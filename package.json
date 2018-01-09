@@ -4,10 +4,8 @@
   "description": "ES6 Universal Library Starter",
   "main": "./index.js",
   "scripts": {
-    "build": "gulp build",
-    "build-dev": "gulp build-dev",
-    "build-web": "gulp build-web",
-    "build-web-dev": "gulp build-web-dev"
+    "build": "gulp build-web",
+    "build-dev": "gulp build-web-dev"
   },
   "license": "MIT",
   "files": [
