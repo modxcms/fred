@@ -3,16 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Uploader</title>
-    <link  href="../dist/fred.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300">
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../dist/fred.css" rel="stylesheet">
     <script src="../dist/fred.min.js"></script>
     <style>
     </style>
 </head>
 <body>
-
+<div id="topbar">
+  <div class="columns">
+    <div class="col-8 p0">
+      <ul>
+        <li><img src="images/modx-revo-icon-48.svg" alt="MODX FRED" class="logo"></li>
+        <li><a href="">New Page <i class="fa fa-angle-down"></i></a></li>
+        <li><a href="">Settings <i class="fa fa-angle-down"></i></a></li>
+      </ul>
+    </div>
+    <div class="col-2 text-right pthird">
+      <button id="logout" class="btn-small">LOGOUT</button>
+    </div>
+  </div>
+</div>
 
 <script>
-    
+
     var fred = new Fred({
 
     });
