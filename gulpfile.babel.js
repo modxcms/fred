@@ -18,7 +18,7 @@ const $ = gulpLoadPlugins();
 const libFolder = 'lib';
 const sources = './src/**/*.js';
 
-gulp.task('default', ['build', 'build-web']);
+gulp.task('default', ['build-web']);
 
 // Build for web
 gulp.task('build-web', ['webpack:build-web', 'css']);
