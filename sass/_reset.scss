@@ -1,0 +1,122 @@
+// Reset
+
+/*! sanitize.css | CC0 Public Domain | github.com/jonathantneal/sanitize.css */
+
+$root-box-sizing: border-box !default;
+$root-font-family: sans-serif !default;
+$root-font-size: 16px !default;
+$root-line-height: 1.6em !default;
+$root-text-rendering: optimizeLegibility !default;
+
+$anchor-text-decoration: none !default;
+$form-element-min-height: if(unitless($root-line-height), #{$root-line-height}em, if(unit($root-line-height) != '%', $root-line-height, null)) !default;
+$media-element-vertical-align: middle !default;
+$monospace-font-family: monospace !default;
+$table-border-collapse: collapse !default;
+$table-border-spacing: 0 !default;
+$textarea-resize: vertical !default;
+
+/*
+ * Normalization
+ */
+
+:root {
+	-ms-overflow-style: -ms-autohiding-scrollbar; // IE11+
+	overflow-y: scroll; // All browsers without overlaying scrollbars
+	box-sizing: $root-box-sizing;
+	font: #{$root-font-size}/#{$root-line-height} $root-font-family;
+	text-rendering: $root-text-rendering;
+	text-size-adjust: 100%; // iOS 8+
+	-webkit-font-smoothing:antialiased;
+}
+
+body, button, input, select, textarea, pre, ul, ol { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6, p, dl, ol, ul, dt, dd {margin: 0;}
+ul,ol{list-style: none;}
+button, input, select, textarea { font-family: inherit; font-size: 100%; }
+article, aside, details, figcaption, figure, footer, header, main, nav, section, summary { display: block; }
+img{border:none; max-width:100%;}
+
+[hidden] {
+	display: none; // Internet Explorer 10-
+}
+
+[unselectable] {
+	user-select: none; // Android 4.4+, Chrome 40+, Firefox 36+, iOS 8+, Safari 8+
+}
+
+
+/*
+ * Universal inheritance
+ */
+
+*,
+::before,
+::after {
+	text-decoration: inherit;
+	vertical-align: inherit;
+	border-style: solid;
+	border-width: 0;
+}
+
+// remove margin and padding of all elements
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+
+// specify the text decoration of anchors
+
+a {
+	text-decoration: $anchor-text-decoration;
+}
+
+// specify media element style
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+	vertical-align: $media-element-vertical-align;
+}
+
+
+// specify the font family of code elements
+
+code,
+kbd,
+pre,
+samp {
+	font-family: $monospace-font-family, monospace;
+}
+
+// specify the border styles of tables
+
+table {
+	border-collapse: $table-border-collapse;
+	border-spacing: $table-border-spacing;
+}
+
+// specify textarea resizability
+
+textarea {
+	resize: $textarea-resize;
+}
+
+
+// hide content from screens but not screenreaders
+
+@media screen {
+	[hidden~="screen"] {
+		display: inherit;
+	}
+
+	[hidden~="screen"]:not(:active):not(:focus):not(:target) {
+		clip: rect(0 0 0 0) !important;
+		position: absolute !important;
+	}
+}

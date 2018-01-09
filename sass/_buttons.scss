@@ -1,0 +1,45 @@
+@mixin btn{
+  transition-duration: $timing;
+  transition-timing-function: ease;
+  transition-property: background-color;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: $radius;
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-block;
+  line-height: $baseGutter*1.6;
+  height: auto;
+}
+
+$btn-padding: $baseGutter/2 $baseGutter;
+$btn-padding-small: .2rem $baseGutter;
+
+button{
+overflow: visible; // Internet Explorer 11-
+-webkit-appearance: button; // iOS 8+
+cursor: pointer;
+}
+
+.btn{
+  @include btn();
+  padding: $btn-padding;
+  color: $white;
+  background-color: $primary;
+  &:hover {
+    color: $white;
+    background-color: darken($primary, 10%);
+  }
+}
+
+.btn-small{
+  @include btn();
+  padding: $btn-padding-small;
+  color: $white;
+  background-color: $primary;
+  &:hover {
+    color: $white;
+    background-color: darken($primary, 10%);
+  }
+}

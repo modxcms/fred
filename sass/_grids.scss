@@ -1,0 +1,591 @@
+////
+/// @group Grid
+////
+
+$gridGutter : $baseGutter;
+$mpGutter : 1.2%;
+
+/// 100%
+@mixin grid1{
+    flex-basis: 100%;
+    max-width: 100%;
+    margin-bottom: $gridGutter;
+}
+
+/// 50.5%
+@mixin grid2{
+    flex: 0 0 calc(50.5% - #{$gridGutter});
+    margin-bottom: $gridGutter;
+}
+
+@mixin grid3{
+    flex: 0 0 calc(33.8% - #{$gridGutter});
+    margin-bottom: $gridGutter;
+}
+
+@mixin grid4{
+    flex: 0 0 calc(25.25% - #{$gridGutter});
+    margin-bottom: $gridGutter;
+}
+
+@mixin grid5{
+    flex: 0 0 calc(20.25% - #{$gridGutter});
+    margin-bottom: $gridGutter;
+}
+
+@mixin gridReset{
+    @include respond-to($mobile){
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+
+@mixin gridHalf{
+    @include respond-to($tabletP){
+        flex: 0 0 calc(50.5% - #{$gridGutter});
+    }
+    @include respond-to($mobile){
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+
+@mixin smallReset{
+    @include respond-to($oldmobile){
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+
+/// .grid requires "justify-content: space-between;" b/c of flex: 0 0 calc
+.grid{
+
+    //IE hack
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+    -ms-flex-direction: row;
+
+    //properties
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: $gridGutter 0 0 0;
+
+    .grid-1{
+        @include grid1;
+    }
+
+    .grid-2{
+        @include grid2;
+    }
+
+    .grid-3{
+        @include grid3;
+    }
+
+    .grid-4{
+        @include grid4;
+    }
+
+    .grid-5{
+        @include grid5;
+    }
+
+    //reset all the grid classes b/c .grid is a layout utility not a specific element like a card or tile
+    .grid-2,.grid-3,.grid-4,.grid-5{
+        @include gridReset;
+    }
+
+    //alignments
+    &.grid-center{
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content:center;
+    }
+
+    &.grid-center_y{
+        align-items:center;
+    }
+
+}
+
+/// Multi-Purpose Grid (floats)
+.mp-grid{
+	@extend .clearfix;
+
+	.mp-2{
+		width: 48.8%;
+		float: left;
+		margin-left: $mpGutter;
+		margin-right: $mpGutter;
+		margin-bottom: $mpGutter;
+
+		&:nth-child(2n+1){margin-left: 0;clear:left;}
+		&:nth-child(2n+0){margin-right: 0;}
+
+		@include respond-to($mobile){
+			width: 100%;
+			margin-right: 0;
+			margin-left: 0;
+		}
+	}
+
+	.mp-3{
+		width: 31.719%;
+		float: left;
+		margin-left: $mpGutter;
+		margin-right: $mpGutter;
+		margin-bottom: $mpGutter;
+
+		&:nth-child(3n+1){margin-left: 0;clear:left;}
+		&:nth-child(3n+0){margin-right: 0;}
+
+		@include respond-to($mobile){
+			width: 100%;
+			margin-right: 0;
+			margin-left: 0;
+		}
+	}
+
+	.mp-4{
+		width: 23.2%;
+		float: left;
+		margin-left: $mpGutter;
+		margin-right: $mpGutter;
+		margin-bottom: $mpGutter;
+
+		&:nth-child(4n+1){margin-left: 0;clear:left;}
+		&:nth-child(4n+0){margin-right: 0;}
+
+		@include respond-to($mobile){
+			width: 100%;
+			margin-right: 0;
+			margin-left: 0;
+		}
+	}
+
+	.mp-5{
+		width: 18.069%;
+		float: left;
+		margin-left: $mpGutter;
+		margin-right: $mpGutter;
+		margin-bottom: $mpGutter;
+
+		&:nth-child(5n+1){margin-left: 0;clear:left;}
+		&:nth-child(5n+0){margin-right: 0;}
+
+		@include respond-to($mobile){
+			width: 100%;
+			margin-right: 0;
+			margin-left: 0;
+		}
+
+	}
+}
+
+
+.cards, .tiles{
+    //IE hack
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+    -ms-flex-direction: row;
+
+    //properties
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: $gridGutter 0 0 0;
+    overflow:hidden;
+
+    .card-1, .tile-1{
+        @include grid1;
+    }
+
+    .card-2, .tile-2{
+        @include grid2;
+    }
+
+    .card-3, .tile-3{
+        @include grid3;
+    }
+
+    .card-4, .tile-4{
+        @include grid4;
+        @include gridHalf;
+    }
+
+    .tile-5{
+        @include grid5;
+        @include gridHalf;
+    }
+
+    .card-2, .tile-2,.card-3{@include gridReset;}
+    .tile-3{@include smallReset;}
+
+    .card-1,.card-2,.card-3,.card-4{
+        background-color: lighten($light-gray,2%);
+        border-radius: $radius;
+        //make them equal heights and card caption is at bottom
+        display:flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow:hidden;
+
+        &:not(.fill-card) img{
+            padding: $gridGutter;
+            display:block;
+            margin:0 auto;
+        }
+
+        figcaption{
+            padding: $gridGutter;
+            background-color: lighten($primary,5%);
+            border-bottom-left-radius: $radius;
+            border-bottom-right-radius: $radius;
+
+            strong{
+                display:block;
+                font-size:1.25rem;
+                line-height:1.5rem;
+            }
+        }
+
+    }
+
+    .tile-1,.tile-2,.tile-3,.tile-4,.tile-5{
+        background-color: lighten($light-gray,2%);
+        position: relative;
+
+        figcaption{
+            position: absolute;
+            z-index: 99;
+            bottom: 0;
+            padding: $gridGutter/2;
+        }
+        &:not(.fill-tile) figcaption{
+            padding: $gridGutter*1.25;
+        }
+
+        img{
+            position: relative;
+            z-index: 9;
+        }
+        &:not(.fill-tile) img{
+            padding: $gridGutter;
+            display:block;
+            margin:0 auto;
+        }
+
+    }
+
+}
+
+.thumbs{
+    //IE hack
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+    -ms-flex-direction: row;
+
+    //properties
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: $gridGutter 0 0 0;
+
+    .thumb{
+        @include grid1;
+    }
+
+    .thumb-2{
+        @include grid2;
+    }
+
+    .thumb-3{
+        @include grid3;
+    }
+
+    .thumb,.thumb-2,.thumb-3{
+        background-color: lighten($light-gray,2%);
+        border-radius: $radius;
+        //make them equal heights and card caption is at bottom
+        display:flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        img{
+            min-width:100px;
+        }
+
+        figcaption{
+            padding: $gridGutter;
+            strong{
+                display:block;
+                font-size:1.15rem;
+                line-height:1.25rem;
+            }
+            font-size: .95rem;
+        }
+
+        @include gridReset;
+
+    }
+}
+
+.columns{
+    //IE hack
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+    -ms-flex-direction: row;
+
+    //properties
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .col,
+    .col-1,
+    .col-2,
+    .col-3,
+    .col-4,
+    .col-5,
+    .col-6,
+    .col-7,
+    .col-8,
+    .col-9,
+    .col-10,
+    .col-11,
+    .col-12 {
+      flex: 0 0 auto;
+      padding: $gridGutter;
+    }
+
+    .col {
+      flex-grow: 1;
+      flex-basis: 0;
+      max-width: 100%;
+    }
+
+    .col-1 {
+      flex-basis: 8.333%;
+      max-width: 8.333%;
+    }
+
+    .col-2 {
+      flex-basis: 16.667%;
+      max-width: 16.667%;
+    }
+
+    .col-3 {
+      flex-basis: 25%;
+      max-width: 25%;
+    }
+
+    .col-4 {
+      flex-basis: 33.333%;
+      max-width: 33.333%;
+    }
+
+    .col-5 {
+      flex-basis: 41.667%;
+      max-width: 41.667%;
+    }
+
+    .col-6 {
+      flex-basis: 50%;
+      max-width: 50%;
+    }
+
+    .col-7 {
+      flex-basis: 58.333%;
+      max-width: 58.333%;
+    }
+
+    .col-8 {
+      flex-basis: 66.667%;
+      max-width: 66.667%;
+    }
+
+    .col-9 {
+      flex-basis: 75%;
+      max-width: 75%;
+    }
+
+    .col-10 {
+      flex-basis: 83.333%;
+      max-width: 83.333%;
+    }
+
+    .col-11 {
+      flex-basis: 91.667%;
+      max-width: 91.667%;
+    }
+
+    .col-12 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+
+
+  //Default all .col to 100% on mobile
+  @include respond-to($mobile){
+    .col-1,
+    .col-2,
+    .col-3,
+    .col-4,
+    .col-5,
+    .col-6,
+    .col-7,
+    .col-8,
+    .col-9,
+    .col-10,
+    .col-11,
+    .col-12 {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+  }
+
+
+
+  // col-md
+  @include respond-to($tabletP){
+    .col-md-1 {
+      flex-basis: 8.333%;
+      max-width: 8.333%;
+    }
+
+    .col-md-2 {
+      flex-basis: 16.667%;
+      max-width: 16.667%;
+    }
+
+    .col-md-3 {
+      flex-basis: 25%;
+      max-width: 25%;
+    }
+
+    .col-md-4 {
+      flex-basis: 33.333%;
+      max-width: 33.333%;
+    }
+
+    .col-md-5 {
+      flex-basis: 41.667%;
+      max-width: 41.667%;
+    }
+
+    .col-md-6 {
+      flex-basis: 50%;
+      max-width: 50%;
+    }
+
+    .col-md-7 {
+      flex-basis: 58.333%;
+      max-width: 58.333%;
+    }
+
+    .col-md-8 {
+      flex-basis: 66.667%;
+      max-width: 66.667%;
+    }
+
+    .col-md-9 {
+      flex-basis: 75%;
+      max-width: 75%;
+    }
+
+    .col-md-10 {
+      flex-basis: 83.333%;
+      max-width: 83.333%;
+    }
+
+    .col-md-11 {
+      flex-basis: 91.667%;
+      max-width: 91.667%;
+    }
+
+    .col-md-12 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+
+  // col-md
+  @include respond-to($mobile){
+    .col-xs-1 {
+      flex-basis: 8.333%;
+      max-width: 8.333%;
+    }
+
+    .col-xs-2 {
+      flex-basis: 16.667%;
+      max-width: 16.667%;
+    }
+
+    .col-xs-3 {
+      flex-basis: 25%;
+      max-width: 25%;
+    }
+
+    .col-xs-4 {
+      flex-basis: 33.333%;
+      max-width: 33.333%;
+    }
+
+    .col-xs-5 {
+      flex-basis: 41.667%;
+      max-width: 41.667%;
+    }
+
+    .col-xs-6 {
+      flex-basis: 50%;
+      max-width: 50%;
+    }
+
+    .col-xs-7 {
+      flex-basis: 58.333%;
+      max-width: 58.333%;
+    }
+
+    .col-xs-8 {
+      flex-basis: 66.667%;
+      max-width: 66.667%;
+    }
+
+    .col-xs-9 {
+      flex-basis: 75%;
+      max-width: 75%;
+    }
+
+    .col-xs-10 {
+      flex-basis: 83.333%;
+      max-width: 83.333%;
+    }
+
+    .col-xs-11 {
+      flex-basis: 91.667%;
+      max-width: 91.667%;
+    }
+
+    .col-xs-12 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+
+}  //columns
+
+//Eliminate Nesting Double Padding on Components
+.grid .thumbs,
+.grid .cards,
+.grid .tiles,
+.columns .thumbs,
+.columns .cards,
+.columns .tiles
+{padding:0;}

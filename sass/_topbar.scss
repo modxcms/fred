@@ -1,0 +1,26 @@
+.logo{width:34px;margin:0 .5rem;}
+#topbar{
+  background-color: $black;
+  position: fixed;
+  z-index: 99999;
+  top:0;
+  left:0;
+  width: 100%;
+
+  li{
+    display:inline-block;
+    border-right:1px solid $dark-gray;
+    &:first-of-type{border-right:0;}
+  }
+  a{
+    color: $white;
+    display:block;
+    padding:1rem .5rem;
+    background-color: $black;
+    text-transform: uppercase;
+    font-size:1.1rem;
+    &:hover{
+      background-color: $dark-gray;
+    }
+  }
+}

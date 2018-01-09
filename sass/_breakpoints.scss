@@ -1,0 +1,33 @@
+//Breakpoints
+
+$oldmobile: 480px;
+$mobile: 768px;
+$tabletP: 960px;
+$tabletL: 1024px;
+$desktop: 1280px;
+
+//master mixin
+//can be used with specific px/em value or $var
+
+@mixin respond-to($breakpoint){
+	@media only screen and (max-width: $breakpoint) { @content; }
+}
+
+@mixin respond-to-above($breakpoint){
+	@media only screen and (min-width: $breakpoint) { @content; }
+}
+
+.narrow {
+	width: $mobile; max-width:100%; margin:0 auto;
+
+	@include respond-to($desktop){
+		padding: 0 $baseGutter;
+	}
+}
+.container {
+	width: $desktop; max-width:100%; margin:0 auto;
+
+	@include respond-to($desktop){
+		padding: 0 $baseGutter;
+	}
+}

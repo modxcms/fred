@@ -1,0 +1,19 @@
+
+
+// COLORS
+$blue: #517B95;
+$darkblue: #374b5a;
+$gray: #747f8a;
+$light-gray: lighten($gray, 15%);
+$dark-gray: darken($gray, 20%);
+$green: #60B7A0;
+$white: #FFFFFF;
+$black: #2a2e32;
+
+// PLACEHOLDERS
+$primary: $blue;
+$secondary: $green;
+
+$baseGutter: 1rem;
+$radius: 4px;
+$timing: .3s;
