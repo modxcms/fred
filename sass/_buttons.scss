@@ -22,7 +22,7 @@ overflow: visible; // Internet Explorer 11-
 cursor: pointer;
 }
 
-.btn{
+.fred--btn{
   @include btn();
   padding: $btn-padding;
   color: $white;
@@ -33,7 +33,7 @@ cursor: pointer;
   }
 }
 
-.btn-small{
+.fred--btn-small{
   @include btn();
   padding: $btn-padding-small;
   color: $white;

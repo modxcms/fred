@@ -1,11 +1,14 @@
-.logo{width:34px;margin:0 .5rem;}
-#topbar{
+.fred--logo{width:34px;margin:0 .5rem;}
+.fred--topbar{
+  font-family: "Open Sans", Arial, sans-serif;
   background-color: $black;
+  width: 100%;
+/* TODO MOVE TO FIXED ON SCROLL
   position: fixed;
   z-index: 99999;
   top:0;
   left:0;
-  width: 100%;
+*/
 
   li{
     display:inline-block;
@@ -23,4 +26,13 @@
       background-color: $dark-gray;
     }
   }
+}
+
+.fred--topbar_links{
+  padding:0 !important;
+}
+
+.fred--topbar_buttons{
+  padding: .75rem !important;
+  text-align: right;
 }

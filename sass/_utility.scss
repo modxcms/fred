@@ -1,55 +1,5 @@
-//Brash Utilities
 
-[aria-hidden="true"]{display:none;}
-[aria-hidden="false"]{display:block;}
-
-.clearfix {
+.fred--clearfix {
   &:before, &:after { content: " "; display: table; }
   &:after { clear: both; }
-}
-
-@mixin headings {
-    h1, h2, h3 {
-        @content;
-    }
-}
-
-.m0{margin: 0 !important;}
-.m1{margin: $baseGutter !important;}
-.m2{margin: $baseGutter*2 !important;}
-.mt1{margin-top: $baseGutter !important;}
-.mt2{margin-top: $baseGutter*2 !important;}
-.mb1{margin-bottom: $baseGutter !important;}
-.mb2{margin-bottom: $baseGutter*2 !important;}
-
-.p0{padding: 0 !important;}
-.phalf{padding: $baseGutter/2 !important;}
-.pthird{padding: .75rem !important;}
-.p1{padding: $baseGutter !important;}
-.p2{padding: $baseGutter*2 !important;}
-.pt1{padding-top: $baseGutter !important;}
-.pt2{padding-top: $baseGutter*2 !important;}
-.pb1{padding-bottom: $baseGutter !important;}
-.pb2{padding-bottom: $baseGutter*2 !important;}
-
-.py1{padding: $baseGutter 0 !important;}
-.py2{padding: $baseGutter*2 0 !important;}
-.px1{padding: 0 $baseGutter !important;}
-.px2{padding: 0 $baseGutter*2 !important;}
-
-.text-center{text-align:center;}
-.text-right{text-align:right;}
-.block{display:block;}
-.mobile-show,.tablet-show{display:none;}
-
-@include respond-to($tabletP){
-  .tablet-hide{display:none !important;}
-  .tablet-show{display: inline-block;}
-  .table-block{display:block;}
-}
-
-@include respond-to($mobile){
-  .mobile-hide{display:none !important;}
-  .mobile-show{display: inline-block;}
-  .mobile-block{display:block;}
 }
