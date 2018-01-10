@@ -4,7 +4,7 @@
   width: 100%;
 /* TODO MOVE TO FIXED ON SCROLL
   position: fixed;
-  z-index: 99999;
+  z-index: 999;
   top:0;
   left:0;
 */
@@ -14,7 +14,7 @@
     li{
       display:inline-block;
       float: left;
-      border-right:1px solid $gray;
+      border-right:1px solid #cfd2d2;
 
       a{
         color: $gray;
