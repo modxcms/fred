@@ -14,7 +14,7 @@
 }
 
 $btn-padding: $baseGutter/2 $baseGutter;
-$btn-padding-small: .2rem $baseGutter;
+$btn-padding-small: .2rem .7rem;
 
 button{
 overflow: visible; // Internet Explorer 11-
@@ -35,6 +35,7 @@ cursor: pointer;
 
 .fred--btn-small{
   @include btn();
+  font-size:.9rem;
   padding: $btn-padding-small;
   color: $white;
   background-color: $primary;

@@ -1,0 +1,89 @@
+.fred--logo{width:35px;margin:0 .5rem; vertical-align: text-bottom;}
+.fred--sidebar_title{
+  width:100%;
+
+  h1{
+    display: inline-block;
+    color: $white;
+    line-height: 3rem;
+    font-size: 2rem;
+    margin: .25rem 0;
+  }
+}
+.fred--sidebar{
+  font-family: "Open Sans", Arial, sans-serif;
+  background-color: $black;
+  width: 240px;
+  height:100vh;
+  overflow-x: hidden;
+  position: fixed;
+  top:0;
+  left: 0;
+  z-index: 99999;
+  transition: $timing;
+}
+
+.fred--accordion{
+  dt{
+    overflow: hidden;
+    background-color: darken($black,1%);
+    border-bottom: 1px solid $black;
+    color:$white;
+    font-size: 1rem;
+    padding:.5rem;
+    cursor: pointer;
+
+    span{
+      i{
+        font-size: .8rem; margin: -2px 5px 0 0; vertical-align: middle; opacity: .7;
+      }
+    }
+
+    .fred--accordion_toggle{
+      float:right; font-size:1.2rem; margin-top:2px;
+    }
+
+    &:hover,&.active{
+      background-color: $primary;
+    }
+
+  }
+
+  dd{
+    background-color: lighten($black,5%);
+    padding:.5rem;
+    color:$light-gray;
+    font-size: .9rem;
+
+    .fred--thumbs .fred--thumb{
+      background-color: transparent;
+      border-bottom: 1px solid $black;
+      margin-bottom:.5rem;
+      cursor:hand;
+      cursor:move;
+      cursor:grab;
+      cursor: -webkit-grab;
+      &:hover{
+        figcaption{color:$primary;}
+      }
+      > div{padding:.5rem;}
+      img{min-width: 30px;max-width: 30px;}
+      figcaption{
+        padding:.5rem;
+        line-height: normal;
+        em{font-size: .8rem;}
+      }
+    }
+  }
+}
+
+.fred--accordion_resource-list{
+  li{
+    display: block;
+    a{
+      color: $light-gray;
+      display: block;
+      &:hover{color:$primary;}
+    }
+  }
+}
