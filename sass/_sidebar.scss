@@ -1,6 +1,7 @@
 .fred--logo{width:35px;margin:0 .5rem; vertical-align: text-bottom;}
 .fred--sidebar_title{
   width:100%;
+  position: relative;
 
   h1{
     display: inline-block;
@@ -9,6 +10,20 @@
     font-size: 2rem;
     margin: .25rem 0;
   }
+
+  button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: .9rem .5rem .7rem .5rem;
+    background: transparent;
+    svg{fill:$dark-gray;}
+    &:hover{
+      svg{fill:$white;}
+      background-color: darken($black,1%);
+    }
+  }
+
 }
 .fred--sidebar{
   font-family: "Open Sans", Arial, sans-serif;
@@ -47,9 +62,21 @@
       background-color: $primary;
     }
 
+    &.open{
+      background-color: lighten($black,10%);
+    }
+
+    &.active{
+      + dd{
+        display: block;
+        background-color: lighten($black,10%);
+      }
+    }
+
   }
 
   dd{
+    display:none;
     background-color: lighten($black,5%);
     padding:.5rem;
     color:$light-gray;
@@ -58,11 +85,10 @@
     .fred--thumbs .fred--thumb{
       background-color: transparent;
       border-bottom: 1px solid $black;
+      &:last-of-type{border-bottom: 0;}
       margin-bottom:.5rem;
-      cursor:hand;
       cursor:move;
-      cursor:grab;
-      cursor: -webkit-grab;
+
       &:hover{
         figcaption{color:$primary;}
       }
@@ -86,4 +112,17 @@
       &:hover{color:$primary;}
     }
   }
+}
+
+.fred--sidebar_paneltwo{
+  font-family: "Open Sans", Arial, sans-serif;
+  background-color: lighten($black,5%);
+  width: 340px;
+  height:100vh;
+  overflow-x: hidden;
+  position: fixed;
+  top:0;
+  left: 240px;
+  z-index: 9999;
+  transition: $timing;
 }

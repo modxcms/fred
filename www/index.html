@@ -11,10 +11,13 @@
     </style>
 </head>
 <body>
+<button class="fred--open"><i class="fa fa-angle-right"></i> <i class="fa fa-angle-right"></i></button>  
 <div class="fred--sidebar">
   <div class="fred--sidebar_title">
     <img src="images/modx-revo-icon-48.svg" alt="MODX FRED" class="fred--logo">
     <h1>FRED</h1>
+    <button><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026
+	6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg></button>
   </div>
   <dl class="fred--accordion" tabindex="0" role="tablist">
         <dt role="tab" tabindex="0" aria-controls="acc1">
@@ -29,33 +32,10 @@
               <li><a href="">Services</a></li>
             </ul>
         </dd>
-        <dt role="tab" tabindex="0" aria-controls="acc2">
+        <dt role="tab" tabindex="0" aria-controls="acc2" class="open">
             <span><i class="fa fa-television"></i> LAYOUTS</span>
             <i class="fa fa-angle-right fred--accordion_toggle"></i>
         </dt>
-        <dd aria-hidden="true" id="acc2" tabindex="0" role="tabpanel">
-            <div class="fred--thumbs">
-              <figure class="fred--thumb">
-                  <div><img src="layouts/full-width.svg" alt=""></div>
-                  <figcaption>
-                      <strong>Full Width</strong>
-                  </figcaption>
-              </figure>
-              <figure class="fred--thumb">
-                  <div><img src="layouts/right-panel-layout.svg" alt=""></div>
-                  <figcaption>
-                      <strong>2 Column</strong>
-                      <em>Content Left. Component Right.</em>
-                  </figcaption>
-              </figure>
-              <figure class="fred--thumb">
-                  <div><img src="layouts/four-grid.svg" alt=""></div>
-                  <figcaption>
-                      <strong>Grid</strong>
-                  </figcaption>
-              </figure>
-            </div>
-        </dd>
         <dt role="tab" tabindex="0" aria-controls="acc3">
             <span><i class="fa fa-vcard-o"></i> COMPONENTS</span>
             <i class="fa fa-angle-right fred--accordion_toggle"></i>
@@ -73,6 +53,37 @@
         </dd>
     </dl>
 </div> <!-- eof fred sidebar -->
+
+<div class="fred--sidebar_paneltwo active">
+    <dl class="fred--accordion" tabindex="0" role="tablist">
+      <dt role="tab" tabindex="0" aria-controls="acc2" class="active">
+          <span><i class="fa fa-television"></i> LAYOUTS</span>
+      </dt>
+      <dd aria-hidden="true" id="acc2" tabindex="0" role="tabpanel">
+          <div class="fred--thumbs">
+            <figure class="fred--thumb">
+                <div><img src="layouts/full-width.svg" alt=""></div>
+                <figcaption>
+                    <strong>Full Width</strong>
+                </figcaption>
+            </figure>
+            <figure class="fred--thumb">
+                <div><img src="layouts/right-panel-layout.svg" alt=""></div>
+                <figcaption>
+                    <strong>2 Column</strong>
+                    <em>Content Left. Component Right.</em>
+                </figcaption>
+            </figure>
+            <figure class="fred--thumb">
+                <div><img src="layouts/four-grid.svg" alt=""></div>
+                <figcaption>
+                    <strong>Grid</strong>
+                </figcaption>
+            </figure>
+          </div>
+      </dd>
+    </dl>
+</div> <!-- eof fred sidebar _paneltwo -->
 
 <div class="fred--canvas">
 
