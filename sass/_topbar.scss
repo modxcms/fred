@@ -1,7 +1,6 @@
-.fred--logo{width:34px;margin:0 .5rem;}
 .fred--topbar{
   font-family: "Open Sans", Arial, sans-serif;
-  background-color: $black;
+  background-color: #e4efef;
   width: 100%;
 /* TODO MOVE TO FIXED ON SCROLL
   position: fixed;
@@ -9,23 +8,29 @@
   top:0;
   left:0;
 */
+  ul{
+    overflow: hidden;
 
-  li{
-    display:inline-block;
-    border-right:1px solid $dark-gray;
-    &:first-of-type{border-right:0;}
-  }
-  a{
-    color: $white;
-    display:block;
-    padding:1rem .5rem;
-    background-color: $black;
-    text-transform: uppercase;
-    font-size:1.1rem;
-    &:hover{
-      background-color: $dark-gray;
+    li{
+      display:inline-block;
+      float: left;
+      border-right:1px solid $gray;
+
+      a{
+        color: $gray;
+        display:block;
+        padding:.5rem 1.5rem;
+        text-transform: uppercase;
+        font-size:.9rem;
+        &:hover{
+          background-color: $secondary;
+          color: $white;
+        }
+      }
+
     }
   }
+
 }
 
 .fred--topbar_links{
@@ -33,6 +38,6 @@
 }
 
 .fred--topbar_buttons{
-  padding: .75rem !important;
+  padding: .25rem !important;
   text-align: right;
 }
