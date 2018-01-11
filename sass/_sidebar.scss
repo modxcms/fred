@@ -1,40 +1,54 @@
-.fred--logo{width:35px;margin:0 .5rem; vertical-align: text-bottom;}
+.fred--sidebar_close{
+  position: absolute;
+  width:40px;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  padding: .5rem;
+  background: lighten($black,1%);
+  transition: $timing;
+  svg{
+    fill:$dark-gray;
+    position: absolute;
+    top:.6rem;
+    left:.6rem;
+    transition: $timing;
+  }
+  &:hover{
+    svg{fill:$white;}
+    background-color: darken($black,1%);
+  }
+}
+
+.fred--logo{
+  width:35px;margin:2px .5rem; vertical-align: text-bottom;
+}
+
 .fred--sidebar_title{
   width:100%;
   position: relative;
+  vertical-align: top;
 
   h1{
     display: inline-block;
     color: $white;
-    line-height: 3rem;
-    font-size: 2rem;
+    line-height: 2rem;
+    font-size: 1.6rem;
     margin: .25rem 0;
   }
 
-  button{
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: .9rem .5rem .7rem .5rem;
-    background: transparent;
-    svg{fill:$dark-gray;}
-    &:hover{
-      svg{fill:$white;}
-      background-color: darken($black,1%);
-    }
-  }
-
 }
+
 .fred--sidebar{
   font-family: "Open Sans", Arial, sans-serif;
   background-color: $black;
-  width: 240px;
+  width: 360px;
   height:100vh;
   overflow-x: hidden;
   position: fixed;
   top:0;
   left: 0;
-  z-index: 99999;
+  z-index: 9999;
   transition: $timing;
 }
 
@@ -42,10 +56,10 @@
   dt{
     overflow: hidden;
     background-color: darken($black,1%);
-    border-bottom: 1px solid $black;
+    border-bottom: 1px solid #000;
     color:$white;
     font-size: 1rem;
-    padding:.5rem;
+    padding:.7rem .5rem;
     cursor: pointer;
 
     span{
@@ -55,15 +69,11 @@
     }
 
     .fred--accordion_toggle{
-      float:right; font-size:1.2rem; margin-top:2px;
+      font-size:1.2rem; margin:2px 5px 0 0; width:14px; text-align: center;
     }
 
     &:hover,&.active{
       background-color: $primary;
-    }
-
-    &.open{
-      background-color: lighten($black,10%);
     }
 
     &.active{
@@ -117,12 +127,13 @@
 .fred--sidebar_paneltwo{
   font-family: "Open Sans", Arial, sans-serif;
   background-color: lighten($black,5%);
-  width: 340px;
+  border-right: 1px solid #000;
+  width: 320px;
   height:100vh;
   overflow-x: hidden;
   position: fixed;
   top:0;
-  left: 240px;
-  z-index: 9999;
+  left: 0;
+  z-index: 99999;
   transition: $timing;
 }

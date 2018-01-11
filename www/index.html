@@ -15,16 +15,17 @@
 <body>
 <button class="fred--open"><i class="fa fa-angle-right"></i> <i class="fa fa-angle-right"></i></button>
 <div class="fred--sidebar">
+  <button class="fred--sidebar_close"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026
+6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg></button>
+
   <div class="fred--sidebar_title">
     <img src="images/modx-revo-icon-48.svg" alt="MODX FRED" class="fred--logo">
     <h1>FRED</h1>
-    <button><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026
-	6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg></button>
   </div>
   <dl class="fred--accordion" tabindex="0" role="tablist">
         <dt role="tab" tabindex="0" aria-controls="acc1">
-            <span><i class="fa fa-file-o"></i> RESOURCES</span>
             <i class="fa fa-angle-down fred--accordion_toggle"></i>
+            <span><i class="fa fa-file-o"></i> RESOURCES</span>
         </dt>
         <dd aria-hidden="true" id="acc1" tabindex="0" role="tabpanel">
             <ul class="fred--accordion_resource-list">
@@ -34,13 +35,13 @@
               <li><a href="">Services</a></li>
             </ul>
         </dd>
-        <dt role="tab" tabindex="0" aria-controls="acc2" class="open">
+        <dt role="tab" tabindex="0" aria-controls="acc2">
+            <i class="fa fa-angle-left fred--accordion_toggle"></i>
             <span><i class="fa fa-television"></i> LAYOUTS</span>
-            <i class="fa fa-angle-right fred--accordion_toggle"></i>
         </dt>
         <dt role="tab" tabindex="0" aria-controls="acc3">
+            <i class="fa fa-angle-left fred--accordion_toggle"></i>
             <span><i class="fa fa-vcard-o"></i> COMPONENTS</span>
-            <i class="fa fa-angle-right fred--accordion_toggle"></i>
         </dt>
         <dd aria-hidden="true" id="acc3" tabindex="0" role="tabpanel">
           <div class="fred--thumbs">
@@ -87,31 +88,24 @@
     </dl>
 </div> <!-- eof fred sidebar _paneltwo -->
 
-<div class="fred--canvas">
 
-  <div class="fred--topbar">
-    <div class="fred--columns">
-      <div class="fred--col-8 fred--topbar_links">
-        <ul>
-          <li><a href="">New Page <i class="fa fa-angle-down"></i></a></li>
-          <li><a href="">Settings <i class="fa fa-angle-down"></i></a></li>
-        </ul>
-      </div>
-      <div class="fred--col-2 fred--topbar_buttons">
-        <button id="logout" class="fred--btn-small">LOGOUT</button>
-      </div>
+<div class="fred--topbar fred--clearfix">
+    <ul class="fred--topbar_links">
+      <li><a href="">New Page <i class="fa fa-angle-down"></i></a></li>
+      <li><a href="">Settings <i class="fa fa-angle-down"></i></a></li>
+    </ul>
+
+    <div class="fred--topbar_buttons">
+      <button id="logout" class="fred--btn-small">LOGOUT</button>
     </div>
-  </div>
+</div>
 
 
-  <!-- content -->
+<!-- content -->
 
 
 
-  <!-- eof content -->
-
-
-</div>  <!-- eof fred canvas -->
+<!-- eof content -->
 
 
 <script>
