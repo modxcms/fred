@@ -1,22 +1,18 @@
 .fred--open{
   position: absolute;
-  top: 1rem;
+  z-index: 10;
+  top: 3px;
   left: 0;
   border-top-right-radius: $radius;
   border-bottom-right-radius: $radius;
-  padding: .7rem .5rem;
+  padding: .5rem .5rem;
   color: $gray;
   background-color: $black;
-  font-size: 1.2rem;
+  font-size: 1rem;
 
   &:hover{
     color: $white;
     background-color: darken($black,1%);
   }
 
-}
-.fred--canvas{
-  transition: $timing;
-  overflow-x: hidden;
-  margin-left: 240px;
 }

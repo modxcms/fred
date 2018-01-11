@@ -2,12 +2,11 @@
   font-family: "Open Sans", Arial, sans-serif;
   background-color: #e4efef;
   width: 100%;
-/* TODO MOVE TO FIXED ON SCROLL
   position: fixed;
-  z-index: 999;
+  z-index: 9;
   top:0;
   left:0;
-*/
+
   ul{
     overflow: hidden;
 
@@ -34,10 +33,12 @@
 }
 
 .fred--topbar_links{
-  padding:0 !important;
+  padding:0 0 0 3rem;
+  float: left;
 }
 
 .fred--topbar_buttons{
   padding: .25rem !important;
   text-align: right;
+  float:right;
 }
