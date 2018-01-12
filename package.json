@@ -26,6 +26,7 @@
     "del": "^2.2.0",
     "gulp": "^3.9.*",
     "gulp-babel": "^6.1.1",
+    "gulp-concat": "^2.6.1",
     "gulp-env": "^0.2.0",
     "gulp-load-plugins": "^1.2.0",
     "gulp-ruby-sass": "",
@@ -39,5 +40,7 @@
     "entry": "index.js",
     "dist-web": "fred.min.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dragula": "^3.7.2"
+  }
 }
