@@ -71,10 +71,45 @@ export default class Fred {
             return dt;
         };
 
-        list.appendChild(dtWrapper('Resources', 'file-o', false));
+        list.appendChild(dtWrapper('Resources', 'file-o', true, () => {
+            this.showSidebar2('<i class="fa fa-file-o"></i> Resources', 'THIS IS A TEST CONTENT');
+            
+        }));
         
         list.appendChild(dtWrapper('Layouts', 'television', true, () => {
-            this.sidebar2.removeAttribute('hidden');
+            const content = '<figure class="fred--thumb">\n' +
+                '                            <div><img src="layouts/full-width.svg" alt=""></div>\n' +
+                '                            <figcaption>\n' +
+                '                                <strong>Full Width</strong>\n' +
+                '                            </figcaption>\n' +
+                '                            <div class="chunk" hidden="hidden">\n' +
+                '                                <h2>Header #2</h2>\n' +
+                '                                <p>Description</p>\n' +
+                '                            </div>\n' +
+                '                        </figure>\n' +
+                '                        <figure class="fred--thumb">\n' +
+                '                            <div><img src="layouts/right-panel-layout.svg" alt=""></div>\n' +
+                '                            <figcaption>\n' +
+                '                                <strong>2 Column</strong>\n' +
+                '                                <em>Content Left. Component Right.</em>\n' +
+                '                            </figcaption>\n' +
+                '                            <div class="chunk" hidden="hidden">\n' +
+                '                                <h3>Header #3</h3>\n' +
+                '                                <img src="http://via.placeholder.com/350x150" />\n' +
+                '                                <p>Description</p>\n' +
+                '                            </div>\n' +
+                '                        </figure>\n' +
+                '                        <figure class="fred--thumb">\n' +
+                '                            <div><img src="layouts/four-grid.svg" alt=""></div>\n' +
+                '                            <figcaption>\n' +
+                '                                <strong>Grid</strong>\n' +
+                '                            </figcaption>\n' +
+                '                            <div class="chunk" hidden="hidden">\n' +
+                '                                <p>Description Only</p>\n' +
+                '                            </div>\n' +
+                '                        </figure>';
+            
+            this.showSidebar2('<i class="fa fa-television"></i> Layouts', content);
         }));
         
         list.appendChild(dtWrapper('Components', 'vcard-o', false));
@@ -86,6 +121,12 @@ export default class Fred {
         return this.sidebar;
     }
 
+    showSidebar2(title, content) {
+        this.sidebar2Header.innerHTML = '<span>' + title + '</span>';
+        this.sidebar2Content.innerHTML = content;
+        this.sidebar2.removeAttribute('hidden');
+    }
+    
     buildSidebar2() {
         this.sidebar2 = document.createElement('div');
         this.sidebar2.classList.add('fred--sidebar_paneltwo', 'active');
@@ -96,56 +137,23 @@ export default class Fred {
         list.setAttribute('tabindex', '0');
         list.setAttribute('role', 'tablist');
         
-        const header = document.createElement('dt');
-        header.classList.add('active');
-        header.setAttribute('role', 'tab');
-        header.setAttribute('tabindex', '0');
+        this.sidebar2Header = document.createElement('dt');
+        this.sidebar2Header.classList.add('active');
+        this.sidebar2Header.setAttribute('role', 'tab');
+        this.sidebar2Header.setAttribute('tabindex', '0');
 
         const title = '<i class="fa fa-television"></i> Layouts';
-        header.innerHTML = '<span>' + title + '</span>';
         
         const items = document.createElement('dd');
         items.setAttribute('role', 'tab');
         items.setAttribute('tabindex', '0');
 
-        const content = document.createElement('div');
-        content.classList.add('fred--thumbs', 'source');
+        this.sidebar2Content = document.createElement('div');
+        this.sidebar2Content.classList.add('fred--thumbs', 'source');
 
-        content.innerHTML = '<figure class="fred--thumb">\n' +
-            '                            <div><img src="layouts/full-width.svg" alt=""></div>\n' +
-            '                            <figcaption>\n' +
-            '                                <strong>Full Width</strong>\n' +
-            '                            </figcaption>\n' +
-            '                            <div class="chunk" hidden="hidden">\n' +
-            '                                <h2>Header #2</h2>\n' +
-            '                                <p>Description</p>\n' +
-            '                            </div>\n' +
-            '                        </figure>\n' +
-            '                        <figure class="fred--thumb">\n' +
-            '                            <div><img src="layouts/right-panel-layout.svg" alt=""></div>\n' +
-            '                            <figcaption>\n' +
-            '                                <strong>2 Column</strong>\n' +
-            '                                <em>Content Left. Component Right.</em>\n' +
-            '                            </figcaption>\n' +
-            '                            <div class="chunk" hidden="hidden">\n' +
-            '                                <h3>Header #3</h3>\n' +
-            '                                <img src="http://via.placeholder.com/350x150" />\n' +
-            '                                <p>Description</p>\n' +
-            '                            </div>\n' +
-            '                        </figure>\n' +
-            '                        <figure class="fred--thumb">\n' +
-            '                            <div><img src="layouts/four-grid.svg" alt=""></div>\n' +
-            '                            <figcaption>\n' +
-            '                                <strong>Grid</strong>\n' +
-            '                            </figcaption>\n' +
-            '                            <div class="chunk" hidden="hidden">\n' +
-            '                                <p>Description Only</p>\n' +
-            '                            </div>\n' +
-            '                        </figure>';
+        items.appendChild(this.sidebar2Content);
 
-        items.appendChild(content);
-
-        list.appendChild(header);
+        list.appendChild(this.sidebar2Header);
         list.appendChild(items);
 
         this.sidebar2.appendChild(list);
