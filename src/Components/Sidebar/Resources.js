@@ -6,7 +6,7 @@ export default class Resources extends Sidebar {
     static expandable = true;
 
     click() {
-        const content = 'THIS IS A DELAYED TEST CONTENT';
+        const content = '<div>THIS IS A DELAYED TEST CONTENT</div>';
         
         return new Promise((resolve, reject) => {
             setTimeout(() => {
