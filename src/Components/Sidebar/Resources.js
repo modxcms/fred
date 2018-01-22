@@ -11,7 +11,7 @@ export default class Resources extends Sidebar {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(content);
-            }, 2000);
+            }, 10000);
         })
     }
 }
