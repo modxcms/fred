@@ -16,15 +16,21 @@ export default class Sidebar {
                 dt.addEventListener('click', this.click);
             } else {
                 dt.addEventListener('click', () => {
-                    emitter.emit('fred-expand', text, icon, this.click());
+                    emitter.emit('fred-sidebar-expand', this, text, icon, this.click());
                 });
             }
 
             return dt;
         };
 
+        this.init();
+        
         return render(this.constructor.title, this.constructor.icon, this.constructor.expandable);
     }
     
+    init() {}
+    
     click() {}
+
+    afterExpand() {}
 }

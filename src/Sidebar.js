@@ -9,11 +9,12 @@ export default class Sidebar {
         wrapper.appendChild(this.buildSidebar());
         wrapper.appendChild(this.buildSidebar2());
 
-        emitter.on('fred-expand', (title, icon, data) => {
+        emitter.on('fred-sidebar-expand', (cmp, title, icon, data) => {
             this.showSidebar2('<i class="fa fa-spinner fa-spin"></i> LOADING', 'LOADING');
 
             Promise.resolve(data).then(content => {
                 this.showSidebar2('<i class="fa fa-' + icon + '"></i> ' + title, content);
+                cmp.afterExpand();
             }).catch(err => {
                 this.showSidebar2('<i class="fa fa-exclamation-triangle"></i> ERROR', 'SOMETHING WRONG HAPPENED');
             });
@@ -85,7 +86,6 @@ export default class Sidebar {
         items.setAttribute('tabindex', '0');
 
         this.sidebar2Content = document.createElement('div');
-        this.sidebar2Content.classList.add('fred--thumbs', 'source');
 
         items.appendChild(this.sidebar2Content);
 

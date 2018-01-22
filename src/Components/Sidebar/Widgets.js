@@ -1,12 +1,21 @@
 import Sidebar from '../Sidebar';
+import dragula from 'dragula';
+import emitter from '../../EE';
 
 export default class Widgets extends Sidebar {
     static title = 'Widgets';
     static icon = 'television';
     static expandable = true;
 
+    init() {
+        this.drake = null;
+    }
+    
     click() {
-        const content = '<figure class="fred--thumb">\n' +
+        const content = document.createElement('div');
+        content.classList.add('fred--thumbs', 'source');
+        
+        content.innerHTML = '<figure class="fred--thumb">\n' +
             '                            <div><img src="layouts/full-width.svg" alt=""></div>\n' +
             '                            <figcaption>\n' +
             '                                <strong>Full Width</strong>\n' +
@@ -40,8 +49,67 @@ export default class Widgets extends Sidebar {
         
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(content);
+                resolve(content.outerHTML);
             }, 500);
         })
+    }
+
+    afterExpand() {
+        if (this.drake === null) {
+            this.drake = dragula([document.querySelector('.source'), document.querySelector('.content')], {
+                copy: function (el, source) {
+                    return source === document.getElementsByClassName('source')[0]
+                },
+                accepts: function (el, target) {
+                    return target !== document.getElementsByClassName('source')[0]
+                },
+                moves: function (el, source, handle, sibling) {
+                    if (source.id === 'content') {
+                        return handle.classList.contains('handle');
+                    }
+    
+                    return true;
+                }
+            });
+
+            this.drake.on('drop', (el, target, source, sibling) => {
+                if (source.classList.contains('source')) {
+                    const wrapper = document.createElement('div');
+                    wrapper.classList.add('test-wrapper');
+    
+                    const toolbar = document.createElement('div');
+                    const handle = document.createElement('i');
+                    handle.classList.add('fa', 'fa-heart', 'handle');
+    
+                    toolbar.appendChild(handle);
+    
+                    wrapper.appendChild(toolbar);
+    
+                    const content = document.createElement('div');
+                    content.setAttribute('contenteditable', true);
+                    content.innerHTML = el.getElementsByClassName('chunk')[0].innerHTML;
+                    content.addEventListener('keypress', e => {
+                        if ((e.charCode === 13) && (e.shiftKey === false)) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    });
+    
+                    wrapper.appendChild(content);
+    
+                    el.parentNode.replaceChild(wrapper, el);
+                }
+            });
+
+            this.drake.on('drag', (el, source) => {
+                emitter.emit('fred-hide');
+            });
+
+            this.drake.on('dragend', el => {
+                emitter.emit('fred-show');
+            });
+        } else {
+            this.drake.containers = [document.querySelector('.source'), document.querySelector('.content')];
+        }
     }
 }
