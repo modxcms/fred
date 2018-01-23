@@ -10,11 +10,11 @@ export default class Widgets extends Sidebar {
     init() {
         this.drake = null;
     }
-    
+
     click() {
         const content = document.createElement('div');
         content.classList.add('fred--thumbs', 'source');
-        
+
         content.innerHTML = '<figure class="fred--thumb">\n' +
             '                            <div><img src="layouts/full-width.svg" alt=""></div>\n' +
             '                            <figcaption>\n' +
@@ -46,7 +46,7 @@ export default class Widgets extends Sidebar {
             '                                <p contenteditable="true">Description Only</p>\n' +
             '                            </div>\n' +
             '                        </figure>';
-        
+
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(content.outerHTML);
@@ -58,7 +58,7 @@ export default class Widgets extends Sidebar {
         if (this.drake === null) {
             const containers = [...document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])')];
             containers.unshift(document.querySelector('.source'));
-            
+
             this.drake = dragula(containers, {
                 copy: function (el, source) {
                     return source === document.getElementsByClassName('source')[0]
@@ -70,7 +70,7 @@ export default class Widgets extends Sidebar {
                     if ((source.dataset.fredDropzone !== undefined) && (source.dataset.fredDropzone !== '')) {
                         return handle.classList.contains('handle');
                     }
-    
+
                     return true;
                 }
             });
@@ -78,28 +78,42 @@ export default class Widgets extends Sidebar {
             this.drake.on('drop', (el, target, source, sibling) => {
                 if (source.classList.contains('source')) {
                     const wrapper = document.createElement('div');
-                    wrapper.classList.add('test-wrapper');
-    
+                    wrapper.classList.add('fred--block');
+
                     const toolbar = document.createElement('div');
-                    const handle = document.createElement('i');
-                    handle.classList.add('fa', 'fa-heart', 'handle');
-    
-                    toolbar.appendChild(handle);
-    
+                    toolbar.classList.add('fred--toolbar');
+                    const moveHandle = document.createElement('button');
+                    moveHandle.classList.add('move-icon');
+                    const moveDownHandle = document.createElement('button');
+                    moveDownHandle.classList.add('move-down-icon');
+                    const moveUpHandle = document.createElement('button');
+                    moveUpHandle.classList.add('move-up-icon');
+                    const cogHandle = document.createElement('button');
+                    cogHandle.classList.add('cog');
+                    const trashHandle = document.createElement('button');
+                    trashHandle.classList.add('trash');
+
+                    toolbar.appendChild(moveHandle);
+                    toolbar.appendChild(moveDownHandle);
+                    toolbar.appendChild(moveUpHandle);
+                    toolbar.appendChild(cogHandle);
+                    toolbar.appendChild(trashHandle);
+
                     wrapper.appendChild(toolbar);
-    
+
                     const content = document.createElement('div');
-                    
+                    content.classList.add('fred--block_content');
+
                     content.innerHTML = el.getElementsByClassName('chunk')[0].innerHTML;
-                    
+
                     content.querySelectorAll('[contenteditable]').forEach(item => {
-                        item.innerHTML = item.innerHTML.replace(/\[\[\+[a-z]+\]\]/, 'Placeholder'); 
-                        
+                        item.innerHTML = item.innerHTML.replace(/\[\[\+[a-z]+\]\]/, 'Placeholder');
+
                         item.addEventListener('input', e => {
                             console.log(e.srcElement.innerHTML);
                         })
                     });
-                    
+
                     /*
                     // Prevent creating new paragraph on enter key press
                     content.addEventListener('keypress', e => {
@@ -108,9 +122,9 @@ export default class Widgets extends Sidebar {
                             return false;
                         }
                     });*/
-    
+
                     wrapper.appendChild(content);
-    
+
                     el.parentNode.replaceChild(wrapper, el);
                 }
             });
@@ -125,7 +139,7 @@ export default class Widgets extends Sidebar {
         } else {
             const containers = [...document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])')];
             containers.unshift(document.querySelector('.source'));
-            
+
             this.drake.containers = containers;
         }
     }
