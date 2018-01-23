@@ -13,6 +13,7 @@
     top:.6rem;
     left:.6rem;
     transition: $timing;
+    pointer-events: none;
   }
   &:hover{
     svg{fill:$white;}

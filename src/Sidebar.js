@@ -6,9 +6,9 @@ import promiseCancel from 'promise-cancel';
 export default class Sidebar {
     constructor() {
         this.lastRequest = null;
-        
+
         emitter.on('fred-sidebar-expand', (cmp, title, icon, data) => {
-            this.showSidebar2('<i class="fa fa-spinner fa-spin"></i> LOADING', 'LOADING');
+            this.showSidebar2('LOADING', 'LOADING');
 
             this.lastRequest = promiseCancel(Promise.resolve(data));
             this.lastRequest.promise.then(content => {
@@ -17,12 +17,12 @@ export default class Sidebar {
                 cmp.afterExpand();
             }).catch(err => {
                 this.lastRequest = null;
-                
+
                 if (err.type === 'cancel') {
                     return;
                 }
-                
-                this.showSidebar2('<i class="fa fa-exclamation-triangle"></i> ERROR', 'SOMETHING WRONG HAPPENED');
+
+                this.showSidebar2('ERROR', 'SOMETHING WRONG HAPPENED');
             });
         });
 
@@ -34,10 +34,10 @@ export default class Sidebar {
             this.showSidebar();
         });
     }
-    
+
     render(wrapper) {
         this.wrapper = document.createElement('div');
-        
+
         this.closeSidebar = this.closeSidebar.bind(this);
         this.wrapper.appendChild(this.buildOpenButton());
         this.wrapper.appendChild(this.buildSidebar());
@@ -133,7 +133,7 @@ export default class Sidebar {
     buildOpenButton() {
         this.open = document.createElement('button');
         this.open.classList.add('fred--open');
-        this.open.innerHTML = '<i class="fa fa-angle-right"></i> <i class="fa fa-angle-right"></i>';
+        this.open.innerHTML = '<i class="angle-right"></i> <i class="angle-right"></i>';
 
         this.open.addEventListener('click', e => {
             e.preventDefault();
@@ -151,17 +151,17 @@ export default class Sidebar {
             this.lastRequest.cancel();
             this.lastRequest = null;
         }
-        
+
         this.sidebar.setAttribute('hidden', 'hidden');
         this.sidebar2.setAttribute('hidden', 'hidden');
 
         window.removeEventListener('click', this.closeSidebar);
     }
-    
+
     hideSidebar() {
         this.wrapper.setAttribute('hidden', 'hidden');
     }
-    
+
     showSidebar() {
         this.wrapper.removeAttribute('hidden');
     }
