@@ -16,7 +16,7 @@ export default class Fred {
         });
 
         new Topbar(this.wrapper);
-        new Sidebar(this.wrapper);
+        this.sidebar.render(this.wrapper);
 
         if (document.body.firstChild === null) {
             document.body.appendChild(this.wrapper);
@@ -36,9 +36,22 @@ export default class Fred {
     init() {
         console.log('Hello from Fred!');
 
+        const dropzones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
+        let registeredDropzones = [];
+
+        for (let zoneIndex = 0; zoneIndex < dropzones.length; zoneIndex++) {
+            if (registeredDropzones.indexOf(dropzones[zoneIndex].dataset.fredDropzone) != -1) {
+                console.error('There are several dropzones with same name: ' + dropzones[zoneIndex].dataset.fredDropzone + '. The name of each dropzone has to be unique.');
+                return false;
+            }
+
+            registeredDropzones.push(dropzones[zoneIndex].dataset.fredDropzone);
+        }
+
         emitter.on('fred-hide', () => {this.hideFred();});
         emitter.on('fred-show', () => {this.showFred();});
         
+        this.sidebar = new Sidebar();
         this.render();
     }
 }

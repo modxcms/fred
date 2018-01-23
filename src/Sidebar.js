@@ -1,24 +1,49 @@
 import emitter from './EE';
 import ResourcesComponent from './Components/Sidebar/Resources';
 import WidgetsComponent from './Components/Sidebar/Widgets';
+import promiseCancel from 'promise-cancel';
 
 export default class Sidebar {
-    constructor(wrapper) {
-        this.closeSidebar = this.closeSidebar.bind(this);
-        wrapper.appendChild(this.buildOpenButton());
-        wrapper.appendChild(this.buildSidebar());
-        wrapper.appendChild(this.buildSidebar2());
-
+    constructor() {
+        this.lastRequest = null;
+        
         emitter.on('fred-sidebar-expand', (cmp, title, icon, data) => {
             this.showSidebar2('<i class="fa fa-spinner fa-spin"></i> LOADING', 'LOADING');
 
-            Promise.resolve(data).then(content => {
+            this.lastRequest = promiseCancel(Promise.resolve(data));
+            this.lastRequest.promise.then(content => {
+                this.lastRequest = null;
                 this.showSidebar2('<i class="fa fa-' + icon + '"></i> ' + title, content);
                 cmp.afterExpand();
             }).catch(err => {
+                this.lastRequest = null;
+                
+                if (err.type === 'cancel') {
+                    return;
+                }
+                
                 this.showSidebar2('<i class="fa fa-exclamation-triangle"></i> ERROR', 'SOMETHING WRONG HAPPENED');
             });
         });
+
+        emitter.on('fred-sidebar-hide', () => {
+            this.hideSidebar();
+        });
+
+        emitter.on('fred-sidebar-show', () => {
+            this.showSidebar();
+        });
+    }
+    
+    render(wrapper) {
+        this.wrapper = document.createElement('div');
+        
+        this.closeSidebar = this.closeSidebar.bind(this);
+        this.wrapper.appendChild(this.buildOpenButton());
+        this.wrapper.appendChild(this.buildSidebar());
+        this.wrapper.appendChild(this.buildSidebar2());
+
+        wrapper.appendChild(this.wrapper);
 
         return this;
     }
@@ -34,9 +59,17 @@ export default class Sidebar {
         this.close.addEventListener('click', e => {
             e.preventDefault();
             if (this.sidebar2.hasAttribute('hidden') === true) {
+                if (this.lastRequest !== null) {
+                    this.lastRequest.cancel();
+                    this.lastRequest = null;
+                }
                 this.sidebar.setAttribute('hidden', 'hidden');
                 window.removeEventListener('click', this.closeSidebar);
             } else {
+                if (this.lastRequest !== null) {
+                    this.lastRequest.cancel();
+                    this.lastRequest = null;
+                }
                 this.sidebar2.setAttribute('hidden', 'hidden');
             }
         });
@@ -113,9 +146,23 @@ export default class Sidebar {
 
     closeSidebar(e) {
         e.preventDefault();
+
+        if (this.lastRequest !== null) {
+            this.lastRequest.cancel();
+            this.lastRequest = null;
+        }
+        
         this.sidebar.setAttribute('hidden', 'hidden');
         this.sidebar2.setAttribute('hidden', 'hidden');
 
         window.removeEventListener('click', this.closeSidebar);
+    }
+    
+    hideSidebar() {
+        this.wrapper.setAttribute('hidden', 'hidden');
+    }
+    
+    showSidebar() {
+        this.wrapper.removeAttribute('hidden');
     }
 }
