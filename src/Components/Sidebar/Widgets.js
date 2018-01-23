@@ -21,8 +21,8 @@ export default class Widgets extends Sidebar {
             '                                <strong>Full Width</strong>\n' +
             '                            </figcaption>\n' +
             '                            <div class="chunk" hidden="hidden">\n' +
-            '                                <h2>Header #2</h2>\n' +
-            '                                <p>Description</p>\n' +
+            '                                <h2 contenteditable="true">{header}</h2>\n' +
+            '                                <p contenteditable="true">{description}</p>\n' +
             '                            </div>\n' +
             '                        </figure>\n' +
             '                        <figure class="fred--thumb">\n' +
@@ -32,9 +32,9 @@ export default class Widgets extends Sidebar {
             '                                <em>Content Left. Component Right.</em>\n' +
             '                            </figcaption>\n' +
             '                            <div class="chunk" hidden="hidden">\n' +
-            '                                <h3>Header #3</h3>\n' +
+            '                                <h3>Can\'t Edit THIS</h3>\n' +
             '                                <img src="http://via.placeholder.com/350x150" />\n' +
-            '                                <p>Description</p>\n' +
+            '                                <p contenteditable="true">Description</p>\n' +
             '                            </div>\n' +
             '                        </figure>\n' +
             '                        <figure class="fred--thumb">\n' +
@@ -43,7 +43,7 @@ export default class Widgets extends Sidebar {
             '                                <strong>Grid</strong>\n' +
             '                            </figcaption>\n' +
             '                            <div class="chunk" hidden="hidden">\n' +
-            '                                <p>Description Only</p>\n' +
+            '                                <p contenteditable="true">Description Only</p>\n' +
             '                            </div>\n' +
             '                        </figure>';
         
@@ -56,7 +56,10 @@ export default class Widgets extends Sidebar {
 
     afterExpand() {
         if (this.drake === null) {
-            this.drake = dragula([document.querySelector('.source'), document.querySelector('.content')], {
+            const containers = [...document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])')];
+            containers.unshift(document.querySelector('.source'));
+            
+            this.drake = dragula(containers, {
                 copy: function (el, source) {
                     return source === document.getElementsByClassName('source')[0]
                 },
@@ -64,7 +67,7 @@ export default class Widgets extends Sidebar {
                     return target !== document.getElementsByClassName('source')[0]
                 },
                 moves: function (el, source, handle, sibling) {
-                    if (source.id === 'content') {
+                    if ((source.dataset.fredDropzone !== undefined) && (source.dataset.fredDropzone !== '')) {
                         return handle.classList.contains('handle');
                     }
     
@@ -86,14 +89,25 @@ export default class Widgets extends Sidebar {
                     wrapper.appendChild(toolbar);
     
                     const content = document.createElement('div');
-                    content.setAttribute('contenteditable', true);
+                    
                     content.innerHTML = el.getElementsByClassName('chunk')[0].innerHTML;
+                    
+                    content.querySelectorAll('[contenteditable]').forEach(item => {
+                        item.innerHTML = item.innerHTML.replace(/\[\[\+[a-z]+\]\]/, 'Placeholder'); 
+                        
+                        item.addEventListener('input', e => {
+                            console.log(e.srcElement.innerHTML);
+                        })
+                    });
+                    
+                    /*
+                    // Prevent creating new paragraph on enter key press
                     content.addEventListener('keypress', e => {
                         if ((e.charCode === 13) && (e.shiftKey === false)) {
                             e.preventDefault();
                             return false;
                         }
-                    });
+                    });*/
     
                     wrapper.appendChild(content);
     
@@ -102,14 +116,17 @@ export default class Widgets extends Sidebar {
             });
 
             this.drake.on('drag', (el, source) => {
-                emitter.emit('fred-hide');
+                emitter.emit('fred-sidebar-hide');
             });
 
             this.drake.on('dragend', el => {
-                emitter.emit('fred-show');
+                emitter.emit('fred-sidebar-show');
             });
         } else {
-            this.drake.containers = [document.querySelector('.source'), document.querySelector('.content')];
+            const containers = [...document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])')];
+            containers.unshift(document.querySelector('.source'));
+            
+            this.drake.containers = containers;
         }
     }
 }

@@ -41,6 +41,7 @@
     "dist-web": "fred.min.js"
   },
   "dependencies": {
-    "dragula": "^3.7.2"
+    "dragula": "^3.7.2",
+    "promise-cancel": "^2.0.1"
   }
 }
