@@ -1,10 +1,10 @@
 export default class Topbar {
     constructor(wrapper) {
         wrapper.appendChild(this.buildTopBar());
-        
+
         return this;
     }
-    
+
     liWrapper(node) {
         const li = document.createElement('li');
         li.innerHTML = node.outerHTML;
@@ -20,10 +20,10 @@ export default class Topbar {
         links.classList.add('fred--topbar_links');
 
         const newPage = document.createElement('a');
-        newPage.innerHTML = 'New Page <i class="fa fa-angle-down"></i>';
+        newPage.innerHTML = 'New Page <i class="angle-down"></i>';
 
         const settings = document.createElement('a');
-        settings.innerHTML = 'Settings <i class="fa fa-angle-down"></i>';
+        settings.innerHTML = 'Settings <i class="angle-down"></i>';
 
         links.appendChild(this.liWrapper(newPage));
         links.appendChild(this.liWrapper(settings));
