@@ -16,3 +16,44 @@
   }
 
 }
+
+.fred--block{
+  overflow:hidden;
+  position: relative;
+  padding:2rem 1rem;
+  border-bottom: 1px dashed lighten($light-gray,5%);
+
+  &:nth-child(even){background: #f9f9f9;}
+
+  &:hover{
+    .fred--toolbar{display:block;}
+  }
+
+  .fred--toolbar{
+    display:none;
+    position: absolute;
+    top:0;
+    right:0;
+
+    button{
+      margin-right: 1px;
+      width:28px;
+      height:28px;
+      display: inline-block;
+      background-color: $light-gray;
+      opacity: .8;
+      transition: $timing;
+      &:hover{
+        background-color: $gray;
+        opacity: 1;
+      }
+    }
+  }
+
+  .fred--block_content{
+    h2{
+      padding-bottom: 1rem;
+    }
+  }
+
+}
