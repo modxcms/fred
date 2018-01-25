@@ -2,7 +2,6 @@ import Sidebar from '../Sidebar';
 
 export default class Resources extends Sidebar {
     static title = 'Resources';
-    static icon = 'file-o';
     static expandable = true;
 
     click() {

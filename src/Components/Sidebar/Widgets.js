@@ -4,7 +4,6 @@ import emitter from '../../EE';
 
 export default class Widgets extends Sidebar {
     static title = 'Widgets';
-    static icon = 'television';
     static expandable = true;
 
     init() {
@@ -53,6 +52,86 @@ export default class Widgets extends Sidebar {
             }, 500);
         })
     }
+    
+    wrapContent(el) {
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('fred--block');
+
+        const toolbar = document.createElement('div');
+        toolbar.classList.add('fred--toolbar');
+
+        const moveHandle = document.createElement('button');
+        moveHandle.classList.add('fred--move-icon', 'handle');
+
+        const duplicate = document.createElement('button');
+        duplicate.classList.add('fred--duplicate-icon');
+        duplicate.addEventListener('click', e => {
+            e.preventDefault();
+
+            const clone = this.wrapContent(wrapper.querySelector('.fred--block_content').cloneNode(true));
+
+            if (wrapper.nextSibling === null) {
+                wrapper.parentNode.appendChild(clone);
+            } else {
+                wrapper.parentNode.insertBefore(clone, wrapper.nextSibling);
+            }
+        });
+
+        /*
+        const moveDownHandle = document.createElement('button');
+        moveDownHandle.classList.add('move-down-icon');
+        const moveUpHandle = document.createElement('button');
+        moveUpHandle.classList.add('move-up-icon');
+        */
+
+        /*
+        const cogHandle = document.createElement('button');
+        cogHandle.classList.add('cog');
+        */
+
+        const trashHandle = document.createElement('button');
+        trashHandle.classList.add('fred--trash');
+        trashHandle.addEventListener('click', e => {
+            e.preventDefault();
+            wrapper.remove();
+        });
+
+        toolbar.appendChild(moveHandle);
+        // toolbar.appendChild(moveDownHandle);
+        // toolbar.appendChild(moveUpHandle);
+        // toolbar.appendChild(cogHandle);
+        toolbar.appendChild(duplicate);
+        toolbar.appendChild(trashHandle);
+
+        wrapper.appendChild(toolbar);
+
+        const content = document.createElement('div');
+        content.classList.add('fred--block_content');
+        content.dataset.fredId = el.dataset.fredId;
+
+        content.innerHTML = el.innerHTML;
+
+        /*
+        content.querySelectorAll('[contenteditable]').forEach(item => {
+
+            item.addEventListener('input', e => {
+                console.log(e.srcElement.innerHTML);
+            })
+        });
+*/
+        /*
+        // Prevent creating new paragraph on enter key press
+        content.addEventListener('keypress', e => {
+            if ((e.charCode === 13) && (e.shiftKey === false)) {
+                e.preventDefault();
+                return false;
+            }
+        });*/
+
+        wrapper.appendChild(content);
+
+        return wrapper;
+    }
 
     afterExpand() {
         if (this.drake === null) {
@@ -77,66 +156,7 @@ export default class Widgets extends Sidebar {
 
             this.drake.on('drop', (el, target, source, sibling) => {
                 if (source.classList.contains('source')) {
-                    const wrapper = document.createElement('div');
-                    wrapper.classList.add('fred--block');
-
-                    const toolbar = document.createElement('div');
-                    toolbar.classList.add('fred--toolbar');
-                    const moveHandle = document.createElement('button');
-                    moveHandle.classList.add('move-icon', 'handle');
-                    
-                    /*
-                    const moveDownHandle = document.createElement('button');
-                    moveDownHandle.classList.add('move-down-icon');
-                    const moveUpHandle = document.createElement('button');
-                    moveUpHandle.classList.add('move-up-icon');
-                    */
-                    
-                    /*
-                    const cogHandle = document.createElement('button');
-                    cogHandle.classList.add('cog');
-                    */
-                    
-                    const trashHandle = document.createElement('button');
-                    trashHandle.classList.add('trash');
-                    trashHandle.addEventListener('click', e => {
-                        e.preventDefault();
-                        wrapper.remove();
-                    });
-
-                    toolbar.appendChild(moveHandle);
-                    // toolbar.appendChild(moveDownHandle);
-                    // toolbar.appendChild(moveUpHandle);
-                    // toolbar.appendChild(cogHandle);
-                    toolbar.appendChild(trashHandle);
-
-                    wrapper.appendChild(toolbar);
-
-                    const content = document.createElement('div');
-                    content.classList.add('fred--block_content');
-
-                    content.innerHTML = el.getElementsByClassName('chunk')[0].innerHTML;
-
-                    /*
-                    content.querySelectorAll('[contenteditable]').forEach(item => {
-
-                        item.addEventListener('input', e => {
-                            console.log(e.srcElement.innerHTML);
-                        })
-                    });
-*/
-                    /*
-                    // Prevent creating new paragraph on enter key press
-                    content.addEventListener('keypress', e => {
-                        if ((e.charCode === 13) && (e.shiftKey === false)) {
-                            e.preventDefault();
-                            return false;
-                        }
-                    });*/
-
-                    wrapper.appendChild(content);
-
-                    el.parentNode.replaceChild(wrapper, el);
+                    el.parentNode.replaceChild(this.wrapContent(el.getElementsByClassName('chunk')[0]), el);
                 }
             });
 

@@ -32,20 +32,58 @@ export default class Fred {
     hideFred() {
         this.wrapper.setAttribute('hidden', 'hidden');
     }
+    
+    save() {
+        const content = {};
+        
+        for (let i = 0; i < this.dropzones.length; i++) {
+            if (!content[this.dropzones[i].dataset.fredDropzone]) {
+                content[this.dropzones[i].dataset.fredDropzone] = [];
+            }
+
+            this.dropzones[i].querySelectorAll('[data-fred-id]').forEach(item => {
+                const values = {};
+                
+                item.querySelectorAll('[contenteditable]').forEach(field => {
+                    values[field.dataset.fredName] = field.innerHTML;    
+                });
+
+                content[this.dropzones[i].dataset.fredDropzone].push({
+                    widget: item.dataset.fredId,
+                    values
+                });
+            })
+        }
+
+        localStorage.setItem('fred-content', JSON.stringify(content));
+        console.log(content);
+    }
+    
+    loadContent() {
+        let content = localStorage.getItem('fred-content');
+        if (content) {
+            try {
+                content = JSON.parse(content);
+                console.log(content);
+            } catch (err) {
+                console.error('Failed to parse stored state.');
+            } 
+        }
+    }
 
     init() {
         console.log('Hello from Fred!');
 
-        const dropzones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
+        this.dropzones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
         let registeredDropzones = [];
 
-        for (let zoneIndex = 0; zoneIndex < dropzones.length; zoneIndex++) {
-            if (registeredDropzones.indexOf(dropzones[zoneIndex].dataset.fredDropzone) != -1) {
-                console.error('There are several dropzones with same name: ' + dropzones[zoneIndex].dataset.fredDropzone + '. The name of each dropzone has to be unique.');
+        for (let zoneIndex = 0; zoneIndex < this.dropzones.length; zoneIndex++) {
+            if (registeredDropzones.indexOf(this.dropzones[zoneIndex].dataset.fredDropzone) != -1) {
+                console.error('There are several dropzones with same name: ' + this.dropzones[zoneIndex].dataset.fredDropzone + '. The name of each dropzone has to be unique.');
                 return false;
             }
 
-            registeredDropzones.push(dropzones[zoneIndex].dataset.fredDropzone);
+            registeredDropzones.push(this.dropzones[zoneIndex].dataset.fredDropzone);
         }
 
         emitter.on('fred-hide', () => {this.hideFred();});
@@ -53,5 +91,7 @@ export default class Fred {
         
         this.sidebar = new Sidebar();
         this.render();
+
+        this.loadContent();
     }
 }

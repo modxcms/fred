@@ -7,13 +7,13 @@ export default class Sidebar {
     constructor() {
         this.lastRequest = null;
 
-        emitter.on('fred-sidebar-expand', (cmp, title, icon, data) => {
-            this.showSidebar2('LOADING', 'LOADING');
+        emitter.on('fred-sidebar-expand', (cmp, title, data) => {
+            this.showSidebar2('<span class="fred--loading">LOADING</span>', '<span class="fred--loading"></span>');
 
             this.lastRequest = promiseCancel(Promise.resolve(data));
             this.lastRequest.promise.then(content => {
                 this.lastRequest = null;
-                this.showSidebar2('<i class="fa fa-' + icon + '"></i> ' + title, content);
+                this.showSidebar2(title, content);
                 cmp.afterExpand();
             }).catch(err => {
                 this.lastRequest = null;
@@ -133,7 +133,7 @@ export default class Sidebar {
     buildOpenButton() {
         this.open = document.createElement('button');
         this.open.classList.add('fred--open');
-        this.open.innerHTML = '<i class="angle-right"></i> <i class="angle-right"></i>';
+        this.open.innerHTML = '<i class="fred--angle-right"></i> <i class="fred--angle-right"></i>';
 
         this.open.addEventListener('click', e => {
             e.preventDefault();
