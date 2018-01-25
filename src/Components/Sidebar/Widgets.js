@@ -20,9 +20,9 @@ export default class Widgets extends Sidebar {
             '                            <figcaption>\n' +
             '                                <strong>Full Width</strong>\n' +
             '                            </figcaption>\n' +
-            '                            <div class="chunk" hidden="hidden">\n' +
-            '                                <h2 contenteditable="true">{header}</h2>\n' +
-            '                                <p contenteditable="true">{description}</p>\n' +
+            '                            <div class="chunk" data-fred-id="1" hidden="hidden">\n' +
+            '                                <h2 contenteditable="true" data-fred-name="header">Header 2</h2>\n' +
+            '                                <p contenteditable="true" data-fred-name="description">Description</p>\n' +
             '                            </div>\n' +
             '                        </figure>\n' +
             '                        <figure class="fred--thumb">\n' +
@@ -31,10 +31,10 @@ export default class Widgets extends Sidebar {
             '                                <strong>2 Column</strong>\n' +
             '                                <em>Content Left. Component Right.</em>\n' +
             '                            </figcaption>\n' +
-            '                            <div class="chunk" hidden="hidden">\n' +
+            '                            <div class="chunk"  data-fred-id="2" hidden="hidden">\n' +
             '                                <h3>Can\'t Edit THIS</h3>\n' +
             '                                <img src="http://via.placeholder.com/350x150" />\n' +
-            '                                <p contenteditable="true">Description</p>\n' +
+            '                                <p contenteditable="true" data-fred-name="description">Description</p>\n' +
             '                            </div>\n' +
             '                        </figure>\n' +
             '                        <figure class="fred--thumb">\n' +
@@ -42,8 +42,8 @@ export default class Widgets extends Sidebar {
             '                            <figcaption>\n' +
             '                                <strong>Grid</strong>\n' +
             '                            </figcaption>\n' +
-            '                            <div class="chunk" hidden="hidden">\n' +
-            '                                <p contenteditable="true">Description Only</p>\n' +
+            '                            <div class="chunk" data-fred-id="3" hidden="hidden">\n' +
+            '                                <p contenteditable="true" data-fred-name="description">Description Only</p>\n' +
             '                            </div>\n' +
             '                        </figure>';
 
@@ -83,20 +83,31 @@ export default class Widgets extends Sidebar {
                     const toolbar = document.createElement('div');
                     toolbar.classList.add('fred--toolbar');
                     const moveHandle = document.createElement('button');
-                    moveHandle.classList.add('move-icon');
+                    moveHandle.classList.add('move-icon', 'handle');
+                    
+                    /*
                     const moveDownHandle = document.createElement('button');
                     moveDownHandle.classList.add('move-down-icon');
                     const moveUpHandle = document.createElement('button');
                     moveUpHandle.classList.add('move-up-icon');
+                    */
+                    
+                    /*
                     const cogHandle = document.createElement('button');
                     cogHandle.classList.add('cog');
+                    */
+                    
                     const trashHandle = document.createElement('button');
                     trashHandle.classList.add('trash');
+                    trashHandle.addEventListener('click', e => {
+                        e.preventDefault();
+                        wrapper.remove();
+                    });
 
                     toolbar.appendChild(moveHandle);
-                    toolbar.appendChild(moveDownHandle);
-                    toolbar.appendChild(moveUpHandle);
-                    toolbar.appendChild(cogHandle);
+                    // toolbar.appendChild(moveDownHandle);
+                    // toolbar.appendChild(moveUpHandle);
+                    // toolbar.appendChild(cogHandle);
                     toolbar.appendChild(trashHandle);
 
                     wrapper.appendChild(toolbar);
@@ -106,14 +117,14 @@ export default class Widgets extends Sidebar {
 
                     content.innerHTML = el.getElementsByClassName('chunk')[0].innerHTML;
 
+                    /*
                     content.querySelectorAll('[contenteditable]').forEach(item => {
-                        item.innerHTML = item.innerHTML.replace(/\[\[\+[a-z]+\]\]/, 'Placeholder');
 
                         item.addEventListener('input', e => {
                             console.log(e.srcElement.innerHTML);
                         })
                     });
-
+*/
                     /*
                     // Prevent creating new paragraph on enter key press
                     content.addEventListener('keypress', e => {
