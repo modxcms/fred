@@ -23,7 +23,7 @@ module.exports = function getConfig(options) {
     // for the web
     config = assign(getBaseConfig(isProd), {
         output: {
-            path: path.join(__dirname, 'dist'),
+            path: path.join(__dirname, './assets/components/fred/web'),
             filename: outputName,
             library: libraryName,
             libraryTarget: 'umd',
@@ -45,7 +45,7 @@ function getBaseConfig(isProd) {
 
     // get library details from JSON config
     var libraryDesc = require('./package.json').library;
-    var libraryEntryPoint = path.join('src', libraryDesc.entry);
+    var libraryEntryPoint = path.join('./_build/assets/js', libraryDesc.entry);
 
     // generate webpack base config
     return {

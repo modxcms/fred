@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="fred" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="fred" version="0.1">
+</model>

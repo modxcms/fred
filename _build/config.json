@@ -1,0 +1,20 @@
+{
+    "name": "Fred",
+    "lowCaseName": "fred",
+    "description": "Frontend Editor",
+    "author": "John Peca",
+    "version": "0.1.0",
+    "package":{
+        "menus": [],
+        "elements": {
+            "snippets": [{
+                "name": "Fred",
+                "file": "Fred.php"
+            }]
+        },
+        "systemSettings": []
+    }
+    ,"database": {
+        "tables": []
+    }
+}

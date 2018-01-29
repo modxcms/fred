@@ -15,8 +15,8 @@ import webpackConfig from "./webpack.config.js";
 import sass from 'gulp-ruby-sass';
 
 const $ = gulpLoadPlugins();
-const libFolder = 'lib';
-const sources = './src/**/*.js';
+const libFolder = './_build/assets/lib';
+const sources = './_build/assets/js/**/*.js';
 
 gulp.task('default', ['build-web']);
 
@@ -26,17 +26,17 @@ gulp.task('build-web', ['webpack:build-web', 'css']);
 // Build for web + watch
 gulp.task('build-web-dev', ['webpack:build-web-dev', 'css'], () => {
     gulp.watch([sources], ['webpack:build-web-dev']);
-    gulp.watch(['./sass/**/*.scss'], ['css']);
+    gulp.watch(['./_build/assets/sass/**/*.scss'], ['css']);
 });
 
 gulp.task('css', function() {
-    return sass('./sass/fred.scss', {
+    return sass('./_build/assets/sass/fred.scss', {
         style: 'compressed',
         loadPath: [
-            './sass'
+            './_build/assets/sass'
         ]
     })
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./assets/components/fred/web'));
 });
 
 // Run Babel only
