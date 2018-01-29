@@ -15,7 +15,7 @@ export default class Widgets extends Sidebar {
         content.classList.add('fred--thumbs', 'source');
 
         content.innerHTML = '<figure class="fred--thumb">\n' +
-            '                            <div><img src="layouts/full-width.svg" alt=""></div>\n' +
+            '                            <div><img src="http://via.placeholder.com/150x150" alt=""></div>\n' +
             '                            <figcaption>\n' +
             '                                <strong>Full Width</strong>\n' +
             '                            </figcaption>\n' +
@@ -25,7 +25,7 @@ export default class Widgets extends Sidebar {
             '                            </div>\n' +
             '                        </figure>\n' +
             '                        <figure class="fred--thumb">\n' +
-            '                            <div><img src="layouts/right-panel-layout.svg" alt=""></div>\n' +
+            '                            <div><img src="http://via.placeholder.com/150x150" alt=""></div>\n' +
             '                            <figcaption>\n' +
             '                                <strong>2 Column</strong>\n' +
             '                                <em>Content Left. Component Right.</em>\n' +
@@ -37,7 +37,7 @@ export default class Widgets extends Sidebar {
             '                            </div>\n' +
             '                        </figure>\n' +
             '                        <figure class="fred--thumb">\n' +
-            '                            <div><img src="layouts/four-grid.svg" alt=""></div>\n' +
+            '                            <div><img src="http://via.placeholder.com/150x150" alt=""></div>\n' +
             '                            <figcaption>\n' +
             '                                <strong>Grid</strong>\n' +
             '                            </figcaption>\n' +
