@@ -20,10 +20,10 @@ export default class Topbar {
         links.classList.add('fred--topbar_links');
 
         const newPage = document.createElement('a');
-        newPage.innerHTML = 'New Page <i class="angle-down"></i>';
+        newPage.innerHTML = 'New Page <i class="fred--angle-down"></i>';
 
         const settings = document.createElement('a');
-        settings.innerHTML = 'Settings <i class="angle-down"></i>';
+        settings.innerHTML = 'Settings <i class="fred--angle-down"></i>';
 
         links.appendChild(this.liWrapper(newPage));
         links.appendChild(this.liWrapper(settings));
