@@ -2,7 +2,7 @@
   "name": "fred",
   "version": "1.0.3",
   "description": "ES6 Universal Library Starter",
-  "main": "./index.js",
+  "main": "./_build/assets/index.js",
   "scripts": {
     "build": "gulp build-web",
     "build-dev": "gulp build-web-dev"
