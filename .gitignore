@@ -29,3 +29,5 @@ Thumbs.db
 node_modules
 npm-debug.log
 .sass-cache
+
+core/components/fred/model/vendor
