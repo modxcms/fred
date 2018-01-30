@@ -207,57 +207,6 @@ $mpGutter : 1.2%;
 
 }
 
-.fred--thumbs{
-    //IE hack
-    display: -ms-flexbox;
-    -ms-flex-wrap: wrap;
-    -ms-flex-direction: row;
-
-    //properties
-    display:flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .fred--thumb{
-        @include grid1;
-    }
-
-    .fred--thumb-2{
-        @include grid2;
-    }
-
-    .fred--thumb-3{
-        @include grid3;
-    }
-
-    .fred--thumb,.fred--thumb-2,.fred--thumb-3{
-        background-color: lighten($light-gray,2%);
-        border-radius: $radius;
-        //make them equal heights and card caption is at bottom
-        display:flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: flex-start;
-
-        img{
-            min-width:100px;
-        }
-
-        figcaption{
-            padding: $gridGutter;
-            strong{
-                display:block;
-                font-size:1.15rem;
-            }
-            font-size: .95rem;
-        }
-
-        @include gridReset;
-
-    }
-}
-
 .fred--columns{
     //IE hack
     display: -ms-flexbox;

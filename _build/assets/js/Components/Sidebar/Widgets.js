@@ -17,23 +17,34 @@ export default class Widgets extends Sidebar {
         content.innerHTML = '<figure class="fred--thumb">\n' +
             '                            <div><img src="http://via.placeholder.com/150x150" alt=""></div>\n' +
             '                            <figcaption>\n' +
-            '                                <strong>Full Width</strong>\n' +
+            '                                <strong>Container</strong>\n' +
             '                            </figcaption>\n' +
             '                            <div class="chunk" data-fred-id="1" hidden="hidden">\n' +
+            '                              <div class="container">\n' +
             '                                <h2 contenteditable="true" data-fred-name="header">Header 2</h2>\n' +
             '                                <p contenteditable="true" data-fred-name="description">Description</p>\n' +
+            '                              </div>\n' +
             '                            </div>\n' +
             '                        </figure>\n' +
             '                        <figure class="fred--thumb">\n' +
-            '                            <div><img src="http://via.placeholder.com/150x150" alt=""></div>\n' +
+            '                            <div><img src="layouts/two-column.jpeg" alt=""></div>\n' +
             '                            <figcaption>\n' +
             '                                <strong>2 Column</strong>\n' +
             '                                <em>Content Left. Component Right.</em>\n' +
             '                            </figcaption>\n' +
             '                            <div class="chunk"  data-fred-id="2" hidden="hidden">\n' +
+            '                              <div class="container">\n' +
+            '                              <div class="row">\n' +
+            '                                <div class="col-6">\n' +
             '                                <h3>Can\'t Edit THIS</h3>\n' +
             '                                <img src="http://via.placeholder.com/350x150" />\n' +
             '                                <p contenteditable="true" data-fred-name="description">Description</p>\n' +
+            '                                </div>\n' +
+            '                                <div class="col-6">\n' +
+            '                                <p contenteditable="true" data-fred-name="description">Description</p>\n' +
+            '                                </div>\n' +
+            '                              </div>\n' +
+            '                              </div>\n' +
             '                            </div>\n' +
             '                        </figure>\n' +
             '                        <figure class="fred--thumb">\n' +
@@ -52,7 +63,7 @@ export default class Widgets extends Sidebar {
             }, 500);
         })
     }
-    
+
     wrapContent(el) {
         const wrapper = document.createElement('div');
         wrapper.classList.add('fred--block');
