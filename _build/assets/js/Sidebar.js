@@ -84,8 +84,8 @@ export default class Sidebar {
         list.setAttribute('tabindex', '0');
         list.setAttribute('role', 'tablist');
 
-        list.appendChild(new ResourcesComponent());
-        list.appendChild(new WidgetsComponent());
+        list.appendChild(new ResourcesComponent(this.config));
+        list.appendChild(new WidgetsComponent(this.config));
 
         this.sidebar.appendChild(this.close);
         this.sidebar.appendChild(header);
