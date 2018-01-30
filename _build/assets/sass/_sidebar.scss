@@ -35,7 +35,10 @@
     color: $white;
     line-height: 2rem;
     font-size: 1.6rem;
-    margin: .25rem 0;
+    margin: .25rem 0
+    padding-bottom: 0 !important;
+    border-bottom: 0 !important;
+    font-weight: normal;
   }
 
 }
@@ -59,8 +62,11 @@
     background-color: darken($black,1%);
     border-bottom: 1px solid #000;
     color:$white;
-    font-size: 1rem;
-    padding:.7rem .5rem;
+    font-size: 1rem !important;
+    padding:.7rem .5rem !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    margin-top: 0 !important;
     cursor: pointer;
 
     span{
