@@ -27,7 +27,7 @@ export default class Widgets extends Sidebar {
             '                            </div>\n' +
             '                        </figure>\n' +
             '                        <figure class="fred--thumb">\n' +
-            '                            <div><img src="layouts/two-column.jpeg" alt=""></div>\n' +
+            '                            <div><img src="' + (this.config.assetsUrl || '') + 'layouts/two-column.jpeg" alt=""></div>\n' +
             '                            <figcaption>\n' +
             '                                <strong>2 Column</strong>\n' +
             '                                <em>Content Left. Component Right.</em>\n' +

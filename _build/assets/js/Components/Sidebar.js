@@ -4,7 +4,9 @@ export default class Sidebar {
     static title = 'TITLE NOT SET';
     static expandable = false;
 
-    constructor() {
+    constructor(config = {}) {
+        this.config = config || {};
+        
         const render = (text, expandable = false) => {
             const dt = document.createElement('dt');
             dt.setAttribute('role', 'tab');
