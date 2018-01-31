@@ -1,6 +1,7 @@
 import Sidebar from '../Sidebar';
 import dragula from 'dragula';
 import emitter from '../../EE';
+import fetch from 'isomorphic-fetch';
 
 export default class Widgets extends Sidebar {
     static title = 'Widgets';
@@ -8,60 +9,34 @@ export default class Widgets extends Sidebar {
 
     init() {
         this.drake = null;
+        this.content = null;
     }
 
     click() {
-        const content = document.createElement('div');
-        content.classList.add('fred--thumbs', 'source');
-
-        content.innerHTML = '<figure class="fred--thumb">\n' +
-            '                            <div><img src="http://via.placeholder.com/150x150" alt=""></div>\n' +
-            '                            <figcaption>\n' +
-            '                                <strong>Container</strong>\n' +
-            '                            </figcaption>\n' +
-            '                            <div class="chunk" data-fred-id="1" hidden="hidden">\n' +
-            '                              <div class="container">\n' +
-            '                                <h2 contenteditable="true" data-fred-name="header">Header 2</h2>\n' +
-            '                                <p contenteditable="true" data-fred-name="description">Description</p>\n' +
-            '                              </div>\n' +
-            '                            </div>\n' +
-            '                        </figure>\n' +
-            '                        <figure class="fred--thumb">\n' +
-            '                            <div><img src="' + (this.config.assetsUrl || '') + 'layouts/two-column.jpeg" alt=""></div>\n' +
-            '                            <figcaption>\n' +
-            '                                <strong>2 Column</strong>\n' +
-            '                                <em>Content Left. Component Right.</em>\n' +
-            '                            </figcaption>\n' +
-            '                            <div class="chunk"  data-fred-id="2" hidden="hidden">\n' +
-            '                              <div class="container">\n' +
-            '                              <div class="row">\n' +
-            '                                <div class="col-6">\n' +
-            '                                <h3>Can\'t Edit THIS</h3>\n' +
-            '                                <img src="http://via.placeholder.com/350x150" />\n' +
-            '                                <p contenteditable="true" data-fred-name="description">Description</p>\n' +
-            '                                </div>\n' +
-            '                                <div class="col-6">\n' +
-            '                                <p contenteditable="true" data-fred-name="description">Description</p>\n' +
-            '                                </div>\n' +
-            '                              </div>\n' +
-            '                              </div>\n' +
-            '                            </div>\n' +
-            '                        </figure>\n' +
-            '                        <figure class="fred--thumb">\n' +
-            '                            <div><img src="http://via.placeholder.com/150x150" alt=""></div>\n' +
-            '                            <figcaption>\n' +
-            '                                <strong>Grid</strong>\n' +
-            '                            </figcaption>\n' +
-            '                            <div class="chunk" data-fred-id="3" hidden="hidden">\n' +
-            '                                <p contenteditable="true" data-fred-name="description">Description Only</p>\n' +
-            '                            </div>\n' +
-            '                        </figure>';
-
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(content.outerHTML);
-            }, 500);
-        })
+        if (this.content !== null) {
+            return this.content;
+        }
+        
+        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-widgets`)
+            .then(response => {
+                return response.json();
+            })
+            .then(response => {
+                const content = document.createElement('div');
+                content.classList.add('fred--thumbs', 'source');
+                
+                response.data.widgets.forEach(widget => {
+                   content.innerHTML += this.widgetWrapper(widget.id, widget.title, widget.description, widget.image, widget.content); 
+                });
+                
+                this.content = content.outerHTML;
+                
+                return this.content;
+            });
+    }
+    
+    widgetWrapper(id, title, description, image, content) {
+        return `<figure class="fred--thumb"><div><img src="${image}" alt=""></div><figcaption><strong>${title}</strong><em>${description}</em></figcaption><div class="chunk" data-fred-id="${id}" hidden="hidden">${content}</div></figure>`;
     }
 
     wrapContent(el) {

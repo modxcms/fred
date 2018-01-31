@@ -38,6 +38,7 @@ class Fred
 
         $this->modx->addPackage('fred', $this->getOption('modelPath'));
         $this->modx->lexicon->load('fred:default');
+        $this->autoload();
     }
 
     /**
@@ -62,5 +63,10 @@ class Fred
             }
         }
         return $option;
+    }
+
+    protected function autoload()
+    {
+        require_once $this->getOption('modelPath') . 'vendor/autoload.php';
     }
 }
