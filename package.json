@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "dragula": "^3.7.2",
+    "isomorphic-fetch": "^2.2.1",
     "promise-cancel": "^2.0.1"
   }
 }

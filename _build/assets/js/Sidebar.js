@@ -32,6 +32,7 @@ export default class Sidebar {
         });
 
         emitter.on('fred-sidebar-show', () => {
+            console.log('show sidebar');
             this.showSidebar();
         });
     }
