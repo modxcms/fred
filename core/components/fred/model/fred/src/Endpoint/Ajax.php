@@ -16,7 +16,10 @@ class Ajax extends Endpoint
         $action = implode('', $action);
 
         $className = "\\Fred\\Endpoint\\Ajax\\{$action}";
-        if (class_exists($className) !== true) return;
+        if (class_exists($className) !== true) {
+            http_response_code(404);
+            return;
+        }
 
         /** @var Endpoint $ajaxEndpoint */
         $ajaxEndpoint = new $className($this->fred);

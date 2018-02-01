@@ -60,15 +60,12 @@ export default class Fred {
             })
         }
 
-        fetch(`${this.config.assetsUrl}endpoints/ajax.php`, {
+        fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
             method: "post",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                action: "save-content",
-                data
-            })
+            body: JSON.stringify(data)
         });
         
         console.log(data);
