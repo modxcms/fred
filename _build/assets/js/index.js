@@ -1,6 +1,7 @@
 import emitter from './EE';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
+import fetch from 'isomorphic-fetch';
 
 export default class Fred {
     constructor(config = {}) {
@@ -38,11 +39,11 @@ export default class Fred {
     }
     
     save() {
-        const content = {};
+        const data = {};
         
         for (let i = 0; i < this.dropzones.length; i++) {
-            if (!content[this.dropzones[i].dataset.fredDropzone]) {
-                content[this.dropzones[i].dataset.fredDropzone] = [];
+            if (!data[this.dropzones[i].dataset.fredDropzone]) {
+                data[this.dropzones[i].dataset.fredDropzone] = [];
             }
 
             this.dropzones[i].querySelectorAll('[data-fred-id]').forEach(item => {
@@ -52,15 +53,25 @@ export default class Fred {
                     values[field.dataset.fredName] = field.innerHTML;    
                 });
 
-                content[this.dropzones[i].dataset.fredDropzone].push({
+                data[this.dropzones[i].dataset.fredDropzone].push({
                     widget: item.dataset.fredId,
                     values
                 });
             })
         }
 
-        localStorage.setItem('fred-content', JSON.stringify(content));
-        console.log(content);
+        fetch(`${this.config.assetsUrl}endpoints/ajax.php`, {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: "save-content",
+                data
+            })
+        });
+        
+        console.log(data);
     }
     
     loadContent() {
@@ -92,6 +103,7 @@ export default class Fred {
 
         emitter.on('fred-hide', () => {this.hideFred();});
         emitter.on('fred-show', () => {this.showFred();});
+        emitter.on('fred-save', () => {this.save();});
         
         this.sidebar = new Sidebar(this.config);
         this.render();

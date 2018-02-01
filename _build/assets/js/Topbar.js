@@ -1,3 +1,5 @@
+import emitter from './EE';
+
 export default class Topbar {
     constructor(wrapper) {
         wrapper.appendChild(this.buildTopBar());
@@ -34,7 +36,16 @@ export default class Topbar {
         const logout = document.createElement('button');
         logout.classList.add('fred--btn-small');
         logout.innerText = 'Logout';
+        
+        const save = document.createElement('button');
+        save.classList.add('fred--btn-small');
+        save.innerText = 'Save';
+        save.addEventListener('click', e => {
+            e.preventDefault();
+            emitter.emit('fred-save');
+        });
 
+        buttons.appendChild(save);
         buttons.appendChild(logout);
 
         topBar.appendChild(links);
