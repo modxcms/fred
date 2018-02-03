@@ -21,6 +21,9 @@ $modx->regClientCSS($fred->getOption('webAssetsUrl') . 'fred.css');
 $modx->regClientStartupHTMLBlock('
 <script>
     var fred = new Fred({
-        assetsUrl: "' .$fred->getOption('webAssetsUrl'). '"
+        assetsUrl: "' .$fred->getOption('webAssetsUrl'). '",
+        resource: {
+            "id": ' . $modx->resource->id . '
+        }
     });
 </script>');
