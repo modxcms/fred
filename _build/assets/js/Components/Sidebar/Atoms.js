@@ -3,8 +3,8 @@ import dragula from 'dragula';
 import emitter from '../../EE';
 import fetch from 'isomorphic-fetch';
 
-export default class Widgets extends Sidebar {
-    static title = 'Widgets';
+export default class Atoms extends Sidebar {
+    static title = 'Atoms';
     static expandable = true;
 
     init() {
@@ -17,7 +17,7 @@ export default class Widgets extends Sidebar {
             return this.content;
         }
         
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-widgets`)
+        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-atoms`)
             .then(response => {
                 return response.json();
             })
