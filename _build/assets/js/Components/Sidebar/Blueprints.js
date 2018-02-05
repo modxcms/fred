@@ -3,15 +3,15 @@ import drake from '../../drake';
 import emitter from '../../EE';
 import fetch from 'isomorphic-fetch';
 
-export default class Atoms extends Sidebar {
-    static title = 'Atoms';
+export default class Blueprints extends Sidebar {
+    static title = 'Blueprints';
     static expandable = true;
 
     init() {
         this.content = null;
-
+        
         emitter.on('fred-dragula-drop', (el, target, source, sibling) => {
-            if (source.classList.contains('atoms-source')) {
+            if (source.classList.contains('blueprints-source')) {
                 el.parentNode.replaceChild(this.wrapContent(el.getElementsByClassName('chunk')[0]), el);
             }
         });
@@ -22,16 +22,16 @@ export default class Atoms extends Sidebar {
             return this.content;
         }
         
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-atoms`)
+        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-blueprints`)
             .then(response => {
                 return response.json();
             })
             .then(response => {
                 const content = document.createElement('div');
-                content.classList.add('fred--thumbs', 'source', 'atoms-source');
+                content.classList.add('fred--thumbs', 'source', 'blueprints-source');
                 
-                response.data.atoms.forEach(atom => {
-                   content.innerHTML += this.atomWrapper(atom.id, atom.title, atom.description, atom.image, atom.content); 
+                response.data.blueprints.forEach(blueprint => {
+                   content.innerHTML += this.blueprintWrapper(blueprint.id, blueprint.title, blueprint.description, blueprint.image, blueprint.content); 
                 });
                 
                 this.content = content.outerHTML;
@@ -40,8 +40,8 @@ export default class Atoms extends Sidebar {
             });
     }
 
-    atomWrapper(id, title, description, image, content) {
-        return `<figure class="fred--thumb"><div><img src="${image}" alt=""></div><figcaption><strong>${title}</strong><em>${description}</em></figcaption><div class="chunk" data-fred-id="${id}" hidden="hidden">${content}</div></figure>`;
+    blueprintWrapper(id, title, description, image, content) {
+        return `<figure class="fred--thumb"><div><img src="${image}" alt=""></div><figcaption><strong>${title}</strong><em>${description}</em></figcaption><div class="chunk" data-fred-blueprint-id="${id}" hidden="hidden">${content}</div></figure>`;
     }
 
     wrapContent(el) {
@@ -98,7 +98,7 @@ export default class Atoms extends Sidebar {
 
         const content = document.createElement('div');
         content.classList.add('fred--block_content');
-        content.dataset.fredId = el.dataset.fredId;
+        content.dataset.fredBlueprintId = el.dataset.fredBlueprintId;
 
         content.innerHTML = el.innerHTML;
 
