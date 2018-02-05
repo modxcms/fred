@@ -2,11 +2,13 @@ import emitter from './EE';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import fetch from 'isomorphic-fetch';
+import drake from './drake';
 
 export default class Fred {
     constructor(config = {}) {
         this.config = config || {};
-        
+        this.drake = null;
+
         document.addEventListener("DOMContentLoaded", () => {
             this.init();
         });
@@ -37,10 +39,10 @@ export default class Fred {
     hideFred() {
         this.wrapper.setAttribute('hidden', 'hidden');
     }
-    
+
     save() {
         const data = {};
-        
+
         for (let i = 0; i < this.dropzones.length; i++) {
             if (!data[this.dropzones[i].dataset.fredDropzone]) {
                 data[this.dropzones[i].dataset.fredDropzone] = [];
@@ -48,9 +50,9 @@ export default class Fred {
 
             this.dropzones[i].querySelectorAll('[data-fred-id]').forEach(item => {
                 const values = {};
-                
+
                 item.querySelectorAll('[contenteditable]').forEach(field => {
-                    values[field.dataset.fredName] = field.innerHTML;    
+                    values[field.dataset.fredName] = field.innerHTML;
                 });
 
                 data[this.dropzones[i].dataset.fredDropzone].push({
@@ -70,10 +72,10 @@ export default class Fred {
                 data
             })
         });
-        
+
         console.log(data);
     }
-    
+
     loadContent() {
         let content = localStorage.getItem('fred-content');
         if (content) {
@@ -82,7 +84,7 @@ export default class Fred {
                 console.log(content);
             } catch (err) {
                 console.error('Failed to parse stored state.');
-            } 
+            }
         }
     }
 
@@ -101,13 +103,21 @@ export default class Fred {
             registeredDropzones.push(this.dropzones[zoneIndex].dataset.fredDropzone);
         }
 
-        emitter.on('fred-hide', () => {this.hideFred();});
-        emitter.on('fred-show', () => {this.showFred();});
-        emitter.on('fred-save', () => {this.save();});
-        
+        emitter.on('fred-hide', () => {
+            this.hideFred();
+        });
+        emitter.on('fred-show', () => {
+            this.showFred();
+        });
+        emitter.on('fred-save', () => {
+            this.save();
+        });
+
         this.sidebar = new Sidebar(this.config);
         this.render();
-
+        
+        drake.initDrake();
+        
         this.loadContent();
     }
 }

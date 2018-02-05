@@ -23,9 +23,16 @@ class GetAtoms extends Endpoint
                 "description" => "",
                 "image" => "http://via.placeholder.com/300x70",
                 "content" => "<p contenteditable=\"true\" data-fred-name=\"description\">Description Only</p>"
+            ],
+            [
+                "id" => 2,
+                "title" => "Image",
+                "description" => "",
+                "image" => "http://via.placeholder.com/150x150",
+                "content" => "<img src='http://via.placeholder.com/150x150'>"
             ]
         ];
         
-        return $this->data(['widgets' => $widgets]);
+        return $this->data(['atoms' => $widgets]);
     }
 }

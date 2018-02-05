@@ -1,6 +1,7 @@
 import emitter from './EE';
 import ResourcesComponent from './Components/Sidebar/Resources';
 import AtomsComponent from './Components/Sidebar/Atoms';
+import BlueprintsComponent from './Components/Sidebar/Blueprints';
 import promiseCancel from 'promise-cancel';
 
 export default class Sidebar {
@@ -19,6 +20,8 @@ export default class Sidebar {
             }).catch(err => {
                 this.lastRequest = null;
 
+                console.log(err);
+                
                 if (err.type === 'cancel') {
                     return;
                 }
@@ -85,6 +88,7 @@ export default class Sidebar {
         list.setAttribute('role', 'tablist');
 
         list.appendChild(new ResourcesComponent(this.config));
+        list.appendChild(new BlueprintsComponent(this.config));
         list.appendChild(new AtomsComponent(this.config));
 
         this.sidebar.appendChild(this.close);
