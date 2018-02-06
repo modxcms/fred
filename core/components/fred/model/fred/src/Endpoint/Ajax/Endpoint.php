@@ -8,7 +8,13 @@ abstract class Endpoint
 
     /** @var \Fred */
     protected $fred;
-    
+
+    /** @var string */
+    protected $method;
+
+    /** @var array */
+    protected $body;
+
     /** @var array */
     protected $allowedMethod = ['POST', 'OPTIONS'];
 
@@ -30,9 +36,13 @@ abstract class Endpoint
             return $checked;
         }
 
+        if ($this->method === 'POST') {
+            $this->body = json_decode(file_get_contents('php://input'), true);
+        }
+
         return $this->process();
     }
-    
+
     /**
      * @return string
      */
@@ -45,7 +55,7 @@ abstract class Endpoint
     protected function failure($message)
     {
         http_response_code(400);
-        
+
         return json_encode([
             'message' => $message
         ]);
@@ -58,12 +68,12 @@ abstract class Endpoint
     protected function success($message = '')
     {
         http_response_code(200);
-        
+
         return json_encode([
             'message' => $message
         ]);
     }
-    
+
     /**
      * @param array $data
      * @param array $meta
@@ -72,17 +82,17 @@ abstract class Endpoint
     protected function data($data, $meta = [])
     {
         http_response_code(200);
-        
+
         $meta['data'] = $data;
-        
+
         return json_encode($meta);
     }
-    
+
     protected function checkMethod()
     {
-        $method = strtoupper($_SERVER['REQUEST_METHOD']);
-        
-        if (in_array($method, $this->allowedMethod)) return true;
+        $this->method = strtoupper($_SERVER['REQUEST_METHOD']);
+
+        if (in_array($this->method, $this->allowedMethod)) return true;
 
         http_response_code(405);
         return '{}';

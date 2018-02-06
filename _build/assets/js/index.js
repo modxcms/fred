@@ -64,6 +64,7 @@ export default class Fred {
 
         fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
             method: "post",
+            credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -71,6 +72,8 @@ export default class Fred {
                 id: this.config.resource.id,
                 data
             })
+        }).then(response => {
+            return response.json();
         });
 
         console.log(data);
@@ -115,9 +118,9 @@ export default class Fred {
 
         this.sidebar = new Sidebar(this.config);
         this.render();
-        
+
         drake.initDrake();
-        
+
         this.loadContent();
     }
 }
