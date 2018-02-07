@@ -7,10 +7,8 @@ class Drake {
     }
 
     initDrake() {
-        const containers = [...document.querySelectorAll('[data-fred-dropzone]')];
+        const containers = [...document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])')];
         containers.unshift(document.querySelector('.source'));
-
-        console.log('drake init');
 
         this.drake = dragula(containers, {
             copy: function (el, source) {
@@ -48,7 +46,7 @@ class Drake {
         const containers = [...initContainer];
 
         for (let i = 0; i < initContainer.length; i++) {
-            containers.push(...(initContainer[i].querySelectorAll('[data-fred-dropzone]')));
+            containers.push(...(initContainer[i].querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])')));
         }
 
         containers.unshift(document.querySelector('.source'));
