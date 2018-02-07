@@ -8,31 +8,39 @@ class GetElements extends Endpoint
     
     public function process()
     {
-
-        $widgets = [
-            [
-                "id" => 1,
-                "title" => "2 column",
-                "description" => "",
-                "image" => "http://via.placeholder.com/150x150",
-                "content" => "<div style='border:thin solid blue;float:left;min-height:100px;width:50%;' data-fred-dropzone=''></div><div style='border:thin solid green;float:left;min-height:100px;width:50%;' data-fred-dropzone=''></div>"
-            ],
-            [
-                "id" => 2,
-                "title" => "Header & Text",
-                "description" => "",
-                "image" => "http://via.placeholder.com/150x150",
-                "content" => "<h2 contenteditable=\"true\" data-fred-name=\"header\">Header #2</h2><p contenteditable=\"true\" data-fred-name=\"description\">Description</p>"
-            ],
-            [
-                "id" => 3,
-                "title" => "Text & Dropzone",
-                "description" => "",
-                "image" => "http://via.placeholder.com/150x150",
-                "content" => "<p contenteditable=\"true\" data-fred-name=\"description\">Description</p><br /><div style='border:thin solid blue;float:left;min-height:100px;width:50%;' data-fred-dropzone=''></div><div style='border:thin solid green;float:left;min-height:100px;width:50%;' data-fred-dropzone=''></div>"
-            ]
-        ];
+        $categoryId = $this->fred->getOption('elements_category_id');
         
-        return $this->data(['elements' => $widgets]);
+        if (empty($categoryId)) {
+            return $this->data(['elements' => []]);
+        }
+        
+        $elements = [];
+        
+        /** @var \modChunk[] $chunks */
+        $chunks = $this->modx->getIterator('modChunk', ['category' => $categoryId]);
+        foreach ($chunks as $chunk) {
+            $matches = [];
+            preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
+
+            $image = '';
+            $description = $chunk->description;
+            
+            if (count($matches) == 2) {
+                $image = $matches[1];
+                $description = str_replace($matches[0], '', $description);
+            }
+            
+            
+
+            $elements[] = [
+                "id" => $chunk->id,
+                "title" => $chunk->name,
+                "description" => $description,
+                "image" => $image,
+                "content" => $chunk->content
+            ];
+        }
+
+        return $this->data(['elements' => $elements]);
     }
 }
