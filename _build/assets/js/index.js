@@ -39,29 +39,52 @@ export default class Fred {
     hideFred() {
         this.wrapper.setAttribute('hidden', 'hidden');
     }
+    
+    getDataFromDropzone(dropzone) {
+        const data = [];
+        
+        const clone = dropzone.cloneNode(true);
+
+        let element = clone.querySelector('[data-fred-element-id]');
+        while (element) {
+            const elementData = {
+                widget: element.dataset.fredElementId,
+                values: {},
+                children: {}
+            };
+
+            let dz = element.querySelector('[data-fred-dropzone');
+
+            while (dz) {
+                elementData.children[dz.dataset.fredDropzone] = this.getDataFromDropzone(dz);
+
+                dz.remove();
+                dz = element.querySelector('[data-fred-dropzone');
+            }
+
+            element.querySelectorAll('[contenteditable]').forEach(field => {
+                elementData.values[field.dataset.fredName] = field.innerHTML;
+            });
+
+            data.push(elementData);
+
+            element.remove();
+
+            element = clone.querySelector('[data-fred-element-id]');
+        }
+        
+        return data;
+    }
 
     save() {
         const data = {};
 
         for (let i = 0; i < this.dropzones.length; i++) {
-            if (!data[this.dropzones[i].dataset.fredDropzone]) {
-                data[this.dropzones[i].dataset.fredDropzone] = [];
-            }
-
-            this.dropzones[i].querySelectorAll('[data-fred-id]').forEach(item => {
-                const values = {};
-
-                item.querySelectorAll('[contenteditable]').forEach(field => {
-                    values[field.dataset.fredName] = field.innerHTML;
-                });
-
-                data[this.dropzones[i].dataset.fredDropzone].push({
-                    widget: item.dataset.fredId,
-                    values
-                });
-            })
+                data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropzone(this.dropzones[i]);
         }
 
+        console.log('data: ', data);
+        
         fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
             method: "post",
             credentials: 'same-origin',
@@ -75,20 +98,10 @@ export default class Fred {
         }).then(response => {
             return response.json();
         });
-
-        console.log(data);
     }
 
     loadContent() {
-        let content = localStorage.getItem('fred-content');
-        if (content) {
-            try {
-                content = JSON.parse(content);
-                console.log(content);
-            } catch (err) {
-                console.error('Failed to parse stored state.');
-            }
-        }
+
     }
 
     init() {
