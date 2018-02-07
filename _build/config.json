@@ -12,7 +12,11 @@
                 "file": "Fred.php"
             }]
         },
-        "systemSettings": []
+        "systemSettings": [{
+            "key": "elements_category_id",
+            "name": "Element's Category ID",
+            "value": ""
+        }]
     }
     ,"database": {
         "tables": []
