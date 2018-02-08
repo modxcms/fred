@@ -77,24 +77,30 @@ export default class Fred {
     }
 
     save() {
+        const body = {};
         const data = {};
 
         for (let i = 0; i < this.dropzones.length; i++) {
-                data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropzone(this.dropzones[i]);
+            data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropzone(this.dropzones[i]);
+            
+            const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
+            for (let target of targets) {
+                body[target.dataset.fredTarget] = target.innerHTML;
+            }
         }
-
-        console.log('data: ', data);
         
+        body.id = this.config.resource.id;
+        body.data = data;
+
+        console.log('body: ', body);
+
         fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
             method: "post",
             credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                id: this.config.resource.id,
-                data
-            })
+            body: JSON.stringify(body)
         }).then(response => {
             return response.json();
         });
