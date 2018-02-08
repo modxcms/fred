@@ -19,7 +19,7 @@ export default class Fred {
         this.wrapper.classList.add('fred');
 
         this.wrapper.addEventListener('click', e => {
-            e.stopPropagation();
+            e.stopImmediatePropagation();
         });
 
         new Topbar(this.wrapper);

@@ -163,9 +163,14 @@ export default class Sidebar {
 
     hideSidebar() {
         this.wrapper.setAttribute('hidden', 'hidden');
+        window.removeEventListener('click', this.closeSidebar);
     }
 
     showSidebar() {
         this.wrapper.removeAttribute('hidden');
+        
+        setTimeout(() => {
+            window.addEventListener('click', this.closeSidebar);
+        }, 50);
     }
 }
