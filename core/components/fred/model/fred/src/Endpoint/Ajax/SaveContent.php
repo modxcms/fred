@@ -21,7 +21,7 @@ class SaveContent extends Endpoint
             return $this->failure('Could not load resource with id ' . (int)$this->body['id']);
         }
 
-        $object->setProperty('fred', $this->body['data'], 'fred');
+        $object->setProperty('data', $this->body['data'], 'fred');
         $saved = $object->save();
 
         if (!$saved) {
