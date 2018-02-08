@@ -10,22 +10,33 @@ class Drake {
         const containers = [...document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])')];
         containers.unshift(document.querySelector('.source'));
 
-        this.drake = dragula(containers, {
-            copy: function (el, source) {
-                return source === document.getElementsByClassName('source')[0]
-            },
-            accepts: function (el, target) {
-                return target !== document.getElementsByClassName('source')[0]
-            },
-            moves: function (el, source, handle, sibling) {
-                if ((source.dataset.fredDropzone !== undefined) && (source.dataset.fredDropzone !== '')) {
-                    return handle.classList.contains('handle');
+
+        const contains = (a, b) => {
+            return a.contains ? a != b && a.contains(b) : !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_CONTAINED_BY);
+        };
+        
+        try {
+            this.drake = dragula(containers, {
+                copy: function (el, source) {
+                    return source === document.getElementsByClassName('source')[0]
+                },
+                accepts: function (el, target) {
+                    if (!contains(el, target) === false) {
+                        return false;
+                    }
+                    
+                    return target !== document.getElementsByClassName('source')[0]
+                },
+                moves: function (el, source, handle, sibling) {
+                    if ((source.dataset.fredDropzone !== undefined) && (source.dataset.fredDropzone !== '')) {
+                        return handle.classList.contains('handle');
+                    }
+    
+                    return true;
                 }
-
-                return true;
-            }
-        });
-
+            });
+        } catch (err){}
+        
         this.drake.on('drop', (el, target, source, sibling) => {
             emitter.emit('fred-dragula-drop', el, target, source, sibling);
             this.reloadContainers();
