@@ -11,7 +11,7 @@ export default class Elements extends Sidebar {
         this.content = null;
 
         emitter.on('fred-dragula-drop', (el, target, source, sibling) => {
-            if (source.classList.contains('blueprints-source')) {
+            if (source.classList.contains('blueprints-source') && el.parentNode) {
                 el.parentNode.replaceChild(Elements.wrapContent(el.getElementsByClassName('chunk')[0]), el);
             }
         });
