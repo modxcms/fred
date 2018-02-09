@@ -77,6 +77,57 @@ export default class Fred {
         return data;
     }
 
+    getCleanDropZoneContent(dropZone) {
+        const clone = dropZone.cloneNode(true);
+        
+        // Remove fred--block wrappers
+        let fredBlock = clone.querySelector('.fred--block');
+        while(fredBlock) {
+            const content = fredBlock.querySelector('.fred--block_content');
+            
+            const children = content.children;
+            
+            const sibling = fredBlock.nextSibling;
+            const parent = fredBlock.parentNode;
+            
+            fredBlock.remove();
+            
+            if (sibling) {
+                while(children.length > 0) {
+                    if (parent) {
+                        parent.insertBefore(children[0], sibling);       
+                    } else {
+                        clone.insertBefore(children[0], sibling);
+                    }
+                }
+            } else if (parent) {
+                while(children.length > 0) {
+                    parent.appendChild(children[0]);
+                }
+            }
+            
+            fredBlock = clone.querySelector('.fred--block');
+        }
+        
+        // Remove contenteditable, data-fred-name & data-fred-target attributes
+        const contentEditables = clone.querySelectorAll('[contenteditable]');
+        for (let el of contentEditables) {
+            el.removeAttribute('contentEditable');
+            el.removeAttribute('data-fred-name');
+            el.removeAttribute('data-fred-target');
+        }
+        
+        // Remove data-fred-dropzone attributes
+        const dropzones = clone.querySelectorAll('[data-fred-dropzone]');
+        for (let el of dropzones) {
+            el.removeAttribute('data-fred-dropzone');
+            el.removeAttribute('data-fred-dropzone');
+            el.removeAttribute('data-fred-dropzone');
+        }
+        
+        return clone.innerHTML.trim();
+    }
+    
     save() {
         const body = {};
         const data = {};
@@ -88,6 +139,8 @@ export default class Fred {
             for (let target of targets) {
                 body[target.dataset.fredTarget] = target.innerHTML;
             }
+            
+            body[this.dropzones[i].dataset.fredDropzone] = this.getCleanDropZoneContent(this.dropzones[i]);
         }
         
         body.id = this.config.resource.id;
