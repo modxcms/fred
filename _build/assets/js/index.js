@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import fetch from 'isomorphic-fetch';
 import drake from './drake';
+import Elements from './Components/Sidebar/Elements';
 
 export default class Fred {
     constructor(config = {}) {
@@ -40,10 +41,10 @@ export default class Fred {
         this.wrapper.setAttribute('hidden', 'hidden');
     }
     
-    getDataFromDropzone(dropzone) {
+    getDataFromDropZone(dropZone) {
         const data = [];
         
-        const clone = dropzone.cloneNode(true);
+        const clone = dropZone.cloneNode(true);
 
         let element = clone.querySelector('[data-fred-element-id]');
         while (element) {
@@ -56,7 +57,7 @@ export default class Fred {
             let dz = element.querySelector('[data-fred-dropzone');
 
             while (dz) {
-                elementData.children[dz.dataset.fredDropzone] = this.getDataFromDropzone(dz);
+                elementData.children[dz.dataset.fredDropzone] = this.getDataFromDropZone(dz);
 
                 dz.remove();
                 dz = element.querySelector('[data-fred-dropzone');
@@ -81,7 +82,7 @@ export default class Fred {
         const data = {};
 
         for (let i = 0; i < this.dropzones.length; i++) {
-            data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropzone(this.dropzones[i]);
+            data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropZone(this.dropzones[i]);
             
             const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
             for (let target of targets) {
@@ -107,7 +108,36 @@ export default class Fred {
     }
 
     loadContent() {
+        fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${this.config.resource.id}&XDEBUG_SESSION_START=phpstorm`, {
+            credentials: 'same-origin'
+        }).then(response => {
+            return response.json();
+        }).then(json => {
+            const zones = json.data.data;
+            
+            for (let zoneName in zones) {
+                if (zones.hasOwnProperty(zoneName)) {
+                    const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
+                    if (zoneEl) {
+                        zones[zoneName].forEach(html => {
+                            const virtualWrapper = document.createElement('div');
+                            virtualWrapper.innerHTML = html;
+                            
+                            let apiItem = virtualWrapper.querySelector('.fred-api');
+                            while(apiItem) {
+                                apiItem.replaceWith(Elements.wrapContent(apiItem));
 
+                                apiItem = virtualWrapper.querySelector('.fred-api');
+                            }
+                            
+                            zoneEl.append(virtualWrapper.firstChild); 
+                        });
+                    }
+                }
+            }
+
+            drake.reloadContainers();
+        });
     }
 
     init() {
