@@ -43,10 +43,20 @@ class Drake {
         });
 
         this.drake.on('drag', (el, source) => {
+            const dropZones = document.querySelectorAll('[data-fred-dropzone');
+            for (let zone of dropZones) {
+                zone.classList.add('fred--dropzone_highlight');
+            }
+            
             emitter.emit('fred-sidebar-hide');
         });
 
         this.drake.on('dragend', el => {
+            const dropZones = document.querySelectorAll('[data-fred-dropzone');
+            for (let zone of dropZones) {
+                zone.classList.remove('fred--dropzone_highlight');
+            }
+            
             emitter.emit('fred-sidebar-show');
         });
 
