@@ -2,6 +2,7 @@ import emitter from './EE';
 import ResourcesComponent from './Components/Sidebar/Resources';
 import ElementsComponent from './Components/Sidebar/Elements';
 import promiseCancel from 'promise-cancel';
+import Modal from './Modal';
 
 export default class Sidebar {
     constructor(config = {}) {
@@ -20,7 +21,7 @@ export default class Sidebar {
                 this.lastRequest = null;
 
                 console.log(err);
-                
+
                 if (err.type === 'cancel') {
                     return;
                 }
@@ -168,7 +169,7 @@ export default class Sidebar {
 
     showSidebar() {
         this.wrapper.removeAttribute('hidden');
-        
+
         setTimeout(() => {
             window.addEventListener('click', this.closeSidebar);
         }, 50);
