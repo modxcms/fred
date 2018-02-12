@@ -35,11 +35,11 @@ export default class Fred {
     }
 
     showFred() {
-        this.wrapper.removeAttribute('hidden');
+        this.wrapper.classList.remove('fred--hidden');
     }
 
     hideFred() {
-        this.wrapper.setAttribute('hidden', 'hidden');
+        this.wrapper.classList.add('fred--hidden');
     }
 
     getDataFromDropZone(dropZone) {

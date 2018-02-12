@@ -2,17 +2,19 @@
   position: absolute;
   z-index: 10;
   top: 3px;
-  left: 0;
+  left: -1px;
+  border: 1px solid rgba($white, .4);
   border-top-right-radius: $radius;
   border-bottom-right-radius: $radius;
   padding: .25rem .5rem .35rem .5rem;
-  color: $gray;
+  color: $white;
   background-color: $black;
   font-size: .9rem;
+  transition: $timing;
 
   &:hover{
     color: $white;
-    background-color: darken($black,1%);
+    background-color: darken($black,15%);
   }
 
 }
@@ -20,8 +22,9 @@
 .fred--block{
   overflow:hidden;
   position: relative;
-  padding:2rem 1rem;
-  border-bottom: 1px dashed lighten($light-gray,5%);
+  //padding:2rem 1rem;
+  min-height: 30px;
+  border-bottom: 1px dashed rgba($light-gray,.5);
 
   &:nth-child(even){background: #f9f9f9;}
 

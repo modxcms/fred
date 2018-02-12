@@ -55,26 +55,26 @@ export default class Sidebar {
     buildSidebar() {
         this.sidebar = document.createElement('div');
         this.sidebar.classList.add('fred--sidebar');
-        this.sidebar.setAttribute('hidden', 'hidden');
+        this.sidebar.classList.add('fred--hidden');
 
         this.close = document.createElement('button');
         this.close.classList.add('fred--sidebar_close');
         this.close.innerHTML = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026 6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg>';
         this.close.addEventListener('click', e => {
             e.preventDefault();
-            if (this.sidebar2.hasAttribute('hidden') === true) {
+            if (this.sidebar2.classList.contains('fred--hidden') === true) {
                 if (this.lastRequest !== null) {
                     this.lastRequest.cancel();
                     this.lastRequest = null;
                 }
-                this.sidebar.setAttribute('hidden', 'hidden');
+                this.sidebar.classList.add('fred--hidden');
                 window.removeEventListener('click', this.closeSidebar);
             } else {
                 if (this.lastRequest !== null) {
                     this.lastRequest.cancel();
                     this.lastRequest = null;
                 }
-                this.sidebar2.setAttribute('hidden', 'hidden');
+                this.sidebar2.classList.add('fred--hidden');
             }
         });
 
@@ -100,13 +100,13 @@ export default class Sidebar {
     showSidebar2(title, content) {
         this.sidebar2Header.innerHTML = '<span>' + title + '</span>';
         this.sidebar2Content.innerHTML = content;
-        this.sidebar2.removeAttribute('hidden');
+        this.sidebar2.classList.remove('fred--hidden');;
     }
 
     buildSidebar2() {
         this.sidebar2 = document.createElement('div');
         this.sidebar2.classList.add('fred--sidebar_paneltwo', 'active');
-        this.sidebar2.setAttribute('hidden', 'hidden');
+        this.sidebar2.classList.add('fred--hidden');;
 
         const list = document.createElement('dl');
         list.classList.add('fred--accordion');
@@ -141,7 +141,7 @@ export default class Sidebar {
 
         this.open.addEventListener('click', e => {
             e.preventDefault();
-            this.sidebar.removeAttribute('hidden');
+            this.sidebar.classList.remove('fred--hidden');
             window.addEventListener('click', this.closeSidebar);
         });
 
@@ -156,20 +156,19 @@ export default class Sidebar {
             this.lastRequest = null;
         }
 
-        this.sidebar.setAttribute('hidden', 'hidden');
-        this.sidebar2.setAttribute('hidden', 'hidden');
+        this.sidebar.classList.add('fred--hidden');
+        this.sidebar2.classList.add('fred--hidden');
 
         window.removeEventListener('click', this.closeSidebar);
     }
 
     hideSidebar() {
-        this.wrapper.setAttribute('hidden', 'hidden');
+        this.wrapper.classList.add('fred--hidden');
         window.removeEventListener('click', this.closeSidebar);
     }
 
     showSidebar() {
-        this.wrapper.removeAttribute('hidden');
-
+        this.wrapper.classList.remove('fred--hidden');
         setTimeout(() => {
             window.addEventListener('click', this.closeSidebar);
         }, 50);

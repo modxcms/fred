@@ -35,10 +35,17 @@ export default class Topbar {
 
         const logout = document.createElement('button');
         logout.classList.add('fred--btn-small');
+        logout.classList.add('fred--btn-hollow');
         logout.innerText = 'Logout';
+
+        const duplicate = document.createElement('button');
+        duplicate.classList.add('fred--btn-small');
+        duplicate.classList.add('fred--btn-hollow');
+        duplicate.innerText = 'Duplicate';
         
         const save = document.createElement('button');
         save.classList.add('fred--btn-small');
+        save.classList.add('fred--btn-save');
         save.innerText = 'Save';
         save.addEventListener('click', e => {
             e.preventDefault();
@@ -46,6 +53,7 @@ export default class Topbar {
         });
 
         buttons.appendChild(save);
+        buttons.appendChild(duplicate);
         buttons.appendChild(logout);
 
         topBar.appendChild(links);
