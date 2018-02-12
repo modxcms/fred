@@ -1,6 +1,7 @@
 export class Modal {
     
-    constructor(title, content = '', onSave = () => {}) {
+    constructor(fredWrapper, title, content = '', onSave = () => {}) {
+        this.fredWrapper = fredWrapper;
         this.wrapper = null;
         this.title = title;
         this.content = content;
@@ -19,7 +20,12 @@ export class Modal {
         this.content = content;
 
         if (this.wrapper !== null) {
-            this.body.innerHTML = content;
+            if (typeof this.content === 'string') {
+                this.body.innerHTML = this.content;
+            } else {
+                this.body.innerHTML = '';
+                this.body.appendChild(this.content);
+            }
         }
     }
     
@@ -44,7 +50,12 @@ export class Modal {
 
         this.body = document.createElement('div');
         this.body.classList.add('fred--modal-body');
-        this.body.innerHTML = this.content;
+        
+        if (typeof this.content === 'string') {
+            this.body.innerHTML = this.content;
+        } else {
+            this.body.appendChild(this.content);
+        }
 
         const footer = document.createElement('div');
         footer.classList.add('fred--modal-footer');
@@ -69,6 +80,8 @@ export class Modal {
         modal.appendChild(footer);
 
         this.wrapper.appendChild(modal);
+
+        this.fredWrapper.appendChild(this.wrapper);
         
         return this.wrapper;
     }
