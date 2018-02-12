@@ -1,6 +1,6 @@
 .fred--topbar{
   font-family: "Open Sans", Arial, sans-serif;
-  background-color: #e4efef;
+  background-color: $black;
   width: 100%;
   z-index: 9;
   top:0;
@@ -12,17 +12,22 @@
     li{
       display:inline-block;
       float: left;
-      border-right:1px solid #cfd2d2;
+      border-right:1px solid rgba($white, .4);
+      &:last-child{
+        border-right: none;
+      }
 
       a{
-        color: $gray;
+        color: $white;
         display:block;
-        padding:.5rem 1.5rem;
+        padding:.65rem 1.5rem;
         text-transform: uppercase;
         font-size:.9rem;
+        transition: $timing;
         &:hover{
-          background-color: $secondary;
+          background-color: darken($black, 15%);
           color: $white;
+          cursor: pointer;
         }
       }
 
@@ -41,4 +46,8 @@
   padding: .25rem !important;
   text-align: right;
   float:right;
+
+  .fred--btn-small{
+    margin-right: .5rem;
+  }
 }

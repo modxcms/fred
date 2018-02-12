@@ -21,12 +21,17 @@
   }
 }
 
+.fred--hidden{
+  transition: $timing;
+  opacity: .5;
+}
+
 .fred--logo{
   width:35px;margin:2px .5rem; vertical-align: text-bottom;
 }
 
 .fred--sidebar_title{
-  width:100%;
+  width: calc(100% - 40px);
   position: relative;
   vertical-align: top;
 
@@ -48,12 +53,17 @@
   background-color: $black;
   width: 360px;
   height:100vh;
+  opacity:1;
   overflow-x: hidden;
   position: fixed;
   top:0;
   left: 0;
   z-index: 9999;
   transition: $timing;
+  &.fred--hidden{
+    left: -360px;
+    opacity: 0;
+  }
 }
 
 .fred--accordion{
@@ -76,7 +86,7 @@
     }
 
     .fred--accordion_toggle{
-      font-size:1.2rem; margin:2px 5px 0 0; width:14px; text-align: center;
+      font-size:1.2rem; margin:2px 0 0 5px; width:14px; text-align: center;
     }
 
     &:hover,&.active{
@@ -139,10 +149,15 @@
   border-right: 1px solid #000;
   width: 320px;
   height:100vh;
+  opacity: 1;
   overflow-x: hidden;
   position: fixed;
   top:0;
   left: 0;
   z-index: 99999;
   transition: $timing;
+  &.fred--hidden{
+    left: -360px;
+    opacity: 0;
+  }
 }
