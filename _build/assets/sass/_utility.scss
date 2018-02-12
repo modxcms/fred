@@ -45,6 +45,12 @@
     background-color: #e4e4e4;
     font-size: 1rem;
     padding: 1rem;
+
+    input[type="text"] {
+      width: 100%;
+      padding: 6px;
+      border: 1px solid #ccc;
+    }
   }
 
   .fred--modal-footer{
@@ -55,10 +61,4 @@
     text-align: right;
   }
 
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 6px;
-  border: 1px solid #ccc;
 }
