@@ -4,6 +4,7 @@ import Topbar from './Topbar';
 import fetch from 'isomorphic-fetch';
 import drake from './drake';
 import Elements from './Components/Sidebar/Elements';
+import imageEditor from './Editors/ImageEditor';
 
 export default class Fred {
     constructor(config = {}) {
@@ -40,10 +41,10 @@ export default class Fred {
     hideFred() {
         this.wrapper.setAttribute('hidden', 'hidden');
     }
-    
+
     getDataFromDropZone(dropZone) {
         const data = [];
-        
+
         const clone = dropZone.cloneNode(true);
 
         let element = clone.querySelector('[data-fred-element-id]');
@@ -64,7 +65,13 @@ export default class Fred {
             }
 
             element.querySelectorAll('[contenteditable]').forEach(field => {
-                elementData.values[field.dataset.fredName] = field.innerHTML;
+                switch (field.tagName.toLowerCase()) {
+                    case 'img':
+                        elementData.values[field.dataset.fredName] = field.src;
+                        break;
+                    default:
+                        elementData.values[field.dataset.fredName] = field.innerHTML;
+                }
             });
 
             data.push(elementData);
@@ -73,42 +80,42 @@ export default class Fred {
 
             element = clone.querySelector('[data-fred-element-id]');
         }
-        
+
         return data;
     }
 
     getCleanDropZoneContent(dropZone) {
         const clone = dropZone.cloneNode(true);
-        
+
         // Remove fred--block wrappers
         let fredBlock = clone.querySelector('.fred--block');
-        while(fredBlock) {
+        while (fredBlock) {
             const content = fredBlock.querySelector('.fred--block_content');
-            
+
             const children = content.children;
-            
+
             const sibling = fredBlock.nextSibling;
             const parent = fredBlock.parentNode;
-            
+
             fredBlock.remove();
-            
+
             if (sibling) {
-                while(children.length > 0) {
+                while (children.length > 0) {
                     if (parent) {
-                        parent.insertBefore(children[0], sibling);       
+                        parent.insertBefore(children[0], sibling);
                     } else {
                         clone.insertBefore(children[0], sibling);
                     }
                 }
             } else if (parent) {
-                while(children.length > 0) {
+                while (children.length > 0) {
                     parent.appendChild(children[0]);
                 }
             }
-            
+
             fredBlock = clone.querySelector('.fred--block');
         }
-        
+
         // Remove contenteditable, data-fred-name & data-fred-target attributes
         const contentEditables = clone.querySelectorAll('[contenteditable]');
         for (let el of contentEditables) {
@@ -116,33 +123,31 @@ export default class Fred {
             el.removeAttribute('data-fred-name');
             el.removeAttribute('data-fred-target');
         }
-        
+
         // Remove data-fred-dropzone attributes
         const dropzones = clone.querySelectorAll('[data-fred-dropzone]');
         for (let el of dropzones) {
             el.removeAttribute('data-fred-dropzone');
-            el.removeAttribute('data-fred-dropzone');
-            el.removeAttribute('data-fred-dropzone');
         }
-        
+
         return clone.innerHTML.trim();
     }
-    
+
     save() {
         const body = {};
         const data = {};
 
         for (let i = 0; i < this.dropzones.length; i++) {
             data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropZone(this.dropzones[i]);
-            
+
             const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
             for (let target of targets) {
                 body[target.dataset.fredTarget] = target.innerHTML;
             }
-            
+
             body[this.dropzones[i].dataset.fredDropzone] = this.getCleanDropZoneContent(this.dropzones[i]);
         }
-        
+
         body.id = this.config.resource.id;
         body.data = data;
 
@@ -161,13 +166,13 @@ export default class Fred {
     }
 
     loadContent() {
-        fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${this.config.resource.id}&XDEBUG_SESSION_START=phpstorm`, {
+        fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${this.config.resource.id}`, {
             credentials: 'same-origin'
         }).then(response => {
             return response.json();
         }).then(json => {
             const zones = json.data.data;
-            
+
             for (let zoneName in zones) {
                 if (zones.hasOwnProperty(zoneName)) {
                     const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
@@ -175,15 +180,15 @@ export default class Fred {
                         zones[zoneName].forEach(html => {
                             const virtualWrapper = document.createElement('div');
                             virtualWrapper.innerHTML = html;
-                            
+
                             let apiItem = virtualWrapper.querySelector('.fred-api');
-                            while(apiItem) {
+                            while (apiItem) {
                                 apiItem.replaceWith(Elements.wrapContent(apiItem));
 
                                 apiItem = virtualWrapper.querySelector('.fred-api');
                             }
-                            
-                            zoneEl.append(virtualWrapper.firstChild); 
+
+                            zoneEl.append(virtualWrapper.firstChild);
                         });
                     }
                 }
@@ -222,6 +227,7 @@ export default class Fred {
         this.render();
 
         drake.initDrake();
+        imageEditor.init(this.wrapper);
 
         this.loadContent();
     }

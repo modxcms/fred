@@ -65,7 +65,13 @@ class LoadContent extends Endpoint
         $fields->each(function($node, $i) use ($values) {
             $fieldName = $node->getAttribute('data-fred-name');
             if (isset($values[$fieldName])) {
-                $node->html($values[$fieldName]);
+                switch($node->nodeName()) {
+                    case 'img':
+                        $node->setAttribute('src', $values[$fieldName]);
+                        break;
+                    default:
+                        $node->html($values[$fieldName]);
+                }
             } else {
                 $node->html('');
             }

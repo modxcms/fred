@@ -2,6 +2,7 @@ import Sidebar from '../Sidebar';
 import drake from '../../drake';
 import emitter from '../../EE';
 import fetch from 'isomorphic-fetch';
+import imageEditor from '../../Editors/ImageEditor';
 
 export default class Elements extends Sidebar {
     static title = 'Elements';
@@ -48,13 +49,13 @@ export default class Elements extends Sidebar {
         for (let item of children) {
 
             const block = item.querySelector('.fred--block');
-            
+
             if (block) {
                 const siblings = [];
 
                 let sibling = block.nextSibling;
 
-                while(sibling) {
+                while (sibling) {
                     if (sibling.classList.contains('fred--block')) {
                         siblings.push(sibling);
                     }
@@ -82,7 +83,7 @@ export default class Elements extends Sidebar {
         const clone = Elements.wrapContent(el.cloneNode(true));
 
         Elements.reRenderWrapper(clone.querySelector('.fred--block_content').children);
-        
+
         return clone;
     }
 
@@ -131,6 +132,13 @@ export default class Elements extends Sidebar {
         content.dataset.fredElementId = el.dataset.fredElementId;
 
         content.innerHTML = el.innerHTML;
+
+        content.querySelectorAll('img[contenteditable="true"]').forEach(img => {
+            img.addEventListener('click', e => {
+                e.preventDefault();
+                imageEditor.edit(img);
+            })
+        });
 
         wrapper.appendChild(content);
 
