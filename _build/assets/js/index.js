@@ -177,6 +177,7 @@ export default class Fred {
                 if (zones.hasOwnProperty(zoneName)) {
                     const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
                     if (zoneEl) {
+                        zoneEl.innerHTML = '';
                         zones[zoneName].forEach(html => {
                             const virtualWrapper = document.createElement('div');
                             virtualWrapper.innerHTML = html;
