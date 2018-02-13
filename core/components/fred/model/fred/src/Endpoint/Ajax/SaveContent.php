@@ -33,12 +33,34 @@ class SaveContent extends Endpoint
             $object->set('introtext', $this->body['introtext']);
         }
 
+        if (isset($this->body['description'])) {
+            $object->set('description', $this->body['description']);
+        }
+
         if (isset($this->body['pagetitle'])) {
             $object->set('pagetitle', $this->body['pagetitle']);
         }
 
+        if (isset($this->body['menutitle'])) {
+            $object->set('menutitle', $this->body['menutitle']);
+        }
+
         if (isset($this->body['longtitle'])) {
             $object->set('longtitle', $this->body['longtitle']);
+        }
+
+        if (isset($this->body['menuindex'])) {
+            $object->set('menuindex', (integer)$this->body['menuindex']);
+        }
+
+        if (isset($this->body['hidemenu'])) {
+            $object->set('hidemenu', (boolean)$this->body['hidemenu']);
+        }
+
+        $uriChanged = false;
+        if (isset($this->body['alias'])) {
+            $object->set('alias', $this->body['alias']);
+            $uriChanged = $object->isDirty('alias');
         }
 
         if (isset($this->body['published'])) {
@@ -55,6 +77,7 @@ class SaveContent extends Endpoint
         }
 
         $object->setProperty('data', $this->body['data'], 'fred');
+
         $object->set('editedon', time());
         $object->set('editedby', $this->modx->user->get('id'));
 
@@ -64,6 +87,13 @@ class SaveContent extends Endpoint
             return $this->failure('Error saving resource with id ' . $object->get('id'));
         }
 
-        return $this->success('Save successful');
+        $this->modx->getCacheManager()->refresh();
+
+        $response = ['message' => 'Save successful'];
+        if ($uriChanged) {
+            $response['url'] = $this->modx->makeUrl($object->get('id'));
+        }
+
+        return $this->success($response);
     }
 }
