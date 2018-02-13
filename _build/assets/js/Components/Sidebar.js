@@ -11,7 +11,7 @@ export default class Sidebar {
             const dt = document.createElement('dt');
             dt.setAttribute('role', 'tab');
             dt.setAttribute('tabindex', '0');
-            dt.innerHTML = ((expandable === true) ? text + '<i class="fred--angle-right fred--accordion_toggle"></i>' : '') + '</span>';
+            dt.innerHTML = text + ((expandable === true) ? '<i class="fred--angle-right fred--accordion_toggle"></i>' : '');
 
             if (expandable === false) {
                 dt.addEventListener('click', this.click);

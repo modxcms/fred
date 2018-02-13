@@ -1,6 +1,6 @@
 .fred--open{
-  position: absolute;
-  z-index: 10;
+  position: fixed;
+  z-index: 10010;
   top: 3px;
   left: -1px;
   border: 1px solid rgba($white, .4);
