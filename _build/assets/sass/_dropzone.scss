@@ -1,0 +1,67 @@
+.fred--dropzone_highlight {
+  background-color: rgba($green,.05);
+  padding: 1rem 0;
+  transition: $timing;
+}
+
+.fred--thumb{
+  &.gu-mirror{
+    background: $white;
+    box-shadow: 0 1.25rem 1.5rem rgba(black, .8);
+    margin: 0;
+    padding: 0;
+    div, img{
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0;
+    }
+    figcaption{
+      display:none;
+      //padding: .5rem;
+    }
+    &:after{
+      content: "";
+      display:table;
+      width: 100%;
+      clear: both;
+    }
+  }
+  &.gu-transit{
+    width: 100%;
+    /*animation: fred--thumb_transit .3s ease-in-out;
+    img{
+      width: 100%;
+    }*/
+    &:before{
+      content: ' DROP HERE ';
+      font-weight: bold;
+      font-size: 1.25rem;
+      text-align: center;
+      text-shadow: 1px 1px 1px $white;
+      color: darken($light-gray,25%);
+      padding: 1rem;
+      width: 100%;
+      height: 4rem;
+      display:block;
+      animation: fred--thumb_transit .3s ease-in-out;
+      background: $light-gray;
+    }
+    div, figcaption{
+      display:none;
+    }
+  }
+}
+
+/* @TODO Create animation for reveal */
+@keyframes fred--thumb_transit {
+  0% {
+    height: 0;
+    padding: 0;
+    overflow:hidden;
+  }
+  100% {
+    padding: 1rem;
+    height: 4rem;
+  }
+}

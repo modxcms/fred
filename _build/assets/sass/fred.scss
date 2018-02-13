@@ -17,12 +17,8 @@
   @import "utility";
   @import "grids";
   @import "buttons";
-  
   @import "body";
   @import "topbar";
   @import "sidebar";
+  @import "dropzone";
 //}
-
-.fred--dropzone_highlight {
-  background-color: lightcoral;
-}
