@@ -10,6 +10,8 @@ export default class Fred {
     constructor(config = {}) {
         this.config = config || {};
         this.drake = null;
+        this.loading = null;
+        this.wrapper = null;
 
         document.addEventListener("DOMContentLoaded", () => {
             this.init();
@@ -134,6 +136,7 @@ export default class Fred {
     }
 
     save() {
+        emitter.emit('fred-loading', 'Saving Page');
         const body = {};
         const data = {};
 
@@ -161,11 +164,13 @@ export default class Fred {
             },
             body: JSON.stringify(body)
         }).then(response => {
+            emitter.emit('fred-loading-hide');
             return response.json();
         });
     }
 
     loadContent() {
+        emitter.emit('fred-loading', 'Preparing Content');
         fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${this.config.resource.id}`, {
             credentials: 'same-origin'
         }).then(response => {
@@ -196,6 +201,8 @@ export default class Fred {
             }
 
             drake.reloadContainers();
+
+            emitter.emit('fred-loading-hide');
         });
     }
 
@@ -230,6 +237,26 @@ export default class Fred {
         drake.initDrake();
         imageEditor.init(this.wrapper);
 
+        emitter.on('fred-loading', text => {
+            if (this.loading !== null) return;
+            
+            text = text || '';
+
+            this.loading = document.createElement('section');
+            this.loading.classList.add('fred--modal-bg');
+            
+            this.loading.innerHTML = `<div class="fred--modal" aria-hidden="false"><div style="color:white;text-align:center;"><span class="fred--loading"></span> ${text}</div></div>`;
+            
+            this.wrapper.appendChild(this.loading);
+        });
+        
+        emitter.on('fred-loading-hide', () => {
+            if (this.loading !== null) {
+                this.loading.remove();
+                this.loading = null;
+            }
+        });
+        
         this.loadContent();
     }
 }
