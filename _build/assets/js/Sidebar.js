@@ -98,7 +98,7 @@ export default class Sidebar {
     }
 
     showSidebar2(title, content) {
-        this.sidebar2Header.innerHTML = '<span>' + title + '</span>';
+        this.sidebar2Header.innerHTML = '<i class="fred--angle-left fred--accordion_toggle"></i> ' + title;
         this.sidebar2Content.innerHTML = content;
         this.sidebar2.classList.remove('fred--hidden');;
     }
@@ -117,6 +117,11 @@ export default class Sidebar {
         this.sidebar2Header.classList.add('active');
         this.sidebar2Header.setAttribute('role', 'tab');
         this.sidebar2Header.setAttribute('tabindex', '0');
+        this.sidebar2Header.addEventListener('click', e => {
+            e.preventDefault();
+            this.sidebar2.classList.add('fred--hidden');
+            window.addEventListener('click', this.closeSidebar);
+        });
 
         const items = document.createElement('dd');
         items.setAttribute('role', 'tab');

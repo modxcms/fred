@@ -58,7 +58,7 @@
   position: fixed;
   top:0;
   left: 0;
-  z-index: 9999;
+  z-index: 10011;
   transition: $timing;
   &.fred--hidden{
     left: -360px;
