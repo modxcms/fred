@@ -24,6 +24,7 @@
 .fred--hidden{
   transition: $timing;
   opacity: .5;
+  filter:blur(2px);
 }
 
 .fred--logo{
@@ -108,6 +109,7 @@
     padding:.5rem;
     color:$light-gray;
     font-size: .9rem;
+    position: relative;
 
     .fred--thumbs .fred--thumb{
       background-color: transparent;
@@ -115,19 +117,28 @@
       &:last-of-type{border-bottom: 0;}
       margin-bottom:.5rem;
       cursor:move;
-
-      &:hover{
-        figcaption{color:$primary;}
-      }
-      > div{padding:.5rem;}
+      transition: $timing;
 
       figcaption{
         padding:.5rem;
         font-size: .95rem;
         line-height: normal;
+        position: absolute;
+        top: .5rem;
+        left: .5rem;
+        background: rgba(black, .6);
+        opacity: 0;
+        transition: $timing;
         em{font-size: .8rem;}
-        strong{display:block;font-size:1.15rem;}
+        strong{display:block; color: white;}
       }
+
+      &:hover{
+        transform: scale(1.05);
+        background-color: $black;
+        figcaption{opacity: 1}
+      }
+      > div{padding:.5rem;}
     }
   }
 }
