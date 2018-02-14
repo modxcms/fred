@@ -49,29 +49,33 @@ abstract class Endpoint
     abstract function process();
 
     /**
-     * @param $message
+     * @param string|array $message
      * @return string
      */
     protected function failure($message)
     {
         http_response_code(400);
 
-        return json_encode([
-            'message' => $message
-        ]);
+        if (!is_array($message)) {
+            $message = ['message' => $message];
+        }
+
+        return json_encode($message);
     }
 
     /**
-     * @param string $message
+     * @param string|array $message
      * @return string
      */
     protected function success($message = '')
     {
         http_response_code(200);
 
-        return json_encode([
-            'message' => $message
-        ]);
+        if (!is_array($message)) {
+            $message = ['message' => $message];
+        }
+
+        return json_encode($message);
     }
 
     /**
