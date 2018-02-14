@@ -98,7 +98,7 @@ export default class Sidebar {
     }
 
     showSidebar2(title, content) {
-        this.sidebar2Header.innerHTML = '<i class="fred--angle-left fred--accordion_toggle"></i> ' + title;
+        this.sidebar2Header.innerHTML = '<i class="fred--close-small"></i> ' + title;
         this.sidebar2Content.innerHTML = content;
         this.sidebar2.classList.remove('fred--hidden');;
     }
