@@ -2,6 +2,9 @@
   background-color: rgba($green,.05);
   padding: 1rem 0;
   transition: $timing;
+  .fred--block{
+    border-bottom: 1px dashed rgba($light-gray,.5);
+  }
 }
 
 .fred--thumb{

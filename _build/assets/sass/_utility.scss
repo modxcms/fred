@@ -14,7 +14,10 @@
   background: rgba(0,0,0,0.8);
 
   .fred--modal{
-    margin: 4rem auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     max-width: 90%;
     width: 480px;
   }
