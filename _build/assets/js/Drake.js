@@ -43,7 +43,7 @@ class Drake {
         });
 
         this.drake.on('drag', (el, source) => {
-            const dropZones = document.querySelectorAll('[data-fred-dropzone');
+            const dropZones = document.querySelectorAll('[data-fred-dropzone]');
             for (let zone of dropZones) {
                 zone.classList.add('fred--dropzone_highlight');
             }
@@ -52,7 +52,7 @@ class Drake {
         });
 
         this.drake.on('dragend', el => {
-            const dropZones = document.querySelectorAll('[data-fred-dropzone');
+            const dropZones = document.querySelectorAll('[data-fred-dropzone]');
             for (let zone of dropZones) {
                 zone.classList.remove('fred--dropzone_highlight');
             }
