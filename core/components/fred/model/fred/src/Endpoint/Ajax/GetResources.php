@@ -39,6 +39,10 @@ class GetResources extends Endpoint
         return $this->data(['resources' => $this->resources]);
     }
 
+    /**
+     * @param \modResource $resource
+     * @param boolean $isFred
+     */
     protected function handleResource($resource, $isFred) {
         $pageFormatted = [
             'pagetitle' => $resource->pagetitle,
@@ -47,6 +51,7 @@ class GetResources extends Endpoint
             'published' => (boolean)$resource->published,
             'deleted' => (boolean)$resource->deleted,
             'url' => $this->modx->makeUrl($resource->id, $resource->context_key, '', 'full'),
+            'hidemenu' => (boolean)$resource->hidemenu,
             'menuindex' => $resource->menuindex
         ];
 
