@@ -34,6 +34,8 @@ class GetResources extends Endpoint
             $this->handleResource($resource, true);
         }
 
+        $this->resources = $this->sortResources($this->resources);
+
         return $this->data(['resources' => $this->resources]);
     }
 
@@ -44,7 +46,8 @@ class GetResources extends Endpoint
             'isFred' => $isFred,
             'published' => (boolean)$resource->published,
             'deleted' => (boolean)$resource->deleted,
-            'url' => $this->modx->makeUrl($resource->id, $resource->context_key, '', 'full')
+            'url' => $this->modx->makeUrl($resource->id, $resource->context_key, '', 'full'),
+            'menuindex' => $resource->menuindex
         ];
 
         if ($resource->parent === 0) {
@@ -73,5 +76,27 @@ class GetResources extends Endpoint
         $templateIds = array_map('trim', $templateIds);
         $templateIds = array_map('intval', $templateIds);
         $this->templates = array_filter($templateIds);
+    }
+
+    protected function sortResources($resources)
+    {
+        usort($resources, [$this, 'compareMenuindex']);
+
+        foreach ($resources as &$resource) {
+            if (!empty($resource['children'])) {
+                $resource['children'] = $this->sortResources($resource['children']);
+            }
+        }
+
+        return $resources;
+    }
+
+    protected function compareMenuindex($a, $b)
+    {
+        if ($a['menuindex'] === $b['menuindex']) {
+            return 0;
+        }
+
+        return $a['menuindex'] > $b['menuindex'] ? +1 : -1;
     }
 }
