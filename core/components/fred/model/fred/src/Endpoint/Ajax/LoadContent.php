@@ -49,12 +49,11 @@ class LoadContent extends Endpoint
         /** @var \modChunk $chunk */
         $chunk = $this->modx->getObject('modChunk', $id);
         if (!$chunk) {
-            return '';
+            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Chunk {$id} wasn't found.");
+            return new HtmlPageCrawler('');
         }
 
-        $dom = new HtmlPageCrawler($chunk->content);
-        
-        return $dom;
+        return new HtmlPageCrawler($chunk->content);
     }
 
 
