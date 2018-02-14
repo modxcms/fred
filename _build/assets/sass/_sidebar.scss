@@ -78,6 +78,7 @@
     font-weight: normal !important;
     margin-top: 0 !important;
     cursor: pointer;
+    transition: $timing;
 
     span{
       i{
@@ -97,6 +98,14 @@
       + dd{
         display: block;
         background-color: lighten($black,10%);
+        transition: $timing;
+        opacity: 1;
+      }
+      &:hover{
+        background-color: darken($black,1%);
+        + dd{
+          opacity: .5;
+        }
       }
     }
 
