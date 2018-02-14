@@ -12,11 +12,18 @@
                 "file": "Fred.php"
             }]
         },
-        "systemSettings": [{
-            "key": "elements_category_id",
-            "name": "Element's Category ID",
-            "value": ""
-        }]
+        "systemSettings": [
+            {
+                "key": "elements_category_id",
+                "name": "Element's Category ID",
+                "value": ""
+            },
+            {
+                "key": "template_ids",
+                "name": "Fred Template IDs",
+                "value": ""
+            }
+        ]
     }
     ,"database": {
         "tables": []
