@@ -41,7 +41,10 @@ class GetResources extends Endpoint
         $pageFormatted = [
             'pagetitle' => $resource->pagetitle,
             'children' => [],
-            'isFred' => $isFred
+            'isFred' => $isFred,
+            'published' => (boolean)$resource->published,
+            'deleted' => (boolean)$resource->deleted,
+            'url' => $this->modx->makeUrl($resource->id, $resource->context_key, '', 'full')
         ];
 
         if ($resource->parent === 0) {
