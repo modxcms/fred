@@ -22,9 +22,8 @@
 }
 
 .fred--hidden{
-  transition: $timing;
-  opacity: .5;
-  filter:blur(2px);
+  left: -360px;
+  opacity: 0;
 }
 
 .fred--logo{
