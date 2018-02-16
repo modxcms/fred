@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2001.058 136 45.238 45">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: 0.25;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Sidebar_Layout_2_" class="cls-1" transform="translate(2001.058 136)">
+    <g id="_x31_15-layout_-_left_sidebar_half_content_1_">
+      <g id="_x31_15-layout_-_left_sidebar_half_content_4_">
+        <g id="Group_9" data-name="Group 9">
+          <path id="Path_13" data-name="Path 13" class="cls-2" d="M39.583,0H5.655A5.642,5.642,0,0,0,0,5.625v33.75A5.642,5.642,0,0,0,5.655,45H39.583a5.642,5.642,0,0,0,5.655-5.625V5.625A5.642,5.642,0,0,0,39.583,0ZM11.309,42.21H5.637A2.821,2.821,0,0,1,2.8,39.4V14.04h8.5ZM39.6,42.12H14.114V28.08H42.433V39.3A2.823,2.823,0,0,1,39.6,42.12Zm2.832-16.83H14.114V14.04H42.433Zm0-14.04H2.8V5.607A2.823,2.823,0,0,1,5.637,2.79H39.61a2.821,2.821,0,0,1,2.823,2.817Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

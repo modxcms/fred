@@ -1,0 +1,65 @@
+.fred--launcher{
+  position:fixed;
+  z-index: 10010;
+  margin: 2rem;
+  display: inline-block;
+  &_top{
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    &_left{
+      top: 0;
+      left: 0;
+    }
+    &_right{
+      top: 0;
+      right:0;
+    }
+  }
+  &_bottom{
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    &_left{
+      bottom: 0;
+      left: 0;
+    }
+    &_right{
+      bottom: 0;
+      right: 0;
+    }
+  }
+  &_btn{
+    border-radius: 50%;
+    border: none;
+    background: $gray center center no-repeat;
+    background-size: 60%;
+    text-indent: -9999px;
+    padding: 0;
+    height: 3rem; width: 3rem;
+    box-shadow: rgba($black, .34) 0 .25rem .5rem;
+    transition: $timing;
+    &:hover{
+      transform: scale(1.05);
+    }
+    &_fred{
+      background-color: $black;
+      background-image: url('images/modx-revo-icon-48.svg');
+      height: 5rem; width: 5rem;
+    }
+    &_save{
+      background-color: $modxred;
+      background-image: url('images/save.svg');
+      position: absolute;
+      top: -4rem;
+      left: 1.25rem;
+    }
+    &_undo{
+      background-color: $modxblue;
+      background-image: url('images/undo.svg');
+      position: absolute;
+      top: -2rem;
+      left: 105%;
+    }
+  }
+}
