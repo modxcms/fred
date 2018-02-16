@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="/fred/">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Starter Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="_static/example.css" rel="stylesheet">
+
+    <!-- Fred stylesheet -->
+    <link href="assets/components/fred/web/fred.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Navbar</a>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Bootstrap starter template</h1>
+        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a
+            mostly barebones HTML document.</p>
+    </div>
+
+</div>
+
+<!-- BEGIN FRED -->
+<div id="fred">
+    <div class="fred--launcher fred--launcher_bottom_left">
+        <button class="fred--launcher_btn fred--launcher_btn_fred" role="button">Fred</button>
+        <button class="fred--launcher_btn fred--launcher_btn_save" role="button">Save</button>
+        <button class="fred--launcher_btn fred--launcher_btn_undo" role="button">Undo</button>
+    </div>
+    <div class="fred--sidebar fred--hidden" aria-hidden="true">
+        <button class="fred--sidebar_close" role="button">
+            <i class="fred--angle-left"></i><i class="fred--angle-left"></i>
+        </button>
+        <div class="fred--sidebar_title">
+            <img src="assets/components/fred/web/images/modx-revo-icon-48.svg" alt="MODX FRED" class="fred--logo">
+            <h1>Fred</h1>
+        </div>
+        <dl class="fred--accordion" tabindex="0" role="tablist" id="fred--menu">
+            <dt role="tab" tabindex="0" class="fred--sidebar_Pages">Pages <i class="fred--angle-right fred--accordion_toggle"></i></dt>
+            <dd> Page Content <dd>
+            <dt role="tab" tabindex="0" class="fred--sidebar_Elements">Elements <i class="fred--angle-right fred--accordion_toggle"></i></dt>
+            <dd>
+                <dl>
+                    <dt role="tab" tabindex="1">Category 1</dt>
+                    <dd>
+                        <div class="fred--thumbs source blueprints-source">
+                            <figure class="fred--thumb">
+                                <div><img src="https://placehold.it/300x150&amp;text=Text" alt=""></div>
+                                <figcaption><strong>Text Area</strong><em></em></figcaption>
+                                <div class="chunk" data-fred-element-id="36" hidden="hidden">
+                                    <div data-fred-name="header" contenteditable="true">
+                                        <p>I am a paragraph!</p>
+                                    </div>
+                                </div>
+                            </figure>
+                            <figure class="fred--thumb">
+                                <div><img src="https://placehold.it/700x150&amp;text=Text+and+Image" alt=""></div>
+                                <figcaption><strong>Text and Image</strong><em></em></figcaption>
+                                <div class="chunk" data-fred-element-id="37" hidden="hidden">
+                                    <p data-fred-name="text" contenteditable="true"> Click on the image to edit it.</p>
+                                    <img src="https://via.placeholder.com/150x150" data-fred-name="image" contenteditable="true">
+                                </div>
+                            </figure>
+                        </div>
+                    </dd>
+                    <dt role="tab" tabindex="1">Category 2</dt>
+                    <dd></dd>
+                    <dt role="tab" tabindex="1">Category with a stupid long name</dt>
+                    <dd></dd>
+                    <dt role="tab" tabindex="1">Category 4</dt>
+                    <dd></dd>
+                </dl>
+            <dd>
+            <dt role="tab" tabindex="0" class="fred--sidebar_Settings">Settings <i class="fred--angle-right fred--accordion_toggle"></i></dt>
+            <dd> Settings Content <dd>
+        </dl>
+    </div>
+</div>
+
+<!-- END FRED -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    // Demo Functions
+    $(document).ready(function(){
+        var fredbutton, sidebar, sidebarclose, menu, Pages, Elements, Settings = null;
+        fredbutton = $('.fred--launcher_btn_fred');
+        sidebar = $('.fred--sidebar');
+        sidebarclose = $('.fred--sidebar_close');
+        menu = $('#fred--menu')
+        Pages = $('.fred--sidebar_Pages');
+        Elements = $('.fred--sidebar_Elements');
+        Settings = $('.fred--sidebar_Settings');
+
+        fredbutton.click(function(){
+            sidebar.removeAttr('aria-hidden');
+            sidebar.removeClass('fred--hidden');
+        });
+
+        sidebarclose.click(function(){
+           sidebar.attr('aria-hidden','true');
+           sidebar.addClass('fred--hidden');
+        });
+
+        menu.children('dt').each(function(){
+           $(this).click(function(){
+               $(this).toggleClass('active');
+               if($(this).hasClass('active')){
+                   menu.children('dt').each(function(){
+                     if(!$(this).hasClass('active')){
+                         $(this).addClass('fred--hidden')
+                     }
+                   });
+               }else{
+                   menu.children('dt').each(function(){
+                       $(this).removeClass('fred--hidden')
+                   });
+               }
+           })
+        });
+    });
+</script>
+
+</body>
+</html>

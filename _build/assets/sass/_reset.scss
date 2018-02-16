@@ -20,103 +20,109 @@ $textarea-resize: vertical !default;
  * Normalization
  */
 
-:root {
-	-ms-overflow-style: -ms-autohiding-scrollbar; // IE11+
-	overflow-y: scroll; // All browsers without overlaying scrollbars
-	box-sizing: $root-box-sizing;
-	font: #{$root-font-size}/#{$root-line-height} $root-font-family;
-	text-rendering: $root-text-rendering;
-	text-size-adjust: 100%; // iOS 8+
-	-webkit-font-smoothing:antialiased;
-}
+.fred {
 
-body, button, input, select, textarea, pre, ul, ol { margin: 0; padding: 0; }
-h1, h2, h3, h4, h5, h6, p, dl, ol, ul, dt, dd {margin: 0;}
-ul,ol{list-style: none;}
-button, input, select, textarea { font-family: inherit; font-size: 100%; }
-article, aside, details, figcaption, figure, footer, header, main, nav, section, summary { display: block; }
-img{border:none; max-width:100%;}
+  button, input, select, textarea, pre, ul, ol {
+    margin: 0;
+    padding: 0;
+  }
+  h1, h2, h3, h4, h5, h6, p, dl, ol, ul, dt, dd {
+    margin: 0;
+  }
+  ul, ol {
+    list-style: none;
+  }
+  button, input, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+  }
+  article, aside, details, figcaption, figure, footer, header, main, nav, section, summary {
+    display: block;
+  }
+  img {
+    border: none;
+    max-width: 100%;
+  }
 
-[hidden] {
-	display: none; // Internet Explorer 10-
-}
+  [hidden] {
+    display: none; // Internet Explorer 10-
+  }
 
-[unselectable] {
-	user-select: none; // Android 4.4+, Chrome 40+, Firefox 36+, iOS 8+, Safari 8+
-}
+  [unselectable] {
+    user-select: none; // Android 4.4+, Chrome 40+, Firefox 36+, iOS 8+, Safari 8+
+  }
 
+  /*
+   * Universal inheritance
+   */
 
-/*
- * Universal inheritance
- */
+  *,
+  ::before,
+  ::after {
+    text-decoration: inherit;
+    vertical-align: inherit;
+    border-style: solid;
+    border-width: 0;
+  }
 
-*,
-::before,
-::after {
-	text-decoration: inherit;
-	vertical-align: inherit;
-	border-style: solid;
-	border-width: 0;
-}
+  // remove margin and padding of all elements
 
-// remove margin and padding of all elements
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+  }
 
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: inherit;
-}
+  // specify the text decoration of anchors
 
-// specify the text decoration of anchors
+  a {
+    text-decoration: $anchor-text-decoration;
+  }
 
-a {
-	text-decoration: $anchor-text-decoration;
-}
+  // specify media element style
 
-// specify media element style
+  audio,
+  canvas,
+  iframe,
+  img,
+  svg,
+  video {
+    vertical-align: $media-element-vertical-align;
+  }
 
-audio,
-canvas,
-iframe,
-img,
-svg,
-video {
-	vertical-align: $media-element-vertical-align;
-}
+  // specify the font family of code elements
 
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: $monospace-font-family, monospace;
+  }
 
-// specify the font family of code elements
+  // specify the border styles of tables
 
-code,
-kbd,
-pre,
-samp {
-	font-family: $monospace-font-family, monospace;
-}
+  table {
+    border-collapse: $table-border-collapse;
+    border-spacing: $table-border-spacing;
+  }
 
-// specify the border styles of tables
+  // specify textarea resizability
 
-table {
-	border-collapse: $table-border-collapse;
-	border-spacing: $table-border-spacing;
-}
+  textarea {
+    resize: $textarea-resize;
+  }
 
-// specify textarea resizability
+  // hide content from screens but not screenreaders
 
-textarea {
-	resize: $textarea-resize;
-}
+  @media screen {
+    [hidden~="screen"] {
+      display: inherit;
+    }
 
+    [hidden~="screen"]:not(:active):not(:focus):not(:target) {
+      clip: rect(0 0 0 0) !important;
+      position: absolute !important;
+    }
+  }
 
-// hide content from screens but not screenreaders
-
-@media screen {
-	[hidden~="screen"] {
-		display: inherit;
-	}
-
-	[hidden~="screen"]:not(:active):not(:focus):not(:target) {
-		clip: rect(0 0 0 0) !important;
-		position: absolute !important;
-	}
 }

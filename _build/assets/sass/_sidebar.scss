@@ -1,109 +1,159 @@
-.fred--sidebar_close{
+.fred--sidebar_close {
   position: absolute;
-  width:40px;
-  height: 100vh;
-  top: 0;
-  right: 0;
-  padding: .5rem;
-  background: lighten($black,1%);
+  right: .5rem;
+  z-index: 10010;
+  top: .25rem;
+  height: auto;
+  border: 1px solid rgba($white, .4);
+  border-radius: $radius;
+  padding: 0.2rem 0.7rem;
+  font-size: .9rem;
+  line-height: 1.6rem;
+  color: $white;
+  background-color: $black;
   transition: $timing;
-  svg{
-    fill:$dark-gray;
-    position: absolute;
-    top:.6rem;
-    left:.6rem;
-    transition: $timing;
-    pointer-events: none;
+  i:nth-child(2) {
+    margin-left: -5px;
   }
-  &:hover{
-    svg{fill:$white;}
-    background-color: darken($black,1%);
+  &:hover {
+    color: $white;
+    background-color: darken($black, 15%);
   }
 }
 
-.fred--hidden{
+.fred--hidden {
+  position: absolute;
   left: -360px;
   opacity: 0;
 }
 
-.fred--logo{
-  width:35px;margin:2px .5rem; vertical-align: text-bottom;
+.fred--logo {
+  width: 35px;
+  margin: .25rem .5rem;
 }
 
-.fred--sidebar_title{
+.fred--sidebar_title {
   width: calc(100% - 40px);
   position: relative;
-  vertical-align: top;
+  display: flex;
+  align-items: center;
 
-  h1{
+  h1 {
     display: inline-block;
     color: $white;
     line-height: 2rem;
     font-size: 1.6rem;
-    margin: .25rem 0;
     padding-bottom: 0 !important;
     border-bottom: 0 !important;
     font-weight: normal;
+    margin: 0;
   }
 
 }
 
-.fred--sidebar{
+.fred--sidebar {
   font-family: "Open Sans", Arial, sans-serif;
   background-color: $black;
-  width: 360px;
-  height:100vh;
-  opacity:1;
+  width: 275px;
+  height: 100vh;
+  opacity: 1;
   overflow-x: hidden;
   position: fixed;
-  top:0;
+  top: 0;
   left: 0;
   z-index: 10011;
   transition: $timing;
-  &.fred--hidden{
+  &.fred--hidden {
     left: -360px;
     opacity: 0;
   }
+  &_Pages {
+    &:before {
+      content: "";
+      height: 35px;
+      width: 35px;
+      background: url('images/pages.svg') center center no-repeat;
+      margin-right: .5rem;
+    }
+    &.active, &:hover, &:focus {
+      background-color: $modxred !important;
+    }
+  }
+  &_Elements {
+    &:before {
+      content: "";
+      height: 35px;
+      width: 35px;
+      background: url('images/elements.svg') center center no-repeat;
+      margin-right: .5rem;
+    }
+    &.active, &:hover, &:focus {
+      background-color: $modxblue !important;
+    }
+  }
+  &_Settings {
+    &:before {
+      content: "";
+      height: 35px;
+      width: 35px;
+      background: url('images/settings.svg') center center no-repeat;
+      margin-right: .5rem;
+    }
+    &.active, &:hover, &:focus {
+      background-color: $modxgreen !important;
+    }
+  }
 }
 
-.fred--accordion{
-  dt{
+.fred--accordion {
+  > dt {
+    display: flex;
+    align-items: center;
     overflow: hidden;
-    background-color: darken($black,1%);
+    background-color: darken($black, 1%);
     border-bottom: 1px solid #000;
-    color:$white;
-    font-size: 1rem !important;
-    padding:.7rem .5rem !important;
+    color: $white;
+    font-size: 1.5rem !important;
+    padding: 1.5rem .5rem !important;
     font-style: normal !important;
     font-weight: normal !important;
     margin-top: 0 !important;
     cursor: pointer;
     transition: $timing;
 
-    span{
-      i{
-        font-size: .8rem; margin: -2px 5px 0 0; vertical-align: middle; opacity: .7;
+    span {
+      i {
+        font-size: .8rem;
+        margin: -2px 5px 0 0;
+        vertical-align: middle;
+        opacity: .7;
+        transition: $timing;
       }
     }
 
-    .fred--accordion_toggle{
-      font-size:1.2rem; margin:2px 0 0 5px; width:14px; text-align: center;
+    .fred--accordion_toggle {
+      font-size: 1.2rem;
+      margin: 2px 0 0 5px;
+      width: 14px;
+      text-align: center;
     }
 
-    &:hover,&.active{
+    &:hover, &.active, &:focus {
       background-color: $primary;
     }
 
-    &.active{
-      + dd{
+    &.active {
+      > i {
+        opacity: 0;
+      }
+      + dd {
         display: block;
-        background-color: lighten($black,10%);
         transition: $timing;
         opacity: 1;
       }
-      &:hover{
-        background-color: darken($black,1%);
-        + dd{
+      &:hover {
+        background-color: darken($black, 1%);
+        + dd {
           opacity: .5;
         }
       }
@@ -111,24 +161,28 @@
 
   }
 
-  dd{
-    display:none;
-    background-color: lighten($black,5%);
-    padding:.5rem;
-    color:$light-gray;
+  dd {
+    display: none;
+    color: $white;
     font-size: .9rem;
     position: relative;
 
-    .fred--thumbs .fred--thumb{
+    .fred--thumbs .fred--thumb {
       background-color: transparent;
       border-bottom: 1px solid $black;
-      &:last-of-type{border-bottom: 0;}
-      margin-bottom:.5rem;
-      cursor:move;
+      &:last-of-type {
+        border-bottom: 0;
+      }
+      margin-bottom: .5rem;
+      cursor: move;
       transition: $timing;
 
-      figcaption{
-        padding:.5rem;
+      img{
+        max-width: 100%;
+      }
+
+      figcaption {
+        padding: .5rem;
         font-size: .95rem;
         line-height: normal;
         position: absolute;
@@ -137,45 +191,86 @@
         background: rgba(black, .6);
         opacity: 0;
         transition: $timing;
-        em{font-size: .8rem;}
-        strong{display:block; color: white;}
+        em {
+          font-size: .8rem;
+        }
+        strong {
+          display: block;
+          color: white;
+        }
       }
 
-      &:hover{
+      &:hover {
         transform: scale(1.05);
         background-color: $black;
-        figcaption{opacity: 1}
+        figcaption {
+          opacity: 1
+        }
       }
-      > div{padding:.5rem;}
+      > div {
+        padding: .5rem;
+      }
+    }
+    dl {
+      dt{
+        padding: 1rem 2rem 1rem 3rem;
+        font-size: 1.2rem;
+        font-weight: lighter;
+        transition: $timing;
+        cursor: pointer;
+        &.active, &:hover, &:focus {
+          background-color: darken($black, 15%);
+          + dd {
+            display: block;
+          }
+        }
+        + dd{
+          transition: $timing;
+          opacity: 1;
+          position: fixed;
+          width: 320px;
+          left: 275px;
+          height: 100vh;
+          overflow: auto;
+          overflow-x: hidden;
+          top: 0;
+          background-color: lighten($black,5%);
+          &:hover{
+            display:block;
+          }
+        }
+      }
     }
   }
 }
 
-.fred--accordion_resource-list{
-  li{
+.fred--accordion_resource-list {
+  li {
     display: block;
-    a{
+    a {
       color: $light-gray;
       display: block;
-      &:hover{color:$primary;}
+      &:hover {
+        color: $primary;
+      }
     }
   }
 }
 
-.fred--sidebar_paneltwo{
+.fred--sidebar_paneltwo {
   font-family: "Open Sans", Arial, sans-serif;
-  background-color: lighten($black,5%);
+  background-color: lighten($black, 5%);
   border-right: 1px solid #000;
   width: 320px;
-  height:100vh;
+  height: 100vh;
   opacity: 1;
   overflow-x: hidden;
   position: fixed;
-  top:0;
+  top: 0;
   left: 0;
   z-index: 99999;
   transition: $timing;
-  &.fred--hidden{
+  &.fred--hidden {
     left: -360px;
     opacity: 0;
   }
