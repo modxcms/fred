@@ -70,7 +70,7 @@
 
 <!-- BEGIN FRED -->
 <div id="fred">
-    <div class="fred--launcher fred--launcher_bottom_left">
+    <div class="fred--launcher fred--launcher_bottom_right" >
         <button class="fred--launcher_btn fred--launcher_btn_fred" role="button">Fred</button>
         <button class="fred--launcher_btn fred--launcher_btn_save" role="button">Save</button>
         <button class="fred--launcher_btn fred--launcher_btn_undo" role="button">Undo</button>
@@ -150,8 +150,13 @@
         Settings = $('.fred--sidebar_Settings');
 
         fredbutton.click(function(){
-            sidebar.removeAttr('aria-hidden');
-            sidebar.removeClass('fred--hidden');
+            if(sidebar.hasClass('fred--hidden')){
+                sidebar.removeAttr('aria-hidden');
+                sidebar.removeClass('fred--hidden');
+            }else{
+                sidebar.attr('aria-hidden','true');
+                sidebar.addClass('fred--hidden');
+            }
         });
 
         sidebarclose.click(function(){

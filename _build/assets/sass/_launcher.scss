@@ -3,31 +3,10 @@
   z-index: 10010;
   margin: 2rem;
   display: inline-block;
-  &_top{
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    &_left{
-      top: 0;
-      left: 0;
-    }
-    &_right{
-      top: 0;
-      right:0;
-    }
-  }
-  &_bottom{
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    &_left{
-      bottom: 0;
-      left: 0;
-    }
-    &_right{
-      bottom: 0;
-      right: 0;
-    }
+  bottom: 0;
+  left: 0;
+  * {
+    outline: 0 !important;
   }
   &_btn{
     border-radius: 50%;
@@ -59,7 +38,93 @@
       background-image: url('images/undo.svg');
       position: absolute;
       top: -2rem;
-      left: 105%;
+      right: -2.75rem;
+    }
+  }
+  &_top{
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: initial;
+    .fred--launcher_btn{
+      &_save{
+        left: -1rem;
+        bottom: -3.25rem;
+        top:initial;
+      }
+      &_undo{
+        right: -1rem;
+        bottom: -3.25rem;
+        left:initial;
+        top:initial;
+      }
+    }
+    &_left{
+      top: 0;
+      left: 0;
+      bottom: initial;
+      .fred--launcher_btn{
+        &_save{
+          bottom: -4rem;
+          top: initial;
+        }
+        &_undo {
+          bottom: -2rem;
+          top: initial;
+        }
+      }
+    }
+    &_right{
+      top: 0;
+      right:0;
+      left:initial;
+      bottom: initial;
+      .fred--launcher_btn{
+        &_save{
+          bottom: -4rem;
+          top: initial;
+        }
+        &_undo{
+          left: -2.75rem;
+          bottom: -2rem;
+          top: initial;
+          right: initial;
+        }
+      }
+    }
+  }
+  &_bottom{
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    .fred--launcher_btn{
+      &_save{
+        left: -1rem;
+        top: -3.25rem;
+      }
+      &_undo{
+        right: -1rem;
+        top: -3.25rem;
+        left:initial;
+      }
+    }
+    &_left{
+      bottom: 0;
+      left: 0;
+    }
+    &_right{
+      bottom: 0;
+      right: 0;
+      left:initial;
+      .fred--launcher_btn{
+        &_save{
+
+        }
+        &_undo{
+          left: -2.75rem;
+          right: initial;
+        }
+      }
     }
   }
 }
