@@ -137,35 +137,27 @@ button{
 }
 
 .fred--loading {
-  will-change: box-shadow;
-  animation-fill-mode: both;
   z-index: 1000;
-  padding-left: 30px;
   position: relative;
-  animation-delay: -0.16s;
   text-indent:-9999px;
   overflow: hidden;
+  margin: 1rem;
+  display: block;
 }
-
-.fred--loading:before, .fred--loading:after {
-  border-radius: 50%;
-  width: 8px;
-  height: 8px;
-  will-change: box-shadow;
-  animation-fill-mode: both;
-  animation: fred--btnloading 1s infinite ease-in-out;
-  top: 8px;
-  left: 10px;
+.fred--loading:before{
   content: '';
-  position: absolute;
+  background-color: rgba($black,.3);
+  border: 10px solid $modxgreen;
+  border-top-color: $modxblue;
+  border-right-color: $modxred;
+  border-bottom-color: $modxbrightgreen;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: fred--spin 2s linear infinite;
   z-index: 1000;
-  background-color: rgba(255,255,255,.6);
-  opacity: 0;
-}
-
-.fred--loading:before {
-  left: 0;
-  animation-delay: -0.32s;
+  display: block;
+  margin: 0 auto;
 }
 
 @keyframes fred--btnloading {
@@ -177,4 +169,9 @@ button{
   20% {
     opacity: 0;
   }
+}
+
+@keyframes fred--spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

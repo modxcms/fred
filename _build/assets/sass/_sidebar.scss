@@ -275,3 +275,20 @@
     opacity: 0;
   }
 }
+
+.fred--loading_wrapper{
+  margin: 2rem auto;
+  color:$white;
+  text-align:center;
+  text-shadow: 1px 1px 2px black;
+  animation: fred--fadein .3s ease-in;
+}
+
+@keyframes fred--fadein {
+  0%{
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
