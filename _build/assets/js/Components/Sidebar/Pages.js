@@ -1,7 +1,7 @@
 import Sidebar from '../Sidebar';
 
-export default class Resources extends Sidebar {
-    static title = 'Resources';
+export default class Pages extends Sidebar {
+    static title = 'Pages';
     static expandable = true;
 
     click() {

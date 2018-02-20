@@ -1,33 +1,57 @@
 import emitter from './EE';
-import ResourcesComponent from './Components/Sidebar/Resources';
+import PagesComponent from './Components/Sidebar/Pages';
 import ElementsComponent from './Components/Sidebar/Elements';
 import promiseCancel from 'promise-cancel';
 import Modal from './Modal';
 
 export default class Sidebar {
-    constructor(config = {}) {
+    constructor(fredWrapper, config = {}) {
+        this.fredWrapper = fredWrapper;
         this.lastRequest = null;
         this.config = config || {};
+        this.components = [];
+
+        this.hideSidebar = this.hideSidebar.bind(this);
 
         emitter.on('fred-sidebar-expand', (cmp, title, data) => {
-            this.showSidebar2('<span class="fred--loading">LOADING</span>', '<span class="fred--loading"></span>');
+            cmp.loading();
 
+            this.components.forEach(component => {
+                component.hide();
+            });
+            
+            cmp.expand();
+            
             this.lastRequest = promiseCancel(Promise.resolve(data));
             this.lastRequest.promise.then(content => {
                 this.lastRequest = null;
-                this.showSidebar2(title, content);
+                
+                cmp.setContent(content);
+                
                 cmp.afterExpand();
             }).catch(err => {
                 this.lastRequest = null;
-
-                console.log(err);
 
                 if (err.type === 'cancel') {
                     return;
                 }
 
-                this.showSidebar2('ERROR', 'SOMETHING WRONG HAPPENED');
+                console.log(err);
+                
+                cmp.setContent('SOMETHING WRONG HAPPENED');
             });
+        });
+        
+        emitter.on('fred-sidebar-collapse', cmp => {
+            if (this.lastRequest !== null) {
+                this.lastRequest.cancel();
+                this.lastRequest = null;
+            }
+            
+            this.components.forEach(component => {
+                component.collapse();
+            });
+            
         });
 
         emitter.on('fred-sidebar-hide', () => {
@@ -37,145 +61,86 @@ export default class Sidebar {
         emitter.on('fred-sidebar-show', () => {
             this.showSidebar();
         });
+        
+        emitter.on('fred-sidebar-toggle', () => {
+            if (this.wrapper.classList.contains('fred--hidden')) {
+                emitter.emit('fred-sidebar-show');
+            } else {
+                emitter.emit('fred-sidebar-hide');
+            }
+        });
+        
+        this.render();
     }
 
-    render(wrapper) {
+    render() {
         this.wrapper = document.createElement('div');
+        this.wrapper.classList.add('fred--sidebar', 'fred--hidden');
+        this.wrapper.setAttribute('aria-hidden', 'true');
 
-        this.closeSidebar = this.closeSidebar.bind(this);
-        this.wrapper.appendChild(this.buildOpenButton());
+        this.wrapper.appendChild(this.buildCloseButton());
+        this.wrapper.appendChild(this.buildSidebarHeader());
         this.wrapper.appendChild(this.buildSidebar());
-        this.wrapper.appendChild(this.buildSidebar2());
 
-        wrapper.appendChild(this.wrapper);
+        this.fredWrapper.appendChild(this.wrapper);
 
         return this;
     }
 
-    buildSidebar() {
-        this.sidebar = document.createElement('div');
-        this.sidebar.classList.add('fred--sidebar');
-        this.sidebar.classList.add('fred--hidden');
-
-        this.close = document.createElement('button');
-        this.close.classList.add('fred--sidebar_close');
-        this.close.innerHTML = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026 6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg>';
-        this.close.addEventListener('click', e => {
+    buildCloseButton() {
+        const button = document.createElement('button');
+        button.classList.add('fred--sidebar_close');
+        button.setAttribute('role', 'button');
+        button.innerHTML = '<i class="fred--angle-left"></i><i class="fred--angle-left"></i>';
+        button.addEventListener('click', e => {
             e.preventDefault();
-            if (this.sidebar2.classList.contains('fred--hidden') === true) {
-                if (this.lastRequest !== null) {
-                    this.lastRequest.cancel();
-                    this.lastRequest = null;
-                }
-                this.sidebar.classList.add('fred--hidden');
-                window.removeEventListener('click', this.closeSidebar);
-            } else {
-                if (this.lastRequest !== null) {
-                    this.lastRequest.cancel();
-                    this.lastRequest = null;
-                }
-                this.sidebar2.classList.add('fred--hidden');
-            }
+            
+            emitter.emit('fred-sidebar-hide');
         });
+        
+        return button;
+    }
 
+    buildSidebarHeader() {
         const header = document.createElement('div');
         header.classList.add('fred--sidebar_title');
-        header.innerHTML = '<img src="' + (this.config.assetsUrl || '') + 'images/modx-revo-icon-48.svg" alt="MODX FRED" class="fred--logo"><h1>Fred</h1>';
 
-        const list = document.createElement('dl');
-        list.classList.add('fred--accordion');
-        list.setAttribute('tabindex', '0');
-        list.setAttribute('role', 'tablist');
+        const logo = document.createElement('img');
+        logo.setAttribute('alt', 'MODX FRED');
+        logo.classList.add('fred--logo');
+        logo.src = `${this.config.assetsUrl || ''}images/modx-revo-icon-48.svg`;
 
-        list.appendChild(new ResourcesComponent(this.config));
-        list.appendChild(new ElementsComponent(this.config));
+        const title = document.createElement('h1');
+        title.innerText = 'Fred';
 
-        this.sidebar.appendChild(this.close);
-        this.sidebar.appendChild(header);
-        this.sidebar.appendChild(list);
+        header.appendChild(logo);
+        header.appendChild(title);
+        
+        return header;
+    }
 
+    buildSidebar() {
+        this.sidebar = document.createElement('dl');
+        this.sidebar.classList.add('fred--accordion');
+        this.sidebar.setAttribute('tabindex', '0');
+        this.sidebar.setAttribute('role', 'tablist');
+
+        this.components.push(new PagesComponent(this.sidebar, this.config));
+        this.components.push(new ElementsComponent(this.sidebar, this.config));
+        
         return this.sidebar;
-    }
-
-    showSidebar2(title, content) {
-        this.sidebar2Header.innerHTML = '<i class="fred--close-small"></i> ' + title;
-        this.sidebar2Content.innerHTML = content;
-        this.sidebar2.classList.remove('fred--hidden');;
-    }
-
-    buildSidebar2() {
-        this.sidebar2 = document.createElement('div');
-        this.sidebar2.classList.add('fred--sidebar_paneltwo', 'active');
-        this.sidebar2.classList.add('fred--hidden');;
-
-        const list = document.createElement('dl');
-        list.classList.add('fred--accordion');
-        list.setAttribute('tabindex', '0');
-        list.setAttribute('role', 'tablist');
-
-        this.sidebar2Header = document.createElement('dt');
-        this.sidebar2Header.classList.add('active');
-        this.sidebar2Header.setAttribute('role', 'tab');
-        this.sidebar2Header.setAttribute('tabindex', '0');
-        this.sidebar2Header.addEventListener('click', e => {
-            e.preventDefault();
-            this.sidebar2.classList.add('fred--hidden');
-            window.addEventListener('click', this.closeSidebar);
-        });
-
-        const items = document.createElement('dd');
-        items.setAttribute('role', 'tab');
-        items.setAttribute('tabindex', '0');
-
-        this.sidebar2Content = document.createElement('div');
-
-        items.appendChild(this.sidebar2Content);
-
-        list.appendChild(this.sidebar2Header);
-        list.appendChild(items);
-
-        this.sidebar2.appendChild(list);
-
-        return this.sidebar2;
-    }
-
-    buildOpenButton() {
-        this.open = document.createElement('button');
-        this.open.classList.add('fred--open');
-        this.open.innerHTML = '<i class="fred--angle-right"></i> <i class="fred--angle-right"></i>';
-
-        this.open.addEventListener('click', e => {
-            e.preventDefault();
-            this.sidebar.classList.remove('fred--hidden');
-            window.addEventListener('click', this.closeSidebar);
-        });
-
-        return this.open;
-    }
-
-    closeSidebar(e) {
-        e.preventDefault();
-
-        if (this.lastRequest !== null) {
-            this.lastRequest.cancel();
-            this.lastRequest = null;
-        }
-
-        this.sidebar.classList.add('fred--hidden');
-        this.sidebar2.classList.add('fred--hidden');
-
-        window.removeEventListener('click', this.closeSidebar);
     }
 
     hideSidebar() {
         this.wrapper.classList.add('fred--hidden');
-        window.removeEventListener('click', this.closeSidebar);
+
+        window.removeEventListener('click', this.hideSidebar);
     }
 
     showSidebar() {
         this.wrapper.classList.remove('fred--hidden');
         setTimeout(() => {
-            window.addEventListener('click', this.closeSidebar);
+            window.addEventListener('click', this.hideSidebar);
         }, 50);
     }
 }
