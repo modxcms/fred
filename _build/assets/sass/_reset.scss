@@ -19,7 +19,9 @@ $textarea-resize: vertical !default;
 /*
  * Normalization
  */
-
+html{
+  font-size: 16px;
+}
 .fred {
 
   button, input, select, textarea, pre, ul, ol {
@@ -71,6 +73,7 @@ $textarea-resize: vertical !default;
     margin: 0;
     padding: 0;
     box-sizing: inherit;
+    font-family: "Open Sans", Arial, sans-serif;
   }
 
   // specify the text decoration of anchors
