@@ -28,11 +28,28 @@ export default class Elements extends Sidebar {
                 return response.json();
             })
             .then(response => {
-                const content = document.createElement('div');
-                content.classList.add('fred--thumbs', 'source', 'blueprints-source');
+                const content = document.createElement('dl');
+                
 
-                response.data.elements.forEach(element => {
-                    content.innerHTML += Elements.elementWrapper(element.id, element.title, element.description, element.image, element.content);
+                response.data.elements.forEach(category => {
+                    const dt = document.createElement('dt');
+                    dt.setAttribute('role', 'tab');
+                    dt.setAttribute('tabindex', '1');
+                    dt.innerHTML = category.category;
+                    
+                    const dd = document.createElement('dd');
+                    
+                    const categoryEl = document.createElement('div');
+                    categoryEl.classList.add('fred--thumbs', 'source', 'blueprints-source');
+                    
+                    category.elements.forEach(element => {
+                        categoryEl.innerHTML += Elements.elementWrapper(element.id, element.title, element.description, element.image, element.content);
+                    });
+
+                    dd.appendChild(categoryEl);
+
+                    content.append(dt);
+                    content.append(dd);
                 });
 
                 this.content = content.outerHTML;

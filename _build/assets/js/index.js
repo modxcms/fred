@@ -1,6 +1,6 @@
 import emitter from './EE';
 import Sidebar from './Sidebar';
-import Topbar from './Topbar';
+import Launcher from './Launcher';
 import fetch from 'isomorphic-fetch';
 import drake from './drake';
 import Elements from './Components/Sidebar/Elements';
@@ -26,22 +26,10 @@ export default class Fred {
             e.stopImmediatePropagation();
         });
 
-        new Topbar(this.wrapper);
-        this.sidebar.render(this.wrapper);
+        new Launcher(this.wrapper);
+        new Sidebar(this.wrapper, this.config);
 
-        if (document.body.firstChild === null) {
-            document.body.appendChild(this.wrapper);
-        } else {
-            document.body.insertBefore(this.wrapper, document.body.firstChild);
-        }
-    }
-
-    showFred() {
-        this.wrapper.classList.remove('fred--hidden');
-    }
-
-    hideFred() {
-        this.wrapper.classList.add('fred--hidden');
+        document.body.appendChild(this.wrapper);
     }
 
     getDataFromDropZone(dropZone) {
@@ -155,7 +143,7 @@ export default class Fred {
         body.data = data;
 
         console.log('body: ', body);
-
+        
         fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
             method: "post",
             credentials: 'same-origin',
@@ -220,18 +208,11 @@ export default class Fred {
 
             registeredDropzones.push(this.dropzones[zoneIndex].dataset.fredDropzone);
         }
-
-        emitter.on('fred-hide', () => {
-            this.hideFred();
-        });
-        emitter.on('fred-show', () => {
-            this.showFred();
-        });
+        
         emitter.on('fred-save', () => {
             this.save();
         });
 
-        this.sidebar = new Sidebar(this.config);
         this.render();
 
         drake.initDrake();
@@ -255,6 +236,10 @@ export default class Fred {
                 this.loading.remove();
                 this.loading = null;
             }
+        });
+
+        emitter.on('fred-undo', () => {
+            console.log('Undo not yet implemented.');
         });
         
         this.loadContent();

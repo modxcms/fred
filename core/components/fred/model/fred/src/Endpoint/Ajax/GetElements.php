@@ -16,30 +16,44 @@ class GetElements extends Endpoint
         
         $elements = [];
         
-        /** @var \modChunk[] $chunks */
-        $chunks = $this->modx->getIterator('modChunk', ['category' => $categoryId]);
-        foreach ($chunks as $chunk) {
-            $matches = [];
-            preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
-
-            $image = '';
-            $description = $chunk->description;
+        /** @var \modCategory[] $categories */
+        $categories = $this->modx->getIterator('modCategory', [
+            'parent' => $categoryId
+        ]);
+        
+        foreach ($categories as $category) {
+            $categoryElements = [
+                'category' => $category->category,
+                'elements' => []
+            ];
             
-            if (count($matches) == 2) {
-                $image = $matches[1];
-                $description = str_replace($matches[0], '', $description);
+            /** @var \modChunk[] $chunks */
+            $chunks = $this->modx->getIterator('modChunk', ['category' => $category->id]);
+            foreach ($chunks as $chunk) {
+                $matches = [];
+                preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
+
+                $image = '';
+                $description = $chunk->description;
+
+                if (count($matches) == 2) {
+                    $image = $matches[1];
+                    $description = str_replace($matches[0], '', $description);
+                }
+
+                $categoryElements['elements'][] = [
+                    "id" => $chunk->id,
+                    "title" => $chunk->name,
+                    "description" => $description,
+                    "image" => $image,
+                    "content" => $chunk->content
+                ];
             }
             
-            
-
-            $elements[] = [
-                "id" => $chunk->id,
-                "title" => $chunk->name,
-                "description" => $description,
-                "image" => $image,
-                "content" => $chunk->content
-            ];
+            $elements[] = $categoryElements;
         }
+        
+        
 
         return $this->data(['elements' => $elements]);
     }
