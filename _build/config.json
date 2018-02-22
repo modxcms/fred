@@ -22,6 +22,10 @@
                 "key": "template_ids",
                 "name": "Fred Template IDs",
                 "value": ""
+            },
+            {
+                "key": "launcher_position",
+                "value": "bottom_left"
             }
         ]
     }

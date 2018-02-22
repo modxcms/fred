@@ -1,17 +1,16 @@
 import emitter from './EE';
 
 export default class Launcher {
-    constructor(fredWrapper, position = 'right') {
+    constructor(fredWrapper, position = 'bottom_left') {
         this.fredWrapper = fredWrapper;
         this.position = position;
-        if (this.position !== 'right') this.position = 'left';
 
         this.render();
     }
     
     render() {
         const wrapper = document.createElement('div');
-        wrapper.classList.add('fred--launcher', `fred--launcher_bottom_${this.position}`);
+        wrapper.classList.add('fred--launcher', `fred--launcher_${this.position}`);
 
         const fred = document.createElement('button');
         fred.classList.add('fred--launcher_btn', 'fred--launcher_btn_fred');
