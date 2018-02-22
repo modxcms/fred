@@ -1,35 +1,37 @@
 {
-    "name": "Fred",
-    "lowCaseName": "fred",
-    "description": "Frontend Editor",
-    "author": "John Peca",
-    "version": "0.1.0",
-    "package":{
-        "menus": [],
-        "elements": {
-            "snippets": [{
-                "name": "Fred",
-                "file": "Fred.php"
-            }]
-        },
-        "systemSettings": [
-            {
-                "key": "elements_category_id",
-                "name": "Element's Category ID",
-                "value": ""
-            },
-            {
-                "key": "template_ids",
-                "name": "Fred Template IDs",
-                "value": ""
-            },
-            {
-                "key": "launcher_position",
-                "value": "bottom_left"
-            }
-        ]
-    }
-    ,"database": {
-        "tables": []
-    }
+  "name": "Fred",
+  "lowCaseName": "fred",
+  "description": "Frontend Editor",
+  "author": "John Peca",
+  "version": "0.1.0",
+  "package": {
+    "menus": [],
+    "elements": {
+      "snippets": [
+        {
+          "name": "Fred",
+          "file": "Fred.php"
+        }
+      ]
+    },
+    "systemSettings": [
+      {
+        "key": "elements_category_id",
+        "name": "Element's Category ID",
+        "value": ""
+      },
+      {
+        "key": "template_ids",
+        "name": "Fred Template IDs",
+        "value": ""
+      },
+      {
+        "key": "launcher_position",
+        "value": "bottom_left"
+      }
+    ]
+  },
+  "database": {
+    "tables": []
+  }
 }
