@@ -26,7 +26,7 @@ export default class Fred {
             e.stopImmediatePropagation();
         });
 
-        new Launcher(this.wrapper);
+        new Launcher(this.wrapper, (this.config.launcherPosition || 'bottom_left'));
         new Sidebar(this.wrapper, this.config);
 
         document.body.appendChild(this.wrapper);
