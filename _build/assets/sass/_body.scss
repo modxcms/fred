@@ -30,6 +30,11 @@
 
   //&:nth-child(even){background: #f9f9f9;}
 
+  &:before {
+    content: '';
+    background: transparent;
+    transition: $timing;
+  }
   &:hover{
     &:before{
       content: '';
@@ -76,7 +81,7 @@
 @keyframes fred--slide_toolbar {
   0%{
     height: 0;
-    overflow-hidden;
+    overflow:hidden;
   }
   100%{
     height: 28px;
