@@ -213,12 +213,14 @@
     }
     dl {
       dt{
+        position: relative;
         padding: 1rem 2rem 1rem 3rem;
         font-size: 1.2rem;
         font-weight: lighter;
         transition: $timing;
         cursor: pointer;
         &.active, &:hover, &:focus {
+          color: $modxgreen;
           background-color: darken($black, 15%);
           + dd {
             display: block;
@@ -254,6 +256,45 @@
         color: $primary;
       }
     }
+  }
+}
+
+.fred--pages{
+  &_list{
+    dl{
+      border-left: 2px solid $white;
+      margin-left: 2px;
+    }
+  }
+  &_menu{
+    h3 {
+      font-size: 1.3rem;
+      padding: 1rem 2rem;
+    }
+    button{
+      color: white;
+      position: relative;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-weight: lighter;
+      transition: $timing;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      display:block;
+      width: 100%;
+      text-align: left;
+      &:hover, &:focus {
+        background-color: darken($black, 15%);
+      }
+    }
+  }
+  &_deleted{
+    color: rgba($modxred, .5);
+    text-decoration: line-through;
+  }
+  &_unpublished{
+    font-style: italic;
   }
 }
 
