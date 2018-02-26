@@ -86,9 +86,84 @@
         <dl class="fred--accordion" tabindex="0" role="tablist" id="fred--menu">
             <dt role="tab" tabindex="0" class="fred--sidebar_Pages">Pages <i class="fred--angle-right fred--accordion_toggle"></i></dt>
             <dd>
-                <div class="fred--loading_wrapper">
+                <div class="fred--loading_wrapper" hidden="hidden">
                     <span class="fred--loading"></span>
                     Retrieving Pages
+                </div>
+                <div class="fred--pages">
+                    <form class="fred--pages_search">
+                        <fieldset>
+                            <label for="fred--pages_search_text">
+                                Search
+                            </label>
+                            <div class="fred--pages_search_wrapper">
+                                <input type="text" name="search" placeholder="Enter Keyword" id="fred--pages_search_text" />
+                                <button name="submit" class="fred--pages_search_button"></button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <dl class="fred--pages_list">
+                        <dt role="tab" tabindex="1">Home (1)</dt>
+                        <dd>
+                            <div class="fred--pages_menu">
+                                <h3>Home (1)</h3>
+                                <button>Edit</button>
+                                <button>Duplicate</button>
+                                <button>Unpublish</button>
+                                <button>Create Child Page</button>
+                                <button>Delete</button>
+                            </div>
+                        </dd>
+                        <dt role="tab" tabindex="1">About (3)</dt>
+                        <dd>
+                            <div class="fred--pages_menu">
+                                <h3>About (3)</h3>
+                                <button>Edit</button>
+                                <button>Duplicate</button>
+                                <button>Unpublish</button>
+                                <button>Create Child Page</button>
+                                <button>Delete</button>
+                            </div>
+                        </dd>
+                        <dt role="tab" tabindex="1"><span class="fred--btn-list fred--btn-list_expand" onclick="expandChildren('#fred-children-2'); $(this).toggleClass('fred--btn-list_close');"></span> Section (2)</dt>
+                        <dd>
+                            <div class="fred--pages_menu">
+                                <h3>Section (2)</h3>
+                                <button>Edit</button>
+                                <button>Duplicate</button>
+                                <button>Unpublish</button>
+                                <button>Create Child Page</button>
+                                <button>Delete</button>
+                            </div>
+                        </dd>
+                        <dl class="fred--pages_list fred--hidden" id="fred-children-2" aria-disabled="true">
+                            <dt role="tab" tabindex="1" class="fred--pages_deleted">Sub-page (5)</dt>
+                            <dd>
+                                <div class="fred--pages_menu">
+                                    <h3>Sub-page (5)</h3>
+                                    <button>Edit</button>
+                                    <button>Duplicate</button>
+                                    <button>Unpublish</button>
+                                    <button>Create Child Page</button>
+                                    <button>Undelete</button>
+                                </div>
+                            </dd>
+                            <dt role="tab" tabindex="1" class="fred--pages_unpublished">Sub-page (6)</dt>
+                            <dd>
+                                <div class="fred--pages_menu">
+                                    <h3>Sub-page (6)</h3>
+                                    <button>Edit</button>
+                                    <button>Duplicate</button>
+                                    <button>Publish</button>
+                                    <button>Create Child Page</button>
+                                    <button>Delete</button>
+                                </div>
+                            </dd>
+                        </dl>
+                    </dl>
+                    <button class="fred--btn-sidebar">
+                        Create Page
+                    </button>
                 </div>
             <dd>
             <dt role="tab" tabindex="0" class="fred--sidebar_Elements">Elements <i class="fred--angle-right fred--accordion_toggle"></i></dt>
@@ -127,6 +202,9 @@
             <dt role="tab" tabindex="0" class="fred--sidebar_Settings">Settings <i class="fred--angle-right fred--accordion_toggle"></i></dt>
             <dd> Settings Content <dd>
         </dl>
+        <button class="fred--btn-sidebar fred--btn-sidebar_logout">
+            Logout
+        </button>
     </div>
 </div>
 
@@ -145,7 +223,7 @@
 <script type="text/javascript">
     // Demo Functions
     $(document).ready(function(){
-        var fredbutton, sidebar, sidebarclose, menu, Pages, Elements, Settings = null;
+        var fredbutton, sidebar, sidebarclose, menu, Pages, Elements, Settings, logout = null;
         fredbutton = $('.fred--launcher_btn_fred');
         sidebar = $('.fred--sidebar');
         sidebarclose = $('.fred--sidebar_close');
@@ -153,6 +231,7 @@
         Pages = $('.fred--sidebar_Pages');
         Elements = $('.fred--sidebar_Elements');
         Settings = $('.fred--sidebar_Settings');
+        logout = $('.fred--btn-sidebar_logout');
 
         fredbutton.click(function(){
             if(sidebar.hasClass('fred--hidden')){
@@ -173,12 +252,14 @@
            $(this).click(function(){
                $(this).toggleClass('active');
                if($(this).hasClass('active')){
+                   logout.hide();
                    menu.children('dt').each(function(){
                      if(!$(this).hasClass('active')){
                          $(this).addClass('fred--hidden')
                      }
                    });
                }else{
+                   logout.show();
                    menu.children('dt').each(function(){
                        $(this).removeClass('fred--hidden')
                    });
@@ -186,6 +267,15 @@
            })
         });
     });
+    function expandChildren(target){
+        if($(target).hasClass('fred--hidden')){
+            $(target).removeAttr('aria-hidden');
+            $(target).removeClass('fred--hidden');
+        }else{
+            $(target).attr('aria-hidden','true');
+            $(target).addClass('fred--hidden');
+        }
+    }
 </script>
 
 </body>
