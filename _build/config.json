@@ -7,22 +7,21 @@
   "package": {
     "menus": [],
     "elements": {
-      "snippets": [
+      "plugins": [
         {
           "name": "Fred",
-          "file": "Fred.php"
+          "file": "Fred.php",
+          "events": ["OnWebPagePrerender"]
         }
       ]
     },
     "systemSettings": [
       {
         "key": "elements_category_id",
-        "name": "Element's Category ID",
         "value": ""
       },
       {
         "key": "template_ids",
-        "name": "Fred Template IDs",
         "value": ""
       },
       {
