@@ -14,7 +14,7 @@ export default class Sidebar {
             this.titleEl = document.createElement('dt');
             this.titleEl.setAttribute('role', 'tab');
             this.titleEl.setAttribute('tabindex', '0');
-            this.titleEl.classList.add(`fred--sidebar_${this.constructor.title}`);
+            this.titleEl.classList.add(`fred--sidebar_${this.constructor.title.toLowerCase()}`);
 
             this.titleEl.innerHTML = text + ((expandable === true) ? '<i class="fred--angle-right fred--accordion_toggle"></i>' : '');
 
@@ -62,7 +62,8 @@ export default class Sidebar {
     
     setContent(content) {
         if ((typeof content === 'object') && (content.outerHTML !== undefined)) {
-            this.contentEl.innerHTML = content.outerHTML;
+            this.contentEl.innerHTML = '';
+            this.contentEl.appendChild(content);
             return;
         }
         
