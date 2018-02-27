@@ -53,6 +53,14 @@ export default class Pages extends Sidebar {
             dt.setAttribute('role', 'tab');
             dt.setAttribute('tabindex', '1');
             dt.innerHTML = page.pagetitle;
+            
+            if (page.published !== true) {
+                dt.classList.add('fred--pages_unpublished');
+            }
+            
+            if (page.deleted === true) {
+                dt.classList.add('fred--pages_deleted');
+            }
 
             wrapper.append(dt);
 
@@ -114,19 +122,27 @@ export default class Pages extends Sidebar {
         const duplicate = document.createElement('button');
         duplicate.innerHTML = 'Duplicate';
         
-        const unpublish = document.createElement('button');
-        unpublish.innerHTML = 'Unpublish';
+        const publish = document.createElement('button');
+        if (page.published === true) {
+            publish.innerHTML = 'Unpublish';    
+        } else {
+            publish.innerHTML = 'Publish';
+        }
         
         const createChildPage = document.createElement('button');
         createChildPage.innerHTML = 'Create Child Page';
         
         const deletePage = document.createElement('button');
-        deletePage.innerHTML = 'Delete';
-
+        if (page.deleted === true) {
+            deletePage.innerHTML = 'Undelete';
+        } else {
+            deletePage.innerHTML = 'Delete';    
+        }
+        
         menu.appendChild(header);
         menu.appendChild(edit);
         menu.appendChild(duplicate);
-        menu.appendChild(unpublish);
+        menu.appendChild(publish);
         menu.appendChild(createChildPage);
         menu.appendChild(deletePage);
         
