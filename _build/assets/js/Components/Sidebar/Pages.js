@@ -61,6 +61,10 @@ export default class Pages extends Sidebar {
             if (page.deleted === true) {
                 dt.classList.add('fred--pages_deleted');
             }
+            
+            if (page.hidemenu === true) {
+                dt.classList.add('fred--pages_hidden');
+            }
 
             wrapper.append(dt);
 
@@ -69,6 +73,8 @@ export default class Pages extends Sidebar {
                 dd.appendChild(this.createMenu(page));
 
                 wrapper.append(dd);
+            } else {
+                dt.classList.add('fred--pages_noedit');
             }
             
             if (page.children.length > 0) {
