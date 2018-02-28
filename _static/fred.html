@@ -84,7 +84,7 @@
             <h1>Fred</h1>
         </div>
         <dl class="fred--accordion" tabindex="0" role="tablist" id="fred--menu">
-            <dt role="tab" tabindex="0" class="fred--sidebar_Pages">Pages <i class="fred--angle-right fred--accordion_toggle"></i></dt>
+            <dt role="tab" tabindex="0" class="fred--sidebar_pages">Pages <i class="fred--angle-right fred--accordion_toggle"></i></dt>
             <dd>
                 <div class="fred--loading_wrapper" hidden="hidden">
                     <span class="fred--loading"></span>
@@ -160,13 +160,49 @@
                                 </div>
                             </dd>
                         </dl>
+                        <dt role="tab" tabindex="1" class="fred--pages_hidden">Hidden Page (9)</dt>
+                        <dd>
+                            <div class="fred--pages_menu">
+                                <h3>Hidden Page (9)</h3>
+                                <button>Edit</button>
+                                <button>Duplicate</button>
+                                <button>Unpublish</button>
+                                <button>Create Child Page</button>
+                                <button>Delete</button>
+                            </div>
+                        </dd>
+                        <dt role="tab" tabindex="1" class="fred--pages_noedit"><span class="fred--btn-list fred--btn-list_expand" onclick="expandChildren('#fred-children-10'); $(this).toggleClass('fred--btn-list_close');"></span> Can't Edit but has a long name too (10)</dt>
+                        <dl class="fred--pages_list fred--hidden" id="fred-children-10" aria-disabled="true">
+                            <dt role="tab" tabindex="1" class="fred--pages_deleted">Sub-page (11)</dt>
+                            <dd>
+                                <div class="fred--pages_menu">
+                                    <h3>Sub-page (11)</h3>
+                                    <button>Edit</button>
+                                    <button>Duplicate</button>
+                                    <button>Unpublish</button>
+                                    <button>Create Child Page</button>
+                                    <button>Undelete</button>
+                                </div>
+                            </dd>
+                            <dt role="tab" tabindex="1" class="fred--pages_unpublished">Sub-page (12)</dt>
+                            <dd>
+                                <div class="fred--pages_menu">
+                                    <h3>Sub-page (12)</h3>
+                                    <button>Edit</button>
+                                    <button>Duplicate</button>
+                                    <button>Publish</button>
+                                    <button>Create Child Page</button>
+                                    <button>Delete</button>
+                                </div>
+                            </dd>
+                        </dl>
                     </dl>
                     <button class="fred--btn-sidebar">
                         Create Page
                     </button>
                 </div>
             <dd>
-            <dt role="tab" tabindex="0" class="fred--sidebar_Elements">Elements <i class="fred--angle-right fred--accordion_toggle"></i></dt>
+            <dt role="tab" tabindex="0" class="fred--sidebar_elements">Elements <i class="fred--angle-right fred--accordion_toggle"></i></dt>
             <dd>
                 <dl>
                     <dt role="tab" tabindex="1">Category 1</dt>
@@ -199,7 +235,7 @@
                     <dd></dd>
                 </dl>
             <dd>
-            <dt role="tab" tabindex="0" class="fred--sidebar_Settings">Settings <i class="fred--angle-right fred--accordion_toggle"></i></dt>
+            <dt role="tab" tabindex="0" class="fred--sidebar_settings">Settings <i class="fred--angle-right fred--accordion_toggle"></i></dt>
             <dd> Settings Content <dd>
         </dl>
         <button class="fred--btn-sidebar fred--btn-sidebar_logout">
