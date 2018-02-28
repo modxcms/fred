@@ -67,7 +67,7 @@
     left: -360px;
     opacity: 0;
   }
-  &_Pages {
+  &_pages {
     &:before {
       content: "";
       height: 35px;
@@ -79,7 +79,7 @@
       background-color: $modxred !important;
     }
   }
-  &_Elements {
+  &_elements {
     &:before {
       content: "";
       height: 35px;
@@ -91,7 +91,7 @@
       background-color: $modxblue !important;
     }
   }
-  &_Settings {
+  &_settings {
     &:before {
       content: "";
       height: 35px;
@@ -270,9 +270,11 @@
     h3 {
       font-size: 1.3rem;
       padding: 1rem 2rem;
+      color: $white;
+      font-weight: lighter;
     }
     button{
-      color: white;
+      color: $white;
       position: relative;
       padding: 1rem 2rem;
       font-size: 1.2rem;
@@ -295,6 +297,16 @@
   }
   &_unpublished{
     font-style: italic;
+  }
+  &_hidden{
+    color: rgba($white, .5);
+  }
+  &_noedit{
+    cursor: not-allowed !important;
+    &:hover, &:focus, &.active{
+      color: $white !important;
+      background: transparent !important;
+    }
   }
 }
 
