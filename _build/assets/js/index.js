@@ -3,8 +3,8 @@ import Sidebar from './Sidebar';
 import Launcher from './Launcher';
 import fetch from 'isomorphic-fetch';
 import drake from './drake';
-import Elements from './Components/Sidebar/Elements';
 import imageEditor from './Editors/ImageEditor';
+import ContentElement from './Components/Sidebar/Elements/ContentElement';
 
 export default class Fred {
     constructor(config = {}) {
@@ -109,7 +109,7 @@ export default class Fred {
         // Remove contenteditable, data-fred-name & data-fred-target attributes
         const contentEditables = clone.querySelectorAll('[contenteditable]');
         for (let el of contentEditables) {
-            el.removeAttribute('contentEditable');
+            el.removeAttribute('contenteditable');
             el.removeAttribute('data-fred-name');
             el.removeAttribute('data-fred-target');
         }
@@ -177,7 +177,7 @@ export default class Fred {
 
                             let apiItem = virtualWrapper.querySelector('.fred-api');
                             while (apiItem) {
-                                apiItem.replaceWith(Elements.wrapContent(apiItem));
+                                apiItem.replaceWith((new ContentElement(apiItem)).wrapper);
 
                                 apiItem = virtualWrapper.querySelector('.fred-api');
                             }
