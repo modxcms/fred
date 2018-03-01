@@ -27,8 +27,8 @@
   position: relative;
   //padding:2rem 1rem;
   min-height: 30px;
-  box-shadow: inset 0 0 2px transparent;
-  transition: $timing;
+  outline: 15px solid rgba($modxblue,0);
+  transition: $timing cubic-bezier(.79,.14,.15,.86);
 
   //&:nth-child(even){background: #f9f9f9;}
 
@@ -38,7 +38,7 @@
     background: transparent;
   }
   &:hover, &:focus{
-    box-shadow: inset 0 0 2px rgba($modxblue,.5);
+    outline: 3px solid $modxblue;
     &:before{
       content: '';
       background: rgba($modxblue, .1);
