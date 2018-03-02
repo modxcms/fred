@@ -261,9 +261,17 @@
 
 .fred--pages {
   &_list {
+    font-size: 20px;
+    & > dt{
+      font-size: inherit !important;
+    }
     dl {
       border-left: 2px solid $white;
       margin-left: 2px;
+      font-size: .95em;
+      & > dt{
+        font-size: inherit !important;
+      }
     }
   }
   &_menu {
