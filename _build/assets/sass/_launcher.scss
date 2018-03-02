@@ -1,127 +1,129 @@
-.fred--launcher{
-  position:fixed;
+.fred--launcher {
+  position: fixed;
   z-index: 10010;
-  margin: 2rem;
+  margin: 32px;
   display: inline-block;
   bottom: 0;
   left: 0;
   * {
     outline: 0 !important;
   }
-  &_btn{
+  &_btn {
     border-radius: 50%;
     border: none;
     background: $gray center center no-repeat;
     background-size: 60%;
     text-indent: -9999px;
     padding: 0;
-    height: 3rem; width: 3rem;
-    box-shadow: rgba($black, .34) 0 .25rem .5rem;
+    height: 48px;
+    width: 48px;
+    box-shadow: rgba($black, .34) 0 4px 8px;
     transition: $timing;
-    &:hover{
+    &:hover {
       transform: scale(1.05);
     }
-    &_fred{
+    &_fred {
       background-color: $black;
       background-image: url('images/modx-revo-icon-48.svg');
-      height: 5rem; width: 5rem;
+      height: 80px;
+      width: 80px;
     }
-    &_save{
+    &_save {
       background-color: $modxred;
       background-image: url('images/save.svg');
       position: absolute;
-      top: -4rem;
-      left: 1.25rem;
+      top: -64px;
+      left: 20px;
     }
-    &_undo{
+    &_undo {
       background-color: $modxblue;
       background-image: url('images/undo.svg');
       position: absolute;
-      top: -2rem;
-      right: -2.75rem;
+      top: -32px;
+      right: -44px;
     }
   }
-  &_top{
+  &_top {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     bottom: initial;
-    .fred--launcher_btn{
-      &_save{
-        left: -1rem;
-        bottom: -3.25rem;
-        top:initial;
+    .fred--launcher_btn {
+      &_save {
+        left: -16px;
+        bottom: -52px;
+        top: initial;
       }
-      &_undo{
-        right: -1rem;
-        bottom: -3.25rem;
-        left:initial;
-        top:initial;
+      &_undo {
+        right: -16px;
+        bottom: -52px;
+        left: initial;
+        top: initial;
       }
     }
-    &_left{
+    &_left {
       top: 0;
       left: 0;
       bottom: initial;
-      .fred--launcher_btn{
-        &_save{
-          bottom: -4rem;
+      .fred--launcher_btn {
+        &_save {
+          bottom: -64px;
           top: initial;
         }
         &_undo {
-          bottom: -2rem;
+          bottom: -32px;
           top: initial;
         }
       }
     }
-    &_right{
+    &_right {
       top: 0;
-      right:0;
-      left:initial;
+      right: 0;
+      left: initial;
       bottom: initial;
-      .fred--launcher_btn{
-        &_save{
-          bottom: -4rem;
+      .fred--launcher_btn {
+        &_save {
+          bottom: -64px;
           top: initial;
         }
-        &_undo{
-          left: -2.75rem;
-          bottom: -2rem;
+        &_undo {
+          left: -44px;
+          bottom: -32px;
           top: initial;
           right: initial;
         }
       }
     }
   }
-  &_bottom{
+  &_bottom {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    .fred--launcher_btn{
-      &_save{
-        left: -1rem;
-        top: -3.25rem;
+    .fred--launcher_btn {
+      &_save {
+        left: -16px;
+        top: -52px;
       }
-      &_undo{
-        right: -1rem;
-        top: -3.25rem;
-        left:initial;
+      &_undo {
+        right: -16px;
+        top: -52px;
+        left: initial;
       }
     }
-    &_left{
+    &_left {
       bottom: 0;
       left: 0;
     }
-    &_right{
+    &_right {
       bottom: 0;
       right: 0;
-      left:initial;
-      .fred--launcher_btn{
-        &_save{
+      left: initial;
+      .fred--launcher_btn {
+        &_save {
 
         }
-        &_undo{
-          left: -2.75rem;
+        &_undo {
+          left: -44px;
           right: initial;
         }
       }

@@ -64,13 +64,26 @@
         <h1>Bootstrap starter template</h1>
         <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a
             mostly barebones HTML document.</p>
+        <div class="fred--block">
+            <div class="fred--toolbar">
+                <button class="fred--move-icon handle"></button>
+                <button class="fred--duplicate-icon"></button>
+                <button class="fred--trash"></button>
+            </div>
+            <div class="fred--block_content" data-fred-element-id="5">
+                <h3 data-fred-name="pagetitle"contenteditable="true">Editable Area</h3>
+                <div data-fred-name="content" contenteditable="true">
+                    <p>This text is editable</p>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
 
 <!-- BEGIN FRED -->
-<div id="fred">
-    <div class="fred--launcher fred--launcher_bottom_right" >
+<div class="fred">
+    <div class="fred--launcher fred--launcher_bottom_right">
         <button class="fred--launcher_btn fred--launcher_btn_fred" role="button">Fred</button>
         <button class="fred--launcher_btn fred--launcher_btn_save" role="button">Save</button>
         <button class="fred--launcher_btn fred--launcher_btn_undo" role="button">Undo</button>
@@ -84,7 +97,8 @@
             <h1>Fred</h1>
         </div>
         <dl class="fred--accordion" tabindex="0" role="tablist" id="fred--menu">
-            <dt role="tab" tabindex="0" class="fred--sidebar_pages">Pages <i class="fred--angle-right fred--accordion_toggle"></i></dt>
+            <dt role="tab" tabindex="0" class="fred--sidebar_pages">Pages <i
+                    class="fred--angle-right fred--accordion_toggle"></i></dt>
             <dd>
                 <div class="fred--loading_wrapper" hidden="hidden">
                     <span class="fred--loading"></span>
@@ -97,13 +111,14 @@
                                 Search
                             </label>
                             <div class="fred--pages_search_wrapper">
-                                <input type="text" name="search" placeholder="Enter Keyword" id="fred--pages_search_text" />
+                                <input type="text" name="search" placeholder="Enter Keyword"
+                                       id="fred--pages_search_text"/>
                                 <button name="submit" class="fred--pages_search_button"></button>
                             </div>
                         </fieldset>
                     </form>
                     <dl class="fred--pages_list">
-                        <dt role="tab" tabindex="1">Home (1)</dt>
+                        <dt role="tab" tabindex="0">Home (1)</dt>
                         <dd>
                             <div class="fred--pages_menu">
                                 <h3>Home (1)</h3>
@@ -114,7 +129,7 @@
                                 <button>Delete</button>
                             </div>
                         </dd>
-                        <dt role="tab" tabindex="1">About (3)</dt>
+                        <dt role="tab" tabindex="0">About (3)</dt>
                         <dd>
                             <div class="fred--pages_menu">
                                 <h3>About (3)</h3>
@@ -125,7 +140,10 @@
                                 <button>Delete</button>
                             </div>
                         </dd>
-                        <dt role="tab" tabindex="1"><span class="fred--btn-list fred--btn-list_expand" onclick="expandChildren('#fred-children-2'); $(this).toggleClass('fred--btn-list_close');"></span> Section (2)</dt>
+                        <dt role="tab" tabindex="0"><button class="fred--btn-list fred--btn-list_expand"
+                                                          onclick="expandChildren('#fred-children-2'); $(this).toggleClass('fred--btn-list_close');"></button>
+                            Section (2)
+                        </dt>
                         <dd>
                             <div class="fred--pages_menu">
                                 <h3>Section (2)</h3>
@@ -137,7 +155,7 @@
                             </div>
                         </dd>
                         <dl class="fred--pages_list fred--hidden" id="fred-children-2" aria-disabled="true">
-                            <dt role="tab" tabindex="1" class="fred--pages_deleted">Sub-page (5)</dt>
+                            <dt role="tab" tabindex="0" class="fred--pages_deleted">Sub-page (5)</dt>
                             <dd>
                                 <div class="fred--pages_menu">
                                     <h3>Sub-page (5)</h3>
@@ -148,7 +166,7 @@
                                     <button>Undelete</button>
                                 </div>
                             </dd>
-                            <dt role="tab" tabindex="1" class="fred--pages_unpublished">Sub-page (6)</dt>
+                            <dt role="tab" tabindex="0" class="fred--pages_unpublished">Sub-page (6)</dt>
                             <dd>
                                 <div class="fred--pages_menu">
                                     <h3>Sub-page (6)</h3>
@@ -160,7 +178,7 @@
                                 </div>
                             </dd>
                         </dl>
-                        <dt role="tab" tabindex="1" class="fred--pages_hidden">Hidden Page (9)</dt>
+                        <dt role="tab" tabindex="0" class="fred--pages_hidden">Hidden Page (9)</dt>
                         <dd>
                             <div class="fred--pages_menu">
                                 <h3>Hidden Page (9)</h3>
@@ -171,9 +189,13 @@
                                 <button>Delete</button>
                             </div>
                         </dd>
-                        <dt role="tab" tabindex="1" class="fred--pages_noedit"><span class="fred--btn-list fred--btn-list_expand" onclick="expandChildren('#fred-children-10'); $(this).toggleClass('fred--btn-list_close');"></span> Can't Edit but has a long name too (10)</dt>
+                        <dt role="tab" tabindex="0" class="fred--pages_noedit"><button
+                                class="fred--btn-list fred--btn-list_expand"
+                                onclick="expandChildren('#fred-children-10'); $(this).toggleClass('fred--btn-list_close');"></button>
+                            Can't Edit but has a long name too (10)
+                        </dt>
                         <dl class="fred--pages_list fred--hidden" id="fred-children-10" aria-disabled="true">
-                            <dt role="tab" tabindex="1" class="fred--pages_deleted">Sub-page (11)</dt>
+                            <dt role="tab" tabindex="0" class="fred--pages_deleted">Sub-page (11)</dt>
                             <dd>
                                 <div class="fred--pages_menu">
                                     <h3>Sub-page (11)</h3>
@@ -184,7 +206,7 @@
                                     <button>Undelete</button>
                                 </div>
                             </dd>
-                            <dt role="tab" tabindex="1" class="fred--pages_unpublished">Sub-page (12)</dt>
+                            <dt role="tab" tabindex="0" class="fred--pages_unpublished">Sub-page (12)</dt>
                             <dd>
                                 <div class="fred--pages_menu">
                                     <h3>Sub-page (12)</h3>
@@ -196,7 +218,10 @@
                                 </div>
                             </dd>
 
-                            <dt role="tab" tabindex="1"><span class="fred--btn-list fred--btn-list_expand" onclick="expandChildren('#fred-children-20'); $(this).toggleClass('fred--btn-list_close');"></span> Sub-page Section (20)</dt>
+                            <dt role="tab" tabindex="0"><button class="fred--btn-list fred--btn-list_expand"
+                                                              onclick="expandChildren('#fred-children-20'); $(this).toggleClass('fred--btn-list_close');"></button>
+                                Sub-page Section (20)
+                            </dt>
                             <dd>
                                 <div class="fred--pages_menu">
                                     <h3>Sub-page Section (20)</h3>
@@ -208,7 +233,7 @@
                                 </div>
                             </dd>
                             <dl class="fred--pages_list fred--hidden" id="fred-children-20" aria-disabled="true">
-                                <dt role="tab" tabindex="1" class="fred--pages_deleted">Sub-page (15)</dt>
+                                <dt role="tab" tabindex="0" class="fred--pages_deleted">Sub-page (15)</dt>
                                 <dd>
                                     <div class="fred--pages_menu">
                                         <h3>Sub-page (15)</h3>
@@ -219,7 +244,7 @@
                                         <button>Undelete</button>
                                     </div>
                                 </dd>
-                                <dt role="tab" tabindex="1" class="fred--pages_unpublished">Sub-page (16)</dt>
+                                <dt role="tab" tabindex="0" class="fred--pages_unpublished">Sub-page (16)</dt>
                                 <dd>
                                     <div class="fred--pages_menu">
                                         <h3>Sub-page (16)</h3>
@@ -238,10 +263,11 @@
                     </button>
                 </div>
             <dd>
-            <dt role="tab" tabindex="0" class="fred--sidebar_elements">Elements <i class="fred--angle-right fred--accordion_toggle"></i></dt>
+            <dt role="tab" tabindex="0" class="fred--sidebar_elements">Elements <i
+                    class="fred--angle-right fred--accordion_toggle"></i></dt>
             <dd>
                 <dl>
-                    <dt role="tab" tabindex="1">Category 1</dt>
+                    <dt role="tab" tabindex="0">Category 1</dt>
                     <dd>
                         <div class="fred--thumbs source blueprints-source">
                             <figure class="fred--thumb">
@@ -258,21 +284,24 @@
                                 <figcaption><strong>Text and Image</strong><em></em></figcaption>
                                 <div class="chunk" data-fred-element-id="37" hidden="hidden">
                                     <p data-fred-name="text" contenteditable="true"> Click on the image to edit it.</p>
-                                    <img src="https://via.placeholder.com/150x150" data-fred-name="image" contenteditable="true">
+                                    <img src="https://via.placeholder.com/150x150" data-fred-name="image"
+                                         contenteditable="true">
                                 </div>
                             </figure>
                         </div>
                     </dd>
-                    <dt role="tab" tabindex="1">Category 2</dt>
+                    <dt role="tab" tabindex="0">Category 2</dt>
                     <dd></dd>
-                    <dt role="tab" tabindex="1">Category with a stupid long name</dt>
+                    <dt role="tab" tabindex="0">Category with a stupid long name</dt>
                     <dd></dd>
-                    <dt role="tab" tabindex="1">Category 4</dt>
+                    <dt role="tab" tabindex="0">Category 4</dt>
                     <dd></dd>
                 </dl>
             <dd>
-            <dt role="tab" tabindex="0" class="fred--sidebar_settings">Settings <i class="fred--angle-right fred--accordion_toggle"></i></dt>
-            <dd> Settings Content <dd>
+            <dt role="tab" tabindex="0" class="fred--sidebar_settings">Settings <i
+                    class="fred--angle-right fred--accordion_toggle"></i></dt>
+            <dd> Settings Content
+            <dd>
         </dl>
         <button class="fred--btn-sidebar fred--btn-sidebar_logout">
             Logout
@@ -294,7 +323,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     // Demo Functions
-    $(document).ready(function(){
+    $(document).ready(function () {
         var fredbutton, sidebar, sidebarclose, menu, Pages, Elements, Settings, logout = null;
         fredbutton = $('.fred--launcher_btn_fred');
         sidebar = $('.fred--sidebar');
@@ -305,46 +334,47 @@
         Settings = $('.fred--sidebar_Settings');
         logout = $('.fred--btn-sidebar_logout');
 
-        fredbutton.click(function(){
-            if(sidebar.hasClass('fred--hidden')){
+        fredbutton.click(function () {
+            if (sidebar.hasClass('fred--hidden')) {
                 sidebar.removeAttr('aria-hidden');
                 sidebar.removeClass('fred--hidden');
-            }else{
-                sidebar.attr('aria-hidden','true');
+            } else {
+                sidebar.attr('aria-hidden', 'true');
                 sidebar.addClass('fred--hidden');
             }
         });
 
-        sidebarclose.click(function(){
-           sidebar.attr('aria-hidden','true');
-           sidebar.addClass('fred--hidden');
+        sidebarclose.click(function () {
+            sidebar.attr('aria-hidden', 'true');
+            sidebar.addClass('fred--hidden');
         });
 
-        menu.children('dt').each(function(){
-           $(this).click(function(){
-               $(this).toggleClass('active');
-               if($(this).hasClass('active')){
-                   logout.hide();
-                   menu.children('dt').each(function(){
-                     if(!$(this).hasClass('active')){
-                         $(this).addClass('fred--hidden')
-                     }
-                   });
-               }else{
-                   logout.show();
-                   menu.children('dt').each(function(){
-                       $(this).removeClass('fred--hidden')
-                   });
-               }
-           })
+        menu.children('dt').each(function () {
+            $(this).click(function () {
+                $(this).toggleClass('active');
+                if ($(this).hasClass('active')) {
+                    logout.hide();
+                    menu.children('dt').each(function () {
+                        if (!$(this).hasClass('active')) {
+                            $(this).addClass('fred--hidden')
+                        }
+                    });
+                } else {
+                    logout.show();
+                    menu.children('dt').each(function () {
+                        $(this).removeClass('fred--hidden')
+                    });
+                }
+            })
         });
     });
-    function expandChildren(target){
-        if($(target).hasClass('fred--hidden')){
+
+    function expandChildren(target) {
+        if ($(target).hasClass('fred--hidden')) {
             $(target).removeAttr('aria-hidden');
             $(target).removeClass('fred--hidden');
-        }else{
-            $(target).attr('aria-hidden','true');
+        } else {
+            $(target).attr('aria-hidden', 'true');
             $(target).addClass('fred--hidden');
         }
     }

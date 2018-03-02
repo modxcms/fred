@@ -2,224 +2,312 @@
 /// @group Grid
 ////
 
-$gridGutter : $baseGutter;
-$mpGutter : 1.2%;
+$gridGutter: $baseGutter;
+$mpGutter: 1.2%;
 
 /// 100%
-@mixin grid1{
-    flex-basis: 100%;
-    max-width: 100%;
-    margin-bottom: $gridGutter;
+@mixin grid1 {
+  flex-basis: 100%;
+  max-width: 100%;
+  margin-bottom: $gridGutter;
 }
 
 /// 50.5%
-@mixin grid2{
+@mixin grid2 {
+  flex: 0 0 calc(50.5% - #{$gridGutter});
+  margin-bottom: $gridGutter;
+}
+
+@mixin grid3 {
+  flex: 0 0 calc(33.8% - #{$gridGutter});
+  margin-bottom: $gridGutter;
+}
+
+@mixin grid4 {
+  flex: 0 0 calc(25.25% - #{$gridGutter});
+  margin-bottom: $gridGutter;
+}
+
+@mixin grid5 {
+  flex: 0 0 calc(20.25% - #{$gridGutter});
+  margin-bottom: $gridGutter;
+}
+
+@mixin gridReset {
+  @include respond-to($mobile) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+
+@mixin gridHalf {
+  @include respond-to($tabletP) {
     flex: 0 0 calc(50.5% - #{$gridGutter});
-    margin-bottom: $gridGutter;
+  }
+  @include respond-to($mobile) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 }
 
-@mixin grid3{
-    flex: 0 0 calc(33.8% - #{$gridGutter});
-    margin-bottom: $gridGutter;
-}
-
-@mixin grid4{
-    flex: 0 0 calc(25.25% - #{$gridGutter});
-    margin-bottom: $gridGutter;
-}
-
-@mixin grid5{
-    flex: 0 0 calc(20.25% - #{$gridGutter});
-    margin-bottom: $gridGutter;
-}
-
-@mixin gridReset{
-    @include respond-to($mobile){
-        flex-basis: 100%;
-        max-width: 100%;
-    }
-}
-
-@mixin gridHalf{
-    @include respond-to($tabletP){
-        flex: 0 0 calc(50.5% - #{$gridGutter});
-    }
-    @include respond-to($mobile){
-        flex-basis: 100%;
-        max-width: 100%;
-    }
-}
-
-@mixin smallReset{
-    @include respond-to($oldmobile){
-        flex-basis: 100%;
-        max-width: 100%;
-    }
+@mixin smallReset {
+  @include respond-to($oldmobile) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 }
 
 /// .grid requires "justify-content: space-between;" b/c of flex: 0 0 calc
-.fred--grid{
+.fred--grid {
 
-    //IE hack
-    display: -ms-flexbox;
-    -ms-flex-wrap: wrap;
-    -ms-flex-direction: row;
+  //IE hack
+  display: -ms-flexbox;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: row;
 
-    //properties
-    display:flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: $gridGutter 0 0 0;
+  //properties
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: $gridGutter 0 0 0;
 
-    .fred--grid-1{
-        @include grid1;
-    }
+  .fred--grid-1 {
+    @include grid1;
+  }
 
-    .fred--grid-2{
-        @include grid2;
-    }
+  .fred--grid-2 {
+    @include grid2;
+  }
 
-    .fred--grid-3{
-        @include grid3;
-    }
+  .fred--grid-3 {
+    @include grid3;
+  }
 
-    .fred--grid-4{
-        @include grid4;
-    }
+  .fred--grid-4 {
+    @include grid4;
+  }
 
-    .fred--grid-5{
-        @include grid5;
-    }
+  .fred--grid-5 {
+    @include grid5;
+  }
 
-    //reset all the grid classes b/c .grid is a layout utility not a specific element like a card or tile
-    .fred--grid-2,.fred--grid-3,.fred--grid-4,.fred--grid-5{
-        @include gridReset;
-    }
+  //reset all the grid classes b/c .grid is a layout utility not a specific element like a card or tile
+  .fred--grid-2, .fred--grid-3, .fred--grid-4, .fred--grid-5 {
+    @include gridReset;
+  }
 
-    //alignments
-    &.fred--grid-center{
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content:center;
-    }
+  //alignments
+  &.fred--grid-center {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
 
-    &.fred--grid-center_y{
-        align-items:center;
-    }
-
-}
-
-.fred--cards, .fred--tiles{
-    //IE hack
-    display: -ms-flexbox;
-    -ms-flex-wrap: wrap;
-    -ms-flex-direction: row;
-
-    //properties
-    display:flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-    overflow:hidden;
-
-    .fred--card-1, .fred--tile-1{
-        @include grid1;
-    }
-
-    .fred--card-2, .fred--tile-2{
-        @include grid2;
-    }
-
-    .fred--card-3, .fred--tile-3{
-        @include grid3;
-    }
-
-    .fred--card-4, .fred--tile-4{
-        @include grid4;
-        @include gridHalf;
-    }
-
-    .fred--tile-5{
-        @include grid5;
-        @include gridHalf;
-    }
-
-    .fred--card-2, .fred--tile-2,.fred--card-3{@include gridReset;}
-    .fred--tile-3{@include smallReset;}
-
-    .fred--card-1,.fred--card-2,.fred--card-3,.card-4{
-        background-color: lighten($light-gray,2%);
-        border-radius: $radius;
-        //make them equal heights and card caption is at bottom
-        display:flex;
-        flex-wrap: nowrap;
-        flex-direction: column;
-        justify-content: space-between;
-        overflow:hidden;
-
-        &:not(.fred--fill-card) img{
-            padding: $gridGutter;
-            display:block;
-            margin:0 auto;
-        }
-
-        figcaption{
-            padding: $gridGutter;
-            background-color: lighten($primary,5%);
-            border-bottom-left-radius: $radius;
-            border-bottom-right-radius: $radius;
-
-            strong{
-                display:block;
-                font-size:1.25rem;
-                line-height:1.5rem;
-            }
-        }
-
-    }
-
-    .fred--tile-1,.fred--tile-2,.fred--tile-3,.fred--tile-4,.fred--tile-5{
-        background-color: lighten($light-gray,2%);
-        position: relative;
-
-        figcaption{
-            position: absolute;
-            z-index: 99;
-            bottom: 0;
-            padding: $gridGutter/2;
-        }
-        &:not(.fred--fill-tile) figcaption{
-            padding: $gridGutter*1.25;
-        }
-
-        img{
-            position: relative;
-            z-index: 9;
-        }
-        &:not(.fred--fill-tile) img{
-            padding: $gridGutter;
-            display:block;
-            margin:0 auto;
-        }
-
-    }
+  &.fred--grid-center_y {
+    align-items: center;
+  }
 
 }
 
-.fred--columns{
-    //IE hack
-    display: -ms-flexbox;
-    -ms-flex-wrap: wrap;
-    -ms-flex-direction: row;
+.fred--cards, .fred--tiles {
+  //IE hack
+  display: -ms-flexbox;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: row;
 
-    //properties
-    display:flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+  //properties
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  overflow: hidden;
+
+  .fred--card-1, .fred--tile-1 {
+    @include grid1;
+  }
+
+  .fred--card-2, .fred--tile-2 {
+    @include grid2;
+  }
+
+  .fred--card-3, .fred--tile-3 {
+    @include grid3;
+  }
+
+  .fred--card-4, .fred--tile-4 {
+    @include grid4;
+    @include gridHalf;
+  }
+
+  .fred--tile-5 {
+    @include grid5;
+    @include gridHalf;
+  }
+
+  .fred--card-2, .fred--tile-2, .fred--card-3 {
+    @include gridReset;
+  }
+  .fred--tile-3 {
+    @include smallReset;
+  }
+
+  .fred--card-1, .fred--card-2, .fred--card-3, .card-4 {
+    background-color: lighten($light-gray, 2%);
+    border-radius: $radius;
+    //make them equal heights and card caption is at bottom
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
 
-    .fred--col,
+    &:not(.fred--fill-card) img {
+      padding: $gridGutter;
+      display: block;
+      margin: 0 auto;
+    }
+
+    figcaption {
+      padding: $gridGutter;
+      background-color: lighten($primary, 5%);
+      border-bottom-left-radius: $radius;
+      border-bottom-right-radius: $radius;
+
+      strong {
+        display: block;
+        font-size: 20px;
+        line-height: 24px;
+      }
+    }
+
+  }
+
+  .fred--tile-1, .fred--tile-2, .fred--tile-3, .fred--tile-4, .fred--tile-5 {
+    background-color: lighten($light-gray, 2%);
+    position: relative;
+
+    figcaption {
+      position: absolute;
+      z-index: 99;
+      bottom: 0;
+      padding: $gridGutter/2;
+    }
+    &:not(.fred--fill-tile) figcaption {
+      padding: $gridGutter*1.25;
+    }
+
+    img {
+      position: relative;
+      z-index: 9;
+    }
+    &:not(.fred--fill-tile) img {
+      padding: $gridGutter;
+      display: block;
+      margin: 0 auto;
+    }
+
+  }
+
+}
+
+.fred--columns {
+  //IE hack
+  display: -ms-flexbox;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: row;
+
+  //properties
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .fred--col,
+  .fred--col-1,
+  .fred--col-2,
+  .fred--col-3,
+  .fred--col-4,
+  .fred--col-5,
+  .fred--col-6,
+  .fred--col-7,
+  .fred--col-8,
+  .fred--col-9,
+  .fred--col-10,
+  .fred--col-11,
+  .fred--col-12 {
+    flex: 0 0 auto;
+    padding: $gridGutter;
+  }
+
+  .fred--col {
+    flex-grow: 1;
+    flex-basis: 0;
+    max-width: 100%;
+  }
+
+  .fred--col-1 {
+    flex-basis: 8.333%;
+    max-width: 8.333%;
+  }
+
+  .fred--col-2 {
+    flex-basis: 16.667%;
+    max-width: 16.667%;
+  }
+
+  .fred--col-3 {
+    flex-basis: 25%;
+    max-width: 25%;
+  }
+
+  .fred--col-4 {
+    flex-basis: 33.333%;
+    max-width: 33.333%;
+  }
+
+  .fred--col-5 {
+    flex-basis: 41.667%;
+    max-width: 41.667%;
+  }
+
+  .fred--col-6 {
+    flex-basis: 50%;
+    max-width: 50%;
+  }
+
+  .fred--col-7 {
+    flex-basis: 58.333%;
+    max-width: 58.333%;
+  }
+
+  .fred--col-8 {
+    flex-basis: 66.667%;
+    max-width: 66.667%;
+  }
+
+  .fred--col-9 {
+    flex-basis: 75%;
+    max-width: 75%;
+  }
+
+  .fred--col-10 {
+    flex-basis: 83.333%;
+    max-width: 83.333%;
+  }
+
+  .fred--col-11 {
+    flex-basis: 91.667%;
+    max-width: 91.667%;
+  }
+
+  .fred--col-12 {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  //Default all .fred--col to 100% on mobile
+  @include respond-to($mobile) {
     .fred--col-1,
     .fred--col-2,
     .fred--col-3,
@@ -231,101 +319,14 @@ $mpGutter : 1.2%;
     .fred--col-9,
     .fred--col-10,
     .fred--col-11,
-    .fred--col-12 {
-      flex: 0 0 auto;
-      padding: $gridGutter;
-    }
-
-    .fred--col {
-      flex-grow: 1;
-      flex-basis: 0;
-      max-width: 100%;
-    }
-
-    .fred--col-1 {
-      flex-basis: 8.333%;
-      max-width: 8.333%;
-    }
-
-    .fred--col-2 {
-      flex-basis: 16.667%;
-      max-width: 16.667%;
-    }
-
-    .fred--col-3 {
-      flex-basis: 25%;
-      max-width: 25%;
-    }
-
-    .fred--col-4 {
-      flex-basis: 33.333%;
-      max-width: 33.333%;
-    }
-
-    .fred--col-5 {
-      flex-basis: 41.667%;
-      max-width: 41.667%;
-    }
-
-    .fred--col-6 {
-      flex-basis: 50%;
-      max-width: 50%;
-    }
-
-    .fred--col-7 {
-      flex-basis: 58.333%;
-      max-width: 58.333%;
-    }
-
-    .fred--col-8 {
-      flex-basis: 66.667%;
-      max-width: 66.667%;
-    }
-
-    .fred--col-9 {
-      flex-basis: 75%;
-      max-width: 75%;
-    }
-
-    .fred--col-10 {
-      flex-basis: 83.333%;
-      max-width: 83.333%;
-    }
-
-    .fred--col-11 {
-      flex-basis: 91.667%;
-      max-width: 91.667%;
-    }
-
     .fred--col-12 {
       flex-basis: 100%;
       max-width: 100%;
     }
-
-
-  //Default all .fred--col to 100% on mobile
-  @include respond-to($mobile){
-    .fred--col-1,
-    .fred--col-2,
-    .fred--col-3,
-    .fred--col-4,
-    .fred--col-5,
-    .fred--col-6,
-    .fred--col-7,
-    .fred--col-8,
-    .fred--col-9,
-    .fred--col-10,
-    .fred--col-11,
-    .fred--col-12 {
-        flex-basis: 100%;
-        max-width: 100%;
-    }
   }
 
-
-
   // col-md
-  @include respond-to($tabletP){
+  @include respond-to($tabletP) {
     .fred--col-md-1 {
       flex-basis: 8.333%;
       max-width: 8.333%;
@@ -388,7 +389,7 @@ $mpGutter : 1.2%;
   }
 
   // col-md
-  @include respond-to($mobile){
+  @include respond-to($mobile) {
     .fred--col-xs-1 {
       flex-basis: 8.333%;
       max-width: 8.333%;
@@ -450,7 +451,9 @@ $mpGutter : 1.2%;
     }
   }
 
-}  //columns
+}
+
+//columns
 
 //Eliminate Nesting Double Padding on Components
 .grid .thumbs,
@@ -458,5 +461,6 @@ $mpGutter : 1.2%;
 .grid .tiles,
 .fred--columns .thumbs,
 .fred--columns .cards,
-.fred--columns .tiles
-{padding:0;}
+.fred--columns .tiles {
+  padding: 0;
+}

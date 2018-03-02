@@ -24,7 +24,7 @@
 
   .fred--modal-header{
     background-color: $darkblue;
-    padding: .5rem;
+    padding: 8px;
     border-top-left-radius: $radius*2;
     border-top-right-radius: $radius*2;
     color: $white;
@@ -46,8 +46,8 @@
 
   .fred--modal-body{
     background-color: #e4e4e4;
-    font-size: 1rem;
-    padding: 1rem;
+    font-size: 16px;
+    padding: 16px;
 
     input[type="text"] {
       width: 100%;
@@ -57,7 +57,7 @@
   }
 
   .fred--modal-footer{
-    padding: .5rem;
+    padding: 8px;
     background-color: #cecece;
     border-bottom-left-radius: $radius*2;
     border-bottom-right-radius: $radius*2;

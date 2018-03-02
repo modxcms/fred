@@ -8,16 +8,17 @@
 
 //Part of the Bootstrap - Need Globally
 @import "dragula";
-
+@import "vars";
+.fred{
   @import "reset";
-  @import "vars";
   @import "breakpoints";
   @import "utility";
   @import "grids";
-  @import "buttons";
-  @import "body";
   @import "topbar";
   @import "sidebar";
   @import "dropzone";
   @import "launcher";
   @import "forms";
+}
+@import "buttons";
+@import "body";
