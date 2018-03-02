@@ -1,14 +1,14 @@
 .fred--sidebar_close {
   position: absolute;
-  right: .5rem;
+  right: 8px;
   z-index: 10010;
-  top: .25rem;
+  top: 4px;
   height: auto;
   border: 1px solid rgba($white, .4);
   border-radius: $radius;
-  padding: 0.2rem 0.7rem !important;
-  font-size: .9rem !important;
-  line-height: 1.6rem;
+  padding: 3px 11px !important;
+  font-size: 15px !important;
+  line-height: 25px;
   color: $white;
   background-color: $black;
   transition: $timing;
@@ -29,7 +29,7 @@
 
 .fred--logo {
   width: 35px;
-  margin: .25rem .5rem;
+  margin: 4px 8px;
 }
 
 .fred--sidebar_title {
@@ -41,8 +41,8 @@
   h1 {
     display: inline-block;
     color: $white;
-    line-height: 2rem;
-    font-size: 1.6rem;
+    line-height: 32px;
+    font-size: 25px;
     padding-bottom: 0 !important;
     border-bottom: 0 !important;
     font-weight: normal;
@@ -73,7 +73,7 @@
       height: 35px;
       width: 35px;
       background: url('images/pages.svg') center center no-repeat;
-      margin-right: .5rem;
+      margin-right: 8px;
     }
     &.active, &:hover, &:focus {
       background-color: $modxred !important;
@@ -85,7 +85,7 @@
       height: 35px;
       width: 35px;
       background: url('images/elements.svg') center center no-repeat;
-      margin-right: .5rem;
+      margin-right: 8px;
     }
     &.active, &:hover, &:focus {
       background-color: $modxblue !important;
@@ -97,7 +97,7 @@
       height: 35px;
       width: 35px;
       background: url('images/settings.svg') center center no-repeat;
-      margin-right: .5rem;
+      margin-right: 8px;
     }
     &.active, &:hover, &:focus {
       background-color: $modxgreen !important;
@@ -113,8 +113,8 @@
     background-color: darken($black, 1%);
     border-bottom: 1px solid #000;
     color: $white;
-    font-size: 1.5rem !important;
-    padding: 1.5rem .5rem !important;
+    font-size: 24px !important;
+    padding: 24px 8px !important;
     font-style: normal !important;
     font-weight: normal !important;
     margin-top: 0 !important;
@@ -123,7 +123,7 @@
 
     span {
       i {
-        font-size: .8rem;
+        font-size: 13px;
         margin: -2px 5px 0 0;
         vertical-align: middle;
         opacity: .7;
@@ -132,7 +132,7 @@
     }
 
     .fred--accordion_toggle {
-      font-size: 1.2rem;
+      font-size: 20px;
       margin: 2px 0 0 5px;
       width: 14px;
       text-align: center;
@@ -164,7 +164,7 @@
   dd {
     display: none;
     color: $white;
-    font-size: .9rem;
+    font-size: 14px;
     position: relative;
 
     .fred--thumbs .fred--thumb {
@@ -173,26 +173,26 @@
       &:last-of-type {
         border-bottom: 0;
       }
-      margin-bottom: .5rem;
+      margin-bottom: 8px;
       cursor: move;
       transition: $timing;
 
-      img{
+      img {
         max-width: 100%;
       }
 
       figcaption {
-        padding: .5rem;
-        font-size: .95rem;
+        padding: 8px;
+        font-size: 15px;
         line-height: normal;
         position: absolute;
-        top: .5rem;
-        left: .5rem;
+        top: 8px;
+        left: 8px;
         background: rgba(black, .6);
         opacity: 0;
         transition: $timing;
         em {
-          font-size: .8rem;
+          font-size: 13px;
         }
         strong {
           display: block;
@@ -208,14 +208,14 @@
         }
       }
       > div {
-        padding: .5rem;
+        padding: 8px;
       }
     }
     dl {
-      dt{
+      dt {
         position: relative;
-        padding: 1rem 2rem 1rem 3rem;
-        font-size: 1.2rem;
+        padding: 16px 32px 16px 48px;
+        font-size: 20px;
         font-weight: lighter;
         transition: $timing;
         cursor: pointer;
@@ -226,7 +226,7 @@
             display: block;
           }
         }
-        + dd{
+        + dd {
           transition: $timing;
           opacity: 1;
           position: fixed;
@@ -236,9 +236,9 @@
           overflow: auto;
           overflow-x: hidden;
           top: 0;
-          background-color: lighten($black,5%);
-          &:hover{
-            display:block;
+          background-color: lighten($black, 5%);
+          &:hover {
+            display: block;
           }
         }
       }
@@ -259,31 +259,31 @@
   }
 }
 
-.fred--pages{
-  &_list{
-    dl{
+.fred--pages {
+  &_list {
+    dl {
       border-left: 2px solid $white;
       margin-left: 2px;
     }
   }
-  &_menu{
+  &_menu {
     h3 {
-      font-size: 1.3rem;
-      padding: 1rem 2rem;
+      font-size: 21px;
+      padding: 16px 32px;
       color: $white;
       font-weight: lighter;
     }
-    button{
+    button {
       color: $white;
       position: relative;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
+      padding: 16px 32px;
+      font-size: 20px;
       font-weight: lighter;
       transition: $timing;
       cursor: pointer;
       background: transparent;
       border: none;
-      display:block;
+      display: block;
       width: 100%;
       text-align: left;
       &:hover, &:focus {
@@ -291,19 +291,19 @@
       }
     }
   }
-  &_deleted{
+  &_deleted {
     color: rgba($modxred, .5);
     text-decoration: line-through;
   }
-  &_unpublished{
+  &_unpublished {
     font-style: italic;
   }
-  &_hidden{
+  &_hidden {
     color: rgba($white, .5);
   }
-  &_noedit{
+  &_noedit {
     cursor: not-allowed !important;
-    &:hover, &:focus, &.active{
+    &:hover, &:focus, &.active {
       color: $white !important;
       background: transparent !important;
     }
@@ -329,16 +329,16 @@
   }
 }
 
-.fred--loading_wrapper{
-  margin: 2rem auto;
-  color:$white;
-  text-align:center;
+.fred--loading_wrapper {
+  margin: 32px auto;
+  color: $white;
+  text-align: center;
   text-shadow: 1px 1px 2px black;
   animation: fred--fadein .3s ease-in;
 }
 
 @keyframes fred--fadein {
-  0%{
+  0% {
     opacity: 0;
   }
   100% {
