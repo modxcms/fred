@@ -23,22 +23,36 @@
 }
 
 .fred--block {
-  overflow: hidden;
   position: relative;
   //padding:2rem 16px;
   min-height: 30px;
   outline: 15px solid rgba($modxblue, 0);
   transition: $timing cubic-bezier(.79, .14, .15, .86);
+  z-index: 1;
+  .fred--block{
+    outline: 3px solid rgba($modxblue, 0);
+    &.fred--block-active, &:focus {
+      transition: $timing cubic-bezier(.79, .14, .15, .86);
+    }
+  }
 
   //&:nth-child(even){background: #f9f9f9;}
-
+  &:after{
+    content: "";
+    display:table;
+    clear:both;
+    width: 100%;
+  }
   &:before {
     content: '';
     display: block;
     background: transparent;
   }
-  &:hover, &:focus {
+  &.fred--block-active, &:focus {
     outline: 3px solid $modxblue;
+    z-index: 2;
+    min-height: 1px;
+    transition: none;
     &:before {
       content: '';
       background: rgba($modxblue, .1);
@@ -47,6 +61,26 @@
     }
     > .fred--toolbar {
       display: block;
+      &-settings{
+        display:block;
+      }
+    }
+    > .fred--hidden{
+      display: none !important;
+    }
+
+  }
+  &.fred--block-active_parent {
+    outline: 3px solid rgba($gray, .75);
+    z-index: 1;
+    &:before{
+      background: rgba($gray, .1)
+    }
+    > .fred--toolbar{
+      opacity: .5;
+    }
+    .fred--block-active{
+      box-shadow: rgba($black, .34) 0 4px 8px;
     }
   }
 
@@ -59,6 +93,8 @@
     line-height: 1;
 
     button {
+      @include btn();
+      padding: 0;
       margin-right: 4px;
       width: 28px;
       height: 28px;
@@ -70,6 +106,93 @@
       &:hover {
         opacity: 1;
         transform: scale(1.05);
+      }
+    }
+    &-settings{
+      display:none;
+      position: fixed;
+      top:0; bottom:0; left:0; right: 0;
+      background: rgba($black, .85);
+      form, fieldset{
+        outline: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: $dark-gray;
+        font-family: "Open Sans", Arial, sans-serif;
+        text-align: left;
+      }
+      form{
+        background: $white;
+        padding: 0;
+        font-size: 18px;
+        position: absolute;
+        top: 10vh;
+        left:  50%;
+        transform: translateX(-50%);
+        width: 320px;
+        max-width: 100%;
+      }
+      legend{
+        position: relative;
+        width: 100%;
+        background-color: $gray;
+        text-align: left;
+        overflow: hidden;
+        border-bottom: 1px solid #000;
+        color: #fff;
+        font-size: 24px !important;
+        font-style: normal !important;
+        font-weight: normal !important;
+        margin: 0 0 16px;
+        height: auto;
+        padding: 16px;
+        cursor: pointer;
+        button{
+          background: none;
+          border: none;
+          position: absolute;
+          right: -50px;
+          top: 50%;
+          width: auto;
+          transform: translateY(-50%);
+          transition: $timing ease-in;
+        }
+        &:before {
+          content: "";
+          height: 29px;
+          width: 25px;
+          background: url("images/settings.svg") center center no-repeat;
+          margin-right: 8px;
+          display: inline;
+          clear: none;
+          float: left;
+        }
+        &:hover{
+          button {
+            right: 8px;
+          }
+        }
+      }
+      label{
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 18px;
+        padding: 12px 16px;
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+      button, input, select, textarea{
+        margin: 0 0 4px;
+        box-sizing: border-box;
+        width: 100%;
+        display:block;
+        font-size: 14px;
+        line-height: 18px;
+        padding: 8px;
+        border: 1px solid $gray;
+        border-radius: $radius;
       }
     }
   }

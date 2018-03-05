@@ -64,16 +64,46 @@
         <h1>Bootstrap starter template</h1>
         <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a
             mostly barebones HTML document.</p>
-        <div class="fred--block">
-            <div class="fred--toolbar">
-                <button class="fred--move-icon handle"></button>
-                <button class="fred--duplicate-icon"></button>
-                <button class="fred--trash"></button>
-            </div>
-            <div class="fred--block_content" data-fred-element-id="5">
-                <h3 data-fred-name="pagetitle"contenteditable="true">Editable Area</h3>
-                <div data-fred-name="content" contenteditable="true">
-                    <p>This text is editable</p>
+        <div data-fred-dropzone="content">
+
+            <div class="fred--block">
+                <div class="fred--toolbar">
+                    <button class="fred--move-icon handle"></button>
+                    <button class="fred--duplicate-icon"></button>
+                    <button class="fred--trash"></button>
+                </div>
+                <div data-fred-dropzone="inner">
+
+                    <div class="fred--block">
+                        <div class="fred--toolbar">
+                            <button class="fred--element-settings" data-fred-settings-id="9"></button>
+                            <button class="fred--move-icon handle"></button>
+                            <button class="fred--duplicate-icon"></button>
+                            <button class="fred--trash"></button>
+                        </div>
+                        <div class="fred--toolbar-settings fred--hidden" data-fred-settings-id="9">
+                            <form>
+                                <fieldset>
+                                    <legend>Element Settings <button><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026 6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg></button></legend>
+                                    <label>
+                                        Class
+                                        <input type="text" name="element-class">
+                                    </label>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="fred--block_content" data-fred-element-id="5">
+                            <div data-fred-name="content" contenteditable="true">
+                                <p>This nested editable content</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fred--block_content" data-fred-element-id="5">
+                    <h3 data-fred-name="pagetitle"contenteditable="true">Editable Area</h3>
+                    <div data-fred-name="content" contenteditable="true">
+                        <p>This text is editable</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -321,64 +351,7 @@
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    // Demo Functions
-    $(document).ready(function () {
-        var fredbutton, sidebar, sidebarclose, menu, Pages, Elements, Settings, logout = null;
-        fredbutton = $('.fred--launcher_btn_fred');
-        sidebar = $('.fred--sidebar');
-        sidebarclose = $('.fred--sidebar_close');
-        menu = $('#fred--menu')
-        Pages = $('.fred--sidebar_Pages');
-        Elements = $('.fred--sidebar_Elements');
-        Settings = $('.fred--sidebar_Settings');
-        logout = $('.fred--btn-sidebar_logout');
-
-        fredbutton.click(function () {
-            if (sidebar.hasClass('fred--hidden')) {
-                sidebar.removeAttr('aria-hidden');
-                sidebar.removeClass('fred--hidden');
-            } else {
-                sidebar.attr('aria-hidden', 'true');
-                sidebar.addClass('fred--hidden');
-            }
-        });
-
-        sidebarclose.click(function () {
-            sidebar.attr('aria-hidden', 'true');
-            sidebar.addClass('fred--hidden');
-        });
-
-        menu.children('dt').each(function () {
-            $(this).click(function () {
-                $(this).toggleClass('active');
-                if ($(this).hasClass('active')) {
-                    logout.hide();
-                    menu.children('dt').each(function () {
-                        if (!$(this).hasClass('active')) {
-                            $(this).addClass('fred--hidden')
-                        }
-                    });
-                } else {
-                    logout.show();
-                    menu.children('dt').each(function () {
-                        $(this).removeClass('fred--hidden')
-                    });
-                }
-            })
-        });
-    });
-
-    function expandChildren(target) {
-        if ($(target).hasClass('fred--hidden')) {
-            $(target).removeAttr('aria-hidden');
-            $(target).removeClass('fred--hidden');
-        } else {
-            $(target).attr('aria-hidden', 'true');
-            $(target).addClass('fred--hidden');
-        }
-    }
-</script>
+<script type="text/javascript" src="_static/fred-demo.js"></script>
 
 </body>
 </html>
