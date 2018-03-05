@@ -51,7 +51,7 @@ export default class Pages extends Sidebar {
         pages.forEach(page => {
             const dt = document.createElement('dt');
             dt.setAttribute('role', 'tab');
-            dt.setAttribute('tabindex', '1');
+            dt.setAttribute('tabindex', '0');
             dt.innerHTML = page.pagetitle;
             
             if (page.published !== true) {
@@ -84,7 +84,7 @@ export default class Pages extends Sidebar {
                 
                 this.buildTree(page.children, dl);
 
-                const expander = document.createElement('span');
+                const expander = document.createElement('button');
                 expander.classList.add('fred--btn-list', 'fred--btn-list_expand');
                 expander.addEventListener('click', e => {
                     e.preventDefault();
