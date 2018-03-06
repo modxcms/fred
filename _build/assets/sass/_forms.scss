@@ -77,9 +77,9 @@
     margin: 0;
     font-size: 14px;
     font-weight: bold;
-    color: lighten($black, 15%);
+    color: lighten($black, 25%);
   }
-  button, input, select, textarea{
+  input, select, textarea{
     margin: 0 0 4px;
     box-sizing: border-box;
     width: 100%;

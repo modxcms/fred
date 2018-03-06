@@ -69,7 +69,12 @@ $(document).ready(function () {
     panel.find('legend').each(function(){
         $(this).click(function(){
             panel.toggleClass('fred--hidden');
-        }) 
+        })
+    });
+    panel.find('button').each(function(){
+        $(this).click(function(){
+            panel.toggleClass('fred--hidden');
+        })
     });
 });
 
