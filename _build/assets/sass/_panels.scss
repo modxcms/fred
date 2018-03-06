@@ -1,0 +1,32 @@
+.fred--panel{
+  font-family: "Open Sans", Arial, sans-serif;
+  background-color: $black;
+  width: 275px;
+  height: 100vh;
+  opacity: 1;
+  //overflow-x: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10011;
+  transition: $timing;
+  &.fred--hidden {
+    left: -360px;
+    opacity: 0;
+  }
+  &_element {
+    legend {
+      background: $gray;
+      &:before {
+        content: "";
+        height: 29px;
+        width: 25px;
+        background: url("images/settings.svg") center center no-repeat;
+        margin-right: 8px;
+        display: inline;
+        clear: none;
+        float: left;
+      }
+    }
+  }
+}
