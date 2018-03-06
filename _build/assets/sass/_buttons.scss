@@ -72,6 +72,23 @@ button.fred--btn, .fred--btn {
       width: 50%;
     }
   }
+  &-panel {
+    position: relative;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    background: transparent;
+    border: 1px solid darken($black, 15%);
+    border-radius: $radius;
+    padding: 8px 16px;
+    margin: 16px 4px;
+    &:hover, &:focus {
+      background-color: darken($black, 15%);
+    }
+  }
+  &-apply{
+    background: $modxgreen;
+  }
   &-list {
     display: inline-block;
     position: absolute;
