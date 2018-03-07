@@ -43,6 +43,14 @@ export class ContentElement {
         wrapper.classList.add('fred--block');
         wrapper.fredEl = this;
 
+        wrapper.addEventListener('mouseover', e => {
+            wrapper.classList.add('fred--block-active');
+        });
+        
+        wrapper.addEventListener('mouseout', e => {
+            wrapper.classList.remove('fred--block-active');
+        });
+
         const toolbar = document.createElement('div');
         toolbar.classList.add('fred--toolbar');
 
