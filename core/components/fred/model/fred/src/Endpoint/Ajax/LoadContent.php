@@ -2,8 +2,6 @@
 
 namespace Fred\Endpoint\Ajax;
 
-use \Wa72\HtmlPageDom\HtmlPageCrawler;
-
 class LoadContent extends Endpoint
 {
     protected $allowedMethod = ['GET', 'OPTIONS'];
@@ -24,79 +22,42 @@ class LoadContent extends Endpoint
         }
 
         $data = $object->getProperty('data', 'fred');
-        $content = [];
+        $elements = [];
         
-        foreach ($data as $dropZoneName => $dropZone) {
-            $content[$dropZoneName] = [];
-            
+        $this->gatherElements($elements, $data);
+        
+
+        return $this->data([
+            "data" => $data, 
+            "elements" => $elements
+        ]);
+    }
+    
+    protected function gatherElements(&$elements, $dropZones) {
+        foreach ($dropZones as $dropZone) {
             foreach ($dropZone as $element) {
-                $dom = $this->getHTML($element['widget']);
-                $this->fillValues($dom, $element['values']);
-                $this->fillDropZones($dom, $element['children']);
-
-                $content[$dropZoneName][] = '<div class="fred-api" data-fred-element-id="' . $element['widget'] . '">' . $dom->saveHTML() . '</div>';
+                $elementId = intval($element['widget']);
+                
+                if (!isset($elements[$elementId])) {
+                    $elements[$elementId] = $this->getElement($elementId);
+                }
+                
+                $this->gatherElements($elements, $element['children']);
             }
-            
         }
-
-        return $this->data(["data" => $content]);
     }
 
-    protected function getHTML($id)
+    protected function getElement($id)
     {
-        $id = intval($id);
-        
         /** @var \modChunk $chunk */
         $chunk = $this->modx->getObject('modChunk', $id);
         if (!$chunk) {
             $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Chunk {$id} wasn't found.");
-            return new HtmlPageCrawler('');
+            return '';
         }
 
-        return new HtmlPageCrawler($chunk->content);
+        return $chunk->content;
     }
 
-
-    protected function fillValues(HtmlPageCrawler $dom, $values)
-    {
-        $fields = $dom->filter('[data-fred-name]');
-        
-        $fields->each(function($node, $i) use ($values) {
-            $fieldName = $node->getAttribute('data-fred-name');
-            if (isset($values[$fieldName])) {
-                switch($node->nodeName()) {
-                    case 'img':
-                        $node->setAttribute('src', $values[$fieldName]);
-                        break;
-                    default:
-                        $node->html($values[$fieldName]);
-                }
-            } else {
-                $node->html('');
-            }
-        });
-        
-        return $dom;
-    }
-    
-    protected function fillDropZones($dom, $dropZones)
-    {
-        $dom->filter('[data-fred-dropzone]')->each(function($node, $i) use ($dropZones) {
-            $zoneName = $node->getAttribute('data-fred-dropzone');
-            
-            if (isset($dropZones[$zoneName])) {
-                foreach ($dropZones[$zoneName] as $element) {
-                    
-                    $dom = $this->getHTML($element['widget']);
-                    $this->fillValues($dom, $element['values']);
-                    $this->fillDropZones($dom, $element['children']);
-                    
-                    $node->append('<div class="fred-api" data-fred-element-id="' . $element['widget'] . '">' . $dom->saveHTML() . '</div>');
-                }
-            }
-        });
-        
-        return $dom;
-    }
     
 }

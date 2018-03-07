@@ -35,40 +35,8 @@ export default class Fred {
     getDataFromDropZone(dropZone) {
         const data = [];
 
-        const clone = dropZone.cloneNode(true);
-
-        let element = clone.querySelector('[data-fred-element-id]');
-        while (element) {
-            const elementData = {
-                widget: element.dataset.fredElementId,
-                values: {},
-                children: {}
-            };
-
-            let dz = element.querySelector('[data-fred-dropzone');
-
-            while (dz) {
-                elementData.children[dz.dataset.fredDropzone] = this.getDataFromDropZone(dz);
-
-                dz.remove();
-                dz = element.querySelector('[data-fred-dropzone');
-            }
-
-            element.querySelectorAll('[contenteditable]').forEach(field => {
-                switch (field.tagName.toLowerCase()) {
-                    case 'img':
-                        elementData.values[field.dataset.fredName] = field.src;
-                        break;
-                    default:
-                        elementData.values[field.dataset.fredName] = field.innerHTML;
-                }
-            });
-
-            data.push(elementData);
-
-            element.remove();
-
-            element = clone.querySelector('[data-fred-element-id]');
+        for (let child of dropZone.children) {
+            data.push(child.fredEl.getContent());
         }
 
         return data;
@@ -171,18 +139,18 @@ export default class Fred {
                     const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
                     if (zoneEl) {
                         zoneEl.innerHTML = '';
-                        zones[zoneName].forEach(html => {
-                            const virtualWrapper = document.createElement('div');
-                            virtualWrapper.innerHTML = html;
-
-                            let apiItem = virtualWrapper.querySelector('.fred-api');
-                            while (apiItem) {
-                                apiItem.replaceWith((new ContentElement(apiItem)).wrapper);
-
-                                apiItem = virtualWrapper.querySelector('.fred-api');
-                            }
-
-                            zoneEl.append(virtualWrapper.firstChild);
+                        zones[zoneName].forEach(element => {
+                            const chunk = document.createElement('div');
+                            chunk.classList.add('chunk');
+                            chunk.setAttribute('hidden', 'hidden');
+                            chunk.dataset.fredElementId = element.widget;
+                            chunk.innerHTML = json.data.elements[element.widget]; 
+                                
+                            const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}));
+                            this.loadChildren(element.children, contentElement, json.data.elements);
+                            
+                            zoneEl.append(contentElement.wrapper);
+                            
                         });
                     }
                 }
@@ -192,6 +160,25 @@ export default class Fred {
 
             emitter.emit('fred-loading-hide');
         });
+    }
+    
+    loadChildren(zones, parent, elements) {
+        for (let zoneName in zones) {
+            if (zones.hasOwnProperty(zoneName)) {
+                zones[zoneName].forEach(element => {
+                    const chunk = document.createElement('div');
+                    chunk.classList.add('chunk');
+                    chunk.setAttribute('hidden', 'hidden');
+                    chunk.dataset.fredElementId = element.widget;
+                    chunk.innerHTML = elements[element.widget];
+
+                    const contentElement = new ContentElement(chunk, zoneName, parent, element.values, (element.settings || {}));
+                    parent.addElementToDropZone(zoneName, contentElement);
+
+                    this.loadChildren(element.children, contentElement, elements);
+                });
+            }
+        }
     }
 
     init() {
