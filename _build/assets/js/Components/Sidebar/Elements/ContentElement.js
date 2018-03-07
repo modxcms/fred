@@ -2,15 +2,46 @@ import drake from '../../../drake';
 import imageEditor from '../../../Editors/ImageEditor';
 
 export class ContentElement {
-    constructor(el) {
+    constructor(el, dzName, parent = null, content = {}, settings = {}) {
         this.el = el;
+        this.id = parseInt(this.el.dataset.fredElementId);
+        
+        this.parent = parent;
+        this.dzName = dzName;
+        this.content = {...content};
+        this.settings = {...settings};
+        this.dzs = {};
+        
         this.wrapper = this.render();
+    }
+    
+    getContent() {
+        const content = {
+            widget: this.id,
+            values: this.content,
+            settings: this.settings,
+            children: {}
+        };
+        
+        for (let dzName in this.dzs) {
+            if (this.dzs.hasOwnProperty(dzName)) {
+                if (this.dzs[dzName].children.length > 0) {
+                    content.children[dzName] = [];
+
+                    this.dzs[dzName].children.forEach(child => {
+                        content.children[dzName].push(child.fredEl.getContent());    
+                    });
+                }
+            }
+        }
+        
+        return content;
     }
     
     render() {
         const wrapper = document.createElement('div');
         wrapper.classList.add('fred--block');
-        wrapper.fredWrapper = this;
+        wrapper.fredEl = this;
 
         const toolbar = document.createElement('div');
         toolbar.classList.add('fred--toolbar');
@@ -22,7 +53,6 @@ export class ContentElement {
         duplicate.classList.add('fred--duplicate-icon');
         duplicate.addEventListener('click', e => {
             e.preventDefault();
-
             this.duplicate();
         });
 
@@ -30,7 +60,7 @@ export class ContentElement {
         trashHandle.classList.add('fred--trash');
         trashHandle.addEventListener('click', e => {
             e.preventDefault();
-            wrapper.remove();
+            this.remove();
         });
 
         toolbar.appendChild(moveHandle);
@@ -45,7 +75,85 @@ export class ContentElement {
         content.dataset.fredElementId = this.el.dataset.fredElementId;
 
         content.innerHTML = this.el.innerHTML;
+        
+        const dzs = content.querySelectorAll('[data-fred-dropzone]');
+        
+        let prev = null;
+        
+        for (let dz of dzs) {
+            if (prev === null) {
+                prev = dz;
+                dz.fredEl = this;
+                if (!this.dzs[dz.dataset.fredDropzone]) {
+                    this.dzs[dz.dataset.fredDropzone] = {
+                        el: dz, 
+                        children: []
+                    };
+                } else {
+                    this.dzs[dz.dataset.fredDropzone].el = dz;
+                    this.dzs[dz.dataset.fredDropzone].children.forEach(child => {
+                        this.dzs[dz.dataset.fredDropzone].el.appendChild(child);
+                    });
+                }
+            } else {
+                if (!prev.contains(dz)) {
+                    dz.fredEl = this;
+                    prev = dz;
+                    if (!this.dzs[dz.dataset.fredDropzone]) {
+                        this.dzs[dz.dataset.fredDropzone] = {
+                            el: dz,
+                            children: []
+                        };
+                    } else {
+                        this.dzs[dz.dataset.fredDropzone].el = dz;
+                        this.dzs[dz.dataset.fredDropzone].children.forEach(child => {
+                            this.dzs[dz.dataset.fredDropzone].el.appendChild(child);
+                        });
+                    }
+                }
+            }
+        }
+        
+        for (let setting in this.settings) {
+            if (this.settings.hasOwnProperty(setting)) {
+                content.innerHTML = content.innerHTML.replace(new RegExp('{{' + setting + '}}', 'g'), this.settings[setting]);
+            }
+        }
+        
+        content.querySelectorAll('[contenteditable="true"]').forEach(el => {
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    if (mutation.type === 'characterData') {
+                        this.content[el.dataset.fredName] = el.innerHTML;
+                        return;
+                    }
 
+                    if (mutation.type === 'attributes') {
+                        if (mutation.attributeName === 'src') {
+                            this.content[el.dataset.fredName] = el.getAttribute(mutation.attributeName);
+                            return;
+                        }
+                    }
+                });
+            });
+            
+            observer.observe(el, {
+                attributes: true,
+                characterData: true,
+                subtree: true
+            });
+            
+            if (this.content[el.dataset.fredName]) {
+                switch(el.nodeName.toLowerCase()) {
+                    case 'img':
+                        el.setAttribute('src', this.content[el.dataset.fredName]);
+                        break;
+                    default:
+                       el.innerHTML = this.content[el.dataset.fredName];
+                }
+            }
+        });
+        
         content.querySelectorAll('img[contenteditable="true"]').forEach(img => {
             img.addEventListener('click', e => {
                 e.preventDefault();
@@ -54,58 +162,70 @@ export class ContentElement {
         });
 
         wrapper.appendChild(content);
-
+        
         return wrapper;
     }
-
+    
     reRender() {
-        const children = this.wrapper.querySelector('.fred--block_content').children;
-        for (let item of children) {
+        const newWrapper = this.render();
 
-            const block = item.querySelector('.fred--block');
+        this.wrapper.replaceWith(newWrapper);
+        this.wrapper = newWrapper;
+    }
+    
+    remove() {
+        if (this.parent) {
+            const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
+            if (index > -1) {
+                this.parent.dzs[this.dzName].children.splice(index, 1);
+            }
+        }
 
-            if (block) {
-                const siblings = [];
+        this.wrapper.remove();
+    }
 
-                let sibling = block.nextSibling;
+    duplicateDropZones(dzs) {
+        for (let dzName in dzs) {
+            if (dzs.hasOwnProperty(dzName)) {
+                dzs[dzName].children.forEach(child => {
+                    if (this.dzs[dzName]) {
+                        const clonedChild = new ContentElement(child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings);
+                        this.addElementToDropZone(dzName, clonedChild);
 
-                while (sibling) {
-                    if (sibling.classList.contains('fred--block')) {
-                        siblings.push(sibling);
+                        clonedChild.duplicateDropZones(child.fredEl.dzs);
                     }
-
-                    sibling = sibling.nextSibling;
-                }
-                
-                const blockContent = new ContentElement(block.querySelector('.fred--block_content'));
-
-                blockContent.reRender();
-
-                block.replaceWith(blockContent.wrapper);
-
-                siblings.forEach(nextItem => {
-                    const siblingContent = new ContentElement(nextItem.querySelector('.fred--block_content'));
-
-                    siblingContent.reRender();
-
-                    nextItem.replaceWith(siblingContent.wrapper);
                 });
             }
         }
     }
     
     duplicate() {
-        const clone = new ContentElement(this.wrapper.querySelector('.fred--block_content').cloneNode(true));
-
-        clone.reRender();
-
+        const clone = new ContentElement(this.el, this.dzName, this.parent, this.content, this.settings);
+        clone.duplicateDropZones(this.dzs);
+        
         if (this.wrapper.nextSibling === null) {
             this.wrapper.parentNode.appendChild(clone.wrapper);
         } else {
             this.wrapper.parentNode.insertBefore(clone.wrapper, this.wrapper.nextSibling);
         }
 
+        if (this.parent) {
+            const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
+            if (index > -1) {
+                this.parent.dzs[this.dzName].children.splice(index + 1, 0, clone.wrapper);
+            }
+        }
+
         drake.reloadContainers();
+        
+        return true;
+    }
+
+    addElementToDropZone(zoneName, element) {
+        if (!this.dzs[zoneName]) return false;
+        
+        this.dzs[zoneName].children.push(element.wrapper);
+        this.dzs[zoneName].el.appendChild(element.wrapper);
         
         return true;
     }

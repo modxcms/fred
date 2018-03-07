@@ -10,12 +10,6 @@ export default class Elements extends Sidebar {
 
     init() {
         this.content = null;
-
-        emitter.on('fred-dragula-drop', (el, target, source, sibling) => {
-            if (source.classList.contains('blueprints-source') && el.parentNode) {
-                el.parentNode.replaceChild((new ContentElement(el.getElementsByClassName('chunk')[0])).wrapper, el);
-            }
-        });
     }
 
     click() {

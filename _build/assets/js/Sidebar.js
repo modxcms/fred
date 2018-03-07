@@ -10,8 +10,10 @@ export default class Sidebar {
         this.lastRequest = null;
         this.config = config || {};
         this.components = [];
+        this.visible = false;
 
         this.hideSidebar = this.hideSidebar.bind(this);
+        this.globalHideSidebar = this.globalHideSidebar.bind(this);
 
         emitter.on('fred-sidebar-expand', (cmp, title, data) => {
             cmp.loading();
@@ -54,12 +56,12 @@ export default class Sidebar {
             
         });
 
-        emitter.on('fred-sidebar-hide', () => {
-            this.hideSidebar();
+        emitter.on('fred-sidebar-hide', silent => {
+            this.hideSidebar(silent);
         });
 
-        emitter.on('fred-sidebar-show', () => {
-            this.showSidebar();
+        emitter.on('fred-sidebar-show', silent => {
+            this.showSidebar(silent);
         });
         
         emitter.on('fred-sidebar-toggle', () => {
@@ -131,16 +133,29 @@ export default class Sidebar {
         return this.sidebar;
     }
 
-    hideSidebar() {
+    hideSidebar(silent = false) {
+        if (silent === false) {
+            this.visible = false;
+        }
+        
         this.wrapper.classList.add('fred--hidden');
 
-        window.removeEventListener('click', this.hideSidebar);
+        window.removeEventListener('click', this.globalHideSidebar);
     }
 
-    showSidebar() {
+    showSidebar(silent = false) {
+        if (silent === true) {
+           if (this.visible === false) return; 
+        }
+            
+        this.visible = true;
         this.wrapper.classList.remove('fred--hidden');
         setTimeout(() => {
-            window.addEventListener('click', this.hideSidebar);
+            window.addEventListener('click', this.globalHideSidebar);
         }, 50);
+    }
+    
+    globalHideSidebar() {
+        this.hideSidebar(false);
     }
 }
