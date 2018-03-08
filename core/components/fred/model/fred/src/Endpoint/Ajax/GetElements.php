@@ -46,7 +46,7 @@ class GetElements extends Endpoint
                 preg_match('/options:([^\n]+)\n?/', $description, $matches);
 
                 if (count($matches) == 2) {
-                    $options = $matches[1];
+                    $options = $this->modx->getChunk($matches[1]);
                     $options = json_decode($options, true);
                     if (empty($options)) $options = [];
                     

@@ -6,7 +6,7 @@ export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
         this.el = el;
         this.id = parseInt(this.el.dataset.fredElementId);
-console.log(this.el.elementOptions);
+
         this.parent = parent;
         this.dzName = dzName;
         this.options = {...(this.el.elementOptions || {})};
