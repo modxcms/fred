@@ -1,8 +1,7 @@
 import emitter from './EE';
 
 export default class Launcher {
-    constructor(fredWrapper, position = 'bottom_left') {
-        this.fredWrapper = fredWrapper;
+    constructor(position = 'bottom_left') {
         this.position = position;
 
         this.render();
@@ -39,7 +38,7 @@ export default class Launcher {
         wrapper.appendChild(fred);
         wrapper.appendChild(save);
         wrapper.appendChild(undo);
-        
-        this.fredWrapper.appendChild(wrapper);
+
+        emitter.emit('fred-wrapper-insert', wrapper);
     }
 }

@@ -2,11 +2,9 @@ import emitter from './EE';
 import PagesComponent from './Components/Sidebar/Pages';
 import ElementsComponent from './Components/Sidebar/Elements';
 import promiseCancel from 'promise-cancel';
-import Modal from './Modal';
 
 export default class Sidebar {
-    constructor(fredWrapper, config = {}) {
-        this.fredWrapper = fredWrapper;
+    constructor(config = {}) {
         this.lastRequest = null;
         this.config = config || {};
         this.components = [];
@@ -84,8 +82,8 @@ export default class Sidebar {
         this.wrapper.appendChild(this.buildSidebarHeader());
         this.wrapper.appendChild(this.buildSidebar());
 
-        this.fredWrapper.appendChild(this.wrapper);
-
+        emitter.emit('fred-wrapper-insert', this.wrapper);
+        
         return this;
     }
 

@@ -38,12 +38,18 @@ class Drake {
         } catch (err) {
         }
 
+        this.drake.on('cloned', (clone, original, type) => {
+            if (type === 'copy') {
+                clone.lastChild.elementOptions = original.lastChild.elementOptions;
+            }
+        });
+
         this.drake.on('drop', (el, target, source, sibling) => {
             //emitter.emit('fred-dragula-drop', el, target, source, sibling);
 
             if (source.classList.contains('blueprints-source') && el.parentNode) {
                 const parent = target.fredEl || null;
-                const contentElement = new ContentElement(el.getElementsByClassName('chunk')[0], target.dataset.fredDropzone, parent);
+                const contentElement = new ContentElement(el.lastChild, target.dataset.fredDropzone, parent);
                 
                 if (parent) {
                     if (sibling === null) {

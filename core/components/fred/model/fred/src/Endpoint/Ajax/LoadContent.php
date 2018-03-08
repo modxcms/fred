@@ -53,10 +53,36 @@ class LoadContent extends Endpoint
         $chunk = $this->modx->getObject('modChunk', $id);
         if (!$chunk) {
             $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Chunk {$id} wasn't found.");
-            return '';
+            return ['html' => '', 'options' => []];
         }
 
-        return $chunk->content;
+        $matches = [];
+        preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
+
+        $image = '';
+        $options = [];
+        $description = $chunk->description;
+
+        if (count($matches) == 2) {
+            $image = $matches[1];
+            $description = str_replace($matches[0], '', $description);
+        }
+
+        $matches = [];
+        preg_match('/options:([^\n]+)\n?/', $description, $matches);
+
+        if (count($matches) == 2) {
+            $options = $matches[1];
+            $options = json_decode($options, true);
+            if (empty($options)) $options = [];
+
+            $description = str_replace($matches[0], '', $description);
+        }
+
+        return [
+            'html' => $chunk->content,
+            'options' => $options
+        ];
     }
 
     

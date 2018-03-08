@@ -1,8 +1,6 @@
 import Sidebar from '../Sidebar';
 import drake from '../../drake';
-import emitter from '../../EE';
 import fetch from 'isomorphic-fetch';
-import ContentElement from './Elements/ContentElement';
 
 export default class Elements extends Sidebar {
     static title = 'Elements';
@@ -37,7 +35,7 @@ export default class Elements extends Sidebar {
                     categoryEl.classList.add('fred--thumbs', 'source', 'blueprints-source');
                     
                     category.elements.forEach(element => {
-                        categoryEl.innerHTML += Elements.elementWrapper(element.id, element.title, element.description, element.image, element.content);
+                        categoryEl.appendChild(Elements.elementWrapper(element.id, element.title, element.description, element.image, element.content, element.options || {}));
                     });
 
                     dd.appendChild(categoryEl);
@@ -46,14 +44,38 @@ export default class Elements extends Sidebar {
                     content.append(dd);
                 });
 
-                this.content = content.outerHTML;
+                this.content = content;
 
                 return this.content;
             });
     }
 
-    static elementWrapper(id, title, description, image, content) {
-        return `<figure class="fred--thumb"><div><img src="${image}" alt=""></div><figcaption><strong>${title}</strong><em>${description}</em></figcaption><div class="chunk" data-fred-element-id="${id}" hidden="hidden">${content}</div></figure>`;
+    static elementWrapper(id, title, description, image, content, options) {
+        const figure = document.createElement('figure');
+        figure.classList.add('fred--thumb');
+
+        const div = document.createElement('div');
+        const img = document.createElement('img');
+        img.src = image;
+        img.alt = title;
+
+        div.appendChild(img);
+
+        const figCaption = document.createElement('figcaption');
+        figCaption.innerHTML = `<strong>${title}</strong><em>${description}</em>`;
+
+        const chunk = document.createElement('div');
+        chunk.classList.add('chunk');
+        chunk.dataset.fredElementId = id;
+        chunk.setAttribute('hidden', 'hidden');
+        chunk.innerHTML = content;
+        chunk.elementOptions = options;
+
+        figure.appendChild(div);
+        figure.appendChild(figCaption);
+        figure.appendChild(chunk);
+        
+        return figure;
     }
 
     afterExpand() {
