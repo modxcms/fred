@@ -34,10 +34,22 @@ class GetElements extends Endpoint
                 preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
 
                 $image = '';
+                $options = [];
                 $description = $chunk->description;
 
                 if (count($matches) == 2) {
                     $image = $matches[1];
+                    $description = str_replace($matches[0], '', $description);
+                }
+
+                $matches = [];
+                preg_match('/options:([^\n]+)\n?/', $description, $matches);
+
+                if (count($matches) == 2) {
+                    $options = $matches[1];
+                    $options = json_decode($options, true);
+                    if (empty($options)) $options = [];
+                    
                     $description = str_replace($matches[0], '', $description);
                 }
 
@@ -46,7 +58,8 @@ class GetElements extends Endpoint
                     "title" => $chunk->name,
                     "description" => $description,
                     "image" => $image,
-                    "content" => $chunk->content
+                    "content" => $chunk->content,
+                    "options" => $options
                 ];
             }
             
