@@ -1,10 +1,12 @@
 import drake from '../../../drake';
 import imageEditor from '../../../Editors/ImageEditor';
 import emitter from '../../../EE';
+import doT from 'dot';
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
         this.el = el;
+        this.template = doT.template(this.el.innerHTML);
         this.id = parseInt(this.el.dataset.fredElementId);
 
         this.parent = parent;
@@ -59,18 +61,18 @@ export class ContentElement {
 
         wrapper.addEventListener('mouseover', e => {
             e.stopPropagation();
-            
+
             let firstSet = false;
             e.path.forEach(el => {
                 if (el.classList && el.classList.contains('fred--block')) {
                     el.classList.add('fred--block-active');
-                    
+
                     if (firstSet === true) {
-                        el.classList.add('fred--block-active_parent');    
+                        el.classList.add('fred--block-active_parent');
                     }
-                    
+
                     firstSet = true;
-                }    
+                }
             });
         });
 
@@ -120,15 +122,7 @@ export class ContentElement {
         content.classList.add('fred--block_content');
         content.dataset.fredElementId = this.el.dataset.fredElementId;
 
-        let processedEl = this.el.innerHTML;
-
-        for (let setting in this.settings) {
-            if (this.settings.hasOwnProperty(setting)) {
-                processedEl = processedEl.replace(new RegExp('{{' + setting + '}}', 'g'), this.settings[setting]);
-            }
-        }
-
-        content.innerHTML = processedEl;
+        content.innerHTML = this.template(this.settings);
 
         const dzs = content.querySelectorAll('[data-fred-dropzone]');
 
