@@ -43,27 +43,27 @@
     clear:both;
     width: 100%;
   }
-  &:before {
+  /*&:before {
     content: '';
     display: block;
     background: transparent;
-  }
+  }*/
   &.fred--block-active, &:focus {
     outline: 3px solid $modxblue;
     z-index: 2;
     min-height: 1px;
     transition: none;
-    &:before {
+    /*&:before {
       content: '';
       background: rgba($modxblue, .1);
       width: 100%;
       height: 30px;
-    }
+    }*/
     > .fred--toolbar {
       display: block;
-      &-settings{
-        display:block;
-      }
+      height: 36px;
+      opacity: 1;
+      padding: 3px;
     }
     > .fred--hidden{
       display: none !important;
@@ -73,11 +73,13 @@
   &.fred--block-active_parent {
     outline: 3px solid rgba($gray, .75);
     z-index: 1;
-    &:before{
-      background: rgba($gray, .1)
-    }
     > .fred--toolbar{
+      background: rgba($gray, .1);
       opacity: .5;
+      height: 20px;
+      button{
+        opacity: 0;
+      }
     }
     .fred--block-active{
       box-shadow: rgba($black, .34) 0 4px 8px;
@@ -85,12 +87,17 @@
   }
 
   .fred--toolbar {
-    display: none;
-    position: absolute;
-    top: 0;
+    background: rgba($modxblue, .1);
+    width: 100%;
+    margin:0;
+    text-align: right;
     right: 0;
     font-size: 15px;
     line-height: 1;
+    height: 0;
+    opacity: 0;
+    overflow:hidden;
+    transition: .2s ease-in;
 
     button {
       @include btn();
