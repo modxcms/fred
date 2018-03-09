@@ -122,70 +122,57 @@ class Drake {
         }
     }
     
+    scrollWindow(e, type, breakpoints) {
+        let start = false;
+        let speed = null;
+        
+        breakpoints.forEach(breakpoint => {
+            if (type === 'top') {
+                const currentBreakpoint = e.y > (window.innerHeight - breakpoint.offset);
+                start = start || currentBreakpoint;
+                
+                if (currentBreakpoint) {
+                    speed = breakpoint.speed;
+                }
+            }  else {
+                const currentBreakpoint = e.y < breakpoint.offset;
+                start = start || currentBreakpoint;
+
+                if (currentBreakpoint) {
+                    speed = -1 * breakpoint.speed;
+                }
+            }
+        });
+        
+        if (start) {
+            if (this[type + 'Scroll'] && (speed !== this.scrollSpeed)) {
+                clearInterval(this[type + 'Scroll']);
+                this[type + 'Scroll'] = null;
+            }
+
+            if (this[type + 'Scroll'] === null) {
+                this.lastPosition = window.innerHeight + window.scrollY;
+
+                this[type + 'Scroll'] = setInterval(() => {
+                    this.scrollSpeed = speed;
+                    window.scrollBy(0, speed);
+                    const newPosition = window.innerHeight + window.scrollY;
+
+                    if(this.lastPosition === newPosition) {
+                        this.cancelScroll(type);
+                    }
+
+                    this.lastPosition = newPosition;
+                }, 5);
+            }
+        } else {
+            this.cancelScroll(type);
+        }
+    }
+    
     scrollHandler(e) {
-        const height = document.body.offsetHeight;
-
-        if (e.y > (height - 30)) {
-            let speed = 2;
-
-            if (e.y > (height - 15)) {
-                speed = 4;
-            }
-
-            if (this.topScroll && (speed !== this.scrollSpeed)) {
-                clearInterval(this.topScroll);
-                this.topScroll = null;
-            }
-
-            if (this.topScroll === null) {
-                this.lastPosition = document.body.offsetHeight + document.body.scrollTop;
-
-                this.topScroll = setInterval(() => {
-                    this.scrollSpeed = speed;
-                    document.body.scrollBy(0, speed);
-                    const newPosition = document.body.offsetHeight + document.body.scrollTop;
-
-                    if(this.lastPosition === newPosition) {
-                        this.cancelScroll('top');
-                    }
-
-                    this.lastPosition = newPosition;
-                }, 5);
-            }
-        } else {
-            this.cancelScroll('top');
-        }
-
-        if (e.y < 30) {
-            let speed = -2;
-
-            if (e.y < 15) {
-                speed = -4;
-            }
-
-            if (this.bottomScroll && (speed !== this.scrollSpeed)) {
-                clearInterval(this.bottomScroll);
-                this.bottomScroll = null;
-            }
-
-            if (this.bottomScroll === null) {
-                this.lastPosition = document.body.offsetHeight + document.body.scrollTop;
-
-                this.bottomScroll = setInterval(() => {
-                    this.scrollSpeed = speed;
-                    document.body.scrollBy(0, speed);
-                    const newPosition = document.body.offsetHeight + document.body.scrollTop;
-
-                    if(this.lastPosition === newPosition) {
-                        this.cancelScroll('bottom');
-                    }
-
-                    this.lastPosition = newPosition;
-                }, 5);
-            }
-        } else {
-            this.cancelScroll('bottom');
-        }
+        this.scrollWindow(e, 'top', [{offset: 60, speed: 2},{offset:30, speed: 8}]);
+        this.scrollWindow(e, 'bottom', [{offset: 60, speed: 2},{offset:30, speed: 8}]);
     }
     
     registerScroller() {
