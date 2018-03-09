@@ -5,6 +5,13 @@ import ContentElement from './Components/Sidebar/Elements/ContentElement';
 class Drake {
     constructor() {
         this.drake = null;
+
+        this.topScroll = null;
+        this.bottomScroll = null;
+        this.scrollSpeed = null;
+        this.lastPosition = null;
+
+        this.scrollHandler = this.scrollHandler.bind(this);
     }
 
     initDrake() {
@@ -83,6 +90,8 @@ class Drake {
         });
 
         this.drake.on('drag', (el, source) => {
+            this.registerScroller();
+            
             const dropZones = document.querySelectorAll('[data-fred-dropzone]');
             for (let zone of dropZones) {
                 zone.classList.add('fred--dropzone_highlight');
@@ -92,6 +101,8 @@ class Drake {
         });
 
         this.drake.on('dragend', el => {
+            this.removeScroller();
+            
             const dropZones = document.querySelectorAll('[data-fred-dropzone]');
             for (let zone of dropZones) {
                 zone.classList.remove('fred--dropzone_highlight');
@@ -101,6 +112,94 @@ class Drake {
         });
 
     };
+    
+    cancelScroll(type) {
+        if (this[type + 'Scroll']) {
+            clearInterval(this[type + 'Scroll']);
+            this[type + 'Scroll'] = null;
+            this.scrollSpeed = null;
+            this.lastPosition = null;
+        }
+    }
+    
+    scrollHandler(e) {
+        const height = document.body.offsetHeight;
+
+        if (e.y > (height - 30)) {
+            let speed = 2;
+
+            if (e.y > (height - 15)) {
+                speed = 4;
+            }
+
+            if (this.topScroll && (speed !== this.scrollSpeed)) {
+                clearInterval(this.topScroll);
+                this.topScroll = null;
+            }
+
+            if (this.topScroll === null) {
+                this.lastPosition = document.body.offsetHeight + document.body.scrollTop;
+
+                this.topScroll = setInterval(() => {
+                    this.scrollSpeed = speed;
+                    document.body.scrollBy(0, speed);
+                    const newPosition = document.body.offsetHeight + document.body.scrollTop;
+
+                    if(this.lastPosition === newPosition) {
+                        this.cancelScroll('top');
+                    }
+
+                    this.lastPosition = newPosition;
+                }, 5);
+            }
+        } else {
+            this.cancelScroll('top');
+        }
+
+        if (e.y < 30) {
+            let speed = -2;
+
+            if (e.y < 15) {
+                speed = -4;
+            }
+
+            if (this.bottomScroll && (speed !== this.scrollSpeed)) {
+                clearInterval(this.bottomScroll);
+                this.bottomScroll = null;
+            }
+
+            if (this.bottomScroll === null) {
+                this.lastPosition = document.body.offsetHeight + document.body.scrollTop;
+
+                this.bottomScroll = setInterval(() => {
+                    this.scrollSpeed = speed;
+                    document.body.scrollBy(0, speed);
+                    const newPosition = document.body.offsetHeight + document.body.scrollTop;
+
+                    if(this.lastPosition === newPosition) {
+                        this.cancelScroll('bottom');
+                    }
+
+                    this.lastPosition = newPosition;
+                }, 5);
+            }
+        } else {
+            this.cancelScroll('bottom');
+        }
+    }
+    
+    registerScroller() {
+        this.topScroll = null;
+        this.bottomScroll = null;
+        this.scrollSpeed = null;
+        this.lastPosition = null;
+
+        document.addEventListener('mousemove', this.scrollHandler);
+    }
+    
+    removeScroller() {
+        document.removeEventListener('mousemove', this.scrollHandler);
+    }
 
     reloadContainers() {
         const initContainer = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
