@@ -189,18 +189,17 @@ export class ContentElement {
                 switch (el.nodeName.toLowerCase()) {
                     case 'img':
                         el.setAttribute('src', this.content[el.dataset.fredName]);
+                        
+                        el.addEventListener('click', e => {
+                            e.preventDefault();
+                            imageEditor.edit(el);
+                        });
+                        
                         break;
                     default:
                         el.innerHTML = this.content[el.dataset.fredName];
                 }
             }
-        });
-
-        content.querySelectorAll('img[contenteditable="true"]').forEach(img => {
-            img.addEventListener('click', e => {
-                e.preventDefault();
-                imageEditor.edit(img);
-            })
         });
 
         wrapper.appendChild(content);
