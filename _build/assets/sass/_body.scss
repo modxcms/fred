@@ -77,6 +77,9 @@
       background: rgba($gray, .1);
       opacity: .5;
       height: 20px;
+      .fred--toolbar-grip{
+        opacity: 0;
+      }
       button{
         opacity: 0;
       }
@@ -98,6 +101,37 @@
     opacity: 0;
     overflow:hidden;
     transition: .2s ease-in;
+    cursor: move;
+    cursor: -moz-grab;
+    &-grip{
+      content: '....';
+      width: 15px;
+      height: 36px;
+      display: inline-block;
+      overflow: hidden;
+      line-height: 5px;
+      padding: 10px 4px;
+      vertical-align: middle;
+      margin-top: -.7em;
+      margin-right: .3em;
+      font-size: 12px;
+      font-weight: bold;
+      font-family: sans-serif;
+      letter-spacing: 2px;
+      color: $modxblue;
+      float:left;
+      opacity: .75;
+      transition: $timing;
+      &:after{
+        content: '.. .. .. ..';
+      }
+    }
+
+    &:hover{
+      .fred--toolbar-grip{
+        opacity: 1;
+      }
+    }
 
     button {
       @include btn();
@@ -110,9 +144,13 @@
       border: none;
       opacity: .8;
       transition: $timing;
+      background-size: 20px;
       &:hover {
         opacity: 1;
         transform: scale(1.05);
+      }
+      &:not(:hover){
+        background-color: $modxblue;
       }
     }
   }
