@@ -23,6 +23,8 @@ class LoadContent extends Endpoint
 
         $data = $object->getProperty('data', 'fred');
         $elements = [];
+
+        $data = $this->fixData($data);
         
         $this->gatherElements($elements, $data);
         
@@ -85,5 +87,27 @@ class LoadContent extends Endpoint
         ];
     }
 
-    
+    /**
+     * Temporal method to fix data model change
+     * 
+     * @param $data
+     */
+    private function fixData($data)
+    {
+        foreach ($data as $dz => &$elements) {
+            foreach ($elements as &$element) {
+                foreach ($element['values'] as $key => $value) {
+                    if (!is_array($value)) {
+                        $element['values'][$key] = ['_raw' => ['_value' => $value]];
+                    }
+                }
+
+                $element['children'] = $this->fixData($element['children']);
+            }
+        }
+        
+        return $data;
+    }
+
+
 }
