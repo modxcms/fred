@@ -1,4 +1,4 @@
-import drake from '../../../drake';
+import drake from '../../../Drake';
 import imageEditor from '../../../Editors/ImageEditor';
 import emitter from '../../../EE';
 import doT from 'dot';

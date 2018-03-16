@@ -1,5 +1,5 @@
 import Sidebar from '../Sidebar';
-import drake from '../../drake';
+import drake from '../../Drake';
 import fetch from 'isomorphic-fetch';
 
 export default class Elements extends Sidebar {

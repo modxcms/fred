@@ -2,7 +2,7 @@ import emitter from './EE';
 import Sidebar from './Sidebar';
 import Launcher from './Launcher';
 import fetch from 'isomorphic-fetch';
-import drake from './drake';
+import drake from './Drake';
 import imageEditor from './Editors/ImageEditor';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
