@@ -82,10 +82,12 @@ export class ContentElement {
         });
 
         const toolbar = document.createElement('div');
-        toolbar.classList.add('fred--toolbar');
+        toolbar.classList.add('fred--toolbar', 'handle');
 
-        const moveHandle = document.createElement('button');
-        moveHandle.classList.add('fred--move-icon', 'handle');
+        const moveHandle = document.createElement('div');
+        moveHandle.classList.add('fred--toolbar-grip');
+
+        toolbar.appendChild(moveHandle);
 
         const duplicate = document.createElement('button');
         duplicate.classList.add('fred--duplicate-icon');
@@ -112,7 +114,7 @@ export class ContentElement {
             toolbar.appendChild(settings);
         }
 
-        toolbar.appendChild(moveHandle);
+        
         toolbar.appendChild(duplicate);
         toolbar.appendChild(trashHandle);
 
@@ -166,15 +168,28 @@ export class ContentElement {
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
                     if (mutation.type === 'characterData') {
-                        this.content[el.dataset.fredName] = el.innerHTML;
+                        if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+                        if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+                        
+                        this.content[el.dataset.fredName]._raw._value = el.innerHTML;
+                        
                         return;
                     }
 
                     if (mutation.type === 'attributes') {
-                        if (mutation.attributeName === 'src') {
-                            this.content[el.dataset.fredName] = el.getAttribute(mutation.attributeName);
+                        if ((el.nodeName.toLowerCase()) === 'img' && (mutation.attributeName === 'src')) {
+                            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+                            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+
+                            this.content[el.dataset.fredName]._raw._value = el.getAttribute(mutation.attributeName);
+                            
                             return;
                         }
+
+                        if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+                        if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+
+                        this.content[el.dataset.fredName]._raw[mutation.attributeName] = el.getAttribute(mutation.attributeName);
                     }
                 });
             });
@@ -188,7 +203,7 @@ export class ContentElement {
             if (this.content[el.dataset.fredName]) {
                 switch (el.nodeName.toLowerCase()) {
                     case 'img':
-                        el.setAttribute('src', this.content[el.dataset.fredName]);
+                        el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
                         
                         el.addEventListener('click', e => {
                             e.preventDefault();
@@ -197,7 +212,16 @@ export class ContentElement {
                         
                         break;
                     default:
-                        el.innerHTML = this.content[el.dataset.fredName];
+                        el.innerHTML = this.content[el.dataset.fredName]._raw._value;
+                }
+                
+                if (el.dataset.fredAttrs) {
+                    const attrs = el.dataset.fredAttrs.split(',');
+                    attrs.forEach(attr => {
+                        if (this.content[el.dataset.fredName]._raw[attr]) {
+                            el.setAttribute(attr, this.content[el.dataset.fredName]._raw[attr]);
+                        }
+                    });
                 }
             }
         });

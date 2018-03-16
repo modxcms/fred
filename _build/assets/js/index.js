@@ -82,6 +82,7 @@ export default class Fred {
             el.removeAttribute('contenteditable');
             el.removeAttribute('data-fred-name');
             el.removeAttribute('data-fred-target');
+            el.removeAttribute('data-fred-attrs');
         }
 
         // Remove data-fred-dropzone attributes
