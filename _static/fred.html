@@ -319,7 +319,74 @@
             <dd>
             <dt role="tab" tabindex="0" class="fred--sidebar_settings">Settings <i
                     class="fred--angle-right fred--accordion_toggle"></i></dt>
-            <dd> Settings Content
+            <dd>
+                <form class="fred--settings_form">
+                    <fieldset>
+                        <label class="fred--settings_form_select">
+                            Template
+                            <select name="template">
+                                <option>Inside Page</option>
+                            </select>
+                        </label>
+                        <label>
+                            Page Title
+                            <input type="text" name="pagetitle" value="About Us">
+                        </label>
+                        <label>
+                            Long Title
+                            <input type="text" name="longtitle" value="About MODX, LLC">
+                        </label>
+                        <label>
+                            Description
+                            <textarea name="description">This is the description of this page</textarea>
+                        </label>
+                        <label>
+                            Intro Text
+                            <textarea name="introtext">This is the introtext of this page</textarea>
+                        </label>
+                        <label>
+                            Menu Title
+                            <input type="text" name="longtitle" value="About">
+                        </label>
+                        <label>
+                            Alias
+                            <input type="text" name="longtitle" value="about-us.html">
+                        </label>
+                        <label class="fred--settings_form_checkbox">
+                            <input type="checkbox" name="published" checked="checked">
+                            Published
+                        </label>
+                        <label class="fred--settings_form_checkbox">
+                            <input type="checkbox" name="hidemenu" checked="checked">
+                            Hide from Menu
+                        </label>
+                        <button class="fred--btn-sidebar" type="button" onclick="expandChildren('#fred-advanced-settings');">
+                           Advanced Settings
+                        </button>
+
+                    </fieldset>
+                    <fieldset id="fred-advanced-settings" class="fred--settings_form_advanced fred--hidden">
+                        <label>
+                            Published On
+                            <input type="date" name="publishedon">
+                        </label>
+                        <label>
+                            Publish On
+                            <input type="date" name="publishon">
+                        </label>
+                        <label>
+                            Unpublish On
+                            <input type="date" name="unpublishon">
+                        </label>
+                        <label class="fred--settings_form_checkbox">
+                            <input type="checkbox" name="deleted" checked="checked">
+                            Deleted
+                        </label>
+                    </fieldset>
+                    <button type="button" class="fred--btn-sidebar fred--settings_form_save">
+                        Save
+                    </button>
+                </form>
             <dd>
         </dl>
         <button class="fred--btn-sidebar fred--btn-sidebar_logout">

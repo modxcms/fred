@@ -22,3 +22,18 @@ $modxred: #E12A29;
 $modxblue: #3380C2;
 $modxgreen: #42AB4A;
 $modxbrightgreen: #95C953;
+
+//Mixins
+@mixin draggable{
+  cursor: move; /* fallback: no `url()` support or images disabled */
+  cursor: url(images/grab.cur); /* fallback: Internet Explorer */
+  cursor: -webkit-grab; /* Chrome 1-21, Safari 4+ */
+  cursor:    -moz-grab; /* Firefox 1.5-26 */
+  cursor:         grab; /* W3C standards syntax, should come least */
+  &:active {
+    cursor: url(images/grabbing.cur);
+    cursor: -webkit-grabbing;
+    cursor:    -moz-grabbing;
+    cursor:         grabbing;
+  }
+}

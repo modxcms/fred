@@ -62,6 +62,7 @@ button.fred--btn, .fred--btn {
     padding: 8px;
     margin: 16px 5%;
     width: 90%;
+    cursor: pointer;
     &:hover, &:focus {
       background-color: darken($black, 15%);
     }
