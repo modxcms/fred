@@ -41,18 +41,76 @@
     }
   }
 }
-.fred--panel{
-  form, fieldset{
+
+.fred--settings_form {
+  margin: 32px 8px 16px;
+  fieldset{
+    &.fred--settings_form_advanced{
+      transition: $timing;
+      padding: 24px 16px;
+      opacity: 1;
+      position: fixed;
+      width: 320px;
+      left: 275px;
+      height: 100vh;
+      overflow: auto;
+      overflow-x: hidden;
+      top: 0;
+      background-color: lighten($black, 5%);
+    }
+  }
+  label {
+    width: 90%;
+    margin: 0 5% 16px;
+    font-weight: lighter;
+    color: $white;
+  }
+  input[type="text"], input[type="date"], textarea, select {
+    background-color: lighten($black, 5%);
+    color: white;
+    border: 1px solid darken($black, 5%);
+    height: 35px;
+    width: 100%;
+    border-radius: $radius 0 0 $radius;
+    padding: 0 16px;
+  }
+  textarea {
+    height: auto;
+    padding: 8px 16px;
+  }
+  button {
+
+  }
+  &_checkbox {
+    margin-bottom: 4px !important;
+    &:last-child {
+      margin-bottom: 16px !important;
+    }
+  }
+  &_select {
+    select {
+
+    }
+  }
+  &_save {
+    &:not(:hover){
+      background-color: $modxred;
+    }
+  }
+}
+
+.fred--panel {
+  form, fieldset {
     outline: none;
     border: none;
     padding: 0;
     margin: 0;
     text-align: left;
   }
-  form{
+  form {
     width: 100%;
   }
-  legend{
+  legend {
     box-sizing: border-box;
     position: relative;
     width: 100%;
@@ -68,7 +126,7 @@
     padding: 16px;
     cursor: pointer;
   }
-  label{
+  label {
     box-sizing: border-box;
     line-height: 18px;
     padding: 12px 16px;
@@ -79,11 +137,11 @@
     font-weight: bold;
     color: lighten($black, 25%);
   }
-  input, select, textarea{
+  input, select, textarea {
     margin: 0 0 4px;
     box-sizing: border-box;
     width: 100%;
-    display:block;
+    display: block;
     font-size: 14px;
     line-height: 18px;
     padding: 8px;

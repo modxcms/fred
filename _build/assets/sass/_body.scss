@@ -101,8 +101,7 @@
     opacity: 0;
     overflow:hidden;
     transition: .2s ease-in;
-    cursor: move;
-    cursor: -moz-grab;
+    @include draggable();
     &-grip{
       content: '....';
       width: 15px;
