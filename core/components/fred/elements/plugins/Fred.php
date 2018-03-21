@@ -21,8 +21,9 @@ if (isset($templates[$modx->resource->template])) {
     );
 
     $fredContent = '
-    <script type="text/javascript" src="'.$fred->getOption('webAssetsUrl').'fred.min.js"></script>
-    <link rel="stylesheet" href="'.$fred->getOption('webAssetsUrl').'fred.css" type="text/css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.9/tinymce.min.js"></script>
+    <script type="text/javascript" src="'.$fred->getOption('webAssetsUrl') . 'fred.min.js"></script>
+    <link rel="stylesheet" href="'.$fred->getOption('webAssetsUrl') . 'fred.css" type="text/css" />
     <script>
         var fred = new Fred({
             assetsUrl: "' . $fred->getOption('webAssetsUrl') . '",
