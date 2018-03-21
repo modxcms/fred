@@ -4,6 +4,7 @@ import Launcher from './Launcher';
 import fetch from 'isomorphic-fetch';
 import drake from './Drake';
 import imageEditor from './Editors/ImageEditor';
+import iconEditor from './Editors/IconEditor';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
 
@@ -173,6 +174,7 @@ export default class Fred {
 
         drake.initDrake();
         imageEditor.init(this.wrapper);
+        iconEditor.init(this.wrapper);
 
         emitter.on('fred-loading', text => {
             if (this.loading !== null) return;
