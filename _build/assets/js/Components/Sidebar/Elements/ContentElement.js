@@ -1,5 +1,6 @@
 import drake from '../../../Drake';
 import imageEditor from '../../../Editors/ImageEditor';
+import iconEditor from '../../../Editors/IconEditor';
 import emitter from '../../../EE';
 import doT from 'dot';
 
@@ -168,7 +169,7 @@ export class ContentElement {
             }
         }
 
-        content.querySelectorAll('[contenteditable="true"]').forEach(el => {
+        content.querySelectorAll('[data-fred-name]').forEach(el => {
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
                     if ((mutation.type === 'characterData') && !el.rte) {
@@ -186,6 +187,15 @@ export class ContentElement {
                             if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
 
                             this.content[el.dataset.fredName]._raw._value = el.getAttribute(mutation.attributeName);
+                            
+                            return;
+                        }
+                        
+                        if ((el.nodeName.toLowerCase()) === 'i' && (mutation.attributeName === 'class')) {
+                            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+                            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+
+                            this.content[el.dataset.fredName]._raw._value = el.className;
                             
                             return;
                         }
@@ -246,6 +256,14 @@ export class ContentElement {
             
             if (this.content[el.dataset.fredName]._raw._value) {
                 switch (el.nodeName.toLowerCase()) {
+                    case 'i':
+                        el.className = this.content[el.dataset.fredName]._raw._value;
+
+                        el.addEventListener('click', e => {
+                            e.preventDefault();
+                            iconEditor.edit(el);
+                        });
+                        break;
                     case 'img':
                         el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
                         
@@ -269,6 +287,14 @@ export class ContentElement {
                 }
             } else {
                 switch (el.nodeName.toLowerCase()) {
+                    case 'i':
+                        this.content[el.dataset.fredName]._raw._value = el.className;
+
+                        el.addEventListener('click', e => {
+                            e.preventDefault();
+                            iconEditor.edit(el);
+                        });
+                        break;
                     case 'img':
                         this.content[el.dataset.fredName]._raw._value = el.getAttribute('src');
 
@@ -309,9 +335,12 @@ export class ContentElement {
         const element = document.createElement('div');
         element.innerHTML = this.template(this.settings);
 
-        element.querySelectorAll('[contenteditable="true"]').forEach(el => {
+        element.querySelectorAll('[data-fred-name]').forEach(el => {
             if (this.content[el.dataset.fredName] && this.content[el.dataset.fredName]._raw && this.content[el.dataset.fredName]._raw._value) {
                 switch (el.nodeName.toLowerCase()) {
+                    case 'i':
+                        el.className = this.content[el.dataset.fredName]._raw._value;
+                        break;
                     case 'img':
                         el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
                         break;
