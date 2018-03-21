@@ -40,8 +40,8 @@ export default class Elements extends Sidebar {
 
                     dd.appendChild(categoryEl);
 
-                    content.append(dt);
-                    content.append(dd);
+                    content.appendChild(dt);
+                    content.appendChild(dd);
                 });
 
                 this.content = content;

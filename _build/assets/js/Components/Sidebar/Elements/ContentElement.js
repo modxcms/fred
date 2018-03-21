@@ -66,17 +66,35 @@ export class ContentElement {
             e.stopPropagation();
 
             let firstSet = false;
-            e.path.forEach(el => {
-                if (el.classList && el.classList.contains('fred--block')) {
-                    el.classList.add('fred--block-active');
-
-                    if (firstSet === true) {
-                        el.classList.add('fred--block-active_parent');
+            
+            if (e.path) {
+                e.path.forEach(el => {
+                    if (el.classList && el.classList.contains('fred--block')) {
+                        el.classList.add('fred--block-active');
+    
+                        if (firstSet === true) {
+                            el.classList.add('fred--block-active_parent');
+                        }
+    
+                        firstSet = true;
                     }
+                });
+            } else {
+                let el = e.target.parentNode;
+                while(el) {
+                    if (el.classList && el.classList.contains('fred--block')) {
+                        el.classList.add('fred--block-active');
 
-                    firstSet = true;
+                        if (firstSet === true) {
+                            el.classList.add('fred--block-active_parent');
+                        }
+
+                        firstSet = true;
+                    }
+                    
+                    el = el.parentNode;
                 }
-            });
+            }
         });
 
         wrapper.addEventListener('mouseout', e => {
@@ -169,7 +187,8 @@ export class ContentElement {
             }
         }
 
-        content.querySelectorAll('[data-fred-name]').forEach(el => {
+        const fredElements = content.querySelectorAll('[data-fred-name]');
+        for (let el of fredElements) {
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
                     if ((mutation.type === 'characterData') && !el.rte) {
@@ -317,7 +336,7 @@ export class ContentElement {
                     });
                 }
             }
-        });
+        }
 
         wrapper.appendChild(content);
 
@@ -335,7 +354,8 @@ export class ContentElement {
         const element = document.createElement('div');
         element.innerHTML = this.template(this.settings);
 
-        element.querySelectorAll('[data-fred-name]').forEach(el => {
+        const fredElements = element.querySelectorAll('[data-fred-name]');
+        for (let el of fredElements) {
             if (this.content[el.dataset.fredName] && this.content[el.dataset.fredName]._raw && this.content[el.dataset.fredName]._raw._value) {
                 switch (el.nodeName.toLowerCase()) {
                     case 'i':
@@ -363,7 +383,7 @@ export class ContentElement {
             el.removeAttribute('data-fred-rte');
             el.removeAttribute('data-fred-target');
             el.removeAttribute('data-fred-attrs');
-        });
+        };
 
         for (let dzName in this.dzs) {
             if (this.dzs.hasOwnProperty(dzName)) {
