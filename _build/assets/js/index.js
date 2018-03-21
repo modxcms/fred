@@ -114,7 +114,7 @@ export default class Fred {
                             const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}));
                             this.loadChildren(element.children, contentElement, json.data.elements);
 
-                            zoneEl.append(contentElement.wrapper);
+                            zoneEl.appendChild(contentElement.wrapper);
 
                         });
                     }
