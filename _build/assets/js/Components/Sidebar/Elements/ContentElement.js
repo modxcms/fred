@@ -1,5 +1,6 @@
 import drake from '../../../Drake';
 import imageEditor from '../../../Editors/ImageEditor';
+import iconEditor from '../../../Editors/IconEditor';
 import emitter from '../../../EE';
 import doT from 'dot';
 
@@ -11,8 +12,8 @@ export class ContentElement {
 
         this.parent = parent;
         this.dzName = dzName;
-        this.options = {...(this.el.elementOptions || {})};
-        this.content = {...content};
+        this.options = JSON.parse(JSON.stringify((this.el.elementOptions || {})));
+        this.content = JSON.parse(JSON.stringify(content));
         this.settings = {};
 
         if (this.options.settings) {
@@ -23,10 +24,12 @@ export class ContentElement {
 
         this.settings = {
             ...(this.settings),
-            ...settings
+            ...JSON.parse(JSON.stringify(settings))
         };
 
         this.dzs = {};
+
+        this.inEditor = false;
 
         this.wrapper = this.render();
     }
@@ -63,22 +66,42 @@ export class ContentElement {
             e.stopPropagation();
 
             let firstSet = false;
-            e.path.forEach(el => {
-                if (el.classList && el.classList.contains('fred--block')) {
-                    el.classList.add('fred--block-active');
-
-                    if (firstSet === true) {
-                        el.classList.add('fred--block-active_parent');
+            
+            if (e.path) {
+                e.path.forEach(el => {
+                    if (el.classList && el.classList.contains('fred--block')) {
+                        el.classList.add('fred--block-active');
+    
+                        if (firstSet === true) {
+                            el.classList.add('fred--block-active_parent');
+                        }
+    
+                        firstSet = true;
                     }
+                });
+            } else {
+                let el = e.target.parentNode;
+                while(el) {
+                    if (el.classList && el.classList.contains('fred--block')) {
+                        el.classList.add('fred--block-active');
 
-                    firstSet = true;
+                        if (firstSet === true) {
+                            el.classList.add('fred--block-active_parent');
+                        }
+
+                        firstSet = true;
+                    }
+                    
+                    el = el.parentNode;
                 }
-            });
+            }
         });
 
         wrapper.addEventListener('mouseout', e => {
-            wrapper.classList.remove('fred--block-active');
-            wrapper.classList.remove('fred--block-active_parent');
+            if (this.inEditor === false) {
+                wrapper.classList.remove('fred--block-active');
+                wrapper.classList.remove('fred--block-active_parent');
+            }
         });
 
         const toolbar = document.createElement('div');
@@ -164,10 +187,11 @@ export class ContentElement {
             }
         }
 
-        content.querySelectorAll('[contenteditable="true"]').forEach(el => {
+        const fredElements = content.querySelectorAll('[data-fred-name]');
+        for (let el of fredElements) {
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
-                    if (mutation.type === 'characterData') {
+                    if ((mutation.type === 'characterData') && !el.rte) {
                         if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
                         if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
                         
@@ -185,23 +209,80 @@ export class ContentElement {
                             
                             return;
                         }
+                        
+                        if ((el.nodeName.toLowerCase()) === 'i' && (mutation.attributeName === 'class')) {
+                            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+                            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
 
-                        if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
-                        if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+                            this.content[el.dataset.fredName]._raw._value = el.className;
+                            
+                            return;
+                        }
+                        
+                        if (el.dataset.fredAttrs) {
+                            const attrs = el.dataset.fredAttrs.split(',');
+                            if (attrs.indexOf(mutation.attributeName) === -1) return;
 
-                        this.content[el.dataset.fredName]._raw[mutation.attributeName] = el.getAttribute(mutation.attributeName);
+                            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+                            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+
+                            this.content[el.dataset.fredName]._raw[mutation.attributeName] = el.getAttribute(mutation.attributeName);
+                        }
                     }
                 });
             });
-
+            
             observer.observe(el, {
                 attributes: true,
                 characterData: true,
                 subtree: true
             });
 
-            if (this.content[el.dataset.fredName]) {
+            if (el.dataset.fredRte === 'true') {
+                tinymce.init({
+                    target: el,
+                    theme: 'inlite',
+                    inline: true,
+                    insert_toolbar: "quickimage quicktable",
+                    selection_toolbar: 'bold italic | quicklink h2 h3 blockquote',
+                    auto_focus: false,
+                    branding: false,
+                    setup: editor => {
+                        el.rte = editor;
+
+                        editor.on('change', e => {
+                            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+                            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+                            
+                            this.content[el.dataset.fredName]._raw._value = editor.getContent();
+                        });
+                        
+                        editor.on('focus', e => {
+                            this.inEditor = true;
+                        });
+                        
+                        editor.on('blur', e => {
+                            this.inEditor = false;
+                            wrapper.classList.remove('fred--block-active');
+                            wrapper.classList.remove('fred--block-active_parent');
+                        });
+                    }
+                });
+            }
+
+            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+            
+            if (this.content[el.dataset.fredName]._raw._value) {
                 switch (el.nodeName.toLowerCase()) {
+                    case 'i':
+                        el.className = this.content[el.dataset.fredName]._raw._value;
+
+                        el.addEventListener('click', e => {
+                            e.preventDefault();
+                            iconEditor.edit(el);
+                        });
+                        break;
                     case 'img':
                         el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
                         
@@ -223,8 +304,39 @@ export class ContentElement {
                         }
                     });
                 }
+            } else {
+                switch (el.nodeName.toLowerCase()) {
+                    case 'i':
+                        this.content[el.dataset.fredName]._raw._value = el.className;
+
+                        el.addEventListener('click', e => {
+                            e.preventDefault();
+                            iconEditor.edit(el);
+                        });
+                        break;
+                    case 'img':
+                        this.content[el.dataset.fredName]._raw._value = el.getAttribute('src');
+
+                        el.addEventListener('click', e => {
+                            e.preventDefault();
+                            imageEditor.edit(el);
+                        });
+
+                        break;
+                    default:
+                        this.content[el.dataset.fredName]._raw._value = el.innerHTML;
+                }
+
+                if (el.dataset.fredAttrs) {
+                    const attrs = el.dataset.fredAttrs.split(',');
+                    attrs.forEach(attr => {
+                        if (this.content[el.dataset.fredName]._raw[attr]) {
+                            this.content[el.dataset.fredName]._raw[attr] = el.getAttribute(attr);
+                        }
+                    });
+                }
             }
-        });
+        }
 
         wrapper.appendChild(content);
 
@@ -236,6 +348,64 @@ export class ContentElement {
 
         this.wrapper.replaceWith(newWrapper);
         this.wrapper = newWrapper;
+    }
+    
+    cleanRender() {
+        const element = document.createElement('div');
+        element.innerHTML = this.template(this.settings);
+
+        const fredElements = element.querySelectorAll('[data-fred-name]');
+        for (let el of fredElements) {
+            if (this.content[el.dataset.fredName] && this.content[el.dataset.fredName]._raw && this.content[el.dataset.fredName]._raw._value) {
+                switch (el.nodeName.toLowerCase()) {
+                    case 'i':
+                        el.className = this.content[el.dataset.fredName]._raw._value;
+                        break;
+                    case 'img':
+                        el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
+                        break;
+                    default:
+                        el.innerHTML = this.content[el.dataset.fredName]._raw._value;
+                }
+
+                if (el.dataset.fredAttrs) {
+                    const attrs = el.dataset.fredAttrs.split(',');
+                    attrs.forEach(attr => {
+                        if (this.content[el.dataset.fredName]._raw[attr]) {
+                            el.setAttribute(attr, this.content[el.dataset.fredName]._raw[attr]);
+                        }
+                    });
+                }
+            }
+
+            el.removeAttribute('contenteditable');
+            el.removeAttribute('data-fred-name');
+            el.removeAttribute('data-fred-rte');
+            el.removeAttribute('data-fred-target');
+            el.removeAttribute('data-fred-attrs');
+        };
+
+        for (let dzName in this.dzs) {
+            if (this.dzs.hasOwnProperty(dzName)) {
+                const dzEl = element.querySelector('[data-fred-dropzone="' + dzName + '"]');
+                if (dzEl) {
+                    dzEl.removeAttribute('data-fred-dropzone');
+                    
+                    if (this.dzs[dzName].children.length > 0) {
+                    
+                        let cleanedDropZoneContent = '';
+    
+                        this.dzs[dzName].children.forEach(child => {
+                            cleanedDropZoneContent += child.fredEl.cleanRender().innerHTML;
+                        });
+
+                        dzEl.innerHTML = cleanedDropZoneContent;
+                    }
+                }
+            }
+        }
+        
+        return element;
     }
 
     remove() {

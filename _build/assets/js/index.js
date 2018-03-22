@@ -4,6 +4,7 @@ import Launcher from './Launcher';
 import fetch from 'isomorphic-fetch';
 import drake from './Drake';
 import imageEditor from './Editors/ImageEditor';
+import iconEditor from './Editors/IconEditor';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
 
@@ -45,53 +46,13 @@ export default class Fred {
     }
 
     getCleanDropZoneContent(dropZone) {
-        const clone = dropZone.cloneNode(true);
+        let cleanedContent = '';
 
-        // Remove fred--block wrappers
-        let fredBlock = clone.querySelector('.fred--block');
-        while (fredBlock) {
-            const content = fredBlock.querySelector('.fred--block_content');
-
-            const children = content.children;
-
-            const sibling = fredBlock.nextSibling;
-            const parent = fredBlock.parentNode;
-
-            fredBlock.remove();
-
-            if (sibling) {
-                while (children.length > 0) {
-                    if (parent) {
-                        parent.insertBefore(children[0], sibling);
-                    } else {
-                        clone.insertBefore(children[0], sibling);
-                    }
-                }
-            } else if (parent) {
-                while (children.length > 0) {
-                    parent.appendChild(children[0]);
-                }
-            }
-
-            fredBlock = clone.querySelector('.fred--block');
+        for (let child of dropZone.children) {
+            cleanedContent += child.fredEl.cleanRender().innerHTML;
         }
 
-        // Remove contenteditable, data-fred-name & data-fred-target attributes
-        const contentEditables = clone.querySelectorAll('[contenteditable]');
-        for (let el of contentEditables) {
-            el.removeAttribute('contenteditable');
-            el.removeAttribute('data-fred-name');
-            el.removeAttribute('data-fred-target');
-            el.removeAttribute('data-fred-attrs');
-        }
-
-        // Remove data-fred-dropzone attributes
-        const dropzones = clone.querySelectorAll('[data-fred-dropzone]');
-        for (let el of dropzones) {
-            el.removeAttribute('data-fred-dropzone');
-        }
-
-        return clone.innerHTML.trim();
+        return cleanedContent;
     }
 
     save() {
@@ -153,7 +114,7 @@ export default class Fred {
                             const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}));
                             this.loadChildren(element.children, contentElement, json.data.elements);
 
-                            zoneEl.append(contentElement.wrapper);
+                            zoneEl.appendChild(contentElement.wrapper);
 
                         });
                     }
@@ -213,6 +174,7 @@ export default class Fred {
 
         drake.initDrake();
         imageEditor.init(this.wrapper);
+        iconEditor.init(this.wrapper);
 
         emitter.on('fred-loading', text => {
             if (this.loading !== null) return;
