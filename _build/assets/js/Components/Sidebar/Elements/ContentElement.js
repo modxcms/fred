@@ -296,13 +296,14 @@ export class ContentElement {
                         target: el,
                         theme: 'inlite',
                         inline: true,
-                        insert_toolbar: "quickimage quicktable",
-                        selection_toolbar: 'bold italic | quicklink h2 h3 blockquote',
+                        plugins: 'modxlink',
+                        insert_toolbar: "quickimage quicktable modxlink",
+                        selection_toolbar: 'bold italic | h2 h3 blockquote modxlink',
                         auto_focus: false,
                         branding: false,
                         setup: editor => {
                             el.rte = editor;
-    
+
                             editor.on('change', e => {
                                 if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
                                 if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
