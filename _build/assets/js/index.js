@@ -8,6 +8,8 @@ import iconEditor from './Editors/IconEditor';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
 
+import test from './Test';
+
 export default class Fred {
     constructor(config = {}) {
         this.config = config || {};
