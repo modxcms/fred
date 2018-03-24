@@ -76,6 +76,11 @@ $(document).ready(function () {
             panel.toggleClass('fred--hidden');
         })
     });
+    $("input[type='datetime-local']").flatpickr({
+        weekNumbers: true,
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+    });
 });
 
 function expandChildren(target) {
