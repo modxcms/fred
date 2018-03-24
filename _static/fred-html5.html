@@ -287,17 +287,17 @@
                     <dd></dd>
                 </dl>
             <dd>
-            <dt role="tab" tabindex="0" class="fred--sidebar_settings">Settings <i
+            <dt role="tab" tabindex="0" class="fred--sidebar_settings">Page Settings <i
                     class="fred--angle-right fred--accordion_toggle"></i></dt>
             <dd>
                 <form class="fred--settings_form">
                     <fieldset>
-                        <label class="fred--settings_form_select">
+                        <!-- <label class="fred--settings_form_select">
                             Template
                             <select name="template">
                                 <option>Inside Page</option>
                             </select>
-                        </label>
+                        </label> -->
                         <label>
                             Page Title
                             <input type="text" name="pagetitle" value="About Us">
@@ -330,29 +330,31 @@
                             <input type="checkbox" name="hidemenu" checked="checked">
                             Hide from Menu
                         </label>
-                        <button class="fred--btn-sidebar" type="button" onclick="expandChildren('#fred-advanced-settings');">
-                            Advanced Settings
-                        </button>
 
                     </fieldset>
-                    <fieldset id="fred-advanced-settings" class="fred--settings_form_advanced fred--hidden">
-                        <label>
-                            Published On
-                            <input type="date" name="publishedon">
-                        </label>
-                        <label>
-                            Publish On
-                            <input type="date" name="publishon">
-                        </label>
-                        <label>
-                            Unpublish On
-                            <input type="date" name="unpublishon">
-                        </label>
-                        <label class="fred--settings_form_checkbox">
-                            <input type="checkbox" name="deleted" checked="checked">
-                            Deleted
-                        </label>
-                    </fieldset>
+                    <dl>
+                        <dt role="tab" tabindex="0" onclick="$(this).toggleClass('active')">Advanced Settings</dt>
+                        <dd>
+                            <fieldset id="fred-advanced-settings" class="fred--settings_form_advanced">
+                                <label>
+                                    Published On
+                                    <input type="datetime-local" name="publishedon" value="2018-03-05 12:00">
+                                </label>
+                                <label>
+                                    Publish On
+                                    <input type="datetime-local" name="publishon">
+                                </label>
+                                <label>
+                                    Unpublish On
+                                    <input type="datetime-local" name="unpublishon">
+                                </label>
+                                <label class="fred--settings_form_checkbox">
+                                    <input type="checkbox" name="deleted">
+                                    Deleted
+                                </label>
+                            </fieldset>
+                        </dd>
+                    </dl>
                     <button type="button" class="fred--btn-sidebar fred--settings_form_save">
                         Save
                     </button>

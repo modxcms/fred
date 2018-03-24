@@ -300,6 +300,7 @@
     }
   }
   &_deleted {
+    cursor: not-allowed !important;
     color: rgba($modxred, .5);
     text-decoration: line-through;
   }
