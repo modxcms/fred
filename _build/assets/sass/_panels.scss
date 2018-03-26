@@ -33,4 +33,42 @@
       }
     }
   }
+
+  dl {
+    dt {
+      position: relative;
+      padding: 16px 32px 16px 48px;
+      font-size: 20px;
+      font-weight: lighter;
+      transition: $timing;
+      cursor: pointer;
+      color: $white;
+      &.active, &:hover, &:focus {
+        color: $modxgreen;
+        background-color: darken($black, 15%);
+        + dd {
+          display: block;
+        }
+      }
+      + dd {
+        display: none;
+        color: $white;
+        font-size: 14px;
+        padding: 24px 16px;
+        transition: $timing;
+        opacity: 1;
+        position: fixed;
+        width: 320px;
+        left: 275px;
+        height: 100vh;
+        overflow: auto;
+        overflow-x: hidden;
+        top: 0;
+        background-color: lighten($black, 5%);
+        &:hover {
+          display: block;
+        }
+      }
+    }
+  }
 }

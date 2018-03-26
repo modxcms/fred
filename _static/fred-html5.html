@@ -369,10 +369,16 @@
         <form>
             <fieldset>
                 <legend>Element Settings</legend>
-                <label>
-                    Class
-                    <input type="text" name="element-class">
-                </label>
+                <dl>
+                    <dt tabindex="0" onclick="$(this).toggleClass('active')">Colors</dt>
+                    <dd>
+                        <label>
+                            Class
+                            <input type="text" name="element-class">
+                        </label>
+
+                    </dd>
+                </dl>
                 <div class="fred--panel_button_wrapper">
                     <button class="fred--btn-panel fred--btn-apply">Apply</button>
                     <button class="fred--btn-panel">Cancel</button>
