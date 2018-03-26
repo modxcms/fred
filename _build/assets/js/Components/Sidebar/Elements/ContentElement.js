@@ -18,7 +18,13 @@ export class ContentElement {
 
         if (this.options.settings) {
             this.options.settings.forEach(setting => {
-                this.settings[setting.name] = setting.value || '';
+                if (setting.group && setting.settings) {
+                    setting.settings.forEach(subSetting => {
+                        this.settings[subSetting.name] = subSetting.value || '';    
+                    });
+                } else {
+                    this.settings[setting.name] = setting.value || '';
+                }
             });
         }
 
