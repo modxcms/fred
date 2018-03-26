@@ -36,7 +36,6 @@ export default class Pages extends Sidebar {
                 const pageList = document.createElement('dl');
                 pageList.classList.add('fred--pages_list');
 
-                console.log(response.data.resources);
                 this.content = response.data.resources;
                 this.buildTree(response.data.resources, pageList);
 
@@ -121,7 +120,6 @@ export default class Pages extends Sidebar {
         edit.innerHTML = 'Edit';
         edit.addEventListener('click', e => {
             e.preventDefault();
-            console.log('click');
             window.location.href = page.url;
         });
         

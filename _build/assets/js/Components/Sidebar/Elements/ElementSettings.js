@@ -40,9 +40,13 @@ export class ElementSettings {
         fieldSet.appendChild(legend);
 
         this.settings.forEach(setting => {
-            const defaultValue = this.el.settings[setting.name] || setting.value;
-            this.originalValues[setting.name] = defaultValue;
-            fieldSet.appendChild(this.renderSetting(setting, defaultValue));
+            if (setting.group && setting.settings) {
+                fieldSet.appendChild(this.renderSettingsGroup(setting));
+            } else {
+                const defaultValue = this.el.settings[setting.name] || setting.value;
+                this.originalValues[setting.name] = defaultValue;
+                fieldSet.appendChild(this.renderSetting(setting, defaultValue));
+            }
         });
 
         const apply = document.createElement('button');
@@ -69,8 +73,28 @@ export class ElementSettings {
         return form;
     }
 
+    renderSettingsGroup(group) {
+        const content = document.createElement('dl');
+
+        const dt = document.createElement('dt');
+        dt.setAttribute('role', 'tab');
+        dt.setAttribute('tabindex', '1');
+        dt.innerHTML = group.group;
+
+        const dd = document.createElement('dd');
+        group.settings.forEach(setting => {
+            const defaultValue = this.el.settings[setting.name] || setting.value;
+            this.originalValues[setting.name] = defaultValue;
+            dd.appendChild(this.renderSetting(setting, defaultValue));
+        });
+
+        content.appendChild(dt);
+        content.appendChild(dd);
+        
+        return content;
+    }
+
     renderSetting(setting, defaultValue) {
-        console.log(setting);
         const label = document.createElement('label');
         label.innerHTML = setting.label || setting.name;
         
