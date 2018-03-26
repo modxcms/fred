@@ -75,14 +75,16 @@ button.fred--btn, .fred--btn {
   }
   &-panel {
     position: relative;
-    display: inline-block;
+    display: block;
     color: white;
     text-align: center;
     background: transparent;
     border: 1px solid darken($black, 15%);
     border-radius: $radius;
     padding: 8px 16px;
-    margin: 16px 4px;
+    margin: 16px 5%;
+    width: 90%;
+    cursor: pointer;
     &:hover, &:focus {
       background-color: darken($black, 15%);
     }

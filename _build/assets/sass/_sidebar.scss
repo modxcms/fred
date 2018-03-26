@@ -219,12 +219,15 @@
         font-weight: lighter;
         transition: $timing;
         cursor: pointer;
-        &.active, &:hover, &:focus {
+        &.active, &:focus {
           color: $modxgreen;
           background-color: darken($black, 15%);
           + dd {
             display: block;
           }
+        }
+        &:hover:not(:focus){
+          background-color: darken($black, 5%);
         }
         + dd {
           transition: $timing;
@@ -300,7 +303,6 @@
     }
   }
   &_deleted {
-    cursor: not-allowed !important;
     color: rgba($modxred, .5);
     text-decoration: line-through;
   }
@@ -311,11 +313,7 @@
     color: rgba($white, .5);
   }
   &_noedit {
-    cursor: not-allowed !important;
-    &:hover, &:focus, &.active {
-      color: $white !important;
-      background: transparent !important;
-    }
+
   }
 }
 
