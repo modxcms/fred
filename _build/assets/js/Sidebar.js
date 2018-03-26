@@ -1,6 +1,7 @@
 import emitter from './EE';
 import PagesComponent from './Components/Sidebar/Pages';
 import ElementsComponent from './Components/Sidebar/Elements';
+import PageSettingsComponent from './Components/Sidebar/PageSettings';
 import promiseCancel from 'promise-cancel';
 
 export default class Sidebar {
@@ -125,6 +126,7 @@ export default class Sidebar {
 
         this.components.push(new PagesComponent(this.sidebar, this.config));
         this.components.push(new ElementsComponent(this.sidebar, this.config));
+        this.components.push(new PageSettingsComponent(this.sidebar, this.config));
         
         return this.sidebar;
     }

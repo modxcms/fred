@@ -343,10 +343,10 @@
                     <dd></dd>
                 </dl>
             <dd>
-            <dt role="tab" tabindex="0" class="fred--sidebar_settings">Page Settings <i
+            <dt role="tab" tabindex="0" class="fred--sidebar_page_settings">Page Settings <i
                     class="fred--angle-right fred--accordion_toggle"></i></dt>
             <dd>
-                <form class="fred--settings_form">
+                <form class="fred--page_settings_form">
                     <fieldset>
                         <!-- <label class="fred--settings_form_select">
                             Template
@@ -378,12 +378,12 @@
                             Alias
                             <input type="text" name="longtitle" value="about-us.html">
                         </label>
-                        <label class="fred--settings_form_checkbox fred--toggle">
+                        <label class="fred--page_settings_form_checkbox fred--toggle">
                             <input type="checkbox" name="published" checked="checked">
                             Published
                             <span></span>
                         </label>
-                        <label class="fred--settings_form_checkbox fred--toggle">
+                        <label class="fred--page_settings_form_checkbox fred--toggle">
                             <input type="checkbox" name="hidemenu" checked="checked">
                             Hide from Menu
                             <span></span>
@@ -393,7 +393,7 @@
                     <dl>
                         <dt role="tab" tabindex="0" onclick="$(this).toggleClass('active')">Advanced Settings</dt>
                         <dd>
-                            <fieldset id="fred-advanced-settings" class="fred--settings_form_advanced">
+                            <fieldset id="fred-advanced-settings" class="fred--page_settings_form_advanced">
                                 <label>
                                     Published On
                                     <input type="datetime-local" name="publishedon" value="2018-03-05 12:00">
@@ -406,7 +406,7 @@
                                     Unpublish On
                                     <input type="datetime-local" name="unpublishon">
                                 </label>
-                                <label class="fred--settings_form_checkbox fred--toggle">
+                                <label class="fred--page_settings_form_checkbox fred--toggle">
                                     <input type="checkbox" name="deleted">
                                     Deleted
                                     <span></span>

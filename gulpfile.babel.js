@@ -11,6 +11,8 @@ import webpack from 'webpack';
 import del from 'del';
 import pkg from './package.json';
 import webpackConfig from "./webpack.config.js";
+import merge from "merge-stream";
+import concat from "gulp-concat";
 
 import sass from 'gulp-ruby-sass';
 
@@ -30,12 +32,19 @@ gulp.task('build-web-dev', ['webpack:build-web-dev', 'css'], () => {
 });
 
 gulp.task('css', function() {
-    return sass('./_build/assets/sass/fred.scss', {
+    var sassStream = sass('./_build/assets/sass/fred.scss', {
         style: 'compressed',
         loadPath: [
             './_build/assets/sass'
         ]
-    })
+    });
+    
+    var cssStream = gulp.src([
+        './node_modules/flatpickr/dist/flatpickr.css'
+    ]);
+    
+    return merge(sassStream,cssStream)
+        .pipe(concat('fred.css'))
         .pipe(gulp.dest('./assets/components/fred/web'));
 });
 

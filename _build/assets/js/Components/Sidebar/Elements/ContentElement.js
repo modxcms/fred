@@ -5,7 +5,8 @@ import emitter from '../../../EE';
 import doT from 'dot';
 
 export class ContentElement {
-    constructor(el, dzName, parent = null, content = {}, settings = {}) {
+    constructor(config, el, dzName, parent = null, content = {}, settings = {}) {
+        this.config = config;
         this.el = el;
         this.template = doT.template(this.el.innerHTML);
         this.id = parseInt(this.el.dataset.fredElementId);
@@ -203,6 +204,10 @@ export class ContentElement {
                         
                         this.content[el.dataset.fredName]._raw._value = el.innerHTML;
                         
+                        if (el.dataset.fredTarget) {
+                            emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
+                        }
+                        
                         return;
                     }
 
@@ -212,6 +217,10 @@ export class ContentElement {
                             if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
 
                             this.content[el.dataset.fredName]._raw._value = el.getAttribute(mutation.attributeName);
+
+                            if (el.dataset.fredTarget) {
+                                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
+                            }
                             
                             return;
                         }
@@ -221,6 +230,10 @@ export class ContentElement {
                             if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
 
                             this.content[el.dataset.fredName]._raw._value = el.className;
+
+                            if (el.dataset.fredTarget) {
+                                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
+                            }
                             
                             return;
                         }
@@ -261,6 +274,10 @@ export class ContentElement {
                             if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
                             
                             this.content[el.dataset.fredName]._raw._value = editor.getContent();
+
+                            if (el.dataset.fredTarget) {
+                                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
+                            }
                         });
                         
                         editor.on('focus', e => {
@@ -278,6 +295,18 @@ export class ContentElement {
 
             if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
             if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+
+            if (el.dataset.fredTarget) {
+                if (this.config.pageSettings[el.dataset.fredTarget]) {
+                    this.content[el.dataset.fredName]._raw._value = this.config.pageSettings[el.dataset.fredTarget];
+                }
+                
+                emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
+                    if ((el !== sourceEl) && (el.dataset.fredTarget === settingName)) {
+                        this.setElValue(el, settingValue);
+                    }
+                });
+            }
             
             if (this.content[el.dataset.fredName]._raw._value) {
                 switch (el.nodeName.toLowerCase()) {
@@ -347,6 +376,27 @@ export class ContentElement {
         wrapper.appendChild(content);
 
         return wrapper;
+    }
+    
+    setElValue(el, value) {
+        if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+        if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+
+        switch (el.nodeName.toLowerCase()) {
+            case 'i':
+                this.content[el.dataset.fredName]._raw._value = value;
+                el.className = value;
+                break;
+            case 'img':
+                this.content[el.dataset.fredName]._raw._value = value;
+                el.setAttribute('src', value);
+                break;
+            default:
+                this.content[el.dataset.fredName]._raw._value = value;
+                el.innerHTML = value;
+        }
+
+
     }
 
     reRender() {
@@ -430,7 +480,7 @@ export class ContentElement {
             if (dzs.hasOwnProperty(dzName)) {
                 dzs[dzName].children.forEach(child => {
                     if (this.dzs[dzName]) {
-                        const clonedChild = new ContentElement(child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings);
+                        const clonedChild = new ContentElement(this.config, child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings);
                         this.addElementToDropZone(dzName, clonedChild);
 
                         clonedChild.duplicateDropZones(child.fredEl.dzs);
@@ -441,7 +491,7 @@ export class ContentElement {
     }
 
     duplicate() {
-        const clone = new ContentElement(this.el, this.dzName, this.parent, this.content, this.settings);
+        const clone = new ContentElement(this.config, this.el, this.dzName, this.parent, this.content, this.settings);
         clone.duplicateDropZones(this.dzs);
 
         if (this.wrapper.nextSibling === null) {

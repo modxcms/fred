@@ -14,7 +14,9 @@ class Drake {
         this.scrollHandler = this.scrollHandler.bind(this);
     }
 
-    initDrake() {
+    initDrake(config) {
+        this.config = config;
+
         const containers = [...document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])')];
         containers.unshift(...(document.querySelectorAll('.source')));
 
@@ -56,7 +58,7 @@ class Drake {
 
             if (source.classList.contains('blueprints-source') && el.parentNode) {
                 const parent = target.fredEl || null;
-                const contentElement = new ContentElement(el.lastChild, target.dataset.fredDropzone, parent);
+                const contentElement = new ContentElement(this.config, el.lastChild, target.dataset.fredDropzone, parent);
                 
                 if (parent) {
                     if (sibling === null) {

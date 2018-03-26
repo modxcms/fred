@@ -14,6 +14,7 @@ export default class Fred {
         this.drake = null;
         this.loading = null;
         this.wrapper = null;
+        this.config.pageSettings = {};
 
         document.addEventListener("DOMContentLoaded", () => {
             this.init();
@@ -28,11 +29,13 @@ export default class Fred {
             e.stopImmediatePropagation();
         });
 
+        document.body.appendChild(this.wrapper);
+    }
+    
+    renderComponents() {
         new Launcher((this.config.launcherPosition || 'bottom_left'));
         new Sidebar(this.config);
-        new ElementSettings();
-
-        document.body.appendChild(this.wrapper);
+        new ElementSettings();        
     }
 
     getDataFromDropZone(dropZone) {
@@ -65,7 +68,9 @@ export default class Fred {
 
             const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
             for (let target of targets) {
-                body[target.dataset.fredTarget] = target.innerHTML;
+                if (!this.config.pageSettings.hasOwnProperty(target.dataset.fredTarget)) {
+                    body[target.dataset.fredTarget] = target.innerHTML;
+                }
             }
 
             body[this.dropzones[i].dataset.fredDropzone] = this.getCleanDropZoneContent(this.dropzones[i]);
@@ -73,9 +78,10 @@ export default class Fred {
 
         body.id = this.config.resource.id;
         body.data = data;
+        body.pageSettings = this.config.pageSettings;
 
         console.log('body: ', body);
-
+        
         fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
             method: "post",
             credentials: 'same-origin',
@@ -84,19 +90,27 @@ export default class Fred {
             },
             body: JSON.stringify(body)
         }).then(response => {
-            emitter.emit('fred-loading-hide');
             return response.json();
+        }).then(json => {
+            if (json.url) {
+                location.href = json.url;
+            }
+            
+            emitter.emit('fred-loading-hide');
+
         });
     }
 
     loadContent() {
         emitter.emit('fred-loading', 'Preparing Content');
-        fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${this.config.resource.id}`, {
+        
+        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${this.config.resource.id}`, {
             credentials: 'same-origin'
         }).then(response => {
             return response.json();
         }).then(json => {
             const zones = json.data.data;
+            this.config.pageSettings = json.data.pageSettings || {};
 
             for (let zoneName in zones) {
                 if (zones.hasOwnProperty(zoneName)) {
@@ -111,7 +125,7 @@ export default class Fred {
                             chunk.innerHTML = json.data.elements[element.widget].html;
                             chunk.elementOptions = json.data.elements[element.widget].options;
 
-                            const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}));
+                            const contentElement = new ContentElement(this.config, chunk, zoneName, null, element.values, (element.settings || {}));
                             this.loadChildren(element.children, contentElement, json.data.elements);
 
                             zoneEl.appendChild(contentElement.wrapper);
@@ -138,7 +152,7 @@ export default class Fred {
                     chunk.innerHTML = elements[element.widget].html;
                     chunk.elementOptions = elements[element.widget].options || {};
                     
-                    const contentElement = new ContentElement(chunk, zoneName, parent, element.values, (element.settings || {}));
+                    const contentElement = new ContentElement(this.config, chunk, zoneName, parent, element.values, (element.settings || {}));
                     parent.addElementToDropZone(zoneName, contentElement);
 
                     this.loadChildren(element.children, contentElement, elements);
@@ -146,22 +160,8 @@ export default class Fred {
             }
         }
     }
-
-    init() {
-        console.log('Hello from Fred!');
-
-        this.dropzones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
-        let registeredDropzones = [];
-
-        for (let zoneIndex = 0; zoneIndex < this.dropzones.length; zoneIndex++) {
-            if (registeredDropzones.indexOf(this.dropzones[zoneIndex].dataset.fredDropzone) != -1) {
-                console.error('There are several dropzones with same name: ' + this.dropzones[zoneIndex].dataset.fredDropzone + '. The name of each dropzone has to be unique.');
-                return false;
-            }
-
-            registeredDropzones.push(this.dropzones[zoneIndex].dataset.fredDropzone);
-        }
-
+    
+    registerListeners() {
         emitter.on('fred-save', () => {
             this.save();
         });
@@ -169,12 +169,6 @@ export default class Fred {
         emitter.on('fred-wrapper-insert', el => {
             this.wrapper.appendChild(el);
         });
-
-        this.render();
-
-        drake.initDrake();
-        imageEditor.init(this.wrapper);
-        iconEditor.init(this.wrapper);
 
         emitter.on('fred-loading', text => {
             if (this.loading !== null) return;
@@ -199,7 +193,32 @@ export default class Fred {
         emitter.on('fred-undo', () => {
             console.log('Undo not yet implemented.');
         });
+    }
 
-        this.loadContent();
+    init() {
+        console.log('Hello from Fred!');
+        
+        this.registerListeners();
+
+        this.dropzones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
+        let registeredDropzones = [];
+
+        for (let zoneIndex = 0; zoneIndex < this.dropzones.length; zoneIndex++) {
+            if (registeredDropzones.indexOf(this.dropzones[zoneIndex].dataset.fredDropzone) != -1) {
+                console.error('There are several dropzones with same name: ' + this.dropzones[zoneIndex].dataset.fredDropzone + '. The name of each dropzone has to be unique.');
+                return false;
+            }
+
+            registeredDropzones.push(this.dropzones[zoneIndex].dataset.fredDropzone);
+        }
+
+        this.render();
+        drake.initDrake(this.config);
+        imageEditor.init(this.wrapper);
+        iconEditor.init(this.wrapper);
+
+        this.loadContent().then(() => {
+            this.renderComponents();
+        });
     }
 }
