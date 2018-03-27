@@ -369,12 +369,21 @@
         <form>
             <fieldset>
                 <legend>Element Settings</legend>
+                <label>
+                    Ungrouped Element
+                    <input type="text" name="ungrouped">
+                </label>
                 <dl>
                     <dt tabindex="0" onclick="$(this).toggleClass('active')">Colors</dt>
                     <dd>
                         <label>
                             Class
                             <input type="text" name="element-class">
+                        </label>
+                        <label class="fred--toggle">
+                            Toggle Option
+                            <input type="checkbox" name="toggle-field">
+                            <span></span>
                         </label>
 
                     </dd>
