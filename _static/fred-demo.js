@@ -80,6 +80,8 @@ $(document).ready(function () {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
     });
+    new Selectr('#template');
+    new Selectr('#parent');
 });
 
 function expandChildren(target) {
