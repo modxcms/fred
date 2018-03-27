@@ -193,25 +193,25 @@
     outline: none;
     user-select: none;
     padding: 2px;
-    width: 72px;
-    height: 36px;
+    width: 48px;
+    height: 21px;
     background-color: darken($black, 5%);
     border-radius: 16px;
-    overflow: hidden;
     float: right;
-    margin-top: -6px;
+    margin-top: 2px;
     margin-right: -72px;
     &:after {
       border-radius: 16px;
       display: block;
       position: absolute;
+      margin-top: -2px;
       top: 1px;
       left: 1px;
       bottom: 1px;
       content: "";
-      width: 36px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      background-color: rgba($modxgreen,.5);
+      width: 22px; height: 22px;
+      box-shadow: 0 1px 2px $black;
+      background-color: lighten($black, 10%);
       transition: margin 0.4s;
     }
   }
@@ -221,7 +221,7 @@
     visibility: hidden;
     &:checked + span{
       &:after {
-        margin-left: 35px;
+        margin-left: 25px;
         background-color: $modxgreen;
       }
     }
