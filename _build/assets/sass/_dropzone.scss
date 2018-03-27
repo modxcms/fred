@@ -4,6 +4,12 @@
   transition: $timing;
   .fred--block {
     border-bottom: 1px dashed rgba($light-gray, .5);
+    .fred--toolbar{
+      display:none !important;
+    }
+  }
+  figure + .fred--block{
+    border-top: 1px dashed rgba($light-gray, .5);
   }
 }
 
