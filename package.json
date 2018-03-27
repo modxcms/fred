@@ -44,6 +44,7 @@
     "dot": "^1.1.2",
     "dragula": "^3.7.2",
     "flatpickr": "^4.3.2",
+    "gulp-sourcemaps": "^2.6.4",
     "isomorphic-fetch": "^2.2.1",
     "promise-cancel": "^2.0.1"
   }
