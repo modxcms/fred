@@ -9,8 +9,6 @@
 
 .fred--thumb {
   &.gu-mirror {
-    background: $white;
-    box-shadow: 0 20px 24px rgba(black, .8);
     margin: 0;
     padding: 0;
     div, img {
@@ -28,6 +26,9 @@
       display: table;
       width: 100%;
       clear: both;
+    }
+    img{
+      box-shadow: 0 20px 24px rgba(black, .8);
     }
   }
   &.gu-transit {
