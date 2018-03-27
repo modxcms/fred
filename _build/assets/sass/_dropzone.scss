@@ -33,6 +33,9 @@
   }
   &.gu-transit {
     width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     /*animation: fred--thumb_transit .3s ease-in-out;
     img{
       width: 100%;
@@ -44,9 +47,8 @@
       text-align: center;
       text-shadow: 1px 1px 1px $white;
       color: darken($light-gray, 25%);
-      padding: 16px;
+      padding: 24px 0;
       width: 100%;
-      height: 64px;
       display: block;
       animation: fred--thumb_transit .3s ease-in-out;
       background: $light-gray;
