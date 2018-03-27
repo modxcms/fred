@@ -15,7 +15,7 @@ $choices-bg-color-dropdown: lighten($black, 5%) !default;
 $choices-text-color: $white !default;
 $choices-keyline-color: darken($black, 5%) !default;
 $choices-primary-color: $modxgreen !default;
-$choices-disabled-color: $light-gray !default;
+$choices-disabled-color: $dark-gray !default;
 $choices-highlight-color: $choices-primary-color !default;
 $choices-button-icon-path: '../../icons' !default;
 $choices-button-dimension: 8px !default;
@@ -45,7 +45,7 @@ $choices-button-offset: 8px !default;
     width: 100%;
     padding: 10px;
     border-bottom: 1px solid $choices-keyline-color;
-    background-color: #FFFFFF;
+    background-color: $choices-bg-color;
     margin: 0;
   }
   .#{$choices-selector}__button {
@@ -162,7 +162,7 @@ $choices-button-offset: 8px !default;
     margin-bottom: 3.75px;
     background-color: $choices-primary-color;
     border: 1px solid darken($choices-primary-color, 5%);
-    color: #FFFFFF;
+    color: $choices-bg-color;
     word-break: break-all;
     &[data-deletable] { padding-right: 5px; }
     [dir="rtl"] & {
@@ -238,7 +238,7 @@ $choices-button-offset: 8px !default;
       }
     }
     &.is-highlighted {
-      background-color: mix(#000000, #FFFFFF, 5%);
+      background-color: mix(#000000, $choices-bg-color, 25%);
       &:after { opacity: .5; }
     }
   }
@@ -275,7 +275,7 @@ $choices-button-offset: 8px !default;
 .#{$choices-selector}__input {
   display: inline-block;
   vertical-align: baseline;
-  background-color: mix(#000000, #FFFFFF, 2.5%);
+  background-color: mix(#000000, $choices-bg-color, 2.5%);
   font-size: $choices-font-size-md;
   margin-bottom: 5px;
   border: 0;

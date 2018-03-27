@@ -12,6 +12,7 @@
 .fred{
   @import "reset";
   @import "breakpoints";
+  @import "choices";
   @import "utility";
   @import "grids";
   @import "topbar";
@@ -20,7 +21,6 @@
   @import "launcher";
   @import "forms";
   @import "panels";
-  @import "choices";
 }
 @import "buttons";
 @import "body";
