@@ -62,12 +62,10 @@
 /* @TODO Create animation for reveal */
 @keyframes fred--thumb_transit {
   0% {
-    height: 0;
     padding: 0;
     overflow: hidden;
   }
   100% {
-    padding: 16px;
-    height: 64px;
+    padding: 24px 0;
   }
 }
