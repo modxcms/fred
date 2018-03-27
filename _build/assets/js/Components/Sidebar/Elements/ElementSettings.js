@@ -95,21 +95,22 @@ export class ElementSettings {
     }
 
     renderSetting(setting, defaultValue) {
-        const label = document.createElement('label');
-        label.innerHTML = setting.label || setting.name;
+        
         
         switch (setting.type) {
             case 'select':
-                label.appendChild(this.buildSelectInput(setting, defaultValue));
-                break;
+                return this.buildSelectInput(setting, defaultValue);
+            case 'toggle':
+                return this.buildToggleInput(setting, defaultValue);
             default:
-                label.appendChild(this.buildTextInput(setting, defaultValue));        
+                return this.buildTextInput(setting, defaultValue);        
         }
-        
-        return label;
     }
     
     buildTextInput(setting, defaultValue) {
+        const label = document.createElement('label');
+        label.innerHTML = setting.label || setting.name;
+        
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
         input.value = defaultValue;
@@ -117,11 +118,16 @@ export class ElementSettings {
         input.addEventListener('keyup', e => {
             this.setSetting(setting.name, input.value);
         });
+
+        label.appendChild(input);
         
-        return input;
+        return label;
     }
     
     buildSelectInput(setting, defaultValue) {
+        const label = document.createElement('label');
+        label.innerHTML = setting.label || setting.name;
+        
         const select = document.createElement('select');
         
         if (setting.options) {
@@ -145,8 +151,33 @@ export class ElementSettings {
                 this.setSetting(setting.name, select.value);
             }
         });
+
+        label.appendChild(select);
+
+        return label;
+    }
+
+    buildToggleInput(setting, defaultValue) {
+        const label = document.createElement('label');
+        label.classList.add('fred--toggle');
+        label.innerHTML = setting.label || setting.name;
         
-        return select;
+        const input = document.createElement('input');
+        input.setAttribute('type', 'checkbox');
+        if (defaultValue === true) {
+            input.setAttribute('checked', 'checked');
+        }
+
+        input.addEventListener('change', e => {
+            this.setSetting(setting.name, e.target.checked);
+        });
+
+        const span = document.createElement('span');
+
+        label.appendChild(input);
+        label.appendChild(span);
+
+        return label;
     }
     
     setSetting(name, value) {
