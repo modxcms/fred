@@ -290,15 +290,11 @@
                             <label>
                                 Parent
                                 <select id="parent">
-                                    <option value="1">Parent</option>
-                                    <option value="2">Parent 2</option>
                                 </select>
                             </label>
                             <label>
                                 Template
                                 <select id="template">
-                                    <option value="1">Template</option>
-                                    <option value="2">Template 2</option>
                                 </select>
                             </label>
                             <label>
@@ -382,13 +378,15 @@
                             Alias
                             <input type="text" name="longtitle" value="about-us.html">
                         </label>
-                        <label class="fred--settings_form_checkbox">
+                        <label class="fred--settings_form_checkbox fred--toggle">
                             <input type="checkbox" name="published" checked="checked">
                             Published
+                            <span></span>
                         </label>
-                        <label class="fred--settings_form_checkbox">
+                        <label class="fred--settings_form_checkbox fred--toggle">
                             <input type="checkbox" name="hidemenu" checked="checked">
                             Hide from Menu
+                            <span></span>
                         </label>
 
                     </fieldset>
@@ -408,9 +406,10 @@
                                     Unpublish On
                                     <input type="datetime-local" name="unpublishon">
                                 </label>
-                                <label class="fred--settings_form_checkbox">
+                                <label class="fred--settings_form_checkbox fred--toggle">
                                     <input type="checkbox" name="deleted">
                                     Deleted
+                                    <span></span>
                                 </label>
                             </fieldset>
                         </dd>
@@ -468,9 +467,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
+<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
+<script src="_static/choices.js" type="text/javascript"></script>
 <script type="text/javascript" src="_static/fred-demo.js"></script>
 
 </body>

@@ -80,8 +80,14 @@ $(document).ready(function () {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
     });
-    new Selectr('#template');
-    new Selectr('#parent');
+    //new Selectr('#template');
+    //new Selectr('#parent');
+    const template = new Choices('#template',{
+        choices : [{value: 1, label: 'Template 1', id: 1}, {value: 2, label: 'Template 2', id: 2}]
+    });
+    const parent = new Choices('#parent',{
+        choices : [{value: 1, label: 'Parent 1', id: 1}, {value: 2, label: 'Parent 2', id: 2}]
+    });
 });
 
 function expandChildren(target) {

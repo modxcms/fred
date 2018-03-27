@@ -183,6 +183,9 @@
   }
 }
 .fred--toggle{
+  padding-top: 6px !important;
+  padding-right: 72px !important;
+  min-height: 40px;
   span{
     display: block;
     position: relative;
@@ -192,9 +195,12 @@
     padding: 2px;
     width: 72px;
     height: 36px;
-    background-color: $black;
+    background-color: darken($black, 5%);
     border-radius: 16px;
     overflow: hidden;
+    float: right;
+    margin-top: -6px;
+    margin-right: -72px;
     &:after {
       border-radius: 16px;
       display: block;
