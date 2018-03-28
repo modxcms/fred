@@ -14,7 +14,7 @@ export default class Sidebar {
             this.titleEl = document.createElement('dt');
             this.titleEl.setAttribute('role', 'tab');
             this.titleEl.setAttribute('tabindex', '0');
-            this.titleEl.classList.add(`fred--sidebar_${this.constructor.title.toLowerCase()}`);
+            this.titleEl.classList.add(`fred--sidebar_${this.constructor.title.toLowerCase().replace(/ /g, '_')}`);
 
             this.titleEl.innerHTML = text + ((expandable === true) ? '<i class="fred--angle-right fred--accordion_toggle"></i>' : '');
 

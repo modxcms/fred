@@ -27,9 +27,23 @@ class LoadContent extends Endpoint
         $data = $this->fixData($data);
         
         $this->gatherElements($elements, $data);
-        
+
+        $pageSettings = [
+            'pagetitle' => $object->pagetitle,
+            'longtitle' => $object->longtitle,
+            'description' => $object->description,
+            'introtext' => $object->introtext,
+            'menutitle' => $object->menutitle,
+            'alias' => $object->alias,
+            'published' => $object->published == 1,
+            'hidemenu' => $object->hidemenu == 1,
+            'publishedon' => $object->publishedon,
+            'publishon' => $object->pub_date,
+            'unpublishon' => $object->unpub_date,
+        ];
 
         return $this->data([
+            "pageSettings" => $pageSettings,
             "data" => $data, 
             "elements" => $elements
         ]);

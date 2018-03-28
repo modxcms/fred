@@ -31,6 +31,7 @@
     "gulp-load-plugins": "^1.2.0",
     "gulp-ruby-sass": "",
     "gulp-util": "^3.0.6",
+    "merge-stream": "^1.0.1",
     "object-assign": "^4.0.1",
     "webpack": "^1.12.11",
     "webpack-node-externals": "^0.4.1"
@@ -43,8 +44,7 @@
   "dependencies": {
     "dot": "^1.1.2",
     "dragula": "^3.7.2",
-    "flatpickr": "^4.3.2",
-    "gulp-sourcemaps": "^2.6.4",
+    "flatpickr": "^4.4.3",
     "isomorphic-fetch": "^2.2.1",
     "promise-cancel": "^2.0.1"
   }
