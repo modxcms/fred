@@ -80,6 +80,11 @@ $(document).ready(function () {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
     });
+    $(".fred--datetime").flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        wrap: true,
+    });
     //new Selectr('#template');
     //new Selectr('#parent');
     const template = new Choices('#template',{
