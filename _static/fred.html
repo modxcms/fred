@@ -392,15 +392,27 @@
                             <fieldset id="fred-advanced-settings" class="fred--page_settings_form_advanced">
                                 <label>
                                     Published On
-                                    <input type="datetime-local" name="publishedon" value="2018-03-05 12:00">
+                                    <div class="fred--input-group fred--datetime">
+                                        <input type="text" name="publishedon" value="2018-03-05T12:00" data-input>
+                                        <a class="fred--close-small" title="clear" data-clear>
+                                        </a>
+                                    </div>
                                 </label>
                                 <label>
                                     Publish On
-                                    <input type="datetime-local" name="publishon">
+                                    <div class="fred--input-group fred--datetime">
+                                        <input type="text" name="publishon" value="" data-input>
+                                        <a class="fred--close-small" title="clear" data-clear>
+                                        </a>
+                                    </div>
                                 </label>
                                 <label>
                                     Unpublish On
-                                    <input type="datetime-local" name="unpublishon">
+                                    <div class="fred--input-group fred--datetime">
+                                        <input type="text" name="unpublishon" value="" data-input>
+                                        <a class="fred--close-small" title="clear" data-clear>
+                                        </a>
+                                    </div>
                                 </label>
                                 <label class="fred--page_settings_form_checkbox fred--toggle">
                                     <input type="checkbox" name="deleted">

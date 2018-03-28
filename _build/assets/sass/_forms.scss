@@ -1,3 +1,22 @@
+.fred--input-group{
+  display: flex;
+  align-items: center;
+  .fred--close-small{
+    position: relative;
+    height: 36px; width: 36px;
+    background-color: darken($black, 5%);
+    background-position: center;
+    background-size: 20px;
+    background-blend-mode: overlay;
+    margin: 0;
+    cursor: pointer;
+    transition: $timing;
+    &:hover{
+      background-color: $black;
+    }
+  }
+}
+
 .fred--pages_search {
   margin: 32px 8px 16px;
   &_wrapper {
@@ -90,6 +109,8 @@
     margin: 0 5% 16px;
     font-weight: lighter;
     color: $white;
+    display: block;
+    box-sizing: border-box;
   }
   input[type="text"], input[type="date"], textarea, select {
     background-color: lighten($black, 5%);
