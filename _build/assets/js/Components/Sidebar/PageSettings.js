@@ -160,18 +160,36 @@ export default class PageSettings extends Sidebar {
         const labelEl = document.createElement('label');
         labelEl.innerHTML = label;
 
+        const group = document.createElement('div');
+        group.classList.add('fred--input-group', 'fred--datetime');
+
         const input = document.createElement('input');
         
-        flatpickr(input, {
+        const picker = flatpickr(input, {
             enableTime: true,
             dateFormat: "Y-m-d H:i",
             defaultDate: (this.pageSettings[name] === 0) ? '' : (this.pageSettings[name] * 1000),
             onChange: selectedDates => {
-                this.pageSettings[name] = selectedDates[0].getTime() / 1000
+                if (selectedDates.length === 0) {
+                    this.pageSettings[name] = 0;
+                } else {
+                    this.pageSettings[name] = selectedDates[0].getTime() / 1000
+                }
             }
         });
 
-        labelEl.appendChild(input);
+        const clear = document.createElement('a');
+        clear.classList.add('fred--close-small');
+        clear.setAttribute('title', 'Clear');
+        clear.addEventListener('click', e => {
+            e.preventDefault();
+            picker.clear();
+        });
+
+        group.appendChild(input);
+        group.appendChild(clear);
+        
+        labelEl.appendChild(group);
 
         return labelEl;
     }
