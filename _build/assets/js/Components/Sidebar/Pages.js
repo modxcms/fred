@@ -1,5 +1,7 @@
 import Sidebar from '../Sidebar';
 import fetch from 'isomorphic-fetch';
+import Choices from 'choices.js';
+import emitter from "../../EE";
 
 export default class Pages extends Sidebar {
     static title = 'Pages';
@@ -7,22 +9,16 @@ export default class Pages extends Sidebar {
 
     init() {
         this.content = null;
+        this.parents = [{
+            id: 0,
+            value: '0',
+            label: 'No Parent'
+        }];
     }
     
     click() {
         if (this.content !== null) {
-            const content = document.createElement('div');
-            content.classList.add('fred--pages');
-
-            const pageList = document.createElement('dl');
-            pageList.classList.add('fred--pages_list');
-
-            this.buildTree(this.content, pageList);
-
-            content.appendChild(pageList);
-
-
-            return content;
+            return this.buildPanel();
         }
 
         return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-resources`)
@@ -30,24 +26,147 @@ export default class Pages extends Sidebar {
                 return response.json();
             })
             .then(response => {
-                const content = document.createElement('div');
-                content.classList.add('fred--pages');
-
-                const pageList = document.createElement('dl');
-                pageList.classList.add('fred--pages_list');
-
                 this.content = response.data.resources;
-                this.buildTree(response.data.resources, pageList);
-
-                content.appendChild(pageList);
-
-
-                return content;
+                return this.buildPanel();
             });
+    }
+    
+    buildPanel() {
+        const content = document.createElement('div');
+        content.classList.add('fred--pages');
+
+        const pageList = document.createElement('dl');
+        pageList.classList.add('fred--pages_list');
+
+        this.buildTree(this.content, pageList);
+
+        content.appendChild(pageList);
+
+        content.appendChild(this.buildCreatePage());
+
+
+        return content;
+    }
+    
+    buildCreatePage()
+    {
+        const wrapper = document.createElement('div');
+
+        const form = document.createElement('form');
+        form.classList.add('fred--pages_create', 'fred--hidden');
+        
+        const fieldset = document.createElement('fieldset');
+        const legend = document.createElement('legend');
+        legend.innerHTML = 'Create Page';
+
+        const parentLabel = document.createElement('label');
+        parentLabel.setAttribute('for', 'fred_create_page_parent');
+        parentLabel.classList.add('fred--label-choices');
+        parentLabel.innerHTML = 'Parent';
+        
+        const parentInput = document.createElement('select');
+        parentInput.setAttribute('id', 'fred_create_page_parent');
+        
+        const templateLabel = document.createElement('label');
+        templateLabel.setAttribute('for', 'fred_create_page_template');
+        templateLabel.classList.add('fred--label-choices');
+        templateLabel.innerHTML = 'Template';
+        
+        const templateInput = document.createElement('select');
+        templateInput.setAttribute('id', 'fred_create_page_template');
+
+        const pagetitleLabel = document.createElement('label');
+        pagetitleLabel.setAttribute('for', 'fred_create_page_pagetitle');
+        pagetitleLabel.classList.add('fred--label-choices');
+        pagetitleLabel.innerHTML = 'Page Title';
+        
+        const pagetitleInput = document.createElement('input');
+        pagetitleInput.setAttribute('id', 'fred_create_page_pagetitle');
+        pagetitleInput.setAttribute('type', 'text');
+
+        const createButton = document.createElement('button');
+        createButton.classList.add('fred--btn-panel', 'fred--btn-apply');
+        createButton.innerHTML = 'Create';
+        createButton.addEventListener('click', e => {
+            e.preventDefault();
+            emitter.emit('fred-loading', 'Creating Page');
+
+            fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
+                method: "post",
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    parent: parentInput.value,
+                    template: templateInput.value,
+                    pagetitle: pagetitleInput.value,
+                })
+            }).then(response => {
+                return response.json();
+            }).then(json => {
+                location.href = json.url;
+                emitter.emit('fred-loading-hide');
+            });
+        });
+        
+        fieldset.appendChild(legend);
+        fieldset.appendChild(parentLabel);
+        fieldset.appendChild(parentInput);
+        fieldset.appendChild(templateLabel);
+        fieldset.appendChild(templateInput);
+        fieldset.appendChild(pagetitleLabel);
+        fieldset.appendChild(pagetitleInput);
+        fieldset.appendChild(createButton);
+
+        form.appendChild(fieldset);
+
+        const button = document.createElement('button');
+        button.classList.add('fred--btn-sidebar');
+        button.innerHTML = 'Create Page';
+        button.addEventListener('click', e => {
+            e.preventDefault();
+            form.classList.toggle('fred--hidden');
+        });
+        
+        wrapper.appendChild(button);
+        wrapper.appendChild(form);
+
+        new Choices(parentInput, {
+            choices : this.parents,
+            shouldSort: false
+        });
+
+        const templateInputChoices = new Choices(templateInput);
+        templateInputChoices.ajax(callback => {
+            fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-templates`)
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    if (data.data.templates[0]) {
+                        data.data.templates[0].selected = true;
+                    }
+                    callback(data.data.templates, 'value', 'name');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        });
+        
+        window.test = templateInputChoices;
+        
+        return wrapper;
     }
     
     buildTree(pages, wrapper) {
         pages.forEach(page => {
+            this.parents.push({
+                id: page.id,
+                value: '' + page.id,
+                label: page.pagetitle
+            });
+            
             const dt = document.createElement('dt');
             dt.setAttribute('role', 'tab');
             dt.setAttribute('tabindex', '0');

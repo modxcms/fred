@@ -45,6 +45,7 @@ class GetResources extends Endpoint
      */
     protected function handleResource($resource, $isFred) {
         $pageFormatted = [
+            'id' => $resource->id,
             'pagetitle' => $resource->pagetitle,
             'children' => [],
             'isFred' => $isFred,

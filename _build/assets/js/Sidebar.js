@@ -5,11 +5,12 @@ import PageSettingsComponent from './Components/Sidebar/PageSettings';
 import promiseCancel from 'promise-cancel';
 
 export default class Sidebar {
-    constructor(config = {}) {
+    constructor(config = {}, fredWrapper) {
         this.lastRequest = null;
         this.config = config || {};
         this.components = [];
         this.visible = false;
+        this.fredWrapper = fredWrapper;
 
         this.hideSidebar = this.hideSidebar.bind(this);
         this.globalHideSidebar = this.globalHideSidebar.bind(this);
@@ -153,7 +154,9 @@ export default class Sidebar {
         }, 50);
     }
     
-    globalHideSidebar() {
-        this.hideSidebar(false);
+    globalHideSidebar(e) {
+        if (!this.fredWrapper.contains(e.target)) {
+            this.hideSidebar(false);
+        }
     }
 }

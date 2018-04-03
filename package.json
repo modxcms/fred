@@ -42,6 +42,7 @@
     "dist-web": "fred.min.js"
   },
   "dependencies": {
+    "choices.js": "^3.0.4",
     "dot": "^1.1.2",
     "dragula": "^3.7.2",
     "flatpickr": "^4.4.3",
