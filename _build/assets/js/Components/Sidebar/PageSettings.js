@@ -72,6 +72,7 @@ export default class PageSettings extends Sidebar {
         fieldset.appendChild(this.buildDateTimeInput('publishedon', 'Published On'));
         fieldset.appendChild(this.buildDateTimeInput('publishon', 'Publish On'));
         fieldset.appendChild(this.buildDateTimeInput('unpublishon', 'Unpublish On'));
+        fieldset.appendChild(this.buildTextInput('menuindex', 'Menu Index'));
         fieldset.appendChild(this.buildToggleInput('deleted', 'Deleted'));
 
         dd.appendChild(fieldset);
