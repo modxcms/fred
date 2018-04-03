@@ -25,16 +25,12 @@ export default class Fred {
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add('fred');
 
-        this.wrapper.addEventListener('click', e => {
-            e.stopImmediatePropagation();
-        });
-
         document.body.appendChild(this.wrapper);
     }
     
     renderComponents() {
         new Launcher((this.config.launcherPosition || 'bottom_left'));
-        new Sidebar(this.config);
+        new Sidebar(this.config, this.wrapper);
         new ElementSettings();        
     }
 
