@@ -203,6 +203,17 @@ export default class Fred {
             }
         });
 
+        emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
+            this.dropzones.forEach(dz => {
+                const targets = dz.querySelectorAll(`[data-fred-target="${settingName}"`);
+                for (let target of targets) {
+                    if (target !== sourceEl) {
+                        target.fredEl.setElValue(target, settingValue);
+                    }
+                }
+            });
+        });
+
         emitter.on('fred-undo', () => {
             console.log('Undo not yet implemented.');
         });

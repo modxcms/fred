@@ -166,8 +166,6 @@ export class ContentElement {
         content.classList.add('fred--block_content');
         content.dataset.fredElementId = this.el.dataset.fredElementId;
 
-        // content.innerHTML = this.template.render(this.settings);
-        
         return this.templateRender().then(html => {
             content.innerHTML = html;
             this.initDropZones(wrapper, content);
@@ -228,6 +226,8 @@ export class ContentElement {
     initElements(wrapper, content) {
         const fredElements = content.querySelectorAll('[data-fred-name]');
         for (let el of fredElements) {
+            el.fredEl = this;
+            
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
                     if ((mutation.type === 'characterData') && !el.rte) {
@@ -332,12 +332,6 @@ export class ContentElement {
                 if (this.config.pageSettings[el.dataset.fredTarget]) {
                     this.content[el.dataset.fredName]._raw._value = this.config.pageSettings[el.dataset.fredTarget];
                 }
-
-                emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
-                    if ((el !== sourceEl) && (el.dataset.fredTarget === settingName)) {
-                        this.setElValue(el, settingValue);
-                    }
-                });
             }
 
             if (this.content[el.dataset.fredName]._raw._value) {
