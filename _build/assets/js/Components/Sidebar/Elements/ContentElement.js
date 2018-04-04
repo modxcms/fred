@@ -2,14 +2,18 @@ import drake from '../../../Drake';
 import imageEditor from '../../../Editors/ImageEditor';
 import iconEditor from '../../../Editors/IconEditor';
 import emitter from '../../../EE';
-import doT from 'dot';
+import { twig } from 'twig';
+import fetch from "isomorphic-fetch";
 
 export class ContentElement {
     constructor(config, el, dzName, parent = null, content = {}, settings = {}) {
         this.config = config;
         this.el = el;
-        this.template = doT.template(this.el.innerHTML);
+        this.template = twig({data: this.el.innerHTML});
         this.id = parseInt(this.el.dataset.fredElementId);
+        this.wrapper = null;
+
+        this.render = this.render.bind(this);
 
         this.parent = parent;
         this.dzName = dzName;
@@ -37,8 +41,16 @@ export class ContentElement {
         this.dzs = {};
 
         this.inEditor = false;
-
-        this.wrapper = this.render();
+    }
+    
+    setEl(el) {
+        if (!el.innerHTML) {
+            this.el.innerHTML = el;
+        } else {
+            this.el.innerHTML = el.innerHTML;
+        }
+        
+        this.template = twig({data: this.el.innerHTML});
     }
 
     getContent() {
@@ -154,8 +166,26 @@ export class ContentElement {
         content.classList.add('fred--block_content');
         content.dataset.fredElementId = this.el.dataset.fredElementId;
 
-        content.innerHTML = this.template(this.settings);
+        // content.innerHTML = this.template.render(this.settings);
+        
+        return this.templateRender().then(html => {
+            content.innerHTML = html;
+            this.initDropZones(wrapper, content);
+            this.initElements(wrapper,content);
 
+            wrapper.appendChild(content);
+            
+            if (this.wrapper !== null) {
+                this.wrapper.replaceWith(wrapper);
+            }
+                
+            this.wrapper = wrapper;
+            
+            return wrapper;
+        });
+    }
+    
+    initDropZones(wrapper, content) {
         const dzs = content.querySelectorAll('[data-fred-dropzone]');
 
         let prev = null;
@@ -193,7 +223,9 @@ export class ContentElement {
                 }
             }
         }
-
+    }
+    
+    initElements(wrapper, content) {
         const fredElements = content.querySelectorAll('[data-fred-name]');
         for (let el of fredElements) {
             const observer = new MutationObserver(mutations => {
@@ -201,13 +233,13 @@ export class ContentElement {
                     if ((mutation.type === 'characterData') && !el.rte) {
                         if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
                         if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
-                        
+
                         this.content[el.dataset.fredName]._raw._value = el.innerHTML;
-                        
+
                         if (el.dataset.fredTarget) {
                             emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
                         }
-                        
+
                         return;
                     }
 
@@ -221,10 +253,10 @@ export class ContentElement {
                             if (el.dataset.fredTarget) {
                                 emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
                             }
-                            
+
                             return;
                         }
-                        
+
                         if ((el.nodeName.toLowerCase()) === 'i' && (mutation.attributeName === 'class')) {
                             if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
                             if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
@@ -234,10 +266,10 @@ export class ContentElement {
                             if (el.dataset.fredTarget) {
                                 emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
                             }
-                            
+
                             return;
                         }
-                        
+
                         if (el.dataset.fredAttrs) {
                             const attrs = el.dataset.fredAttrs.split(',');
                             if (attrs.indexOf(mutation.attributeName) === -1) return;
@@ -250,7 +282,7 @@ export class ContentElement {
                     }
                 });
             });
-            
+
             observer.observe(el, {
                 attributes: true,
                 characterData: true,
@@ -272,18 +304,18 @@ export class ContentElement {
                         editor.on('change', e => {
                             if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
                             if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
-                            
+
                             this.content[el.dataset.fredName]._raw._value = editor.getContent();
 
                             if (el.dataset.fredTarget) {
                                 emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
                             }
                         });
-                        
+
                         editor.on('focus', e => {
                             this.inEditor = true;
                         });
-                        
+
                         editor.on('blur', e => {
                             this.inEditor = false;
                             wrapper.classList.remove('fred--block-active');
@@ -300,14 +332,14 @@ export class ContentElement {
                 if (this.config.pageSettings[el.dataset.fredTarget]) {
                     this.content[el.dataset.fredName]._raw._value = this.config.pageSettings[el.dataset.fredTarget];
                 }
-                
+
                 emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
                     if ((el !== sourceEl) && (el.dataset.fredTarget === settingName)) {
                         this.setElValue(el, settingValue);
                     }
                 });
             }
-            
+
             if (this.content[el.dataset.fredName]._raw._value) {
                 switch (el.nodeName.toLowerCase()) {
                     case 'i':
@@ -320,17 +352,17 @@ export class ContentElement {
                         break;
                     case 'img':
                         el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
-                        
+
                         el.addEventListener('click', e => {
                             e.preventDefault();
                             imageEditor.edit(el);
                         });
-                        
+
                         break;
                     default:
                         el.innerHTML = this.content[el.dataset.fredName]._raw._value;
                 }
-                
+
                 if (el.dataset.fredAttrs) {
                     const attrs = el.dataset.fredAttrs.split(',');
                     attrs.forEach(attr => {
@@ -372,10 +404,6 @@ export class ContentElement {
                 }
             }
         }
-
-        wrapper.appendChild(content);
-
-        return wrapper;
     }
     
     setElValue(el, value) {
@@ -399,69 +427,108 @@ export class ContentElement {
 
     }
 
-    reRender() {
-        const newWrapper = this.render();
-
-        this.wrapper.replaceWith(newWrapper);
-        this.wrapper = newWrapper;
+    templateRender(parseModx = true) {
+        if (this.options.remote === true) {
+            return this.remoteTemplateRender(parseModx);
+        }
+        
+        return Promise.resolve(this.localTemplateRender());
+    }
+    
+    localTemplateRender() {
+        return this.template.render(this.settings);
+    }
+    
+    remoteTemplateRender(parseModx = true) {
+        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=render-element`, {
+            method: "post",
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                resource: this.config.resource.id,
+                parseModx,
+                element: this.id,
+                settings: this.settings
+            })
+        }).then(response => {
+            if (response.status > 299) {
+                return response.json().then(data => {
+                    throw new Error(data.message);    
+                });
+            }
+            
+            return response.json();
+        }).then(json => {
+            this.setEl(json.data.html);
+            return json.data.html;
+        })
+        .catch(err => {
+            console.log(err);
+            emitter.emit('fred-loading', err.message);
+            return '';
+        });
     }
     
     cleanRender() {
         const element = document.createElement('div');
-        element.innerHTML = this.template(this.settings);
+        return this.templateRender(false).then(html => {
+            element.innerHTML = html;
 
-        const fredElements = element.querySelectorAll('[data-fred-name]');
-        for (let el of fredElements) {
-            if (this.content[el.dataset.fredName] && this.content[el.dataset.fredName]._raw && this.content[el.dataset.fredName]._raw._value) {
-                switch (el.nodeName.toLowerCase()) {
-                    case 'i':
-                        el.className = this.content[el.dataset.fredName]._raw._value;
-                        break;
-                    case 'img':
-                        el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
-                        break;
-                    default:
-                        el.innerHTML = this.content[el.dataset.fredName]._raw._value;
+            const fredElements = element.querySelectorAll('[data-fred-name]');
+            for (let el of fredElements) {
+                if (this.content[el.dataset.fredName] && this.content[el.dataset.fredName]._raw && this.content[el.dataset.fredName]._raw._value) {
+                    switch (el.nodeName.toLowerCase()) {
+                        case 'i':
+                            el.className = this.content[el.dataset.fredName]._raw._value;
+                            break;
+                        case 'img':
+                            el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
+                            break;
+                        default:
+                            el.innerHTML = this.content[el.dataset.fredName]._raw._value;
+                    }
+
+                    if (el.dataset.fredAttrs) {
+                        const attrs = el.dataset.fredAttrs.split(',');
+                        attrs.forEach(attr => {
+                            if (this.content[el.dataset.fredName]._raw[attr]) {
+                                el.setAttribute(attr, this.content[el.dataset.fredName]._raw[attr]);
+                            }
+                        });
+                    }
                 }
 
-                if (el.dataset.fredAttrs) {
-                    const attrs = el.dataset.fredAttrs.split(',');
-                    attrs.forEach(attr => {
-                        if (this.content[el.dataset.fredName]._raw[attr]) {
-                            el.setAttribute(attr, this.content[el.dataset.fredName]._raw[attr]);
-                        }
-                    });
-                }
+                el.removeAttribute('contenteditable');
+                el.removeAttribute('data-fred-name');
+                el.removeAttribute('data-fred-rte');
+                el.removeAttribute('data-fred-target');
+                el.removeAttribute('data-fred-attrs');
             }
 
-            el.removeAttribute('contenteditable');
-            el.removeAttribute('data-fred-name');
-            el.removeAttribute('data-fred-rte');
-            el.removeAttribute('data-fred-target');
-            el.removeAttribute('data-fred-attrs');
-        };
+            for (let dzName in this.dzs) {
+                if (this.dzs.hasOwnProperty(dzName)) {
+                    const dzEl = element.querySelector('[data-fred-dropzone="' + dzName + '"]');
+                    if (dzEl) {
+                        dzEl.removeAttribute('data-fred-dropzone');
 
-        for (let dzName in this.dzs) {
-            if (this.dzs.hasOwnProperty(dzName)) {
-                const dzEl = element.querySelector('[data-fred-dropzone="' + dzName + '"]');
-                if (dzEl) {
-                    dzEl.removeAttribute('data-fred-dropzone');
-                    
-                    if (this.dzs[dzName].children.length > 0) {
-                    
-                        let cleanedDropZoneContent = '';
-    
-                        this.dzs[dzName].children.forEach(child => {
-                            cleanedDropZoneContent += child.fredEl.cleanRender().innerHTML;
-                        });
+                        if (this.dzs[dzName].children.length > 0) {
 
-                        dzEl.innerHTML = cleanedDropZoneContent;
+                            let cleanedDropZoneContent = '';
+
+                            this.dzs[dzName].children.forEach(child => {
+                                cleanedDropZoneContent += child.fredEl.cleanRender().innerHTML;
+                            });
+
+                            dzEl.innerHTML = cleanedDropZoneContent;
+                        }
                     }
                 }
             }
-        }
-        
-        return element;
+
+            return element;
+        });
     }
 
     remove() {
@@ -481,9 +548,11 @@ export class ContentElement {
                 dzs[dzName].children.forEach(child => {
                     if (this.dzs[dzName]) {
                         const clonedChild = new ContentElement(this.config, child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings);
-                        this.addElementToDropZone(dzName, clonedChild);
-
-                        clonedChild.duplicateDropZones(child.fredEl.dzs);
+                        clonedChild.render().then(() => {
+                            this.addElementToDropZone(dzName, clonedChild);
+    
+                            clonedChild.duplicateDropZones(child.fredEl.dzs);
+                        });
                     }
                 });
             }
@@ -492,24 +561,24 @@ export class ContentElement {
 
     duplicate() {
         const clone = new ContentElement(this.config, this.el, this.dzName, this.parent, this.content, this.settings);
-        clone.duplicateDropZones(this.dzs);
-
-        if (this.wrapper.nextSibling === null) {
-            this.wrapper.parentNode.appendChild(clone.wrapper);
-        } else {
-            this.wrapper.parentNode.insertBefore(clone.wrapper, this.wrapper.nextSibling);
-        }
-
-        if (this.parent) {
-            const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
-            if (index > -1) {
-                this.parent.dzs[this.dzName].children.splice(index + 1, 0, clone.wrapper);
+        clone.render().then(() => {
+            clone.duplicateDropZones(this.dzs);
+    
+            if (this.wrapper.nextSibling === null) {
+                this.wrapper.parentNode.appendChild(clone.wrapper);
+            } else {
+                this.wrapper.parentNode.insertBefore(clone.wrapper, this.wrapper.nextSibling);
             }
-        }
-
-        drake.reloadContainers();
-
-        return true;
+    
+            if (this.parent) {
+                const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
+                if (index > -1) {
+                    this.parent.dzs[this.dzName].children.splice(index + 1, 0, clone.wrapper);
+                }
+            }
+    
+            drake.reloadContainers();
+        });
     }
 
     openSettings() {
