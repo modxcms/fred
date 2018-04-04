@@ -125,6 +125,8 @@ export default class Fred {
                 if (zones.hasOwnProperty(zoneName)) {
                     const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
                     if (zoneEl) {
+                        const promises = [];
+
                         zoneEl.innerHTML = '';
                         zones[zoneName].forEach(element => {
                             const chunk = document.createElement('div');
@@ -135,12 +137,17 @@ export default class Fred {
                             chunk.elementOptions = json.data.elements[element.widget].options;
 
                             const contentElement = new ContentElement(this.config, chunk, zoneName, null, element.values, (element.settings || {}));
-                            contentElement.render().then(() => {
+                            promises.push(contentElement.render().then(wrapper => {
                                 this.loadChildren(element.children, contentElement, json.data.elements);
-                        
-                                zoneEl.appendChild(contentElement.wrapper);
-                            });
+                                return wrapper;
+                            }));
 
+                        });
+
+                        Promise.all(promises).then(wrappers => {
+                            wrappers.forEach(wrapper => {
+                                zoneEl.appendChild(wrapper);
+                            });
                         });
                     }
                 }
