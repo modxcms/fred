@@ -104,8 +104,9 @@ class LoadContent extends Endpoint
 
     /**
      * Temporal method to fix data model change
-     * 
+     *
      * @param $data
+     * @return mixed
      */
     private function fixData($data)
     {

@@ -1,6 +1,6 @@
 {
   "require": {
-    "wa72/htmlpagedom": "^1.3"
+    "twig/twig": "^2.0"
   },
   "autoload": {
     "psr-4": {

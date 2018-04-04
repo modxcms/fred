@@ -24,12 +24,10 @@ export default class Fred {
     render() {
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add('fred');
-        const test = document.createElement('div');
         
         this.config.fredWrapper = this.wrapper;
 
         document.body.appendChild(this.wrapper);
-        document.body.appendChild(test);
     }
     
     renderComponents() {
@@ -51,11 +49,18 @@ export default class Fred {
     getCleanDropZoneContent(dropZone) {
         let cleanedContent = '';
 
+        const promises = [];
         for (let child of dropZone.children) {
-            cleanedContent += child.fredEl.cleanRender().innerHTML;
+            promises.push(child.fredEl.cleanRender());
         }
-
-        return cleanedContent;
+        
+        return Promise.all(promises).then(values => {
+            values.forEach(el => {
+                cleanedContent += el.innerHTML;
+            });
+            
+            return cleanedContent;
+        });
     }
 
     save() {
@@ -63,6 +68,8 @@ export default class Fred {
         const body = {};
         const data = {};
 
+        const promises = [];
+        
         for (let i = 0; i < this.dropzones.length; i++) {
             data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropZone(this.dropzones[i]);
 
@@ -72,32 +79,34 @@ export default class Fred {
                     body[target.dataset.fredTarget] = target.innerHTML;
                 }
             }
-
-            body[this.dropzones[i].dataset.fredDropzone] = this.getCleanDropZoneContent(this.dropzones[i]);
+            promises.push(this.getCleanDropZoneContent(this.dropzones[i]).then(content => {
+                body[this.dropzones[i].dataset.fredDropzone] = content;    
+            }))
         }
 
         body.id = this.config.resource.id;
         body.data = data;
         body.pageSettings = this.config.pageSettings;
 
-        console.log('body: ', body);
-        
-        fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
-            method: "post",
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        }).then(response => {
-            return response.json();
-        }).then(json => {
-            if (json.url) {
-                location.href = json.url;
-            }
-            
-            emitter.emit('fred-loading-hide');
+        Promise.all(promises).then(() => {
+            console.log('body: ', body);
 
+            fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
+                method: "post",
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then(response => {
+                return response.json();
+            }).then(json => {
+                if (json.url) {
+                    location.href = json.url;
+                }
+
+                emitter.emit('fred-loading-hide');
+            });
         });
     }
 
@@ -111,11 +120,14 @@ export default class Fred {
         }).then(json => {
             const zones = json.data.data;
             this.config.pageSettings = json.data.pageSettings || {};
-
+            const dzPromises = [];
+            
             for (let zoneName in zones) {
                 if (zones.hasOwnProperty(zoneName)) {
                     const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
                     if (zoneEl) {
+                        const promises = [];
+
                         zoneEl.innerHTML = '';
                         zones[zoneName].forEach(element => {
                             const chunk = document.createElement('div');
@@ -126,18 +138,27 @@ export default class Fred {
                             chunk.elementOptions = json.data.elements[element.widget].options;
 
                             const contentElement = new ContentElement(this.config, chunk, zoneName, null, element.values, (element.settings || {}));
-                            this.loadChildren(element.children, contentElement, json.data.elements);
-
-                            zoneEl.appendChild(contentElement.wrapper);
+                            promises.push(contentElement.render().then(wrapper => {
+                                this.loadChildren(element.children, contentElement, json.data.elements);
+                                return wrapper;
+                            }));
 
                         });
+
+                        dzPromises.push(Promise.all(promises).then(wrappers => {
+                            wrappers.forEach(wrapper => {
+                                zoneEl.appendChild(wrapper);
+                            });
+                        }));
                     }
                 }
             }
 
-            drake.reloadContainers();
-
-            emitter.emit('fred-loading-hide');
+            Promise.all(dzPromises).then(() => {
+                drake.reloadContainers();
+    
+                emitter.emit('fred-loading-hide');
+            });
         });
     }
 
@@ -153,9 +174,11 @@ export default class Fred {
                     chunk.elementOptions = elements[element.widget].options || {};
                     
                     const contentElement = new ContentElement(this.config, chunk, zoneName, parent, element.values, (element.settings || {}));
-                    parent.addElementToDropZone(zoneName, contentElement);
-
-                    this.loadChildren(element.children, contentElement, elements);
+                    contentElement.render().then(() => {
+                        parent.addElementToDropZone(zoneName, contentElement);
+    
+                        this.loadChildren(element.children, contentElement, elements);
+                    });
                 });
             }
         }
@@ -190,6 +213,17 @@ export default class Fred {
             }
         });
 
+        emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
+            this.dropzones.forEach(dz => {
+                const targets = dz.querySelectorAll(`[data-fred-target="${settingName}"`);
+                for (let target of targets) {
+                    if (target !== sourceEl) {
+                        target.fredEl.setElValue(target, settingValue);
+                    }
+                }
+            });
+        });
+
         emitter.on('fred-undo', () => {
             console.log('Undo not yet implemented.');
         });
@@ -220,5 +254,6 @@ export default class Fred {
         this.loadContent().then(() => {
             this.renderComponents();
         });
+
     }
 }
