@@ -81,10 +81,12 @@ $(document).ready(function () {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
     });
-    $(".fred--datetime").flatpickr({
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        wrap: true,
+    $(".fred--datetime").each(function(){
+        $(this).flatpickr({
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            appendTo: $(this)[0]
+        });
     });
     //new Selectr('#template');
     //new Selectr('#parent');
