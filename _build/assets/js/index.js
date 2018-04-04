@@ -24,8 +24,12 @@ export default class Fred {
     render() {
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add('fred');
+        const test = document.createElement('div');
+        
+        this.config.fredWrapper = this.wrapper;
 
         document.body.appendChild(this.wrapper);
+        document.body.appendChild(test);
     }
     
     renderComponents() {

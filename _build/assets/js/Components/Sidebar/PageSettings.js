@@ -169,6 +169,7 @@ export default class PageSettings extends Sidebar {
         const picker = flatpickr(input, {
             enableTime: true,
             dateFormat: "Y-m-d H:i",
+            appendTo: group,
             defaultDate: (this.pageSettings[name] === 0) ? '' : (this.pageSettings[name] * 1000),
             onChange: selectedDates => {
                 if (selectedDates.length === 0) {
