@@ -120,7 +120,8 @@ export default class Fred {
         }).then(json => {
             const zones = json.data.data;
             this.config.pageSettings = json.data.pageSettings || {};
-
+            const dzPromises = [];
+            
             for (let zoneName in zones) {
                 if (zones.hasOwnProperty(zoneName)) {
                     const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
@@ -144,18 +145,20 @@ export default class Fred {
 
                         });
 
-                        Promise.all(promises).then(wrappers => {
+                        dzPromises.push(Promise.all(promises).then(wrappers => {
                             wrappers.forEach(wrapper => {
                                 zoneEl.appendChild(wrapper);
                             });
-                        });
+                        }));
                     }
                 }
             }
 
-            drake.reloadContainers();
-
-            emitter.emit('fred-loading-hide');
+            Promise.all(dzPromises).then(() => {
+                drake.reloadContainers();
+    
+                emitter.emit('fred-loading-hide');
+            });
         });
     }
 
