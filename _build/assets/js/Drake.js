@@ -59,16 +59,17 @@ class Drake {
             if (source.classList.contains('blueprints-source') && el.parentNode) {
                 const parent = target.fredEl || null;
                 const contentElement = new ContentElement(this.config, el.lastChild, target.dataset.fredDropzone, parent);
-                
-                if (parent) {
-                    if (sibling === null) {
-                        parent.dzs[target.dataset.fredDropzone].children.push(contentElement.wrapper);
-                    } else {
-                        parent.dzs[target.dataset.fredDropzone].children.splice(parent.dzs[target.dataset.fredDropzone].children.indexOf(sibling), 0, contentElement.wrapper);
+                contentElement.render().then(() => {
+                    if (parent) {
+                        if (sibling === null) {
+                            parent.dzs[target.dataset.fredDropzone].children.push(contentElement.wrapper);
+                        } else {
+                            parent.dzs[target.dataset.fredDropzone].children.splice(parent.dzs[target.dataset.fredDropzone].children.indexOf(sibling), 0, contentElement.wrapper);
+                        }
                     }
-                }
-                
-                el.parentNode.replaceChild(contentElement.wrapper, el);
+                    
+                    el.parentNode.replaceChild(contentElement.wrapper, el);
+                });
             } else {
                 if (target && el.fredEl) {
                     if (el.fredEl.parent) {

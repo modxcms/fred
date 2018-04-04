@@ -1,4 +1,6 @@
 import emitter from '../../../EE';
+import fetch from 'isomorphic-fetch';
+import { debounce } from '../../../Utils';
 
 export class ElementSettings {
     constructor() {
@@ -23,6 +25,8 @@ export class ElementSettings {
         this.el = el;
         this.settings = el.options.settings;
         this.originalValues = {};
+        this.remote = el.options.remote || false;
+        this.debouncedRender = debounce(200, this.el.render);
 
         this.wrapper.innerHTML = '';
         this.wrapper.appendChild(this.renderSettings());
@@ -182,11 +186,16 @@ export class ElementSettings {
     
     setSetting(name, value) {
         this.el.settings[name] = value;
-        this.el.reRender();
+        
+        if (this.remote === false) {
+            this.el.render();
+        } else {
+            this.debouncedRender();
+        }
     }
     
     apply() {
-        this.el.reRender();
+        this.el.render();
         this.close();
     }
     
@@ -214,7 +223,7 @@ export class ElementSettings {
     
     realCancel() {
         this.el.settings = this.originalValues;
-        this.el.reRender();
+        this.el.render();
         this.close();
     }
     
