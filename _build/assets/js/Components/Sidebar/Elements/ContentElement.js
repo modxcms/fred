@@ -469,6 +469,11 @@ export class ContentElement {
         const element = document.createElement('div');
         return this.templateRender(false).then(html => {
             element.innerHTML = html;
+            
+            const noRenderElements = element.querySelectorAll('[data-fred-render="false"]');
+            for (let noRenderElement of noRenderElements) {
+                noRenderElement.remove();
+            }
 
             const fredElements = element.querySelectorAll('[data-fred-name]');
             for (let el of fredElements) {
