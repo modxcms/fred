@@ -674,10 +674,16 @@ span.flatpickr-weekday {
 }
 .flatpickr-time input.flatpickr-hour {
   font-weight: bold;
+  background-color: white;
+  color: #343e42;
+  border: none;
 }
 .flatpickr-time input.flatpickr-minute,
 .flatpickr-time input.flatpickr-second {
   font-weight: 400;
+  background-color: white;
+  color: #343e42;
+  border: none;
 }
 .flatpickr-time input:focus {
   outline: 0;
