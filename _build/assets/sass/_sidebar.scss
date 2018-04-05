@@ -64,6 +64,7 @@
   z-index: 10011;
   transition: $timing;
   overflow-y: auto;
+  overflow-x: visible;
   &.fred--hidden {
     left: -360px;
     opacity: 0;
