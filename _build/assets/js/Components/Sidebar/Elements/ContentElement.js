@@ -290,39 +290,42 @@ export class ContentElement {
             });
 
             if (el.dataset.fredRte === 'true') {
-                tinymce.init({
-                    target: el,
-                    theme: 'inlite',
-                    inline: true,
-                    insert_toolbar: "quickimage quicktable",
-                    selection_toolbar: 'bold italic | quicklink h2 h3 blockquote',
-                    auto_focus: false,
-                    branding: false,
-                    setup: editor => {
-                        el.rte = editor;
-
-                        editor.on('change', e => {
-                            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
-                            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
-
-                            this.content[el.dataset.fredName]._raw._value = editor.getContent();
-
-                            if (el.dataset.fredTarget) {
-                                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
-                            }
-                        });
-
-                        editor.on('focus', e => {
-                            this.inEditor = true;
-                        });
-
-                        editor.on('blur', e => {
-                            this.inEditor = false;
-                            wrapper.classList.remove('fred--block-active');
-                            wrapper.classList.remove('fred--block-active_parent');
-                        });
-                    }
-                });
+                // I hate this fix; tinemce throws an error on first drop from dragule
+                setTimeout(() => {
+                    tinymce.init({
+                        target: el,
+                        theme: 'inlite',
+                        inline: true,
+                        insert_toolbar: "quickimage quicktable",
+                        selection_toolbar: 'bold italic | quicklink h2 h3 blockquote',
+                        auto_focus: false,
+                        branding: false,
+                        setup: editor => {
+                            el.rte = editor;
+    
+                            editor.on('change', e => {
+                                if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+                                if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+    
+                                this.content[el.dataset.fredName]._raw._value = editor.getContent();
+    
+                                if (el.dataset.fredTarget) {
+                                    emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
+                                }
+                            });
+    
+                            editor.on('focus', e => {
+                                this.inEditor = true;
+                            });
+    
+                            editor.on('blur', e => {
+                                this.inEditor = false;
+                                wrapper.classList.remove('fred--block-active');
+                                wrapper.classList.remove('fred--block-active_parent');
+                            });
+                        }
+                    });
+                }, 1);
             }
 
             if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
