@@ -76,6 +76,10 @@ $(document).ready(function () {
             panel.toggleClass('fred--hidden');
         })
     });
+    $('.fred dd dt').on('click',function(){
+        $(this).siblings().removeClass('active');
+        $(this).toggleClass('active');
+    });
     $(".fred input[type='datetime-local']").flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
