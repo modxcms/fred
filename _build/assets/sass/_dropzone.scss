@@ -17,6 +17,7 @@
   &.gu-mirror {
     margin: 0;
     padding: 0;
+    @include draggable();
     div, img {
       width: 100%;
       height: auto;
