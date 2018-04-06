@@ -11,7 +11,7 @@
         {
           "name": "Fred",
           "file": "Fred.php",
-          "events": ["OnWebPagePrerender"]
+          "events": ["OnWebPagePrerender", "OnDocFormPrerender"]
         }
       ]
     },
