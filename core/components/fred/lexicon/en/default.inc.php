@@ -8,6 +8,8 @@
 
 $_lang['fred'] = 'Fred';
 
+$_lang['resource_fred.open'] = 'Open In Fred';
+
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
 $_lang['setting_fred.elements_category_id'] = 'Element\'s Category ID';
