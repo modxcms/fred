@@ -4,7 +4,7 @@ $templates = explode(',', $templates);
 switch ($modx->event->name) {
     case 'OnDocFormPrerender':
         $templates =  array_map('intval', $templates);
-        if(!empty($modx->resource) && in_array($modx->resource->template,$templates)){
+        if(!empty($resource) && in_array($resource->template,$templates)){
             $modx->lexicon->load('fred:default');
             $modx->controller->addHtml("
         <script>
