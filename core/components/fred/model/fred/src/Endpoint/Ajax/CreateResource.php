@@ -20,7 +20,7 @@ class CreateResource extends Endpoint
         }
 
         $context = 'web';
-        
+
         $c = $this->modx->newQuery('modResource');
         $c->where([
             'context_key' => $context,
@@ -29,31 +29,30 @@ class CreateResource extends Endpoint
         $c->sortby('menuindex', 'DESC');
         $c->limit(1);
         $lastResource = $this->modx->getObject('modResource', $c);
-        $menuindex = $lastResource ? ($lastResource->menuindex + 1) : 0; 
-
-        /** @var \modResource $object */
-        $object = $this->modx->newObject('modResource', [
+        $menuindex = $lastResource ? ($lastResource->menuindex + 1) : 0;
+        
+        $props = [
             'context_key' => $context,
             'parent' => $this->body['parent'],
             'template' => $this->body['template'],
             'pagetitle' => $this->body['pagetitle'],
-            'menuindex' => $menuindex,
-        ]);
+            'richtext' => 0,
+            'menuindex' => $menuindex
+        ];
         
-
-        $saved = $object->save();
-
-        if (!$saved) {
+        $response = $this->modx->runProcessor('resource/create', $props);
+        
+        if ($response->isError()) {
             return $this->failure('Error creating new resource');
         }
-
-        $this->modx->getCacheManager()->refresh();
-
-        $response = [
+        
+        $object = $response->getObject();
+        
+         $data = [
             'message' => 'Resource created',
-            'url' => $this->modx->makeUrl($object->get('id'), $object->get('context_key'), '', 'full')
+            'url' => $this->modx->makeUrl($object['id'], $context, '', 'full')
         ];
 
-        return $this->success($response);
+        return $this->success($data);
     }
 }
