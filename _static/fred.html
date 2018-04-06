@@ -276,39 +276,33 @@
                                 </dd>
                             </dl>
                         </dl>
+                        <dt role="tab" tabindex="0">Create Page</dt>
+                        <dd>
+
+                            <form class="fred--pages_create">
+                                <fieldset>
+                                    <legend>Create Page</legend>
+                                    <label for="parent" class="fred--label-choices">
+                                        Parent
+                                    </label>
+                                    <select id="parent" name="parent">
+                                    </select>
+                                    <label for="template" class="fred--label-choices">
+                                        Template
+                                    </label>
+                                    <select name="template" id="template">
+                                    </select>
+                                    <label>
+                                        Page Title
+                                        <input type="text" name="pagetitle">
+                                    </label>
+                                    <button class="fred--btn-panel fred--btn-apply">
+                                        Create
+                                    </button>
+                                </fieldset>
+                            </form>
+                        </dd>
                     </dl>
-                    <button class="fred--btn-sidebar" onclick="$('#fred-createpage').toggleClass('fred--hidden');">
-                        Create Page
-                    </button>
-                    <form class="fred--pages_create fred--hidden" id="fred-createpage">
-                        <fieldset>
-                            <legend>Create Page</legend>
-                            <label for="parent" class="fred--label-choices">
-                                Parent
-                            </label>
-                            <select id="parent" name="parent">
-                            </select>
-                            <label for="template" class="fred--label-choices">
-                                Template
-                            </label>
-                            <select name="template" id="template">
-                            </select>
-                            <label>
-                                Page Title
-                                <input type="text" name="pagetitle">
-                            </label>
-                            <button class="fred--btn-panel fred--btn-apply">
-                                Create
-                            </button>
-                            <label>
-                                Just testing Select Styles
-                                <select>
-                                    <option>Option</option>
-                                    <option>Option 2</option>
-                                </select>
-                            </label>
-                        </fieldset>
-                    </form>
                 </div>
             <dd>
             <dt role="tab" tabindex="0" class="fred--sidebar_elements">Elements <i
@@ -394,7 +388,7 @@
 
                     </fieldset>
                     <dl>
-                        <dt role="tab" tabindex="0" onclick="$(this).toggleClass('active')">Advanced Settings</dt>
+                        <dt role="tab" tabindex="0" >Advanced Settings</dt>
                         <dd>
                             <fieldset id="fred-advanced-settings" class="fred--page_settings_form_advanced">
                                 <label>
@@ -448,7 +442,7 @@
                     <input type="text" name="ungrouped">
                 </label>
                 <dl>
-                    <dt tabindex="0" onclick="$(this).toggleClass('active')">Colors</dt>
+                    <dt tabindex="0" >Colors</dt>
                     <dd>
                         <label>
                             Class
