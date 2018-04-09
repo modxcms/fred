@@ -5,6 +5,13 @@ switch ($modx->event->name) {
     case 'OnDocFormPrerender':
         $templates =  array_map('intval', $templates);
         if(!empty($resource) && in_array($resource->template,$templates)){
+            //Disable ContentBlocks
+            $isContentBlocks = $resource->getProperty('_isContentBlocks', 'contentblocks', null);
+            if($isContentBlocks !== false){
+                $resource->setProperty('_isContentBlocks', false, 'contentblocks');
+                $resource->save();
+            }
+            //Load Open in Fred button
             $modx->lexicon->load('fred:default');
             $modx->controller->addLexiconTopic('fred:default');
             $modx->controller->addHtml("
