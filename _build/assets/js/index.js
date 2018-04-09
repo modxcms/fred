@@ -7,8 +7,7 @@ import imageEditor from './Editors/ImageEditor';
 import iconEditor from './Editors/IconEditor';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
-
-import test from './Test';
+import registerPlugins from './TinyMCE/RegisterPlugins';
 
 export default class Fred {
     constructor(config = {}) {
@@ -233,6 +232,8 @@ export default class Fred {
 
     init() {
         console.log('Hello from Fred!');
+
+        registerPlugins(this);
         
         this.registerListeners();
 
