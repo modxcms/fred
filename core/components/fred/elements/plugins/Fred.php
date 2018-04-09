@@ -6,6 +6,7 @@ switch ($modx->event->name) {
         $templates =  array_map('intval', $templates);
         if(!empty($resource) && in_array($resource->template,$templates)){
             $modx->lexicon->load('fred:default');
+            $modx->controller->addLexiconTopic('fred:default');
             $modx->controller->addHtml("
         <script>
             Ext.ComponentMgr.onAvailable('modx-resource-content', function(right) {
@@ -17,11 +18,11 @@ switch ($modx->event->name) {
                      
                     right.insert(0,{
                         xtype: 'button' 
-                        ,fieldLabel: 'View in Fred'
+                        ,fieldLabel: _('fred.open_in_fred')
                         ,hideLabel: true
                         ,cls: 'primary-button'
                         ,style: {padding: '10px 15px'}
-                        ,html: '".$modx->lexicon('resource_fred.open')."'
+                        ,html: _('fred.open_in_fred')
                         ,handler: function(){
                             window.open(panel.config.preview_url)
                         }

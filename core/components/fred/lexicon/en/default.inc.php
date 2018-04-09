@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Default English Lexicon Entries for Fred
@@ -8,7 +9,7 @@
 
 $_lang['fred'] = 'Fred';
 
-$_lang['resource_fred.open'] = 'Open In Fred';
+$_lang['fred.open_in_fred'] = 'Open In Fred';
 
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
