@@ -23,6 +23,9 @@
 }
 .fred,.mce-fred--modxlink{
   @import "choices";
+}
+.mce-fred--modxlink{
+  @import "choices-white";
   @import "tinymce";
 }
 @import "dropzone";
