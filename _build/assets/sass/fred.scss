@@ -12,7 +12,6 @@
 .fred{
   @import "reset";
   @import "breakpoints";
-  @import "choices";
   @import "utility";
   @import "grids";
   @import "topbar";
@@ -22,7 +21,10 @@
   @import "panels";
   @import "flatpickr";
 }
-@import "tinymce";
+.fred,.mce-fred--modxlink{
+  @import "choices";
+  @import "tinymce";
+}
 @import "dropzone";
 @import "buttons";
 @import "body";
