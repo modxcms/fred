@@ -513,13 +513,21 @@ export class ContentElement {
             const fredLinks = element.querySelectorAll('[data-fred-link-page]');
             for (let fredLink of fredLinks) {
                 const resourceId = parseInt(fredLink.dataset.fredLinkPage);
+                const anchor = fredLink.dataset.fredLinkAnchor ? ('#' + fredLink.dataset.fredLinkAnchor) : '#';
                 if (resourceId > 0) {
-                    fredLink.setAttribute('href', `[[~${resourceId}]]`);
+                    fredLink.setAttribute('href', `[[~${resourceId}]]${anchor}`);
                 } else {
-                    fredLink.setAttribute('href', '#');
+                    fredLink.setAttribute('href', anchor);
                 }
                 
                 fredLink.removeAttribute('data-fred-link-page');
+                fredLink.removeAttribute('data-fred-link-anchor');
+            }
+
+            const fredAnchors = element.querySelectorAll('[data-fred-link-anchor]');
+            for (let fredAnchor of fredAnchors) {
+                fredAnchor.setAttribute('href', '#' + fredAnchor.dataset.fredLinkAnchor);
+                fredAnchor.removeAttribute('data-fred-link-anchor');
             }
 
             for (let dzName in this.dzs) {
