@@ -1,3 +1,6 @@
+import Choices from 'choices.js';
+import fetch from "isomorphic-fetch";
+
 export default fred => {
     return (editor, url) => {
         // Add a button that opens a window
@@ -6,7 +9,6 @@ export default fred => {
             icon: 'link',
             onclick: function () {
 
-                console.log('show');
                 let elm;
                 let linkurl = '';
                 let link_title = '';
@@ -14,6 +16,8 @@ export default fred => {
                 let classes = '';
                 let new_window = false;
                 let activeTab = 0;
+                let page = '';
+                let anchor = '';
 
                 elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
                 if (elm) {
@@ -23,10 +27,16 @@ export default fred => {
                     classes = editor.dom.getAttrib(elm, 'class');
                     new_window = editor.dom.getAttrib(elm, 'target') === '_blank';
                     link_text = elm.innerText;
+
+                    page = editor.dom.getAttrib(elm, 'data-fred-link-page');
                 }
                 
                 if (linkurl !== '') {
                     activeTab = 1;
+                }
+                
+                if (page) {
+                    activeTab = 0;
                 }
 
                 const data = {
@@ -34,7 +44,11 @@ export default fred => {
                     link_title,
                     classes,
                     new_window,
-                    page: {},
+                    page: {
+                        page,
+                        url: linkurl,
+                        anchor
+                    },
                     url: {
                         url: linkurl
                     },
@@ -42,17 +56,6 @@ export default fred => {
                     phone: {},
                     file: {}
                 };
-
-                const createLinkList = function () {
-                    tinymce.util.XHR.send({
-                        url: '/fred/assets/components/fred/web/endpoints/ajax.php?action=test&query=test',
-                        success: function(text) {
-                            console.log(tinymce.util.JSON.parse(text));
-                        }
-                    });
-                };
-
-                createLinkList();
 
                 const tabPanel = new tinymce.ui.TabPanel({
                     type: 'tabpanel',
@@ -70,8 +73,10 @@ export default fred => {
                                 columns: 2,
                                 items: [
                                     {
-                                        type: 'textbox',
+                                        type: 'selectbox',
                                         label: 'Page',
+                                        id: 'page_url',
+                                        value: data.page.page
                                     },
                                     {
                                         type: 'textbox',
@@ -172,10 +177,62 @@ export default fred => {
                     ],
                     onsubmit: (tabPanel => {
                         return e => {
-                            console.log(tabPanel.items()[tabPanel.activeTabId.slice(1)]._id);
+                            const activeTab = tabPanel.items()[tabPanel.activeTabId.slice(1)]._id;
+                            console.log(activeTab);
                             console.log(data);
 
-                                const elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
+                            const elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
+                            
+                            if (activeTab === 'page') {
+                                if (elm) {
+                                    editor.focus();
+                                    editor.dom.removeAllAttribs(elm);
+
+                                    editor.dom.setAttrib(elm, 'href', data.page.url);
+                                    editor.dom.setAttrib(elm, 'data-fred-link-page', data.page.page);
+
+                                    if (data.link_title) {
+                                        editor.dom.setAttrib(elm, 'title', data.link_title);
+                                    }
+
+                                    if (data.new_window) {
+                                        editor.dom.setAttrib(elm, 'target', '_blank');
+                                    }
+
+                                    if (data.classes) {
+                                        editor.dom.setAttrib(elm, 'class', data.classes);
+                                    }
+
+                                    elm.innerText = editor.dom.encode(data.link_text);
+                                    editor.selection.select(elm);
+                                    editor.selection.collapse(false);
+                                } else {
+                                    const attrs = {
+                                        href: data.page.url,
+                                        'data-fred-link-page': data.page.page
+                                    };
+
+                                    if (data.link_title) {
+                                        attrs.title = data.link_title;
+                                    }
+
+                                    if (data.new_window) {
+                                        attrs.target = '_blank';
+                                    }
+
+                                    if (data.classes) {
+                                        attrs.class = data.classes;
+                                    }
+
+                                    editor.insertContent(editor.dom.createHTML('a', attrs, editor.dom.encode(data.link_text)));
+
+                                    editor.selection.collapse(false);
+                                }
+                                
+                                return;
+                            }
+                            
+                            if (activeTab === 'url') {
                                 if (elm) {
                                     editor.focus();
                                     editor.dom.removeAllAttribs(elm);
@@ -218,36 +275,86 @@ export default fred => {
 
                                     editor.selection.collapse(false);
                                 }
-                            
-                            // if (data.web_url !== '') {
-                            //     const elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
-                            //     if (elm) {
-                            //         editor.focus();
-                            //         editor.dom.setAttrib(elm, 'href', data.web_url);
-                            //         editor.dom.setAttrib(elm, 'data-fred-link-page', 7);
-                            //         editor.selection.collapse(false);
-                            //     } else {
-                            //         editor.insertContent(editor.dom.createHTML('a', {
-                            //             href: data.web_url,
-                            //             "data-fred-link-page": 6
-                            //         }, editor.dom.encode(data.web_title)));
-                            //
-                            //
-                            //         editor.selection.collapse(false);
-                            //     }
-                            // } else {
-                            //     editor.insertContent('<strong>' + (editor.selection.getContent() || 'Title') + '</strong>: ' + data.page_title);
-                            // }
+                            }
                         }
                     })(tabPanel)
                 });
 
-                // const input = document.querySelector('#page_url');
+                const input = document.querySelector('#page_url');
                 // const wrapper = document.createElement('div');
-                // wrapper.classList.add('autocomplete');
-
+                // wrapper.classList.add('choices__inner');
+                //
                 // input.parentNode.replaceChild(wrapper, input);
                 // wrapper.appendChild(input);
+
+                let lookupTimeout = null;
+                const lookupCache = {};
+                let initData = [];
+                
+                const templateInputChoices = new Choices(input);
+                templateInputChoices.ajax(callback => {
+                    fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources`)
+                        .then(response => {
+                            return response.json()
+                        })
+                        .then(data => {
+                            initData = data.data.resources;
+                            callback(data.data.resources, 'value', 'pagetitle');
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                });
+
+                const populateOptions = options => {
+                    const toRemove = [];
+
+                    templateInputChoices.currentState.items.forEach(item => {
+                        if (item.active) {
+                            toRemove.push(item.value);
+                        }
+                    });
+
+                    const toKeep = [];
+                    options.forEach(option => {
+                        if (toRemove.indexOf(option.id) === -1) {
+                            toKeep.push(option);
+                        }
+                    });
+
+                    templateInputChoices.setChoices(toKeep, 'value', 'pagetitle', true);
+                };
+
+                const serverLookup = () => {
+                    const query = templateInputChoices.input.value;
+                    if (query in lookupCache) {
+                        populateOptions(lookupCache[query]);
+                    } else {
+                        fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources&query=${query}`)
+                            .then(response => {
+                                return response.json()
+                            })
+                            .then(data => {
+                                lookupCache[query] = data.data.resources;
+                                populateOptions(data.data.resources);
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+                    }
+                };
+
+                templateInputChoices.passedElement.addEventListener('search', event => {
+                    clearTimeout(lookupTimeout);
+                    lookupTimeout = setTimeout(serverLookup, 200);
+                });
+
+                templateInputChoices.passedElement.addEventListener('choice', event => {
+                    templateInputChoices.setChoices(initData, 'value', 'pagetitle', true);
+                    data.page.page = event.detail.choice.value;
+                    data.page.url = event.detail.choice.customProperties.url;
+                });
+           
             },
             stateSelector: 'a[href]'
         });

@@ -509,6 +509,18 @@ export class ContentElement {
                 el.removeAttribute('data-fred-target');
                 el.removeAttribute('data-fred-attrs');
             }
+            
+            const fredLinks = element.querySelectorAll('[data-fred-link-page]');
+            for (let fredLink of fredLinks) {
+                const resourceId = parseInt(fredLink.dataset.fredLinkPage);
+                if (resourceId > 0) {
+                    fredLink.setAttribute('href', `[[~${resourceId}]]`);
+                } else {
+                    fredLink.setAttribute('href', '#');
+                }
+                
+                fredLink.removeAttribute('data-fred-link-page');
+            }
 
             for (let dzName in this.dzs) {
                 if (this.dzs.hasOwnProperty(dzName)) {
