@@ -296,13 +296,14 @@ export class ContentElement {
                         target: el,
                         theme: 'inlite',
                         inline: true,
-                        insert_toolbar: "quickimage quicktable",
-                        selection_toolbar: 'bold italic | quicklink h2 h3 blockquote',
+                        plugins: 'modxlink',
+                        insert_toolbar: "quickimage quicktable modxlink",
+                        selection_toolbar: 'bold italic | h2 h3 blockquote modxlink',
                         auto_focus: false,
                         branding: false,
                         setup: editor => {
                             el.rte = editor;
-    
+
                             editor.on('change', e => {
                                 if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
                                 if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
@@ -507,6 +508,26 @@ export class ContentElement {
                 el.removeAttribute('data-fred-rte');
                 el.removeAttribute('data-fred-target');
                 el.removeAttribute('data-fred-attrs');
+            }
+            
+            const fredLinks = element.querySelectorAll('[data-fred-link-page]');
+            for (let fredLink of fredLinks) {
+                const resourceId = parseInt(fredLink.dataset.fredLinkPage);
+                const anchor = fredLink.dataset.fredLinkAnchor ? ('#' + fredLink.dataset.fredLinkAnchor) : '#';
+                if (resourceId > 0) {
+                    fredLink.setAttribute('href', `[[~${resourceId}]]${anchor}`);
+                } else {
+                    fredLink.setAttribute('href', anchor);
+                }
+                
+                fredLink.removeAttribute('data-fred-link-page');
+                fredLink.removeAttribute('data-fred-link-anchor');
+            }
+
+            const fredAnchors = element.querySelectorAll('[data-fred-link-anchor]');
+            for (let fredAnchor of fredAnchors) {
+                fredAnchor.setAttribute('href', '#' + fredAnchor.dataset.fredLinkAnchor);
+                fredAnchor.removeAttribute('data-fred-link-anchor');
             }
 
             for (let dzName in this.dzs) {
