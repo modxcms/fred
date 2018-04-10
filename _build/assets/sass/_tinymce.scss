@@ -33,3 +33,10 @@
     left: 137px;
   }
 }
+.mce-tab{
+  border: 1px solid transparent;
+  &.mce-active{
+    border: 1px solid #c5c5c5;
+    border-bottom-color: transparent;
+  }
+}
