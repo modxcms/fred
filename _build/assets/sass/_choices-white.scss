@@ -47,6 +47,7 @@ $choices-highlight-color: $choices-primary-color !default;
 .#{$choices-selector}__inner {
   background-color: $choices-bg-color;
   border: 1px solid $choices-keyline-color;
+  box-sizing: border-box;
   .is-focused &, .is-open & { border-color: darken($choices-keyline-color, 15%); }
 }
 
