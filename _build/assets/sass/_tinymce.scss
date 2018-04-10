@@ -35,8 +35,15 @@
 }
 .mce-tab{
   border: 1px solid transparent;
+  font-weight: bold;
+  font-size: 15px;
   &.mce-active{
     border: 1px solid #c5c5c5;
+    background: $white;
     border-bottom-color: transparent;
+    height: 15px;
   }
+}
+.mce-tabs, .mce-tabs+.mce-container-body{
+  background-color: transparent;
 }
