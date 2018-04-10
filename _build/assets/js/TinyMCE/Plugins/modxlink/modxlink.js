@@ -34,18 +34,18 @@ export default fred => {
                     phone: {},
                     file: {}
                 };
-                
+
                 elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
                 if (elm) {
                     editor.selection.select(elm);
 
                     const parsedData = ElementHelper.getData(elm, data);
-                    
+
                     data = {
                         ...data,
                         ...(parsedData.data)
                     };
-     
+
                     switch (parsedData.tab) {
                         case 'page':
                             activeTab = 0;
@@ -58,7 +58,7 @@ export default fred => {
                             break;
                     }
                 }
-                
+
                 console.log(data);
 
                 const tabPanel = new tinymce.ui.TabPanel({
@@ -70,29 +70,22 @@ export default fred => {
                             title: 'Page',
                             id: 'page',
                             type: 'form',
-                            items: [{
-                                type: 'form',
-                                layout: 'grid',
-                                padding: 0,
-                                columns: 2,
-                                items: [
-                                    {
-                                        type: 'selectbox',
-                                        label: 'Page',
-                                        id: 'page_url',
-                                        value: data.page.page
-                                    },
-                                    {
-                                        type: 'textbox',
-                                        label: `Block on '${fred.config.pageSettings.pagetitle }'`,
-                                        id: 'page_anchor',
-                                        value: data.page.anchor,
-                                        onkeyup() {
-                                            data.page.anchor = this.value();
-                                        }
+                            items: [
+                                {
+                                    id: 'pagecontainer',
+                                    type: 'container',
+                                    html: '<label for="page_url">Page Title</label><select id="page_url"></select>'
+                                },
+                                {
+                                    type: 'textbox',
+                                    label: `Block on '${fred.config.pageSettings.pagetitle }'`,
+                                    id: 'page_anchor',
+                                    value: data.page.anchor,
+                                    onkeyup() {
+                                        data.page.anchor = this.value();
                                     }
-                                ]
-                            }]
+                                }
+                            ]
                         },
                         {
                             title: 'URL',
@@ -155,8 +148,8 @@ export default fred => {
                         }
                     ]
                 });
-                
-                
+
+
                 // Open window
                 const win = editor.windowManager.open({
                     title: 'Link to',
@@ -205,7 +198,7 @@ export default fred => {
                             ]
                         },
                         tabPanel
-                        
+
                     ],
                     onsubmit: (tabPanel => {
                         return e => {
@@ -214,15 +207,15 @@ export default fred => {
                             console.log(data);
 
                             const elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
-                            
+
                             if (activeTab === 'page') {
                                 if (elm) {
-                                    if (!data.page.page && ! data.page.anchor) return;
-                                    
+                                    if (!data.page.page && !data.page.anchor) return;
+
                                     editor.focus();
                                     editor.dom.removeAllAttribs(elm);
 
-                                    
+
                                     editor.dom.setAttrib(elm, 'data-fred-link-page', data.page.page);
 
                                     if (data.page.anchor) {
@@ -231,7 +224,7 @@ export default fred => {
                                     } else {
                                         editor.dom.setAttrib(elm, 'href', data.page.url);
                                     }
-                                    
+
                                     if (data.link_title) {
                                         editor.dom.setAttrib(elm, 'title', data.link_title);
                                     }
@@ -274,21 +267,21 @@ export default fred => {
 
                                     editor.selection.collapse(false);
                                 }
-                                
+
                                 return;
                             }
-                            
+
                             if (activeTab === 'url') {
                                 if (elm) {
                                     editor.focus();
                                     editor.dom.removeAllAttribs(elm);
-                                    
+
                                     editor.dom.setAttrib(elm, 'href', data.url.url);
-                                    
+
                                     if (data.link_title) {
                                         editor.dom.setAttrib(elm, 'title', data.link_title);
                                     }
-                                    
+
                                     if (data.new_window) {
                                         editor.dom.setAttrib(elm, 'target', '_blank');
                                     }
@@ -296,7 +289,7 @@ export default fred => {
                                     if (data.classes) {
                                         editor.dom.setAttrib(elm, 'class', data.classes);
                                     }
-                                    
+
                                     elm.innerText = editor.dom.encode(data.link_text);
                                     editor.selection.select(elm);
                                     editor.selection.collapse(false);
@@ -312,11 +305,11 @@ export default fred => {
                                     if (data.new_window) {
                                         attrs.target = '_blank';
                                     }
-                                    
+
                                     if (data.classes) {
                                         attrs.class = data.classes;
                                     }
-                                    
+
                                     editor.insertContent(editor.dom.createHTML('a', attrs, editor.dom.encode(data.link_text)));
 
                                     editor.selection.collapse(false);
@@ -330,20 +323,20 @@ export default fred => {
 
                                     let href = `mailto:${data.email.to}`;
                                     const mailAttrs = [];
-                                    
+
                                     if (data.email.subject) {
-                                        mailAttrs.push('subject=' + encodeURI(data.email.subject)); 
+                                        mailAttrs.push('subject=' + encodeURI(data.email.subject));
                                     }
 
                                     if (data.email.body) {
                                         mailAttrs.push('body=' + encodeURI(data.email.body));
                                     }
-                                    
+
                                     if (mailAttrs.length > 0) {
                                         href += '?' + mailAttrs.join('&');
                                     }
-                                    
-                                    
+
+
                                     editor.dom.setAttrib(elm, 'href', href);
 
                                     if (data.link_title) {
@@ -376,7 +369,7 @@ export default fred => {
                                     if (mailAttrs.length > 0) {
                                         href += '?' + mailAttrs.join('&');
                                     }
-                                    
+
                                     const attrs = {
                                         href
                                     };
@@ -412,7 +405,7 @@ export default fred => {
                 let lookupTimeout = null;
                 const lookupCache = {};
                 let initData = [];
-                
+
                 const templateInputChoices = new Choices(input);
                 templateInputChoices.ajax(callback => {
                     fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources`)
@@ -475,13 +468,13 @@ export default fred => {
                     templateInputChoices.setChoices(initData, 'value', 'pagetitle', true);
                     data.page.page = event.detail.choice.value;
                     data.page.url = event.detail.choice.customProperties.url;
-                    
+
                     const pageAnchorEl = document.getElementById('page_anchor-l');
                     if (pageAnchorEl) {
                         pageAnchorEl.innerText = 'Block on \'' + event.detail.choice.label + '\'';
                     }
                 });
-           
+
             },
             stateSelector: 'a[href]'
         });
