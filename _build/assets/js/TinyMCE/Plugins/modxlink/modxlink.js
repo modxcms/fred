@@ -406,15 +406,38 @@ export default fred => {
                 const lookupCache = {};
                 let initData = [];
 
-                const templateInputChoices = new Choices(input);
+                const templateInputChoices = new Choices(input, {
+                    removeItemButton: true
+                });
                 templateInputChoices.ajax(callback => {
                     fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources`)
                         .then(response => {
                             return response.json()
                         })
-                        .then(data => {
-                            initData = data.data.resources;
-                            callback(data.data.resources, 'value', 'pagetitle');
+                        .then(json => {
+                            initData = json.data.resources;
+                            callback(json.data.resources, 'value', 'pagetitle');
+
+                            if (data.page.page) {
+                                fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources&id=${data.page.page}`)
+                                    .then(response => {
+                                        return response.json()
+                                    })
+                                    .then(json => {
+                                        templateInputChoices.setValue([{
+                                            value: json.data.resource.value,
+                                            label: json.data.resource.pagetitle
+                                        }]);
+
+                                        const pageAnchorEl = document.getElementById('page_anchor-l');
+                                        if (pageAnchorEl) {
+                                            pageAnchorEl.innerText = `Block on '${json.data.resource.pagetitle}'`;
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.log(error);
+                                    });
+                            }
                         })
                         .catch(error => {
                             console.log(error);
@@ -471,7 +494,18 @@ export default fred => {
 
                     const pageAnchorEl = document.getElementById('page_anchor-l');
                     if (pageAnchorEl) {
-                        pageAnchorEl.innerText = 'Block on \'' + event.detail.choice.label + '\'';
+                        pageAnchorEl.innerText = `Block on '${event.detail.choice.label}'`;
+                    }
+                });
+                
+                templateInputChoices.passedElement.addEventListener('removeItem', event => {
+                    if (templateInputChoices.getValue()) return;
+                    
+                    data.page.page = '';
+                    data.page.url = '';
+                    const pageAnchorEl = document.getElementById('page_anchor-l');
+                    if (pageAnchorEl) {
+                        pageAnchorEl.innerText = `Block on '${fred.config.pageSettings.pagetitle }'`;
                     }
                 });
 
