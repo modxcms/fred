@@ -17,7 +17,22 @@ class RteGetResources extends Endpoint
         $context = 'web';
         
         $query = $_GET['query'];
+        $id = intval($_GET['id']);
 
+        if (!empty($id)) {
+            $resource = $this->modx->getObject('modResource', $id);
+            if ($resource) {
+                return $this->data(['resource' => [
+                    'id' => $resource->id,
+                    'value' => (string)$resource->id,
+                    'pagetitle' => $resource->pagetitle,
+                    'customProperties' => [
+                        'url' => $this->modx->makeUrl($resource->id, $context, '', 'abs')
+                    ]
+                ]]);
+            }
+        }
+        
         $c = $this->modx->newQuery('modResource');
         $where = [
             'context_key' => $context

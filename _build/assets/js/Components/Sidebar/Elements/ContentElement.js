@@ -513,7 +513,8 @@ export class ContentElement {
             const fredLinks = element.querySelectorAll('[data-fred-link-page]');
             for (let fredLink of fredLinks) {
                 const resourceId = parseInt(fredLink.dataset.fredLinkPage);
-                const anchor = fredLink.dataset.fredLinkAnchor ? ('#' + fredLink.dataset.fredLinkAnchor) : '#';
+                const anchor = fredLink.dataset.fredLinkAnchor ? ('#' + fredLink.dataset.fredLinkAnchor) : '';
+                
                 if (resourceId > 0) {
                     fredLink.setAttribute('href', `[[~${resourceId}]]${anchor}`);
                 } else {
