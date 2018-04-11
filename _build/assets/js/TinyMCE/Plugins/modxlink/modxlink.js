@@ -1,6 +1,7 @@
 import Choices from 'choices.js';
 import fetch from 'isomorphic-fetch';
-import ElementHelper from './ElementHelper';
+import Data from './Data';
+import Link from './Link';
 
 export default fred => {
     return (editor, url) => {
@@ -9,56 +10,26 @@ export default fred => {
         editor.addButton('modxlink', {
             icon: 'link',
             onclick: function () {
-
-                let elm;
+                const dataHelper = new Data(editor);
                 let activeTab = 0;
 
-                let data = {
-                    link_text: editor.selection.getContent(),
-                    link_title: '',
-                    classes: '',
-                    new_window: false,
-                    page: {
-                        page: '',
-                        url: '',
-                        anchor: ''
-                    },
-                    url: {
-                        url: ''
-                    },
-                    email: {
-                        to: '',
-                        subject: '',
-                        body: ''
-                    },
-                    phone: {},
-                    file: {}
-                };
+                const data = dataHelper.getData();
 
-                elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
-                if (elm) {
-                    editor.selection.select(elm);
-
-                    const parsedData = ElementHelper.getData(elm, data);
-
-                    data = {
-                        ...data,
-                        ...(parsedData.data)
-                    };
-
-                    switch (parsedData.tab) {
-                        case 'page':
-                            activeTab = 0;
-                            break;
-                        case 'url':
-                            activeTab = 1;
-                            break;
-                        case 'email':
-                            activeTab = 2;
-                            break;
-                    }
+                switch (dataHelper.getActiveTab()) {
+                    case 'page':
+                        activeTab = 0;
+                        break;
+                    case 'url':
+                        activeTab = 1;
+                        break;
+                    case 'email':
+                        activeTab = 2;
+                        break;
+                    case 'phone':
+                        activeTab = 3;
+                        break;
                 }
-
+                
                 console.log(data);
 
                 const tabPanel = new tinymce.ui.TabPanel({
@@ -138,7 +109,14 @@ export default fred => {
                             title: 'Phone',
                             id: 'phone',
                             type: 'form',
-                            items: []
+                            items: [{
+                                type: 'textbox',
+                                label: 'Phone',
+                                value: data.phone.phone,
+                                onkeyup() {
+                                    data.phone.phone = this.value();
+                                }
+                            }]
                         },
                         {
                             title: 'File',
@@ -203,195 +181,10 @@ export default fred => {
                     ],
                     onsubmit: (tabPanel => {
                         return e => {
+                            const link = new Link(editor);
                             const activeTab = tabPanel.items()[tabPanel.activeTabId.slice(1)]._id;
-                            console.log(activeTab);
-                            console.log(data);
 
-                            const elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
-
-                            if (activeTab === 'page') {
-                                if (elm) {
-                                    if (!data.page.page && !data.page.anchor) return;
-
-                                    editor.focus();
-                                    editor.dom.removeAllAttribs(elm);
-
-
-                                    editor.dom.setAttrib(elm, 'data-fred-link-page', data.page.page);
-
-                                    if (data.page.anchor) {
-                                        editor.dom.setAttrib(elm, 'data-fred-link-anchor', data.page.anchor);
-                                        editor.dom.setAttrib(elm, 'href', data.page.url + '#' + data.page.anchor);
-                                    } else {
-                                        editor.dom.setAttrib(elm, 'href', data.page.url);
-                                    }
-
-                                    if (data.link_title) {
-                                        editor.dom.setAttrib(elm, 'title', data.link_title);
-                                    }
-
-                                    if (data.new_window) {
-                                        editor.dom.setAttrib(elm, 'target', '_blank');
-                                    }
-
-                                    if (data.classes) {
-                                        editor.dom.setAttrib(elm, 'class', data.classes);
-                                    }
-
-                                    elm.innerText = editor.dom.encode(data.link_text);
-                                    editor.selection.select(elm);
-                                    editor.selection.collapse(false);
-                                } else {
-                                    const attrs = {
-                                        href: data.page.url,
-                                        'data-fred-link-page': data.page.page
-                                    };
-
-                                    if (data.page.anchor) {
-                                        attrs['data-fred-link-anchor'] = data.page.anchor;
-                                        attrs.href = data.page.url + '#' + data.page.anchor;
-                                    }
-
-                                    if (data.link_title) {
-                                        attrs.title = data.link_title;
-                                    }
-
-                                    if (data.new_window) {
-                                        attrs.target = '_blank';
-                                    }
-
-                                    if (data.classes) {
-                                        attrs.class = data.classes;
-                                    }
-
-                                    editor.insertContent(editor.dom.createHTML('a', attrs, editor.dom.encode(data.link_text)));
-
-                                    editor.selection.collapse(false);
-                                }
-
-                                return;
-                            }
-
-                            if (activeTab === 'url') {
-                                if (elm) {
-                                    editor.focus();
-                                    editor.dom.removeAllAttribs(elm);
-
-                                    editor.dom.setAttrib(elm, 'href', data.url.url);
-
-                                    if (data.link_title) {
-                                        editor.dom.setAttrib(elm, 'title', data.link_title);
-                                    }
-
-                                    if (data.new_window) {
-                                        editor.dom.setAttrib(elm, 'target', '_blank');
-                                    }
-
-                                    if (data.classes) {
-                                        editor.dom.setAttrib(elm, 'class', data.classes);
-                                    }
-
-                                    elm.innerText = editor.dom.encode(data.link_text);
-                                    editor.selection.select(elm);
-                                    editor.selection.collapse(false);
-                                } else {
-                                    const attrs = {
-                                        href: data.url.url
-                                    };
-
-                                    if (data.link_title) {
-                                        attrs.title = data.link_title;
-                                    }
-
-                                    if (data.new_window) {
-                                        attrs.target = '_blank';
-                                    }
-
-                                    if (data.classes) {
-                                        attrs.class = data.classes;
-                                    }
-
-                                    editor.insertContent(editor.dom.createHTML('a', attrs, editor.dom.encode(data.link_text)));
-
-                                    editor.selection.collapse(false);
-                                }
-                            }
-
-                            if (activeTab === 'email') {
-                                if (elm) {
-                                    editor.focus();
-                                    editor.dom.removeAllAttribs(elm);
-
-                                    let href = `mailto:${data.email.to}`;
-                                    const mailAttrs = [];
-
-                                    if (data.email.subject) {
-                                        mailAttrs.push('subject=' + encodeURI(data.email.subject));
-                                    }
-
-                                    if (data.email.body) {
-                                        mailAttrs.push('body=' + encodeURI(data.email.body));
-                                    }
-
-                                    if (mailAttrs.length > 0) {
-                                        href += '?' + mailAttrs.join('&');
-                                    }
-
-
-                                    editor.dom.setAttrib(elm, 'href', href);
-
-                                    if (data.link_title) {
-                                        editor.dom.setAttrib(elm, 'title', data.link_title);
-                                    }
-
-                                    if (data.new_window) {
-                                        editor.dom.setAttrib(elm, 'target', '_blank');
-                                    }
-
-                                    if (data.classes) {
-                                        editor.dom.setAttrib(elm, 'class', data.classes);
-                                    }
-
-                                    elm.innerText = editor.dom.encode(data.link_text);
-                                    editor.selection.select(elm);
-                                    editor.selection.collapse(false);
-                                } else {
-                                    let href = `mailto:${data.email.to}`;
-                                    const mailAttrs = [];
-
-                                    if (data.email.subject) {
-                                        mailAttrs.push('subject=' + encodeURI(data.email.subject));
-                                    }
-
-                                    if (data.email.body) {
-                                        mailAttrs.push('body=' + encodeURI(data.email.body));
-                                    }
-
-                                    if (mailAttrs.length > 0) {
-                                        href += '?' + mailAttrs.join('&');
-                                    }
-
-                                    const attrs = {
-                                        href
-                                    };
-
-                                    if (data.link_title) {
-                                        attrs.title = data.link_title;
-                                    }
-
-                                    if (data.new_window) {
-                                        attrs.target = '_blank';
-                                    }
-
-                                    if (data.classes) {
-                                        attrs.class = data.classes;
-                                    }
-
-                                    editor.insertContent(editor.dom.createHTML('a', attrs, editor.dom.encode(data.link_text)));
-
-                                    editor.selection.collapse(false);
-                                }
-                            }
+                            link.save(activeTab, data)
                         }
                     })(tabPanel)
                 });
