@@ -202,7 +202,7 @@ export class ElementSettings {
     settingChanged() {
         for (let name in this.el.settings) {
             if (this.el.settings.hasOwnProperty(name)) {
-                if (!(this.originalValues[name] && (this.originalValues[name] === this.el.settings[name]))) {
+                if (!(this.originalValues.hasOwnProperty(name) && (this.originalValues[name] === this.el.settings[name]))) {
                    return true; 
                 }
             }
