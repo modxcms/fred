@@ -17,19 +17,22 @@ class RteGetResources extends Endpoint
         $context = 'web';
         
         $query = $_GET['query'];
-        $id = intval($_GET['id']);
-
-        if (!empty($id)) {
-            $resource = $this->modx->getObject('modResource', $id);
-            if ($resource) {
-                return $this->data(['resource' => [
-                    'id' => $resource->id,
-                    'value' => (string)$resource->id,
-                    'pagetitle' => $resource->pagetitle,
+        $current = intval($_GET['current']);
+        $currentResource = null;
+        
+        if (!empty($current)) {
+            $currentResource = $this->modx->getObject('modResource', $current);
+            if ($currentResource) {
+                $currentResource = [
+                    'id' => $currentResource->id,
+                    'value' => (string)$currentResource->id,
+                    'pagetitle' => $currentResource->pagetitle,
                     'customProperties' => [
-                        'url' => $this->modx->makeUrl($resource->id, $context, '', 'abs')
+                        'url' => $this->modx->makeUrl($currentResource->id, $context, '', 'abs')
                     ]
-                ]]);
+                ];
+            } else {
+                $currentResource = null;
             }
         }
         
@@ -37,6 +40,10 @@ class RteGetResources extends Endpoint
         $where = [
             'context_key' => $context
         ];
+        
+        if (!empty($current)) {
+            $where['id:!='] = $current;
+        }
         
         $c->limit(10);
         
@@ -60,6 +67,6 @@ class RteGetResources extends Endpoint
             ];
         }
 
-        return $this->data(['resources' => $data]);
+        return $this->data(['resources' => $data, 'current' => $currentResource]);
     }
 }

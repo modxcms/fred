@@ -149,6 +149,14 @@ export default fred => {
                     ]
                 });
 
+                const linkText = new tinymce.ui.TextBox({
+                    type: 'textbox',
+                    label: 'Link Text',
+                    name: 'link_text',
+                    onkeyup() {
+                        data.link_text = this.value();
+                    }
+                });
 
                 // Open window
                 const win = editor.windowManager.open({
@@ -156,14 +164,7 @@ export default fred => {
                     classes: 'fred--modxlink',
                     data,
                     body: [
-                        {
-                            type: 'textbox',
-                            label: 'Link Text',
-                            name: 'link_text',
-                            onkeyup() {
-                                data.link_text = this.value();
-                            }
-                        },
+                        linkText,
                         {
                             type: 'form',
                             layout: 'grid',
@@ -410,33 +411,22 @@ export default fred => {
                     removeItemButton: true
                 });
                 templateInputChoices.ajax(callback => {
-                    fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources`)
+                    fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources&current=${data.page.page}`)
                         .then(response => {
                             return response.json()
                         })
                         .then(json => {
                             initData = json.data.resources;
                             callback(json.data.resources, 'value', 'pagetitle');
-
-                            if (data.page.page) {
-                                fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources&id=${data.page.page}`)
-                                    .then(response => {
-                                        return response.json()
-                                    })
-                                    .then(json => {
-                                        templateInputChoices.setValue([{
-                                            value: json.data.resource.value,
-                                            label: json.data.resource.pagetitle
-                                        }]);
-
-                                        const pageAnchorEl = document.getElementById('page_anchor-l');
-                                        if (pageAnchorEl) {
-                                            pageAnchorEl.innerText = `Block on '${json.data.resource.pagetitle}'`;
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.log(error);
-                                    });
+                            
+                            if (json.data.current) {
+                                templateInputChoices.setChoices([json.data.current], 'value', 'pagetitle', false);
+                                templateInputChoices.setValueByChoice(data.page.page);
+                                
+                                const pageAnchorEl = document.getElementById('page_anchor-l');
+                                if (pageAnchorEl) {
+                                    pageAnchorEl.innerText = `Block on '${json.data.current.pagetitle}'`;
+                                }       
                             }
                         })
                         .catch(error => {
@@ -491,6 +481,11 @@ export default fred => {
                     templateInputChoices.setChoices(initData, 'value', 'pagetitle', true);
                     data.page.page = event.detail.choice.value;
                     data.page.url = event.detail.choice.customProperties.url;
+                    
+                    if (!data.link_text) {
+                        data.link_text = event.detail.choice.label;
+                        linkText.value(event.detail.choice.label);
+                    }
 
                     const pageAnchorEl = document.getElementById('page_anchor-l');
                     if (pageAnchorEl) {
