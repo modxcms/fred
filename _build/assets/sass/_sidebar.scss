@@ -358,7 +358,13 @@
   text-shadow: 1px 1px 2px black;
   animation: fred--fadein .3s ease-in;
 }
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) {
 
+  .fred--sidebar {
+    overflow-y: visible;
+  }
+}}
 @keyframes fred--fadein {
   0% {
     opacity: 0;
