@@ -77,10 +77,7 @@
       background: rgba($gray, .1);
       opacity: .5;
       height: 20px;
-      .fred--toolbar-grip{
-        opacity: 0;
-      }
-      button{
+      .fred--toolbar-grip, button, .fred--position-group{
         opacity: 0;
       }
     }
