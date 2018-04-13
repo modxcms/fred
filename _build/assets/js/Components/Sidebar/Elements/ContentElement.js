@@ -485,6 +485,7 @@ export class ContentElement {
     
     cleanRender() {
         const element = document.createElement('div');
+
         return this.templateRender(false).then(html => {
             element.innerHTML = html;
             
@@ -544,6 +545,8 @@ export class ContentElement {
                 }
             }
 
+            const dzPromises = [];
+            
             for (let dzName in this.dzs) {
                 if (this.dzs.hasOwnProperty(dzName)) {
                     const dzEl = element.querySelector('[data-fred-dropzone="' + dzName + '"]');
@@ -553,18 +556,27 @@ export class ContentElement {
                         if (this.dzs[dzName].children.length > 0) {
 
                             let cleanedDropZoneContent = '';
-
+                            const childPromises = [];
+                            
                             this.dzs[dzName].children.forEach(child => {
-                                cleanedDropZoneContent += child.fredEl.cleanRender().innerHTML;
+                                childPromises.push(child.fredEl.cleanRender());
                             });
 
-                            dzEl.innerHTML = cleanedDropZoneContent;
+                            dzPromises.push(Promise.all(childPromises).then(values => {
+                                values.forEach(childEl => {
+                                    cleanedDropZoneContent += childEl.innerHTML;
+                                });
+
+                                dzEl.innerHTML = cleanedDropZoneContent;
+                            }));
                         }
                     }
                 }
             }
 
-            return element;
+            return Promise.all(dzPromises).then(() => {
+                return element;
+            });
         });
     }
 
