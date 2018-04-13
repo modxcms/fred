@@ -28,6 +28,9 @@ export default fred => {
                     case 'phone':
                         activeTab = 3;
                         break;
+                    case 'file':
+                        activeTab = 4;
+                        break;
                 }
                 
                 console.log(data);
@@ -122,7 +125,14 @@ export default fred => {
                             title: 'File',
                             id: 'file',
                             type: 'form',
-                            items: []
+                            items: [{
+                                type: 'filepicker',
+                                label: 'File',
+                                value: data.file.file,
+                                onchange(e) {
+                                    data.file.file = this.value();
+                                }
+                            }]
                         }
                     ]
                 });

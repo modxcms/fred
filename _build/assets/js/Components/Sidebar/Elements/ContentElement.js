@@ -301,6 +301,20 @@ export class ContentElement {
                         selection_toolbar: 'bold italic | h2 h3 blockquote modxlink',
                         auto_focus: false,
                         branding: false,
+                        relative_urls: false,
+                        file_picker_callback : (callback, value, meta) => {
+                            tinymce.activeEditor.windowManager.open({
+                                file: `${this.config.assetsUrl}/elfinder/index.html`,
+                                title: 'File Browser',
+                                width: 900,
+                                height: 450
+                            }, {
+                                oninsert: function (file, fm) {
+                                    callback(file.url);
+                                }
+                            });
+                            return false;
+                        },
                         setup: editor => {
                             el.rte = editor;
 
@@ -510,25 +524,24 @@ export class ContentElement {
                 el.removeAttribute('data-fred-attrs');
             }
             
-            const fredLinks = element.querySelectorAll('[data-fred-link-page]');
+            const fredLinks = element.querySelectorAll('[data-fred-link-type]');
             for (let fredLink of fredLinks) {
-                const resourceId = parseInt(fredLink.dataset.fredLinkPage);
-                const anchor = fredLink.dataset.fredLinkAnchor ? ('#' + fredLink.dataset.fredLinkAnchor) : '';
+                const linkType = fredLink.dataset.fredLinkType;
+                fredLink.removeAttribute('data-fred-link-type');
                 
-                if (resourceId > 0) {
-                    fredLink.setAttribute('href', `[[~${resourceId}]]${anchor}`);
-                } else {
-                    fredLink.setAttribute('href', anchor);
-                }
-                
-                fredLink.removeAttribute('data-fred-link-page');
-                fredLink.removeAttribute('data-fred-link-anchor');
-            }
+                if (linkType === 'page') {
+                    const resourceId = parseInt(fredLink.dataset.fredLinkPage);
+                    const anchor = fredLink.dataset.fredLinkAnchor ? ('#' + fredLink.dataset.fredLinkAnchor) : '';
 
-            const fredAnchors = element.querySelectorAll('[data-fred-link-anchor]');
-            for (let fredAnchor of fredAnchors) {
-                fredAnchor.setAttribute('href', '#' + fredAnchor.dataset.fredLinkAnchor);
-                fredAnchor.removeAttribute('data-fred-link-anchor');
+                    if (resourceId > 0) {
+                        fredLink.setAttribute('href', `[[~${resourceId}]]${anchor}`);
+                    } else {
+                        fredLink.setAttribute('href', anchor);
+                    }
+
+                    fredLink.removeAttribute('data-fred-link-page');
+                    fredLink.removeAttribute('data-fred-link-anchor');
+                }
             }
 
             for (let dzName in this.dzs) {

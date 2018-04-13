@@ -30,8 +30,10 @@ export default class Link {
         return this.editLink(linkText, attributes);
     }
     
-    static getGeneralAttributes(data) {
-        const attributes = {};
+    static getGeneralAttributes(data, type) {
+        const attributes = {
+            'data-fred-link-type': type
+        };
         
         if (data.link_title) {
             attributes.title = data.link_title;
@@ -52,7 +54,7 @@ export default class Link {
         if (!data.page.page && !data.page.anchor) return;
 
         const attributes = {
-            ...(Link.getGeneralAttributes(data)),
+            ...(Link.getGeneralAttributes(data, 'page')),
             'data-fred-link-page': data.page.page
         };
 
@@ -70,7 +72,7 @@ export default class Link {
         if (!data.url.url) return;
 
         return this.handleLink(this.editor.dom.encode(data.link_text), {
-            ...(Link.getGeneralAttributes(data)),
+            ...(Link.getGeneralAttributes(data, 'url')),
             href: data.url.url
         });
     }
@@ -94,7 +96,7 @@ export default class Link {
         }
         
         return this.handleLink(this.editor.dom.encode(data.link_text), {
-            ...(Link.getGeneralAttributes(data)),
+            ...(Link.getGeneralAttributes(data, 'email')),
             href
         });
     }
@@ -103,8 +105,17 @@ export default class Link {
         if (!data.phone.phone) return;
         
         return this.handleLink(this.editor.dom.encode(data.link_text), {
-            ...(Link.getGeneralAttributes(data)),
+            ...(Link.getGeneralAttributes(data, 'phone')),
             href: `tel:${data.phone.phone}`
+        });
+    }
+    
+    saveFile(data) {
+        if (!data.file.file) return;
+        
+        return this.handleLink(this.editor.dom.encode(data.link_text), {
+            ...(Link.getGeneralAttributes(data, 'file')),
+            href: data.file.file
         });
     }
     
@@ -121,6 +132,9 @@ export default class Link {
                 break;
             case 'phone':
                 this.savePhone(data);
+                break;
+            case 'file':
+                this.saveFile(data);
                 break;
         }
 
