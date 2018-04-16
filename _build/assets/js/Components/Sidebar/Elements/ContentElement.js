@@ -296,9 +296,11 @@ export class ContentElement {
                         target: el,
                         theme: 'inlite',
                         inline: true,
-                        plugins: 'modxlink',
-                        insert_toolbar: "quickimage quicktable modxlink",
+                        plugins: 'modxlink image imagetools',
+                        insert_toolbar: "image quicktable modxlink",
                         selection_toolbar: 'bold italic | h2 h3 blockquote modxlink',
+                        image_advtab: true,
+                        imagetools_toolbar: 'alignleft aligncenter alignright | rotateleft rotateright | flipv fliph | editimage imageoptions',
                         auto_focus: false,
                         branding: false,
                         relative_urls: false,
@@ -310,7 +312,15 @@ export class ContentElement {
                                 height: 450
                             }, {
                                 oninsert: function (file, fm) {
-                                    callback(file.url);
+                                    const url = file.url;
+                                    const info = file.name + ' (' + fm.formatSize(file.size) + ')';
+
+                                    if (meta.filetype == 'image') {
+                                        callback(url, {alt: info});
+                                        return;
+                                    }
+
+                                    callback(url);
                                 }
                             });
                             return false;
