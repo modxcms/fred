@@ -12,7 +12,7 @@
   width: 100%;
   height: 100vh;
   z-index: 99999;
-  background: rgba(0,0,0,0.8);
+  background: rgba($black,0.2);
 
   .fred--modal{
     position: absolute;
@@ -46,10 +46,10 @@
   }
 
   .fred--modal-body{
-    background-color: #e4e4e4;
+    background-color: $black;
     font-size: 16px;
     padding: 16px;
-
+    color: white;
     input[type="text"] {
       width: 100%;
       padding: 6px;
@@ -59,10 +59,13 @@
 
   .fred--modal-footer{
     padding: 8px;
-    background-color: #cecece;
+    background-color: $black;
     border-bottom-left-radius: $radius*2;
     border-bottom-right-radius: $radius*2;
     text-align: right;
+    button{
+      background: $modxgreen;
+    }
   }
 
 }

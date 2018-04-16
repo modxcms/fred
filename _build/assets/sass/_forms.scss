@@ -149,7 +149,7 @@
   }
 }
 
-.fred--panel {
+.fred--panel,.fred--modal-bg {
   form, fieldset {
     outline: none;
     border: none;
@@ -204,6 +204,24 @@
     width: 100%;
     border-radius: $radius 0 0 $radius;
     padding: 0 16px;
+  }
+}
+.fred--modal{
+  label{
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .choices{
+    margin: 0 0 16px !important;
+    &__list{
+      color: white;
+    }
+  }
+  .choices, input, select, textarea{
+    margin-bottom: 16px;
   }
 }
 .fred--toggle{

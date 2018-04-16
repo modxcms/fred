@@ -48,8 +48,6 @@ $choices-highlight-color: $choices-primary-color !default;
   background-color: $choices-bg-color;
   border: 1px solid $choices-keyline-color;
   box-sizing: border-box;
-  min-height: 28px;
-  border-radius: 0;
   .is-focused &, .is-open & { border-color: darken($choices-keyline-color, 15%); }
 }
 
