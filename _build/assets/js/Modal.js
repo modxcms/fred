@@ -1,7 +1,8 @@
+import emitter from './EE';
+
 export class Modal {
     
-    constructor(fredWrapper, title, content = '', onSave = () => {}) {
-        this.fredWrapper = fredWrapper;
+    constructor(title, content = '', onSave = () => {}) {
         this.wrapper = null;
         this.title = title;
         this.content = content;
@@ -81,7 +82,7 @@ export class Modal {
 
         this.wrapper.appendChild(modal);
 
-        this.fredWrapper.appendChild(this.wrapper);
+        emitter.emit('fred-wrapper-insert', this.wrapper);
         
         return this.wrapper;
     }

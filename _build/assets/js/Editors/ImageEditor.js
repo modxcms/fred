@@ -1,21 +1,8 @@
 import Modal from '../Modal';
 
-class ImageEditor {
-    constructor() {
-        this.fredWrapper = null;
-        this.inited = false;
-    }
-
-    init(fredWrapper) {
-        if (this.inited === true) return;
-
-        this.fredWrapper = fredWrapper;
-        this.inited = true;
-    }
-
-    edit(img) {
+export default class ImageEditor {
+    constructor(img) {
         const wrapper = document.createElement('div');
-        
         
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
@@ -37,12 +24,13 @@ class ImageEditor {
 
         wrapper.appendChild(this.labelWrapper(input, 'src'));
         
+        
         fields.forEach(field => {
             wrapper.appendChild(this.labelWrapper(field, field.dataset.name));    
         });
 
 
-        const modal = new Modal(this.fredWrapper, 'Edit Image', wrapper, () => {
+        const modal = new Modal('Edit Image', wrapper, () => {
             img.src = input.value;
 
             fields.forEach(field => {
@@ -52,7 +40,7 @@ class ImageEditor {
 
         modal.render();
     }
-    
+
     labelWrapper(input, name) {
         const label = document.createElement('label');
         label.innerText = name;
@@ -63,7 +51,3 @@ class ImageEditor {
     }
 
 }
-
-const imageEditor = new ImageEditor();
-
-export default imageEditor;

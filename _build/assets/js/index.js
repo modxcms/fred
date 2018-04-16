@@ -3,8 +3,6 @@ import Sidebar from './Sidebar';
 import Launcher from './Launcher';
 import fetch from 'isomorphic-fetch';
 import drake from './Drake';
-import imageEditor from './Editors/ImageEditor';
-import iconEditor from './Editors/IconEditor';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
 import registerPlugins from './TinyMCE/RegisterPlugins';
@@ -251,8 +249,6 @@ export default class Fred {
 
         this.render();
         drake.initDrake(this.config);
-        imageEditor.init(this.wrapper);
-        iconEditor.init(this.wrapper);
 
         this.loadContent().then(() => {
             this.renderComponents();
