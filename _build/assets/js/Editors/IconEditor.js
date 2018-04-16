@@ -1,21 +1,8 @@
 import Modal from '../Modal';
 
-class IconEditor {
-    constructor() {
-        this.fredWrapper = null;
-        this.inited = false;
-    }
-
-    init(fredWrapper) {
-        if (this.inited === true) return;
-
-        this.fredWrapper = fredWrapper;
-        this.inited = true;
-    }
-
-    edit(i) {
+export default class IconEditor {
+    constructor(i) {
         const wrapper = document.createElement('div');
-        
         
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
@@ -42,7 +29,7 @@ class IconEditor {
         });
 
 
-        const modal = new Modal(this.fredWrapper, 'Edit Icon', wrapper, () => {
+        const modal = new Modal('Edit Icon', wrapper, () => {
             i.className = input.value;
 
             fields.forEach(field => {
@@ -52,7 +39,7 @@ class IconEditor {
 
         modal.render();
     }
-    
+
     labelWrapper(input, name) {
         const label = document.createElement('label');
         label.innerText = name;
@@ -63,7 +50,3 @@ class IconEditor {
     }
 
 }
-
-const iconEditor = new IconEditor();
-
-export default iconEditor;

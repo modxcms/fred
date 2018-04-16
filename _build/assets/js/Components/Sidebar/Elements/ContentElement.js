@@ -1,6 +1,6 @@
 import drake from '../../../Drake';
-import imageEditor from '../../../Editors/ImageEditor';
-import iconEditor from '../../../Editors/IconEditor';
+import ImageEditor from '../../../Editors/ImageEditor';
+import IconEditor from '../../../Editors/FAIconEditor';
 import emitter from '../../../EE';
 import { twig } from 'twig';
 import fetch from "isomorphic-fetch";
@@ -369,7 +369,7 @@ export class ContentElement {
 
                         el.addEventListener('click', e => {
                             e.preventDefault();
-                            iconEditor.edit(el);
+                            new IconEditor(el);
                         });
                         break;
                     case 'img':
@@ -377,7 +377,7 @@ export class ContentElement {
 
                         el.addEventListener('click', e => {
                             e.preventDefault();
-                            imageEditor.edit(el);
+                            new ImageEditor(el);
                         });
 
                         break;
@@ -400,7 +400,7 @@ export class ContentElement {
 
                         el.addEventListener('click', e => {
                             e.preventDefault();
-                            iconEditor.edit(el);
+                            new IconEditor(el);
                         });
                         break;
                     case 'img':
@@ -408,7 +408,7 @@ export class ContentElement {
 
                         el.addEventListener('click', e => {
                             e.preventDefault();
-                            imageEditor.edit(el);
+                            new ImageEditor(el);
                         });
 
                         break;
