@@ -19,6 +19,7 @@ switch ($modx->event->name) {
             Ext.ComponentMgr.onAvailable('modx-resource-content', function(right) {
                 right.on('beforerender', function() {
                     var content = Ext.getCmp('ta'),
+                    contentvalue = content.getValue(),
                     panel = Ext.getCmp('modx-page-update-resource'); 
                     
                     content.destroy();
@@ -33,6 +34,16 @@ switch ($modx->event->name) {
                         ,handler: function(){
                             window.open(panel.config.preview_url)
                         }
+                    });
+                     
+                    right.insert(1,{
+                        xtype: 'textarea' 
+                        ,hideLabel: true
+                        ,anchor: '100%'
+                        ,grow: true
+                        ,style: {marginTop:'15px'}
+                        ,disabled: true
+                        ,value: contentvalue
                     });
                 })
             });
