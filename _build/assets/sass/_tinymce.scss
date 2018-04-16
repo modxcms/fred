@@ -31,6 +31,10 @@
     position: absolute;
     top: 0;
     left: 137px;
+    &__inner{
+      min-height: 28px;
+      border-radius: 0;
+    }
   }
 }
 .mce-tab{

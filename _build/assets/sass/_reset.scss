@@ -60,7 +60,7 @@ a:focus, a:active, input:focus, input:active, button:focus, button:active, selec
  * Universal inheritance
  */
 
-*,
+*:not([class^="fa"]),
 ::before,
 ::after {
   text-decoration: inherit;
@@ -71,7 +71,7 @@ a:focus, a:active, input:focus, input:active, button:focus, button:active, selec
 
 // remove margin and padding of all elements
 
-* {
+*:not([class^="fa"]) {
   margin: 0;
   padding: 0;
   box-sizing: inherit;
