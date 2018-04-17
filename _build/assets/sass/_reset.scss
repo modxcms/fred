@@ -16,6 +16,36 @@ $table-border-collapse: collapse !default;
 $table-border-spacing: 0 !default;
 $textarea-resize: vertical !default;
 
+
+/*
+ * Universal inheritance
+ */
+
+*:not([class^="fa"]),
+::before,
+::after {
+  text-decoration: inherit;
+  vertical-align: inherit;
+  border-style: solid;
+  border-width: 0;
+}
+
+// remove margin and padding of all elements
+
+*:not([class^="fa"]) {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  font-family: "Open Sans", Arial, sans-serif;
+  text-transform: initial;
+  height: auto;
+  width: auto;
+  font-weight: initial;
+  line-height: 24px;
+  letter-spacing: initial;
+  white-space: initial;
+}
+
 /*
  * Normalization
  */
@@ -23,7 +53,7 @@ $textarea-resize: vertical !default;
 button, input, select, textarea, pre, ul, ol {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 h1, h2, h3, h4, h5, h6, p, dl, ol, ul, dt, dd {
   margin: 0;
@@ -54,35 +84,6 @@ a:focus, a:active, input:focus, input:active, button:focus, button:active, selec
 
 [unselectable] {
   user-select: none; // Android 4.4+, Chrome 40+, Firefox 36+, iOS 8+, Safari 8+
-}
-
-/*
- * Universal inheritance
- */
-
-*:not([class^="fa"]),
-::before,
-::after {
-  text-decoration: inherit;
-  vertical-align: inherit;
-  border-style: solid;
-  border-width: 0;
-}
-
-// remove margin and padding of all elements
-
-*:not([class^="fa"]) {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
-  font-family: "Open Sans", Arial, sans-serif;
-  text-transform: initial;
-  height: auto;
-  width: auto;
-  font-weight: initial;
-  line-height: 24px;
-  letter-spacing: initial;
-  white-space: initial;
 }
 
 // specify the text decoration of anchors
