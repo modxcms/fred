@@ -1,53 +1,33 @@
-import Modal from '../Modal';
+import Editor from './Editor';
 
-export default class ImageEditor {
-    constructor(img) {
+export default class ImageEditor extends Editor {
+    init() {
+        this.state = {
+            ...(this.state),
+            src: (this.el.src || '')
+        }
+    }
+    
+    render() {
         const wrapper = document.createElement('div');
-        
+
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
-        input.value = img.src || '';
-
-        const fields = [];
-
-        if (img.dataset.fredAttrs) {
-            const attrs = img.dataset.fredAttrs.split(',');
-            attrs.forEach(attr => {
-                const field = document.createElement('input');
-                field.dataset.name = attr;
-                field.setAttribute('type', 'text');
-                field.value = img.getAttribute(attr || '');
-
-                fields.push(field);
-            });
-        }
+        input.value = this.state.src;
+        
+        input.addEventListener('keyup', () => {
+            this.setStateValue('src', input.value);
+        });
 
         wrapper.appendChild(this.labelWrapper(input, 'src'));
         
+        wrapper.appendChild(this.buildAttributesFields());
         
-        fields.forEach(field => {
-            wrapper.appendChild(this.labelWrapper(field, field.dataset.name));    
-        });
-
-
-        const modal = new Modal('Edit Image', wrapper, () => {
-            img.src = input.value;
-
-            fields.forEach(field => {
-                img.setAttribute(field.dataset.name, field.value);
-            });
-        });
-
-        modal.render();
+        return wrapper;
     }
-
-    labelWrapper(input, name) {
-        const label = document.createElement('label');
-        label.innerText = name;
-        
-        label.appendChild(input);
-        
-        return label;
+    
+    onSave() {
+        Editor.prototype.onSave.call(this);
+        this.el.src = this.state.src;
     }
-
 }
