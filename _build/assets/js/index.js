@@ -222,8 +222,8 @@ export default class Fred {
             });
         });
 
-        emitter.on('fred-undo', () => {
-            console.log('Undo not yet implemented.');
+        emitter.on('fred-preview', () => {
+            console.log('Preview not yet implemented.');
         });
     }
 
