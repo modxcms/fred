@@ -5,12 +5,11 @@ import fetch from 'isomorphic-fetch';
 import drake from './Drake';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
-import registerPlugins from './TinyMCE/RegisterPlugins';
+import registerTineMCEPlugins from './TinyMCE/RegisterPlugins';
 
 export default class Fred {
     constructor(config = {}) {
         this.config = config || {};
-        this.drake = null;
         this.loading = null;
         this.wrapper = null;
         this.config.pageSettings = {};
@@ -231,7 +230,7 @@ export default class Fred {
     init() {
         console.log('Hello from Fred!');
 
-        registerPlugins(this);
+        registerTineMCEPlugins(this);
         
         this.registerListeners();
 

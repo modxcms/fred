@@ -1,52 +1,34 @@
-import Modal from '../Modal';
+import Editor from './Editor';
 
-export default class IconEditor {
-    constructor(i) {
+export default class IconEditor extends Editor {
+    init() {
+        this.state = {
+            ...(this.state),
+            icon: (this.el.className || '')
+        };
+    }
+
+    render() {
         const wrapper = document.createElement('div');
-        
+
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
-        input.value = i.className || '';
-
-        const fields = [];
-
-        if (i.dataset.fredAttrs) {
-            const attrs = i.dataset.fredAttrs.split(',');
-            attrs.forEach(attr => {
-                const field = document.createElement('input');
-                field.dataset.name = attr;
-                field.setAttribute('type', 'text');
-                field.value = i.getAttribute(attr || '');
-
-                fields.push(field);
-            });
-        }
+        input.value = this.state.icon;
+        
+        input.addEventListener('keyup', () => {
+            this.setStateValue('icon', input.value);
+        });
 
         wrapper.appendChild(this.labelWrapper(input, 'class'));
+
+        wrapper.appendChild(this.buildAttributesFields());
         
-        fields.forEach(field => {
-            wrapper.appendChild(this.labelWrapper(field, field.dataset.name));    
-        });
-
-
-        const modal = new Modal('Edit Icon', wrapper, () => {
-            i.className = input.value;
-
-            fields.forEach(field => {
-                i.setAttribute(field.dataset.name, field.value);
-            });
-        });
-
-        modal.render();
+        return wrapper;
     }
 
-    labelWrapper(input, name) {
-        const label = document.createElement('label');
-        label.innerText = name;
+    onSave() {
+        Editor.prototype.onSave.call(this);
         
-        label.appendChild(input);
-        
-        return label;
+        this.el.className = this.state.icon;
     }
-
 }
