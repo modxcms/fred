@@ -67,7 +67,7 @@ export default class FAIconEditor extends Editor {
         wrapper.classList.add('fred--preview');
         
         const label = document.createElement('label');
-        label.innerHTML = setting.label || setting.name;
+        label.innerText = 'Preview';
 
         this.preview = document.createElement('i');
         this.preview.className = this.buildClass();
