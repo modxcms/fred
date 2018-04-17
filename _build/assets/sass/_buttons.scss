@@ -1,23 +1,4 @@
-@mixin btn {
-  overflow: visible; // Internet Explorer 11-
-  transition-duration: $timing;
-  transition-timing-function: ease;
-  transition-property: background-color;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  border-radius: $radius;
-  -webkit-appearance: none;
-  appearance: none;
-  display: inline-block;
-  line-height: $baseGutter*1.6;
-  height: auto;
-}
-
-$btn-padding: $baseGutter/2 $baseGutter;
-$btn-padding-small: 3px 11px;
-
-button.fred--btn, .fred--btn {
+button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
   @include btn();
   padding: $btn-padding;
   color: $white;

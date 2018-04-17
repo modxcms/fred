@@ -17,6 +17,10 @@ $baseGutter: 16px;
 $radius: 4px;
 $timing: .3s;
 
+$btn-padding: $baseGutter/2 $baseGutter;
+$btn-padding-small: 3px 11px;
+
+
 //MODX Colors
 $modxred: #E12A29;
 $modxblue: #3380C2;
@@ -36,4 +40,20 @@ $modxbrightgreen: #95C953;
     cursor:    -moz-grabbing;
     cursor:         grabbing;
   }
+}
+
+@mixin btn {
+  overflow: visible; // Internet Explorer 11-
+  transition-duration: $timing;
+  transition-timing-function: ease;
+  transition-property: background-color;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: $radius;
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-block;
+  line-height: $baseGutter*1.6;
+  height: auto;
 }
