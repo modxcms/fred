@@ -104,6 +104,10 @@
     &.active, &:hover, &:focus {
       background-color: $modxgreen !important;
     }
+    + dd dt {
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
   }
 }
 
@@ -277,6 +281,10 @@
     font-size: 20px;
     & > dt{
       font-size: inherit !important;
+      &:last-of-type{
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
+      }
     }
     dl {
       border-left: 2px solid $white;

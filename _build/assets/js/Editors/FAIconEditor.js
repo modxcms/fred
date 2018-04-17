@@ -71,7 +71,7 @@ export default class FAIconEditor extends Editor {
 
         this.preview = document.createElement('i');
         this.preview.className = this.buildClass();
-        
+
         wrapper.appendChild(label);
         wrapper.appendChild(this.preview);
         

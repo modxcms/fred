@@ -94,9 +94,17 @@
     color: white;
     border: 1px solid darken($black, 5%);
     height: 36px;
-    width: 100%;
+    width: 90%;
+    margin: 0 5%;
     border-radius: $radius 0 0 $radius;
     padding: 0 16px;
+    box-sizing: border-box;
+  }
+  label{
+    input[type="text"], input[type="date"], textarea, select {
+      width: 100%;
+      margin: 0;
+    }
   }
 }
 .fred--page_settings_form {
