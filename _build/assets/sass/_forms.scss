@@ -216,12 +216,16 @@
   }
   .choices{
     margin: 0 0 16px !important;
+    &__inner{
+      box-sizing: border-box;
+    }
     &__list{
       color: white;
     }
   }
   .choices, input, select, textarea{
     margin-bottom: 16px;
+    box-sizing: border-box;
   }
 }
 .fred--toggle{
