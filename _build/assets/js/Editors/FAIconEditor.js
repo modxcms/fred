@@ -15,7 +15,7 @@ export default class FAIconEditor extends Editor {
     render() {
         const wrapper = document.createElement('div');
 
-        const preview = this.buildPreview();
+        //const preview = this.buildPreview();
 
         wrapper.appendChild(this.buildIconInput());
         wrapper.appendChild(this.buildSelectInput({
@@ -47,7 +47,11 @@ export default class FAIconEditor extends Editor {
         }));
 
         wrapper.appendChild(this.buildAttributesFields());
-        wrapper.appendChild(preview);
+        //wrapper.appendChild(preview);
+        wrapper.appendChild(this.buildPreview({
+            label: 'Preview',
+            name: 'preview'
+        }));
         
         return wrapper;
     }
@@ -60,6 +64,11 @@ export default class FAIconEditor extends Editor {
     
     buildPreview() {
         const wrapper = document.createElement('div');
+        wrapper.classList.add('fred--preview');
+        
+        const label = document.createElement('label');
+        label.innerHTML = setting.label || setting.name;
+
         this.preview = document.createElement('i');
         this.preview.className = this.buildClass();
 
