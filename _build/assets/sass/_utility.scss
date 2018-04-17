@@ -60,7 +60,12 @@
       &:after { clear: both; }
     }
   }
-
+  .fred--preview{
+    text-align: center;
+    label{
+      text-align: left;
+    }
+  }
   .fred--modal-footer{
     padding: 8px;
     background-color: $black;
