@@ -15,6 +15,7 @@
   background: rgba($black,0.2);
 
   .fred--modal{
+    background-color: $black;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -46,7 +47,6 @@
   }
 
   .fred--modal-body{
-    background-color: $black;
     font-size: 16px;
     padding: 16px;
     color: white;
@@ -54,6 +54,10 @@
       width: 100%;
       padding: 6px;
       border: 1px solid #ccc;
+    }
+    & > div{
+      &:before, &:after { content: " "; display: table; }
+      &:after { clear: both; }
     }
   }
 

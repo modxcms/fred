@@ -35,9 +35,9 @@
       top: -64px;
       left: 20px;
     }
-    &_undo {
+    &_preview {
       background-color: $modxblue;
-      background-image: url('images/undo.svg');
+      background-image: url('images/preview.svg');
       position: absolute;
       top: -32px;
       right: -44px;
@@ -54,7 +54,7 @@
         bottom: -52px;
         top: initial;
       }
-      &_undo {
+      &_preview {
         right: -16px;
         bottom: -52px;
         left: initial;
@@ -70,7 +70,7 @@
           bottom: -64px;
           top: initial;
         }
-        &_undo {
+        &_preview {
           bottom: -32px;
           top: initial;
         }
@@ -86,7 +86,7 @@
           bottom: -64px;
           top: initial;
         }
-        &_undo {
+        &_preview {
           left: -44px;
           bottom: -32px;
           top: initial;
@@ -104,7 +104,7 @@
         left: -16px;
         top: -52px;
       }
-      &_undo {
+      &_preview {
         right: -16px;
         top: -52px;
         left: initial;
@@ -122,7 +122,7 @@
         &_save {
 
         }
-        &_undo {
+        &_preview {
           left: -44px;
           right: initial;
         }
