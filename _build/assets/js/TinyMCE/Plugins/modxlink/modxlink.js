@@ -2,6 +2,7 @@ import Choices from 'choices.js';
 import fetch from 'isomorphic-fetch';
 import Data from './Data';
 import Link from './Link';
+import { unlinkSelection } from './Unlink';
 
 export default fred => {
     return (editor, url) => {
@@ -33,8 +34,6 @@ export default fred => {
                         break;
                 }
                 
-                console.log(data);
-
                 const tabPanel = new tinymce.ui.TabPanel({
                     type: 'tabpanel',
                     classes: 'fred--modxlink-panel',
@@ -145,12 +144,35 @@ export default fred => {
                         data.link_text = this.value();
                     }
                 });
+                
+                const linkState = this.state.data.active;
 
                 // Open window
                 const win = editor.windowManager.open({
                     title: 'Link to',
                     classes: 'fred--modxlink',
                     data,
+                    buttons: [
+                        {
+                            text: 'Ok', 
+                            subtype: 'primary', 
+                            onclick () {
+                                win.find('form')[0].submit();
+                            }
+                        },{
+                            text: linkState ? 'Remove Link' : 'Cancel', 
+                            onclick () {
+                                console.log();
+                                if (linkState) {
+                                    const el = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
+                                    editor.selection.select(el);
+                                    unlinkSelection(editor);
+                                }
+
+                                win.close();
+                            }
+                        }
+                    ],
                     body: [
                         linkText,
                         {
