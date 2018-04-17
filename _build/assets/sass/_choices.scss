@@ -127,6 +127,7 @@ $choices-button-offset: 8px !default;
   font-size: $choices-font-size-md;
   //min-height: 44px;
   overflow: hidden;
+  box-sizing: border-box;
   .is-focused &, .is-open & { border-color: darken($choices-keyline-color, 15%); }
   .is-open & { border-radius: $choices-border-radius $choices-border-radius 0 0; }
   .is-flipped.is-open & { border-radius: 0 0 $choices-border-radius $choices-border-radius; }

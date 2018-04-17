@@ -74,7 +74,7 @@
     outline: 3px solid rgba($gray, .75);
     z-index: 1;
     > .fred--toolbar{
-      background: rgba($gray, .1);
+      background: lighten($gray, 35%);
       opacity: .5;
       height: 20px;
       .fred--toolbar-grip, button, .fred--position-group{
@@ -87,7 +87,8 @@
   }
 
   .fred--toolbar {
-    background: rgba($modxblue, .1);
+    box-sizing: border-box;
+    background: lighten($modxblue, 45%);
     width: 100%;
     margin:0;
     text-align: right;
@@ -131,7 +132,7 @@
     button {
       @include btn();
       padding: 0;
-      margin-right: 4px;
+      margin-right: 6px;
       width: 28px;
       height: 28px;
       display: inline-block;
