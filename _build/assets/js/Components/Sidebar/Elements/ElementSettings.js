@@ -53,6 +53,9 @@ export class ElementSettings {
             }
         });
 
+        const buttonGroup = document.createElement('div');
+        buttonGroup.classList.add('fred--panel_button_wrapper');
+
         const apply = document.createElement('button');
         apply.classList.add('fred--btn-panel', 'fred--btn-apply');
         apply.innerHTML = 'Apply';
@@ -69,8 +72,10 @@ export class ElementSettings {
             this.cancel(cancel);
         });
 
-        fieldSet.appendChild(apply);
-        fieldSet.appendChild(cancel);
+        buttonGroup.appendChild(apply);
+        buttonGroup.appendChild(cancel);
+        
+        fieldSet.appendChild(buttonGroup);
 
         form.appendChild(fieldSet);
         

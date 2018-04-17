@@ -27,17 +27,17 @@ export default class Launcher {
             emitter.emit('fred-save');
         });
         
-        const undo = document.createElement('button');
-        undo.classList.add('fred--launcher_btn', 'fred--launcher_btn_undo');
-        undo.setAttribute('role', 'button');
-        undo.addEventListener('click', e => {
+        const preview = document.createElement('button');
+        preview.classList.add('fred--launcher_btn', 'fred--launcher_btn_preview');
+        preview.setAttribute('role', 'button');
+        preview.addEventListener('click', e => {
             e.preventDefault();
-            emitter.emit('fred-undo');
+            emitter.emit('fred-preview');
         });
 
         wrapper.appendChild(fred);
         wrapper.appendChild(save);
-        wrapper.appendChild(undo);
+        wrapper.appendChild(preview);
 
         emitter.emit('fred-wrapper-insert', wrapper);
     }

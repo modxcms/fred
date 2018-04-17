@@ -156,9 +156,23 @@ export class ContentElement {
             toolbar.appendChild(settings);
         }
 
+        const positionGroup = document.createElement('div');
+        positionGroup.classList.add('fred--position-group');
+
+        const moveUp = document.createElement('button');
+        moveUp.classList.add('fred--position-up');
+        moveUp.setAttribute('disabled', 'disabled');
+        
+        const moveDown = document.createElement('button');
+        moveDown.classList.add('fred--position-down');
+        moveDown.setAttribute('disabled', 'disabled');
+
+        positionGroup.appendChild(moveUp);
+        positionGroup.appendChild(moveDown);
         
         toolbar.appendChild(duplicate);
         toolbar.appendChild(trashHandle);
+        toolbar.appendChild(positionGroup);
 
         wrapper.appendChild(toolbar);
 

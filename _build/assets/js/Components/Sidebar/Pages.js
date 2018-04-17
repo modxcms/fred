@@ -39,21 +39,19 @@ export default class Pages extends Sidebar {
         pageList.classList.add('fred--pages_list');
 
         this.buildTree(this.content, pageList);
+        
+        this.buildCreatePage(pageList);
 
         content.appendChild(pageList);
-
-        content.appendChild(this.buildCreatePage());
-
 
         return content;
     }
     
-    buildCreatePage()
-    {
-        const wrapper = document.createElement('div');
-
+    buildCreatePage(content) {
+        const formWrapper = document.createElement('dd');
+        
         const form = document.createElement('form');
-        form.classList.add('fred--pages_create', 'fred--hidden');
+        form.classList.add('fred--pages_create');
         
         const fieldset = document.createElement('fieldset');
         const legend = document.createElement('legend');
@@ -121,16 +119,15 @@ export default class Pages extends Sidebar {
 
         form.appendChild(fieldset);
 
-        const button = document.createElement('button');
-        button.classList.add('fred--btn-sidebar');
+        const button = document.createElement('dt');
+        button.setAttribute('role', 'tab');
+        button.setAttribute('tabindex', '0');
         button.innerHTML = 'Create Page';
-        button.addEventListener('click', e => {
-            e.preventDefault();
-            form.classList.toggle('fred--hidden');
-        });
-        
-        wrapper.appendChild(button);
-        wrapper.appendChild(form);
+
+        formWrapper.appendChild(form);
+
+        content.appendChild(button);
+        content.appendChild(formWrapper);
 
         new Choices(parentInput, {
             choices : this.parents,
@@ -153,10 +150,6 @@ export default class Pages extends Sidebar {
                     console.log(error);
                 });
         });
-        
-        window.test = templateInputChoices;
-        
-        return wrapper;
     }
     
     buildTree(pages, wrapper) {
