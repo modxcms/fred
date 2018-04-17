@@ -17,7 +17,10 @@
   &.gu-mirror {
     margin: 0;
     padding: 0;
-    @include draggable();
+    cursor: url(images/grabbing.cur);
+    cursor: -webkit-grabbing;
+    cursor:    -moz-grabbing;
+    cursor:         grabbing;
     div, img {
       width: 100%;
       height: auto;
