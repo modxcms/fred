@@ -47,7 +47,7 @@ export const buildSelectInput = (setting, defaultValue, onChange, onInit) => {
     if (typeof onChange === 'function') {
         select.addEventListener('change', e => {
             if (setting.options[select.value]) {
-                onChange(setting.name, select.value, input, setting);
+                onChange(setting.name, select.value, select, setting);
             }
         });
     }
