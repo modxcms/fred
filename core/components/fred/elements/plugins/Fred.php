@@ -1,6 +1,7 @@
 <?php
 $templates = $modx->getOption('fred.template_ids');
 $templates = explode(',', $templates);
+
 switch ($modx->event->name) {
     case 'OnDocFormPrerender':
         $templates =  array_map('intval', $templates);
@@ -69,17 +70,37 @@ switch ($modx->event->name) {
                     'core_path' => $corePath
                 )
             );
-
+            
+            $beforeRenderResults = $modx->invokeEvent('FredBeforeRender');
+            $includes = '';
+            $beforeRender = '';
+            foreach ($beforeRenderResults as $result) {
+                
+                if ($result['includes']) {
+                    $includes .= $result['includes'];
+                }
+                
+                if ($result['beforeRender']) {
+                    $beforeRender .= $result['beforeRender'];
+                }
+            }
+            
             $fredContent = '
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.9/tinymce.min.js"></script>
         <script type="text/javascript" src="' . $fred->getOption('webAssetsUrl') . 'fred.min.js"></script>
         <link rel="stylesheet" href="' . $fred->getOption('webAssetsUrl') . 'fred.css" type="text/css" />
+        ' . $includes . '
         <script>
             var fred = new Fred({
                 assetsUrl: "' . $fred->getOption('webAssetsUrl') . '",
                 launcherPosition: "' . $fred->getOption('launcher_position') . '",
+                iconEditor: "' . $fred->getOption('icon_editor') . '",
+                imageEditor: "' . $fred->getOption('image_editor') . '",
                 resource: {
                     "id": ' . $modx->resource->id . '
+                },
+                beforeRender: function() {
+                    ' . $beforeRender . '
                 }
             });
         </script>';

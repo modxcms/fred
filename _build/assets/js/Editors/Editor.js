@@ -1,6 +1,8 @@
 import Modal from '../Modal';
 
 export default class Editor {
+    static title = 'Edit';
+    
     constructor(el) {
         this.el = el;
         this.state = {
@@ -10,7 +12,7 @@ export default class Editor {
         this.init();
 
         const wrapper = this.render();
-        const modal = new Modal('Edit Icon', wrapper, this.onSave.bind(this));
+        const modal = new Modal(this.constructor.title, wrapper, this.onSave.bind(this));
 
         modal.render();        
     }

@@ -11,7 +11,7 @@
         {
           "name": "Fred",
           "file": "Fred.php",
-          "events": ["OnWebPagePrerender", "OnDocFormPrerender"]
+          "events": ["OnWebPagePrerender", "OnDocFormPrerender", "FredTest"]
         }
       ]
     },
@@ -27,6 +27,14 @@
       {
         "key": "launcher_position",
         "value": "bottom_left"
+      },
+      {
+        "key": "icon_editor",
+        "value": "IconEditor"
+      },
+      {
+        "key": "image_editor",
+        "value": "ImageEditor"
       }
     ]
   },

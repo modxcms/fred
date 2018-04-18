@@ -1,9 +1,8 @@
 import drake from '../../../Drake';
-import ImageEditor from '../../../Editors/ImageEditor';
-import IconEditor from '../../../Editors/FAIconEditor';
 import emitter from '../../../EE';
 import { twig } from 'twig';
-import fetch from "isomorphic-fetch";
+import fetch from 'isomorphic-fetch';
+import editorsManager from '../../../EditorsManager';
 
 export class ContentElement {
     constructor(config, el, dzName, parent = null, content = {}, settings = {}) {
@@ -12,6 +11,8 @@ export class ContentElement {
         this.template = twig({data: this.el.innerHTML});
         this.id = parseInt(this.el.dataset.fredElementId);
         this.wrapper = null;
+
+        this.setUpEditors();
 
         this.render = this.render.bind(this);
 
@@ -41,6 +42,16 @@ export class ContentElement {
         this.dzs = {};
 
         this.inEditor = false;
+    }
+    
+    setUpEditors() {
+        this.editors = editorsManager.editors;
+
+        this.iconEditor = this.config.iconEditor || 'IconEditor';
+        this.iconEditor = this.editors[this.iconEditor] || null;
+
+        this.imageEditor = this.config.imageEditor || 'ImageEditor';
+        this.imageEditor = this.editors[this.imageEditor] || null;
     }
     
     setEl(el) {
@@ -383,7 +394,11 @@ export class ContentElement {
 
                         el.addEventListener('click', e => {
                             e.preventDefault();
-                            new IconEditor(el);
+                            if (this.iconEditor !== null) {
+                                new this.iconEditor(el);
+                            } else {
+                                console.log(`Editor ${this.config.iconEditor} not found`);
+                            }
                         });
                         break;
                     case 'img':
@@ -391,7 +406,11 @@ export class ContentElement {
 
                         el.addEventListener('click', e => {
                             e.preventDefault();
-                            new ImageEditor(el);
+                            if (this.imageEditor !== null) {
+                                new this.imageEditor(el);
+                            } else {
+                                console.log(`Editor ${this.config.imageEditor} not found`);
+                            }
                         });
 
                         break;
@@ -414,7 +433,11 @@ export class ContentElement {
 
                         el.addEventListener('click', e => {
                             e.preventDefault();
-                            new IconEditor(el);
+                            if (this.iconEditor !== null) {
+                                new this.iconEditor(el);
+                            } else {
+                                console.log(`Editor ${this.config.iconEditor} not found`);
+                            }
                         });
                         break;
                     case 'img':
@@ -422,7 +445,11 @@ export class ContentElement {
 
                         el.addEventListener('click', e => {
                             e.preventDefault();
-                            new ImageEditor(el);
+                            if (this.imageEditor !== null) {
+                                new this.imageEditor(el);
+                            } else {
+                                console.log(`Editor ${this.config.imageEditor} not found`);
+                            }
                         });
 
                         break;

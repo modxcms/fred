@@ -1,6 +1,8 @@
 import Editor from './Editor';
 
 export default class ImageEditor extends Editor {
+    static title = 'Edit Image';
+    
     init() {
         this.state = {
             ...(this.state),
