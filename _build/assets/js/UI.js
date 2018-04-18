@@ -44,6 +44,7 @@ export const buildSelectInput = (setting, defaultValue, onChange, onInit) => {
             }
         }
     }
+    
     if (typeof onChange === 'function') {
         select.addEventListener('change', e => {
             if (setting.options[select.value]) {
@@ -159,10 +160,58 @@ export const buildDateTimeInput = (setting, defaultValue, onChange, onInit) => {
     return label;
 };
 
+export const buildColorSwatchInput = (setting, defaultValue, onChange, onInit) => {
+    const label = document.createElement('label');
+    label.innerHTML = setting.label || setting.name;
+
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('fred--color_swatch');
+    
+    const preview = document.createElement('div');
+    preview.classList.add('fred--color_swatch-preview');
+    
+    if (defaultValue) {
+        preview.style.backgroundColor = defaultValue;
+    }
+    
+    const colors = document.createElement('div');
+    colors.classList.add('fred--color_swatch-colors');
+
+    if (setting.options) {
+        setting.options.forEach(value => {
+            const option = document.createElement('div');
+            option.classList.add('fred--color_swatch-color');
+            option.style.backgroundColor = value;
+
+            option.addEventListener('click', e => {
+                if (typeof onChange === 'function') {
+                    onChange(setting.name, value, option, setting);
+                }
+
+                preview.style.backgroundColor = value;
+            });
+
+            colors.appendChild(option);
+        });
+    }
+
+    wrapper.appendChild(preview);
+    wrapper.appendChild(colors);
+    
+    label.appendChild(wrapper);
+
+    if (typeof onInit === 'function') {
+        onInit(setting, label, wrapper, preview, colors);
+    }
+    
+    return label;
+};
+
 export default {
     buildTextInput,
     buildSelectInput,
     buildToggleInput,
     buildTextAreaInput,
-    buildDateTimeInput
+    buildDateTimeInput,
+    buildColorSwatchInput
 };

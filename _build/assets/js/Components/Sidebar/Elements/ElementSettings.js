@@ -1,6 +1,6 @@
 import emitter from '../../../EE';
 import { debounce } from '../../../Utils';
-import { buildSelectInput, buildTextInput, buildToggleInput } from '../../../UI';
+import { buildSelectInput, buildTextInput, buildToggleInput, buildColorSwatchInput } from '../../../UI';
 
 export class ElementSettings {
     constructor() {
@@ -109,6 +109,8 @@ export class ElementSettings {
                 return buildSelectInput(setting, defaultValue, this.setSetting.bind(this));
             case 'toggle':
                 return buildToggleInput(setting, defaultValue, this.setSetting.bind(this));
+            case 'colorswatch':
+                return buildColorSwatchInput(setting, defaultValue, this.setSetting.bind(this));
             default:
                 return buildTextInput(setting, defaultValue, this.setSetting.bind(this));        
         }
