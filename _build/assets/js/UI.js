@@ -230,6 +230,7 @@ export const buildColorPickerInput = (setting, defaultValue, onChange, onInit) =
             pickerInstance = ColorPicker.createPicker({
                 attachTo: picker,
                 color: defaultValue,
+                showAlpha: true,
                 paletteEditable: false,
                 palette: setting.options || null
             });
