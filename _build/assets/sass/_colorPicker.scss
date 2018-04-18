@@ -5,7 +5,7 @@
   display: inline-flex;
   flex-direction: column;
   user-select: none;
-  width: 100%;
+  margin: 0 11px;
   input {
     box-sizing: border-box;
   }
@@ -93,7 +93,6 @@
 .a-color-picker-transparent {
   background-image: linear-gradient(to right, #f2eeee 1px, transparent 1px), linear-gradient(to bottom, #f2eeee 1px, transparent 1px);
   background-size: 8px 8px;
-  width: 100%;
 }
 
 .a-color-picker {
