@@ -15,7 +15,7 @@ export default class FAIconEditor extends Editor {
     render() {
         const wrapper = document.createElement('div');
 
-        //const preview = this.buildPreview();
+        const preview = this.buildPreview();
 
         wrapper.appendChild(this.buildIconInput());
         wrapper.appendChild(this.buildSelectInput({
@@ -47,11 +47,7 @@ export default class FAIconEditor extends Editor {
         }));
 
         wrapper.appendChild(this.buildAttributesFields());
-        //wrapper.appendChild(preview);
-        wrapper.appendChild(this.buildPreview({
-            label: 'Preview',
-            name: 'preview'
-        }));
+        wrapper.appendChild(preview);
         
         return wrapper;
     }
@@ -64,15 +60,9 @@ export default class FAIconEditor extends Editor {
     
     buildPreview() {
         const wrapper = document.createElement('div');
-        wrapper.classList.add('fred--preview');
-        
-        const label = document.createElement('label');
-        label.innerText = 'Preview';
-
         this.preview = document.createElement('i');
         this.preview.className = this.buildClass();
 
-        wrapper.appendChild(label);
         wrapper.appendChild(this.preview);
         
         return wrapper;
@@ -96,12 +86,12 @@ export default class FAIconEditor extends Editor {
                 const classNames = this.config.classNames;
                 return {
                     item: (data) => {
-                        return template(`<i class="${data.value}"></i> ${data.value}`);
+                        return template(`<i class="${data.value}" /> ${data.value}`);
                     },
                     choice: (data) => {
                         return template(`
                           <div class="${classNames.item} ${classNames.itemChoice} ${data.disabled ? classNames.itemDisabled : classNames.itemSelectable}" data-select-text="${this.config.itemSelectText}" data-choice ${data.disabled ? 'data-choice-disabled aria-disabled="true"' : 'data-choice-selectable'} data-id="${data.id}" data-value="${data.value}" ${data.groupId > 0 ? 'role="treeitem"' : 'role="option"'}>
-                              <i class="${data.value}"></i> ${data.value}
+                              <i class="${data.value}" /> ${data.value}
                           </div>
                         `);
                     },

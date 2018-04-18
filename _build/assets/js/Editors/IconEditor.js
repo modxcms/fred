@@ -1,6 +1,8 @@
 import Editor from './Editor';
 
 export default class IconEditor extends Editor {
+    static title = 'Edit Icon';
+    
     init() {
         this.state = {
             ...(this.state),

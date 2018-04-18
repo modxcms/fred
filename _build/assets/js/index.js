@@ -6,6 +6,9 @@ import drake from './Drake';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
 import registerTineMCEPlugins from './TinyMCE/RegisterPlugins';
+import editorsManager from './EditorsManager';
+import libs from './libs';
+import Editor from './Editors/Editor';
 
 export default class Fred {
     constructor(config = {}) {
@@ -13,6 +16,7 @@ export default class Fred {
         this.loading = null;
         this.wrapper = null;
         this.config.pageSettings = {};
+        this.libs = libs;
 
         document.addEventListener("DOMContentLoaded", () => {
             this.init();
@@ -226,6 +230,17 @@ export default class Fred {
             console.log('Preview not yet implemented.');
         });
     }
+    
+    registerEditor(name, initFn) {
+        if (typeof initFn !== 'function') {
+            console.log('initFn as to be a functions');
+            return false;
+        }
+        
+        const editor = initFn(Editor, this);
+        
+        return editorsManager.registerEditor(name, editor);
+    }
 
     init() {
         console.log('Hello from Fred!');
@@ -244,6 +259,11 @@ export default class Fred {
             }
 
             registeredDropzones.push(this.dropzones[zoneIndex].dataset.fredDropzone);
+        }
+        
+        if (typeof this.config.beforeRender === 'function') {
+            this.config.beforeRender = this.config.beforeRender.bind(this);
+            this.config.beforeRender();
         }
 
         this.render();
