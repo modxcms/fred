@@ -1,0 +1,136 @@
+.a-color-picker {
+  background-color: #fafafa;
+  padding: 2px;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  user-select: none;
+  width: 208px;
+  font: 400 10px Helvetica,Arial,sans-serif;
+}
+
+.a-color-picker input {
+  box-sizing: border-box;
+}
+
+.a-color-picker-row {
+  padding: 2px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.a-color-picker-row:not(:first-child) {
+  border-top: solid 1px #eee;
+}
+
+.a-color-picker-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.a-color-picker-cell {
+  flex: 1 1 auto;
+}
+
+.a-color-picker-stack {
+  position: relative;
+  overflow: hidden;
+}
+
+.a-color-picker-dot {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  top: 0px;
+  left: 0px;
+  background: rgba(255, 255, 255, 0.59);
+  pointer-events: none;
+  border-radius: 50px;
+  border: solid 1px #074462;
+}
+
+.a-color-picker-h,
+.a-color-picker-a {
+  border-radius: 2px;
+}
+
+.a-color-picker-preview {
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  user-select: none;
+}
+
+.a-color-picker-circle {
+  border-radius: 50px;
+  border: solid 1px #eee;
+}
+
+.a-color-picker-hsl,
+.a-color-picker-rgb,
+.a-color-picker-single-input {
+  justify-content: space-evenly;
+}
+
+.a-color-picker-hsl>label,
+.a-color-picker-rgb>label,
+.a-color-picker-single-input>label {
+  padding: 0 6px;
+  flex: 0 0 auto;
+}
+
+.a-color-picker-hsl>input,
+.a-color-picker-rgb>input,
+.a-color-picker-single-input>input {
+  text-align: center;
+  padding: 2px 0px;
+  width: 0;
+  flex: 1 1 auto;
+}
+
+.a-color-picker-transparent {
+  background-image: linear-gradient(to right, #f2eeee 1px, transparent 1px), linear-gradient(to bottom, #f2eeee 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.a-color-picker.hide-hsl [show-on-hsl],
+.a-color-picker.hide-rgb [show-on-rgb],
+.a-color-picker.hide-single-input [show-on-single-input],
+.a-color-picker.hide-alpha [show-on-alpha] {
+  display: none;
+}
+
+.a-color-picker-clipbaord {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.a-color-picker-palette {
+  flex-flow: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 2px 0px;
+}
+
+.a-color-picker-palette-color {
+  width: 15px;
+  height: 15px;
+  flex: 0 1 15px;
+  margin: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 3px;
+  border: solid 1px rgba(203, 203, 203, 0.32);
+}
+
+.a-color-picker-palette-add {
+  text-align: center;
+  line-height: 13px;
+  color: #607D8B;
+}
