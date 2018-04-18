@@ -83,6 +83,10 @@ An array of setting objects and group objects for the Fred Element.
     - Type specific properties:
         - options - An object of `value:label` properties
 - toggle - true/false checkbox
+- colorswatch
+    - Visual color picker, from predefined values
+    - Type specific properties:
+        - options - An array of colors; Example: `["lightcoral", "red", "black"]`
 
 ##### Example
 ```json
@@ -113,6 +117,13 @@ An array of setting objects and group objects for the Fred Element.
                     "label": "Show CTA",
                     "type": "toggle",
                     "value": false
+                },
+                {
+                    "name": "color",
+                    "label": "Text Color",
+                    "type": "colorswatch",
+                    "value": "black",
+                    "options": ["lightcoral", "black", "rgba(0,255,0,.5)"]
                 }
             ]
         }
