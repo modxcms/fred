@@ -1,7 +1,9 @@
 import Choices from 'choices.js';
+import flatpickr from "flatpickr";
 
 const libs = {
-    Choices
+    Choices,
+    flatpickr
 };
 
 export default libs;
