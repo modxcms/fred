@@ -1,12 +1,16 @@
 import Sidebar from '../Sidebar';
 import emitter from '../../EE';
-import flatpickr from "flatpickr";
+import { buildToggleInput, buildTextInput, buildTextAreaInput, buildDateTimeInput } from '../../UI';
 
 export default class PageSettings extends Sidebar {
     static title = 'Page Settings';
     static expandable = true;
 
     init() {
+        this.setSetting = this.setSetting.bind(this);
+        this.setSettingWithEmitter = this.setSettingWithEmitter.bind(this);
+        this.addSettingChangeListener = this.addSettingChangeListener.bind(this);
+        
         this.pageSettings = this.config.pageSettings;
         this.content = this.render();
     }
@@ -40,14 +44,14 @@ export default class PageSettings extends Sidebar {
     getGeneralFields() {
         const fieldset = document.createElement('fieldset');
         
-        fieldset.appendChild(this.buildTextInput('pagetitle', 'Page Title'));
-        fieldset.appendChild(this.buildTextInput('longtitle', 'Long Title'));
-        fieldset.appendChild(this.buildTextAreaInput('description', 'Description'));
-        fieldset.appendChild(this.buildTextAreaInput('introtext', 'Intro Text'));
-        fieldset.appendChild(this.buildTextInput('menutitle', 'Menu Title'));
-        fieldset.appendChild(this.buildTextInput('alias', 'Alias'));
-        fieldset.appendChild(this.buildToggleInput('published', 'Published'));
-        fieldset.appendChild(this.buildToggleInput('hidemenu', 'Hide from Menu'));
+        fieldset.appendChild(buildTextInput({name: 'pagetitle', label: 'Page Title'}, this.pageSettings.pagetitle, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fieldset.appendChild(buildTextInput({name: 'longtitle', label: 'Long Title'}, this.pageSettings.longtitle, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fieldset.appendChild(buildTextAreaInput({name: 'description', label: 'Description'}, this.pageSettings.description, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fieldset.appendChild(buildTextAreaInput({name: 'introtext', label: 'Intro Text'}, this.pageSettings.introtext, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fieldset.appendChild(buildTextInput({name: 'menutitle', label: 'Menu Title'}, this.pageSettings.menutitle, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fieldset.appendChild(buildTextInput({name: 'alias', label: 'Alias'}, this.pageSettings.alias, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fieldset.appendChild(buildToggleInput({name: 'published', label: 'Published'}, this.pageSettings.published, this.setSetting));
+        fieldset.appendChild(buildToggleInput({name: 'hidemenu', label: 'Hide from Menu'}, this.pageSettings.hidemenu, this.setSetting));
         
         return fieldset;
     }
@@ -69,11 +73,11 @@ export default class PageSettings extends Sidebar {
         const fieldset = document.createElement('fieldset');
         fieldset.classList.add('fred--page_settings_form_advanced');
         
-        fieldset.appendChild(this.buildDateTimeInput('publishedon', 'Published On'));
-        fieldset.appendChild(this.buildDateTimeInput('publishon', 'Publish On'));
-        fieldset.appendChild(this.buildDateTimeInput('unpublishon', 'Unpublish On'));
-        fieldset.appendChild(this.buildTextInput('menuindex', 'Menu Index'));
-        fieldset.appendChild(this.buildToggleInput('deleted', 'Deleted'));
+        fieldset.appendChild(buildDateTimeInput({name: 'publishedon', label: 'Published On'}, this.pageSettings.publishedon, this.setSetting));
+        fieldset.appendChild(buildDateTimeInput({name: 'publishon', label: 'Publish On'}, this.pageSettings.publishon, this.setSetting));
+        fieldset.appendChild(buildDateTimeInput({name: 'unpublishon', label: 'Unpublish On'}, this.pageSettings.unpublishon, this.setSetting));
+        fieldset.appendChild(buildTextInput({name: 'menuindex', label: 'Menu Index'}, this.pageSettings.menuindex, this.setSetting));
+        fieldset.appendChild(buildToggleInput({name: 'deleted', label: 'Deleted'}, this.pageSettings.deleted, this.setSetting));
 
         dd.appendChild(fieldset);
 
@@ -82,118 +86,23 @@ export default class PageSettings extends Sidebar {
         
         return dl;
     }
+
+    setSetting(name, value) {
+        this.pageSettings[name] = value;
+    }
     
-    buildTextInput(name, label) {
-        const labelEl = document.createElement('label');
-        labelEl.innerHTML = label;
+    setSettingWithEmitter(name, value, input) {
+        this.setSetting(name, value);
 
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = this.pageSettings[name];
-
-        input.addEventListener('keyup', e => {
-            this.pageSettings[name] = input.value;
-            
-            emitter.emit('fred-page-setting-change', name, input.value, input);
-        });
-
+        emitter.emit('fred-page-setting-change', name, value, input);
+    }
+    
+    addSettingChangeListener(setting, label, input) {
         emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
-            if ((input !== sourceEl) && (name === settingName)) {
-                this.pageSettings[settingName] = settingValue;
+            if ((input !== sourceEl) && (setting.name === settingName)) {
+                this.setSetting(settingName, settingValue);
                 input.value = settingValue;
             }
         });
-
-        labelEl.appendChild(input);
-        
-        return labelEl;
     }
-    
-    buildTextAreaInput(name, label) {
-        const labelEl = document.createElement('label');
-        labelEl.innerHTML = label;
-
-        const textarea = document.createElement('textarea');
-        textarea.innerHTML = this.pageSettings[name];
-
-        textarea.addEventListener('keyup', e => {
-            this.pageSettings[name] = textarea.value;
-
-            emitter.emit('fred-page-setting-change', name, textarea.value, textarea);
-        });
-
-        emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
-            if ((textarea !== sourceEl) && (name === settingName)) {
-                this.pageSettings[settingName] = settingValue;
-                textarea.value = settingValue;
-            }
-        });
-
-        labelEl.appendChild(textarea);
-        
-        return labelEl;
-    }
-    
-    buildToggleInput(name, label) {
-        const labelEl = document.createElement('label');
-        labelEl.classList.add('fred--page_settings_form_checkbox', 'fred--toggle');
-        labelEl.innerHTML = label;
-
-        const input = document.createElement('input');
-        input.setAttribute('type', 'checkbox');
-        if (this.pageSettings[name] === true) {
-            input.setAttribute('checked', 'checked');
-        }
-
-        input.addEventListener('change', e => {
-            this.pageSettings[name] = e.target.checked;
-        });
-
-        const span = document.createElement('span');
-
-        labelEl.appendChild(input);
-        labelEl.appendChild(span);
-
-        return labelEl;
-    }
-    
-    buildDateTimeInput(name, label) {
-        const labelEl = document.createElement('label');
-        labelEl.innerHTML = label;
-
-        const group = document.createElement('div');
-        group.classList.add('fred--input-group', 'fred--datetime');
-
-        const input = document.createElement('input');
-        
-        const picker = flatpickr(input, {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            appendTo: group,
-            defaultDate: (this.pageSettings[name] === 0) ? '' : (this.pageSettings[name] * 1000),
-            onChange: selectedDates => {
-                if (selectedDates.length === 0) {
-                    this.pageSettings[name] = 0;
-                } else {
-                    this.pageSettings[name] = selectedDates[0].getTime() / 1000
-                }
-            }
-        });
-
-        const clear = document.createElement('a');
-        clear.classList.add('fred--close-small');
-        clear.setAttribute('title', 'Clear');
-        clear.addEventListener('click', e => {
-            e.preventDefault();
-            picker.clear();
-        });
-
-        group.appendChild(input);
-        group.appendChild(clear);
-        
-        labelEl.appendChild(group);
-
-        return labelEl;
-    }
-
 }

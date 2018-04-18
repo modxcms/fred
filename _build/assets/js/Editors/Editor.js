@@ -1,13 +1,19 @@
 import Modal from '../Modal';
+import UI from '../UI';
 
 export default class Editor {
     static title = 'Edit';
     
     constructor(el) {
         this.el = el;
+        this.ui = UI;
+        
         this.state = {
             _attributes: {}
         };
+
+        this.setStateValue = this.setStateValue.bind(this);
+        this.setStateAttribute = this.setStateAttribute.bind(this);
         
         this.init();
 
@@ -53,92 +59,11 @@ export default class Editor {
         if (this.el.dataset.fredAttrs) {
             const attrs = this.el.dataset.fredAttrs.split(',');
             attrs.forEach(attr => {
-                const field = document.createElement('input');
-                field.setAttribute('type', 'text');
-                field.value = this.el.getAttribute(attr || '');
-                
-                this.state._attributes[attr] = field.value;
-
-                field.addEventListener('keyup', () => {
-                    this.setStateAttribute(attr, field.value);
-                });
-
-                wrapper.appendChild(this.labelWrapper(field, attr));
+                this.state._attributes[attr] = this.el.getAttribute(attr || '');
+                wrapper.appendChild(this.ui.buildTextInput({name: attr, label: attr}, this.state._attributes[attr], this.setStateAttribute));
             });
         }
         
         return wrapper;
-    }
-
-    buildSelectInput(setting, defaultValue) {
-        const wrapper = document.createElement('div');
-
-        const label = document.createElement('label');
-        label.innerHTML = setting.label || setting.name;
-
-        const select = document.createElement('select');
-
-        if (setting.options) {
-            for (let value in setting.options) {
-                if (setting.options.hasOwnProperty(value)) {
-                    const option = document.createElement('option');
-                    option.innerHTML = setting.options[value];
-                    option.value = value;
-
-                    if (value === this.state[setting.name]) {
-                        option.setAttribute('selected', 'selected');
-                    }
-
-                    select.appendChild(option);
-                }
-            }
-        }
-
-        select.addEventListener('change', e => {
-            if (setting.options[select.value]) {
-                this.setStateValue(setting.name, select.value);
-            }
-        });
-
-        wrapper.appendChild(label);
-        wrapper.appendChild(select);
-
-        return wrapper;
-    }
-
-    buildToggleInput(setting) {
-        const wrapper = document.createElement('div');
-
-        const label = document.createElement('label');
-        label.classList.add('fred--toggle');
-        label.innerHTML = setting.label || setting.name;
-
-        const input = document.createElement('input');
-        input.setAttribute('type', 'checkbox');
-        if (this.state[setting.name] === true) {
-            input.setAttribute('checked', 'checked');
-        }
-
-        input.addEventListener('change', e => {
-            this.setStateValue(setting.name, e.target.checked);
-        });
-
-        const span = document.createElement('span');
-
-        label.appendChild(input);
-        label.appendChild(span);
-
-        wrapper.appendChild(label);
-
-        return wrapper;
-    }
-    
-    labelWrapper(input, name) {
-        const label = document.createElement('label');
-        label.innerText = name;
-
-        label.appendChild(input);
-
-        return label;
     }
 }
