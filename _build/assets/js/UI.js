@@ -1,4 +1,5 @@
 import flatpickr from "flatpickr";
+import ColorPicker from './ColorPicker/ColorPicker';
 
 export const buildTextInput = (setting, defaultValue, onChange, onInit) => {
     const label = document.createElement('label');
@@ -184,6 +185,7 @@ export const buildColorSwatchInput = (setting, defaultValue, onChange, onInit) =
             option.style.backgroundColor = value;
 
             option.addEventListener('click', e => {
+                e.preventDefault();
                 if (typeof onChange === 'function') {
                     onChange(setting.name, value, option, setting);
                 }
@@ -207,11 +209,73 @@ export const buildColorSwatchInput = (setting, defaultValue, onChange, onInit) =
     return label;
 };
 
+export const buildColorPickerInput = (setting, defaultValue, onChange, onInit) => {
+    const label = document.createElement('label');
+    label.innerHTML = setting.label || setting.name;
+
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('fred--color_picker');
+    
+    const preview = document.createElement('div');
+    preview.classList.add('fred--color_picker-preview');
+    
+    let isOpen = false;
+    let pickerInstance = null;
+
+    preview.addEventListener('click', e => {
+        e.preventDefault();
+        if (isOpen === false) {
+            isOpen = true;
+            
+            pickerInstance = ColorPicker.createPicker({
+                attachTo: picker,
+                color: defaultValue,
+                paletteEditable: false,
+                palette: setting.options || null
+            });
+            
+            pickerInstance.onchange = (picker) => {
+                if (typeof onChange === 'function') {
+                    onChange(setting.name, picker.color, picker, setting);
+                }
+
+                preview.style.backgroundColor = picker.color;
+                defaultValue = picker.color;
+            };
+        } else {
+            if (pickerInstance !== null) {
+                pickerInstance.element.remove();
+                pickerInstance = null;
+            }
+
+            isOpen = false;
+        }
+    });
+    
+    if (defaultValue) {
+        preview.style.backgroundColor = defaultValue;
+    }
+
+    const picker = document.createElement('div');
+    
+    wrapper.appendChild(preview);
+    wrapper.appendChild(picker);
+    
+    label.appendChild(wrapper);
+
+    if (typeof onInit === 'function') {
+        onInit(setting, label, wrapper, preview, picker);
+    }
+    
+    return label;
+};
+
 export default {
     buildTextInput,
     buildSelectInput,
     buildToggleInput,
     buildTextAreaInput,
     buildDateTimeInput,
-    buildColorSwatchInput
+    buildColorSwatchInput,
+    buildColorPickerInput
 };
