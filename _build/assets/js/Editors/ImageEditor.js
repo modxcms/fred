@@ -13,16 +13,7 @@ export default class ImageEditor extends Editor {
     render() {
         const wrapper = document.createElement('div');
 
-        const input = document.createElement('input');
-        input.setAttribute('type', 'text');
-        input.value = this.state.src;
-        
-        input.addEventListener('keyup', () => {
-            this.setStateValue('src', input.value);
-        });
-
-        wrapper.appendChild(this.labelWrapper(input, 'src'));
-        
+        wrapper.appendChild(this.ui.buildTextInput({name: 'src', label: 'Image URI'}, this.state.src, this.setStateValue));
         wrapper.appendChild(this.buildAttributesFields());
         
         return wrapper;
