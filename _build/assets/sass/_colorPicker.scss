@@ -5,12 +5,10 @@
   display: inline-flex;
   flex-direction: column;
   user-select: none;
-  width: 208px;
-  font: 400 10px Helvetica,Arial,sans-serif;
-}
-
-.a-color-picker input {
-  box-sizing: border-box;
+  width: 100%;
+  input {
+    box-sizing: border-box;
+  }
 }
 
 .a-color-picker-row {
@@ -21,10 +19,9 @@
   align-items: center;
   justify-content: space-between;
   user-select: none;
-}
-
-.a-color-picker-row:not(:first-child) {
-  border-top: solid 1px #eee;
+  &:not(:first-child) {
+    border-top: solid 1px #eee;
+  }
 }
 
 .a-color-picker-column {
@@ -53,8 +50,7 @@
   border: solid 1px #074462;
 }
 
-.a-color-picker-h,
-.a-color-picker-a {
+.a-color-picker-h, .a-color-picker-a {
   border-radius: 2px;
 }
 
@@ -70,38 +66,40 @@
   border: solid 1px #eee;
 }
 
-.a-color-picker-hsl,
-.a-color-picker-rgb,
-.a-color-picker-single-input {
+.a-color-picker-hsl, .a-color-picker-rgb, .a-color-picker-single-input {
   justify-content: space-evenly;
 }
 
-.a-color-picker-hsl>label,
-.a-color-picker-rgb>label,
-.a-color-picker-single-input>label {
+.a-color-picker-hsl > label, .a-color-picker-rgb > label, .a-color-picker-single-input > label {
   padding: 0 6px;
   flex: 0 0 auto;
+  width: auto;
+  margin: auto;
+  font-size: 12px;
+  color: $black;
 }
 
-.a-color-picker-hsl>input,
-.a-color-picker-rgb>input,
-.a-color-picker-single-input>input {
+.a-color-picker-hsl > input, .a-color-picker-rgb > input, .a-color-picker-single-input > input {
   text-align: center;
   padding: 2px 0px;
   width: 0;
   flex: 1 1 auto;
+  border-radius: 0;
+  background-color: white;
+  color: black;
+  border: 1px solid #cecece;
 }
 
 .a-color-picker-transparent {
   background-image: linear-gradient(to right, #f2eeee 1px, transparent 1px), linear-gradient(to bottom, #f2eeee 1px, transparent 1px);
   background-size: 8px 8px;
+  width: 100%;
 }
 
-.a-color-picker.hide-hsl [show-on-hsl],
-.a-color-picker.hide-rgb [show-on-rgb],
-.a-color-picker.hide-single-input [show-on-single-input],
-.a-color-picker.hide-alpha [show-on-alpha] {
-  display: none;
+.a-color-picker {
+  &.hide-hsl [show-on-hsl], &.hide-rgb [show-on-rgb], &.hide-single-input [show-on-single-input], &.hide-alpha [show-on-alpha] {
+    display: none;
+  }
 }
 
 .a-color-picker-clipbaord {
