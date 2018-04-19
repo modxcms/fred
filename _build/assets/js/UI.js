@@ -176,7 +176,20 @@ export const buildColorSwatchInput = (setting, defaultValue, onChange, onInit) =
     }
     
     const colors = document.createElement('div');
-    colors.classList.add('fred--color_swatch-colors');
+    colors.classList.add('fred--color_swatch-colors', 'fred--hidden');
+
+    let isOpen = false;
+
+    preview.addEventListener('click', e => {
+        e.preventDefault();
+        if (isOpen === false) {
+            isOpen = true;
+            colors.classList.remove('fred--hidden');
+        } else {
+            isOpen = false;
+            colors.classList.add('fred--hidden');
+        }
+    });
 
     if (setting.options) {
         setting.options.forEach(value => {
