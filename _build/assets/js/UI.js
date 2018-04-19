@@ -191,23 +191,54 @@ export const buildColorSwatchInput = (setting, defaultValue, onChange, onInit) =
             colors.classList.add('fred--hidden');
         }
     });
+    
+    let defaultValueTranslated = false;
 
     if (setting.options) {
         setting.options.forEach(value => {
-            const option = document.createElement('div');
-            option.classList.add('fred--color_swatch-color');
-            option.style.backgroundColor = value;
-
-            option.addEventListener('click', e => {
-                e.preventDefault();
-                if (typeof onChange === 'function') {
-                    onChange(setting.name, value, option, setting);
+            if (typeof value === 'object') {
+                const option = document.createElement('div');
+                option.classList.add('fred--color_swatch-color');
+                option.style.backgroundColor = value.color;
+                
+                if (value.label) {
+                    option.setAttribute('data-tooltip', value.label);
                 }
 
-                preview.style.backgroundColor = value;
-            });
+                if (!defaultValueTranslated && defaultValue && (value.value === defaultValue)) {
+                    defaultValueTranslated = true;
+                    
+                    if (defaultValue) {
+                        preview.style.backgroundColor = value.color;
+                    }
+                }
+                
+                option.addEventListener('click', e => {
+                    e.preventDefault();
+                    if (typeof onChange === 'function') {
+                        onChange(setting.name, value.value, option, setting);
+                    }
 
-            colors.appendChild(option);
+                    preview.style.backgroundColor = value.color;
+                });
+
+                colors.appendChild(option);
+            } else {
+                const option = document.createElement('div');
+                option.classList.add('fred--color_swatch-color');
+                option.style.backgroundColor = value;
+    
+                option.addEventListener('click', e => {
+                    e.preventDefault();
+                    if (typeof onChange === 'function') {
+                        onChange(setting.name, value, option, setting);
+                    }
+    
+                    preview.style.backgroundColor = value;
+                });
+                
+                colors.appendChild(option);
+            }
         });
     }
 
