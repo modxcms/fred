@@ -1,5 +1,6 @@
 import flatpickr from "flatpickr";
 import ColorPicker from './ColorPicker/ColorPicker';
+import noUiSlider from 'nouislider';
 
 export const buildTextInput = (setting, defaultValue, onChange, onInit) => {
     const label = document.createElement('label');
@@ -284,6 +285,41 @@ export const buildColorPickerInput = (setting, defaultValue, onChange, onInit) =
     return label;
 };
 
+export const buildSliderInput = (setting, defaultValue, onChange, onInit) => {
+    const label = document.createElement('label');
+    label.innerHTML = setting.label || setting.name;
+
+    const sliderEl = document.createElement('div');
+    
+    const slider = noUiSlider.create(sliderEl, {
+        start: defaultValue,
+        connect: [true, false],
+        tooltips: {to: value => {
+                return parseInt(value.toFixed());
+            }},
+        step: 10,
+        range: {
+            'min': 0,
+            'max': 100
+        }
+    });
+
+    if (typeof onChange === 'function') {
+        slider.on('update', (values, handle, unencoded, tap, positions) => {
+            onChange(setting.name, values[0], slider, setting);
+        });
+    }
+
+    label.appendChild(sliderEl);
+
+    if (typeof onInit === 'function') {
+        onInit(setting, label, sliderEl);
+    }
+
+    return label;
+};
+
+
 export default {
     buildTextInput,
     buildSelectInput,
@@ -291,5 +327,6 @@ export default {
     buildTextAreaInput,
     buildDateTimeInput,
     buildColorSwatchInput,
-    buildColorPickerInput
+    buildColorPickerInput,
+    buildSliderInput
 };
