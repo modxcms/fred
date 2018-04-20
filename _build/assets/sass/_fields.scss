@@ -25,6 +25,26 @@
       cursor: pointer;
       display: inline-block;
       box-sizing: border-box;
+      position: relative;
+      &:after{
+        content: attr(style);
+        display: none;
+        background: darken($black, 5%);
+        color: $white;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        padding: 4px;
+        border-radius: 3px;
+        font-size: 12px;
+        line-height: 14px;
+        text-align: center;
+      }
+      &:hover:after{
+        display:inline-block;
+      }
     }
   }
 }
