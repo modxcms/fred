@@ -1,6 +1,8 @@
 .fred--input-group{
   display: flex;
   align-items: center;
+
+  .fred--browse-small,
   .fred--close-small{
     position: relative;
     height: 36px; width: 36px;
