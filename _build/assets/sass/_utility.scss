@@ -54,7 +54,6 @@
     input[type="text"] {
       width: 100%;
       padding: 6px;
-      border: 1px solid #ccc;
     }
     & > div{
       &:before, &:after { content: " "; display: table; }
@@ -65,6 +64,12 @@
     text-align: center;
     label{
       text-align: left;
+    }
+  }
+  .fred--browse{
+    margin-bottom: 16px;
+    input{
+      margin-bottom: 0;
     }
   }
   .fred--modal-footer{
