@@ -26,6 +26,7 @@ export default class ImageEditor extends Editor {
         
         
         openFinder.innerText = 'Browse';
+        openFinder.classList.add('fred--btn-small');
 
         
 

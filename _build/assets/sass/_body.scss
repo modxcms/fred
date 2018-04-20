@@ -63,7 +63,6 @@
       display: block;
       height: 36px;
       opacity: 1;
-      padding: 3px;
     }
     > .fred--hidden{
       display: none !important;
@@ -71,12 +70,13 @@
 
   }
   &.fred--block-active_parent {
-    outline: 3px solid rgba($gray, .75);
+    outline: 3px solid lighten($gray, 15%);
     z-index: 1;
     > .fred--toolbar{
-      background: lighten($gray, 35%);
-      opacity: .5;
+      background: lighten($gray, 45%);
+      border-color: lighten($gray, 15%);
       height: 20px;
+      top: -20px;
       .fred--toolbar-grip, button, .fred--position-group{
         opacity: 0;
       }
@@ -89,16 +89,21 @@
   .fred--toolbar {
     box-sizing: border-box;
     background: lighten($modxblue, 45%);
-    width: 100%;
     margin:0;
     text-align: right;
-    right: 0;
     font-size: 15px;
     line-height: 1;
     height: 0;
+    padding: 2px;
     opacity: 0;
     overflow:hidden;
     transition: .2s ease-in;
+    position: absolute;
+    top: -36px;
+    left: -3px;
+    right: -3px;
+    border: 3px solid $modxblue;
+    border-bottom: 0;
     @include draggable();
     &-grip{
       content: '....';
