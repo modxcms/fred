@@ -2,11 +2,12 @@ import emitter from './EE';
 
 export class Modal {
     
-    constructor(title, content = '', onSave = () => {}) {
+    constructor(title, content = '', onSave = () => {}, isFinder) {
         this.wrapper = null;
         this.title = title;
         this.content = content;
         this.onSave = onSave;
+        this.isFinder = isFinder || false;
     }
     
     setTitle(title) {
@@ -52,6 +53,12 @@ export class Modal {
         this.body = document.createElement('div');
         this.body.classList.add('fred--modal-body');
         
+        if (this.isFinder === true) {
+            modal.style.width = '800px';    
+            modal.style.height = '600px';    
+            this.body.style.padding = '0';    
+        }
+        
         if (typeof this.content === 'string') {
             this.body.innerHTML = this.content;
         } else {
@@ -78,7 +85,10 @@ export class Modal {
 
         modal.appendChild(header);
         modal.appendChild(this.body);
-        modal.appendChild(footer);
+        
+        if (this.isFinder === false) {
+            modal.appendChild(footer);
+        }
 
         this.wrapper.appendChild(modal);
 

@@ -35,10 +35,12 @@
         opts = {
             cssAutoLoad : ['../vendor/elfinder-themes/material/css/theme-gray.css'],
             getFileCallback : function(file, fm) {
-                // pass selected file data to TinyMCE
-                parent.tinymce.activeEditor.windowManager.getParams().oninsert(file, fm);
-                // close popup window
-                parent.tinymce.activeEditor.windowManager.close();
+                if (parent.fredEditorOnChange && (typeof parent.fredEditorOnChange === 'function')) {
+                    parent.fredEditorOnChange(file, fm);
+                }
+
+                // parent.tinymce.activeEditor.windowManager.getParams().oninsert(file, fm);
+                // parent.tinymce.activeEditor.windowManager.close();
             },
             resizable : false,
             width : '100%',
