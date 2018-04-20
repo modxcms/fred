@@ -330,6 +330,13 @@ export class ContentElement {
                         branding: false,
                         relative_urls: false,
                         file_picker_callback : (callback, value, meta) => {
+                            window.fredEditorOnChange = (file, fm) => {
+                                tinymce.activeEditor.windowManager.getParams().oninsert(file, fm);
+                                tinymce.activeEditor.windowManager.close();
+
+                                delete window.fredEditorOnChange;
+                            };
+                            
                             tinymce.activeEditor.windowManager.open({
                                 file: `${this.config.assetsUrl}/elfinder/index.html`,
                                 title: 'File Browser',
@@ -395,7 +402,7 @@ export class ContentElement {
                         el.addEventListener('click', e => {
                             e.preventDefault();
                             if (this.iconEditor !== null) {
-                                new this.iconEditor(el);
+                                new this.iconEditor(el, this.config);
                             } else {
                                 console.log(`Editor ${this.config.iconEditor} not found`);
                             }
@@ -407,7 +414,7 @@ export class ContentElement {
                         el.addEventListener('click', e => {
                             e.preventDefault();
                             if (this.imageEditor !== null) {
-                                new this.imageEditor(el);
+                                new this.imageEditor(el, this.config);
                             } else {
                                 console.log(`Editor ${this.config.imageEditor} not found`);
                             }
@@ -434,7 +441,7 @@ export class ContentElement {
                         el.addEventListener('click', e => {
                             e.preventDefault();
                             if (this.iconEditor !== null) {
-                                new this.iconEditor(el);
+                                new this.iconEditor(el, this.config);
                             } else {
                                 console.log(`Editor ${this.config.iconEditor} not found`);
                             }
@@ -446,7 +453,7 @@ export class ContentElement {
                         el.addEventListener('click', e => {
                             e.preventDefault();
                             if (this.imageEditor !== null) {
-                                new this.imageEditor(el);
+                                new this.imageEditor(el, this.config);
                             } else {
                                 console.log(`Editor ${this.config.imageEditor} not found`);
                             }

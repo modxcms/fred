@@ -4,9 +4,10 @@ import UI from '../UI';
 export default class Editor {
     static title = 'Edit';
     
-    constructor(el) {
+    constructor(el, config) {
         this.el = el;
         this.ui = UI;
+        this.config = config;
         
         this.state = {
             _attributes: {}
