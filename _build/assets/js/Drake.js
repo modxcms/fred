@@ -69,6 +69,7 @@ class Drake {
                     }
                     
                     el.parentNode.replaceChild(contentElement.wrapper, el);
+                    this.reloadContainers();
                 });
             } else {
                 if (target && el.fredEl) {
@@ -87,9 +88,9 @@ class Drake {
                     el.fredEl.parent = parent;
                     el.fredEl.dzName = target.dataset.fredDropzone;
                 }
-            }
 
-            this.reloadContainers();
+                this.reloadContainers();
+            }
         });
 
         this.drake.on('drag', (el, source) => {
