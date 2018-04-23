@@ -87,6 +87,23 @@ An array of setting objects and group objects for the Fred Element.
     - Visual color picker, from predefined values
     - Type specific properties:
         - options - An array of colors; Example: `["lightcoral", "red", "black"]`
+- colorpicker
+    - Color picker
+    - Type specific properties:
+        - showAlpha - boolean to show alpha slider; Default: `true`
+        - options 
+            - An array of colors; Example: `["lightcoral", "red", "black"]`
+            - Color can be either a `string` or an `object` with following properties:
+               - value - Real value of the color, will be passed to Twig
+               - color - Color that will display in the color swatch
+               - label - Label that will display in the color swatch
+- slider
+    - Slider input for numbers
+    - Type specific properties:
+        - min - **REQURED**; Minimum value of the slider
+        - max - **REQURED**; Maximum value of the slider
+        - tooltipDecimals: Number of decimals to show in slider's tooltip; Default: 0
+        - step: Number to increment slider's value; Default: 1
 
 ##### Example
 ```json
@@ -123,7 +140,15 @@ An array of setting objects and group objects for the Fred Element.
                     "label": "Text Color",
                     "type": "colorswatch",
                     "value": "black",
-                    "options": ["lightcoral", "black", "rgba(0,255,0,.5)"]
+                    "options": [{"value":"primary", "color":"blue","label":"Primary"}, "lightcoral", "black", "rgba(0,255,0,.5)"]
+                },
+                {
+                    "name": "bg_color",
+                    "label": "Background COlor",
+                    "type": "colorpicker",
+                    "value": "white",
+                    "showAlpha": true,
+                    "options": ["lightcoral", "black", "white"]
                 }
             ]
         }
