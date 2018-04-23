@@ -108,6 +108,28 @@ switch ($modx->event->name) {
             $modx->resource->_output = preg_replace('/(<\/head>(?:<\/head>)?)/i', "{$fredContent}\r\n$1", $modx->resource->_output);
         }
         break;
+    case 'OnDocFormSave':
+        if ($mode !== 'upd') return;
+
+        $templates = array_map('trim', $templates);
+        $templates = array_flip($templates);
+        if (!isset($templates[$resource->template])) return;
+        
+        $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+        /** @var Fred $fred */
+        $fred = $modx->getService(
+            'fred',
+            'Fred',
+            $corePath . 'model/fred/',
+            array(
+                'core_path' => $corePath
+            )
+        );
+
+        $renderResource = new \Fred\RenderResource($resource, $modx);
+        $renderResource->render();
+        
+        break;
 }
 
 return;
