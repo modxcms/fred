@@ -3,7 +3,8 @@ import emitter from './EE';
 export default class Launcher {
     constructor(position = 'bottom_left') {
         this.position = position;
-
+        this.previewMode = false;
+        
         this.render();
     }
     
@@ -32,7 +33,21 @@ export default class Launcher {
         preview.setAttribute('role', 'button');
         preview.addEventListener('click', e => {
             e.preventDefault();
-            emitter.emit('fred-preview');
+            if (this.previewMode === false) {
+                this.previewMode = true;
+                wrapper.style.zIndex = '9999999999';
+                fred.style.display = 'none';
+                save.style.display = 'none';
+
+                emitter.emit('fred-preview-on');
+            } else {
+                this.previewMode = false;
+                wrapper.style.zIndex = '';
+                fred.style.display = '';
+                save.style.display = '';
+
+                emitter.emit('fred-preview-off');
+            }
         });
 
         wrapper.appendChild(fred);

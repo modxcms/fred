@@ -27,9 +27,43 @@ export default class Fred {
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add('fred');
         
+        this.testPreview();
+        
         this.config.fredWrapper = this.wrapper;
 
         document.body.appendChild(this.wrapper);
+    }
+    
+    testPreview() {
+        const previewWrapper = document.createElement('div');
+        previewWrapper.classList.add('fred--content-preview');
+        previewWrapper.style.display = 'none';
+
+        this.iframe = document.createElement('iframe');
+        this.iframe.src = this.config.resource.previewUrl;
+        this.iframe.style.width = '1024px';
+        this.iframe.style.height = '768px';
+
+        previewWrapper.appendChild(this.iframe);
+
+        this.wrapper.appendChild(previewWrapper);
+    }
+    
+    previewContent() {
+        const promises = [];
+
+        for (let i = 0; i < this.dropzones.length; i++) {
+            promises.push(this.getCleanDropZoneContent(this.dropzones[i], true).then(content => {
+                const dz = this.iframe.contentDocument.querySelector('[data-fred-dropzone="' + this.dropzones[i].dataset.fredDropzone + '"]');
+                if (dz) {
+                    dz.innerHTML = content;
+                }
+            }));
+        }
+        
+        Promise.all(promises).then(() => {
+            this.iframe.parentNode.style.display = 'block';
+        });
     }
     
     renderComponents() {
@@ -48,12 +82,12 @@ export default class Fred {
         return data;
     }
 
-    getCleanDropZoneContent(dropZone) {
+    getCleanDropZoneContent(dropZone, parseModx = false) {
         let cleanedContent = '';
 
         const promises = [];
         for (let child of dropZone.children) {
-            promises.push(child.fredEl.cleanRender());
+            promises.push(child.fredEl.cleanRender(parseModx));
         }
         
         return Promise.all(promises).then(values => {
@@ -226,8 +260,12 @@ export default class Fred {
             });
         });
 
-        emitter.on('fred-preview', () => {
-            console.log('Preview not yet implemented.');
+        emitter.on('fred-preview-on', () => {
+            this.previewContent();
+        });
+        
+        emitter.on('fred-preview-off', () => {
+            this.iframe.parentNode.style.display = 'none';
         });
     }
     
