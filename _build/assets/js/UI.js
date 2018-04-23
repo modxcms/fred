@@ -326,19 +326,47 @@ export const buildSliderInput = (setting, defaultValue, onChange, onInit) => {
     }
     
     const sliderEl = document.createElement('div');
+
+    let step = 1;
+    if (setting.step) {
+        step = setting.step;
+    } else {
+        if (setting.tooltipDecimals) {
+            step = Math.pow(10, -1 * setting.tooltipDecimals);
+        }
+    }
     
     const slider = noUiSlider.create(sliderEl, {
         start: defaultValue,
         connect: [true, false],
         tooltips: {
             to: value => {
-                return parseInt(value.toFixed((setting.tooltipDecimals === undefined) ? 0 : setting.tooltipDecimals));
+                const decimals = (setting.tooltipDecimals === undefined) ? 0 : setting.tooltipDecimals;
+    
+                if (decimals === 0) {
+                    return parseInt(value.toFixed());
+                }
+                
+                return parseFloat(value.toFixed(decimals));
             }
         },
-        step: (setting.step === undefined) ? 1 : setting.step,
+        step: step,
         range: {
             'min': setting.min,
             'max': setting.max
+        }
+    });
+
+    sliderEl.querySelector('.noUi-handle').addEventListener('keydown', function( e ) {
+
+        const value = Number(sliderEl.noUiSlider.get());
+
+        if (e.which === 37) {
+            sliderEl.noUiSlider.set(value - step);
+        }
+
+        if (e.which === 39) {
+            sliderEl.noUiSlider.set(value + step);
         }
     });
 
