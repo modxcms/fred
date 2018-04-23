@@ -34,3 +34,19 @@
 @import "dropzone";
 @import "buttons";
 @import "body";
+
+
+.fred--content-preview {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: lightcoral;
+  text-align: center;
+  z-index: 99999999999999;
+  
+  iframe {
+    background-color: white;
+  }
+}

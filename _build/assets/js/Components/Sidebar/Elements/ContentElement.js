@@ -531,10 +531,10 @@ export class ContentElement {
         });
     }
     
-    cleanRender() {
+    cleanRender(parseModx = false) {
         const element = document.createElement('div');
 
-        return this.templateRender(false).then(html => {
+        return this.templateRender(parseModx).then(html => {
             element.innerHTML = html;
             
             const noRenderElements = element.querySelectorAll('[data-fred-render="false"]');
@@ -607,7 +607,7 @@ export class ContentElement {
                             const childPromises = [];
                             
                             this.dzs[dzName].children.forEach(child => {
-                                childPromises.push(child.fredEl.cleanRender());
+                                childPromises.push(child.fredEl.cleanRender(parseModx));
                             });
 
                             dzPromises.push(Promise.all(childPromises).then(values => {
