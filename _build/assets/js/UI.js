@@ -201,7 +201,7 @@ export const buildColorSwatchInput = (setting, defaultValue, onChange, onInit) =
                 option.classList.add('fred--color_swatch-color');
                 option.style.backgroundColor = value.color;
                 
-                if (value.label) {
+                if (value.label && value.label.trim() !== '') {
                     option.setAttribute('data-tooltip', value.label);
                 }
 
