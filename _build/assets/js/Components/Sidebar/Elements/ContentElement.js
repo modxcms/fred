@@ -3,6 +3,7 @@ import emitter from '../../../EE';
 import { twig } from 'twig';
 import fetch from 'isomorphic-fetch';
 import editorsManager from '../../../EditorsManager';
+import Finder from "../../../Finder";
 
 export class ContentElement {
     constructor(config, el, dzName, parent = null, content = {}, settings = {}) {
@@ -330,31 +331,20 @@ export class ContentElement {
                         branding: false,
                         relative_urls: false,
                         file_picker_callback : (callback, value, meta) => {
-                            window.fredEditorOnChange = (file, fm) => {
-                                tinymce.activeEditor.windowManager.getParams().oninsert(file, fm);
-                                tinymce.activeEditor.windowManager.close();
+                            const finder = new Finder(`${this.config.assetsUrl}/elfinder/index.html`, (file, fm) => {
+                                const url = file.url;
+                                const info = file.name + ' (' + fm.formatSize(file.size) + ')';
 
-                                delete window.fredEditorOnChange;
-                            };
-                            
-                            tinymce.activeEditor.windowManager.open({
-                                file: `${this.config.assetsUrl}/elfinder/index.html`,
-                                title: 'File Browser',
-                                width: 900,
-                                height: 450
-                            }, {
-                                oninsert: function (file, fm) {
-                                    const url = file.url;
-                                    const info = file.name + ' (' + fm.formatSize(file.size) + ')';
-
-                                    if (meta.filetype == 'image') {
-                                        callback(url, {alt: info});
-                                        return;
-                                    }
-
-                                    callback(url);
+                                if (meta.filetype == 'image') {
+                                    callback(url, {alt: info});
+                                    return;
                                 }
-                            });
+
+                                callback(url);
+                            }, 'Browse Files');
+
+                            finder.render();
+                            
                             return false;
                         },
                         setup: editor => {
