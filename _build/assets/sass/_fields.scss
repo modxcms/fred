@@ -26,8 +26,8 @@
       display: inline-block;
       box-sizing: border-box;
       position: relative;
-      &:after{
-        content: attr(style);
+      &[data-tooltip]:after{
+        content: attr(data-tooltip);
         display: none;
         background: darken($black, 5%);
         color: $white;
