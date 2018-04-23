@@ -44,6 +44,72 @@ export default class Fred {
         this.iframe.style.width = '1024px';
         this.iframe.style.height = '768px';
 
+        this.controls = document.createElement('div');
+        this.controls.classList.add('fred--content-preview_controls');
+
+        this.devices = document.createElement('div');
+        this.devices.classList.add('fred--devices');
+        
+        this.tabletP = document.createElement('a');
+        this.tabletP.classList.add('fred--tablet-portrait');
+        this.tabletP.innerHTML = '<span>Tablet Portrait</span>';
+        this.tabletP.addEventListener('click', e => {
+            e.preventDefault();
+            this.iframe.style.width = '768px';
+            this.iframe.style.height = '1024px';
+        });
+
+        this.devices.appendChild(this.tabletP);
+
+        this.tabletL = document.createElement('a');
+        this.tabletL.classList.add('fred--tablet-landscape');
+        this.tabletL.innerHTML = '<span>Tablet Landscape</span>';
+        this.tabletL.addEventListener('click', e => {
+            e.preventDefault();
+            this.iframe.style.width = '1024px';
+            this.iframe.style.height = '768px';
+        });
+
+        this.devices.appendChild(this.tabletL);
+
+        this.phoneP = document.createElement('a');
+        this.phoneP.classList.add('fred--smartphone-portrait');
+        this.phoneP.innerHTML = '<span>Phone Portrait</span>';
+        this.phoneP.addEventListener('click', e => {
+            e.preventDefault();
+            this.iframe.style.width = '320px';
+            this.iframe.style.height = '480px';
+        });
+
+        this.devices.appendChild(this.phoneP);
+
+        this.phoneL = document.createElement('a');
+        this.phoneL.classList.add('fred--smartphone-landscape');
+        this.phoneL.innerHTML = '<span>Phone Landscape</span>';
+        this.phoneL.addEventListener('click', e => {
+            e.preventDefault();
+            this.iframe.style.width = '480px';
+            this.iframe.style.height = '320px';
+        });
+
+        this.devices.appendChild(this.phoneL);
+
+        this.auto = document.createElement('a');
+        this.auto.classList.add('fred--auto');
+        this.auto.innerHTML = '<span>Auto</span>';
+        this.auto.addEventListener('click', e => {
+            e.preventDefault();
+            this.iframe.style.width = '100%';
+            this.iframe.style.height = '100%';
+        });
+
+        this.devices.appendChild(this.auto);
+
+        this.controls.appendChild(this.devices);
+        
+
+        previewWrapper.append(this.controls);
+
         previewWrapper.appendChild(this.iframe);
 
         this.wrapper.appendChild(previewWrapper);
