@@ -1,5 +1,5 @@
 import Editor from './Editor';
-import Modal from '../Modal';
+import Finder from '../Finder';
 
 export default class ImageEditor extends Editor {
     static title = 'Edit Image';
@@ -43,23 +43,12 @@ export default class ImageEditor extends Editor {
     }
 
     openFinder(input) {
-        const iframe = document.createElement('iframe');
-        iframe.src = `${this.config.assetsUrl}/elfinder/index.html`;
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
-
-        const modal = new Modal('Browser Images', iframe, () => {
-        }, true);
-
-        window.fredEditorOnChange = (file, fm) => {
+        const finder = new Finder(`${this.config.assetsUrl}/elfinder/index.html`, (file, fm) => {
             this.setStateValue('src', file.url);
             input.value = file.url;
+        }, 'Browse Images');
 
-            modal.close();
-            delete window.fredEditorOnChange;
-        };
-
-        modal.render();
+        finder.render();
     }
 
     onSave() {
