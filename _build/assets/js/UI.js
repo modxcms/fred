@@ -320,18 +320,28 @@ export const buildSliderInput = (setting, defaultValue, onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
+    if (!setting.min && !setting.max) {
+        console.error('Slider Input error. Parameters min and max are required');
+        return label;
+    }
+    
+    const tooltips = {
+        to: value => {
+            return parseInt(value.toFixed((setting.tooltipDecimals === undefined) ? 0 : setting.tooltipDecimals));
+        }
+    };
+    
+    
     const sliderEl = document.createElement('div');
     
     const slider = noUiSlider.create(sliderEl, {
         start: defaultValue,
-        connect: [true, false],
-        tooltips: {to: value => {
-                return parseInt(value.toFixed());
-            }},
-        step: 10,
+        connect: setting.connect || [true, false],
+        tooltips: tooltips,
+        step: (setting.step === undefined) ? 1 : setting.step,
         range: {
-            'min': 0,
-            'max': 100
+            'min': setting.min,
+            'max': setting.max
         }
     });
 
