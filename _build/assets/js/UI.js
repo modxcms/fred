@@ -275,7 +275,7 @@ export const buildColorPickerInput = (setting, defaultValue, onChange, onInit) =
             pickerInstance = ColorPicker.createPicker({
                 attachTo: picker,
                 color: defaultValue,
-                showAlpha: true,
+                showAlpha: (setting.showAlpha === undefined) ? true : setting.showAlpha,
                 paletteEditable: false,
                 palette: setting.options || null
             });
@@ -325,19 +325,16 @@ export const buildSliderInput = (setting, defaultValue, onChange, onInit) => {
         return label;
     }
     
-    const tooltips = {
-        to: value => {
-            return parseInt(value.toFixed((setting.tooltipDecimals === undefined) ? 0 : setting.tooltipDecimals));
-        }
-    };
-    
-    
     const sliderEl = document.createElement('div');
     
     const slider = noUiSlider.create(sliderEl, {
         start: defaultValue,
-        connect: setting.connect || [true, false],
-        tooltips: tooltips,
+        connect: [true, false],
+        tooltips: {
+            to: value => {
+                return parseInt(value.toFixed((setting.tooltipDecimals === undefined) ? 0 : setting.tooltipDecimals));
+            }
+        },
         step: (setting.step === undefined) ? 1 : setting.step,
         range: {
             'min': setting.min,
