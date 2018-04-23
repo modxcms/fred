@@ -38,14 +38,14 @@ export default class Launcher {
                 wrapper.style.zIndex = '9999999999';
                 fred.style.display = 'none';
                 save.style.display = 'none';
-
+                preview.classList.add('active');
                 emitter.emit('fred-preview-on');
             } else {
                 this.previewMode = false;
                 wrapper.style.zIndex = '';
                 fred.style.display = '';
                 save.style.display = '';
-
+                preview.classList.remove('active');
                 emitter.emit('fred-preview-off');
             }
         });
