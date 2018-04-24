@@ -1,6 +1,6 @@
 import emitter from '../../../EE';
 import { debounce } from '../../../Utils';
-import { buildSelectInput, buildTextInput, buildToggleInput, buildColorSwatchInput, buildColorPickerInput, buildSliderInput } from '../../../UI';
+import { buildSelectInput, buildTextInput, buildToggleInput, buildColorSwatchInput, buildColorPickerInput, buildSliderInput, buildPageInput } from '../../../UI';
 
 export class ElementSettings {
     constructor() {
@@ -115,6 +115,8 @@ export class ElementSettings {
                 return buildColorPickerInput(setting, defaultValue, this.setSetting.bind(this));
             case 'slider':
                 return buildSliderInput(setting, defaultValue, this.setSetting.bind(this));
+            case 'page':
+                return buildPageInput(setting, defaultValue, this.setSetting.bind(this));
             default:
                 return buildTextInput(setting, defaultValue, this.setSetting.bind(this));        
         }

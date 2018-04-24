@@ -104,6 +104,11 @@ An array of setting objects and group objects for the Fred Element.
         - max - **REQURED**; Maximum value of the slider
         - tooltipDecimals: Number of decimals to show in slider's tooltip; Default: 0
         - step: Number to increment slider's value; Default: 1
+- page
+    - MODX Page select
+    - Value is returned as an object in format: `{"id": 1, "url": "fred.html"}`
+    - Type specific properties:
+        - clearButton - If set to `true` button to clear select will appear    
 
 ##### Example
 ```json
@@ -149,6 +154,12 @@ An array of setting objects and group objects for the Fred Element.
                     "value": "white",
                     "showAlpha": true,
                     "options": ["lightcoral", "black", "white"]
+                },
+                {
+                    "name": "page",
+                    "label": "Page",
+                    "type": "page",
+                    "value": {"id":1, "url": "[[~1]]"}
                 }
             ]
         }
@@ -220,4 +231,21 @@ Defines a new Drop Zone for Fred Elements. This attribute cannot be empty and ha
 ```html
 <div data-fred-dropzone="left" class="left-content"></div>
 <div data-fred-dropzone="right" class="right-content"></div>
+```
+
+#### data-fred-link-type
+Sets a type for a link, used for processing before generating content. Available values: `page`
+Used together with other `data-fred-link-` attributes.
+
+##### Example
+```html
+<a href="fred.html" data-fred-link-type="page" data-fred-link-page="2">Fred</a>
+```
+
+#### data-fred-link-page
+Defines ID of MODX Resource. Value of this attribute will be used as a link's href (in MODX format `[[~ID]]`) when content is generated.
+
+##### Example
+```html
+<a href="fred.html" data-fred-link-type="page" data-fred-link-page="2">Fred</a>
 ```
