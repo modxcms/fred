@@ -302,6 +302,7 @@ export default class Fred {
 
             this.loading = document.createElement('section');
             this.loading.classList.add('fred--modal-bg');
+            this.loading.classList.add('fred--modal_loading');
 
             this.loading.innerHTML = `<div class="fred--modal" aria-hidden="false"><div style="color:white;text-align:center;"><span class="fred--loading"></span> ${text}</div></div>`;
 

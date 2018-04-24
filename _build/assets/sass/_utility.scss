@@ -23,6 +23,12 @@
     max-width: 90%;
     width: 480px;
   }
+  &.fred--modal_loading{
+    background: rgba($black,0.8);
+    .fred--modal{
+      background-color: transparent;
+    }
+  }
 
   .fred--modal-header{
     background-color: $darkblue;
