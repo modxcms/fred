@@ -1,6 +1,8 @@
 import flatpickr from "flatpickr";
+import Choices from 'choices.js';
 import ColorPicker from './ColorPicker/ColorPicker';
 import noUiSlider from 'nouislider';
+import fetch from "isomorphic-fetch";
 
 export const buildTextInput = (setting, defaultValue, onChange, onInit) => {
     const label = document.createElement('label');
@@ -385,6 +387,114 @@ export const buildSliderInput = (setting, defaultValue, onChange, onInit) => {
     return label;
 };
 
+export const buildPageInput = (setting, defaultValue, onChange, onInit) => {
+    const wrapper = document.createElement('div');
+    
+    const label = document.createElement('label');
+    label.innerHTML = setting.label || setting.name;
+    label.classList.add('fred--label-choices');
+
+    const input = document.createElement('select');
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(input);
+    
+    let lookupTimeout = null;
+    const lookupCache = {};
+    let initData = [];
+
+    const pageChoices = new Choices(input, {
+        removeItemButton: setting.clearButton || false
+    });
+    
+    pageChoices.ajax(callback => {
+        fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${defaultValue.id}`)
+            .then(response => {
+                return response.json()
+            })
+            .then(json => {
+                initData = json.data.resources;
+                callback(json.data.resources, 'value', 'pagetitle');
+
+                if (json.data.current) {
+                    pageChoices.setChoices([json.data.current], 'value', 'pagetitle', false);
+                    pageChoices.setValueByChoice("" + defaultValue.id);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    });
+
+    const populateOptions = options => {
+        const toRemove = [];
+
+        pageChoices.currentState.items.forEach(item => {
+            if (item.active) {
+                toRemove.push(item.value);
+            }
+        });
+
+        const toKeep = [];
+        options.forEach(option => {
+            if (toRemove.indexOf(option.id) === -1) {
+                toKeep.push(option);
+            }
+        });
+
+        pageChoices.setChoices(toKeep, 'value', 'pagetitle', true);
+    };
+
+    const serverLookup = () => {
+        const query = pageChoices.input.value;
+        if (query in lookupCache) {
+            populateOptions(lookupCache[query]);
+        } else {
+            fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}`)
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    lookupCache[query] = data.data.resources;
+                    populateOptions(data.data.resources);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    };
+
+    pageChoices.passedElement.addEventListener('search', event => {
+        clearTimeout(lookupTimeout);
+        lookupTimeout = setTimeout(serverLookup, 200);
+    });
+
+    pageChoices.passedElement.addEventListener('choice', event => {
+        pageChoices.setChoices(initData, 'value', 'pagetitle', true);
+
+        if (typeof onChange === 'function') {
+            onChange(setting.name, {
+                url: event.detail.choice.customProperties.url,
+                id: event.detail.choice.value
+            }, pageChoices, setting);
+        }
+    });
+
+    pageChoices.passedElement.addEventListener('removeItem', event => {
+        if (pageChoices.getValue()) return;
+
+        if (typeof onChange === 'function') {
+            onChange(setting.name, {url: '', id: ''}, pageChoices, setting);
+        }
+    });
+
+    if (typeof onInit === 'function') {
+        onInit(setting, label, input);
+    }
+
+    return wrapper;
+};
+
 
 export default {
     buildTextInput,
@@ -394,5 +504,6 @@ export default {
     buildDateTimeInput,
     buildColorSwatchInput,
     buildColorPickerInput,
-    buildSliderInput
+    buildSliderInput,
+    buildPageInput
 };

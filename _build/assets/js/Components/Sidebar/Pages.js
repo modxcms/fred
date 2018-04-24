@@ -21,7 +21,7 @@ export default class Pages extends Sidebar {
             return this.buildPanel();
         }
 
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-resources`)
+        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree`)
             .then(response => {
                 return response.json();
             })
@@ -75,7 +75,6 @@ export default class Pages extends Sidebar {
 
         const pagetitleLabel = document.createElement('label');
         pagetitleLabel.setAttribute('for', 'fred_create_page_pagetitle');
-        pagetitleLabel.classList.add('fred--label-choices');
         pagetitleLabel.innerHTML = 'Page Title';
         
         const pagetitleInput = document.createElement('input');

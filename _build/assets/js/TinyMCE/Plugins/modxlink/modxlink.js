@@ -236,7 +236,7 @@ export default fred => {
                     removeItemButton: true
                 });
                 templateInputChoices.ajax(callback => {
-                    fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources&current=${data.page.page}`)
+                    fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${data.page.page}`)
                         .then(response => {
                             return response.json()
                         })
@@ -283,7 +283,7 @@ export default fred => {
                     if (query in lookupCache) {
                         populateOptions(lookupCache[query]);
                     } else {
-                        fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=rte-get-resources&query=${query}`)
+                        fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}`)
                             .then(response => {
                                 return response.json()
                             })
