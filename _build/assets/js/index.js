@@ -119,7 +119,7 @@ export default class Fred {
         const promises = [];
 
         for (let i = 0; i < this.dropzones.length; i++) {
-            promises.push(this.getCleanDropZoneContent(this.dropzones[i], true).then(content => {
+            promises.push(this.getCleanDropZoneContent(this.dropzones[i], true, false).then(content => {
                 const dz = this.iframe.contentDocument.querySelector('[data-fred-dropzone="' + this.dropzones[i].dataset.fredDropzone + '"]');
                 if (dz) {
                     dz.innerHTML = content;
@@ -148,12 +148,12 @@ export default class Fred {
         return data;
     }
 
-    getCleanDropZoneContent(dropZone, parseModx = false) {
+    getCleanDropZoneContent(dropZone, parseModx = false, handleLinks = true) {
         let cleanedContent = '';
 
         const promises = [];
         for (let child of dropZone.children) {
-            promises.push(child.fredEl.cleanRender(parseModx));
+            promises.push(child.fredEl.cleanRender(parseModx, handleLinks));
         }
         
         return Promise.all(promises).then(values => {

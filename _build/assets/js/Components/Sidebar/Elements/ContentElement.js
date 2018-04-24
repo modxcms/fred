@@ -531,7 +531,7 @@ export class ContentElement {
         });
     }
     
-    cleanRender(parseModx = false) {
+    cleanRender(parseModx = false, handleLinks = true) {
         const element = document.createElement('div');
 
         return this.templateRender(parseModx).then(html => {
@@ -573,23 +573,25 @@ export class ContentElement {
                 el.removeAttribute('data-fred-attrs');
             }
             
-            const fredLinks = element.querySelectorAll('[data-fred-link-type]');
-            for (let fredLink of fredLinks) {
-                const linkType = fredLink.dataset.fredLinkType;
-                fredLink.removeAttribute('data-fred-link-type');
-                
-                if (linkType === 'page') {
-                    const resourceId = parseInt(fredLink.dataset.fredLinkPage);
-                    const anchor = fredLink.dataset.fredLinkAnchor ? ('#' + fredLink.dataset.fredLinkAnchor) : '';
+            if (handleLinks === true) {
+                const fredLinks = element.querySelectorAll('[data-fred-link-type]');
+                for (let fredLink of fredLinks) {
+                    const linkType = fredLink.dataset.fredLinkType;
+                    fredLink.removeAttribute('data-fred-link-type');
 
-                    if (resourceId > 0) {
-                        fredLink.setAttribute('href', `[[~${resourceId}]]${anchor}`);
-                    } else {
-                        fredLink.setAttribute('href', anchor);
+                    if (linkType === 'page') {
+                        const resourceId = parseInt(fredLink.dataset.fredLinkPage);
+                        const anchor = fredLink.dataset.fredLinkAnchor ? ('#' + fredLink.dataset.fredLinkAnchor) : '';
+
+                        if (resourceId > 0) {
+                            fredLink.setAttribute('href', `[[~${resourceId}]]${anchor}`);
+                        } else {
+                            fredLink.setAttribute('href', anchor);
+                        }
+
+                        fredLink.removeAttribute('data-fred-link-page');
+                        fredLink.removeAttribute('data-fred-link-anchor');
                     }
-
-                    fredLink.removeAttribute('data-fred-link-page');
-                    fredLink.removeAttribute('data-fred-link-anchor');
                 }
             }
 
@@ -607,7 +609,7 @@ export class ContentElement {
                             const childPromises = [];
                             
                             this.dzs[dzName].children.forEach(child => {
-                                childPromises.push(child.fredEl.cleanRender(parseModx));
+                                childPromises.push(child.fredEl.cleanRender(parseModx, handleLinks));
                             });
 
                             dzPromises.push(Promise.all(childPromises).then(values => {
