@@ -98,7 +98,7 @@ switch ($modx->event->name) {
                 imageEditor: "' . $fred->getOption('image_editor') . '",
                 resource: {
                     "id": ' . $modx->resource->id . ',
-                    "previewUrl": "' . $modx->makeUrl($modx->resource->id, '', 'fred=0' , 'abs') . '",
+                    "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 0] , 'abs')) . '",
                 },
                 beforeRender: function() {
                     ' . $beforeRender . '
