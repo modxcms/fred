@@ -49,6 +49,8 @@ JSON object of specific options for the Fred Element.
 ```json
 {
     "remote": true,
+    "mediaSource": "1,2",
+    "imageMediaSource": 3,
     "settings": [
         {
             "name": "panel_class",
@@ -62,6 +64,12 @@ JSON object of specific options for the Fred Element.
 
 #### remote
 If set to `true` XHR request will be fired to render the Element through both Twig and MODX parsers. This means you can have dynamic content that references other pages within a Fred page using MODX Snippets.
+
+#### mediaSource
+ID of the Media Source to use for Finder. Multiple IDs can be passed separated by comma `,`.
+
+#### imageMediaSource
+ID of the Media Source to use for Image fields. Multiple IDs can be passed separated by comma `,`. This option overrides `mediaSource`.
 
 #### settings
 An array of setting objects and group objects for the Fred Element.
@@ -248,4 +256,24 @@ Defines ID of MODX Resource. Value of this attribute will be used as a link's hr
 ##### Example
 ```html
 <a href="fred.html" data-fred-link-type="page" data-fred-link-page="2">Fred</a>
+```
+
+#### data-fred-media-source
+This option override globals from Element Settings.
+
+Defines Media Source to be used for the element. ID of the media source is expected and can accommodate multiple IDs separated by comma `,`.
+
+##### Example
+```html
+<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-media-source="1,2">
+```
+
+#### data-fred-image-media-source
+This option override globals from Element Settings and `data-fred-media-source` (but only for images).
+
+Defines Media Source to be used for the element. ID of the media source is expected and can accommodate multiple IDs separated by comma `,`.
+
+##### Example
+```html
+<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-image-media-source="1,2">
 ```

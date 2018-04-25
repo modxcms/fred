@@ -43,10 +43,10 @@ export default class ImageEditor extends Editor {
     }
 
     openFinder(input) {
-        const finder = new Finder(`${this.config.assetsUrl}/elfinder/index.html`, (file, fm) => {
+        const finder = new Finder(`${this.config.assetsUrl}elfinder/index.html`, (file, fm) => {
             this.setStateValue('src', file.url);
             input.value = file.url;
-        }, 'Browse Images');
+        }, 'Browse Images', Finder.getFinderOptions(this.el, true));
 
         finder.render();
     }

@@ -11,7 +11,23 @@ include_once dirname(dirname(__FILE__)) . '/vendor/elfinder/php/autoload.php';
 
 $roots = [];
 
-$mediaSources = $modx->getIterator('modMediaSource');
+$mediaSourceIDs = $modx->getOption('mediaSource', $_GET, '');
+$mediaSourceIDs = explode(',', $mediaSourceIDs);
+$mediaSourceIDs = array_map('trim', $mediaSourceIDs);
+$mediaSourceIDs = array_map('intval', $mediaSourceIDs);
+$mediaSourceIDs = array_keys(array_flip($mediaSourceIDs));
+$mediaSourceIDs = array_filter($mediaSourceIDs);
+
+$c = $modx->newQuery('modMediaSource');
+$where = [];
+
+if (!empty($mediaSourceIDs)) {
+    $where['id:IN'] = $mediaSourceIDs;
+}
+
+$c->where($where);
+
+$mediaSources = $modx->getIterator('modMediaSource', $c);
 foreach ($mediaSources as $mediaSource) {
     $mediaSource->initialize();
     $properties = $mediaSource->getProperties();
@@ -47,6 +63,6 @@ foreach ($mediaSources as $mediaSource) {
     }
 }
 
-$opts = array('roots' => $roots);
-$connector = new elFinderConnector(new elFinder($opts));
+$options = ['roots' => $roots];
+$connector = new elFinderConnector(new elFinder($options));
 $connector->run();
