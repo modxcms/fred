@@ -1,13 +1,14 @@
 import Modal from '../Modal';
 import UI from '../UI';
+import fredConfig from '../Config';
 
 export default class Editor {
     static title = 'Edit';
     
-    constructor(el, config) {
+    constructor(el) {
         this.el = el;
         this.ui = UI;
-        this.config = config;
+        this.config = fredConfig.config;
         
         this.state = {
             _attributes: {}

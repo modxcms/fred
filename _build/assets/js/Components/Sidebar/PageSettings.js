@@ -11,7 +11,7 @@ export default class PageSettings extends Sidebar {
         this.setSettingWithEmitter = this.setSettingWithEmitter.bind(this);
         this.addSettingChangeListener = this.addSettingChangeListener.bind(this);
         
-        this.pageSettings = this.config.pageSettings;
+        this.pageSettings = this.fredConfig.pageSettings;
         this.content = this.render();
     }
 

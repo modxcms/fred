@@ -3,11 +3,11 @@ import PagesComponent from './Components/Sidebar/Pages';
 import ElementsComponent from './Components/Sidebar/Elements';
 import PageSettingsComponent from './Components/Sidebar/PageSettings';
 import promiseCancel from 'promise-cancel';
+import fredConfig from './Config';
 
 export default class Sidebar {
-    constructor(config = {}, fredWrapper) {
+    constructor(fredWrapper) {
         this.lastRequest = null;
-        this.config = config || {};
         this.components = [];
         this.visible = false;
         this.fredWrapper = fredWrapper;
@@ -108,7 +108,7 @@ export default class Sidebar {
         const logo = document.createElement('img');
         logo.setAttribute('alt', 'MODX FRED');
         logo.classList.add('fred--logo');
-        logo.src = `${this.config.assetsUrl || ''}images/modx-revo-icon-48.svg`;
+        logo.src = `${fredConfig.config.assetsUrl || ''}images/modx-revo-icon-48.svg`;
 
         const title = document.createElement('h1');
         title.innerText = 'Fred';
@@ -125,9 +125,9 @@ export default class Sidebar {
         this.sidebar.setAttribute('tabindex', '0');
         this.sidebar.setAttribute('role', 'tablist');
 
-        this.components.push(new PagesComponent(this.sidebar, this.config));
-        this.components.push(new ElementsComponent(this.sidebar, this.config));
-        this.components.push(new PageSettingsComponent(this.sidebar, this.config));
+        this.components.push(new PagesComponent(this.sidebar));
+        this.components.push(new ElementsComponent(this.sidebar));
+        this.components.push(new PageSettingsComponent(this.sidebar));
         
         return this.sidebar;
     }

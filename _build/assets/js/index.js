@@ -6,16 +6,16 @@ import drake from './Drake';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
 import registerTineMCEPlugins from './TinyMCE/RegisterPlugins';
-import editorsManager from './EditorsManager';
 import libs from './libs';
 import Editor from './Editors/Editor';
+import fredConfig from './Config';
 
 export default class Fred {
     constructor(config = {}) {
-        this.config = config || {};
+        fredConfig.config = config || {};
         this.loading = null;
         this.wrapper = null;
-        this.config.pageSettings = {};
+        
         this.libs = libs;
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -29,8 +29,6 @@ export default class Fred {
         
         this.testPreview();
         
-        this.config.fredWrapper = this.wrapper;
-
         document.body.appendChild(this.wrapper);
     }
     
@@ -40,7 +38,7 @@ export default class Fred {
         previewWrapper.style.display = 'none';
 
         this.iframe = document.createElement('iframe');
-        this.iframe.src = this.config.resource.previewUrl;
+        this.iframe.src = fredConfig.config.resource.previewUrl;
         this.iframe.style.width = '1024px';
         this.iframe.style.height = '768px';
 
@@ -133,8 +131,8 @@ export default class Fred {
     }
     
     renderComponents() {
-        new Launcher((this.config.launcherPosition || 'bottom_left'));
-        new Sidebar(this.config, this.wrapper);
+        new Launcher((fredConfig.config.launcherPosition || 'bottom_left'));
+        new Sidebar(this.wrapper);
         new ElementSettings();        
     }
 
@@ -177,7 +175,7 @@ export default class Fred {
 
             const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
             for (let target of targets) {
-                if (!this.config.pageSettings.hasOwnProperty(target.dataset.fredTarget)) {
+                if (!fredConfig.pageSettings.hasOwnProperty(target.dataset.fredTarget)) {
                     body[target.dataset.fredTarget] = target.innerHTML;
                 }
             }
@@ -186,14 +184,14 @@ export default class Fred {
             }))
         }
 
-        body.id = this.config.resource.id;
+        body.id = fredConfig.config.resource.id;
         body.data = data;
-        body.pageSettings = this.config.pageSettings;
+        body.pageSettings = fredConfig.pageSettings;
 
         Promise.all(promises).then(() => {
             console.log('body: ', body);
 
-            fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
+            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
                 method: "post",
                 credentials: 'same-origin',
                 headers: {
@@ -215,13 +213,13 @@ export default class Fred {
     loadContent() {
         emitter.emit('fred-loading', 'Preparing Content');
         
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${this.config.resource.id}`, {
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${fredConfig.config.resource.id}`, {
             credentials: 'same-origin'
         }).then(response => {
             return response.json();
         }).then(json => {
             const zones = json.data.data;
-            this.config.pageSettings = json.data.pageSettings || {};
+            fredConfig.pageSettings = json.data.pageSettings || {};
             const dzPromises = [];
             
             for (let zoneName in zones) {
@@ -239,7 +237,7 @@ export default class Fred {
                             chunk.innerHTML = json.data.elements[element.widget].html;
                             chunk.elementOptions = json.data.elements[element.widget].options;
 
-                            const contentElement = new ContentElement(this.config, chunk, zoneName, null, element.values, (element.settings || {}));
+                            const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}));
                             promises.push(contentElement.render().then(wrapper => {
                                 this.loadChildren(element.children, contentElement, json.data.elements);
                                 return wrapper;
@@ -275,7 +273,7 @@ export default class Fred {
                     chunk.innerHTML = elements[element.widget].html;
                     chunk.elementOptions = elements[element.widget].options || {};
                     
-                    const contentElement = new ContentElement(this.config, chunk, zoneName, parent, element.values, (element.settings || {}));
+                    const contentElement = new ContentElement(chunk, zoneName, parent, element.values, (element.settings || {}));
                     contentElement.render().then(() => {
                         parent.addElementToDropZone(zoneName, contentElement);
     
@@ -344,7 +342,7 @@ export default class Fred {
         
         const editor = initFn(Editor, this);
         
-        return editorsManager.registerEditor(name, editor);
+        return fredConfig.registerEditor(name, editor);
     }
 
     init() {
@@ -366,13 +364,13 @@ export default class Fred {
             registeredDropzones.push(this.dropzones[zoneIndex].dataset.fredDropzone);
         }
         
-        if (typeof this.config.beforeRender === 'function') {
-            this.config.beforeRender = this.config.beforeRender.bind(this);
-            this.config.beforeRender();
+        if (typeof fredConfig.config.beforeRender === 'function') {
+            fredConfig.config.beforeRender = fredConfig.config.beforeRender.bind(this);
+            fredConfig.config.beforeRender();
         }
 
         this.render();
-        drake.initDrake(this.config);
+        drake.initDrake();
 
         this.loadContent().then(() => {
             this.renderComponents();

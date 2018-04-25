@@ -2,12 +2,12 @@ import drake from '../../../Drake';
 import emitter from '../../../EE';
 import { twig } from 'twig';
 import fetch from 'isomorphic-fetch';
-import editorsManager from '../../../EditorsManager';
+import fredConfig from '../../../Config';
 import Finder from "../../../Finder";
 
 export class ContentElement {
-    constructor(config, el, dzName, parent = null, content = {}, settings = {}) {
-        this.config = config;
+    constructor(el, dzName, parent = null, content = {}, settings = {}) {
+        this.config = fredConfig.config;
         this.el = el;
         this.template = twig({data: this.el.innerHTML});
         this.id = parseInt(this.el.dataset.fredElementId);
@@ -46,7 +46,7 @@ export class ContentElement {
     }
     
     setUpEditors() {
-        this.editors = editorsManager.editors;
+        this.editors = fredConfig.editors;
 
         this.iconEditor = this.config.iconEditor || 'IconEditor';
         this.iconEditor = this.editors[this.iconEditor] || null;
@@ -331,7 +331,7 @@ export class ContentElement {
                         branding: false,
                         relative_urls: false,
                         file_picker_callback : (callback, value, meta) => {
-                            const finder = new Finder(`${this.config.assetsUrl}elfinder/index.html`, (file, fm) => {
+                            const finder = new Finder((file, fm) => {
                                 const url = file.url;
                                 const info = file.name + ' (' + fm.formatSize(file.size) + ')';
 
@@ -341,7 +341,7 @@ export class ContentElement {
                                 }
 
                                 callback(url);
-                            }, 'Browse Files', Finder.getFinderOptions(el, (meta.filetype === 'image')));
+                            }, 'Browse Files', Finder.getFinderOptionsFromElement(el, (meta.filetype === 'image')));
 
                             finder.render();
                             
@@ -379,8 +379,8 @@ export class ContentElement {
             if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
 
             if (el.dataset.fredTarget) {
-                if (this.config.pageSettings[el.dataset.fredTarget]) {
-                    this.content[el.dataset.fredName]._raw._value = this.config.pageSettings[el.dataset.fredTarget];
+                if (fredConfig.pageSettings[el.dataset.fredTarget]) {
+                    this.content[el.dataset.fredName]._raw._value = fredConfig.pageSettings[el.dataset.fredTarget];
                 }
             }
 
@@ -392,7 +392,7 @@ export class ContentElement {
                         el.addEventListener('click', e => {
                             e.preventDefault();
                             if (this.iconEditor !== null) {
-                                new this.iconEditor(el, this.config);
+                                new this.iconEditor(el);
                             } else {
                                 console.log(`Editor ${this.config.iconEditor} not found`);
                             }
@@ -404,7 +404,7 @@ export class ContentElement {
                         el.addEventListener('click', e => {
                             e.preventDefault();
                             if (this.imageEditor !== null) {
-                                new this.imageEditor(el, this.config);
+                                new this.imageEditor(el);
                             } else {
                                 console.log(`Editor ${this.config.imageEditor} not found`);
                             }
@@ -431,7 +431,7 @@ export class ContentElement {
                         el.addEventListener('click', e => {
                             e.preventDefault();
                             if (this.iconEditor !== null) {
-                                new this.iconEditor(el, this.config);
+                                new this.iconEditor(el);
                             } else {
                                 console.log(`Editor ${this.config.iconEditor} not found`);
                             }
@@ -443,7 +443,7 @@ export class ContentElement {
                         el.addEventListener('click', e => {
                             e.preventDefault();
                             if (this.imageEditor !== null) {
-                                new this.imageEditor(el, this.config);
+                                new this.imageEditor(el);
                             } else {
                                 console.log(`Editor ${this.config.imageEditor} not found`);
                             }
@@ -648,7 +648,7 @@ export class ContentElement {
             if (dzs.hasOwnProperty(dzName)) {
                 dzs[dzName].children.forEach(child => {
                     if (this.dzs[dzName]) {
-                        const clonedChild = new ContentElement(this.config, child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings);
+                        const clonedChild = new ContentElement(child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings);
                         clonedChild.render().then(() => {
                             this.addElementToDropZone(dzName, clonedChild);
     
@@ -661,7 +661,7 @@ export class ContentElement {
     }
 
     duplicate() {
-        const clone = new ContentElement(this.config, this.el, this.dzName, this.parent, this.content, this.settings);
+        const clone = new ContentElement(this.el, this.dzName, this.parent, this.content, this.settings);
         clone.render().then(() => {
             clone.duplicateDropZones(this.dzs);
     

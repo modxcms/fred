@@ -14,41 +14,15 @@ export default class ImageEditor extends Editor {
     render() {
         const wrapper = document.createElement('div');
 
-        wrapper.appendChild(this.ui.buildTextInput({
+        wrapper.appendChild(this.ui.buildImageInput({
             name: 'src',
-            label: 'Image URI'
-        }, this.state.src, this.setStateValue, (setting, label, input) => {
-            const inputWrapper = document.createElement('div');
-            inputWrapper.classList.add('fred--input-group', 'fred--browse');
-            
-            const openFinder = document.createElement('a');
-            openFinder.classList.add('fred--browse-small');
-            openFinder.setAttribute('title', 'Browse');
-
-            openFinder.addEventListener('click', e => {
-                e.preventDefault();
-
-                this.openFinder(input);
-            });
-
-            inputWrapper.appendChild(input);
-            inputWrapper.appendChild(openFinder);
-            
-            label.appendChild(inputWrapper);
-        }));
+            label: 'Image URI',
+            ...(Finder.getFinderOptionsFromElement(this.el, true))
+        }, this.state.src, this.setStateValue));
 
         wrapper.appendChild(this.buildAttributesFields());
 
         return wrapper;
-    }
-
-    openFinder(input) {
-        const finder = new Finder(`${this.config.assetsUrl}elfinder/index.html`, (file, fm) => {
-            this.setStateValue('src', file.url);
-            input.value = file.url;
-        }, 'Browse Images', Finder.getFinderOptions(this.el, true));
-
-        finder.render();
     }
 
     onSave() {
