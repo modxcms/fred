@@ -2,11 +2,15 @@ import emitter from './EE';
 
 export class Finder {
 
-    constructor(url, onSelect = (file, fm) => {}, title = 'Browse Files', width = '800px', height = '600px') {
+    constructor(url, onSelect = (file, fm) => {}, title = 'Browse Files', options = {}) {
         this.wrapper = null;
         this.title = title;
-        this.width = width;
-        this.height = height;
+        this.options = {
+            width: '800px', 
+            height: '600px',
+            ...options
+        };
+        
         this.url = url;
         this.onSelect = onSelect.bind(this);
     }
@@ -33,12 +37,23 @@ export class Finder {
         this.body = document.createElement('div');
         this.body.classList.add('fred--modal-body');
 
-        modal.style.width = this.width;
-        modal.style.height = this.height;
+        modal.style.width = this.options.width || '800px';
+        modal.style.height = this.options.height || '600px';
         this.body.style.padding = '0';
 
         const iframe = document.createElement('iframe');
-        iframe.src = this.url;
+
+        const finderOptions = [];
+        if (this.options.mediaSource) {
+            finderOptions.push(`mediaSource=${this.options.mediaSource}`);
+        }
+
+        let finderOptionsString = '';
+        if (finderOptions.length > 0) {
+            finderOptionsString = '?' + finderOptions.join('&');
+        }
+        
+        iframe.src = this.url + finderOptionsString;
         iframe.style.width = '100%';
         iframe.style.height = '100%';
         
@@ -52,10 +67,9 @@ export class Finder {
 
         this.wrapper.appendChild(modal);
 
-        window.fredEditorOnChange = (file, fm) => {
+        window.fredFinderOnChange = (file, fm) => {
             this.onSelect(file, fm);
             this.close();
-            delete window.fredEditorOnChange;
         };
 
         emitter.emit('fred-wrapper-insert', this.wrapper);
@@ -64,7 +78,37 @@ export class Finder {
     }
 
     close() {
+        delete window.fredFinderOnChange;
+        
         this.wrapper.remove();
+    }
+    
+    static getFinderOptions(el, imageFinder = false) {
+        const options = {};
+
+        let mediaSource = '';
+
+        if (el.fredEl.options.mediaSource && el.fredEl.options.mediaSource !== '') {
+            mediaSource = el.fredEl.options.mediaSource;
+        }
+
+        if (imageFinder && el.fredEl.options.imageMediaSource && el.fredEl.options.imageMediaSource !== '') {
+            mediaSource = el.fredEl.options.imageMediaSource;
+        }
+
+        if (el.dataset.fredMediaSource && el.dataset.fredMediaSource !== '') {
+            mediaSource = el.dataset.fredMediaSource;
+        }
+
+        if (imageFinder && el.dataset.fredImageMediaSource && el.dataset.fredImageMediaSource !== '') {
+            mediaSource = el.dataset.fredImageMediaSource;
+        }
+
+        if (mediaSource !== '') {
+            options.mediaSource = mediaSource;
+        }
+
+        return options;
     }
 }
 

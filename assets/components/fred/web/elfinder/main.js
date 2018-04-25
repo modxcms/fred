@@ -1,24 +1,15 @@
 "use strict";
-/**
- * elFinder client options and main script for RequireJS
- *
- * Rename "main.default.js" to "main.js" and edit it if you need configure elFInder options or any things. And use that in elfinder.html.
- * e.g. `<script data-main="./main.js" src="./require.js"></script>`
- **/
+
 (function(){
-    var // jQuery and jQueryUI version
-        jqver = '3.2.1',
+    var jqver = '3.2.1',
         uiver = '1.12.1',
 
-        // Detect language (optional)
         lang = (function() {
             var locq = window.location.search,
                 fullLang, locm, lang;
             if (locq && (locm = locq.match(/lang=([a-zA-Z_-]+)/))) {
-                // detection by url query (?lang=xx)
                 fullLang = locm[1];
             } else {
-                // detection by browser language
                 fullLang = (navigator.browserLanguage || navigator.language || navigator.userLanguage);
             }
             lang = fullLang.substr(0,2);
@@ -29,28 +20,21 @@
             return lang;
         })(),
 
-        // elFinder options (REQUIRED)
-        // Documentation for client options:
-        // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
         opts = {
             cssAutoLoad : ['../vendor/elfinder-themes/material/css/theme-gray.css'],
             getFileCallback : function(file, fm) {
-                if (parent.fredEditorOnChange && (typeof parent.fredEditorOnChange === 'function')) {
-                    parent.fredEditorOnChange(file, fm);
+                if (parent.fredFinderOnChange && (typeof parent.fredFinderOnChange === 'function')) {
+                    parent.fredFinderOnChange(file, fm);
                 }
-
-                // parent.tinymce.activeEditor.windowManager.getParams().oninsert(file, fm);
-                // parent.tinymce.activeEditor.windowManager.close();
             },
             resizable : false,
             width : '100%',
             height : '100%',
-            url : './connector.php', // connector URL (REQUIRED)
-            lang: lang,                         // auto detected language (optional)
+            url : './connector.php' + location.search,
+            lang: lang,
             uiOptions: {
                 toolbar: [
                     ['home', 'back', 'forward', 'up', 'reload'],
-                    // ['netmount'],
                     ['mkdir', 'mkfile', 'upload'],
                     ['open', 'download', 'getfile'],
                     ['undo', 'redo'],
@@ -58,11 +42,8 @@
                     ['duplicate', 'rename', 'edit', 'resize', 'chmod'],
                     ['selectall', 'selectnone', 'selectinvert'],
                     ['quicklook', 'info'],
-                    // ['extract', 'archive'],
                     ['search'],
                     ['view', 'sort']
-                    // ['preference', 'help']
-                    // ['fullscreen']
                 ]
             },
             contextmenu : {
@@ -72,31 +53,26 @@
             },
         },
 
-        // Start elFinder (REQUIRED)
         start = function(elFinder) {
-            // load jQueryUI CSS
             elFinder.prototype.loadCss('//cdnjs.cloudflare.com/ajax/libs/jqueryui/'+uiver+'/themes/smoothness/jquery-ui.css');
 
             $(function() {
-                // Optional for Japanese decoder "extras/encoding-japanese.min"
                 if (window.Encoding && Encoding.convert) {
                     elFinder.prototype._options.rawStringDecoder = function(s) {
                         return Encoding.convert(s,{to:'UNICODE',type:'string'});
                     };
                 }
-                // Make elFinder (REQUIRED)
+                
                 $('#elfinder').elfinder(opts).elfinder('instance').exec('fullscreen');
             });
         },
 
-        // JavaScript loader (REQUIRED)
+        
         load = function() {
             require(
                 [
-                    'elfinder'
-                    , (lang !== 'en')? 'elfinder.lang' : null    // load detected language
-                    //	, 'extras/quicklook.googledocs'              // optional preview for GoogleApps contents on the GoogleDrive volume
-                    //	, (lang === 'jp')? 'extras/encoding-japanese.min' : null // optional Japanese decoder for archive preview
+                    'elfinder',
+                    (lang !== 'en')? 'elfinder.lang' : null
                 ],
                 start,
                 function(error) {
@@ -105,10 +81,8 @@
             );
         },
 
-        // is IE8? for determine the jQuery version to use (optional)
         ie8 = (typeof window.addEventListener === 'undefined' && typeof document.getElementsByClassName === 'undefined');
 
-    // config of RequireJS (REQUIRED)
     require.config({
         baseUrl : '../vendor/elfinder/js',
         paths : {
@@ -120,10 +94,8 @@
                 'i18n/elfinder.fallback'
             ]
         },
-        waitSeconds : 10 // optional
+        waitSeconds : 10
     });
 
-    // load JavaScripts (REQUIRED)
     load();
-
 })();

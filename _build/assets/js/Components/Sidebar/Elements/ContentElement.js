@@ -331,7 +331,7 @@ export class ContentElement {
                         branding: false,
                         relative_urls: false,
                         file_picker_callback : (callback, value, meta) => {
-                            const finder = new Finder(`${this.config.assetsUrl}/elfinder/index.html`, (file, fm) => {
+                            const finder = new Finder(`${this.config.assetsUrl}elfinder/index.html`, (file, fm) => {
                                 const url = file.url;
                                 const info = file.name + ' (' + fm.formatSize(file.size) + ')';
 
@@ -341,7 +341,7 @@ export class ContentElement {
                                 }
 
                                 callback(url);
-                            }, 'Browse Files');
+                            }, 'Browse Files', Finder.getFinderOptions(el, (meta.filetype === 'image')));
 
                             finder.render();
                             
@@ -571,6 +571,8 @@ export class ContentElement {
                 el.removeAttribute('data-fred-rte');
                 el.removeAttribute('data-fred-target');
                 el.removeAttribute('data-fred-attrs');
+                el.removeAttribute('data-fred-media-source');
+                el.removeAttribute('data-fred-image-media-source');
             }
             
             if (handleLinks === true) {
