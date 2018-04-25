@@ -1,8 +1,8 @@
 import emitter from './EE';
+import fredConfig from './Config';
 
 export class Finder {
-
-    constructor(url, onSelect = (file, fm) => {}, title = 'Browse Files', options = {}) {
+    constructor(onSelect = (file, fm) => {}, title = 'Browse Files', options = {}) {
         this.wrapper = null;
         this.title = title;
         this.options = {
@@ -11,7 +11,6 @@ export class Finder {
             ...options
         };
         
-        this.url = url;
         this.onSelect = onSelect.bind(this);
     }
 
@@ -53,7 +52,7 @@ export class Finder {
             finderOptionsString = '?' + finderOptions.join('&');
         }
         
-        iframe.src = this.url + finderOptionsString;
+        iframe.src = `${fredConfig.config.assetsUrl}elfinder/index.html` + finderOptionsString;
         iframe.style.width = '100%';
         iframe.style.height = '100%';
         
@@ -83,7 +82,7 @@ export class Finder {
         this.wrapper.remove();
     }
     
-    static getFinderOptions(el, imageFinder = false) {
+    static getFinderOptionsFromElement(el, imageFinder = false) {
         const options = {};
 
         let mediaSource = '';

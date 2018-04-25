@@ -3,6 +3,8 @@ import Choices from 'choices.js';
 import ColorPicker from './ColorPicker/ColorPicker';
 import noUiSlider from 'nouislider';
 import fetch from "isomorphic-fetch";
+import Finder from "./Finder";
+import fredConfig from './Config';
 
 export const buildTextInput = (setting, defaultValue, onChange, onInit) => {
     const label = document.createElement('label');
@@ -408,7 +410,7 @@ export const buildPageInput = (setting, defaultValue, onChange, onInit) => {
     });
     
     pageChoices.ajax(callback => {
-        fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${defaultValue.id}`)
+        fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${defaultValue.id}`)
             .then(response => {
                 return response.json()
             })
@@ -450,7 +452,7 @@ export const buildPageInput = (setting, defaultValue, onChange, onInit) => {
         if (query in lookupCache) {
             populateOptions(lookupCache[query]);
         } else {
-            fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}`)
+            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}`)
                 .then(response => {
                     return response.json()
                 })
@@ -495,6 +497,52 @@ export const buildPageInput = (setting, defaultValue, onChange, onInit) => {
     return wrapper;
 };
 
+export const buildImageInput = (setting, defaultValue, onChange, onInit) => {
+    const label = document.createElement('label');
+    label.innerHTML = setting.label || setting.name;
+
+    const inputWrapper = document.createElement('div');
+    inputWrapper.classList.add('fred--input-group', 'fred--browse');
+    
+    const input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.value = defaultValue;
+
+    const openFinderButton = document.createElement('a');
+    openFinderButton.classList.add('fred--browse-small');
+    openFinderButton.setAttribute('title', 'Browse');
+
+    const finderOptions = {};
+    
+    if (setting.mediaSource) {
+        finderOptions.mediaSource = setting.mediaSource;
+    }
+    
+    openFinderButton.addEventListener('click', e => {
+        e.preventDefault();
+
+        const finder = new Finder((file, fm) => {
+            if (typeof onChange === 'function') {
+                onChange(setting.name, file.url, input, setting);
+            }
+            
+            input.value = file.url;
+        }, 'Browse Images', finderOptions);
+
+        finder.render();
+    });
+
+    inputWrapper.appendChild(input);
+    inputWrapper.appendChild(openFinderButton);
+
+    label.appendChild(inputWrapper);
+
+    if (typeof onInit === 'function') {
+        onInit(setting, label, input);
+    }
+
+    return label;
+};
 
 export default {
     buildTextInput,
@@ -505,5 +553,6 @@ export default {
     buildColorSwatchInput,
     buildColorPickerInput,
     buildSliderInput,
-    buildPageInput
+    buildPageInput,
+    buildImageInput
 };

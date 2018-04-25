@@ -4,10 +4,8 @@ import Data from './Data';
 import Link from './Link';
 import { unlinkSelection } from './Unlink';
 
-export default fred => {
+export default (fred, fredConfig) => {
     return (editor, url) => {
-        // Add a button that opens a window
-
         editor.addButton('modxlink', {
             icon: 'link',
             onclick: function () {
@@ -51,7 +49,7 @@ export default fred => {
                                 },
                                 {
                                     type: 'textbox',
-                                    label: `Block on '${fred.config.pageSettings.pagetitle }'`,
+                                    label: `Block on '${fredConfig.pageSettings.pagetitle }'`,
                                     id: 'page_anchor',
                                     value: data.page.anchor,
                                     onkeyup() {
@@ -236,7 +234,7 @@ export default fred => {
                     removeItemButton: true
                 });
                 templateInputChoices.ajax(callback => {
-                    fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${data.page.page}`)
+                    fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${data.page.page}`)
                         .then(response => {
                             return response.json()
                         })
@@ -283,7 +281,7 @@ export default fred => {
                     if (query in lookupCache) {
                         populateOptions(lookupCache[query]);
                     } else {
-                        fetch(`${fred.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}`)
+                        fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}`)
                             .then(response => {
                                 return response.json()
                             })
@@ -325,7 +323,7 @@ export default fred => {
                     data.page.url = '';
                     const pageAnchorEl = document.getElementById('page_anchor-l');
                     if (pageAnchorEl) {
-                        pageAnchorEl.innerText = `Block on '${fred.config.pageSettings.pagetitle }'`;
+                        pageAnchorEl.innerText = `Block on '${fredConfig.pageSettings.pagetitle }'`;
                     }
                 });
 

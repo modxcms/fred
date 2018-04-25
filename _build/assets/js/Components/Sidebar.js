@@ -1,12 +1,14 @@
 import emitter from '../EE';
+import fredConfig from './../Config';
 
 export default class Sidebar {
     static title = 'TITLE NOT SET';
     static expandable = false;
 
-    constructor(sidebarWrapper, config = {}) {
+    constructor(sidebarWrapper) {
         this.sidebarWrapper = sidebarWrapper;
-        this.config = config || {};
+        this.fredConfig = fredConfig;
+        this.config = fredConfig.config;
         this.titleEl = null;
         this.contentEl = null;
         
