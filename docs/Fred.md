@@ -117,6 +117,11 @@ An array of setting objects and group objects for the Fred Element.
     - Value is returned as an object in format: `{"id": 1, "url": "fred.html"}`
     - Type specific properties:
         - clearButton - If set to `true` button to clear select will appear    
+- image
+    - Image select
+    - Type specific properties:
+        - showPreview - If set to `false` preview won't appear under the text input
+        - mediaSource - ID of the Media Source to use; Overrides `imageMediaSource` global setting.  
 
 ##### Example
 ```json

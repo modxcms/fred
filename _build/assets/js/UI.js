@@ -519,7 +519,7 @@ export const buildImageInput = (setting, defaultValue = '', onChange, onInit) =>
     
     const finderOptions = {};
     
-    if (setting.mediaSource) {
+    if (setting.mediaSource && (setting.mediaSource !== '')) {
         finderOptions.mediaSource = setting.mediaSource;
     }
 

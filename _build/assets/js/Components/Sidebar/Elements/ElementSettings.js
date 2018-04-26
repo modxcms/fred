@@ -24,8 +24,9 @@ export class ElementSettings {
     openSettings(el) {
         this.el = el;
         this.settings = el.options.settings;
+        this.options = el.options;
         this.originalValues = {};
-        this.remote = el.options.remote || false;
+        this.remote = this.options.remote || false;
         this.debouncedRender = debounce(200, this.el.render);
 
         this.wrapper.innerHTML = '';
@@ -118,7 +119,17 @@ export class ElementSettings {
             case 'page':
                 return ui.buildPageInput(setting, defaultValue, this.setSetting.bind(this));
             case 'image':
-                return ui.buildImageInput(setting, defaultValue, this.setSetting.bind(this));
+                let mediaSource = '';
+
+                if (this.options.mediaSource && this.options.mediaSource !== '') {
+                    mediaSource = this.options.mediaSource;
+                }
+
+                if (this.options.imageMediaSource && this.options.imageMediaSource !== '') {
+                    mediaSource = this.options.imageMediaSource;
+                }
+                
+                return ui.buildImageInput({mediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
             default:
                 return ui.buildTextInput(setting, defaultValue, this.setSetting.bind(this));        
         }
