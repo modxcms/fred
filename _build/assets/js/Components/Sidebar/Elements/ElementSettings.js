@@ -1,6 +1,6 @@
 import emitter from '../../../EE';
 import { debounce } from '../../../Utils';
-import { buildSelectInput, buildTextInput, buildToggleInput, buildColorSwatchInput, buildColorPickerInput, buildSliderInput, buildPageInput } from '../../../UI';
+import ui from '../../../UI';
 
 export class ElementSettings {
     constructor() {
@@ -106,19 +106,21 @@ export class ElementSettings {
     renderSetting(setting, defaultValue) {
         switch (setting.type) {
             case 'select':
-                return buildSelectInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.buildSelectInput(setting, defaultValue, this.setSetting.bind(this));
             case 'toggle':
-                return buildToggleInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.buildToggleInput(setting, defaultValue, this.setSetting.bind(this));
             case 'colorswatch':
-                return buildColorSwatchInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.buildColorSwatchInput(setting, defaultValue, this.setSetting.bind(this));
             case 'colorpicker':
-                return buildColorPickerInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.buildColorPickerInput(setting, defaultValue, this.setSetting.bind(this));
             case 'slider':
-                return buildSliderInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.buildSliderInput(setting, defaultValue, this.setSetting.bind(this));
             case 'page':
-                return buildPageInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.buildPageInput(setting, defaultValue, this.setSetting.bind(this));
+            case 'image':
+                return ui.buildImageInput(setting, defaultValue, this.setSetting.bind(this));
             default:
-                return buildTextInput(setting, defaultValue, this.setSetting.bind(this));        
+                return ui.buildTextInput(setting, defaultValue, this.setSetting.bind(this));        
         }
     }
     

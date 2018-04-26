@@ -6,7 +6,7 @@ import fetch from "isomorphic-fetch";
 import Finder from "./Finder";
 import fredConfig from './Config';
 
-export const buildTextInput = (setting, defaultValue, onChange, onInit) => {
+export const buildTextInput = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -29,7 +29,7 @@ export const buildTextInput = (setting, defaultValue, onChange, onInit) => {
     return label;
 };
 
-export const buildSelectInput = (setting, defaultValue, onChange, onInit) => {
+export const buildSelectInput = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -68,7 +68,7 @@ export const buildSelectInput = (setting, defaultValue, onChange, onInit) => {
     return label;
 };
 
-export const buildToggleInput = (setting, defaultValue, onChange, onInit) => {
+export const buildToggleInput = (setting, defaultValue = false, onChange, onInit) => {
     const label = document.createElement('label');
     label.classList.add('fred--toggle');
     label.innerHTML = setting.label || setting.name;
@@ -97,7 +97,7 @@ export const buildToggleInput = (setting, defaultValue, onChange, onInit) => {
     return label;
 };
 
-export const buildTextAreaInput = (setting, defaultValue, onChange, onInit) => {
+export const buildTextAreaInput = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -119,7 +119,7 @@ export const buildTextAreaInput = (setting, defaultValue, onChange, onInit) => {
     return label;
 };
 
-export const buildDateTimeInput = (setting, defaultValue, onChange, onInit) => {
+export const buildDateTimeInput = (setting, defaultValue = 0, onChange, onInit) => {
     defaultValue = parseInt(defaultValue) || 0;
     
     const label = document.createElement('label');
@@ -166,7 +166,7 @@ export const buildDateTimeInput = (setting, defaultValue, onChange, onInit) => {
     return label;
 };
 
-export const buildColorSwatchInput = (setting, defaultValue, onChange, onInit) => {
+export const buildColorSwatchInput = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -258,7 +258,7 @@ export const buildColorSwatchInput = (setting, defaultValue, onChange, onInit) =
     return label;
 };
 
-export const buildColorPickerInput = (setting, defaultValue, onChange, onInit) => {
+export const buildColorPickerInput = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -320,7 +320,7 @@ export const buildColorPickerInput = (setting, defaultValue, onChange, onInit) =
     return label;
 };
 
-export const buildSliderInput = (setting, defaultValue, onChange, onInit) => {
+export const buildSliderInput = (setting, defaultValue = 0, onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -389,7 +389,7 @@ export const buildSliderInput = (setting, defaultValue, onChange, onInit) => {
     return label;
 };
 
-export const buildPageInput = (setting, defaultValue, onChange, onInit) => {
+export const buildPageInput = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit) => {
     const wrapper = document.createElement('div');
     
     const label = document.createElement('label');
@@ -497,9 +497,11 @@ export const buildPageInput = (setting, defaultValue, onChange, onInit) => {
     return wrapper;
 };
 
-export const buildImageInput = (setting, defaultValue, onChange, onInit) => {
+export const buildImageInput = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
+
+    setting.showPreview = (setting.showPreview === undefined) ? true : setting.showPreview;
 
     const inputWrapper = document.createElement('div');
     inputWrapper.classList.add('fred--input-group', 'fred--browse');
@@ -512,11 +514,34 @@ export const buildImageInput = (setting, defaultValue, onChange, onInit) => {
     openFinderButton.classList.add('fred--browse-small');
     openFinderButton.setAttribute('title', 'Browse');
 
+    const preview = document.createElement('img');
+    let previewAdded = false;
+    
     const finderOptions = {};
     
     if (setting.mediaSource) {
         finderOptions.mediaSource = setting.mediaSource;
     }
+
+    input.addEventListener('keyup', e => {
+        if (typeof onChange === 'function') {
+            onChange(setting.name, input.value, input, setting);
+        }
+
+        if((setting.showPreview === true) && input.value) {
+            preview.src = input.value;
+            if (!previewAdded) {
+                label.appendChild(preview);
+                previewAdded = true;
+            }
+        } else {
+            if (previewAdded) {
+                preview.src = '';
+                preview.remove();
+                previewAdded = false;
+            } 
+        }
+    });
     
     openFinderButton.addEventListener('click', e => {
         e.preventDefault();
@@ -527,6 +552,12 @@ export const buildImageInput = (setting, defaultValue, onChange, onInit) => {
             }
             
             input.value = file.url;
+            preview.src = file.url;
+            
+            if ((setting.showPreview === true) && !previewAdded) {
+                label.appendChild(preview);
+                previewAdded = true;
+            }
         }, 'Browse Images', finderOptions);
 
         finder.render();
@@ -536,6 +567,15 @@ export const buildImageInput = (setting, defaultValue, onChange, onInit) => {
     inputWrapper.appendChild(openFinderButton);
 
     label.appendChild(inputWrapper);
+
+    if(input.value) {
+        preview.src = input.value;
+    }
+    
+    if ((setting.showPreview === true) && preview.src) {
+        label.appendChild(preview);
+        previewAdded = true;
+    }
 
     if (typeof onInit === 'function') {
         onInit(setting, label, input);
