@@ -4,6 +4,7 @@ import { twig } from 'twig';
 import fetch from 'isomorphic-fetch';
 import fredConfig from '../../../Config';
 import Finder from "../../../Finder";
+import { div, button } from '../../../UI/Elements';
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
@@ -13,6 +14,7 @@ export class ContentElement {
         this.id = parseInt(this.el.dataset.fredElementId);
         this.wrapper = null;
 
+        this.setUpEditors();
         this.setUpEditors();
 
         this.render = this.render.bind(this);
@@ -89,8 +91,7 @@ export class ContentElement {
     }
 
     render() {
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('fred--block');
+        const wrapper = div(['fred--block']);
         wrapper.fredEl = this;
 
         wrapper.addEventListener('mouseover', e => {
@@ -135,48 +136,26 @@ export class ContentElement {
             }
         });
 
-        const toolbar = document.createElement('div');
-        toolbar.classList.add('fred--toolbar', 'handle');
+        const toolbar = div(['fred--toolbar', 'handle']);
 
-        const moveHandle = document.createElement('div');
-        moveHandle.classList.add('fred--toolbar-grip');
+        const moveHandle = div(['fred--toolbar-grip']);
 
         toolbar.appendChild(moveHandle);
 
-        const duplicate = document.createElement('button');
-        duplicate.classList.add('fred--duplicate-icon');
-        duplicate.addEventListener('click', e => {
-            e.preventDefault();
-            this.duplicate();
-        });
-
-        const trashHandle = document.createElement('button');
-        trashHandle.classList.add('fred--trash');
-        trashHandle.addEventListener('click', e => {
-            e.preventDefault();
-            this.remove();
-        });
+        const duplicate = button('', ['fred--duplicate-icon'], this.duplicate.bind(this));
+        const trashHandle = button('', ['fred--trash'], this.remove.bind(this));
 
         if (this.options.settings) {
-            const settings = document.createElement('button');
-            settings.classList.add('fred--element-settings');
-            settings.addEventListener('click', e => {
-                e.preventDefault();
-                this.openSettings();
-            });
-
+            const settings = button('', ['fred--element-settings'], this.openSettings.bind(this));
             toolbar.appendChild(settings);
         }
 
-        const positionGroup = document.createElement('div');
-        positionGroup.classList.add('fred--position-group');
+        const positionGroup = div(['fred--position-group']);
 
-        const moveUp = document.createElement('button');
-        moveUp.classList.add('fred--position-up');
+        const moveUp = button('', ['fred--position-up']);
         moveUp.setAttribute('disabled', 'disabled');
         
-        const moveDown = document.createElement('button');
-        moveDown.classList.add('fred--position-down');
+        const moveDown = button('', ['fred--position-down']);
         moveDown.setAttribute('disabled', 'disabled');
 
         positionGroup.appendChild(moveUp);
@@ -188,8 +167,7 @@ export class ContentElement {
 
         wrapper.appendChild(toolbar);
 
-        const content = document.createElement('div');
-        content.classList.add('fred--block_content');
+        const content = div(['fred--block_content']);
         content.dataset.fredElementId = this.el.dataset.fredElementId;
 
         return this.templateRender().then(html => {
@@ -532,7 +510,7 @@ export class ContentElement {
     }
     
     cleanRender(parseModx = false, handleLinks = true) {
-        const element = document.createElement('div');
+        const element = div();
 
         return this.templateRender(parseModx).then(html => {
             element.innerHTML = html;

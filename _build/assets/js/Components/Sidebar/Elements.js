@@ -1,6 +1,7 @@
 import Sidebar from '../Sidebar';
 import drake from '../../Drake';
 import fetch from 'isomorphic-fetch';
+import { div, dl, dt, dd, figure, img, figCaption } from './../../UI/Elements'
 
 export default class Elements extends Sidebar {
     static title = 'Elements';
@@ -20,28 +21,22 @@ export default class Elements extends Sidebar {
                 return response.json();
             })
             .then(response => {
-                const content = document.createElement('dl');
+                const content = dl();
                 
 
                 response.data.elements.forEach(category => {
-                    const dt = document.createElement('dt');
-                    dt.setAttribute('role', 'tab');
-                    dt.setAttribute('tabindex', '1');
-                    dt.innerHTML = category.category;
-                    
-                    const dd = document.createElement('dd');
-                    
-                    const categoryEl = document.createElement('div');
-                    categoryEl.classList.add('fred--thumbs', 'source', 'blueprints-source');
+                    const categoryTab = dt(category.category);
+                    const categoryContent = dd();
+                    const categoryEl = div(['fred--thumbs', 'source', 'blueprints-source']);
                     
                     category.elements.forEach(element => {
                         categoryEl.appendChild(Elements.elementWrapper(element.id, element.title, element.description, element.image, element.content, element.options || {}));
                     });
 
-                    dd.appendChild(categoryEl);
+                    categoryContent.appendChild(categoryEl);
 
-                    content.appendChild(dt);
-                    content.appendChild(dd);
+                    content.appendChild(categoryTab);
+                    content.appendChild(categoryContent);
                 });
 
                 this.content = content;
@@ -51,31 +46,26 @@ export default class Elements extends Sidebar {
     }
 
     static elementWrapper(id, title, description, image, content, options) {
-        const figure = document.createElement('figure');
-        figure.classList.add('fred--thumb');
+        const element = figure(['fred--thumb']);
 
-        const div = document.createElement('div');
-        const img = document.createElement('img');
-        img.src = image;
-        img.alt = title;
+        const imageWrapper = div();
+        const elementImage = img(image, title);
 
-        div.appendChild(img);
+        imageWrapper.appendChild(elementImage);
 
-        const figCaption = document.createElement('figcaption');
-        figCaption.innerHTML = `<strong>${title}</strong><em>${description}</em>`;
+        const caption = figCaption(`<strong>${title}</strong><em>${description}</em>`);
 
-        const chunk = document.createElement('div');
-        chunk.classList.add('chunk');
+        const chunk = div(['chunk']);
         chunk.dataset.fredElementId = id;
         chunk.setAttribute('hidden', 'hidden');
         chunk.innerHTML = content;
         chunk.elementOptions = options;
 
-        figure.appendChild(div);
-        figure.appendChild(figCaption);
-        figure.appendChild(chunk);
+        element.appendChild(imageWrapper);
+        element.appendChild(caption);
+        element.appendChild(chunk);
         
-        return figure;
+        return element;
     }
 
     afterExpand() {

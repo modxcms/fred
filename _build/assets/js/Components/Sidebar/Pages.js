@@ -2,6 +2,7 @@ import Sidebar from '../Sidebar';
 import fetch from 'isomorphic-fetch';
 import Choices from 'choices.js';
 import emitter from "../../EE";
+import { div, dl, dd, dt, button, h3, form, fieldSet, legend } from '../../UI/Elements';
 
 export default class Pages extends Sidebar {
     static title = 'Pages';
@@ -32,14 +33,10 @@ export default class Pages extends Sidebar {
     }
     
     buildPanel() {
-        const content = document.createElement('div');
-        content.classList.add('fred--pages');
-
-        const pageList = document.createElement('dl');
-        pageList.classList.add('fred--pages_list');
+        const content = div(['fred--pages']);
+        const pageList = dl(['fred--pages_list']);
 
         this.buildTree(this.content, pageList);
-        
         this.buildCreatePage(pageList);
 
         content.appendChild(pageList);
@@ -48,14 +45,12 @@ export default class Pages extends Sidebar {
     }
     
     buildCreatePage(content) {
-        const formWrapper = document.createElement('dd');
+        const formWrapper = dd();
         
-        const form = document.createElement('form');
-        form.classList.add('fred--pages_create');
+        const pageForm = form(['fred--pages_create']);
         
-        const fieldset = document.createElement('fieldset');
-        const legend = document.createElement('legend');
-        legend.innerHTML = 'Create Page';
+        const fields = fieldSet();
+        const title = legend('Create Page');
 
         const parentLabel = document.createElement('label');
         parentLabel.setAttribute('for', 'fred_create_page_parent');
@@ -81,11 +76,7 @@ export default class Pages extends Sidebar {
         pagetitleInput.setAttribute('id', 'fred_create_page_pagetitle');
         pagetitleInput.setAttribute('type', 'text');
 
-        const createButton = document.createElement('button');
-        createButton.classList.add('fred--btn-panel', 'fred--btn-apply');
-        createButton.innerHTML = 'Create';
-        createButton.addEventListener('click', e => {
-            e.preventDefault();
+        const createButton = button('Create', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', 'Creating Page');
 
             fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
@@ -107,25 +98,22 @@ export default class Pages extends Sidebar {
             });
         });
         
-        fieldset.appendChild(legend);
-        fieldset.appendChild(parentLabel);
-        fieldset.appendChild(parentInput);
-        fieldset.appendChild(templateLabel);
-        fieldset.appendChild(templateInput);
-        fieldset.appendChild(pagetitleLabel);
-        fieldset.appendChild(pagetitleInput);
-        fieldset.appendChild(createButton);
+        fields.appendChild(title);
+        fields.appendChild(parentLabel);
+        fields.appendChild(parentInput);
+        fields.appendChild(templateLabel);
+        fields.appendChild(templateInput);
+        fields.appendChild(pagetitleLabel);
+        fields.appendChild(pagetitleInput);
+        fields.appendChild(createButton);
 
-        form.appendChild(fieldset);
+        pageForm.appendChild(fields);
 
-        const button = document.createElement('dt');
-        button.setAttribute('role', 'tab');
-        button.setAttribute('tabindex', '0');
-        button.innerHTML = 'Create Page';
+        const createPageButton = dt('Create Page');
 
-        formWrapper.appendChild(form);
+        formWrapper.appendChild(pageForm);
 
-        content.appendChild(button);
+        content.appendChild(createPageButton);
         content.appendChild(formWrapper);
 
         new Choices(parentInput, {
@@ -159,95 +147,79 @@ export default class Pages extends Sidebar {
                 label: page.pagetitle
             });
             
-            const dt = document.createElement('dt');
-            dt.setAttribute('role', 'tab');
-            dt.setAttribute('tabindex', '0');
-            dt.innerHTML = page.pagetitle;
+            const pageTitle = dt(page.pagetitle);
             
             if (page.published !== true) {
-                dt.classList.add('fred--pages_unpublished');
+                pageTitle.classList.add('fred--pages_unpublished');
             }
             
             if (page.deleted === true) {
-                dt.classList.add('fred--pages_deleted');
+                pageTitle.classList.add('fred--pages_deleted');
             }
             
             if (page.hidemenu === true) {
-                dt.classList.add('fred--pages_hidden');
+                pageTitle.classList.add('fred--pages_hidden');
             }
 
-            wrapper.append(dt);
+            wrapper.append(pageTitle);
 
             if (page.isFred === true) {
-                const dd = document.createElement('dd');
-                dd.appendChild(this.createMenu(page));
+                const pageMenu = dd();
+                pageMenu.appendChild(this.createMenu(page));
 
-                wrapper.append(dd);
+                wrapper.append(pageMenu);
             } else {
-                dt.classList.add('fred--pages_noedit');
+                pageTitle.classList.add('fred--pages_noedit');
             }
             
             if (page.children.length > 0) {
-                const dl = document.createElement('dl');
-                dl.classList.add('fred--pages_list', 'fred--hidden');
-                dl.setAttribute('aria-disabled', 'true');
+                const children = dl(['fred--hidden']);
+                children.setAttribute('aria-disabled', 'true');
                 
-                this.buildTree(page.children, dl);
+                this.buildTree(page.children, children);
 
-                const expander = document.createElement('button');
-                expander.classList.add('fred--btn-list', 'fred--btn-list_expand');
-                expander.addEventListener('click', e => {
-                    e.preventDefault();
-                    
+                const expander = button('', ['fred--btn-list', 'fred--btn-list_expand'], () => {
                     if (expander.classList.contains('fred--btn-list_close')) {
                         expander.classList.remove('fred--btn-list_close');
-                        dl.classList.add('fred--hidden');
-                        dl.setAttribute('aria-disabled', 'true');
-                        
+                        children.classList.add('fred--hidden');
+                        children.setAttribute('aria-disabled', 'true');
+
                         return;
                     }
 
                     expander.classList.add('fred--btn-list_close');
-                    dl.classList.remove('fred--hidden');
-                    dl.setAttribute('aria-disabled', 'false');
-                    
+                    children.classList.remove('fred--hidden');
+                    children.setAttribute('aria-disabled', 'false');
                 });
+
+                pageTitle.insertBefore(expander, pageTitle.firstChild);
                 
-                dt.insertBefore(expander, dt.firstChild);
-                
-                wrapper.append(dl);
+                wrapper.append(children);
             }
         });
     }
     
     createMenu(page) {
-        const menu = document.createElement('div');
-        menu.classList.add('fred--pages_menu');
+        const menu = div(['fred--pages_menu']);
 
-        const header = document.createElement('h3');
-        header.innerHTML = page.pagetitle;
+        const header = h3(page.pagetitle);
 
-        const edit = document.createElement('button');
-        edit.innerHTML = 'Edit';
-        edit.addEventListener('click', e => {
-            e.preventDefault();
-            window.location.href = page.url;
+        const edit = button('Edit', [], () => {
+            window.location.href = page.url;    
         });
         
-        const duplicate = document.createElement('button');
-        duplicate.innerHTML = 'Duplicate';
+        const duplicate = button('Duplicate');
         
-        const publish = document.createElement('button');
+        const publish = button();
         if (page.published === true) {
             publish.innerHTML = 'Unpublish';    
         } else {
             publish.innerHTML = 'Publish';
         }
         
-        const createChildPage = document.createElement('button');
-        createChildPage.innerHTML = 'Create Child Page';
+        const createChildPage = button('Create Child Page');
         
-        const deletePage = document.createElement('button');
+        const deletePage = button();
         if (page.deleted === true) {
             deletePage.innerHTML = 'Undelete';
         } else {

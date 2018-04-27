@@ -1,12 +1,12 @@
 import flatpickr from "flatpickr";
 import Choices from 'choices.js';
-import ColorPicker from './ColorPicker/ColorPicker';
+import ColorPicker from './../ColorPicker/ColorPicker';
 import noUiSlider from 'nouislider';
 import fetch from "isomorphic-fetch";
-import Finder from "./Finder";
-import fredConfig from './Config';
+import Finder from "./../Finder";
+import fredConfig from './../Config';
 
-export const buildTextInput = (setting, defaultValue = '', onChange, onInit) => {
+export const text = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -29,7 +29,7 @@ export const buildTextInput = (setting, defaultValue = '', onChange, onInit) => 
     return label;
 };
 
-export const buildSelectInput = (setting, defaultValue = '', onChange, onInit) => {
+export const select = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -68,7 +68,7 @@ export const buildSelectInput = (setting, defaultValue = '', onChange, onInit) =
     return label;
 };
 
-export const buildToggleInput = (setting, defaultValue = false, onChange, onInit) => {
+export const toggle = (setting, defaultValue = false, onChange, onInit) => {
     const label = document.createElement('label');
     label.classList.add('fred--toggle');
     label.innerHTML = setting.label || setting.name;
@@ -97,7 +97,7 @@ export const buildToggleInput = (setting, defaultValue = false, onChange, onInit
     return label;
 };
 
-export const buildTextAreaInput = (setting, defaultValue = '', onChange, onInit) => {
+export const area = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -119,7 +119,7 @@ export const buildTextAreaInput = (setting, defaultValue = '', onChange, onInit)
     return label;
 };
 
-export const buildDateTimeInput = (setting, defaultValue = 0, onChange, onInit) => {
+export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
     defaultValue = parseInt(defaultValue) || 0;
     
     const label = document.createElement('label');
@@ -166,7 +166,7 @@ export const buildDateTimeInput = (setting, defaultValue = 0, onChange, onInit) 
     return label;
 };
 
-export const buildColorSwatchInput = (setting, defaultValue = '', onChange, onInit) => {
+export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -258,7 +258,7 @@ export const buildColorSwatchInput = (setting, defaultValue = '', onChange, onIn
     return label;
 };
 
-export const buildColorPickerInput = (setting, defaultValue = '', onChange, onInit) => {
+export const colorPicker = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -320,7 +320,7 @@ export const buildColorPickerInput = (setting, defaultValue = '', onChange, onIn
     return label;
 };
 
-export const buildSliderInput = (setting, defaultValue = 0, onChange, onInit) => {
+export const slider = (setting, defaultValue = 0, onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -389,7 +389,7 @@ export const buildSliderInput = (setting, defaultValue = 0, onChange, onInit) =>
     return label;
 };
 
-export const buildPageInput = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit) => {
+export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit) => {
     const wrapper = document.createElement('div');
     
     const label = document.createElement('label');
@@ -497,7 +497,7 @@ export const buildPageInput = (setting, defaultValue = {id: 0, url: ''}, onChang
     return wrapper;
 };
 
-export const buildImageInput = (setting, defaultValue = '', onChange, onInit) => {
+export const image = (setting, defaultValue = '', onChange, onInit) => {
     const label = document.createElement('label');
     label.innerHTML = setting.label || setting.name;
 
@@ -585,14 +585,14 @@ export const buildImageInput = (setting, defaultValue = '', onChange, onInit) =>
 };
 
 export default {
-    buildTextInput,
-    buildSelectInput,
-    buildToggleInput,
-    buildTextAreaInput,
-    buildDateTimeInput,
-    buildColorSwatchInput,
-    buildColorPickerInput,
-    buildSliderInput,
-    buildPageInput,
-    buildImageInput
+    text,
+    select,
+    toggle,
+    area,
+    dateTime,
+    colorSwatch,
+    colorPicker,
+    slider,
+    page,
+    image
 };

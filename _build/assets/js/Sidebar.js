@@ -4,6 +4,7 @@ import ElementsComponent from './Components/Sidebar/Elements';
 import PageSettingsComponent from './Components/Sidebar/PageSettings';
 import promiseCancel from 'promise-cancel';
 import fredConfig from './Config';
+import { div, button, img, h1, dl } from './UI/Elements';
 
 export default class Sidebar {
     constructor(fredWrapper) {
@@ -37,6 +38,8 @@ export default class Sidebar {
                 if (err.type === 'cancel') {
                     return;
                 }
+                
+                console.log(err);
 
                 cmp.setContent('SOMETHING WRONG HAPPENED');
             });
@@ -74,8 +77,7 @@ export default class Sidebar {
     }
 
     render() {
-        this.wrapper = document.createElement('div');
-        this.wrapper.classList.add('fred--sidebar', 'fred--hidden');
+        this.wrapper = div(['fred--sidebar', 'fred--hidden']);
         this.wrapper.setAttribute('aria-hidden', 'true');
 
         this.wrapper.appendChild(this.buildCloseButton());
@@ -88,30 +90,15 @@ export default class Sidebar {
     }
 
     buildCloseButton() {
-        const button = document.createElement('button');
-        button.classList.add('fred--sidebar_close');
-        button.setAttribute('role', 'button');
-        button.innerHTML = '<i class="fred--angle-left"></i><i class="fred--angle-left"></i>';
-        button.addEventListener('click', e => {
-            e.preventDefault();
-            
+        return button('<i class="fred--angle-left"></i><i class="fred--angle-left"></i>', ['fred--sidebar_close'], () => {
             emitter.emit('fred-sidebar-hide');
         });
-        
-        return button;
     }
 
     buildSidebarHeader() {
-        const header = document.createElement('div');
-        header.classList.add('fred--sidebar_title');
-
-        const logo = document.createElement('img');
-        logo.setAttribute('alt', 'MODX FRED');
-        logo.classList.add('fred--logo');
-        logo.src = `${fredConfig.config.assetsUrl || ''}images/modx-revo-icon-48.svg`;
-
-        const title = document.createElement('h1');
-        title.innerText = 'Fred';
+        const header = div(['fred--sidebar_title']);
+        const logo = img(`${fredConfig.config.assetsUrl || ''}images/modx-revo-icon-48.svg`, 'MODX FRED', ['fred--logo']);
+        const title = h1('Fred');
 
         header.appendChild(logo);
         header.appendChild(title);
@@ -120,10 +107,7 @@ export default class Sidebar {
     }
 
     buildSidebar() {
-        this.sidebar = document.createElement('dl');
-        this.sidebar.classList.add('fred--accordion');
-        this.sidebar.setAttribute('tabindex', '0');
-        this.sidebar.setAttribute('role', 'tablist');
+        this.sidebar = dl(['fred--accordion']);
 
         this.components.push(new PagesComponent(this.sidebar));
         this.components.push(new ElementsComponent(this.sidebar));
@@ -145,7 +129,7 @@ export default class Sidebar {
     showSidebar(silent = false) {
         if (silent === true) {
            if (this.visible === false) return; 
-        }
+        }   
             
         this.visible = true;
         this.wrapper.classList.remove('fred--hidden');
