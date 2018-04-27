@@ -20,7 +20,7 @@ export default class Sidebar {
     }
 
     render() {
-        this.wrapper = View(
+        emitter.emit('fred-wrapper-insert', View.render(
             [PagesComponent, ElementsComponent, PageSettingsComponent],
             component => {
                 this.components.push(component);
@@ -29,9 +29,7 @@ export default class Sidebar {
                 emitter.emit('fred-sidebar-hide');
             }
             
-        );
-
-        emitter.emit('fred-wrapper-insert', this.wrapper);
+        ));
         
         return this;
     }
@@ -85,10 +83,10 @@ export default class Sidebar {
         });
 
         emitter.on('fred-sidebar-toggle', () => {
-            if (this.wrapper.classList.contains('fred--hidden')) {
-                emitter.emit('fred-sidebar-show');
-            } else {
+            if (View.isVisible()) {
                 emitter.emit('fred-sidebar-hide');
+            } else {
+                emitter.emit('fred-sidebar-show');
             }
         });
     }
@@ -97,8 +95,8 @@ export default class Sidebar {
         if (silent === false) {
             this.visible = false;
         }
-        
-        this.wrapper.classList.add('fred--hidden');
+
+        View.hide();
 
         window.removeEventListener('click', this.globalHideSidebar);
     }
@@ -109,7 +107,9 @@ export default class Sidebar {
         }   
             
         this.visible = true;
-        this.wrapper.classList.remove('fred--hidden');
+        
+        View.show();
+        
         setTimeout(() => {
             window.addEventListener('click', this.globalHideSidebar);
         }, 50);
