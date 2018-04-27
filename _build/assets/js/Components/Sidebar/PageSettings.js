@@ -1,6 +1,7 @@
 import Sidebar from '../Sidebar';
 import emitter from '../../EE';
-import { buildToggleInput, buildTextInput, buildTextAreaInput, buildDateTimeInput } from '../../UI';
+import { toggle, text, area, dateTime } from '../../UI/Inputs';
+import { button, dl, dt, dd, form, fieldSet } from '../../UI/Elements';
 
 export default class PageSettings extends Sidebar {
     static title = 'Page Settings';
@@ -20,71 +21,57 @@ export default class PageSettings extends Sidebar {
     }
     
     render () {
-        const form = document.createElement('form');
-        form.classList.add('fred--page_settings_form');
+        const settingsForm = form(['fred--page_settings_form']);
 
-        form.appendChild(this.getGeneralFields());
-        form.appendChild(this.getAdvancedFields());
+        settingsForm.appendChild(this.getGeneralFields());
+        settingsForm.appendChild(this.getAdvancedFields());
 
-        const save = document.createElement('button');
-        save.setAttribute('type', 'button');
-        save.classList.add('fred--btn-sidebar', 'fred--settings_form_save');
-        save.innerText = 'Save';
-
-        save.addEventListener('click', e => {
-            e.preventDefault();
+        const save = button('Save', ['fred--btn-sidebar', 'fred--settings_form_save'], () => {
             emitter.emit('fred-save');
         });
 
-        form.appendChild(save);
+        settingsForm.appendChild(save);
         
-        return form;
+        return settingsForm;
     }
     
     getGeneralFields() {
-        const fieldset = document.createElement('fieldset');
+        const fields = fieldSet();
         
-        fieldset.appendChild(buildTextInput({name: 'pagetitle', label: 'Page Title'}, this.pageSettings.pagetitle, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fieldset.appendChild(buildTextInput({name: 'longtitle', label: 'Long Title'}, this.pageSettings.longtitle, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fieldset.appendChild(buildTextAreaInput({name: 'description', label: 'Description'}, this.pageSettings.description, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fieldset.appendChild(buildTextAreaInput({name: 'introtext', label: 'Intro Text'}, this.pageSettings.introtext, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fieldset.appendChild(buildTextInput({name: 'menutitle', label: 'Menu Title'}, this.pageSettings.menutitle, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fieldset.appendChild(buildTextInput({name: 'alias', label: 'Alias'}, this.pageSettings.alias, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fieldset.appendChild(buildToggleInput({name: 'published', label: 'Published'}, this.pageSettings.published, this.setSetting));
-        fieldset.appendChild(buildToggleInput({name: 'hidemenu', label: 'Hide from Menu'}, this.pageSettings.hidemenu, this.setSetting));
+        fields.appendChild(text({name: 'pagetitle', label: 'Page Title'}, this.pageSettings.pagetitle, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(text({name: 'longtitle', label: 'Long Title'}, this.pageSettings.longtitle, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(area({name: 'description', label: 'Description'}, this.pageSettings.description, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(area({name: 'introtext', label: 'Intro Text'}, this.pageSettings.introtext, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(text({name: 'menutitle', label: 'Menu Title'}, this.pageSettings.menutitle, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(text({name: 'alias', label: 'Alias'}, this.pageSettings.alias, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(toggle({name: 'published', label: 'Published'}, this.pageSettings.published, this.setSetting));
+        fields.appendChild(toggle({name: 'hidemenu', label: 'Hide from Menu'}, this.pageSettings.hidemenu, this.setSetting));
         
-        return fieldset;
+        return fields;
     }
 
     getAdvancedFields() {
-        const dl = document.createElement('dl');
+        const advancedList = dl();
         
-        const dt = document.createElement('dt');
-        dt.setAttribute('role', 'tab');
-        dt.setAttribute('tabindex', '0');
-        dt.innerHTML = 'Advanced Settings';
-
-        dt.addEventListener('click', e => {
-            e.preventDefault();
-            dt.classList.toggle('active');
+        const advancedTab = dt('Advanced Settings', [], () => {
+            advancedTab.classList.toggle('active');
         });
 
-        const dd = document.createElement('dd');
-        const fieldset = document.createElement('fieldset');
-        fieldset.classList.add('fred--page_settings_form_advanced');
+        const advancedContent = dd();
+        const fields = fieldSet(['fred--page_settings_form_advanced']);
         
-        fieldset.appendChild(buildDateTimeInput({name: 'publishedon', label: 'Published On'}, this.pageSettings.publishedon, this.setSetting));
-        fieldset.appendChild(buildDateTimeInput({name: 'publishon', label: 'Publish On'}, this.pageSettings.publishon, this.setSetting));
-        fieldset.appendChild(buildDateTimeInput({name: 'unpublishon', label: 'Unpublish On'}, this.pageSettings.unpublishon, this.setSetting));
-        fieldset.appendChild(buildTextInput({name: 'menuindex', label: 'Menu Index'}, this.pageSettings.menuindex, this.setSetting));
-        fieldset.appendChild(buildToggleInput({name: 'deleted', label: 'Deleted'}, this.pageSettings.deleted, this.setSetting));
+        fields.appendChild(dateTime({name: 'publishedon', label: 'Published On'}, this.pageSettings.publishedon, this.setSetting));
+        fields.appendChild(dateTime({name: 'publishon', label: 'Publish On'}, this.pageSettings.publishon, this.setSetting));
+        fields.appendChild(dateTime({name: 'unpublishon', label: 'Unpublish On'}, this.pageSettings.unpublishon, this.setSetting));
+        fields.appendChild(text({name: 'menuindex', label: 'Menu Index'}, this.pageSettings.menuindex, this.setSetting));
+        fields.appendChild(toggle({name: 'deleted', label: 'Deleted'}, this.pageSettings.deleted, this.setSetting));
 
-        dd.appendChild(fieldset);
+        advancedContent.appendChild(fields);
 
-        dl.appendChild(dt);
-        dl.appendChild(dd);
+        advancedList.appendChild(advancedTab);
+        advancedList.appendChild(advancedContent);
         
-        return dl;
+        return advancedList;
     }
 
     setSetting(name, value) {

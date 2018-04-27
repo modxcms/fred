@@ -11,9 +11,9 @@ export default class IconEditor extends Editor {
     }
 
     render() {
-        const wrapper = document.createElement('div');
+        const wrapper = this.ui.els.div();
 
-        wrapper.appendChild(this.ui.buildTextInput({name: 'icon', label: 'Icon'}, this.state.icon, this.setStateValue));
+        wrapper.appendChild(this.ui.ins.text({name: 'icon', label: 'Icon'}, this.state.icon, this.setStateValue));
         wrapper.appendChild(this.buildAttributesFields());
         
         return wrapper;

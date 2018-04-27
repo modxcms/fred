@@ -1,5 +1,6 @@
 import emitter from './EE';
 import fredConfig from './Config';
+import { section, div, button, h4, iFrame } from './UI/Elements';
 
 export class Finder {
     constructor(onSelect = (file, fm) => {}, title = 'Browse Files', options = {}) {
@@ -15,32 +16,22 @@ export class Finder {
     }
 
     render() {
-        this.wrapper = document.createElement('section');
-        this.wrapper.classList.add('fred--modal-bg');
+        this.wrapper = section(['fred--modal-bg']);
 
-        const modal = document.createElement('div');
-        modal.classList.add('fred--modal');
+        const modal = div(['fred--modal']);
         modal.setAttribute('aria-hidden', 'true');
 
-        const header = document.createElement('div');
-        header.classList.add('fred--modal-header');
+        const header = div(['fred--modal-header']);
 
-        const close = document.createElement('button');
-        close.classList.add('button');
-        close.innerHTML = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026 6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg>';
-        close.addEventListener('click', this.close.bind(this));
+        const close = button('<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026 6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg>', ['button'], this.close.bind(this));
 
-        this.titleEl = document.createElement('h4');
-        this.titleEl.innerHTML = this.title;
+        this.titleEl = h4(this.title);
 
-        this.body = document.createElement('div');
-        this.body.classList.add('fred--modal-body');
+        this.body = div(['fred--modal-body']);
 
         modal.style.width = this.options.width || '800px';
         modal.style.height = this.options.height || '600px';
         this.body.style.padding = '0';
-
-        const iframe = document.createElement('iframe');
 
         const finderOptions = [];
         if (this.options.mediaSource) {
@@ -51,12 +42,13 @@ export class Finder {
         if (finderOptions.length > 0) {
             finderOptionsString = '?' + finderOptions.join('&');
         }
+
+        const finderIframe = iFrame(`${fredConfig.config.assetsUrl}elfinder/index.html` + finderOptionsString);
         
-        iframe.src = `${fredConfig.config.assetsUrl}elfinder/index.html` + finderOptionsString;
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
+        finderIframe.style.width = '100%';
+        finderIframe.style.height = '100%';
         
-        this.body.appendChild(iframe);
+        this.body.appendChild(finderIframe);
         
         header.appendChild(close);
         header.appendChild(this.titleEl);

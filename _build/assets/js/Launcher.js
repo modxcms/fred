@@ -1,4 +1,5 @@
 import emitter from './EE';
+import { div, button } from './UI/Elements';
 
 export default class Launcher {
     constructor(position = 'bottom_left') {
@@ -9,30 +10,17 @@ export default class Launcher {
     }
     
     render() {
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('fred--launcher', `fred--launcher_${this.position}`);
+        const wrapper = div(['fred--launcher', `fred--launcher_${this.position}`]);
 
-        const fred = document.createElement('button');
-        fred.classList.add('fred--launcher_btn', 'fred--launcher_btn_fred');
-        fred.setAttribute('role', 'button');
-        fred.addEventListener('click', e => {
-            e.preventDefault();
+        const fred = button('', ['fred--launcher_btn', 'fred--launcher_btn_fred'], () => {
             emitter.emit('fred-sidebar-toggle');
         });
-        
-        const save = document.createElement('button');
-        save.classList.add('fred--launcher_btn', 'fred--launcher_btn_save');
-        save.setAttribute('role', 'button');
-        save.addEventListener('click', e => {
-            e.preventDefault();
+
+        const save = button('', ['fred--launcher_btn', 'fred--launcher_btn_save'], () => {
             emitter.emit('fred-save');
         });
         
-        const preview = document.createElement('button');
-        preview.classList.add('fred--launcher_btn', 'fred--launcher_btn_preview');
-        preview.setAttribute('role', 'button');
-        preview.addEventListener('click', e => {
-            e.preventDefault();
+        const preview = button('', ['fred--launcher_btn', 'fred--launcher_btn_preview'], () => {
             if (this.previewMode === false) {
                 this.previewMode = true;
                 wrapper.style.zIndex = '9999999999';
@@ -49,7 +37,7 @@ export default class Launcher {
                 emitter.emit('fred-preview-off');
             }
         });
-
+        
         wrapper.appendChild(fred);
         wrapper.appendChild(save);
         wrapper.appendChild(preview);

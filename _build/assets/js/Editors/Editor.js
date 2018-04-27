@@ -56,13 +56,13 @@ export default class Editor {
     }
 
     buildAttributesFields() {
-        const wrapper = document.createElement('div');
+        const wrapper = this.ui.els.div();
         
         if (this.el.dataset.fredAttrs) {
             const attrs = this.el.dataset.fredAttrs.split(',');
             attrs.forEach(attr => {
                 this.state._attributes[attr] = this.el.getAttribute(attr || '');
-                wrapper.appendChild(this.ui.buildTextInput({name: attr, label: attr}, this.state._attributes[attr], this.setStateAttribute));
+                wrapper.appendChild(this.ui.ins.text({name: attr, label: attr}, this.state._attributes[attr], this.setStateAttribute));
             });
         }
         

@@ -9,6 +9,7 @@ import registerTineMCEPlugins from './TinyMCE/RegisterPlugins';
 import libs from './libs';
 import Editor from './Editors/Editor';
 import fredConfig from './Config';
+import { div, section, a, iFrame } from './UI/Elements'
 
 export default class Fred {
     constructor(config = {}) {
@@ -24,8 +25,7 @@ export default class Fred {
     }
 
     render() {
-        this.wrapper = document.createElement('div');
-        this.wrapper.classList.add('fred');
+        this.wrapper = div(['fred']);
         
         this.testPreview();
         
@@ -33,70 +33,46 @@ export default class Fred {
     }
     
     testPreview() {
-        const previewWrapper = document.createElement('div');
-        previewWrapper.classList.add('fred--content-preview');
+        const previewWrapper = div(['fred--content-preview']);
         previewWrapper.style.display = 'none';
 
-        this.iframe = document.createElement('iframe');
-        this.iframe.src = fredConfig.config.resource.previewUrl;
+        this.iframe = iFrame(fredConfig.config.resource.previewUrl);
         this.iframe.style.width = '1024px';
         this.iframe.style.height = '768px';
 
-        this.controls = document.createElement('div');
-        this.controls.classList.add('fred--content-preview_controls');
+        this.controls = div(['fred--content-preview_controls']);
 
-        this.devices = document.createElement('div');
-        this.devices.classList.add('fred--devices');
+        this.devices = div(['fred--devices']);
         
-        this.tabletP = document.createElement('a');
-        this.tabletP.classList.add('fred--tablet-portrait');
-        this.tabletP.innerHTML = '<span>Tablet Portrait</span>';
-        this.tabletP.addEventListener('click', e => {
-            e.preventDefault();
+        this.tabletP = a('<span>Tablet Portrait</span>', 'Tablet Portrait', '', ['fred--tablet-portrait'], () => {
             this.iframe.style.width = '768px';
             this.iframe.style.height = '1024px';
         });
 
         this.devices.appendChild(this.tabletP);
 
-        this.tabletL = document.createElement('a');
-        this.tabletL.classList.add('fred--tablet-landscape');
-        this.tabletL.innerHTML = '<span>Tablet Landscape</span>';
-        this.tabletL.addEventListener('click', e => {
-            e.preventDefault();
+        this.tabletL = a('<span>Tablet Landscape</span>', 'Tablet Landscape', '', ['fred--tablet-landscape'], () => {
             this.iframe.style.width = '1024px';
             this.iframe.style.height = '768px';
         });
 
         this.devices.appendChild(this.tabletL);
 
-        this.phoneP = document.createElement('a');
-        this.phoneP.classList.add('fred--smartphone-portrait');
-        this.phoneP.innerHTML = '<span>Phone Portrait</span>';
-        this.phoneP.addEventListener('click', e => {
-            e.preventDefault();
+        this.phoneP = a('<span>Phone Portrait</span>', 'Phone Portrait', '', ['fred--smartphone-portrait'], () => {
             this.iframe.style.width = '320px';
             this.iframe.style.height = '480px';
         });
 
         this.devices.appendChild(this.phoneP);
 
-        this.phoneL = document.createElement('a');
-        this.phoneL.classList.add('fred--smartphone-landscape');
-        this.phoneL.innerHTML = '<span>Phone Landscape</span>';
-        this.phoneL.addEventListener('click', e => {
-            e.preventDefault();
+        this.phoneL = a('<span>Phone Landscape</span>', 'Phone Landscape', '', ['fred--smartphone-landscape'], () => {
             this.iframe.style.width = '480px';
             this.iframe.style.height = '320px';
         });
 
         this.devices.appendChild(this.phoneL);
 
-        this.auto = document.createElement('a');
-        this.auto.classList.add('fred--auto');
-        this.auto.innerHTML = '<span>Auto</span>';
-        this.auto.addEventListener('click', e => {
-            e.preventDefault();
+        this.auto = a('<span>Auto</span>', 'Auto', '', ['fred--auto'], () => {
             this.iframe.style.width = '100%';
             this.iframe.style.height = '100%';
         });
@@ -230,8 +206,7 @@ export default class Fred {
 
                         zoneEl.innerHTML = '';
                         zones[zoneName].forEach(element => {
-                            const chunk = document.createElement('div');
-                            chunk.classList.add('chunk');
+                            const chunk = div(['chunk']);
                             chunk.setAttribute('hidden', 'hidden');
                             chunk.dataset.fredElementId = element.widget;
                             chunk.innerHTML = json.data.elements[element.widget].html;
@@ -266,8 +241,7 @@ export default class Fred {
         for (let zoneName in zones) {
             if (zones.hasOwnProperty(zoneName)) {
                 zones[zoneName].forEach(element => {
-                    const chunk = document.createElement('div');
-                    chunk.classList.add('chunk');
+                    const chunk = div(['chunk']);
                     chunk.setAttribute('hidden', 'hidden');
                     chunk.dataset.fredElementId = element.widget;
                     chunk.innerHTML = elements[element.widget].html;
@@ -298,10 +272,7 @@ export default class Fred {
 
             text = text || '';
 
-            this.loading = document.createElement('section');
-            this.loading.classList.add('fred--modal-bg');
-            this.loading.classList.add('fred--modal_loading');
-
+            this.loading = section(['fred--modal-bg', 'fred--modal_loading']);
             this.loading.innerHTML = `<div class="fred--modal" aria-hidden="false"><div style="color:white;text-align:center;"><span class="fred--loading"></span> ${text}</div></div>`;
 
             this.wrapper.appendChild(this.loading);

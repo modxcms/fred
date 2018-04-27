@@ -1,13 +1,13 @@
 import emitter from './EE';
+import { section, div, button, h4 } from './UI/Elements';
 
 export class Modal {
     
-    constructor(title, content = '', onSave = () => {}, isFinder) {
+    constructor(title, content = '', onSave = () => {}) {
         this.wrapper = null;
         this.title = title;
         this.content = content;
         this.onSave = onSave;
-        this.isFinder = isFinder || false;
     }
     
     setTitle(title) {
@@ -32,32 +32,18 @@ export class Modal {
     }
     
     render() {
-        this.wrapper = document.createElement('section');
-        this.wrapper.classList.add('fred--modal-bg');
+        this.wrapper = section(['fred--modal-bg']);
         
-        const modal = document.createElement('div');
-        modal.classList.add('fred--modal');
+        const modal = div(['fred--modal']);
         modal.setAttribute('aria-hidden', 'true');
 
-        const header = document.createElement('div');
-        header.classList.add('fred--modal-header');
+        const header = div(['fred--modal-header']);
 
-        const close = document.createElement('button');
-        close.classList.add('button');
-        close.innerHTML = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026 6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg>';
-        close.addEventListener('click', this.close.bind(this));
+        const close = button('<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-4 -4 20 20" enable-background="new -4 -4 20 20" xml:space="preserve"><polygon points="16.079,-0.666 12.717,-4.027 6.052,2.637 -0.613,-4.027 -3.975,-0.666 2.69,6 -3.975,12.664 -0.612,16.026 6.052,9.362 12.717,16.027 16.079,12.664 9.414,6 "></polygon></svg>', ['button'], this.close.bind(this));
 
-        this.titleEl = document.createElement('h4');
-        this.titleEl.innerHTML = this.title;
+        this.titleEl = h4(this.title);
 
-        this.body = document.createElement('div');
-        this.body.classList.add('fred--modal-body');
-        
-        if (this.isFinder === true) {
-            modal.style.width = '800px';    
-            modal.style.height = '600px';    
-            this.body.style.padding = '0';    
-        }
+        this.body = div(['fred--modal-body']);
         
         if (typeof this.content === 'string') {
             this.body.innerHTML = this.content;
@@ -65,15 +51,9 @@ export class Modal {
             this.body.appendChild(this.content);
         }
 
-        const footer = document.createElement('div');
-        footer.classList.add('fred--modal-footer');
+        const footer = div(['fred--modal-footer']);
 
-        const save = document.createElement('button');
-        save.classList.add('fred--btn-small');
-        save.setAttribute('type', 'button');
-        save.innerHTML = 'Save';
-        save.addEventListener('click', e => {
-            e.preventDefault();
+        const save = button('Save', ['fred--btn-small'], () => {
             this.onSave();
             this.close();
         });
@@ -86,9 +66,7 @@ export class Modal {
         modal.appendChild(header);
         modal.appendChild(this.body);
         
-        if (this.isFinder === false) {
-            modal.appendChild(footer);
-        }
+        modal.appendChild(footer);
 
         this.wrapper.appendChild(modal);
 

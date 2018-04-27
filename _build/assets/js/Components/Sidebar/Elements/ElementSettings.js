@@ -1,6 +1,7 @@
 import emitter from '../../../EE';
 import { debounce } from '../../../Utils';
-import ui from '../../../UI';
+import ui from '../../../UI/Inputs';
+import { div, form, fieldSet, legend, button, dl, dt, dd } from '../../../UI/Elements';
 
 export class ElementSettings {
     constructor() {
@@ -15,8 +16,7 @@ export class ElementSettings {
     }
 
     render() {
-        this.wrapper = document.createElement('div');
-        this.wrapper.classList.add('fred--panel', 'fred--panel_element', 'fred--hidden');
+        this.wrapper = div(['fred--panel', 'fred--panel_element', 'fred--hidden']);
 
         emitter.emit('fred-wrapper-insert', this.wrapper);
     }
@@ -36,70 +36,52 @@ export class ElementSettings {
     }
     
     renderSettings() {
-        const form = document.createElement('form');
-        const fieldSet = document.createElement('fieldset');
+        const settingsForm = form();
+        const fields = fieldSet();
+        const title = legend('Element Settings');
 
-        const legend = document.createElement('legend');
-        legend.innerHTML = 'Element Settings';
-
-        fieldSet.appendChild(legend);
+        fields.appendChild(title);
 
         this.settings.forEach(setting => {
             if (setting.group && setting.settings) {
-                fieldSet.appendChild(this.renderSettingsGroup(setting));
+                fields.appendChild(this.renderSettingsGroup(setting));
             } else {
                 const defaultValue = this.el.settings[setting.name] || setting.value;
                 this.originalValues[setting.name] = defaultValue;
-                fieldSet.appendChild(this.renderSetting(setting, defaultValue));
+                fields.appendChild(this.renderSetting(setting, defaultValue));
             }
         });
 
-        const buttonGroup = document.createElement('div');
-        buttonGroup.classList.add('fred--panel_button_wrapper');
+        const buttonGroup = div(['fred--panel_button_wrapper']);
 
-        const apply = document.createElement('button');
-        apply.classList.add('fred--btn-panel', 'fred--btn-apply');
-        apply.innerHTML = 'Apply';
-        apply.addEventListener('click', e => {
-            e.preventDefault();
-            this.apply();
-        });
-
-        const cancel = document.createElement('button');
-        cancel.classList.add('fred--btn-panel');
-        cancel.innerHTML = 'Cancel';
-        cancel.addEventListener('click', e => {
-            e.preventDefault();
+        const apply = button('Apply', ['fred--btn-panel', 'fred--btn-apply'], this.apply.bind(this));
+        const cancel = button('Cancel', ['fred--btn-panel'], () => {
             this.cancel(cancel);
         });
 
         buttonGroup.appendChild(apply);
         buttonGroup.appendChild(cancel);
         
-        fieldSet.appendChild(buttonGroup);
+        fields.appendChild(buttonGroup);
 
-        form.appendChild(fieldSet);
+        settingsForm.appendChild(fields);
         
-        return form;
+        return settingsForm;
     }
 
     renderSettingsGroup(group) {
-        const content = document.createElement('dl');
-
-        const dt = document.createElement('dt');
-        dt.setAttribute('role', 'tab');
-        dt.setAttribute('tabindex', '1');
-        dt.innerHTML = group.group;
-
-        const dd = document.createElement('dd');
+        const content = dl();
+        const settingGroup = dt(group.group);
+        const settingGroupContent = dd();
+        
         group.settings.forEach(setting => {
             const defaultValue = this.el.settings[setting.name] || setting.value;
             this.originalValues[setting.name] = defaultValue;
-            dd.appendChild(this.renderSetting(setting, defaultValue));
+            settingGroupContent.appendChild(this.renderSetting(setting, defaultValue));
         });
 
-        content.appendChild(dt);
-        content.appendChild(dd);
+        content.appendChild(settingGroup);
+        content.appendChild(settingGroupContent);
         
         return content;
     }
@@ -107,17 +89,17 @@ export class ElementSettings {
     renderSetting(setting, defaultValue) {
         switch (setting.type) {
             case 'select':
-                return ui.buildSelectInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.select(setting, defaultValue, this.setSetting.bind(this));
             case 'toggle':
-                return ui.buildToggleInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.toggle(setting, defaultValue, this.setSetting.bind(this));
             case 'colorswatch':
-                return ui.buildColorSwatchInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.colorSwatch(setting, defaultValue, this.setSetting.bind(this));
             case 'colorpicker':
-                return ui.buildColorPickerInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.colorPicker(setting, defaultValue, this.setSetting.bind(this));
             case 'slider':
-                return ui.buildSliderInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.slider(setting, defaultValue, this.setSetting.bind(this));
             case 'page':
-                return ui.buildPageInput(setting, defaultValue, this.setSetting.bind(this));
+                return ui.page(setting, defaultValue, this.setSetting.bind(this));
             case 'image':
                 let mediaSource = '';
 
@@ -129,9 +111,9 @@ export class ElementSettings {
                     mediaSource = this.options.imageMediaSource;
                 }
                 
-                return ui.buildImageInput({mediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
+                return ui.image({mediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
             default:
-                return ui.buildTextInput(setting, defaultValue, this.setSetting.bind(this));        
+                return ui.text(setting, defaultValue, this.setSetting.bind(this));        
         }
     }
     

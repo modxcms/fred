@@ -12,9 +12,9 @@ export default class ImageEditor extends Editor {
     }
 
     render() {
-        const wrapper = document.createElement('div');
+        const wrapper = this.ui.els.div();
 
-        wrapper.appendChild(this.ui.buildImageInput({
+        wrapper.appendChild(this.ui.ins.image({
             name: 'src',
             label: 'Image URI',
             ...(Finder.getFinderOptionsFromElement(this.el, true))
