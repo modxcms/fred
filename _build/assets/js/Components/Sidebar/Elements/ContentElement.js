@@ -58,7 +58,7 @@ export class ContentElement {
     }
     
     setEl(el) {
-        if (!el.innerHTML) {
+        if (el.innerHTML === undefined) {
             this.el.innerHTML = el;
         } else {
             this.el.innerHTML = el.innerHTML;

@@ -1,5 +1,5 @@
 import emitter from './EE';
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar/Sidebar';
 import Launcher from './Launcher';
 import fetch from 'isomorphic-fetch';
 import drake from './Drake';
