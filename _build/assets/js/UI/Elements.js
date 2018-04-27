@@ -1,23 +1,45 @@
 const setContent = (el, content) => {
     if (!content) return;
     
-    if ((typeof content === 'object') && content.innerHTML) {
+    if (Array.isArray(content)) {
+        content.forEach(contentEl => {
+            if ((typeof contentEl === 'object') && (contentEl.innerHTML !== undefined)) {
+                el.appendChild(contentEl);        
+            }
+        });    
+    } else if ((typeof content === 'object') && (content.innerHTML !== undefined)) {
         el.appendChild(content);
     } else {
         el.innerHTML = content;
     }
 };
 
-export const div = (classes = []) => {
-    const el = document.createElement('div');
-    el.classList.add(...classes);
+const setClasses = (el, classes) => {
+    if (!classes) return;
+    
+    if (Array.isArray(classes)) {
+        el.classList.add(...classes);   
+    } else {
+        el.classList = classes;
+    }
+};
+
+const createElement = (tag, classes = []) => {
+    const el = document.createElement(tag);
+    setClasses(el, classes);
+    
+    return el;
+};
+
+export const div = (classes = [], content = '') => {
+    const el = createElement('div', classes);
+    setContent(el, content);
     
     return el;
 };
 
 export const dl = (classes = []) => {
-    const el = document.createElement('dl');
-    el.classList.add(...classes);
+    const el = createElement('dl', classes);
 
     el.setAttribute('tabindex', '0');
     el.setAttribute('role', 'tablist');
@@ -26,8 +48,7 @@ export const dl = (classes = []) => {
 };
 
 export const dd = (classes = []) => {
-    const el = document.createElement('dd');
-    el.classList.add(...classes);
+    const el = createElement('dd', classes);
 
     el.setAttribute('tabindex', '0');
     el.setAttribute('role', 'tablist');
@@ -36,8 +57,7 @@ export const dd = (classes = []) => {
 };
 
 export const dt = (content = '', classes = [], onClick = null) => {
-    const el = document.createElement('dt');
-    el.classList.add(...classes);
+    const el = createElement('dt', classes);
 
     el.setAttribute('tabindex', '0');
     el.setAttribute('role', 'tab');
@@ -55,16 +75,13 @@ export const dt = (content = '', classes = [], onClick = null) => {
 };
 
 export const section = (classes = []) => {
-    const el = document.createElement('section');
-    el.classList.add(...classes);
-    
-    return el;
+    return createElement('section', classes);
 };
 
 export const button = (content = '', classes = [], onClick = null) => {
-    const el = document.createElement('button');
+    const el = createElement('button', classes);
+    
     el.setAttribute('role', 'button');
-    el.classList.add(...classes);
     
     setContent(el, content);
     
@@ -79,8 +96,7 @@ export const button = (content = '', classes = [], onClick = null) => {
 };
 
 export const h1 = (content, classes = []) => {
-    const el = document.createElement('h1');
-    el.classList.add(...classes);
+    const el = createElement('h1', classes);
 
     setContent(el, content);
 
@@ -88,8 +104,7 @@ export const h1 = (content, classes = []) => {
 };
 
 export const h2 = (content, classes = []) => {
-    const el = document.createElement('h2');
-    el.classList.add(...classes);
+    const el = createElement('h2', classes);
 
     setContent(el, content);
 
@@ -97,8 +112,7 @@ export const h2 = (content, classes = []) => {
 };
 
 export const h3 = (content, classes = []) => {
-    const el = document.createElement('h3');
-    el.classList.add(...classes);
+    const el = createElement('h3', classes);
 
     setContent(el, content);
 
@@ -106,8 +120,7 @@ export const h3 = (content, classes = []) => {
 };
 
 export const h4 = (content, classes = []) => {
-    const el = document.createElement('h4');
-    el.classList.add(...classes);
+    const el = createElement('h4', classes);
 
     setContent(el, content);
     
@@ -115,20 +128,18 @@ export const h4 = (content, classes = []) => {
 };
 
 export const img = (src, alt = '', classes = []) => {
-    const el = document.createElement('img');
+    const el = createElement('img', classes);
     el.src = src;
     
     if (alt) {
         el.setAttribute('alt', alt);
     }
-    
-    el.classList.add(...classes);
-    
+
     return el;
 };
 
 export const a = (content, title = '', href = '', classes = [], onClick = null) => {
-    const el = document.createElement('a');
+    const el = createElement('a', classes);
 
     setContent(el, content);
     
@@ -139,8 +150,6 @@ export const a = (content, title = '', href = '', classes = [], onClick = null) 
     if (href) {
         el.setAttribute('href', href);
     }
-    
-    el.classList.add(...classes);
 
     if (typeof onClick === 'function') {
         el.addEventListener('click', e => {
@@ -153,22 +162,15 @@ export const a = (content, title = '', href = '', classes = [], onClick = null) 
 };
 
 export const i = (classes = []) => {
-    const el = document.createElement('i');
-    el.classList.add(...classes);
-
-    return el;
+    return createElement('i', classes);
 };
 
 export const form = (classes = []) => {
-    const el = document.createElement('form');
-    el.classList.add(...classes);
-
-    return el;
+    return createElement('form', classes);
 };
 
 export const label = (content, classes = []) => {
-    const el = document.createElement('label');
-    el.classList.add(...classes);
+    const el = createElement('label', classes);
 
     setContent(el, content);
 
@@ -176,15 +178,11 @@ export const label = (content, classes = []) => {
 };
 
 export const fieldSet = (classes = []) => {
-    const el = document.createElement('fieldset');
-    el.classList.add(...classes);
-
-    return el;
+    return createElement('fieldset', classes);
 };
 
 export const legend = (content = '', classes = []) => {
-    const el = document.createElement('legend');
-    el.classList.add(...classes);
+    const el = createElement('legend', classes);
 
     setContent(el, content);
     
@@ -192,15 +190,11 @@ export const legend = (content = '', classes = []) => {
 };
 
 export const figure = (classes = []) => {
-    const el = document.createElement('figure');
-    el.classList.add(...classes);
-
-    return el;
+    return createElement('figure', classes);
 };
 
 export const figCaption = (content = '', classes = []) => {
-    const el = document.createElement('figcaption');
-    el.classList.add(...classes);
+    const el = createElement('figcaption', classes);
 
     setContent(el, content);
     
@@ -208,8 +202,7 @@ export const figCaption = (content = '', classes = []) => {
 };
 
 export const iFrame = (src, classes = []) => {
-    const el = document.createElement('iframe');
-    el.classList.add(...classes);
+    const el = createElement('iframe', classes);
 
     el.src = src;
     
