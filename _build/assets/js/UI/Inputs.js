@@ -376,7 +376,7 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
 export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit) => {
     const wrapper = div();
     const labelEl = label((setting.label || setting.name), 'fred--label-choices');
-    const selectEl = select();
+    const selectEl = selectElement();
 
     wrapper.appendChild(labelEl);
     wrapper.appendChild(selectEl);
