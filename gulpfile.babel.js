@@ -40,8 +40,8 @@ gulp.task('css', function() {
     });
     
     var cssStream = gulp.src([
-        './node_modules/flatpickr/dist/flatpickr.css',
-        './node_modules/nouislider/distribute/nouislider.css'
+        './node_modules/flatpickr/dist/flatpickr.min.css',
+        './node_modules/nouislider/distribute/nouislider.min.css'
     ]);
     
     return merge(sassStream,cssStream)

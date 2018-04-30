@@ -139,7 +139,7 @@
     top: 8px;
     left: 50%;
     margin-left: -104px;
-    border: 1px solid #363738;
+    border: 1px solid $darkblue;
     a {
       &:first-of-type {
         -webkit-border-radius: 4px 0 0 4px;
@@ -156,20 +156,22 @@
         border-radius: 0 4px 4px 0;
         border-right-width: 1px;
       }
-      background: #293134;
+      background: $darkblue;
       text-decoration: none;
-      border: 1px solid #040404;
+      border: 1px solid darken($darkblue, 15%);
       border-right-width: 0;
       float: left;
       display: block;
       width: 40px;
       height: 30px;
       outline: none;
+      cursor: pointer;
+      transition: $timing;
       &:hover {
-        background: #343e42;
+        background: darken($darkblue, 5%);
       }
       &.active, &:active {
-        background: #1a1c1c;
+        background: $modxred;
         outline: none;
       }
       &.active span, &:active span {

@@ -66,15 +66,6 @@
   }
 }
 .fred--pages_create{
-  opacity: 1;
-  position: fixed;
-  width: 320px;
-  left: 275px;
-  height: 100vh;
-  overflow: auto;
-  overflow-x: hidden;
-  top: 0;
-  background-color: lighten($black, 5%);
   fieldset{
     margin: 0;
     padding: 0 16px 24px;
@@ -104,12 +95,30 @@
   }
   label{
     input[type="text"], input[type="date"], textarea, select {
-      width: 100%;
-      margin: 0;
+      //width: 100%;
+      //margin: 0;
     }
+  }
+  .choices:last-child{
+    margin-bottom: 16px;
   }
 }
 .fred--page_settings_form {
+  transition: .3s;
+  opacity: 1;
+  position: fixed;
+  width: 280px;
+  left: 80px;
+  height: 100vh;
+  overflow: auto;
+  overflow-x: hidden;
+  top: 0;
+  background-color: $darkblue;
+  dl{
+    position: relative !important;
+    height: auto !important;
+    left: 0 !important;
+  }
   fieldset{
     margin: 32px 8px 0;
     &.fred--page_settings_form_advanced{
@@ -251,7 +260,7 @@
     padding: 2px;
     width: 48px;
     height: 21px;
-    background-color: darken($black, 5%);
+    background-color: darken($darkblue, 5%);
     border-radius: 16px;
     float: right;
     margin-top: 2px;
@@ -318,4 +327,12 @@ select{
       background: $black;
     }
   }
+}
+.error{
+  background: $modxred;
+  color: $white;
+  font-size: 12px;
+  text-align: center;
+  width: 90%;
+  margin: 0 5%;
 }

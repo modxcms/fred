@@ -1,13 +1,14 @@
 
 // COLORS
-$blue: #517B95;
-$darkblue: #374b5a;
+$blue: #0A4394;
+$darkblue: #06387C;
 $gray: #747f8a;
 $light-gray: #a9abab;
 $dark-gray: darken($gray, 20%);
 $green: #549c89;
 $white: #FEFEFE;
-$black: #293134;
+//$black: #293134;
+$black: $blue;
 
 // PLACEHOLDERS
 $primary: $blue;
@@ -23,7 +24,8 @@ $btn-padding-small: 3px 11px;
 
 //MODX Colors
 $modxred: #E12A29;
-$modxblue: #3380C2;
+//$modxblue: #3380C2;
+$modxblue: $darkblue;
 $modxgreen: #42AB4A;
 $modxbrightgreen: #95C953;
 
