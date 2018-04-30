@@ -35,7 +35,7 @@ $textarea-resize: vertical !default;
 *:not([class^="fa"]) {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
   font-family: "Open Sans", Arial, sans-serif;
   text-transform: initial;
   height: auto;
@@ -75,7 +75,7 @@ img {
 }
 
 a:focus, a:active, input:focus, input:active, button:focus, button:active, select:focus, select:active, textarea:focus, textarea:active{
-  outline: 2px dashed rgba($white, .5);
+  outline: 0;
 }
 
 [hidden] {

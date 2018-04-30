@@ -12,6 +12,7 @@
   color: $white;
   background-color: $black;
   transition: $timing;
+  display: none;
   i:nth-child(2) {
     margin-left: -5px;
   }
@@ -33,11 +34,11 @@
 }
 
 .fred--sidebar_title {
-  width: calc(100% - 40px);
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-
+  height: 80px;
   h1 {
     display: inline-block;
     color: $white;
@@ -47,14 +48,21 @@
     border-bottom: 0 !important;
     font-weight: normal;
     margin: 0;
+    text-indent: -9999px;
   }
-
+  .fred--logo{
+    margin: 16px 8px 0;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    background: $white;
+    border-radius: $radius;
+  }
 }
 
 .fred--sidebar {
   font-family: "Open Sans", Arial, sans-serif;
   background-color: $black;
-  width: 275px;
   height: 100vh;
   opacity: 1;
   //overflow-x: hidden;
@@ -68,45 +76,50 @@
   &.fred--hidden {
     left: -360px;
     opacity: 0;
+    transition: none;
   }
   &_pages {
     &:before {
       content: "";
-      height: 35px;
-      width: 35px;
+      height: 24px;
+      width: 24px;
       background: url('images/pages.svg') center center no-repeat;
-      margin-right: 8px;
+      margin-bottom: 8px;
     }
     &.active, &:hover, &:focus {
-      background-color: $modxred !important;
+      background-color: $darkblue !important;
     }
   }
   &_elements {
     &:before {
       content: "";
-      height: 35px;
-      width: 35px;
+      height: 24px;
+      width: 24px;
       background: url('images/elements.svg') center center no-repeat;
-      margin-right: 8px;
+      margin-bottom: 8px;
     }
     &.active, &:hover, &:focus {
-      background-color: $modxblue !important;
+      background-color: $darkblue !important;
     }
   }
   &_page_settings {
     &:before {
       content: "";
-      height: 35px;
-      width: 35px;
+      height: 24px;
+      width: 24px;
       background: url('images/settings.svg') center center no-repeat;
-      margin-right: 8px;
+      margin-bottom: 8px;
     }
     &.active, &:hover, &:focus {
-      background-color: $modxgreen !important;
+      background-color: $darkblue !important;
     }
     + dd dt {
-      border-top: 1px solid #000;
-      border-bottom: 1px solid #000;
+      border-top: 2px solid #0c4eac;
+      border-bottom: 2px solid #0c4eac;
+      background: $green;
+      &:hover{
+        background: darken($green, 10%) !important;
+      }
     }
   }
 }
@@ -115,16 +128,20 @@
   > dt {
     display: flex;
     align-items: center;
+    flex-direction: column;
     overflow: hidden;
-    background-color: darken($black, 1%);
-    border-bottom: 1px solid #000;
+    background-color: $blue;
+    border-bottom: 1px solid lighten($blue,5%);
     color: $white;
-    font-size: 24px !important;
-    padding: 24px 8px !important;
+    font-size: 14px !important;
+    padding: 16px 8px !important;
     font-style: normal !important;
     font-weight: normal !important;
     margin-top: 0 !important;
     cursor: pointer;
+    width: 80px;
+    text-align: center;
+    line-height: 18px;
     transition: $timing;
 
     span {
@@ -142,6 +159,7 @@
       margin: 2px 0 0 5px;
       width: 14px;
       text-align: center;
+      display:none;
     }
 
     &:hover, &.active, &:focus {
@@ -171,7 +189,7 @@
           opacity: .75
         }
         + dd {
-          opacity: .5;
+          //opacity: .5;
         }
       }
     }
@@ -229,9 +247,19 @@
       }
     }
     dl {
+      transition: $timing;
+      opacity: 1;
+      position: fixed;
+      width: 280px;
+      left: 80px;
+      height: 100vh;
+      overflow: auto;
+      overflow-x: hidden;
+      top: 0;
+      background-color: $darkblue;
       dt {
         position: relative;
-        padding: 16px 32px 16px 48px;
+        padding: 16px 28px;
         font-size: 20px;
         font-weight: lighter;
         transition: $timing;
@@ -239,24 +267,40 @@
         &.active, &:hover, &:focus {
           color: $modxgreen;
           background-color: darken($black, 15%);
+          //pointer-events: none;
           + dd {
             display: block;
+            opacity: 1;
+            position: fixed;
+            width: 300px;
+            left: 160px;
+            height: 100vh;
+            overflow: auto;
+            overflow-x: hidden;
+            top: 0;
+            background-color: lighten($black, 5%);
+            box-shadow: -160px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
+            z-index: 99;
           }
         }
         + dd {
-          transition: $timing;
-          opacity: 1;
-          position: fixed;
-          width: 320px;
-          left: 275px;
-          height: 100vh;
-          overflow: auto;
-          overflow-x: hidden;
-          top: 0;
-          background-color: lighten($black, 5%);
           &:hover {
             display: block;
+            opacity: 1;
+            position: fixed;
+            width: 300px;
+            left: 160px;
+            height: 100vh;
+            overflow: auto;
+            overflow-x: hidden;
+            top: 0;
+            background-color: lighten($black, 5%);
+            box-shadow: -160px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
+            z-index: 99;
           }
+        }
+        &:hover:not(:focus){
+          background-color: darken($black, 15%);
         }
       }
     }
@@ -282,16 +326,28 @@
     & > dt{
       font-size: inherit !important;
       &:last-of-type{
-        border-top: 1px solid #000;
-        border-bottom: 1px solid #000;
+        border-top: 2px solid #0c4eac;
+        border-bottom: 2px solid #0c4eac;
+        background: $green;
+        &:hover{
+          background: darken($green, 10%) !important;
+        }
       }
     }
     dl {
-      border-left: 2px solid $white;
+      border-left: 1px solid #3a7cb1;
       margin-left: 2px;
       font-size: .95em;
+      transition: $timing left !important;
+      &:not(.fred--hidden){
+        position: relative !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+      }
       & > dt{
         font-size: inherit !important;
+        padding-left: 38px !important;
       }
     }
   }
@@ -343,8 +399,8 @@
 .fred--sidebar_paneltwo {
   font-family: "Open Sans", Arial, sans-serif;
   background-color: lighten($black, 5%);
-  border-right: 1px solid #000;
-  width: 320px;
+  border-right: 2px solid #0c4eac;
+  width: 280px;
   height: 100vh;
   opacity: 1;
   overflow-x: hidden;
