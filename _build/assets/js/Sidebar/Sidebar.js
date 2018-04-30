@@ -30,8 +30,6 @@ export default class Sidebar {
             }
             
         ));
-        
-        return this;
     }
     
     registerListeners() {
@@ -57,6 +55,8 @@ export default class Sidebar {
                 if (err.type === 'cancel') {
                     return;
                 }
+                
+                console.log(err);
 
                 cmp.setContent('SOMETHING WRONG HAPPENED');
             });

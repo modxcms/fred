@@ -38,6 +38,13 @@ export const div = (classes = [], content = '') => {
     return el;
 };
 
+export const span = (classes = [], content = '') => {
+    const el = createElement('span', classes);
+    setContent(el, content);
+    
+    return el;
+};
+
 export const dl = (classes = []) => {
     const el = createElement('dl', classes);
 
@@ -177,6 +184,34 @@ export const label = (content, classes = []) => {
     return el;
 };
 
+export const input = (value = '', type = 'text', classes = []) => {
+    const el = createElement('input', classes);
+    el.setAttribute('type', type);
+    
+    if (value) {
+        if (type === 'checkbox') {
+            if (value === true) {
+                el.setAttribute('checked', 'checked');
+            }
+        } else {
+            el.value = value;
+        }
+    }
+
+    return el;
+};
+
+export const select = (classes = []) => {
+    return createElement('select', classes);
+};
+
+export const textArea = (value = '', classes = []) => {
+    const el = createElement('textarea', classes);
+    el.innerHTML = value;
+    
+    return el;
+};
+
 export const fieldSet = (classes = []) => {
     return createElement('fieldset', classes);
 };
@@ -211,6 +246,7 @@ export const iFrame = (src, classes = []) => {
 
 export default {
     div,
+    span,
     dl,
     dd,
     dt,
@@ -225,6 +261,9 @@ export default {
     img,
     form,
     label,
+    input,
+    select,
+    textArea,
     fieldSet,
     legend,
     figure,

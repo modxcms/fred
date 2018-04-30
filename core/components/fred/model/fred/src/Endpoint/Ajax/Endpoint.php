@@ -50,15 +50,18 @@ abstract class Endpoint
 
     /**
      * @param string|array $message
+     * @param array $fields
      * @return string
      */
-    protected function failure($message)
+    protected function failure($message, $fields = [])
     {
         http_response_code(400);
 
         if (!is_array($message)) {
             $message = ['message' => $message];
         }
+
+        $message['_fields'] = $fields;
 
         return json_encode($message);
     }
