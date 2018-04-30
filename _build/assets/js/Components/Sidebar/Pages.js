@@ -1,8 +1,9 @@
 import Sidebar from '../Sidebar';
 import fetch from 'isomorphic-fetch';
-import Choices from 'choices.js';
 import emitter from "../../EE";
 import { div, dl, dd, dt, button, h3, form, fieldSet, legend } from '../../UI/Elements';
+import { text, choices } from '../../UI/Inputs';
+import { errorHandler } from '../../Utils';
 
 export default class Pages extends Sidebar {
     static title = 'Pages';
@@ -15,6 +16,12 @@ export default class Pages extends Sidebar {
             value: '0',
             label: 'No Parent'
         }];
+
+        this.state = {
+            pagetitle: '',
+            parent: 0,
+            template: 0
+        };
     }
     
     click() {
@@ -52,33 +59,54 @@ export default class Pages extends Sidebar {
         const fields = fieldSet();
         const title = legend('Create Page');
 
-        const parentLabel = document.createElement('label');
-        parentLabel.setAttribute('for', 'fred_create_page_parent');
-        parentLabel.classList.add('fred--label-choices');
-        parentLabel.innerHTML = 'Parent';
-        
-        const parentInput = document.createElement('select');
-        parentInput.setAttribute('id', 'fred_create_page_parent');
-        
-        const templateLabel = document.createElement('label');
-        templateLabel.setAttribute('for', 'fred_create_page_template');
-        templateLabel.classList.add('fred--label-choices');
-        templateLabel.innerHTML = 'Template';
-        
-        const templateInput = document.createElement('select');
-        templateInput.setAttribute('id', 'fred_create_page_template');
+        const onChange = (name, value) => {
+            this.state[name] = value;
+        };
 
-        const pagetitleLabel = document.createElement('label');
-        pagetitleLabel.setAttribute('for', 'fred_create_page_pagetitle');
-        pagetitleLabel.innerHTML = 'Page Title';
-        
-        const pagetitleInput = document.createElement('input');
-        pagetitleInput.setAttribute('id', 'fred_create_page_pagetitle');
-        pagetitleInput.setAttribute('type', 'text');
+        const onChangeChoices = (name, value) => {
+            this.state[name] = value.value;
+        };
 
+        fields.appendChild(title);
+        fields.appendChild(choices({
+            name: 'parent',
+            label: 'Parent',
+            choices: {
+                choices : this.parents,
+                shouldSort: false
+            }
+        }, this.state.parent, onChangeChoices));
+
+        fields.appendChild(choices({
+            name: 'template',
+            label: 'Template',
+        }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
+            choicesInstance.ajax(callback => {
+                fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-templates`)
+                    .then(errorHandler)
+                    .then(data => {
+                        if (data.data.templates[0]) {
+                            onChangeChoices('template', data.data.templates[0]);
+                            data.data.templates[0].selected = true;
+                        }
+                        callback(data.data.templates, 'value', 'name');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            });
+        }));
+
+        const pagetitle = text({
+            name: 'pagetitle',
+            label: 'Page Title'
+        }, this.state.pagetitle, onChange);
+        
+        fields.appendChild(pagetitle);
+        
         const createButton = button('Create', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', 'Creating Page');
-
+            
             fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
                 method: "post",
                 credentials: 'same-origin',
@@ -86,25 +114,24 @@ export default class Pages extends Sidebar {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    parent: parentInput.value,
-                    template: templateInput.value,
-                    pagetitle: pagetitleInput.value,
+                    parent: this.state.parent,
+                    template: this.state.template,
+                    pagetitle: this.state.pagetitle
                 })
-            }).then(response => {
-                return response.json();
-            }).then(json => {
+            }).then(errorHandler)
+            .then(json => {
                 location.href = json.url;
+                emitter.emit('fred-loading-hide');
+            }).catch(err => {
+                if (err.response._fields.pagetitle) {
+                    pagetitle.onError(err.response._fields.pagetitle);
+                }
+                
                 emitter.emit('fred-loading-hide');
             });
         });
         
-        fields.appendChild(title);
-        fields.appendChild(parentLabel);
-        fields.appendChild(parentInput);
-        fields.appendChild(templateLabel);
-        fields.appendChild(templateInput);
-        fields.appendChild(pagetitleLabel);
-        fields.appendChild(pagetitleInput);
+        
         fields.appendChild(createButton);
 
         pageForm.appendChild(fields);
@@ -115,28 +142,6 @@ export default class Pages extends Sidebar {
 
         content.appendChild(createPageButton);
         content.appendChild(formWrapper);
-
-        new Choices(parentInput, {
-            choices : this.parents,
-            shouldSort: false
-        });
-
-        const templateInputChoices = new Choices(templateInput);
-        templateInputChoices.ajax(callback => {
-            fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-templates`)
-                .then(response => {
-                    return response.json()
-                })
-                .then(data => {
-                    if (data.data.templates[0]) {
-                        data.data.templates[0].selected = true;
-                    }
-                    callback(data.data.templates, 'value', 'name');
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        });
     }
     
     buildTree(pages, wrapper) {

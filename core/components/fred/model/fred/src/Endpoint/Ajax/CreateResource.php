@@ -16,7 +16,7 @@ class CreateResource extends Endpoint
         }
         
         if (empty($this->body['pagetitle'])) {
-            return $this->failure('No pagetitle was provided');
+            return $this->failure('No pagetitle was provided', ['pagetitle' => 'No pagetitle was provided']);
         }
 
         $context = 'web';

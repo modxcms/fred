@@ -5,35 +5,50 @@ import noUiSlider from 'nouislider';
 import fetch from "isomorphic-fetch";
 import Finder from "./../Finder";
 import fredConfig from './../Config';
+import { div, label, input, select as selectElement, span, textArea, a, img } from './Elements';
 
 export const text = (setting, defaultValue = '', onChange, onInit) => {
-    const label = document.createElement('label');
-    label.innerHTML = setting.label || setting.name;
+    const labelEl = label(setting.label || setting.name);
 
-    const input = document.createElement('input');
-    input.setAttribute('type', 'text');
-    input.value = defaultValue;
+    const inputEl = input(defaultValue);
 
-    if (typeof onChange === 'function') {
-        input.addEventListener('keyup', e => {
-            onChange(setting.name, input.value, input, setting);
-        });
-    }
+    let errorEl = null;
+    
+    inputEl.addEventListener('keyup', e => {
+        if (errorEl !== null) {
+            errorEl.remove();
+            inputEl.removeAttribute('aria-invalid');
+            errorEl = null;
+        }
+        
+        if (typeof onChange === 'function') {
+            onChange(setting.name, inputEl.value, inputEl, setting);
+        }
+    });
+    
+    labelEl.onError = msg => {
+        inputEl.setAttribute('aria-invalid', 'true');
+        if (errorEl === null) {
+            errorEl = div('error', msg);
+            labelEl.appendChild(errorEl);
+        } else {
+            errorEl.innerHTML = msg;
+        }
+    };
 
-    label.appendChild(input);
+    labelEl.appendChild(inputEl);
 
     if (typeof onInit === 'function') {
-        onInit(setting, label, input);
+        onInit(setting, labelEl, inputEl);
     }
     
-    return label;
+    return labelEl;
 };
 
 export const select = (setting, defaultValue = '', onChange, onInit) => {
-    const label = document.createElement('label');
-    label.innerHTML = setting.label || setting.name;
+    const labelEl = label(setting.label || setting.name);
 
-    const select = document.createElement('select');
+    const selectEl = selectElement();
 
     if (setting.options) {
         for (let value in setting.options) {
@@ -46,91 +61,79 @@ export const select = (setting, defaultValue = '', onChange, onInit) => {
                     option.setAttribute('selected', 'selected');
                 }
 
-                select.appendChild(option);
+                selectEl.appendChild(option);
             }
         }
     }
     
     if (typeof onChange === 'function') {
-        select.addEventListener('change', e => {
-            if (setting.options[select.value]) {
-                onChange(setting.name, select.value, select, setting);
+        selectEl.addEventListener('change', e => {
+            if (setting.options[selectEl.value]) {
+                onChange(setting.name, selectEl.value, selectEl, setting);
             }
         });
     }
 
-    label.appendChild(select);
+    labelEl.appendChild(selectEl);
 
     if (typeof onInit === 'function') {
-        onInit(setting, label, select);
+        onInit(setting, labelEl, selectEl);
     }
 
-    return label;
+    return labelEl;
 };
 
 export const toggle = (setting, defaultValue = false, onChange, onInit) => {
-    const label = document.createElement('label');
-    label.classList.add('fred--toggle');
-    label.innerHTML = setting.label || setting.name;
+    const labelEl = label((setting.label || setting.name), 'fred--toggle');
 
-    const input = document.createElement('input');
-    input.setAttribute('type', 'checkbox');
-    if (defaultValue === true) {
-        input.setAttribute('checked', 'checked');
-    }
+    const inputEl = input(defaultValue, 'checkbox');
 
     if (typeof onChange === 'function') {
-        input.addEventListener('change', e => {
-            onChange(setting.name, e.target.checked, input, setting);
+        inputEl.addEventListener('change', e => {
+            onChange(setting.name, e.target.checked, inputEl, setting);
         });
     }
 
-    const span = document.createElement('span');
+    const spanEl = span();
 
-    label.appendChild(input);
-    label.appendChild(span);
+    labelEl.appendChild(inputEl);
+    labelEl.appendChild(spanEl);
     
     if (typeof onInit === 'function') {
-        onInit(setting, label, input, span);
+        onInit(setting, labelEl, inputEl, spanEl);
     }
 
-    return label;
+    return labelEl;
 };
 
 export const area = (setting, defaultValue = '', onChange, onInit) => {
-    const label = document.createElement('label');
-    label.innerHTML = setting.label || setting.name;
+    const labelEl = label(setting.label || setting.name);
 
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = defaultValue;
+    const textAreaEl = textArea(defaultValue);
 
     if (typeof onChange === 'function') {
-        textarea.addEventListener('keyup', e => {
-            onChange(setting.name, textarea.value, textarea, setting);
+        textAreaEl.addEventListener('keyup', e => {
+            onChange(setting.name, textAreaEl.value, textAreaEl, setting);
         });
     }
 
-    label.appendChild(textarea);
+    labelEl.appendChild(textAreaEl);
 
     if (typeof onInit === 'function') {
-        onInit(setting, label, textarea);
+        onInit(setting, labelEl, textAreaEl);
     }
 
-    return label;
+    return labelEl;
 };
 
 export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
     defaultValue = parseInt(defaultValue) || 0;
     
-    const label = document.createElement('label');
-    label.innerHTML = setting.label || setting.name;
+    const labelEl = label(setting.label || setting.name);
+    const group = div(['fred--input-group', 'fred--datetime']);
+    const inputEl = input();
 
-    const group = document.createElement('div');
-    group.classList.add('fred--input-group', 'fred--datetime');
-
-    const input = document.createElement('input');
-
-    const picker = flatpickr(input, {
+    const picker = flatpickr(inputEl, {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
         appendTo: group,
@@ -146,42 +149,31 @@ export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
         }
     });
 
-    const clear = document.createElement('a');
-    clear.classList.add('fred--close-small');
-    clear.setAttribute('title', 'Clear');
-    clear.addEventListener('click', e => {
-        e.preventDefault();
+    const clear = a('', 'Clear', '', 'fred--close-small', () => {
         picker.clear();
     });
 
-    group.appendChild(input);
+    group.appendChild(inputEl);
     group.appendChild(clear);
 
-    label.appendChild(group);
+    labelEl.appendChild(group);
 
     if (typeof onInit === 'function') {
-        onInit(setting, label, input);
+        onInit(setting, labelEl, inputEl);
     }
 
-    return label;
+    return labelEl;
 };
 
 export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
-    const label = document.createElement('label');
-    label.innerHTML = setting.label || setting.name;
-
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('fred--color_swatch');
-    
-    const preview = document.createElement('div');
-    preview.classList.add('fred--color_swatch-preview');
+    const labelEl = label(setting.label || setting.name);
+    const wrapper = div('fred--color_swatch');
+    const preview = div('fred--color_swatch-preview');
+    const colors = div(['fred--color_swatch-colors', 'fred--hidden']);
     
     if (defaultValue) {
         preview.style.backgroundColor = defaultValue;
     }
-    
-    const colors = document.createElement('div');
-    colors.classList.add('fred--color_swatch-colors', 'fred--hidden');
 
     let isOpen = false;
 
@@ -201,8 +193,7 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
     if (setting.options) {
         setting.options.forEach(value => {
             if (typeof value === 'object') {
-                const option = document.createElement('div');
-                option.classList.add('fred--color_swatch-color');
+                const option = div('fred--color_swatch-color');
                 option.style.backgroundColor = value.color;
                 
                 if (value.label && value.label.trim() !== '') {
@@ -228,8 +219,7 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
 
                 colors.appendChild(option);
             } else {
-                const option = document.createElement('div');
-                option.classList.add('fred--color_swatch-color');
+                const option = div('fred--color_swatch-color');
                 option.style.backgroundColor = value;
     
                 option.addEventListener('click', e => {
@@ -249,24 +239,19 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
     wrapper.appendChild(preview);
     wrapper.appendChild(colors);
     
-    label.appendChild(wrapper);
+    labelEl.appendChild(wrapper);
 
     if (typeof onInit === 'function') {
-        onInit(setting, label, wrapper, preview, colors);
+        onInit(setting, labelEl, wrapper, preview, colors);
     }
     
-    return label;
+    return labelEl;
 };
 
 export const colorPicker = (setting, defaultValue = '', onChange, onInit) => {
-    const label = document.createElement('label');
-    label.innerHTML = setting.label || setting.name;
-
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('fred--color_picker');
-    
-    const preview = document.createElement('div');
-    preview.classList.add('fred--color_picker-preview');
+    const labelEl = label(setting.label || setting.name);
+    const wrapper = div('fred--color_picker');
+    const preview = div('fred--color_picker-preview');
     
     let isOpen = false;
     let pickerInstance = null;
@@ -306,30 +291,29 @@ export const colorPicker = (setting, defaultValue = '', onChange, onInit) => {
         preview.style.backgroundColor = defaultValue;
     }
 
-    const picker = document.createElement('div');
+    const picker = div();
     
     wrapper.appendChild(preview);
     wrapper.appendChild(picker);
     
-    label.appendChild(wrapper);
+    labelEl.appendChild(wrapper);
 
     if (typeof onInit === 'function') {
-        onInit(setting, label, wrapper, preview, picker);
+        onInit(setting, labelEl, wrapper, preview, picker);
     }
     
-    return label;
+    return labelEl;
 };
 
 export const slider = (setting, defaultValue = 0, onChange, onInit) => {
-    const label = document.createElement('label');
-    label.innerHTML = setting.label || setting.name;
+    const labelEl = label(setting.label || setting.name);
 
     if (!setting.min && !setting.max) {
         console.error('Slider Input error. Parameters min and max are required');
-        return label;
+        return labelEl;
     }
     
-    const sliderEl = document.createElement('div');
+    const sliderEl = div();
 
     let step = 1;
     if (setting.step) {
@@ -380,32 +364,28 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
         });
     }
 
-    label.appendChild(sliderEl);
+    labelEl.appendChild(sliderEl);
 
     if (typeof onInit === 'function') {
-        onInit(setting, label, sliderEl);
+        onInit(setting, labelEl, sliderEl);
     }
 
-    return label;
+    return labelEl;
 };
 
 export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit) => {
-    const wrapper = document.createElement('div');
-    
-    const label = document.createElement('label');
-    label.innerHTML = setting.label || setting.name;
-    label.classList.add('fred--label-choices');
+    const wrapper = div();
+    const labelEl = label((setting.label || setting.name), 'fred--label-choices');
+    const selectEl = select();
 
-    const input = document.createElement('select');
-
-    wrapper.appendChild(label);
-    wrapper.appendChild(input);
+    wrapper.appendChild(labelEl);
+    wrapper.appendChild(selectEl);
     
     let lookupTimeout = null;
     const lookupCache = {};
     let initData = [];
 
-    const pageChoices = new Choices(input, {
+    const pageChoices = new Choices(selectEl, {
         removeItemButton: setting.clearButton || false
     });
     
@@ -491,30 +471,24 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
     });
 
     if (typeof onInit === 'function') {
-        onInit(setting, label, input);
+        onInit(setting, labelEl, selectEl);
     }
 
     return wrapper;
 };
 
 export const image = (setting, defaultValue = '', onChange, onInit) => {
-    const label = document.createElement('label');
-    label.innerHTML = setting.label || setting.name;
+    const labelEl = label(setting.label || setting.name);
 
     setting.showPreview = (setting.showPreview === undefined) ? true : setting.showPreview;
 
-    const inputWrapper = document.createElement('div');
-    inputWrapper.classList.add('fred--input-group', 'fred--browse');
+    const inputWrapper = div(['fred--input-group', 'fred--browse']);
     
-    const input = document.createElement('input');
-    input.setAttribute('type', 'text');
-    input.value = defaultValue;
+    const inputEl = input(defaultValue);
 
-    const openFinderButton = document.createElement('a');
-    openFinderButton.classList.add('fred--browse-small');
-    openFinderButton.setAttribute('title', 'Browse');
+    const openFinderButton = a('', 'Browse', '', 'fred--browse-small');
 
-    const preview = document.createElement('img');
+    const preview = img('');
     let previewAdded = false;
     
     const finderOptions = {};
@@ -523,15 +497,15 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
         finderOptions.mediaSource = setting.mediaSource;
     }
 
-    input.addEventListener('keyup', e => {
+    inputEl.addEventListener('keyup', e => {
         if (typeof onChange === 'function') {
-            onChange(setting.name, input.value, input, setting);
+            onChange(setting.name, inputEl.value, inputEl, setting);
         }
 
-        if((setting.showPreview === true) && input.value) {
-            preview.src = input.value;
+        if((setting.showPreview === true) && inputEl.value) {
+            preview.src = inputEl.value;
             if (!previewAdded) {
-                label.appendChild(preview);
+                labelEl.appendChild(preview);
                 previewAdded = true;
             }
         } else {
@@ -548,14 +522,14 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
 
         const finder = new Finder((file, fm) => {
             if (typeof onChange === 'function') {
-                onChange(setting.name, file.url, input, setting);
+                onChange(setting.name, file.url, inputEl, setting);
             }
             
-            input.value = file.url;
+            inputEl.value = file.url;
             preview.src = file.url;
             
             if ((setting.showPreview === true) && !previewAdded) {
-                label.appendChild(preview);
+                labelEl.appendChild(preview);
                 previewAdded = true;
             }
         }, 'Browse Images', finderOptions);
@@ -563,25 +537,48 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
         finder.render();
     });
 
-    inputWrapper.appendChild(input);
+    inputWrapper.appendChild(inputEl);
     inputWrapper.appendChild(openFinderButton);
 
-    label.appendChild(inputWrapper);
+    labelEl.appendChild(inputWrapper);
 
-    if(input.value) {
-        preview.src = input.value;
+    if(inputEl.value) {
+        preview.src = inputEl.value;
     }
     
     if ((setting.showPreview === true) && preview.src) {
-        label.appendChild(preview);
+        labelEl.appendChild(preview);
         previewAdded = true;
     }
 
     if (typeof onInit === 'function') {
-        onInit(setting, label, input);
+        onInit(setting, labelEl, inputEl);
     }
 
-    return label;
+    return labelEl;
+};
+
+export const choices = (setting, defaultValue = '', onChange, onInit) => {
+    const wrapper = div();
+    const labelEl = label(setting.label || setting.name);
+    const selectEl = selectElement();
+
+    wrapper.appendChild(labelEl);
+    wrapper.appendChild(selectEl);
+    
+    const choicesInstance = new Choices(selectEl, setting.choices || {});
+
+    if (typeof onChange === 'function') {
+        choicesInstance.passedElement.addEventListener('choice', event => {
+            onChange(setting.name, event.detail.choice, selectEl, setting, choicesInstance);
+        });
+    }
+    
+    if (typeof onInit === 'function') {
+        onInit(setting, labelEl, selectEl, choicesInstance, defaultValue);
+    }
+
+    return wrapper;
 };
 
 export default {
@@ -594,5 +591,6 @@ export default {
     colorPicker,
     slider,
     page,
-    image
+    image,
+    choices
 };
