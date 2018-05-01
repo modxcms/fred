@@ -59,6 +59,10 @@ switch ($modx->event->name) {
             if (isset($_GET['fred'])) {
                 if (intval($_GET['fred']) === 0) return;
             }
+            
+            if (!$modx->user) return;
+            if (!($modx->user->hasSessionContext('mgr') || $modx->user->hasSessionContext($modx->resource->context_key))) return;
+            if ($modx->user->sudo !== 1) return;
 
             $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
             /** @var Fred $fred */
