@@ -83,7 +83,7 @@
       content: "";
       height: 24px;
       width: 24px;
-      background: url('images/pages.svg') center center no-repeat;
+      background: url('images/copy.svg') center center no-repeat;
       margin-bottom: 8px;
     }
     &.active, &:hover, &:focus {
@@ -95,7 +95,7 @@
       content: "";
       height: 24px;
       width: 24px;
-      background: url('images/elements.svg') center center no-repeat;
+      background: url('images/columns.svg') center center no-repeat;
       margin-bottom: 8px;
     }
     &.active, &:hover, &:focus {
@@ -107,7 +107,7 @@
       content: "";
       height: 24px;
       width: 24px;
-      background: url('images/settings.svg') center center no-repeat;
+      background: url('images/cog.svg') center center no-repeat;
       margin-bottom: 8px;
     }
     &.active, &:hover, &:focus {
