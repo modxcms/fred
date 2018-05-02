@@ -116,7 +116,11 @@ An array of setting objects and group objects for the Fred Element.
     - MODX Page select
     - Value is returned as an object in format: `{"id": 1, "url": "fred.html"}`
     - Type specific properties:
-        - clearButton - If set to `true` button to clear select will appear    
+        - clearButton - If set to `true` button to clear select will appear
+        - parents - If set, only resource from these parents (including parents itself) will show; Value can be string with a comma as a separator or an array
+        - resources - If set, only resource with specified IDs will show; Value can be string with a comma as a separator or an array
+        - depth - Depth to look for children for specified `parents`; Default: 1
+            
 - image
     - Image select
     - Type specific properties:

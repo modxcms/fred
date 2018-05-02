@@ -386,11 +386,26 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
     let initData = [];
 
     const pageChoices = new Choices(selectEl, {
+        shouldSort:false,
         removeItemButton: setting.clearButton || false
     });
+
+    let queryOptions = '';
+    
+    if (setting.parents) {
+        queryOptions += `&parents=${setting.parents}`;
+    }
+    
+    if (setting.resources) {
+        queryOptions += `&resources=${setting.resources}`;
+    }
+    
+    if (setting.depth) {
+        queryOptions += `&depth=${setting.depth}`;
+    }
     
     pageChoices.ajax(callback => {
-        fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${defaultValue.id}`)
+        fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${defaultValue.id}${queryOptions}`)
             .then(response => {
                 return response.json()
             })
@@ -432,7 +447,7 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
         if (query in lookupCache) {
             populateOptions(lookupCache[query]);
         } else {
-            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}`)
+            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}${queryOptions}`)
                 .then(response => {
                     return response.json()
                 })

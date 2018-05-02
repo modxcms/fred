@@ -307,7 +307,7 @@ export default class Fred {
     
     registerEditor(name, initFn) {
         if (typeof initFn !== 'function') {
-            console.log('initFn as to be a functions');
+            console.log('initFn has to be a functions');
             return false;
         }
         
