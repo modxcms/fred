@@ -187,12 +187,14 @@
       opacity: 0.75;
     }
     .fred--tablet-portrait span, .fred--tablet-landscape span {
-      background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAQAAAAqnqXBAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALdJREFUKM/VkjEKwkAQRd/EVQKClYgIgmKnjWXu4C3sPIClrZXHsRQEPYG1qKCNINaCyexaBGIKN2jpdH/+4/8pRuyIBS184zgwkeREB8V5oICAjbF1Eom4eoKGLGkatSDn8PYZejQANQpQ8Z2kZQCTUDSp+x2khVDqmrgQin+o+1tIAe8PoO6dZL1JFsBYoeRW22e2v1OmliVVBQJjL/QZ5PrGdJm9pYOjrCM3p5dr2BPSzumdTF90y0NcVdvNJQAAAABJRU5ErkJggg==') 50% 50% no-repeat;
+      background: transparent url('images/tablet-alt.svg') 50% 50% no-repeat;
+      background-size: 50%;
     }
     .fred--smartphone-portrait span, .fred--smartphone-landscape span {
-      background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAQCAQAAACFdibLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJNJREFUGFeVjDEKwkAUBefHhUAQG8HGwguIR7Czs/Munkq8hunTWohoIWlUBBf3r99CA64g6CuHeSP3hU05sZeSq83oY1JJOFJRc2ZLYEhHMpvgd35AMr9xCsU7uuQqTlMNBVz4gAH4w/wdfmvGxIzgFGuXBSCAwS3PRFaH5oMQAKHntEUXgCVr5s+Ei/aKjRk13QeKojmLEk117AAAAABJRU5ErkJggg==') 50% 50% no-repeat;
+      background: transparent url('images/mobile-alt.svg') 50% 50% no-repeat;
+      background-size: 33%;
     }
-    .fred--tablet-portrait span, .fred--smartphone-landscape span {
+    .fred--tablet-landscape span, .fred--smartphone-landscape span {
       -webkit-transform: rotate(90deg);
       -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
