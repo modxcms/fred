@@ -5,6 +5,8 @@ const setContent = (el, content) => {
         content.forEach(contentEl => {
             if ((typeof contentEl === 'object') && (contentEl.innerHTML !== undefined)) {
                 el.appendChild(contentEl);        
+            } else if (typeof contentEl === 'string') {
+                el.append(contentEl);
             }
         });    
     } else if ((typeof content === 'object') && (content.innerHTML !== undefined)) {

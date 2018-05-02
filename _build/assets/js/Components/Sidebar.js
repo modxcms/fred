@@ -1,5 +1,6 @@
 import emitter from '../EE';
 import fredConfig from './../Config';
+import { div, span } from '../UI/Elements';
 
 export default class Sidebar {
     static title = 'TITLE NOT SET';
@@ -49,17 +50,10 @@ export default class Sidebar {
     
     expand() {
         this.titleEl.classList.add('active');
-        this.titleEl.classList.remove('fred--hidden');
     }
     
     collapse() {
         this.titleEl.classList.remove('active');
-        this.titleEl.classList.remove('fred--hidden');
-    }
-    
-    hide() {
-        this.titleEl.classList.remove('active');
-        this.titleEl.classList.add('fred--hidden');
     }
     
     setContent(content) {
@@ -75,9 +69,10 @@ export default class Sidebar {
     loading(text = '') {
         text = text || `Retrieving ${this.constructor.title}`;
         
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('fred--loading_wrapper');
-        wrapper.innerHTML = `<span class="fred--loading"></span> ${text}`;
+        const wrapper = div('fred--loading_wrapper', [
+            span('fred--loading'),
+            text
+        ]);
         
         this.setContent(wrapper);
     }

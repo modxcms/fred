@@ -37,7 +37,7 @@ export default class Sidebar {
             cmp.loading();
 
             this.components.forEach(component => {
-                component.hide();
+                component.collapse();
             });
 
             cmp.expand();
