@@ -2,6 +2,8 @@
 
 namespace Fred\Endpoint\Ajax;
 
+use Fred\Utils;
+
 class GetResources extends Endpoint
 {
     protected $allowedMethod = ['OPTIONS', 'GET'];
@@ -17,7 +19,15 @@ class GetResources extends Endpoint
         $context = 'web';
         
         $query = $_GET['query'];
-        $current = intval($_GET['current']);
+        $current = isset($_GET['current']) ? intval($_GET['current']) : 0;
+        $parents = isset($_GET['parents']) ? $_GET['parents'] : '';
+        $resources = isset($_GET['resources']) ? $_GET['resources'] : '';
+        $depth = isset($_GET['depth']) ? intval($_GET['depth']) : 1;
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 25;
+        
+        $parents = Utils::explodeAndClean($parents, ',', 'intval');
+        $resources = Utils::explodeAndClean($resources, ',', 'intval');
+        
         $currentResource = null;
         
         if (!empty($current)) {
@@ -45,7 +55,28 @@ class GetResources extends Endpoint
             $where['id:!='] = $current;
         }
         
-        $c->limit(10);
+        if (!empty($parents) || !empty($resources)) {
+            $resourceIDs = [];
+            
+            if (!empty($resources)) {
+                $resourceIDs = $resources;
+            } else {
+                foreach ($parents as $parent) {
+                    $resourceIDs[] = $parent;
+                    
+                    $childIDs = $this->modx->getChildIds($parent, $depth, ['context' => $context]);
+                    if (!empty($childIDs)) {
+                        $resourceIDs = array_merge($resourceIDs, $childIDs);
+                    }
+                }
+
+                $resourceIDs = array_keys(array_flip($resourceIDs));
+            }
+
+            $where['id:IN'] = $resourceIDs;
+        }
+        
+        $c->limit($limit);
         
         if (!empty($query)) {
             $where['pagetitle:LIKE'] = '%' . $query . '%';
@@ -54,9 +85,9 @@ class GetResources extends Endpoint
         $c->where($where);
 
         $data = [];
-        $resources = $this->modx->getIterator('modResource', $c);
+        $resourcesIterator = $this->modx->getCollection('modResource', $c);
         
-        foreach ($resources as $resource) {
+        foreach ($resourcesIterator as $resource) {
             $data[] = [
                 'id' => $resource->id,
                 'value' => (string)$resource->id,
