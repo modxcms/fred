@@ -4,6 +4,7 @@ class Config {
     constructor() {
         this._config = {};
         this._editors = fredEditors;
+        this._rtes = {};
         this._pageSettings = {};
     }
     
@@ -23,6 +24,10 @@ class Config {
         return this._editors;
     }
     
+    get rtes() {
+        return this._rtes;
+    }
+    
     get pageSettings() {
         return this._pageSettings;
     }
@@ -33,6 +38,16 @@ class Config {
             return true;
         } else {
             console.log(`Editor "${name}" is already registered`);
+            return false;
+        }
+    }
+
+    registerRTE(name, rteInit) {
+        if (!this._rtes[name]) {
+            this._rtes[name] = rteInit;
+            return true;
+        } else {
+            console.log(`RTE "${name}" is already registered`);
             return false;
         }
     }
