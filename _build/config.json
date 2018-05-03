@@ -35,6 +35,10 @@
       {
         "key": "image_editor",
         "value": "ImageEditor"
+      },
+      {
+        "key": "rte",
+        "value": ""
       }
     ]
   },

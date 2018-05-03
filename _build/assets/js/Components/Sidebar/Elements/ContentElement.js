@@ -3,7 +3,6 @@ import emitter from '../../../EE';
 import { twig } from 'twig';
 import fetch from 'isomorphic-fetch';
 import fredConfig from '../../../Config';
-import Finder from "../../../Finder";
 import { div, button } from '../../../UI/Elements';
 
 export class ContentElement {
@@ -14,7 +13,6 @@ export class ContentElement {
         this.id = parseInt(this.el.dataset.fredElementId);
         this.wrapper = null;
 
-        this.setUpEditors();
         this.setUpEditors();
 
         this.render = this.render.bind(this);
@@ -226,6 +224,40 @@ export class ContentElement {
             }
         }
     }
+
+    onRTEInitFactory (el) {
+        return () => {
+            el.rteInited = true;
+        }
+    }
+    
+    onRTEContentChangeFactory (el) {
+        return (content) => {
+            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+
+            this.content[el.dataset.fredName]._raw._value = content;
+
+            if (el.dataset.fredTarget) {
+                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
+            }
+        }
+    }
+    
+    onRTEFocusFactory (wrapper, el) {
+        return () => {
+            this.inEditor = true;
+        }
+    }
+    
+    onRTEBlurFactory (wrapper, el) {
+        return () => {
+            this.inEditor = false;
+            wrapper.classList.remove('fred--block-active');
+            wrapper.classList.remove('fred--block-active_parent');
+        }
+    }
+    
     
     initElements(wrapper, content) {
         const fredElements = content.querySelectorAll('[data-fred-name]');
@@ -234,7 +266,7 @@ export class ContentElement {
             
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
-                    if ((mutation.type === 'characterData') && !el.rte) {
+                    if ((mutation.type === 'characterData') && (!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
                         if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
                         if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
 
@@ -293,64 +325,10 @@ export class ContentElement {
                 subtree: true
             });
 
-            if (el.dataset.fredRte === 'true') {
-                // I hate this fix; tinemce throws an error on first drop from dragule
-                setTimeout(() => {
-                    tinymce.init({
-                        target: el,
-                        theme: 'inlite',
-                        inline: true,
-                        plugins: 'modxlink image imagetools',
-                        insert_toolbar: "image quicktable modxlink",
-                        selection_toolbar: 'bold italic | h2 h3 blockquote modxlink',
-                        image_advtab: true,
-                        imagetools_toolbar: 'alignleft aligncenter alignright | rotateleft rotateright | flipv fliph | editimage imageoptions',
-                        auto_focus: false,
-                        branding: false,
-                        relative_urls: false,
-                        file_picker_callback : (callback, value, meta) => {
-                            const finder = new Finder((file, fm) => {
-                                const url = file.url;
-                                const info = file.name + ' (' + fm.formatSize(file.size) + ')';
-
-                                if (meta.filetype == 'image') {
-                                    callback(url, {alt: info});
-                                    return;
-                                }
-
-                                callback(url);
-                            }, 'Browse Files', Finder.getFinderOptionsFromElement(el, (meta.filetype === 'image')));
-
-                            finder.render();
-                            
-                            return false;
-                        },
-                        setup: editor => {
-                            el.rte = editor;
-
-                            editor.on('change', e => {
-                                if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
-                                if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
-    
-                                this.content[el.dataset.fredName]._raw._value = editor.getContent();
-    
-                                if (el.dataset.fredTarget) {
-                                    emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
-                                }
-                            });
-    
-                            editor.on('focus', e => {
-                                this.inEditor = true;
-                            });
-    
-                            editor.on('blur', e => {
-                                this.inEditor = false;
-                                wrapper.classList.remove('fred--block-active');
-                                wrapper.classList.remove('fred--block-active_parent');
-                            });
-                        }
-                    });
-                }, 1);
+            if (!!el.dataset.fredRte && (el.dataset.fredRte !== 'false')) {
+                if (this.config.rte && fredConfig.rtes[this.config.rte]) {
+                    fredConfig.rtes[this.config.rte](el, this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
+                }
             }
 
             if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};

@@ -90,7 +90,6 @@ switch ($modx->event->name) {
             }
             
             $fredContent = '
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.9/tinymce.min.js"></script>
         <script type="text/javascript" src="' . $fred->getOption('webAssetsUrl') . 'fred.min.js"></script>
         <link rel="stylesheet" href="' . $fred->getOption('webAssetsUrl') . 'fred.css" type="text/css" />
         ' . $includes . '
@@ -100,6 +99,7 @@ switch ($modx->event->name) {
                 launcherPosition: "' . $fred->getOption('launcher_position') . '",
                 iconEditor: "' . $fred->getOption('icon_editor') . '",
                 imageEditor: "' . $fred->getOption('image_editor') . '",
+                rte: "' . $fred->getOption('rte') . '",
                 resource: {
                     "id": ' . $modx->resource->id . ',
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 0] , 'abs')) . '",

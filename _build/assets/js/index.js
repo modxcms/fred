@@ -5,11 +5,11 @@ import fetch from 'isomorphic-fetch';
 import drake from './Drake';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import ElementSettings from './Components/Sidebar/Elements/ElementSettings';
-import registerTineMCEPlugins from './TinyMCE/RegisterPlugins';
 import libs from './libs';
 import Editor from './Editors/Editor';
 import fredConfig from './Config';
 import { div, section, a, iFrame } from './UI/Elements'
+import Finder from './Finder';
 
 export default class Fred {
     constructor(config = {}) {
@@ -18,6 +18,7 @@ export default class Fred {
         this.wrapper = null;
         
         this.libs = libs;
+        this.Finder = Finder;
 
         document.addEventListener("DOMContentLoaded", () => {
             this.init();
@@ -27,12 +28,12 @@ export default class Fred {
     render() {
         this.wrapper = div(['fred']);
         
-        this.testPreview();
+        this.renderPreview();
         
         document.body.appendChild(this.wrapper);
     }
-    
-    testPreview() {
+
+    renderPreview() {
         const previewWrapper = div(['fred--content-preview']);
         previewWrapper.style.display = 'none';
 
@@ -316,11 +317,20 @@ export default class Fred {
         return fredConfig.registerEditor(name, editor);
     }
 
+    registerRTE(name, initFn) {
+        if (typeof initFn !== 'function') {
+            console.log('initFn has to be a functions');
+            return false;
+        }
+
+        const rteInit = initFn(this, fredConfig);
+
+        return fredConfig.registerRTE(name, rteInit);
+    }
+
     init() {
         console.log('Hello from Fred!');
 
-        registerTineMCEPlugins(this);
-        
         this.registerListeners();
 
         this.dropzones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
