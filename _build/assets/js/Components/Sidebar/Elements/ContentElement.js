@@ -88,24 +88,21 @@ export class ContentElement {
         return content;
     }
 
-    render() {
-        const wrapper = div(['fred--block']);
-        wrapper.fredEl = this;
-
+    setWrapperActiveState(wrapper) {
         wrapper.addEventListener('mouseover', e => {
             e.stopPropagation();
 
             let firstSet = false;
-            
+
             if (e.path) {
                 e.path.forEach(el => {
                     if (el.classList && el.classList.contains('fred--block')) {
                         el.classList.add('fred--block-active');
-    
+
                         if (firstSet === true) {
                             el.classList.add('fred--block-active_parent');
                         }
-    
+
                         firstSet = true;
                     }
                 });
@@ -121,7 +118,7 @@ export class ContentElement {
 
                         firstSet = true;
                     }
-                    
+
                     el = el.parentNode;
                 }
             }
@@ -133,15 +130,20 @@ export class ContentElement {
                 wrapper.classList.remove('fred--block-active_parent');
             }
         });
+    }
+    
+    render() {
+        const wrapper = div(['fred--block']);
+        wrapper.fredEl = this;
+
+        this.setWrapperActiveState(wrapper);
 
         const toolbar = div(['fred--toolbar', 'handle']);
-
         const moveHandle = div(['fred--toolbar-grip']);
-
-        toolbar.appendChild(moveHandle);
-
         const duplicate = button('', ['fred--duplicate-icon'], this.duplicate.bind(this));
         const trashHandle = button('', ['fred--trash'], this.remove.bind(this));
+        
+        toolbar.appendChild(moveHandle);
 
         if (this.options.settings) {
             const settings = button('', ['fred--element-settings'], this.openSettings.bind(this));
@@ -233,14 +235,7 @@ export class ContentElement {
     
     onRTEContentChangeFactory (el) {
         return (content) => {
-            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
-            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
-
-            this.content[el.dataset.fredName]._raw._value = content;
-
-            if (el.dataset.fredTarget) {
-                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
-            }
+            this.setContentValue(el, content);
         }
     }
     
@@ -258,6 +253,84 @@ export class ContentElement {
         }
     }
     
+    setContentValue(el, content) {
+        if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+        if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+
+        this.content[el.dataset.fredName]._raw._value = content;
+
+        if (el.dataset.fredTarget) {
+            emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
+        }
+    }
+    
+    setContentElValue(el, onlyElValue = false, addListeners = true) {
+        switch (el.nodeName.toLowerCase()) {
+            case 'i':
+                if (this.content[el.dataset.fredName]._raw._value !== undefined) {
+                    el.className = this.content[el.dataset.fredName]._raw._value;
+                } else {
+                    if (onlyElValue) {
+                        this.content[el.dataset.fredName]._raw._value = el.className;
+                    }
+                }
+
+                if (addListeners) {
+                    el.addEventListener('click', e => {
+                        e.preventDefault();
+                        if (this.iconEditor !== null) {
+                            new this.iconEditor(el);
+                        } else {
+                            console.log(`Editor ${this.config.iconEditor} not found`);
+                        }
+                    });
+                }
+                
+                break;
+            case 'img':
+                if (this.content[el.dataset.fredName]._raw._value !== undefined) {
+                    el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
+                } else {
+                    if (onlyElValue) {
+                        this.content[el.dataset.fredName]._raw._value = el.getAttribute('src');
+                    }
+                }
+
+                if (addListeners) {
+                    el.addEventListener('click', e => {
+                        e.preventDefault();
+                        if (this.imageEditor !== null) {
+                            new this.imageEditor(el);
+                        } else {
+                            console.log(`Editor ${this.config.imageEditor} not found`);
+                        }
+                    });
+                }
+
+                break;
+            default:
+                if (this.content[el.dataset.fredName]._raw._value !== undefined) {
+                    el.innerHTML = this.content[el.dataset.fredName]._raw._value;
+                } else {
+                    if (onlyElValue) {
+                        this.content[el.dataset.fredName]._raw._value = el.innerHTML;
+                    }
+                }
+        }
+
+        if (el.dataset.fredAttrs) {
+            const attrs = el.dataset.fredAttrs.split(',');
+            attrs.forEach(attr => {
+                if (this.content[el.dataset.fredName]._raw[attr] !== undefined) {
+                    el.setAttribute(attr, this.content[el.dataset.fredName]._raw[attr]);
+                } else {
+                    if (onlyElValue) {
+                        this.content[el.dataset.fredName]._raw[attr] = el.getAttribute(attr);
+                    }
+                }
+            });
+        }
+    }
     
     initElements(wrapper, content) {
         const fredElements = content.querySelectorAll('[data-fred-name]');
@@ -267,42 +340,18 @@ export class ContentElement {
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
                     if ((mutation.type === 'characterData') && (!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
-                        if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
-                        if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
-
-                        this.content[el.dataset.fredName]._raw._value = el.innerHTML;
-
-                        if (el.dataset.fredTarget) {
-                            emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
-                        }
-
+                        this.setContentValue(el, el.innerHTML);
                         return;
                     }
 
                     if (mutation.type === 'attributes') {
                         if ((el.nodeName.toLowerCase()) === 'img' && (mutation.attributeName === 'src')) {
-                            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
-                            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
-
-                            this.content[el.dataset.fredName]._raw._value = el.getAttribute(mutation.attributeName);
-
-                            if (el.dataset.fredTarget) {
-                                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
-                            }
-
+                            this.setContentValue(el, el.getAttribute(mutation.attributeName));
                             return;
                         }
 
                         if ((el.nodeName.toLowerCase()) === 'i' && (mutation.attributeName === 'class')) {
-                            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
-                            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
-
-                            this.content[el.dataset.fredName]._raw._value = el.className;
-
-                            if (el.dataset.fredTarget) {
-                                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
-                            }
-
+                            this.setContentValue(el, el.className);
                             return;
                         }
 
@@ -340,85 +389,7 @@ export class ContentElement {
                 }
             }
 
-            if (this.content[el.dataset.fredName]._raw._value) {
-                switch (el.nodeName.toLowerCase()) {
-                    case 'i':
-                        el.className = this.content[el.dataset.fredName]._raw._value;
-
-                        el.addEventListener('click', e => {
-                            e.preventDefault();
-                            if (this.iconEditor !== null) {
-                                new this.iconEditor(el);
-                            } else {
-                                console.log(`Editor ${this.config.iconEditor} not found`);
-                            }
-                        });
-                        break;
-                    case 'img':
-                        el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
-
-                        el.addEventListener('click', e => {
-                            e.preventDefault();
-                            if (this.imageEditor !== null) {
-                                new this.imageEditor(el);
-                            } else {
-                                console.log(`Editor ${this.config.imageEditor} not found`);
-                            }
-                        });
-
-                        break;
-                    default:
-                        el.innerHTML = this.content[el.dataset.fredName]._raw._value;
-                }
-
-                if (el.dataset.fredAttrs) {
-                    const attrs = el.dataset.fredAttrs.split(',');
-                    attrs.forEach(attr => {
-                        if (this.content[el.dataset.fredName]._raw[attr]) {
-                            el.setAttribute(attr, this.content[el.dataset.fredName]._raw[attr]);
-                        }
-                    });
-                }
-            } else {
-                switch (el.nodeName.toLowerCase()) {
-                    case 'i':
-                        this.content[el.dataset.fredName]._raw._value = el.className;
-
-                        el.addEventListener('click', e => {
-                            e.preventDefault();
-                            if (this.iconEditor !== null) {
-                                new this.iconEditor(el);
-                            } else {
-                                console.log(`Editor ${this.config.iconEditor} not found`);
-                            }
-                        });
-                        break;
-                    case 'img':
-                        this.content[el.dataset.fredName]._raw._value = el.getAttribute('src');
-
-                        el.addEventListener('click', e => {
-                            e.preventDefault();
-                            if (this.imageEditor !== null) {
-                                new this.imageEditor(el);
-                            } else {
-                                console.log(`Editor ${this.config.imageEditor} not found`);
-                            }
-                        });
-
-                        break;
-                    default:
-                        this.content[el.dataset.fredName]._raw._value = el.innerHTML;
-                }
-
-                if (el.dataset.fredAttrs) {
-                    const attrs = el.dataset.fredAttrs.split(',');
-                    attrs.forEach(attr => {
-                        if (this.content[el.dataset.fredName]._raw[attr]) {
-                            this.content[el.dataset.fredName]._raw[attr] = el.getAttribute(attr);
-                        }
-                    });
-                }
-            }
+            this.setContentElValue(el);
         }
     }
     
@@ -426,21 +397,18 @@ export class ContentElement {
         if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
         if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
 
+        this.content[el.dataset.fredName]._raw._value = value;
+        
         switch (el.nodeName.toLowerCase()) {
             case 'i':
-                this.content[el.dataset.fredName]._raw._value = value;
                 el.className = value;
                 break;
             case 'img':
-                this.content[el.dataset.fredName]._raw._value = value;
                 el.setAttribute('src', value);
                 break;
             default:
-                this.content[el.dataset.fredName]._raw._value = value;
                 el.innerHTML = value;
         }
-
-
     }
 
     templateRender(parseModx = true) {
@@ -500,27 +468,7 @@ export class ContentElement {
 
             const fredElements = element.querySelectorAll('[data-fred-name]');
             for (let el of fredElements) {
-                if (this.content[el.dataset.fredName] && this.content[el.dataset.fredName]._raw && this.content[el.dataset.fredName]._raw._value) {
-                    switch (el.nodeName.toLowerCase()) {
-                        case 'i':
-                            el.className = this.content[el.dataset.fredName]._raw._value;
-                            break;
-                        case 'img':
-                            el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
-                            break;
-                        default:
-                            el.innerHTML = this.content[el.dataset.fredName]._raw._value;
-                    }
-
-                    if (el.dataset.fredAttrs) {
-                        const attrs = el.dataset.fredAttrs.split(',');
-                        attrs.forEach(attr => {
-                            if (this.content[el.dataset.fredName]._raw[attr]) {
-                                el.setAttribute(attr, this.content[el.dataset.fredName]._raw[attr]);
-                            }
-                        });
-                    }
-                }
+                this.setContentElValue(el, true, false);
 
                 el.removeAttribute('contenteditable');
                 el.removeAttribute('data-fred-name');
