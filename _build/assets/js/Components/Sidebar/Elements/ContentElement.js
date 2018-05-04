@@ -99,6 +99,10 @@ export class ContentElement {
                     if (el.classList && el.classList.contains('fred--block')) {
                         el.classList.add('fred--block-active');
 
+                        if (this.atTop(el)) {
+                            el.classList.add('fred--block-active_top');
+                        }
+
                         if (firstSet === true) {
                             el.classList.add('fred--block-active_parent');
                         }
@@ -111,6 +115,10 @@ export class ContentElement {
                 while(el) {
                     if (el.classList && el.classList.contains('fred--block')) {
                         el.classList.add('fred--block-active');
+
+                        if (this.atTop(el)) {
+                            el.classList.add('fred--block-active_top');
+                        }
 
                         if (firstSet === true) {
                             el.classList.add('fred--block-active_parent');
@@ -127,9 +135,21 @@ export class ContentElement {
         wrapper.addEventListener('mouseout', e => {
             if (this.inEditor === false) {
                 wrapper.classList.remove('fred--block-active');
+                wrapper.classList.remove('fred--block-active_top');
                 wrapper.classList.remove('fred--block-active_parent');
             }
         });
+    }
+
+    atTop(element) {
+        this.toTop = 0;
+
+        while(element) {
+            this.toTop += (element.offsetTop - element.scrollTop + element.clientTop);
+            element = element.offsetParent;
+        }
+
+        return (this.toTop  < 38);
     }
     
     render() {
@@ -139,7 +159,7 @@ export class ContentElement {
         this.setWrapperActiveState(wrapper);
 
         const toolbar = div(['fred--toolbar', 'handle']);
-        const moveHandle = div(['fred--toolbar-grip']);
+        const moveHandle = div(['fred--toolbar-grip', 'handle']);
         const duplicate = button('', ['fred--duplicate-icon'], this.duplicate.bind(this));
         const trashHandle = button('', ['fred--trash'], this.remove.bind(this));
         
@@ -249,6 +269,7 @@ export class ContentElement {
         return () => {
             this.inEditor = false;
             wrapper.classList.remove('fred--block-active');
+            wrapper.classList.remove('fred--block-active_top');
             wrapper.classList.remove('fred--block-active_parent');
         }
     }

@@ -3,7 +3,7 @@
     width: 100%;
     height: 35px;
     margin: 0 auto 12px;
-    border: 1px solid darken($black, 5%);
+    border: 1px solid darken($black, 10%);
     border-radius: $radius;
     box-sizing: border-box;
   }
@@ -20,7 +20,7 @@
     .fred--color_swatch-color {
       width: 30px;
       height: 30px;
-      border: 1px solid darken($black, 5%);
+      border: 1px solid darken($black, 10%);
       border-radius: 15px;
       cursor: pointer;
       display: inline-block;
@@ -54,7 +54,7 @@
     width: 100%;
     height: 35px;
     margin: 0 auto 12px;
-    border: 1px solid darken($black, 5%);
+    border: 1px solid darken($black, 10%);
     border-radius: $radius;
     cursor: pointer;
   }

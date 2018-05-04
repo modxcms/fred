@@ -66,6 +66,9 @@
       &:after { clear: both; }
     }
   }
+  .fred--input-group .fred--browse-small {
+    margin-bottom: 0;
+  }
   .fred--preview{
     text-align: center;
     label{

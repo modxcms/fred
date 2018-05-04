@@ -70,6 +70,12 @@
     }
 
   }
+  &.fred--block-active_top{
+    > .fred--toolbar{
+      top: auto;
+      bottom: -36px;
+    }
+  }
   &.fred--block-active_parent {
     outline: 3px solid lighten($gray, 15%);
     z-index: 1;
@@ -102,7 +108,6 @@
     transition: .2s ease-in;
     position: absolute;
     top: -36px;
-    left: 0;
     right: 0;
     border: 3px solid $modxblue;
     border-bottom: 0;
@@ -116,6 +121,7 @@
       overflow: hidden;
       line-height: 5px;
       padding: 10px 4px;
+      padding-right: 28px;
       vertical-align: middle;
       margin-top: -.7em;
       margin-right: .3em;
