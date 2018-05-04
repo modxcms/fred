@@ -78,7 +78,7 @@
   }
   label {
     width: 90%;
-    margin: 0 5% 16px;
+    margin: 0 5%;
     font-weight: lighter;
     color: $white;
   }
@@ -88,15 +88,15 @@
     border: 1px solid darken($black, 5%);
     height: 36px;
     width: 90%;
-    margin: 0 5%;
+    margin: 0 5% 16px;
     border-radius: $radius 0 0 $radius;
     padding: 0 16px;
     box-sizing: border-box;
   }
   label{
     input[type="text"], input[type="date"], textarea, select {
-      //width: 100%;
-      //margin: 0;
+      width: 100%;
+      margin: 0 0 16px;
     }
   }
   .choices:last-child{
@@ -201,18 +201,14 @@
     display: block;
     width: calc(90% - 16px);
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: 0;
     margin-left: calc(5% + 8px);
     margin-right: calc(5% + 8px);
     font-size: 14px;
     font-weight: lighter;
     color: $white;
-  }
-  dd{
-    label{
-      width: 90%;
-      margin-left: 5%;
-      margin-right: 5%;
+    & > div{
+      margin-bottom: 16px;
     }
   }
   input, select, textarea {
@@ -223,6 +219,21 @@
     width: 100%;
     border-radius: $radius 0 0 $radius;
     padding: 0 16px;
+    margin-bottom: 16px;
+  }
+  .choices{
+    margin-bottom: 16px;
+    margin-left: calc(5% + 8px);
+    margin-right: calc(5% + 8px);
+    width: calc(90% - 16px);
+    color: $white;
+  }
+  dd{
+    label, .choices{
+      width: 90%;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
   }
 }
 .fred--modal{
