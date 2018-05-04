@@ -6,7 +6,7 @@
   .fred--close-small{
     position: relative;
     height: 36px; width: 36px;
-    background-color: darken($black, 5%);
+    background-color: darken($black, 10%);
     background-position: center;
     background-size: 20px;
     background-blend-mode: overlay;
@@ -16,6 +16,9 @@
     &:hover{
       background-color: $black;
     }
+  }
+  .fred--browse-small{
+    margin-bottom: 16px;
   }
   .flatpickr-calendar{
     flex-basis: 100%;
@@ -39,7 +42,7 @@
   input[type="text"] {
     background-color: lighten($black, 5%);
     color: white;
-    border: 1px solid darken($black, 5%);
+    border: 1px solid darken($black, 10%);
     height: 36px;
     width: calc(100% - 35px);
     border-radius: $radius 0 0 $radius;
@@ -85,7 +88,7 @@
   input[type="text"], input[type="date"], textarea, select {
     background-color: lighten($black, 5%);
     color: white;
-    border: 1px solid darken($black, 5%);
+    border: 1px solid darken($black, 10%);
     height: 36px;
     width: 90%;
     margin: 0 5% 16px;
@@ -137,7 +140,7 @@
   input[type="text"], input[type="date"], textarea, select {
     background-color: lighten($black, 5%);
     color: white;
-    border: 1px solid darken($black, 5%);
+    border: 1px solid darken($black, 10%);
     height: 36px;
     width: 100%;
     border-radius: $radius 0 0 $radius;
@@ -214,7 +217,7 @@
   input, select, textarea {
     background-color: lighten($black, 5%);
     color: white;
-    border: 1px solid darken($black, 5%);
+    border: 1px solid darken($black, 10%);
     height: 36px;
     width: 100%;
     border-radius: $radius 0 0 $radius;
@@ -256,6 +259,7 @@
   .choices, input, select, textarea{
     margin-bottom: 16px;
     box-sizing: border-box;
+    width: 100%;
   }
 }
 .fred--toggle{
