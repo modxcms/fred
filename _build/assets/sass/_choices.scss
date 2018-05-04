@@ -26,7 +26,7 @@ $choices-button-offset: 8px !default;
   margin-bottom: $choices-guttering;
   font-size: $choices-font-size-lg;
   &:focus { outline: none; }
-  &:last-child { margin-bottom: 0; }
+  //&:last-child { margin-bottom: 0; }
   &.is-disabled {
     .#{$choices-selector}__inner, .#{$choices-selector}__input {
       background-color: $choices-bg-color-disabled;
