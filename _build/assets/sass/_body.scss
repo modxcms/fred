@@ -50,6 +50,7 @@
   }*/
   &.fred--block-active, &:focus {
     outline: 3px solid $modxblue;
+    outline-offset: -3px;
     z-index: 2;
     min-height: 1px;
     transition: none;
@@ -101,8 +102,8 @@
     transition: .2s ease-in;
     position: absolute;
     top: -36px;
-    left: -3px;
-    right: -3px;
+    left: 0;
+    right: 0;
     border: 3px solid $modxblue;
     border-bottom: 0;
     z-index: 10009;
