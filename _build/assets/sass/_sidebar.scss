@@ -225,7 +225,16 @@
     display: none;
     color: $white;
     font-size: 14px;
-    position: relative;
+    transition: $timing;
+    opacity: 1;
+    position: fixed;
+    width: 280px;
+    left: 80px;
+    height: 100vh;
+    overflow: auto;
+    overflow-x: hidden;
+    top: 0;
+    background-color: $darkblue;
 
     .fred--thumbs .fred--thumb {
       background-color: transparent;
@@ -272,16 +281,6 @@
       }
     }
     dl {
-      transition: $timing;
-      opacity: 1;
-      position: fixed;
-      width: 280px;
-      left: 80px;
-      height: 100vh;
-      overflow: auto;
-      overflow-x: hidden;
-      top: 0;
-      background-color: $darkblue;
       dt {
         position: relative;
         padding: 16px 28px;
@@ -437,13 +436,16 @@
 
 .fred--loading_wrapper {
   color: $white;
-  background: darken($darkblue, 5%);
   text-align: center;
   text-shadow: 1px 1px 2px black;
   animation: fred--fadein .3s ease-in;
   width: 80px;
   line-height: 18px;
   font-size: 12px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) {
