@@ -64,6 +64,8 @@
       display: block;
       height: 36px;
       opacity: 1;
+      top: -36px;
+      bottom: auto;
     }
     > .fred--hidden{
       display: none !important;
@@ -89,6 +91,11 @@
         opacity: 0;
       }
     }
+    &.fred--block-active_top{
+      > .fred--toolbar{
+        bottom: -20px;
+      }
+    }
     .fred--block-active{
       box-shadow: rgba($black, .34) 0 4px 8px;
     }
@@ -107,7 +114,8 @@
     overflow:hidden;
     transition: .2s ease-in;
     position: absolute;
-    top: -36px;
+    top: 0;
+    bottom: 0;
     right: 0;
     border: 3px solid $modxblue;
     border-bottom: 0;

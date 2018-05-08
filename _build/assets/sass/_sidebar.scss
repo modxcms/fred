@@ -78,6 +78,31 @@
     opacity: 0;
     transition: none;
   }
+  & > dl {
+    outline: none;
+    & > dt{
+      position: relative;
+      outline: none;
+      &:after{
+        content: "";
+        position: absolute;
+        top: 16px;
+        bottom: 16px;
+        left: -16px;
+        width: 8px;
+        background: $white;
+        opacity: 0;
+        border-radius: 8px;
+        transition: $timing;
+      }
+      &.active{
+        &:after{
+          left: -4px;
+          opacity: .3;
+        }
+      }
+    }
+  }
   &_pages {
     &:before {
       content: "";
@@ -411,11 +436,14 @@
 }
 
 .fred--loading_wrapper {
-  margin: 32px auto;
   color: $white;
+  background: darken($darkblue, 5%);
   text-align: center;
   text-shadow: 1px 1px 2px black;
   animation: fred--fadein .3s ease-in;
+  width: 80px;
+  line-height: 18px;
+  font-size: 12px;
 }
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) {
