@@ -27,12 +27,12 @@
   //padding:2rem 16px;
   min-height: 30px;
   outline: 15px solid rgba($modxblue, 0);
-  transition: $timing cubic-bezier(.79, .14, .15, .86);
+  //transition: $timing cubic-bezier(.79, .14, .15, .86);
   z-index: 1;
   .fred--block{
     outline: 3px solid rgba($modxblue, 0);
     &.fred--block-active, &:focus {
-      transition: $timing cubic-bezier(.79, .14, .15, .86);
+      //transition: $timing cubic-bezier(.79, .14, .15, .86);
     }
   }
 
@@ -54,6 +54,7 @@
     z-index: 2;
     min-height: 1px;
     transition: none;
+    box-shadow: 0 0 100vh 100vw rgba(#000,.2), 0 0 50px rgba(#000, .5);
     /*&:before {
       content: '';
       background: rgba($modxblue, .1);

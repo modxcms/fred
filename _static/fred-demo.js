@@ -1,9 +1,10 @@
 // Demo Functions
 $(document).ready(function () {
-    var fredbutton, sidebar, sidebarclose, menu, logout, settings, block, panel = null;
+    var fredlauncher, fredbutton, sidebar, sidebarclose, menu, logout, settings, block, panel = null;
+    fredlauncher = $('.fred--launcher');
     fredbutton = $('.fred--launcher_btn_fred');
     sidebar = $('.fred--sidebar');
-    sidebarclose = $('.fred--sidebar_close');
+    sidebarclose = $('.fred--sidebar_title');
     menu = $('#fred--menu')
     logout = $('.fred--btn-sidebar_logout');
     settings = $('.fred--element-settings');
@@ -14,6 +15,8 @@ $(document).ready(function () {
         if (sidebar.hasClass('fred--hidden')) {
             sidebar.removeAttr('aria-hidden');
             sidebar.removeClass('fred--hidden');
+            fredlauncher.attr('aria-hidden', 'true');
+            fredlauncher.addClass('fred--hidden');
         } else {
             sidebar.attr('aria-hidden', 'true');
             sidebar.addClass('fred--hidden');
@@ -23,23 +26,23 @@ $(document).ready(function () {
     sidebarclose.click(function () {
         sidebar.attr('aria-hidden', 'true');
         sidebar.addClass('fred--hidden');
+        fredlauncher.removeAttr('aria-hidden');
+        fredlauncher.removeClass('fred--hidden');
     });
 
     menu.children('dt').each(function () {
         $(this).click(function () {
-            $(this).toggleClass('active');
             if ($(this).hasClass('active')) {
                 logout.hide();
                 menu.children('dt').each(function () {
-                    if (!$(this).hasClass('active')) {
-                        $(this).addClass('fred--hidden')
-                    }
+                    $(this).removeClass('active');
                 });
             } else {
                 logout.show();
                 menu.children('dt').each(function () {
-                    $(this).removeClass('fred--hidden')
+                    $(this).removeClass('active');
                 });
+                $(this).addClass('active');
             }
         })
     });
