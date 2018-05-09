@@ -1,5 +1,5 @@
 # Fred
-Meet Fred, the friendly editor. Fred helps designers, developers and content creators collaborate more efficiently through an intuitive, powerful and flexible drag-and-drop visual content builder for MODX. 
+Meet Fred, the friendly editor. Fred helps designers, developers and content creators to collaborate on MODX projects through a powerful and flexible drag-and-drop visual website builder. Designers create the specifications of how a site should look and work. Developers create a reusalble design libraries for sites. And the ultimate site owners can then use that work to create compelling content quickly using intuitive, visual drag and drop tools straight from the front end of a website.
 
 Sinces there are _zero_ restriction on markup, techniques or templates, designers can realize their creative vision with pixel-perfect precision. Complete control over what can and cannot be edited means developers can create a library of design elements based on designers’ work without worrying that end-users will break things. And end-users are empowered to quickly create amazing web content without the need to get designers and developers involved (or fear of retribution if they break things).
 
@@ -85,16 +85,25 @@ An array of setting objects and group objects for the Fred Element.
 - value - Default value
 
 **Available types:**
-- text - Text value
+- text 
+    - `input type="text"`
+    - any text value
 - select
     - Single select value
     - Type specific properties:
         - options - An object of `value:label` properties
-- toggle - true/false checkbox
+- toggle 
+    - true/false checkbox
+    - returns logical `true` or `false`
+    
 - colorswatch
     - Visual color picker, from predefined values
     - Type specific properties:
         - options - An array of colors; Example: `["lightcoral", "red", "black"]`
+               - value - the value passed to Twig for the color, which can be anything
+               - color - the displayed color for the swatch
+               - label - an arbitrary label for the swatch
+
 - colorpicker
     - Color picker
     - Type specific properties:
@@ -102,9 +111,9 @@ An array of setting objects and group objects for the Fred Element.
         - options 
             - An array of colors; Example: `["lightcoral", "red", "black"]`
             - Color can be either a `string` or an `object` with following properties:
-               - value - Real value of the color, will be passed to Twig
-               - color - Color that will display in the color swatch
-               - label - Label that will display in the color swatch
+               - value - the value passed to Twig for the color, which can be anything
+               - color - the displayed color for the swatch
+               - label - an arbitrary label for the swatch
 - slider
     - Slider input for numbers
     - Type specific properties:
