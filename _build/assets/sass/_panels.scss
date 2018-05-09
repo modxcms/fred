@@ -51,7 +51,7 @@
   dl {
     dt {
       position: relative;
-      padding: 16px 32px 16px 48px;
+      padding: 16px 32px;
       font-size: 20px;
       font-weight: lighter;
       transition: $timing;
@@ -68,20 +68,19 @@
         background-color: darken($black, 5%);
       }
       + dd {
-        display: none;
-        color: $white;
-        font-size: 14px;
         padding: 24px 16px;
-        transition: $timing;
+        display: none;
         opacity: 1;
         position: fixed;
-        width: 320px;
-        left: 275px;
+        width: 300px;
+        left: 160px;
         height: 100vh;
         overflow: auto;
         overflow-x: hidden;
         top: 0;
         background-color: lighten($black, 5%);
+        box-shadow: -160px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
+        z-index: 99;
         &:hover {
           display: block;
         }
