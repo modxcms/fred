@@ -35,23 +35,39 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
   &-sidebar {
     position: relative;
     display: block;
-    color: white;
-    text-align: center;
-    background: transparent;
-    border: 1px solid darken($black, 15%);
-    border-radius: $radius;
-    padding: 8px;
-    margin: 16px 5%;
-    width: 90%;
+    color: $white;
+    font-size: 12px;
+    margin: 20px 20px 0;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    background: $darkblue;
+    border-radius: 20px;
+    border: 1px solid #3d5f88;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
     cursor: pointer;
+    transition: $timing;
     &:hover, &:focus {
-      background-color: darken($black, 15%);
+      transform: scale(1.05);
+      background-color: darken($darkblue, 10%);
     }
     &_logout {
       position: absolute;
       bottom: 0;
       right: 0;
-      width: 50%;
+    }
+    &_save{
+      background-image: url('images/save.svg');
+      text-indent: -999px;
+      &:hover{
+        background-color: $modxred;
+      }
+    }
+    &_preview{
+      background-image: url('images/flask.svg');
+      text-indent: -999px;
     }
   }
   &-panel {
