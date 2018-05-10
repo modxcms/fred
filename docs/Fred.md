@@ -99,21 +99,18 @@ An array of setting objects and group objects for the Fred Element.
 - colorswatch
     - Visual color picker, from predefined values
     - Type specific properties:
-        - options - An array of colors; Example: `["lightcoral", "red", "black"]`
-               - value - the value passed to Twig for the color, which can be anything
-               - color - the displayed color for the swatch
-               - label - an arbitrary label for the swatch
+        - options 
+            - An array of colors; Example: `["lightcoral", "red", "black"]`
+            - Color can be either a `string` or an `object` with following properties:
+                - value - the value passed to Twig for the color, which can be anything
+                - color - the displayed color for the swatch
+                - label - an arbitrary label for the swatch
 
 - colorpicker
     - Color picker
     - Type specific properties:
         - showAlpha - boolean to show alpha slider; Default: `true`
-        - options 
-            - An array of colors; Example: `["lightcoral", "red", "black"]`
-            - Color can be either a `string` or an `object` with following properties:
-               - value - the value passed to Twig for the color, which can be anything
-               - color - the displayed color for the swatch
-               - label - an arbitrary label for the swatch
+        - options - An array of colors; Example: `["lightcoral", "red", "black"]`
 - slider
     - Slider input for numbers
     - Type specific properties:
