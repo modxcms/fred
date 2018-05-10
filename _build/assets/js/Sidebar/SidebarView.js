@@ -20,10 +20,15 @@ export const render = (components, onComponentAdd, onClose) => {
         return sidebar;
     };
     
+    const logo = img(`${fredConfig.config.assetsUrl || ''}images/modx-revo-icon-48.svg`, 'MODX FRED', 'fred--logo');
+    logo.addEventListener('click', e => {
+        e.preventDefault();
+        onClose();
+    });
+    
     wrapper = div(['fred--sidebar', 'fred--hidden'], [
-        button([i('fred--angle-left'), i('fred--angle-left')], ['fred--sidebar_close'], onClose),
         div('fred--sidebar_title', [
-            img(`${fredConfig.config.assetsUrl || ''}images/modx-revo-icon-48.svg`, 'MODX FRED', 'fred--logo'),
+            logo,
             h1('Fred')
         ])
     ]);
