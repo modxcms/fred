@@ -43,11 +43,15 @@ export default class Launcher {
         wrapper.appendChild(preview);
 
         emitter.on('fred-sidebar-hide', silent => {
-            wrapper.classList.remove('fred--hidden');
+            if (silent !== true) {
+                wrapper.classList.remove('fred--hidden');
+            }
         });
 
         emitter.on('fred-sidebar-show', silent => {
-            wrapper.classList.add('fred--hidden'); 
+            if (silent !== true) {
+                wrapper.classList.add('fred--hidden');
+            }
         });
 
         emitter.emit('fred-wrapper-insert', wrapper);
