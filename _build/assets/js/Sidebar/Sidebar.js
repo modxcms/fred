@@ -117,7 +117,9 @@ export default class Sidebar {
     
     globalHideSidebar(e) {
         if (!this.fredWrapper.contains(e.target)) {
-            this.hideSidebar(false);
+            this.components.forEach(component => {
+                component.collapse();
+            });
         }
     }
 }
