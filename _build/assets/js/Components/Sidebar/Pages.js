@@ -6,7 +6,7 @@ import { text, choices } from '../../UI/Inputs';
 import { errorHandler } from '../../Utils';
 
 export default class Pages extends Sidebar {
-    static title = 'Pages';
+    static title = 'Site';
     static expandable = true;
 
     init() {
@@ -23,7 +23,7 @@ export default class Pages extends Sidebar {
             template: 0
         };
     }
-    
+
     click() {
         if (this.content !== null) {
             return this.buildPanel();
@@ -38,7 +38,7 @@ export default class Pages extends Sidebar {
                 return this.buildPanel();
             });
     }
-    
+
     buildPanel() {
         const content = div(['fred--pages']);
         this.pageList = dl(['fred--pages_list']);
@@ -50,12 +50,12 @@ export default class Pages extends Sidebar {
 
         return content;
     }
-    
+
     buildCreatePage(content) {
         const formWrapper = dd();
-        
+
         const pageForm = form(['fred--pages_create']);
-        
+
         const fields = fieldSet();
         const title = legend('Create Page');
 
@@ -101,12 +101,12 @@ export default class Pages extends Sidebar {
             name: 'pagetitle',
             label: 'Page Title'
         }, this.state.pagetitle, onChange);
-        
+
         fields.appendChild(pagetitle);
-        
+
         const createButton = button('Create', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', 'Creating Page');
-            
+
             fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
                 method: "post",
                 credentials: 'same-origin',
@@ -126,12 +126,12 @@ export default class Pages extends Sidebar {
                 if (err.response._fields.pagetitle) {
                     pagetitle.onError(err.response._fields.pagetitle);
                 }
-                
+
                 emitter.emit('fred-loading-hide');
             });
         });
-        
-        
+
+
         fields.appendChild(createButton);
 
         pageForm.appendChild(fields);
@@ -155,7 +155,7 @@ export default class Pages extends Sidebar {
         content.appendChild(createPageButton);
         content.appendChild(formWrapper);
     }
-    
+
     buildTree(pages, wrapper) {
         pages.forEach(page => {
             this.parents.push({
@@ -163,10 +163,10 @@ export default class Pages extends Sidebar {
                 value: '' + page.id,
                 label: page.pagetitle
             });
-            
+
             const pageTitle = dt(page.pagetitle, [], (e, el) => {
                 const activeTabs = this.pageList.querySelectorAll('dt.active');
-                
+
                 const isActive = el.classList.contains('active');
 
                 for (let tab of activeTabs) {
@@ -177,15 +177,15 @@ export default class Pages extends Sidebar {
                     el.classList.add('active');
                 }
             });
-            
+
             if (page.published !== true) {
                 pageTitle.classList.add('fred--pages_unpublished');
             }
-            
+
             if (page.deleted === true) {
                 pageTitle.classList.add('fred--pages_deleted');
             }
-            
+
             if (page.hidemenu === true) {
                 pageTitle.classList.add('fred--pages_hidden');
             }
@@ -200,11 +200,11 @@ export default class Pages extends Sidebar {
             } else {
                 pageTitle.classList.add('fred--pages_noedit');
             }
-            
+
             if (page.children.length > 0) {
                 const children = dl(['fred--hidden']);
                 children.setAttribute('aria-disabled', 'true');
-                
+
                 this.buildTree(page.children, children);
 
                 const expander = button('', ['fred--btn-list', 'fred--btn-list_expand'], () => {
@@ -222,46 +222,46 @@ export default class Pages extends Sidebar {
                 });
 
                 pageTitle.insertBefore(expander, pageTitle.firstChild);
-                
+
                 wrapper.append(children);
             }
         });
     }
-    
+
     createMenu(page) {
         const menu = div(['fred--pages_menu']);
 
         const header = h3(page.pagetitle);
 
         const edit = button('Edit', [], () => {
-            window.location.href = page.url;    
+            window.location.href = page.url;
         });
-        
+
         const duplicate = button('Duplicate');
-        
+
         const publish = button();
         if (page.published === true) {
-            publish.innerHTML = 'Unpublish';    
+            publish.innerHTML = 'Unpublish';
         } else {
             publish.innerHTML = 'Publish';
         }
-        
+
         const createChildPage = button('Create Child Page');
-        
+
         const deletePage = button();
         if (page.deleted === true) {
             deletePage.innerHTML = 'Undelete';
         } else {
-            deletePage.innerHTML = 'Delete';    
+            deletePage.innerHTML = 'Delete';
         }
-        
+
         menu.appendChild(header);
         menu.appendChild(edit);
         menu.appendChild(duplicate);
         menu.appendChild(publish);
         menu.appendChild(createChildPage);
         menu.appendChild(deletePage);
-        
+
         return menu;
     }
 }
