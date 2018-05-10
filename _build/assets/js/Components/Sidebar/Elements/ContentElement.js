@@ -172,11 +172,167 @@ export class ContentElement {
 
         const positionGroup = div(['fred--position-group']);
 
-        const moveUp = button('', ['fred--position-up']);
-        moveUp.setAttribute('disabled', 'disabled');
+        const moveUpRoot = () => {
+            this.wrapper.parentElement.insertBefore(this.wrapper, this.wrapper.previousElementSibling);
+        };
+
+        const moveUpToDropzone = (target, dzName) => {
+            target.addElementToDropZone(dzName, this);
+        };
+
+        const moveUpFromDropzone = () => {
+            if (!this.parent.parent) {
+                    this.dzName = this.parent.wrapper.parentElement.dataset.fredDropzone;
+                    this.parent.wrapper.parentElement.insertBefore(this.wrapper, this.parent.wrapper);
+                    this.parent = null;
+            } else {
+                const parentPosition = this.parent.parent.dzs[this.parent.dzName].children.indexOf(this.parent.wrapper);
+                if (parentPosition !== -1) {
+                    if (0 === parentPosition) {
+                        this.parent.parent.unshiftElementToDropZone(this.parent.dzName, this);
+                    } else {
+                        this.parent.parent.insertBeforeElementToDropZone(this.parent.dzName, this.parent, this);
+                    }
+                }
+            }
+        };
+
+        const moveUpInDropzone = (fredEl, index) => {
+            fredEl.parent.dzs[fredEl.dzName].children[index - 1].insertAdjacentElement('beforebegin', fredEl.wrapper);
+            fredEl.parent.dzs[fredEl.dzName].children[index - 1] = fredEl.parent.dzs[fredEl.dzName].children.splice(index, 1, fredEl.parent.dzs[fredEl.dzName].children[index - 1])[0];
+        };
         
-        const moveDown = button('', ['fred--position-down']);
-        moveDown.setAttribute('disabled', 'disabled');
+        const moveUp = button('', ['fred--position-up'], () => {
+            if (!this.parent) {
+                if (this.wrapper.previousElementSibling) {
+                    const dzList = Object.keys(this.wrapper.previousElementSibling.fredEl.dzs);
+                    if (dzList.length > 0) {
+                        moveUpToDropzone(this.wrapper.previousElementSibling.fredEl, dzList[dzList.length - 1]);
+                    } else {
+                        moveUpRoot();
+                    }
+                }
+            } else {
+                let carry = false;
+                const dropZones = Object.keys(this.parent.dzs);
+                for (let i = dropZones.length; i--; ) {
+                    const dzName = dropZones[i];
+
+                    if (carry === true) {
+                        carry = false;
+                        moveUpToDropzone(this.parent, dzName);
+                        break;
+                    }
+
+                    if (dzName !== this.dzName) continue;
+
+                    const index = this.parent.dzs[dzName].children.indexOf(this.wrapper);
+                    if (index !== -1) {
+                        const prevChild = this.parent.dzs[dzName].children[index - 1];
+                        if (prevChild) {
+                            const dzList = Object.keys(prevChild.fredEl.dzs);
+                            if (dzList.length > 0) {
+                                this.parent.dzs[dzName].children.splice(index, 1);
+                                moveUpToDropzone(prevChild.fredEl, dzList[dzList.length - 1]);
+                            } else {
+                                moveUpInDropzone(this, index);
+                            }
+                        } else {
+                            this.parent.dzs[dzName].children.shift();
+                            carry = true;
+                        }
+                    }
+                }
+
+                if (carry === true) {
+                    moveUpFromDropzone();
+                }
+            }
+        });
+        
+        const moveDownRoot = () => {
+            this.wrapper.parentElement.insertBefore(this.wrapper.nextElementSibling, this.wrapper);
+        };
+        
+        const moveDownToDropzone = (target, dzName) => {
+            target.unshiftElementToDropZone(dzName, this);
+        };
+        
+        const moveDownInDropzone = (fredEl, index) => {
+            fredEl.parent.dzs[fredEl.dzName].children[index + 1].insertAdjacentElement('afterend', fredEl.wrapper);
+            fredEl.parent.dzs[fredEl.dzName].children[index] = fredEl.parent.dzs[fredEl.dzName].children.splice((index + 1), 1, fredEl.parent.dzs[fredEl.dzName].children[index])[0];
+        };
+        
+        const moveDownFromDropzone = () => {
+            if (!this.parent.parent) {
+                if (!this.parent.wrapper.nextElementSibling) {
+                    this.dzName = this.parent.wrapper.parentElement.dataset.fredDropzone;
+                    this.parent.wrapper.parentElement.appendChild(this.wrapper);
+                    this.parent = null;
+                } else {
+                    this.dzName = this.parent.wrapper.parentElement.dataset.fredDropzone;
+                    this.parent.wrapper.parentElement.insertBefore(this.wrapper, this.parent.wrapper.nextElementSibling);
+                    this.parent = null;
+                }
+            } else {
+                const parentPosition = this.parent.parent.dzs[this.parent.dzName].children.indexOf(this.parent.wrapper);
+                if (parentPosition !== -1) {
+                    if ((this.parent.parent.dzs[this.parent.dzName].children.length - 1) === parentPosition) {
+                        this.parent.parent.addElementToDropZone(this.parent.dzName, this);
+                    } else {
+                        this.parent.parent.insertBeforeElementToDropZone(this.parent.dzName, this.parent.parent.dzs[this.parent.dzName].children[parentPosition + 1].fredEl, this);
+                    }
+                }
+            }
+        };
+        
+        const moveDown = button('', ['fred--position-down'], () => {
+            if (!this.parent) {
+                if (this.wrapper.nextElementSibling) {
+                    const dzList = Object.keys(this.wrapper.nextElementSibling.fredEl.dzs);
+                    if (dzList.length > 0) {
+                        moveDownToDropzone(this.wrapper.nextElementSibling.fredEl, dzList[0]);
+                    } else {
+                        moveDownRoot();
+                    }
+                }
+            } else {
+                let carry = false;
+                
+                for (let dzName in this.parent.dzs) {
+                    if (this.parent.dzs.hasOwnProperty(dzName)) {
+                        if (carry === true) {
+                            carry = false;
+                            moveDownToDropzone(this.parent, dzName);
+                            break;
+                        }
+                        
+                        if (dzName !== this.dzName) continue;
+
+                        const index = this.parent.dzs[dzName].children.indexOf(this.wrapper);
+                        if (index !== -1) {
+                            const nextChild = this.parent.dzs[dzName].children[index + 1];
+                            if (nextChild) {
+                                const dzList = Object.keys(nextChild.fredEl.dzs);
+                                if (dzList.length > 0) {
+                                    this.parent.dzs[dzName].children.splice(index, 1);
+                                    moveDownToDropzone(nextChild.fredEl, dzList[0]);
+                                } else {
+                                    moveDownInDropzone(this, index);
+                                }
+                            } else {
+                                this.parent.dzs[dzName].children.pop();
+                                carry = true;
+                            }
+                        }
+                    }
+                }
+                
+                if (carry === true) {
+                    moveDownFromDropzone();
+                }
+            }
+        });
 
         positionGroup.appendChild(moveUp);
         positionGroup.appendChild(moveDown);
@@ -613,11 +769,38 @@ export class ContentElement {
 
     addElementToDropZone(zoneName, element) {
         if (!this.dzs[zoneName]) return false;
-
+        element.dzName = zoneName;
+        element.parent = this;
+        
         this.dzs[zoneName].children.push(element.wrapper);
         this.dzs[zoneName].el.appendChild(element.wrapper);
 
         return true;
+    }
+    
+    unshiftElementToDropZone(zoneName, element) {
+        if (!this.dzs[zoneName]) return false;
+        element.dzName = zoneName;
+        element.parent = this;
+
+        this.dzs[zoneName].children.unshift(element.wrapper);
+        
+        if (this.dzs[zoneName].el.firstElementChild) {
+            this.dzs[zoneName].el.insertBefore(element.wrapper, this.dzs[zoneName].el.firstElementChild);
+        } else {
+            this.dzs[zoneName].el.appendChild(element.wrapper);
+        }
+
+        return true;
+    }
+    
+    insertBeforeElementToDropZone(zoneName, before, element) {
+        if (!this.dzs[zoneName]) return false;
+        element.dzName = zoneName;
+        element.parent = this;
+
+        this.dzs[zoneName].children.splice(this.dzs[zoneName].children.indexOf(before.wrapper), 0, element.wrapper);
+        before.wrapper.insertAdjacentElement('beforebegin', element.wrapper);
     }
 }
 
