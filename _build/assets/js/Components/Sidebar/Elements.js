@@ -25,7 +25,19 @@ export default class Elements extends Sidebar {
                 
 
                 response.data.elements.forEach(category => {
-                    const categoryTab = dt(category.category);
+                    const categoryTab = dt(category.category, [], (e, el) => {
+                        const activeTabs = el.parentElement.querySelectorAll('dt.active');
+                        
+                        const isActive = el.classList.contains('active');
+                        
+                        for (let tab of activeTabs) {
+                            tab.classList.remove('active');
+                        }
+                        
+                        if (!isActive) {
+                            el.classList.add('active');
+                        }
+                    });
                     const categoryContent = dd();
                     const categoryEl = div(['fred--thumbs', 'source', 'blueprints-source']);
                     

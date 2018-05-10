@@ -41,12 +41,12 @@ export default class Pages extends Sidebar {
     
     buildPanel() {
         const content = div(['fred--pages']);
-        const pageList = dl(['fred--pages_list']);
+        this.pageList = dl(['fred--pages_list']);
 
-        this.buildTree(this.content, pageList);
-        this.buildCreatePage(pageList);
+        this.buildTree(this.content, this.pageList);
+        this.buildCreatePage(this.pageList);
 
-        content.appendChild(pageList);
+        content.appendChild(this.pageList);
 
         return content;
     }
@@ -136,7 +136,19 @@ export default class Pages extends Sidebar {
 
         pageForm.appendChild(fields);
 
-        const createPageButton = dt('Create Page');
+        const createPageButton = dt('Create Page', [], (e, el) => {
+            const activeTabs = this.pageList.querySelectorAll('dt.active');
+
+            const isActive = el.classList.contains('active');
+
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
+                el.classList.add('active');
+            }
+        });
 
         formWrapper.appendChild(pageForm);
 
@@ -152,7 +164,19 @@ export default class Pages extends Sidebar {
                 label: page.pagetitle
             });
             
-            const pageTitle = dt(page.pagetitle);
+            const pageTitle = dt(page.pagetitle, [], (e, el) => {
+                const activeTabs = this.pageList.querySelectorAll('dt.active');
+                
+                const isActive = el.classList.contains('active');
+
+                for (let tab of activeTabs) {
+                    tab.classList.remove('active');
+                }
+
+                if (!isActive) {
+                    el.classList.add('active');
+                }
+            });
             
             if (page.published !== true) {
                 pageTitle.classList.add('fred--pages_unpublished');
