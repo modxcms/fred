@@ -5,6 +5,7 @@ import { button, dl, dt, dd, form, fieldSet } from '../../UI/Elements';
 
 export default class PageSettings extends Sidebar {
     static title = 'Settings';
+    static icon = 'fred--sidebar_page_settings';
     static expandable = true;
 
     init() {
