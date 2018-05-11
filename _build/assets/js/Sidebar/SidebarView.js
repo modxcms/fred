@@ -1,5 +1,5 @@
 import fredConfig from './../Config';
-import { div, img, h1, dl } from './../UI/Elements';
+import { div, img, h1, dl, button } from './../UI/Elements';
 
 let wrapper;
 
@@ -8,7 +8,7 @@ let wrapper;
  * @param onComponentAdd
  * @param onClose
  */
-export const render = (components, onComponentAdd, onClose) => {
+export const render = (components, onComponentAdd, onClose, onSave, onPreview) => {
     const buildComponents = () => {
         const sidebar = dl('fred--accordion');
 
@@ -35,6 +35,9 @@ export const render = (components, onComponentAdd, onClose) => {
     ]);
     
     wrapper.appendChild(buildComponents());
+    wrapper.appendChild(button('', 'fred.fe.save', ['fred--btn-sidebar', 'fred--btn-sidebar_save'], onSave));
+    wrapper.appendChild(button('', 'fred.fe.toggle_preview', ['fred--btn-sidebar', 'fred--btn-sidebar_preview'], onPreview));
+  
     wrapper.setAttribute('aria-hidden', 'true');
 
     return wrapper;
