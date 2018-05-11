@@ -8,6 +8,7 @@ export default class Editor {
     constructor(el) {
         this.el = el;
         this.ui = UI;
+        this.fredConfig = fredConfig;
         this.config = fredConfig.config;
         
         this.state = {
