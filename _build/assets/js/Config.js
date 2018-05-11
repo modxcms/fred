@@ -76,6 +76,10 @@ class Config {
         
         return this._lang[key];
     }
+    
+    lngExists(key) {
+        return this._lang[key] !== undefined;
+    }
 }
 
 const config = new Config();

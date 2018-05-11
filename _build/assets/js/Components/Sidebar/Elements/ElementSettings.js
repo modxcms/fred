@@ -2,6 +2,7 @@ import emitter from '../../../EE';
 import { debounce } from '../../../Utils';
 import ui from '../../../UI/Inputs';
 import { div, form, fieldSet, legend, button, dl, dt, dd } from '../../../UI/Elements';
+import fredConfig from '../../../Config';
 
 export class ElementSettings {
     constructor() {
@@ -38,7 +39,7 @@ export class ElementSettings {
     renderSettings() {
         const settingsForm = form();
         const fields = fieldSet();
-        const title = legend('Element Settings');
+        const title = legend('fred.fe.element_settings');
 
         fields.appendChild(title);
 
@@ -54,8 +55,8 @@ export class ElementSettings {
 
         const buttonGroup = div(['fred--panel_button_wrapper']);
 
-        const apply = button('Apply', ['fred--btn-panel', 'fred--btn-apply'], this.apply.bind(this));
-        const cancel = button('Cancel', ['fred--btn-panel'], () => {
+        const apply = button('fred.fe.apply', 'fred.fe.apply', ['fred--btn-panel', 'fred--btn-apply'], this.apply.bind(this));
+        const cancel = button('fred.fe.cancel', 'fred.fe.cancel', ['fred--btn-panel'], () => {
             this.cancel(cancel);
         });
 
@@ -146,7 +147,7 @@ export class ElementSettings {
     
     cancel(btn) {
         if(this.settingChanged() && (btn.confirmed !== true)) {
-            btn.innerHTML = 'There are unsaved changes, are you sure?';
+            btn.innerHTML = fredConfig.lng('fred.fe.element_settings.unsaved_changes');
             btn.confirmed = true;
             return;
         }

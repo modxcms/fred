@@ -160,13 +160,13 @@ export class ContentElement {
 
         const toolbar = div(['fred--toolbar', 'handle']);
         const moveHandle = div(['fred--toolbar-grip', 'handle']);
-        const duplicate = button('', ['fred--duplicate-icon'], this.duplicate.bind(this));
-        const trashHandle = button('', ['fred--trash'], this.remove.bind(this));
+        const duplicate = button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.duplicate.bind(this));
+        const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
         
         toolbar.appendChild(moveHandle);
 
         if (this.options.settings) {
-            const settings = button('', ['fred--element-settings'], this.openSettings.bind(this));
+            const settings = button('', 'fred.fe.content.settings', ['fred--element-settings'], this.openSettings.bind(this));
             toolbar.appendChild(settings);
         }
 
@@ -202,7 +202,7 @@ export class ContentElement {
             fredEl.parent.dzs[fredEl.dzName].children[index - 1] = fredEl.parent.dzs[fredEl.dzName].children.splice(index, 1, fredEl.parent.dzs[fredEl.dzName].children[index - 1])[0];
         };
         
-        const moveUp = button('', ['fred--position-up'], () => {
+        const moveUp = button('', 'fred.fe.content.move_up', ['fred--position-up'], () => {
             if (!this.parent) {
                 if (this.wrapper.previousElementSibling) {
                     const dzList = Object.keys(this.wrapper.previousElementSibling.fredEl.dzs);
@@ -286,7 +286,7 @@ export class ContentElement {
             }
         };
         
-        const moveDown = button('', ['fred--position-down'], () => {
+        const moveDown = button('', 'fred.fe.content.move_down', ['fred--position-down'], () => {
             if (!this.parent) {
                 if (this.wrapper.nextElementSibling) {
                     const dzList = Object.keys(this.wrapper.nextElementSibling.fredEl.dzs);

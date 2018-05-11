@@ -4,6 +4,7 @@ import emitter from "../../EE";
 import { div, dl, dd, dt, button, h3, form, fieldSet, legend } from '../../UI/Elements';
 import { text, choices } from '../../UI/Inputs';
 import { errorHandler } from '../../Utils';
+import fredConfig from '../../Config';
 
 export default class Pages extends Sidebar {
     static title = 'fred.fe.pages';
@@ -15,7 +16,7 @@ export default class Pages extends Sidebar {
         this.parents = [{
             id: 0,
             value: '0',
-            label: 'No Parent'
+            label: fredConfig.lng('fred.fe.pages.no_parent')
         }];
 
         this.state = {
@@ -58,7 +59,7 @@ export default class Pages extends Sidebar {
         const pageForm = form(['fred--pages_create']);
 
         const fields = fieldSet();
-        const title = legend('Create Page');
+        const title = legend('fred.fe.pages.create_page');
 
         const onChange = (name, value) => {
             this.state[name] = value;
@@ -71,7 +72,7 @@ export default class Pages extends Sidebar {
         fields.appendChild(title);
         fields.appendChild(choices({
             name: 'parent',
-            label: 'Parent',
+            label: fredConfig.lng('fred.fe.pages.parent'),
             choices: {
                 choices : this.parents,
                 shouldSort: false
@@ -80,7 +81,7 @@ export default class Pages extends Sidebar {
 
         fields.appendChild(choices({
             name: 'template',
-            label: 'Template',
+            label: fredConfig.lng('fred.fe.pages.template'),
         }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
             choicesInstance.ajax(callback => {
                 fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-templates`)
@@ -100,13 +101,13 @@ export default class Pages extends Sidebar {
 
         const pagetitle = text({
             name: 'pagetitle',
-            label: 'Page Title'
+            label: 'fred.fe.pages.page_title'
         }, this.state.pagetitle, onChange);
 
         fields.appendChild(pagetitle);
 
-        const createButton = button('Create', ['fred--btn-panel', 'fred--btn-apply'], () => {
-            emitter.emit('fred-loading', 'Creating Page');
+        const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn-panel', 'fred--btn-apply'], () => {
+            emitter.emit('fred-loading', fredConfig.lng('fred.fe.pages.creating_page'));
 
             fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
                 method: "post",
@@ -137,7 +138,7 @@ export default class Pages extends Sidebar {
 
         pageForm.appendChild(fields);
 
-        const createPageButton = dt('Create Page', [], (e, el) => {
+        const createPageButton = dt('fred.fe.pages.create_page', [], (e, el) => {
             const activeTabs = this.pageList.querySelectorAll('dt.active');
 
             const isActive = el.classList.contains('active');
@@ -208,11 +209,13 @@ export default class Pages extends Sidebar {
 
                 this.buildTree(page.children, children);
 
-                const expander = button('', ['fred--btn-list', 'fred--btn-list_expand'], () => {
+                const expander = button('', 'fred.fe.pages.expand_page', ['fred--btn-list', 'fred--btn-list_expand'], () => {
                     if (expander.classList.contains('fred--btn-list_close')) {
                         expander.classList.remove('fred--btn-list_close');
                         children.classList.add('fred--hidden');
                         children.setAttribute('aria-disabled', 'true');
+
+                        expander.setAttribute('title', fredConfig.lng('fred.fe.pages.collapse_page'));
 
                         return;
                     }
@@ -220,6 +223,7 @@ export default class Pages extends Sidebar {
                     expander.classList.add('fred--btn-list_close');
                     children.classList.remove('fred--hidden');
                     children.setAttribute('aria-disabled', 'false');
+                    expander.setAttribute('title', fredConfig.lng('fred.fe.pages.collapse_page'));
                 });
 
                 pageTitle.insertBefore(expander, pageTitle.firstChild);
@@ -234,34 +238,34 @@ export default class Pages extends Sidebar {
 
         const header = h3(page.pagetitle);
 
-        const edit = button('Edit', [], () => {
+        const edit = button('fred.fe.pages.edit', 'fred.fe.pages.edit', [], () => {
             window.location.href = page.url;
         });
 
-        const duplicate = button('Duplicate');
-
-        const publish = button();
-        if (page.published === true) {
-            publish.innerHTML = 'Unpublish';
-        } else {
-            publish.innerHTML = 'Publish';
-        }
-
-        const createChildPage = button('Create Child Page');
-
-        const deletePage = button();
-        if (page.deleted === true) {
-            deletePage.innerHTML = 'Undelete';
-        } else {
-            deletePage.innerHTML = 'Delete';
-        }
+        const duplicate = button('fred.fe.pages.duplicate', 'fred.fe.pages.duplicate');
+        const publish = button('fred.fe.pages.publish', 'fred.fe.pages.publish');
+        const unpublish = button('fred.fe.pages.unpublish', 'fred.fe.pages.unpublish');
+        const createChildPage = button('fred.fe.pages.create_child_page', 'fred.fe.pages.create_child_page');
+        const deletePage = button('fred.fe.pages.delete', 'fred.fe.pages.delete');
+        const unDeletePage = button('fred.fe.pages.undelete', 'fred.fe.pages.undelete');
 
         menu.appendChild(header);
         menu.appendChild(edit);
         menu.appendChild(duplicate);
-        menu.appendChild(publish);
+        
+        if (page.published === true) {
+            menu.appendChild(unpublish);
+        } else {
+            menu.appendChild(publish);
+        }
+        
         menu.appendChild(createChildPage);
-        menu.appendChild(deletePage);
+        
+        if (page.deleted === true) {
+            menu.appendChild(unDeletePage);
+        } else {
+            menu.appendChild(deletePage);
+        }
 
         return menu;
     }

@@ -149,7 +149,7 @@ export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
         }
     });
 
-    const clear = a('', 'Clear', '', 'fred--close-small', () => {
+    const clear = a('', 'fred.fe.clear', '', 'fred--close-small', () => {
         picker.clear();
     });
 
@@ -501,7 +501,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
     
     const inputEl = input(defaultValue);
 
-    const openFinderButton = a('', 'Browse', '', 'fred--browse-small');
+    const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 
     const preview = img('');
     let previewAdded = false;
@@ -547,7 +547,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
                 labelEl.appendChild(preview);
                 previewAdded = true;
             }
-        }, 'Browse Images', finderOptions);
+        }, 'fred.fe.browse_images', finderOptions);
 
         finder.render();
     });
