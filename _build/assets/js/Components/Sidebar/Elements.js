@@ -4,7 +4,8 @@ import fetch from 'isomorphic-fetch';
 import { div, dl, dt, dd, figure, img, figCaption } from './../../UI/Elements'
 
 export default class Elements extends Sidebar {
-    static title = 'Elements';
+    static title = 'fred.fe.elements';
+    static icon = 'fred--sidebar_elements';
     static expandable = true;
 
     init() {

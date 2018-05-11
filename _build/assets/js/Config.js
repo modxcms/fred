@@ -6,6 +6,7 @@ class Config {
         this._editors = fredEditors;
         this._rtes = {};
         this._pageSettings = {};
+        this._lang = {};
     }
     
     set config(config) {
@@ -13,7 +14,11 @@ class Config {
     }
     
     set pageSettings(pageSettings) {
-        this._pageSettings= pageSettings;
+        this._pageSettings = pageSettings;
+    }
+    
+    set lang(lang) {
+        this._lang = lang;
     }
 
     get config() {
@@ -50,6 +55,26 @@ class Config {
             console.log(`RTE "${name}" is already registered`);
             return false;
         }
+    }
+    
+    lng(key, params) {
+        if (this._lang[key] === undefined) {
+            console.log(`[FRED] Language string: ${key} not found`);
+            return '';
+        }
+        
+        if (params && (typeof params === 'object')) {
+            let translation = "" + this._lang[key];
+            for (let key in params) {
+                if (params.hasOwnProperty(key)) {
+                    translation = translation.replace(`[[+${key}]]`, params[key]);
+                }
+            }
+            
+            return translation;
+        }
+        
+        return this._lang[key];
     }
 }
 
