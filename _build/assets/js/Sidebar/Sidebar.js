@@ -27,6 +27,12 @@ export default class Sidebar {
             },
             () => {
                 emitter.emit('fred-sidebar-hide');
+            },
+            () => {
+                emitter.emit('fred-save');
+            },
+            () => {
+                emitter.emit('fred-preview-on');
             }
             
         ));

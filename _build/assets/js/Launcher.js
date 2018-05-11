@@ -5,6 +5,7 @@ export default class Launcher {
     constructor(position = 'bottom_left') {
         this.position = position;
         this.previewMode = false;
+        this.hidden = false;
         
         this.render();
     }
@@ -22,18 +23,8 @@ export default class Launcher {
         
         const preview = button('', 'fred.fe.toggle_preview', ['fred--launcher_btn', 'fred--launcher_btn_preview'], () => {
             if (this.previewMode === false) {
-                this.previewMode = true;
-                wrapper.style.zIndex = '9999999999';
-                fred.style.display = 'none';
-                save.style.display = 'none';
-                preview.classList.add('active');
                 emitter.emit('fred-preview-on');
             } else {
-                this.previewMode = false;
-                wrapper.style.zIndex = '';
-                fred.style.display = '';
-                save.style.display = '';
-                preview.classList.remove('active');
                 emitter.emit('fred-preview-off');
             }
         });
@@ -44,12 +35,38 @@ export default class Launcher {
 
         emitter.on('fred-sidebar-hide', silent => {
             if (silent !== true) {
+                this.hidden = false;
                 wrapper.classList.remove('fred--hidden');
             }
         });
 
         emitter.on('fred-sidebar-show', silent => {
             if (silent !== true) {
+                this.hidden = true;
+                wrapper.classList.add('fred--hidden');
+            }
+        });
+        
+        emitter.on('fred-preview-on', () => {
+            this.previewMode = true;
+            wrapper.style.zIndex = '9999999999';
+            fred.style.display = 'none';
+            save.style.display = 'none';
+            preview.classList.add('active');
+            
+            if (this.hidden) {
+                wrapper.classList.remove('fred--hidden');
+            }
+        });
+        
+        emitter.on('fred-preview-off', () => {
+            this.previewMode = false;
+            wrapper.style.zIndex = '';
+            fred.style.display = '';
+            save.style.display = '';
+            preview.classList.remove('active');
+
+            if (this.hidden) {
                 wrapper.classList.add('fred--hidden');
             }
         });
