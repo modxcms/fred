@@ -59,7 +59,7 @@ export class Modal {
 
         const footer = div(['fred--modal-footer']);
 
-        const save = button('Save', ['fred--btn-small'], () => {
+        const save = button('fred.fe.save', 'fred.fe.save', ['fred--btn-small'], () => {
             this.onSave();
             this.close();
         });
