@@ -7,6 +7,7 @@ import { errorHandler } from '../../Utils';
 
 export default class Pages extends Sidebar {
     static title = 'Site';
+    static icon = 'fred--sidebar_pages';
     static expandable = true;
 
     init() {

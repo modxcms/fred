@@ -4,6 +4,7 @@ import { div, span } from '../UI/Elements';
 
 export default class Sidebar {
     static title = 'TITLE NOT SET';
+    static icon = '';
     static expandable = false;
 
     constructor(sidebarWrapper) {
@@ -17,7 +18,13 @@ export default class Sidebar {
             this.titleEl = document.createElement('dt');
             this.titleEl.setAttribute('role', 'tab');
             this.titleEl.setAttribute('tabindex', '0');
-            this.titleEl.classList.add(`fred--sidebar_${this.constructor.title.toLowerCase().replace(/ /g, '_')}`);
+
+            if (this.constructor.icon) {
+                this.titleEl.classList.add(this.constructor.icon
+                );
+            } else {
+                this.titleEl.classList.add(`fred--sidebar_${this.constructor.title.toLowerCase().replace(/ /g, '_')}`);
+            }
 
             this.titleEl.innerHTML = text + ((expandable === true) ? '<i class="fred--angle-right fred--accordion_toggle"></i>' : '');
 
