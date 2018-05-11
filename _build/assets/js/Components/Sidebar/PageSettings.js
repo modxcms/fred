@@ -27,12 +27,6 @@ export default class PageSettings extends Sidebar {
         settingsForm.appendChild(this.getGeneralFields());
         settingsForm.appendChild(this.getAdvancedFields());
 
-        const save = button('fred.fe.save', 'fred.fe.save', ['fred--btn-sidebar', 'fred--settings_form_save'], () => {
-            emitter.emit('fred-save');
-        });
-
-        settingsForm.appendChild(save);
-
         return settingsForm;
     }
 
