@@ -20,8 +20,12 @@ export default class Fred {
         this.libs = libs;
         this.Finder = Finder;
 
+        const lexiconsLoaded = this.loadLexicons();
+        
         document.addEventListener("DOMContentLoaded", () => {
-            this.init();
+            lexiconsLoaded.then(() => {
+                this.init();
+            });
         });
     }
 
@@ -45,35 +49,35 @@ export default class Fred {
 
         this.devices = div(['fred--devices']);
         
-        this.tabletP = a('<span>Tablet Portrait</span>', 'Tablet Portrait', '', ['fred--tablet-portrait'], () => {
+        this.tabletP = a(`<span>${fredConfig.lng('fred.fe.preview.tablet_portrait')}</span>`, fredConfig.lng('fred.fe.preview.tablet_portrait'), '', ['fred--tablet-portrait'], () => {
             this.iframe.style.width = '768px';
             this.iframe.style.height = '1024px';
         });
 
         this.devices.appendChild(this.tabletP);
 
-        this.tabletL = a('<span>Tablet Landscape</span>', 'Tablet Landscape', '', ['fred--tablet-landscape'], () => {
+        this.tabletL = a(`<span>${fredConfig.lng('fred.fe.preview.tablet_landscape')}</span>`, fredConfig.lng('fred.fe.preview.tablet_landscape'), '', ['fred--tablet-landscape'], () => {
             this.iframe.style.width = '1024px';
             this.iframe.style.height = '768px';
         });
 
         this.devices.appendChild(this.tabletL);
 
-        this.phoneP = a('<span>Phone Portrait</span>', 'Phone Portrait', '', ['fred--smartphone-portrait'], () => {
+        this.phoneP = a(`<span>${fredConfig.lng('fred.fe.preview.phone_portrait')}</span>`, fredConfig.lng('fred.fe.preview.phone_portrait'), '', ['fred--smartphone-portrait'], () => {
             this.iframe.style.width = '320px';
             this.iframe.style.height = '480px';
         });
 
         this.devices.appendChild(this.phoneP);
 
-        this.phoneL = a('<span>Phone Landscape</span>', 'Phone Landscape', '', ['fred--smartphone-landscape'], () => {
+        this.phoneL = a(`<span>${fredConfig.lng('fred.fe.preview.phone_landscape')}</span>`, fredConfig.lng('fred.fe.preview.phone_landscape'), '', ['fred--smartphone-landscape'], () => {
             this.iframe.style.width = '480px';
             this.iframe.style.height = '320px';
         });
 
         this.devices.appendChild(this.phoneL);
 
-        this.auto = a('<span>Auto</span>', 'Auto', '', ['fred--auto'], () => {
+        this.auto = a(`<span>${fredConfig.lng('fred.fe.preview.auto')}</span>`, fredConfig.lng('fred.fe.preview.auto'), '', ['fred--auto'], () => {
             this.iframe.style.width = '100%';
             this.iframe.style.height = '100%';
         });
@@ -141,7 +145,7 @@ export default class Fred {
     }
 
     save() {
-        emitter.emit('fred-loading', 'Saving Page');
+        emitter.emit('fred-loading', fredConfig.lng('fred.fe.saving_page'));
         const body = {};
         const data = {};
 
@@ -188,7 +192,7 @@ export default class Fred {
     }
 
     loadContent() {
-        emitter.emit('fred-loading', 'Preparing Content');
+        emitter.emit('fred-loading', fredConfig.lng('fred.fe.preparing_content'));
         
         return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${fredConfig.config.resource.id}`, {
             credentials: 'same-origin'
@@ -326,6 +330,21 @@ export default class Fred {
         const rteInit = initFn(this, fredConfig);
 
         return fredConfig.registerRTE(name, rteInit);
+    }
+    
+    loadLexicons() {
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-lexicons`, {
+            method: "get",
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            return response.json();
+        }).then(json => {
+            fredConfig.lang = json.data;
+            return true;
+        });
     }
 
     init() {

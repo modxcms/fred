@@ -6,7 +6,7 @@ import { text, choices } from '../../UI/Inputs';
 import { errorHandler } from '../../Utils';
 
 export default class Pages extends Sidebar {
-    static title = 'Site';
+    static title = 'fred.fe.pages';
     static icon = 'fred--sidebar_pages';
     static expandable = true;
 

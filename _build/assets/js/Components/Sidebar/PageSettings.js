@@ -4,7 +4,7 @@ import { toggle, text, area, dateTime } from '../../UI/Inputs';
 import { button, dl, dt, dd, form, fieldSet } from '../../UI/Elements';
 
 export default class PageSettings extends Sidebar {
-    static title = 'Settings';
+    static title = 'fred.fe.settings';
     static icon = 'fred--sidebar_page_settings';
     static expandable = true;
 

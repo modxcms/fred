@@ -20,10 +20,7 @@ export default class Sidebar {
             this.titleEl.setAttribute('tabindex', '0');
 
             if (this.constructor.icon) {
-                this.titleEl.classList.add(this.constructor.icon
-                );
-            } else {
-                this.titleEl.classList.add(`fred--sidebar_${this.constructor.title.toLowerCase().replace(/ /g, '_')}`);
+                this.titleEl.classList.add(this.constructor.icon);
             }
 
             this.titleEl.innerHTML = text + ((expandable === true) ? '<i class="fred--angle-right fred--accordion_toggle"></i>' : '');
@@ -48,7 +45,7 @@ export default class Sidebar {
 
         this.init();
 
-        render(this.constructor.title, this.constructor.expandable);
+        render(fredConfig.lng(this.constructor.title), this.constructor.expandable);
     }
 
     init() {}
