@@ -78,6 +78,7 @@ switch ($modx->event->name) {
             $beforeRenderResults = $modx->invokeEvent('FredBeforeRender');
             $includes = '';
             $beforeRender = '';
+            $lexicons = [];
             foreach ($beforeRenderResults as $result) {
                 
                 if ($result['includes']) {
@@ -86,6 +87,10 @@ switch ($modx->event->name) {
                 
                 if ($result['beforeRender']) {
                     $beforeRender .= $result['beforeRender'];
+                }
+                
+                if ($result['lexicons'] && is_array($result['lexicons'])) {
+                    $lexicons = array_merge($lexicons, $result['lexicons']);
                 }
             }
             
@@ -104,6 +109,7 @@ switch ($modx->event->name) {
                     "id": ' . $modx->resource->id . ',
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 0] , 'abs')) . '",
                 },
+                lexicons: ' . json_encode($lexicons) . ',
                 beforeRender: function() {
                     ' . $beforeRender . '
                 }
