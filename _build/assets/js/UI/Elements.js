@@ -1,3 +1,5 @@
+import fredConfig from '../Config';
+
 const setContent = (el, content) => {
     if (!content) return;
     
@@ -6,13 +8,21 @@ const setContent = (el, content) => {
             if ((typeof contentEl === 'object') && (contentEl.innerHTML !== undefined)) {
                 el.appendChild(contentEl);        
             } else if (typeof contentEl === 'string') {
-                el.append(contentEl);
+                if (fredConfig.lngExists(contentEl)) {
+                    el.innerHTML = fredConfig.lng(contentEl);
+                } else {
+                    el.innerHTML = contentEl;
+                }
             }
         });    
     } else if ((typeof content === 'object') && (content.innerHTML !== undefined)) {
         el.appendChild(content);
     } else {
-        el.innerHTML = content;
+        if (fredConfig.lngExists(content)) {
+            el.innerHTML = fredConfig.lng(content);
+        } else {
+            el.innerHTML = content;
+        }
     }
 };
 
@@ -87,12 +97,20 @@ export const section = (classes = []) => {
     return createElement('section', classes);
 };
 
-export const button = (content = '', classes = [], onClick = null) => {
+export const button = (content = '', title = '', classes = [], onClick = null) => {
     const el = createElement('button', classes);
     
     el.setAttribute('role', 'button');
     
     setContent(el, content);
+    
+    if (title) {
+        if (fredConfig.lngExists(title)) {
+            el.setAttribute('title', fredConfig.lng(title));
+        } else {
+            el.setAttribute('title', title);
+        }
+    }
     
     if (typeof onClick === 'function') {
         el.addEventListener('click', e => {
@@ -153,7 +171,13 @@ export const a = (content, title = '', href = '', classes = [], onClick = null) 
     setContent(el, content);
     
     if (title) {
-        el.setAttribute('title', title);
+        if (title) {
+            if (fredConfig.lngExists(title)) {
+                el.setAttribute('title', fredConfig.lng(title));
+            } else {
+                el.setAttribute('title', title);
+            }
+        }
     }
     
     if (href) {

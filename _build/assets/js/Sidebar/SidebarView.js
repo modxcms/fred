@@ -1,5 +1,5 @@
 import fredConfig from './../Config';
-import { div, button, img, h1, dl, i } from './../UI/Elements';
+import { div, img, h1, dl } from './../UI/Elements';
 
 let wrapper;
 
@@ -21,6 +21,7 @@ export const render = (components, onComponentAdd, onClose) => {
     };
     
     const logo = img(`${fredConfig.config.assetsUrl || ''}images/modx-revo-icon-48.svg`, 'MODX FRED', 'fred--logo');
+    logo.setAttribute('title', fredConfig.lng('fred.fe.close_sidebar'));
     logo.addEventListener('click', e => {
         e.preventDefault();
         onClose();

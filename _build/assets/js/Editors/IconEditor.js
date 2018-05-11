@@ -1,7 +1,7 @@
 import Editor from './Editor';
 
 export default class IconEditor extends Editor {
-    static title = 'Edit Icon';
+    static title = 'fred.fe.editor.edit_icon';
     
     init() {
         this.state = {
@@ -13,7 +13,7 @@ export default class IconEditor extends Editor {
     render() {
         const wrapper = this.ui.els.div();
 
-        wrapper.appendChild(this.ui.ins.text({name: 'icon', label: 'Icon'}, this.state.icon, this.setStateValue));
+        wrapper.appendChild(this.ui.ins.text({name: 'icon', label: 'fred.fe.editor.icon'}, this.state.icon, this.setStateValue));
         wrapper.appendChild(this.buildAttributesFields());
         
         return wrapper;

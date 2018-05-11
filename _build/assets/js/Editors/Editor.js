@@ -3,7 +3,7 @@ import UI from '../UI';
 import fredConfig from '../Config';
 
 export default class Editor {
-    static title = 'Edit';
+    static title = 'fred.fe.editor.edit';
     
     constructor(el) {
         this.el = el;
@@ -20,7 +20,9 @@ export default class Editor {
         this.init();
 
         const wrapper = this.render();
-        const modal = new Modal(this.constructor.title, wrapper, this.onSave.bind(this));
+        
+        const title = fredConfig.lngExists(this.constructor.title) ? fredConfig.lng(this.constructor.title) : this.constructor.title;
+        const modal = new Modal(title, wrapper, this.onSave.bind(this));
 
         modal.render();        
     }

@@ -1,6 +1,6 @@
 import emitter from '../EE';
 import fredConfig from './../Config';
-import { div, span } from '../UI/Elements';
+import { div, span, dt } from '../UI/Elements';
 
 export default class Sidebar {
     static title = 'TITLE NOT SET';
@@ -15,15 +15,11 @@ export default class Sidebar {
         this.contentEl = null;
         
         const render = (text, expandable = false) => {
-            this.titleEl = document.createElement('dt');
-            this.titleEl.setAttribute('role', 'tab');
-            this.titleEl.setAttribute('tabindex', '0');
+            this.titleEl = dt(text);
 
             if (this.constructor.icon) {
                 this.titleEl.classList.add(this.constructor.icon);
             }
-
-            this.titleEl.innerHTML = text + ((expandable === true) ? '<i class="fred--angle-right fred--accordion_toggle"></i>' : '');
 
             if (expandable === false) {
                 this.titleEl.addEventListener('click', this.click);
@@ -45,7 +41,7 @@ export default class Sidebar {
 
         this.init();
 
-        render(fredConfig.lng(this.constructor.title), this.constructor.expandable);
+        render(this.constructor.title, this.constructor.expandable);
     }
 
     init() {}
@@ -71,7 +67,7 @@ export default class Sidebar {
     }
     
     loading(text = '') {
-        text = text || `Retrieving ${this.constructor.title}`;
+        text = text || `Retrieving ${fredConfig.lng(this.constructor.title)}`;
         
         const wrapper = div('fred--loading_wrapper', [
             span('fred--loading'),

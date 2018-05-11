@@ -12,15 +12,15 @@ export default class Launcher {
     render() {
         const wrapper = div(['fred--launcher', `fred--launcher_${this.position}`]);
 
-        const fred = button('', ['fred--launcher_btn', 'fred--launcher_btn_fred'], () => {
+        const fred = button('', 'fred.fe.open_sidebar', ['fred--launcher_btn', 'fred--launcher_btn_fred'], () => {
             emitter.emit('fred-sidebar-toggle');
         });
 
-        const save = button('', ['fred--launcher_btn', 'fred--launcher_btn_save'], () => {
+        const save = button('', 'fred.fe.save', ['fred--launcher_btn', 'fred--launcher_btn_save'], () => {
             emitter.emit('fred-save');
         });
         
-        const preview = button('', ['fred--launcher_btn', 'fred--launcher_btn_preview'], () => {
+        const preview = button('', 'fred.fe.toggle_preview', ['fred--launcher_btn', 'fred--launcher_btn_preview'], () => {
             if (this.previewMode === false) {
                 this.previewMode = true;
                 wrapper.style.zIndex = '9999999999';

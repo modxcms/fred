@@ -2,7 +2,7 @@ import Editor from './Editor';
 import Finder from '../Finder';
 
 export default class ImageEditor extends Editor {
-    static title = 'Edit Image';
+    static title = 'fred.fe.editor.edit_image';
 
     init() {
         this.state = {
@@ -16,7 +16,7 @@ export default class ImageEditor extends Editor {
 
         wrapper.appendChild(this.ui.ins.image({
             name: 'src',
-            label: 'Image URI',
+            label: 'fred.fe.editor.image_uri',
             ...(Finder.getFinderOptionsFromElement(this.el, true))
         }, this.state.src, this.setStateValue));
 
