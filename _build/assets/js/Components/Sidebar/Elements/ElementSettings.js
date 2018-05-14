@@ -72,7 +72,9 @@ export class ElementSettings {
 
     renderSettingsGroup(group) {
         const content = dl();
-        const settingGroup = dt(group.group);
+        const settingGroup = dt(group.group, [], () => {
+            settingGroup.classList.toggle('active');
+        });
         const settingGroupContent = dd();
         
         group.settings.forEach(setting => {

@@ -13,11 +13,6 @@ export default class Pages extends Sidebar {
 
     init() {
         this.content = null;
-        this.parents = [{
-            id: 0,
-            value: '0',
-            label: fredConfig.lng('fred.fe.pages.no_parent')
-        }];
 
         this.state = {
             pagetitle: '',
@@ -45,6 +40,12 @@ export default class Pages extends Sidebar {
         const content = div(['fred--pages']);
         this.pageList = dl(['fred--pages_list']);
 
+        this.parents = [{
+            id: 0,
+            value: '0',
+            label: fredConfig.lng('fred.fe.pages.no_parent')
+        }];
+        
         this.buildTree(this.content, this.pageList);
         this.buildCreatePage(this.pageList);
 
@@ -94,7 +95,7 @@ export default class Pages extends Sidebar {
                         callback(data.data.templates, 'value', 'name');
                     })
                     .catch(error => {
-                        console.log(error);
+                        emitter.emit('fred-loading', error.message);
                     });
             });
         }));
@@ -149,6 +150,8 @@ export default class Pages extends Sidebar {
 
             if (!isActive) {
                 el.classList.add('active');
+                e.stopPropagation();
+                emitter.emit('fred-sidebar-dt-active', createPageButton, formWrapper);
             }
         });
 
@@ -167,6 +170,7 @@ export default class Pages extends Sidebar {
             });
 
             const pageTitle = dt(page.pagetitle, [], (e, el) => {
+                if (e.target !== pageTitle) return;
                 const activeTabs = this.pageList.querySelectorAll('dt.active');
 
                 const isActive = el.classList.contains('active');
@@ -177,6 +181,8 @@ export default class Pages extends Sidebar {
 
                 if (!isActive) {
                     el.classList.add('active');
+                    e.stopPropagation();
+                    emitter.emit('fred-sidebar-dt-active', pageTitle, pageMenu);
                 }
             });
 
@@ -194,8 +200,8 @@ export default class Pages extends Sidebar {
 
             wrapper.append(pageTitle);
 
+            const pageMenu = dd();
             if (page.isFred === true) {
-                const pageMenu = dd();
                 pageMenu.appendChild(this.createMenu(page));
 
                 wrapper.append(pageMenu);

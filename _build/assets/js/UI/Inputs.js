@@ -6,6 +6,7 @@ import fetch from "isomorphic-fetch";
 import Finder from "./../Finder";
 import fredConfig from './../Config';
 import { div, label, input, select as selectElement, span, textArea, a, img } from './Elements';
+import emitter from "../EE";
 
 export const text = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
@@ -419,7 +420,7 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
                 }
             })
             .catch(error => {
-                console.log(error);
+                emitter.emit('fred-loading', error.message);
             });
     });
 
@@ -456,7 +457,7 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
                     populateOptions(data.data.resources);
                 })
                 .catch(error => {
-                    console.log(error);
+                    emitter.emit('fred-loading', error.message);
                 });
         }
     };

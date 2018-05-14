@@ -2,6 +2,7 @@ import Sidebar from '../Sidebar';
 import drake from '../../Drake';
 import fetch from 'isomorphic-fetch';
 import { div, dl, dt, dd, figure, img, figCaption } from './../../UI/Elements'
+import emitter from "../../EE";
 
 export default class Elements extends Sidebar {
     static title = 'fred.fe.elements';
@@ -37,6 +38,8 @@ export default class Elements extends Sidebar {
                         
                         if (!isActive) {
                             el.classList.add('active');
+                            e.stopPropagation();
+                            emitter.emit('fred-sidebar-dt-active', categoryTab, categoryContent);
                         }
                     });
                     const categoryContent = dd();
