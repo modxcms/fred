@@ -48,8 +48,15 @@ export default class PageSettings extends Sidebar {
     getAdvancedFields() {
         const advancedList = dl();
 
-        const advancedTab = dt('fred.fe.page_settings.advanced_settings', [], () => {
-            advancedTab.classList.toggle('active');
+        const advancedTab = dt('fred.fe.page_settings.advanced_settings', [], e => {
+            if (advancedTab.classList.contains('active')) {
+                advancedTab.classList.remove('active');
+            } else {
+                advancedTab.classList.add('active');
+                e.stopPropagation();
+                emitter.emit('fred-sidebar-dt-active', advancedTab, advancedContent);
+            }
+            
         });
 
         const advancedContent = dd();
