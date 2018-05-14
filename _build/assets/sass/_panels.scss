@@ -27,7 +27,7 @@
         content: "";
         height: 29px;
         width: 25px;
-        background: url("images/settings.svg") center center no-repeat;
+        background: inline-svg('settings', $white) center center no-repeat;
         margin-right: 8px;
         display: inline;
         clear: none;
