@@ -149,6 +149,8 @@ export default class Pages extends Sidebar {
 
             if (!isActive) {
                 el.classList.add('active');
+                e.stopPropagation();
+                emitter.emit('fred-sidebar-dt-active', createPageButton, formWrapper);
             }
         });
 
@@ -178,6 +180,8 @@ export default class Pages extends Sidebar {
 
                 if (!isActive) {
                     el.classList.add('active');
+                    e.stopPropagation();
+                    emitter.emit('fred-sidebar-dt-active', pageTitle, pageMenu);
                 }
             });
 
@@ -195,8 +199,8 @@ export default class Pages extends Sidebar {
 
             wrapper.append(pageTitle);
 
+            const pageMenu = dd();
             if (page.isFred === true) {
-                const pageMenu = dd();
                 pageMenu.appendChild(this.createMenu(page));
 
                 wrapper.append(pageMenu);

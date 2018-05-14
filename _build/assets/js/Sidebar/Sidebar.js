@@ -20,7 +20,7 @@ export default class Sidebar {
     }
 
     render() {
-        emitter.emit('fred-wrapper-insert', View.render(
+        this.wrapper = View.render(
             [PagesComponent, ElementsComponent, PageSettingsComponent],
             component => {
                 this.components.push(component);
@@ -34,8 +34,10 @@ export default class Sidebar {
             () => {
                 emitter.emit('fred-preview-on');
             }
-            
-        ));
+
+        );
+        
+        emitter.emit('fred-wrapper-insert', this.wrapper);
     }
     
     registerListeners() {
@@ -94,6 +96,17 @@ export default class Sidebar {
             } else {
                 emitter.emit('fred-sidebar-show');
             }
+        });
+
+        emitter.on('fred-sidebar-dt-active', (tab, content) => {
+            const listener = e => {
+                if (!content.contains(e.target)) {
+                    tab.classList.remove('active');
+                    this.wrapper.removeEventListener('click', listener);
+                }
+            };
+            
+            this.wrapper.addEventListener('click', listener);
         });
     }
 
