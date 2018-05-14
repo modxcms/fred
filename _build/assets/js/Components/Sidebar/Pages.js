@@ -95,7 +95,7 @@ export default class Pages extends Sidebar {
                         callback(data.data.templates, 'value', 'name');
                     })
                     .catch(error => {
-                        console.log(error);
+                        emitter.emit('fred-loading', error.message);
                     });
             });
         }));
