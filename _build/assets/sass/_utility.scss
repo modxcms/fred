@@ -190,11 +190,11 @@
       opacity: 0.75;
     }
     .fred--tablet-portrait span, .fred--tablet-landscape span {
-      background: transparent url('images/tablet-alt.svg') 50% 50% no-repeat;
+      background: transparent inline-svg('tabletalt',$white) 50% 50% no-repeat;
       background-size: 50%;
     }
     .fred--smartphone-portrait span, .fred--smartphone-landscape span {
-      background: transparent url('images/mobile-alt.svg') 50% 50% no-repeat;
+      background: transparent inline-svg('mobile-alt',$white) 50% 50% no-repeat;
       background-size: 33%;
     }
     .fred--tablet-landscape span, .fred--smartphone-landscape span {

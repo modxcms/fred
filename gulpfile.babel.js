@@ -15,6 +15,8 @@ import merge from "merge-stream";
 import concat from "gulp-concat";
 
 import sass from 'gulp-ruby-sass';
+import sassInlineSvg from 'gulp-sass-inline-svg';
+import svgmin from 'gulp-svgmin';
 
 const $ = gulpLoadPlugins();
 const libFolder = './_build/assets/lib';
@@ -47,6 +49,14 @@ gulp.task('css', function() {
     return merge(sassStream,cssStream)
         .pipe(concat('fred.css'))
         .pipe(gulp.dest('./assets/components/fred/web'));
+});
+
+gulp.task('sass:svg', function(){
+    return gulp.src('./_build/assets/images/**/*.svg')
+        .pipe(svgmin()) // Recommend using svg min to optimize svg files first
+        .pipe(sassInlineSvg({
+            destDir: './_build/assets/sass/'
+        }));
 });
 
 // Run Babel only

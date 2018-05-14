@@ -126,17 +126,17 @@
   }
   &_pages {
     &:before {
-      background: url('images/sitemap.svg') center center no-repeat;
+      background: inline-svg('sitemap', $white) center center no-repeat;
     }
   }
   &_elements {
     &:before {
-      background: url('images/clone.svg') center center no-repeat;
+      background: inline-svg('clone', $white) center center no-repeat;
     }
   }
   &_page_settings {
     &:before {
-      background: url('images/cog.svg') center center no-repeat;
+      background: inline-svg('cog', $white) center center no-repeat;
     }
     + dd dt {
       border-top: 2px solid #0c4eac;

@@ -1,0 +1,170 @@
+////
+/// Functions and mixins for gulp-sass-inline-svg based on gulp-sassvg
+/// @author David Mosemann
+/// @group gulp-sass-inline-svg
+/// @see https://github.com/MattDiMu/gulp-sassvg
+////
+
+// Import the generated inline svgs sass functions 
+@import "sass-inline-svg-data";
+
+/// default color, if the inline-svg() mixin gets no color parameter
+/// @type {color}
+$SVG-COLOR: null !default;
+
+/// defines whether the inline-svg() function returns only the data string or the url as well
+/// @type {Boolean}
+/// @example - all these examples return the same (valid) css/svg
+/// 	$SVG-URL: true;
+/// 	background-image: inline-svg("iconname", blue);
+/// 	
+/// 	$SVG-URL: false;
+/// 	background-image: url(inline-svg("iconname", blue));
+/// 	
+/// 	$SVG-URL: false;
+/// 	background-image: inline-svg("iconname", blue, $url: true);
+/// 	
+/// 	$SVG-URL: true;
+/// 	background-image: url(inline-svg("iconname", blue, $url:false));
+$SVG-URL: true !default;
+
+/// returns an uri-encoded color value
+/// if possible, the color is reduced to rgb, otherwise rgba
+/// @return {color} (uri-encoded)
+@function uri-encode-color($color){
+	@if(alpha($color) != 1){
+		@return "rgba%28" + round(red($color)) + "%2C" + round(green($color)) + "%2C" + round(blue($color)) + "%2C" + (alpha($color)) + "%29";
+	}@else{
+		@return "rgb%28" + round(red($color)) + "%2C" + round(green($color)) + "%2C" + round(blue($color)) + "%29";
+	}
+}
+
+
+/// creates an inline svg. Black fill and strokes can by dynaically assigned a
+/// different color 
+///
+/// @param {filename} $icon - name of the svg file
+/// @param {color} $color - color used for both black fill and stroke attributes
+/// @param {color} $fillcolor - color for black fill attributes
+/// @param {color} $strokecolor - color for black stroke attributes
+///
+/// @throws warning if color value is not a valid color (hex, rgb, rgba)
+/// @require {variable} $SVG-COLOR
+/// @require {variable} $SVG-URL
+/// @require {function} uri-encode-color
+///
+/// @example
+/// 	background-image: inline-svg("iconname", blue);
+/// 	background-image: inline-svg("facebook", #FFAFF ); 
+/// 	background-image: inline-svg("arrow-left", rgba(224, 51, 224, 0.79)); 
+///
+/// @return {image} - uri encoded svg to be used as a background-url
+@function inline-svg(
+	$icon, 
+	$color: $SVG-COLOR, 
+	$fillcolor: $color,
+	$strokecolor: $color, 
+	$url: $SVG-URL
+){
+	$functionname: $icon;
+
+	//some sanity checks
+	@if(type-of($icon) != "string"){
+		@warn "Could not find '#{$icon}', either the svg file does not exist or the name was mispelled.";
+	} @else if (function-exists($functionname) == false) {
+		@warn "Function '#{$icon}' does not exist.";
+	} @else{
+		@if(type-of($color) == "color"){
+			$fillcolor: uri-encode-color($fillcolor);
+			$strokecolor: uri-encode-color($strokecolor);
+		} @else if ($color == null){
+			$fillcolor: null;
+			$strokecolor: null;
+		}@else {
+			$fillcolor: uri-encode-color(#000);
+			$strokecolor: uri-encode-color(#000);
+			@warn "Color value is not valid, defaulting to #000. You can use 'null' to use the svg's original color";
+		}
+
+		$uri-string: call($functionname, $fillcolor, $strokecolor);
+		@if $url {
+			@return url($uri-string);
+		} @else {
+			@return $uri-string;
+		}
+	}
+
+}
+
+/// returns all icons passed into gulp-sass-inline-svg, optionally filtered by their folder
+/// @param {folder} [$folder] - only return the icons in a particular folder
+/// @return {list} - a list of icon-names, which may be used by the inline-svg() function
+/// @example scss - in case you have 2 icons (facebook.svg and twitter.svg) in your folder "social"
+/// 	$folder: "social";
+/// 	@each $icon in svg-list($folder){
+/// 			$data: inline-svg($icon, #1a1ab4);
+/// 			.#{$folder}-#{$icon} {
+/// 					background-image: url(#{$data});
+/// 			}
+/// 	}
+///
+/// @example css - then it will generate css like this
+/// 	
+/// 	.social-facebook {
+/// 		background-image: url(data:image/svg+xml...);
+/// 	}
+/// 	.social-twitter {
+/// 		background-image: url(data:image/svg+xml...);
+/// 	} 	
+///
+@function svg-list($folder: null){
+	$iconlist: ();
+	@each $key in map-keys($svg-map){
+
+		@if(map-get(map-get($svg-map, $key), 'folder') == $folder){
+      $iconlist: append($iconlist, unquote(map-get(map-get($svg-map, $key), 'name')));
+		}
+	}
+	@return $iconlist;
+}
+
+/// convenience mixin for creating a svg icon with usefull default values
+/// @param {filename} $icon - filename of the svg icon 
+/// @param {color} $color - color to apply to black fills and strokes 
+/// @param {background-position} $position - sets the background position
+/// @param {background-size} $size - sets the background-size property
+/// @param {background-repeat} $repeat - sets the background-repeat property
+/// @param {color} $fillcolor - color to apply to black fill attributes
+/// @param {strokecolor} $strokecolor - color to apply to black stroke attributes 
+/// @require {function} inline-svg
+/// @example scss
+/// 	
+/// 	.icon-selector {
+/// 		@include inline-svg-icon("filename", blue);
+/// 	}
+/// 
+/// 	...generates..
+/// 	.selector {
+/// 		background-image: url("data:image/svg+xml...");
+/// 		background-repeat: no-repeat;
+/// 		background-position: 0 50%;
+/// 		background-size: 2rem;
+/// 	}
+///
+@mixin inline-svg-icon(
+	$icon,
+	$color: $SVG-COLOR, 
+	$position: 0 50%, 
+	$size: 2rem 2rem, 
+	$repeat: no-repeat, 
+	$fillcolor: $color, 
+	$strokecolor: $color
+) { 
+	background-image: inline-svg($icon, $color, $fillcolor, $strokecolor, $url: true);
+	@if(type-of($repeat) == string) { $repeat: unquote($repeat); }
+	@if(type-of($position) == string) { $position: unquote($position); }
+	@if(type-of($size) == string) { $size: unquote($size); }
+	background-repeat: $repeat;
+	background-position: $position;
+	background-size: $size;
+}
