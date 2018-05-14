@@ -13,11 +13,6 @@ export default class Pages extends Sidebar {
 
     init() {
         this.content = null;
-        this.parents = [{
-            id: 0,
-            value: '0',
-            label: fredConfig.lng('fred.fe.pages.no_parent')
-        }];
 
         this.state = {
             pagetitle: '',
@@ -45,6 +40,12 @@ export default class Pages extends Sidebar {
         const content = div(['fred--pages']);
         this.pageList = dl(['fred--pages_list']);
 
+        this.parents = [{
+            id: 0,
+            value: '0',
+            label: fredConfig.lng('fred.fe.pages.no_parent')
+        }];
+        
         this.buildTree(this.content, this.pageList);
         this.buildCreatePage(this.pageList);
 
