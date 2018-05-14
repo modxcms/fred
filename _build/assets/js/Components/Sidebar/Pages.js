@@ -167,6 +167,7 @@ export default class Pages extends Sidebar {
             });
 
             const pageTitle = dt(page.pagetitle, [], (e, el) => {
+                if (e.target !== pageTitle) return;
                 const activeTabs = this.pageList.querySelectorAll('dt.active');
 
                 const isActive = el.classList.contains('active');
