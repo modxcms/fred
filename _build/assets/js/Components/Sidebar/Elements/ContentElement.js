@@ -626,7 +626,6 @@ export class ContentElement {
             return json.data.html;
         })
         .catch(err => {
-            console.log(err);
             emitter.emit('fred-loading', err.message);
             return '';
         });

@@ -64,8 +64,6 @@ export default class Sidebar {
                     return;
                 }
                 
-                console.log(err);
-
                 cmp.setContent('SOMETHING WRONG HAPPENED');
             });
         });

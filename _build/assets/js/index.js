@@ -170,8 +170,6 @@ export default class Fred {
         body.pageSettings = fredConfig.pageSettings;
 
         Promise.all(promises).then(() => {
-            console.log('body: ', body);
-
             fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
                 method: "post",
                 credentials: 'same-origin',
@@ -348,8 +346,6 @@ export default class Fred {
     }
 
     init() {
-        console.log('Hello from Fred!');
-
         this.registerListeners();
 
         this.dropzones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
