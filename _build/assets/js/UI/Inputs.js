@@ -339,6 +339,26 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
                 return parseFloat(value.toFixed(decimals));
             }
         },
+        format: {
+            to: function ( value ) {
+                const decimals = (setting.tooltipDecimals === undefined) ? 0 : setting.tooltipDecimals;
+
+                if (decimals === 0) {
+                    return parseInt(value.toFixed());
+                }
+
+                return parseFloat(value.toFixed(decimals));
+            },
+            from: function ( value ) {
+                const decimals = (setting.tooltipDecimals === undefined) ? 0 : setting.tooltipDecimals;
+
+                if (decimals === 0) {
+                    return parseInt(value);
+                }
+
+                return parseFloat(value).toFixed(decimals);
+            }
+        },
         step: step,
         range: {
             'min': setting.min,
