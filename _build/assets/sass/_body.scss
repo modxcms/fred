@@ -7,7 +7,6 @@
   border: 1px solid rgba($white, .4);
   border-top-right-radius: $radius;
   border-bottom-right-radius: $radius;
-  //padding: 4px .5rem .35rem .5rem;
   padding: 3px 11px;
   font-size: 15px;
   line-height: 25px;
@@ -24,10 +23,8 @@
 
 .fred--block {
   position: relative;
-  //padding:2rem 16px;
   min-height: 30px;
   outline: 15px solid rgba($modxblue, 0);
-  //transition: $timing cubic-bezier(.79, .14, .15, .86);
   z-index: 1;
   .fred--block{
     outline: 3px solid rgba($modxblue, 0);
@@ -35,32 +32,18 @@
       //transition: $timing cubic-bezier(.79, .14, .15, .86);
     }
   }
-
-  //&:nth-child(even){background: #f9f9f9;}
   &:after{
     content: "";
     display:table;
     clear:both;
     width: 100%;
   }
-  /*&:before {
-    content: '';
-    display: block;
-    background: transparent;
-  }*/
   &.fred--block-active, &:focus {
     outline: 3px solid $modxblue;
     outline-offset: -3px;
     z-index: 2;
-    min-height: 1px;
     transition: none;
     box-shadow: 0 0 100vh 100vw rgba(#000,.2), 0 0 50px rgba(#000, .5);
-    /*&:before {
-      content: '';
-      background: rgba($modxblue, .1);
-      width: 100%;
-      height: 30px;
-    }*/
     > .fred--toolbar {
       display: block;
       height: 36px;
