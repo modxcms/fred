@@ -26,7 +26,7 @@ export class ElementSettings {
         this.el = el;
         this.settings = el.options.settings;
         this.options = el.options;
-        this.originalValues = {};
+        this.originalValues = JSON.parse(JSON.stringify(this.el.settings));
         this.remote = this.options.remote || false;
         this.debouncedRender = debounce(200, this.el.render);
 
@@ -48,7 +48,6 @@ export class ElementSettings {
                 fields.appendChild(this.renderSettingsGroup(setting));
             } else {
                 const defaultValue = this.el.settings[setting.name] || setting.value;
-                this.originalValues[setting.name] = defaultValue;
                 fields.appendChild(this.renderSetting(setting, defaultValue));
             }
         });
@@ -79,7 +78,6 @@ export class ElementSettings {
         
         group.settings.forEach(setting => {
             const defaultValue = this.el.settings[setting.name] || setting.value;
-            this.originalValues[setting.name] = defaultValue;
             settingGroupContent.appendChild(this.renderSetting(setting, defaultValue));
         });
 
@@ -136,10 +134,18 @@ export class ElementSettings {
     }
     
     settingChanged() {
-        for (let name in this.el.settings) {
-            if (this.el.settings.hasOwnProperty(name)) {
-                if (!(this.originalValues.hasOwnProperty(name) && (this.originalValues[name] === this.el.settings[name]))) {
-                   return true; 
+        return this.compareObjects(this.el.settings, this.originalValues);
+    }
+    
+    compareObjects(o1, o2) {
+        for (let name in o1) {
+            if (o1.hasOwnProperty(name)) {
+                if (typeof o1[name] === 'object') {
+                    return this.compareObjects(o1[name], o2[name]);    
+                } else {
+                    if (!(o2.hasOwnProperty(name) && (o2[name] === o1[name]))) {
+                        return true;
+                    }
                 }
             }
         }
@@ -148,7 +154,12 @@ export class ElementSettings {
     }
     
     cancel(btn) {
-        if(this.settingChanged() && (btn.confirmed !== true)) {
+        if (!this.settingChanged()) {
+            this.close();
+            return;
+        }
+        
+        if(btn.confirmed !== true) {
             btn.innerHTML = fredConfig.lng('fred.fe.element_settings.unsaved_changes');
             btn.confirmed = true;
             return;
