@@ -212,7 +212,7 @@ export default class Fred {
                             const chunk = div(['chunk']);
                             chunk.setAttribute('hidden', 'hidden');
                             chunk.dataset.fredElementId = element.widget;
-                            chunk.innerHTML = json.data.elements[element.widget].html;
+                            chunk.elementMarkup = json.data.elements[element.widget].html;
                             chunk.elementOptions = json.data.elements[element.widget].options;
 
                             const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}));
@@ -247,7 +247,7 @@ export default class Fred {
                     const chunk = div(['chunk']);
                     chunk.setAttribute('hidden', 'hidden');
                     chunk.dataset.fredElementId = element.widget;
-                    chunk.innerHTML = elements[element.widget].html;
+                    chunk.elementMarkup = elements[element.widget].html;
                     chunk.elementOptions = elements[element.widget].options || {};
                     
                     const contentElement = new ContentElement(chunk, zoneName, parent, element.values, (element.settings || {}));

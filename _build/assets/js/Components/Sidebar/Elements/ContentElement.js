@@ -9,7 +9,7 @@ export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
         this.config = fredConfig.config;
         this.el = el;
-        this.template = twig({data: this.el.innerHTML});
+        this.template = twig({data: this.el.elementMarkup});
         this.id = parseInt(this.el.dataset.fredElementId);
         this.wrapper = null;
 
@@ -56,13 +56,13 @@ export class ContentElement {
     }
     
     setEl(el) {
-        if (el.innerHTML === undefined) {
-            this.el.innerHTML = el;
+        if (el.elementMarkup === undefined) {
+            this.el.elementMarkup = el;
         } else {
-            this.el.innerHTML = el.innerHTML;
+            this.el.elementMarkup = el.elementMarkup;
         }
         
-        this.template = twig({data: this.el.innerHTML});
+        this.template = twig({data: this.el.elementMarkup});
     }
 
     getContent() {
