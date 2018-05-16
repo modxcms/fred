@@ -48,6 +48,7 @@ class Drake {
         this.drake.on('cloned', (clone, original, type) => {
             if (type === 'copy') {
                 clone.lastChild.elementOptions = original.lastChild.elementOptions;
+                clone.lastChild.elementMarkup = original.lastChild.elementMarkup;
             }
         });
 
