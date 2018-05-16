@@ -316,6 +316,7 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
     
     const sliderEl = div();
 
+    let init = false;
     let step = 1;
     if (setting.step) {
         step = setting.step;
@@ -381,7 +382,11 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
 
     if (typeof onChange === 'function') {
         slider.on('update', (values, handle, unencoded, tap, positions) => {
-            onChange(setting.name, values[0], slider, setting);
+            if (init === false) {
+                init = true;
+            } else {
+                onChange(setting.name, values[0], slider, setting);
+            }
         });
     }
 
