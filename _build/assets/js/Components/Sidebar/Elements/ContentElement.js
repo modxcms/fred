@@ -11,6 +11,7 @@ export class ContentElement {
         this.el = el;
         this.template = twig({data: this.el.elementMarkup});
         this.id = parseInt(this.el.dataset.fredElementId);
+        this.title = this.el.dataset.fredElementTitle;
         this.wrapper = null;
 
         this.setUpEditors();

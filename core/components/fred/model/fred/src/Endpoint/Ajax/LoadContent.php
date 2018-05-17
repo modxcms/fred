@@ -70,7 +70,7 @@ class LoadContent extends Endpoint
         $chunk = $this->modx->getObject('modChunk', $id);
         if (!$chunk) {
             $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Chunk {$id} wasn't found.");
-            return ['html' => '', 'options' => []];
+            return ['html' => '', 'options' => [], 'title' => ''];
         }
 
         $matches = [];
@@ -98,6 +98,7 @@ class LoadContent extends Endpoint
 
         return [
             'html' => $chunk->content,
+            'title' => $chunk->name,
             'options' => $options
         ];
     }

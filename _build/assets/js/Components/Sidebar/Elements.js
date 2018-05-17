@@ -73,6 +73,7 @@ export default class Elements extends Sidebar {
 
         const chunk = div(['chunk']);
         chunk.dataset.fredElementId = id;
+        chunk.dataset.fredElementTitle = title;
         chunk.setAttribute('hidden', 'hidden');
         chunk.elementMarkup = content;
         chunk.elementOptions = options;
