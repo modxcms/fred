@@ -84,6 +84,9 @@
     left: -360px;
     opacity: 0;
     transition: none;
+    & *{
+      display:none;
+    }
   }
   & > dl {
     outline: none;
