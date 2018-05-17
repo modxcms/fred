@@ -19,6 +19,7 @@ export default class Fred {
         
         this.libs = libs;
         this.Finder = Finder;
+        this.previewDocument = null;
 
         const lexiconsLoaded = this.loadLexicons();
         
@@ -41,7 +42,7 @@ export default class Fred {
         const previewWrapper = div(['fred--content-preview']);
         previewWrapper.style.display = 'none';
 
-        this.iframe = iFrame(fredConfig.config.resource.previewUrl);
+        this.iframe = iFrame('#');
         this.iframe.style.width = '1024px';
         this.iframe.style.height = '768px';
 
@@ -95,11 +96,25 @@ export default class Fred {
     }
     
     previewContent() {
+        if (!this.previewDocument) {
+            fetch(fredConfig.config.resource.previewUrl).then(response => {
+                return response.text();
+            }).then(text => {
+                const parser = new DOMParser();
+                this.previewDocument = parser.parseFromString(text, 'text/html');
+                this.getPreviewContent();
+            });
+        } else {
+            this.getPreviewContent();   
+        }
+    }
+    
+    getPreviewContent() {
         const promises = [];
 
         for (let i = 0; i < this.dropzones.length; i++) {
             promises.push(this.getCleanDropZoneContent(this.dropzones[i], true, false).then(content => {
-                const dz = this.iframe.contentDocument.querySelector('[data-fred-dropzone="' + this.dropzones[i].dataset.fredDropzone + '"]');
+                const dz = this.previewDocument.querySelector('[data-fred-dropzone="' + this.dropzones[i].dataset.fredDropzone + '"]');
                 if (dz) {
                     dz.innerHTML = content;
                 }
@@ -107,6 +122,7 @@ export default class Fred {
         }
         
         Promise.all(promises).then(() => {
+            this.iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(this.previewDocument.documentElement.innerHTML);
             this.iframe.parentNode.style.display = 'block';
         });
     }
@@ -307,6 +323,7 @@ export default class Fred {
         
         emitter.on('fred-preview-off', () => {
             this.iframe.parentNode.style.display = 'none';
+            this.iframe.src = '#';
         });
     }
     
