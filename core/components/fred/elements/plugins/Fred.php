@@ -64,6 +64,14 @@ switch ($modx->event->name) {
             if (!($modx->user->hasSessionContext('mgr') || $modx->user->hasSessionContext($modx->resource->context_key))) return;
             if ($modx->user->sudo !== 1) return;
 
+
+            if (isset($_GET['fred'])) {
+                if (intval($_GET['fred']) === 3) {
+                    $modx->resource->_output = '';
+                    return;
+                }
+            }
+            
             $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
             /** @var Fred $fred */
             $fred = $modx->getService(
@@ -122,6 +130,7 @@ switch ($modx->event->name) {
                 resource: {
                     "id": ' . $modx->resource->id . ',
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 2] , 'abs')) . '",
+                    "emptyUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 3] , 'abs')) . '",
                 },
                 lexicons: ' . json_encode($lexicons) . ',
                 beforeRender: function() {
