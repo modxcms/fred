@@ -97,6 +97,24 @@ switch ($modx->event->name) {
                 if (intval($_GET['fred']) === 2) return;
             }
             
+            $scripts = $html->filter('script');
+            $scripts->each(function(Wa72\HtmlPageDom\HtmlPageCrawler $node, $i)  {
+                $newNode = Wa72\HtmlPageDom\HtmlPageCrawler::create('<script-fred></script-fred>');
+                
+                $attrs = $node->getNode(0)->attributes;
+
+                foreach ($attrs as $attr) {
+                    $newNode->attr($attr->nodeName, $attr->nodeValue);
+                }
+                
+                $newNode->setAttribute('data-fred-script', $node->getInnerHtml());
+                
+                $node->replaceWith($newNode);
+                
+            });
+
+            $modx->resource->_output = $html->saveHTML();
+            
             $beforeRenderResults = $modx->invokeEvent('FredBeforeRender');
             $includes = '';
             $beforeRender = '';

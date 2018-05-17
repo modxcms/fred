@@ -20,10 +20,27 @@ export default class Fred {
         this.libs = libs;
         this.Finder = Finder;
         this.previewDocument = null;
+        this.replaceScript = this.replaceScript.bind(this);
+        this.scriptsToReplace = [];
 
         const lexiconsLoaded = this.loadLexicons();
         
         document.addEventListener("DOMContentLoaded", () => {
+            const scripts = document.body.querySelectorAll('script-fred');
+            for (let script of scripts) {
+                const newScript = document.createElement('script');
+
+                for (let i = 0; i < script.attributes.length; i++) {
+                    newScript.setAttribute(script.attributes[i].name, script.attributes[i].value);
+                }
+
+                if (script.dataset.fredScript) {
+                    newScript.innerHTML = script.dataset.fredScript;
+                }
+
+                this.scriptsToReplace.push({old: script, 'new': newScript});
+            }
+            
             lexiconsLoaded.then(() => {
                 this.init();
             });
@@ -391,8 +408,33 @@ export default class Fred {
         drake.initDrake();
 
         this.loadContent().then(() => {
+            if (this.scriptsToReplace[0]) {
+                this.replaceScript(0);
+            }
+
             this.renderComponents();
         });
 
+    }
+    
+    replaceScript(index) {
+        const next = index + 1;
+        
+        if (this.scriptsToReplace[index].new.src) {
+            this.scriptsToReplace[index].new.addEventListener('load', () => {
+                if (this.scriptsToReplace[next]) {
+                    this.replaceScript(next);
+                }
+            });
+            
+            this.scriptsToReplace[index].old.parentElement.replaceChild(this.scriptsToReplace[index].new, this.scriptsToReplace[index].old);
+            return;
+        }
+
+        this.scriptsToReplace[index].old.parentElement.replaceChild(this.scriptsToReplace[index].new, this.scriptsToReplace[index].old);
+        
+        if (this.scriptsToReplace[next]) {
+            this.replaceScript(next);
+        }
     }
 }
