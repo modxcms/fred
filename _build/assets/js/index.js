@@ -122,7 +122,10 @@ export default class Fred {
         }
         
         Promise.all(promises).then(() => {
-            this.iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(this.previewDocument.documentElement.innerHTML);
+            this.iframe.src = fredConfig.config.resource.emptyUrl;
+            this.iframe.contentWindow.document.open();
+            this.iframe.contentWindow.document.write(this.previewDocument.documentElement.innerHTML);
+            this.iframe.contentWindow.document.close();
             this.iframe.parentNode.style.display = 'block';
         });
     }
