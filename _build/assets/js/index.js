@@ -264,7 +264,7 @@ export default class Fred {
                     const chunk = div(['chunk']);
                     chunk.setAttribute('hidden', 'hidden');
                     chunk.dataset.fredElementId = element.widget;
-                    chunk.dataset.fredElementTitle = json.data.elements[element.widget].title;
+                    chunk.dataset.fredElementTitle = elements[element.widget].title;
                     chunk.elementMarkup = elements[element.widget].html;
                     chunk.elementOptions = elements[element.widget].options || {};
                     
