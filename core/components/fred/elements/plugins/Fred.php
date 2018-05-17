@@ -74,6 +74,20 @@ switch ($modx->event->name) {
                     'core_path' => $corePath
                 )
             );
+
+        
+            $html = Wa72\HtmlPageDom\HtmlPageCrawler::create($modx->resource->_output);
+            $dzs = $html->filter('[data-fred-dropzone]');
+
+            $dzs->each(function(Wa72\HtmlPageDom\HtmlPageCrawler $node, $i)  {
+                $node->setInnerHtml('');
+            });
+            
+            $modx->resource->_output = $html->saveHTML();
+            
+            if (isset($_GET['fred'])) {
+                if (intval($_GET['fred']) === 2) return;
+            }
             
             $beforeRenderResults = $modx->invokeEvent('FredBeforeRender');
             $includes = '';
@@ -107,7 +121,7 @@ switch ($modx->event->name) {
                 rte: "' . $fred->getOption('rte') . '",
                 resource: {
                     "id": ' . $modx->resource->id . ',
-                    "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 0] , 'abs')) . '",
+                    "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 2] , 'abs')) . '",
                 },
                 lexicons: ' . json_encode($lexicons) . ',
                 beforeRender: function() {
