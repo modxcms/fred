@@ -97,6 +97,8 @@ export default class Fred {
     
     previewContent() {
         if (!this.previewDocument) {
+            this.iframe.src = fredConfig.config.resource.emptyUrl;
+            
             fetch(fredConfig.config.resource.previewUrl).then(response => {
                 return response.text();
             }).then(text => {
@@ -122,7 +124,6 @@ export default class Fred {
         }
         
         Promise.all(promises).then(() => {
-            this.iframe.src = fredConfig.config.resource.emptyUrl;
             this.iframe.contentWindow.document.open();
             this.iframe.contentWindow.document.write(this.previewDocument.documentElement.innerHTML);
             this.iframe.contentWindow.document.close();
@@ -326,7 +327,6 @@ export default class Fred {
         
         emitter.on('fred-preview-off', () => {
             this.iframe.parentNode.style.display = 'none';
-            this.iframe.src = '#';
         });
     }
     
