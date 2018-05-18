@@ -1,6 +1,7 @@
 import emitter from './EE';
 import dragula from 'dragula';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
+import { applyScripts } from './Utils';
 
 class Drake {
     constructor() {
@@ -68,6 +69,17 @@ class Drake {
                     }
                     
                     el.parentNode.replaceChild(contentElement.wrapper, el);
+
+                    const event = new CustomEvent('FredElementDrop', { detail: {fredEl: contentElement} });
+                    document.body.dispatchEvent(event);
+                    
+                    const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
+                    for (let jsEl of jsElements) {
+                        if (window[jsEl.dataset.fredOnDrop]) {
+                            window[jsEl.dataset.fredOnDrop](jsEl);
+                        }
+                    }
+                    
                     this.reloadContainers();
                 });
             } else {

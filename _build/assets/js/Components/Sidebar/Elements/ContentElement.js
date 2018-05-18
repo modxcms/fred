@@ -4,6 +4,7 @@ import { twig } from 'twig';
 import fetch from 'isomorphic-fetch';
 import fredConfig from '../../../Config';
 import { div, button } from '../../../UI/Elements';
+import { applyScripts } from '../../../Utils';
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
@@ -349,6 +350,9 @@ export class ContentElement {
 
         return this.templateRender().then(html => {
             content.innerHTML = html;
+
+            applyScripts(content);
+            
             this.initDropZones(wrapper, content);
             this.initElements(wrapper,content);
 
@@ -676,6 +680,16 @@ export class ContentElement {
                         fredLink.removeAttribute('data-fred-link-anchor');
                     }
                 }
+            }
+
+            const fredOnDrop = element.querySelectorAll('[data-fred-on-drop]');
+            for (let onDrop of fredOnDrop) {
+                onDrop.removeAttribute('data-fred-on-drop');
+            }
+            
+            const fredOnSettingChange = element.querySelectorAll('[data-fred-on-setting-change]');
+            for (let onSettingChange of fredOnSettingChange) {
+                onSettingChange.removeAttribute('data-fred-on-setting-change');
             }
 
             const dzPromises = [];
