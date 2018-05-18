@@ -24,3 +24,15 @@ export const errorHandler = response => {
         throw err;
     })    
 };
+
+export const applyScripts = el => {
+    const scripts = el.querySelectorAll('script');
+
+    for (let scriptEl of scripts) {
+        const script = document.createElement('script');
+        script.dataset.fredRender = 'false';
+        script.innerHTML = scriptEl.innerHTML;
+        
+        scriptEl.parentNode.replaceChild(script, scriptEl);
+    }
+};

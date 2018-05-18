@@ -127,9 +127,21 @@ export class ElementSettings {
             this.debouncedRender();
         }
     }
-    
+
     apply() {
-        this.el.render();
+        this.el.render().then(() => {
+            const event = new CustomEvent('FredElementSettingChange', { detail: {fredEl: this.el} });
+            document.body.dispatchEvent(event);
+            
+            const jsEls = this.el.wrapper.querySelectorAll('[data-fred-on-setting-change]');
+            for (let jsEl of jsEls) {
+                
+                if (window[jsEl.dataset.fredOnSettingChange]) {
+                    window[jsEl.dataset.fredOnSettingChange]();
+                }
+            }
+        });
+
         this.close();
     }
     

@@ -146,6 +146,16 @@ final class RenderResource {
             }
         });
 
+        $onDrop = $html->filter('[data-fred-on-drop]');
+        $onDrop->each(function(HtmlPageCrawler $node, $i) use ($item) {
+            $node->removeAttr('data-fred-on-drop');
+        });
+        
+        $onSettingChange = $html->filter('[data-fred-on-setting-change]');
+        $onSettingChange->each(function(HtmlPageCrawler $node, $i) use ($item) {
+            $node->removeAttr('data-fred-on-setting-change');
+        });
+
         $dzs = $html->filter('[data-fred-dropzone]');
         $self = $this;
 
