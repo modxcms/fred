@@ -25,6 +25,10 @@ export class ContentElement {
         this.content = JSON.parse(JSON.stringify(content));
         this.settings = {};
 
+        if (!this.options.rteConfig) {
+            this.options.rteConfig = {};
+        }
+
         if (this.options.settings) {
             this.options.settings.forEach(setting => {
                 if (setting.group && setting.settings) {
@@ -558,7 +562,17 @@ export class ContentElement {
 
             if (!!el.dataset.fredRte && (el.dataset.fredRte !== 'false')) {
                 if (this.config.rte && fredConfig.rtes[this.config.rte]) {
-                    fredConfig.rtes[this.config.rte](el, this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
+                    let rteConfig = {};
+                    
+                    if (this.options.rteConfig.default) {
+                        rteConfig = this.options.rteConfig.default;
+                    }
+                    
+                    if (el.dataset.fredRteConfig && this.options.rteConfig[el.dataset.fredRteConfig]) {
+                        rteConfig = this.options.rteConfig[el.dataset.fredRteConfig];
+                    }
+                    
+                    fredConfig.rtes[this.config.rte](el, rteConfig, this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
                 }
             }
 
@@ -654,6 +668,7 @@ export class ContentElement {
                 el.removeAttribute('contenteditable');
                 el.removeAttribute('data-fred-name');
                 el.removeAttribute('data-fred-rte');
+                el.removeAttribute('data-fred-rte-config');
                 el.removeAttribute('data-fred-target');
                 el.removeAttribute('data-fred-attrs');
                 el.removeAttribute('data-fred-media-source');
