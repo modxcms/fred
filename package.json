@@ -48,6 +48,7 @@
     "gulp-sass-inline-svg": "^1.0.3",
     "gulp-svgmin": "^1.2.4",
     "isomorphic-fetch": "^2.2.1",
+    "mousetrap": "^1.6.1",
     "nouislider": "^11.1.0",
     "promise-cancel": "^2.0.1",
     "twig": "^1.10.5"
