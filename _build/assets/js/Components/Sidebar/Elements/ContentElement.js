@@ -5,6 +5,7 @@ import fetch from 'isomorphic-fetch';
 import fredConfig from '../../../Config';
 import { div, button } from '../../../UI/Elements';
 import { applyScripts } from '../../../Utils';
+import Mousetrap from 'mousetrap';
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
@@ -113,6 +114,12 @@ export class ContentElement {
                             el.classList.add('fred--block-active_parent');
                         }
 
+                        if ((firstSet === false) && this.options.settings) {
+                            Mousetrap.bind('mod+alt+s', () => {
+                                this.openSettings();
+                            });
+                        }
+
                         firstSet = true;
                     }
                 });
@@ -143,6 +150,8 @@ export class ContentElement {
                 wrapper.classList.remove('fred--block-active');
                 wrapper.classList.remove('fred--block-active_top');
                 wrapper.classList.remove('fred--block-active_parent');
+
+                Mousetrap.unbind('mod+alt+s');
             }
         });
     }
