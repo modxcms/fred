@@ -11,6 +11,7 @@ import fredConfig from './Config';
 import { div, section, a, iFrame } from './UI/Elements'
 import Finder from './Finder';
 import Mousetrap from 'mousetrap';
+import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-bind.min'
 
 export default class Fred {
     constructor(config = {}) {
@@ -349,7 +350,7 @@ export default class Fred {
     }
 
     registerKeyboardShortcuts() {
-        Mousetrap.bind('mod+s', e => {
+        Mousetrap.bindGlobal('mod+s', e => {
             if (e.preventDefault) {
                 e.preventDefault();
             } else {
