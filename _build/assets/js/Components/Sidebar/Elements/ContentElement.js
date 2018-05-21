@@ -360,6 +360,7 @@ export class ContentElement {
 
         const content = div(['fred--block_content']);
         content.dataset.fredElementId = this.el.dataset.fredElementId;
+        content.dataset.fredElementTitle = this.title;
 
         return this.templateRender().then(html => {
             content.innerHTML = html;
