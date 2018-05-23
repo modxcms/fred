@@ -18,6 +18,12 @@ abstract class Endpoint
     /** @var array */
     protected $allowedMethod = ['POST', 'OPTIONS'];
 
+    /** @var bool */
+    protected $taggerLoaded = false;
+    
+    /** @var \Tagger|null */
+    protected $tagger = null;
+
     /**
      * Endpoint constructor.
      * @param \Fred $fred
@@ -103,5 +109,19 @@ abstract class Endpoint
 
         http_response_code(405);
         return '{}';
+    }
+
+    protected function loadTagger()
+    {
+        $taggerCorePath = $this->modx->getOption('tagger.core_path', null, $this->modx->getOption('core_path') . 'components/tagger/');
+
+        if (!file_exists($taggerCorePath . 'model/tagger/tagger.class.php')) {
+            return;
+        }
+
+        $this->tagger = $this->modx->getService('tagger', 'Tagger', $taggerCorePath . 'model/tagger/');
+        if (!($this->tagger instanceof \Tagger)) return;
+
+        $this->taggerLoaded = true;
     }
 }
