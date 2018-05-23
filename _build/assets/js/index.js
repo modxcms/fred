@@ -52,8 +52,6 @@ export default class Fred {
     render() {
         this.wrapper = div(['fred']);
         
-        this.renderPreview();
-        
         document.body.appendChild(this.wrapper);
     }
 
@@ -111,11 +109,12 @@ export default class Fred {
 
         previewWrapper.appendChild(this.iframe);
 
-        this.wrapper.appendChild(previewWrapper);
+        this.wrapper.insertBefore(previewWrapper, this.wrapper.firstChild);
     }
     
     previewContent() {
         if (!this.previewDocument) {
+            this.renderPreview();
             this.iframe.src = fredConfig.config.resource.emptyUrl;
             
             fetch(fredConfig.config.resource.previewUrl).then(response => {
