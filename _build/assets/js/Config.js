@@ -6,7 +6,7 @@ class Config {
         this._editors = fredEditors;
         this._rtes = {};
         this._pageSettings = {};
-        this._tagger = [];
+        this._tagger = {};
         this._lang = {};
     }
     
