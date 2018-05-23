@@ -5,8 +5,6 @@ namespace Fred\Endpoint\Ajax;
 class LoadContent extends Endpoint
 {
     protected $allowedMethod = ['GET', 'OPTIONS'];
-    protected $taggerLoaded = false;
-    protected $tagger = null;
 
     function process()
     {
@@ -133,20 +131,6 @@ class LoadContent extends Endpoint
         ];
     }
     
-    protected function loadTagger()
-    {
-        $taggerCorePath = $this->modx->getOption('tagger.core_path', null, $this->modx->getOption('core_path') . 'components/tagger/');
-        
-        if (!file_exists($taggerCorePath . 'model/tagger/tagger.class.php')) {
-            return;
-        }
-        
-        $this->tagger = $this->modx->getService('tagger', 'Tagger', $taggerCorePath . 'model/tagger/');
-        if (!($this->tagger instanceof \Tagger)) return;
-        
-        $this->taggerLoaded = true;
-    }
-
     /**
      * @param \modResource $resource
      * @return array
