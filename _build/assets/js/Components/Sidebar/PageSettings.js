@@ -1,7 +1,7 @@
 import Sidebar from '../Sidebar';
 import emitter from '../../EE';
 import { toggle, text, area, dateTime } from '../../UI/Inputs';
-import { button, dl, dt, dd, form, fieldSet, div, span, input } from '../../UI/Elements';
+import { dl, dt, dd, form, fieldSet } from '../../UI/Elements';
 import Tagger from '../../UI/Tagger';
 
 export default class PageSettings extends Sidebar {
@@ -125,10 +125,6 @@ export default class PageSettings extends Sidebar {
 
     setSetting(name, value) {
         this.pageSettings[name] = value;
-    }
-
-    setTaggerTags(name, value) {
-        this.pageSettings['tagger'][name] = value;
     }
 
     setSettingWithEmitter(name, value, input) {
