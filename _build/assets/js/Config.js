@@ -6,6 +6,7 @@ class Config {
         this._editors = fredEditors;
         this._rtes = {};
         this._pageSettings = {};
+        this._tagger = [];
         this._lang = {};
     }
     
@@ -15,6 +16,10 @@ class Config {
     
     set pageSettings(pageSettings) {
         this._pageSettings = pageSettings;
+    }
+    
+    set tagger(tagger) {
+        this._tagger = tagger;
     }
     
     set lang(lang) {
@@ -35,6 +40,10 @@ class Config {
     
     get pageSettings() {
         return this._pageSettings;
+    }
+    
+    get tagger() {
+        return this._tagger;
     }
 
     registerEditor(name, editor) {

@@ -5,27 +5,31 @@ namespace Fred\Endpoint\Ajax;
 class LoadContent extends Endpoint
 {
     protected $allowedMethod = ['GET', 'OPTIONS'];
-    
+    protected $taggerLoaded = false;
+    protected $tagger = null;
+
     function process()
     {
         $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-        
+
         if (empty($id)) {
             return $this->failure('No id was provided');
         }
-        
+
 
         /** @var \modResource $object */
         $object = $this->modx->getObject('modResource', $id);
         if (!$object instanceof \modResource) {
             return $this->failure('Could not load resource with id ' . $id);
         }
+        
+        $this->loadTagger();
 
         $data = $object->getProperty('data', 'fred');
         $elements = [];
 
         $data = $this->fixData($data);
-        
+
         $this->gatherElements($elements, $data);
 
         $pageSettings = [
@@ -41,24 +45,50 @@ class LoadContent extends Endpoint
             'publishedon' => $object->publishedon,
             'publishon' => $object->pub_date,
             'unpublishon' => $object->unpub_date,
+            'tagger' => $this->getTaggerTags($object)
         ];
-
+        
         return $this->data([
             "pageSettings" => $pageSettings,
-            "data" => $data, 
-            "elements" => $elements
+            "data" => $data,
+            "elements" => $elements,
+            "tagger" => $this->getTagger($object)
         ]);
     }
-    
-    protected function gatherElements(&$elements, $dropZones) {
+
+    /**
+     * Temporal method to fix data model change
+     *
+     * @param $data
+     * @return mixed
+     */
+    private function fixData($data)
+    {
+        foreach ($data as $dz => &$elements) {
+            foreach ($elements as &$element) {
+                foreach ($element['values'] as $key => $value) {
+                    if (!is_array($value)) {
+                        $element['values'][$key] = ['_raw' => ['_value' => $value]];
+                    }
+                }
+
+                $element['children'] = $this->fixData($element['children']);
+            }
+        }
+
+        return $data;
+    }
+
+    protected function gatherElements(&$elements, $dropZones)
+    {
         foreach ($dropZones as $dropZone) {
             foreach ($dropZone as $element) {
                 $elementId = intval($element['widget']);
-                
+
                 if (!isset($elements[$elementId])) {
                     $elements[$elementId] = $this->getElement($elementId);
                 }
-                
+
                 $this->gatherElements($elements, $element['children']);
             }
         }
@@ -102,29 +132,104 @@ class LoadContent extends Endpoint
             'options' => $options
         ];
     }
-
-    /**
-     * Temporal method to fix data model change
-     *
-     * @param $data
-     * @return mixed
-     */
-    private function fixData($data)
+    
+    protected function loadTagger()
     {
-        foreach ($data as $dz => &$elements) {
-            foreach ($elements as &$element) {
-                foreach ($element['values'] as $key => $value) {
-                    if (!is_array($value)) {
-                        $element['values'][$key] = ['_raw' => ['_value' => $value]];
-                    }
-                }
-
-                $element['children'] = $this->fixData($element['children']);
-            }
+        $taggerCorePath = $this->modx->getOption('tagger.core_path', null, $this->modx->getOption('core_path') . 'components/tagger/');
+        
+        if (!file_exists($taggerCorePath . 'model/tagger/tagger.class.php')) {
+            return;
         }
         
-        return $data;
+        $this->tagger = $this->modx->getService('tagger', 'Tagger', $taggerCorePath . 'model/tagger/');
+        if (!($this->tagger instanceof \Tagger)) return;
+        
+        $this->taggerLoaded = true;
     }
 
+    /**
+     * @param \modResource $resource
+     * @return array
+     */
+    protected function getTagger($resource)
+    {
+        if (!$this->taggerLoaded) return [];
+        
+        $c = $this->modx->newQuery('TaggerGroup');
+        $c->sortby('position');
+        /** @var \TaggerGroup[] $groups */
+        $groups = $this->modx->getIterator('TaggerGroup', $c);
+        $groupsArray = [];
+        
+        foreach ($groups as $group) {
+            $showForTemplates = $group->show_for_templates;
+            $showForTemplates = $this->tagger->explodeAndClean($showForTemplates, ',', true);
 
+            $showForContexts = $group->show_for_contexts;
+            $showForContexts = $this->tagger->explodeAndClean($showForContexts);
+
+            if (!in_array($resource->template, $showForTemplates)) continue;
+            if (!empty($showForContexts) && !in_array($resource->context_key, $showForContexts)) continue;
+            
+            $groupsArray[] = array_merge($group->toArray(), [
+                'show_for_templates' => array_values($showForTemplates),
+                'show_for_contexts' => array_values($showForContexts),
+                'tags' => ($group->show_autotag === 1) ? $this->taggerGetTagsForGroup($group) : []
+            ]);
+        }
+
+        return $groupsArray;
+    }
+
+    protected function getTaggerTags($resource)
+    {
+        if (!$this->taggerLoaded) return [];
+        
+        $tagsArray = [];
+    
+        $c = $this->modx->newQuery('TaggerTagResource');
+        $c->leftJoin('TaggerTag', 'Tag');
+        $c->where(['resource' => $resource->id]);
+        $c->sortby('Tag.alias', 'ASC');
+    
+        $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', ['resource']));
+        $c->select($this->modx->getSelectColumns('TaggerTag', 'Tag', '', ['tag', 'group']));
+    
+        $c->prepare();
+        $c->stmt->execute();
+        
+        while($relatedTag = $c->stmt->fetch(\PDO::FETCH_ASSOC)) {
+            if (!isset($tagsArray['tagger-' . $relatedTag['group']])) {
+                $tagsArray['tagger-' . $relatedTag['group']] = [$relatedTag['tag']];
+            } else {
+                $tagsArray['tagger-' . $relatedTag['group']][] = $relatedTag['tag'];
+            }
+        }
+
+        return $tagsArray;
+    }
+    
+    protected function taggerGetTagsForGroup($group)
+    {
+        if (!$this->taggerLoaded) return [];
+        
+        $c = $this->modx->newQuery('TaggerTag');
+        $c->where(['group' => $group->id]);
+        
+        $sortDir = (strtolower($group->sort_dir) === 'asc') ? 'ASC' : 'DESC';
+        
+        if ($group->sort_field === 'alias') {
+            $c->sortby('TaggerTag.alias', $sortDir);    
+        } else {
+            $c->sortby('TaggerTag.rank', $sortDir);
+        }
+        
+        $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', ['tag']));
+    
+        $c->prepare();
+        
+        $c->stmt->execute();
+        
+        return $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
+    }
 }

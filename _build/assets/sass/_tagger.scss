@@ -1,0 +1,48 @@
+.fred--tagger_group_title {
+  float: left;
+  margin-bottom: 10px;
+}
+
+.fred--tagger_tag {
+  border: solid thin white;
+  margin-right: 5px;
+  border-radius: 15px;
+  padding: 3px 10px;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 10px;
+  
+  &.fred--tagger_tag_active {
+    color: #294f7b;
+    background-color: white;
+  }
+}
+
+.fred--tagger_input_toggle {
+  background-color: green;
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  font-size: 25px;
+  color: white;
+  margin-left: 10px;
+  
+  &.fred--tagger_input_toggle_open {
+    transform: rotate(45deg);
+    background-color: red;
+  }
+}
+
+.fred--tagger_input_wrapper {
+  clear: both;
+}
+
+.fred--tagger_tags_wrapper {
+  clear: both;
+}
+
+.fred--tagger_input {
+  width: 80% !important;
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
