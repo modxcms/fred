@@ -1,7 +1,8 @@
 import Sidebar from '../Sidebar';
 import emitter from '../../EE';
 import { toggle, text, area, dateTime } from '../../UI/Inputs';
-import { button, dl, dt, dd, form, fieldSet } from '../../UI/Elements';
+import { button, dl, dt, dd, form, fieldSet, div, span, input } from '../../UI/Elements';
+import Tagger from '../../UI/Tagger';
 
 export default class PageSettings extends Sidebar {
     static title = 'fred.fe.page_settings';
@@ -26,6 +27,7 @@ export default class PageSettings extends Sidebar {
 
         settingsForm.appendChild(this.getGeneralFields());
         settingsForm.appendChild(this.getAdvancedFields());
+        settingsForm.appendChild(this.getTaggerFields());
 
         return settingsForm;
     }
@@ -49,9 +51,15 @@ export default class PageSettings extends Sidebar {
         const advancedList = dl();
 
         const advancedTab = dt('fred.fe.page_settings.advanced_settings', [], e => {
-            if (advancedTab.classList.contains('active')) {
-                advancedTab.classList.remove('active');
-            } else {
+            const activeTabs = advancedList.parentElement.querySelectorAll('dt.active');
+
+            const isActive = advancedTab.classList.contains('active');
+
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
                 advancedTab.classList.add('active');
                 e.stopPropagation();
                 emitter.emit('fred-sidebar-dt-active', advancedTab, advancedContent);
@@ -75,9 +83,52 @@ export default class PageSettings extends Sidebar {
 
         return advancedList;
     }
+    
+    getTaggerFields() {
+        const taggerList = dl();
+
+        const taggerTab = dt('Tagger', [], e => {
+            const activeTabs = taggerList.parentElement.querySelectorAll('dt.active');
+
+            const isActive = taggerTab.classList.contains('active');
+            
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
+                taggerTab.classList.add('active');
+                e.stopPropagation();
+                emitter.emit('fred-sidebar-dt-active', taggerTab, taggerContent);
+            }
+        });
+
+        const taggerContent = dd();
+        const fields = fieldSet(['fred--page_settings_form_advanced']);
+
+        this.fredConfig.tagger.forEach(group => {
+            const taggerField = new Tagger(group);
+            const rendered = taggerField.render();
+            
+            if (rendered) {
+                fields.appendChild(rendered);
+            }
+        });
+
+        taggerContent.appendChild(fields);
+
+        taggerList.appendChild(taggerTab);
+        taggerList.appendChild(taggerContent);
+
+        return taggerList;
+    }
 
     setSetting(name, value) {
         this.pageSettings[name] = value;
+    }
+
+    setTaggerTags(name, value) {
+        this.pageSettings['tagger'][name] = value;
     }
 
     setSettingWithEmitter(name, value, input) {

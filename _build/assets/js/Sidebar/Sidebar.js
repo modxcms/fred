@@ -98,7 +98,7 @@ export default class Sidebar {
 
         emitter.on('fred-sidebar-dt-active', (tab, content) => {
             const listener = e => {
-                if (!content.contains(e.target)) {
+                if ((e.target.parentElement !== null) && !content.contains(e.target)) {
                     tab.classList.remove('active');
                     this.wrapper.removeEventListener('click', listener);
                 }
@@ -133,7 +133,7 @@ export default class Sidebar {
     }
     
     globalHideSidebar(e) {
-        if (!this.fredWrapper.contains(e.target)) {
+        if ((e.target.parentElement !== null) && !this.fredWrapper.contains(e.target)) {
             this.components.forEach(component => {
                 component.collapse();
             });

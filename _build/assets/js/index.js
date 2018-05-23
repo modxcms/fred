@@ -238,6 +238,7 @@ export default class Fred {
         }).then(json => {
             const zones = json.data.data;
             fredConfig.pageSettings = json.data.pageSettings || {};
+            fredConfig.tagger = json.data.tagger || {};
             const dzPromises = [];
             
             for (let zoneName in zones) {
