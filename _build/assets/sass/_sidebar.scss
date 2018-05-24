@@ -142,9 +142,6 @@
       background: inline-svg('cog', $white) center center no-repeat;
     }
     + dd dt {
-      border-top: 2px solid #0c4eac;
-      border-bottom: 2px solid #0c4eac;
-      background: $green;
       &:hover{
         background: darken($green, 10%) !important;
       }
@@ -354,8 +351,6 @@
     & > dt{
       font-size: inherit !important;
       &:last-of-type{
-        border-top: 2px solid #0c4eac;
-        border-bottom: 2px solid #0c4eac;
         background: $green;
         &:hover{
           background: darken($green, 10%) !important;

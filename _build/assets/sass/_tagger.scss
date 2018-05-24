@@ -4,17 +4,20 @@
 }
 
 .fred--tagger_tag {
-  border: solid thin white;
+  border: solid 2px darken($darkblue, 5%);
+  background: darken($darkblue, 5%);
+  color: lighten($blue, 25%);
   margin-right: 5px;
-  border-radius: 15px;
+  border-radius: $radius;
   padding: 3px 10px;
   cursor: pointer;
   display: inline-block;
   margin-bottom: 10px;
+  transition: $timing;
 
   &.fred--tagger_tag_active {
-    color: #294f7b;
-    background-color: white;
+    color: $modxgreen;
+    border-color: $modxgreen;
   }
 }
 
@@ -35,16 +38,39 @@
 
 .fred--tagger_input_wrapper {
   clear: both;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  .fred--tagger_input {
+    background-color: lighten($black, 5%);
+    color: white;
+    border: 1px solid darken($black, 15%);
+    height: 36px;
+    width: calc(100% - 35px);
+    border-radius: $radius 0 0 $radius;
+    padding: 0 16px;
+  }
+  .fred--tagger_add_tag{
+    position: relative;
+    height: 36px; width: 36px;
+    background-color: darken($black, 10%);
+    background-image: inline-svg('plus');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+    background-blend-mode: overlay;
+    margin: 0;
+    cursor: pointer;
+    text-indent: -9999px;
+    transition: $timing;
+    &:hover{
+      background-color: $black;
+    }
+  }
 }
 
 .fred--tagger_tags_wrapper {
   clear: both;
-}
-
-.fred--tagger_input {
-  width: 80% !important;
-  margin-right: 10px;
-  margin-bottom: 15px;
 }
 
 .fred--autocomplete_suggestions {
