@@ -1,7 +1,9 @@
-import {button, div, input, span} from "./Elements";
+import {button, div, input, select, span} from "./Elements";
 import fredConfig from '../Config';
 import promiseCancel from 'promise-cancel';
 import fetch from 'isomorphic-fetch';
+import emitter from "../EE";
+import Choices from 'choices.js';
 
 class Tagger {
     constructor(group) {
@@ -18,31 +20,190 @@ class Tagger {
     }
 
     render() {
-        console.log(this.group);
-        if (this.group.field_type !== 'tagger-field-tags') return false;
-
         const field = div('fred--tagger_field', div('fred--tagger_group_title', this.group.name));
-        const tagsWrapper = div('fred--tagger_tags_wrapper');
 
-        if (this.group.hide_input === false) {
-            this.renderInput(tagsWrapper);
-            field.appendChild(this.inputToggle);
-            field.appendChild(this.inputWrapper);
+        switch (this.group.field_type) {
+            case 'tagger-field-tags' :
+                const tagsWrapper = div('fred--tagger_tags_wrapper');
+                
+                if (this.group.hide_input === false) {
+                    this.renderInput(tagsWrapper);
+                    field.appendChild(this.inputToggle);
+                    field.appendChild(this.inputWrapper);
+                }
+        
+                if (this.group.show_autotag) {
+                    this.renderAutoTag(tagsWrapper);
+                } else {
+                    this.renderTags(tagsWrapper);
+                }
+        
+                this.toggleInput();
+                
+                field.appendChild(tagsWrapper);
+                break;
+            case 'tagger-combo-tag':
+                if (this.group.allow_new === false) {
+                    this.renderSingleSelectInput();
+                    field.appendChild(this.inputWrapper);
+                } else {
+                    return false;    
+                }
+                
+                break;
+            default:
+                return false;
+                
         }
-
-        if (this.group.show_autotag) {
-            this.renderAutoTag(tagsWrapper);
-        } else {
-            this.renderTags(tagsWrapper);
-        }
-
-        this.toggleInput();
-
-        field.appendChild(tagsWrapper);
-
+        
         return field;
     }
+    
+    renderTagInput(tagsWrapper) {
+        const inputField = input('', 'text', 'fred--tagger_input');
 
+        inputField.addEventListener('keyup', e => {
+            if ((e.keyCode === 188) || (e.keyCode === 13)) {
+                this.onTagSubmit(tagsWrapper, inputField);
+            }
+        });
+
+        inputField.addEventListener('keydown', e => {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+            }
+        });
+
+        const addTag = button('Add', 'Add', 'fred--tagger_add_tag', () => {
+            this.onTagSubmit(tagsWrapper, inputField);
+        });
+
+        this.inputWrapper.appendChild(inputField);
+        this.inputWrapper.appendChild(addTag);
+
+        let lastRequest = null;
+
+        this.autoComplete({
+            selector: inputField,
+            onSelect: (e, term, item) => {
+                this.onTagSubmit(tagsWrapper, inputField);
+            },
+            source: (term, suggest) => {
+                if (lastRequest !== null) {
+                    lastRequest.cancel();
+                    lastRequest = null;
+                }
+
+                lastRequest = promiseCancel(fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${term}&group=${this.group.id}`));
+
+                lastRequest.promise.then(response => {
+                    return response.json();
+                }).then(json => {
+                    suggest(json.data.tags);
+                })
+            }
+        });
+    }
+
+    renderSelectInput(tagsWrapper = null, defaultValue = null) {
+        const selectField = select();
+
+        this.inputWrapper.appendChild(selectField);
+
+        let lookupTimeout = null;
+        const lookupCache = {};
+        let initData = [];
+
+        const pageChoices = new Choices(selectField, {
+            shouldSort:false,
+            removeItemButton: false
+        });
+        
+        if (defaultValue !== null) {
+            pageChoices.setValue([defaultValue]);
+        }
+
+        pageChoices.ajax(callback => {
+            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&group=${this.group.id}`)
+                .then(response => {
+                    return response.json()
+                })
+                .then(json => {
+                    const tags = [];
+                    json.data.tags.forEach(tag => {
+                        tags.push({
+                            value: '' + tag,
+                            label: '' + tag
+                        });
+                    });
+                    
+                    initData = tags;
+                    callback(tags, 'value', 'label');
+                })
+                .catch(error => {
+                    emitter.emit('fred-loading', error.message);
+                });
+        });
+
+        const populateOptions = options => {
+            pageChoices.setChoices(options, 'value', 'label', true);
+        };
+
+        const serverLookup = () => {
+            const query = pageChoices.input.value;
+            if (query in lookupCache) {
+                populateOptions(lookupCache[query]);
+            } else {
+                fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${query}&group=${this.group.id}`)
+                    .then(response => {
+                        return response.json()
+                    })
+                    .then(data => {
+                        const tags = [];
+                        data.data.tags.forEach(tag => {
+                            tags.push({
+                                value: '' + tag,
+                                label: '' + tag
+                            });
+                        });
+                        
+                        lookupCache[query] = tags;
+                        populateOptions(tags);
+                    })
+                    .catch(error => {
+                        emitter.emit('fred-loading', error.message);
+                    });
+            }
+        };
+
+        pageChoices.passedElement.addEventListener('search', event => {
+            clearTimeout(lookupTimeout);
+            lookupTimeout = setTimeout(serverLookup, 200);
+        });
+
+        pageChoices.passedElement.addEventListener('change', event => {
+            if (tagsWrapper === null) {
+                fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [event.detail.value.trim()];
+                pageChoices.setChoices(initData, 'value', 'label', true);
+            } else {
+                pageChoices.clearStore();
+                pageChoices.setChoices(initData, 'value', 'label', true);
+    
+                this.onTagAdd(tagsWrapper, event.detail.value);
+            }
+        });
+    }
+    
+    renderSingleSelectInput() {
+        this.inputWrapper = div('fred--tagger_input_wrapper');
+        let value = null;
+        if (fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].length > 0) {
+            value = fredConfig.pageSettings.tagger[`tagger-${this.group.id}`][0];
+        }
+        
+        this.renderSelectInput(null, value);
+    }
+    
     renderInput(tagsWrapper) {
         this.inputWrapper = div('fred--tagger_input_wrapper');
         this.inputWrapper.setAttribute('hidden', 'hidden');
@@ -57,49 +218,11 @@ class Tagger {
             }
         });
 
-        const inputField = input('', 'text', 'fred--tagger_input');
-
-        inputField.addEventListener('keyup', e => {
-            if ((e.keyCode === 188) || (e.keyCode === 13)) {
-                this.onTagAdd(tagsWrapper, inputField);
-            }
-        });
-        
-        inputField.addEventListener('keydown', e => {
-            if (e.keyCode === 13) {
-                e.preventDefault();
-            }
-        });
-
-        const addTag = button('Add', 'Add', 'fred--tagger_add_tag', () => {
-            this.onTagAdd(tagsWrapper, inputField);
-        });
-
-        this.inputWrapper.appendChild(inputField);
-        this.inputWrapper.appendChild(addTag);
-
-        let lastRequest = null;
-        
-        this.autoComplete({
-            selector: inputField,
-            onSelect: (e, term, item) => {
-                this.onTagAdd(tagsWrapper, inputField);
-            },
-            source: (term, suggest) => {
-                if (lastRequest !== null) {
-                    lastRequest.cancel();
-                    lastRequest = null;
-                }
-                
-                lastRequest = promiseCancel(fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${term}&group=${this.group.id}`));
-
-                lastRequest.promise.then(response => {
-                    return response.json();
-                }).then(json => {
-                    suggest(json.data.tags);
-                })
-            }
-        });
+        if (this.group.allow_type === true) {
+            this.renderTagInput(tagsWrapper);
+        } else {
+            this.renderSelectInput(tagsWrapper);
+        }
     }
     
     renderTag(tag, active = false, onClick = () => {}) {
@@ -181,9 +304,15 @@ class Tagger {
         this.toggleInput();
     }
 
-    onTagAdd(tagsWrapper, inputField) {
-        const tags = inputField.value.trim().split(',');
+    onTagSubmit(tagsWrapper, inputField) {
+        this.onTagAdd(tagsWrapper, inputField.value);
 
+        inputField.value = '';
+    }
+    
+    onTagAdd(tagsWrapper, tagsString) {
+        const tags = tagsString.trim().split(',');
+        
         tags.forEach(tag => {
             if (this.checkTagLimit()) {
                 tag = tag.trim();
@@ -192,17 +321,17 @@ class Tagger {
                 if (~fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].indexOf(tag)) {
                     return;
                 }
-                
+
                 const tagEl = tagsWrapper.querySelector(`[data-tag="${tag}"]`);
                 if (tagEl) {
                     tagEl.classList.add('fred--tagger_tag_active');
                     fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].push(tag);
                     this.toggleInput();
-                    
+
                     return;
                 }
-                    
-                
+
+
                 const tagToggle = this.renderTag(tag, true, () => {
                     if (this.group.show_autotag) {
                         this.onTagToggle(tagToggle, tag);
@@ -218,8 +347,6 @@ class Tagger {
                 this.toggleInput();
             }
         });
-
-        inputField.value = '';
     }
 
     toggleInput() {
