@@ -27,7 +27,10 @@ export default class PageSettings extends Sidebar {
 
         settingsForm.appendChild(this.getGeneralFields());
         settingsForm.appendChild(this.getAdvancedFields());
-        settingsForm.appendChild(this.getTaggerFields());
+        
+        if (this.fredConfig.tagger.length > 0) {
+            settingsForm.appendChild(this.getTaggerFields());
+        }
 
         return settingsForm;
     }
