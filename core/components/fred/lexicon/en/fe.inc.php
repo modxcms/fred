@@ -75,6 +75,7 @@ $_lang['fred.fe.preview.phone_portrait'] = 'Phone Portrait';
 $_lang['fred.fe.preview.phone_landscape'] = 'Phone Landscape';
 $_lang['fred.fe.preview.auto'] = 'Auto';
 
+$_lang['fred.fe.tagger.tagger'] = 'Tags';
 $_lang['fred.fe.tagger.add'] = 'Add Tag';
 $_lang['fred.fe.tagger.toggle_list'] = 'Toggle List';
 $_lang['fred.fe.tagger.toggle_input'] = 'Toggle Input';
