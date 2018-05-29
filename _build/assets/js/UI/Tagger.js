@@ -75,7 +75,7 @@ class Tagger {
             }
         });
 
-        const addTag = button('Add', 'Add', 'fred--tagger_add_tag', () => {
+        const addTag = button('fred.fe.tagger.add', 'fred.fe.tagger.add', 'fred--tagger_add_tag', () => {
             this.onTagSubmit(tagsWrapper, inputField);
         });
 
@@ -224,7 +224,7 @@ class Tagger {
             fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [inputField.value.trim()];
         });
 
-        const showList = button('Show List', 'Show List', 'fred--tagger_open_list', () => {
+        const showList = button('fred.fe.tagger.toggle_list', 'fred.fe.tagger.toggle_list', 'fred--tagger_open_list', () => {
             if (showList.listVisible) {
                 inputField.blur();
             } else {
@@ -268,7 +268,7 @@ class Tagger {
     renderInput(tagsWrapper) {
         this.inputWrapper = div(['fred--tagger_input_wrapper', 'fred--hidden']);
 
-        this.inputToggle = button('+', '+', 'fred--tagger_input_toggle', () => {
+        this.inputToggle = button('fred.fe.tagger.toggle_input', 'fred.fe.tagger.toggle_input', 'fred--tagger_input_toggle', () => {
             if (this.inputWrapper.classList.contains('fred--hidden')) {
                 this.inputWrapper.classList.remove('fred--hidden');
                 this.inputToggle.classList.add('fred--tagger_input_toggle_open');

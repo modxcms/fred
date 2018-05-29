@@ -22,17 +22,24 @@
 }
 
 .fred--tagger_input_toggle {
-  background-color: green;
   width: 25px;
   height: 25px;
   border-radius: 25px;
   font-size: 25px;
   color: white;
   margin-left: 10px;
+  background-color: darken($green, 10%);
+  background-image: inline-svg('plus');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-blend-mode: overlay;
+  background-size: 15px;
+  text-indent: -9999px;
 
   &.fred--tagger_input_toggle_open {
+    -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
-    background-color: red;
+    background-color: darken(red, 20%);
   }
 }
 
