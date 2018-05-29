@@ -34,6 +34,11 @@
   cursor: pointer;
 }
 
+.fred--sidebar_button-group{
+  position: absolute;
+  bottom: 24px;
+}
+
 .fred--sidebar_title {
   position: relative;
   display: flex;
@@ -203,9 +208,11 @@
         transition: $timing opacity;
       }
       + dd {
-        display: block;
+        //display: block;
         transition: $timing;
         opacity: 1;
+        z-index: 2;
+        left: 80px;
       }
       &:hover {
         background-color: darken($black, 1%);
@@ -221,14 +228,14 @@
   }
 
   dd {
-    display: none;
+    //display: none;
     color: $white;
     font-size: 14px;
     transition: $timing;
     opacity: 1;
     position: fixed;
     width: 280px;
-    left: 80px;
+    left: -300px;
     height: 100vh;
     overflow: auto;
     //overflow-x: hidden;
@@ -280,6 +287,7 @@
       }
     }
     dl {
+      z-index: 3;
       dt {
         position: relative;
         padding: 16px 28px;
@@ -294,22 +302,6 @@
         }
         &.active {
           + dd {
-            display: block;
-            opacity: 1;
-            position: fixed;
-            width: 300px;
-            left: 240px;
-            height: 100vh;
-            overflow: auto;
-            overflow-x: hidden;
-            top: 0;
-            background-color: lighten($black, 5%);
-            box-shadow: -250px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
-            z-index: 99;
-          }
-        }
-        + dd {
-          &:hover {
             display: block;
             opacity: 1;
             position: fixed;

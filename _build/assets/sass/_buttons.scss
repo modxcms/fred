@@ -61,8 +61,9 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     &_save{
       background-image: inline-svg('save',$white);
       text-indent: -999px;
+      background-color: $green;
       &:hover{
-        background-color: $modxred;
+        background-color: darken($green, 10%);
       }
     }
     &_preview{

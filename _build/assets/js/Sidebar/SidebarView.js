@@ -35,8 +35,12 @@ export const render = (components, onComponentAdd, onClose, onSave, onPreview) =
     ]);
     
     wrapper.appendChild(buildComponents());
-    wrapper.appendChild(button('', 'fred.fe.save', ['fred--btn-sidebar', 'fred--btn-sidebar_save'], onSave));
-    wrapper.appendChild(button('', 'fred.fe.toggle_preview', ['fred--btn-sidebar', 'fred--btn-sidebar_preview'], onPreview));
+
+    const buttongroup = div(['fred--sidebar_button-group'])
+    buttongroup.appendChild(button('', 'fred.fe.toggle_preview', ['fred--btn-sidebar', 'fred--btn-sidebar_preview'], onPreview));
+    buttongroup.appendChild(button('', 'fred.fe.save', ['fred--btn-sidebar', 'fred--btn-sidebar_save'], onSave));
+
+    wrapper.appendChild(buttongroup);
   
     wrapper.setAttribute('aria-hidden', 'true');
 
