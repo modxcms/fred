@@ -50,6 +50,9 @@
   align-items: center;
   margin-bottom: 15px;
   position: relative;
+  &.fred--hidden{
+    display:none;
+  }
   .fred--tagger_input {
     background-color: lighten($black, 5%);
     color: white;
