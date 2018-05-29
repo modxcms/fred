@@ -224,6 +224,14 @@
         }
       }
     }
+    &:not(.active){
+      + dd {
+        left: -300px;
+        dd {
+          left: -300px !important;
+        }
+      }
+    }
 
   }
 
@@ -232,7 +240,7 @@
     color: $white;
     font-size: 14px;
     transition: $timing;
-    opacity: 1;
+    opacity: 0;
     position: fixed;
     width: 280px;
     left: -300px;
