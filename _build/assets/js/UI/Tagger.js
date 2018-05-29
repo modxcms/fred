@@ -550,9 +550,6 @@ class Tagger {
         
         element.updateSC = (resize, next) => {
             const rect = element.getBoundingClientRect();
-            // element.sc.style.left = Math.round(rect.left + (window.pageXOffset || document.documentElement.scrollLeft) + o.offsetLeft) + 'px';
-            element.sc.style.left = '16px';
-            // element.sc.style.top = Math.round(rect.bottom + (window.pageYOffset || document.documentElement.scrollTop) + o.offsetTop) + 'px';
             element.sc.style.width = Math.round(rect.right - rect.left) + 'px'; // outerWidth
             
             if (!resize) {
