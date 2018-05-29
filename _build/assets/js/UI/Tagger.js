@@ -45,10 +45,11 @@ class Tagger {
             case 'tagger-combo-tag':
                 if (this.group.allow_new === false) {
                     this.renderSingleSelectInput();
-                    field.appendChild(this.inputWrapper);
                 } else {
-                    return false;    
+                    this.renderSingleTagInput();
                 }
+                
+                field.appendChild(this.inputWrapper);
                 
                 break;
             default:
@@ -74,7 +75,7 @@ class Tagger {
             }
         });
 
-        const addTag = button('Add', 'Add', 'fred--tagger_add_tag', () => {
+        const addTag = button('fred.fe.tagger.add', 'fred.fe.tagger.add', 'fred--tagger_add_tag', () => {
             this.onTagSubmit(tagsWrapper, inputField);
         });
 
@@ -114,16 +115,16 @@ class Tagger {
         const lookupCache = {};
         let initData = [];
 
-        const pageChoices = new Choices(selectField, {
+        const tagChoices = new Choices(selectField, {
             shouldSort:false,
             removeItemButton: false
         });
         
         if (defaultValue !== null) {
-            pageChoices.setValue([defaultValue]);
+            tagChoices.setValue([defaultValue]);
         }
 
-        pageChoices.ajax(callback => {
+        tagChoices.ajax(callback => {
             fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&group=${this.group.id}`)
                 .then(response => {
                     return response.json()
@@ -146,11 +147,11 @@ class Tagger {
         });
 
         const populateOptions = options => {
-            pageChoices.setChoices(options, 'value', 'label', true);
+            tagChoices.setChoices(options, 'value', 'label', true);
         };
 
         const serverLookup = () => {
-            const query = pageChoices.input.value;
+            const query = tagChoices.input.value;
             if (query in lookupCache) {
                 populateOptions(lookupCache[query]);
             } else {
@@ -176,18 +177,18 @@ class Tagger {
             }
         };
 
-        pageChoices.passedElement.addEventListener('search', event => {
+        tagChoices.passedElement.addEventListener('search', event => {
             clearTimeout(lookupTimeout);
             lookupTimeout = setTimeout(serverLookup, 200);
         });
 
-        pageChoices.passedElement.addEventListener('change', event => {
+        tagChoices.passedElement.addEventListener('change', event => {
             if (tagsWrapper === null) {
                 fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [event.detail.value.trim()];
-                pageChoices.setChoices(initData, 'value', 'label', true);
+                tagChoices.setChoices(initData, 'value', 'label', true);
             } else {
-                pageChoices.clearStore();
-                pageChoices.setChoices(initData, 'value', 'label', true);
+                tagChoices.clearStore();
+                tagChoices.setChoices(initData, 'value', 'label', true);
     
                 this.onTagAdd(tagsWrapper, event.detail.value);
             }
@@ -204,16 +205,75 @@ class Tagger {
         this.renderSelectInput(null, value);
     }
     
-    renderInput(tagsWrapper) {
+    renderSingleTagInput() {
         this.inputWrapper = div('fred--tagger_input_wrapper');
-        this.inputWrapper.setAttribute('hidden', 'hidden');
+        
+        const inputField = input('', 'text', 'fred--tagger_input');
 
-        this.inputToggle = button('+', '+', 'fred--tagger_input_toggle', () => {
-            if (this.inputWrapper.getAttribute('hidden')) {
-                this.inputWrapper.removeAttribute('hidden');
+        if (fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].length > 0) {
+            inputField.value = fredConfig.pageSettings.tagger[`tagger-${this.group.id}`][0];
+        }
+
+        inputField.addEventListener('keydown', e => {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+            }
+        });
+        
+        inputField.addEventListener('keyup', e => {
+            fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [inputField.value.trim()];
+        });
+
+        const showList = button('fred.fe.tagger.toggle_list', 'fred.fe.tagger.toggle_list', 'fred--tagger_open_list', () => {
+            if (showList.listVisible) {
+                inputField.blur();
+            } else {
+                inputField.openList(inputField.value, 0);
+                inputField.focus();     
+            }
+        });
+
+        showList.addEventListener('mousedown', e => {
+            showList.listVisible = (inputField.sc.style.display === 'block'); 
+        });
+
+        this.inputWrapper.appendChild(inputField);
+        this.inputWrapper.appendChild(showList);
+
+        let lastRequest = null;
+
+        this.autoComplete({
+            hideOnSelect: true,
+            selector: inputField,
+            onSelect: (e, term, item) => {
+                fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [inputField.value.trim()];
+            },
+            source: (term, suggest) => {
+                if (lastRequest !== null) {
+                    lastRequest.cancel();
+                    lastRequest = null;
+                }
+
+                lastRequest = promiseCancel(fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${term}&group=${this.group.id}`));
+
+                lastRequest.promise.then(response => {
+                    return response.json();
+                }).then(json => {
+                    suggest(json.data.tags);
+                })
+            }
+        });
+    }
+    
+    renderInput(tagsWrapper) {
+        this.inputWrapper = div(['fred--tagger_input_wrapper', 'fred--hidden']);
+
+        this.inputToggle = button('fred.fe.tagger.toggle_input', 'fred.fe.tagger.toggle_input', 'fred--tagger_input_toggle', () => {
+            if (this.inputWrapper.classList.contains('fred--hidden')) {
+                this.inputWrapper.classList.remove('fred--hidden');
                 this.inputToggle.classList.add('fred--tagger_input_toggle_open');
             } else {
-                this.inputWrapper.setAttribute('hidden', 'hidden');
+                this.inputWrapper.classList.add('fred--hidden');
                 this.inputToggle.classList.remove('fred--tagger_input_toggle_open');
             }
         });
@@ -352,11 +412,13 @@ class Tagger {
     toggleInput() {
         if (this.inputToggle && this.inputWrapper) {
             if (this.checkTagLimit()) {
-                this.inputToggle.removeAttribute('hidden');
-                this.inputToggle.classList.remove('fred--tagger_input_toggle_open');
+                if (this.inputToggle.classList.contains('fred--hidden')) {
+                    this.inputToggle.classList.remove('fred--tagger_input_toggle_open');
+                    this.inputToggle.classList.remove('fred--hidden');
+                }
             } else {
-                this.inputToggle.setAttribute('hidden', 'hidden');
-                this.inputWrapper.setAttribute('hidden', 'hidden');
+                this.inputToggle.classList.add('fred--hidden');
+                this.inputWrapper.classList.add('fred--hidden');
                 this.inputToggle.classList.remove('fred--tagger_input_toggle_open');
             }
         }
@@ -367,30 +429,15 @@ class Tagger {
     }
 
     autoComplete(options) {
-        const addEvent = (el, type, handler) => {
-            if (el.attachEvent) {
-                el.attachEvent('on' + type, handler); 
-            } else {
-                el.addEventListener(type, handler);
-            }
-        };
-
-        const removeEvent = (el, type, handler) => {
-            if (el.detachEvent) {
-                el.detachEvent('on' + type, handler);
-            } else {
-                el.removeEventListener(type, handler);
-            }
-        };
-
         const o = {
             selector: null,
             source: null,
-            minChars: 3,
+            minChars: 0,
             delay: 150,
             offsetLeft: 0,
             offsetTop: 1,
             cache: 1,
+            hideOnSelect: false,
             onSelect: (e, term, item) => {}
         };
         
@@ -409,6 +456,39 @@ class Tagger {
         element.cache = {};
         element.last_val = '';
 
+        element.openList = (val, delay) => {
+            element.last_val = val;
+            clearTimeout(element.timer);
+
+            if (o.cache) {
+                if (val in element.cache) {
+                    suggest(element.cache[val], val, false);
+                    return;
+                }
+
+                // no requests if previous suggestions were empty
+                for (let i = 1; i < val.length - o.minChars; i++) {
+                    const part = val.slice(0, val.length - i);
+                    if (part in element.cache && !element.cache[part].length) {
+                        suggest([], '', false);
+                        return;
+                    }
+                }
+            }
+
+            if (delay > 0) {
+                element.timer = setTimeout(() => {
+                    o.source(val, data => {
+                        suggest(data, val);
+                    });
+                }, delay);
+            } else {
+                o.source(val, data => {
+                    suggest(data, val);
+                });
+            }
+        };
+        
         element.updateSC = (resize, next) => {
             const rect = element.getBoundingClientRect();
             // element.sc.style.left = Math.round(rect.left + (window.pageXOffset || document.documentElement.scrollLeft) + o.offsetLeft) + 'px';
@@ -455,9 +535,9 @@ class Tagger {
                 element.last_val = element.value;
                 element.sc.style.display = 'none';
                 
-                setTimeout(() => {
-                    element.sc.style.display = 'none';
-                }, 350);
+                // setTimeout(() => {
+                //     element.sc.style.display = 'none';
+                // }, 350);
             } else if (element !== document.activeElement) {
                 setTimeout(function () {
                     element.focus();
@@ -473,17 +553,17 @@ class Tagger {
                 
                 if (!sel) {
                     next = (key === 40) ? element.sc.querySelector('.fred--autocomplete_suggestion') : element.sc.childNodes[element.sc.childNodes.length - 1]; // first : last
-                    next.className += ' fred--autocomplete_suggestion_selected';
+                    next.classList.add('fred--autocomplete_suggestion_selected');
                     element.value = next.getAttribute('data-val');
                 } else {
                     next = (key === 40) ? sel.nextSibling : sel.previousSibling;
                     
                     if (next) {
-                        sel.className = sel.className.replace('fred--autocomplete_suggestion_selected', '');
-                        next.className += ' fred--autocomplete_suggestion_selected';
+                        sel.classList.remove('fred--autocomplete_suggestion_selected');
+                        next.classList.add('fred--autocomplete_suggestion_selected');
                         element.value = next.getAttribute('data-val');
                     } else {
-                        sel.className = sel.className.replace('fred--autocomplete_suggestion_selected', '');
+                        sel.classList.remove('fred--autocomplete_suggestion_selected');
                         element.value = element.last_val;
                         next = 0;
                     }
@@ -499,9 +579,11 @@ class Tagger {
                 if (sel && element.sc.style.display !== 'none') {
                     o.onSelect(e, sel.getAttribute('data-val'), sel);
                     
-                    setTimeout(function () {
-                        // element.sc.style.display = 'none';
-                    }, 20);
+                    if (o.hideOnSelect === true) {
+                        setTimeout(function () {
+                            element.sc.style.display = 'none';
+                        }, 20);
+                    }
                 }
             }
         };
@@ -512,28 +594,7 @@ class Tagger {
                 
                 if (val.length >= o.minChars) {
                     if (val !== element.last_val) {
-                        element.last_val = val;
-                        clearTimeout(element.timer);
-                        
-                        if (o.cache) {
-                            if (val in element.cache) {
-                                suggest(element.cache[val]);
-                                return;
-                            }
-                            
-                            // no requests if previous suggestions were empty
-                            for (let i = 1; i < val.length - o.minChars; i++) {
-                                const part = val.slice(0, val.length - i);
-                                if (part in element.cache && !element.cache[part].length) {
-                                    suggest([]);
-                                    return;
-                                }
-                            }
-                        }
-
-                        element.timer = setTimeout(() => {
-                            o.source(val, suggest)
-                        }, o.delay);
+                        element.openList(val, o.delay);
                     }
                 } else {
                     element.last_val = val;
@@ -568,16 +629,19 @@ class Tagger {
                 const value = suggestionItem.getAttribute('data-val');
                 element.value = value;
                 o.onSelect(e, value, suggestionItem);
-                suggestionItem.remove();
-                // element.sc.style.display = 'none';
+
+                if (o.hideOnSelect === true) {
+                    element.sc.style.display = 'none';
+                }
             });
 
             return suggestionItem;
         };
         
-        const suggest = data => {
-            const val = element.value;
-            element.cache[val] = data;
+        const suggest = (data, val, cache = true) => {
+            if (cache === true) {
+                element.cache[val] = data;
+            }
             
             if (data.length && val.length >= o.minChars) {
                 element.sc.innerHTML = '';
@@ -592,30 +656,12 @@ class Tagger {
             }
         };
         
-        addEvent(window, 'resize', element.updateSC);
-        addEvent(element, 'blur', element.blurHandler);
-        addEvent(element, 'keydown', element.keydownHandler);
-        addEvent(element, 'keyup', element.keyupHandler);
-        if (!o.minChars) addEvent(element, 'focus', element.focusHandler);
+        window.addEventListener('resize', element.updateSC);
+        element.addEventListener('blur', element.blurHandler);
+        element.addEventListener('keydown', element.keydownHandler);
+        element.addEventListener('keyup', element.keyupHandler);
         
         element.insertAdjacentElement('afterend', element.sc);
-
-        // element.destroyAutoComplete = () => {
-        //     removeEvent(window, 'resize', element.updateSC);
-        //     removeEvent(element, 'blur', element.blurHandler);
-        //     removeEvent(element, 'focus', element.focusHandler);
-        //     removeEvent(element, 'keydown', element.keydownHandler);
-        //     removeEvent(element, 'keyup', element.keyupHandler);
-        //    
-        //     if (element.autocompleteAttr) {
-        //         element.setAttribute('autocomplete', element.autocompleteAttr);
-        //     } else {
-        //         element.removeAttribute('autocomplete');
-        //     }
-        //
-        //     element.sc.remove();
-        //     element.sc = null;
-        // }
     }
 }
 

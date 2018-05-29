@@ -24,7 +24,7 @@
 }
 
 .fred--tagger_input_toggle {
-  background-color: $green;
+  background-color: darken($green, 10%);
   width: 24px;
   height: 24px;
   border-radius: 24px;
@@ -32,9 +32,16 @@
   color: white;
   margin-left: 10px;
   transition: $timing;
+  background-image: inline-svg('plus');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-blend-mode: overlay;
+  background-size: 15px;
+  text-indent: -9999px;
   &.fred--tagger_input_toggle_open {
+    -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
-    background-color: $modxred;
+    background-color: darken($modxred, 10%);
   }
 }
 
@@ -67,11 +74,28 @@
       background-color: $black;
     }
   }
-  .choices{
+  .choices {
     width: 100%;
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
+  }
+  .fred--tagger_open_list{
+    position: relative;
+    height: 36px; width: 36px;
+    background-color: darken($black, 10%);
+    background-image: inline-svg('caret-down');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+    background-blend-mode: overlay;
+    margin: 0;
+    cursor: pointer;
+    text-indent: -9999px;
+    transition: $timing;
+    &:hover{
+      background-color: $black;
+    }
   }
 }
 
