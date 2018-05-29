@@ -53,7 +53,7 @@
     }
     > .fred--block_content {
       &:after {
-        min-height: 32px;
+        min-height: 22px;
         height: auto;
         opacity: .85;
       }
@@ -67,17 +67,16 @@
     > .fred--toolbar{
       top: auto;
       bottom: -36px;
+      border-radius: 0 0 0 $radius;
     }
     > .fred--block_content {
       &:after {
-        right: auto;
-        left: 0;
+        top: calc(100% + 44px);
       }
     }
   }
   &.fred--block-active_parent {
     outline: 3px solid lighten($gray, 15%);
-    z-index: 1;
     > .fred--toolbar{
       background: lighten($gray, 45%);
       border-color: lighten($gray, 15%);
@@ -120,6 +119,7 @@
     bottom: 0;
     right: 0;
     border: 3px solid $modxblue;
+    border-radius: $radius 0 0 0;
     border-bottom: 0;
     z-index: 10009;
     min-width: 172px;
@@ -218,19 +218,20 @@
       content: attr(data-fred-element-title);
       display: inline-block;
       box-sizing: border-box;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1;
       position: absolute;
-      top: 100%;
-      right: 0;
-      background: #1d1d1d;
-      color: $white;
+      border-radius: $radius;
+      top: calc(100% + 8px);
+      right: 8px;
+      background: $white;
+      color: #1d1d1d;
       height: 0;
       padding: 8px;
       opacity: 0;
       overflow: hidden;
       transition: .2s ease-in;
-      text-transform: uppercase;
+      //text-transform: uppercase;
       font-family: Arial, sans-serif;
 
     }
