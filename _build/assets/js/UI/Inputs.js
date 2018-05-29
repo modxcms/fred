@@ -7,6 +7,7 @@ import Finder from "./../Finder";
 import fredConfig from './../Config';
 import { div, label, input, select as selectElement, span, textArea, a, img } from './Elements';
 import emitter from "../EE";
+import { fixChoices } from "../Utils";
 
 export const text = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
@@ -413,8 +414,11 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
 
     const pageChoices = new Choices(selectEl, {
         shouldSort:false,
-        removeItemButton: setting.clearButton || false
+        removeItemButton: setting.clearButton || false,
+        searchResultLimit: 0
     });
+
+    fixChoices(pageChoices);
 
     let queryOptions = '';
     
@@ -606,9 +610,12 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
 
     wrapper.appendChild(labelEl);
     wrapper.appendChild(selectEl);
+    const config = setting.choices || {};
+    config.searchResultLimit = 0;
     
-    const choicesInstance = new Choices(selectEl, setting.choices || {});
-
+    const choicesInstance = new Choices(selectEl, config);
+    fixChoices(choicesInstance);
+    
     if (typeof onChange === 'function') {
         choicesInstance.passedElement.addEventListener('choice', event => {
             onChange(setting.name, event.detail.choice, selectEl, setting, choicesInstance);
