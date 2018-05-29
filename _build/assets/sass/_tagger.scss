@@ -67,6 +67,23 @@
       background-color: $black;
     }
   }
+  .fred--tagger_open_list{
+    position: relative;
+    height: 36px; width: 36px;
+    background-color: darken($black, 10%);
+    background-image: inline-svg('caret-down');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+    background-blend-mode: overlay;
+    margin: 0;
+    cursor: pointer;
+    text-indent: -9999px;
+    transition: $timing;
+    &:hover{
+      background-color: $black;
+    }
+  }
 }
 
 .fred--tagger_tags_wrapper {
