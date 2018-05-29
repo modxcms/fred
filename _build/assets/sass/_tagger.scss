@@ -44,9 +44,10 @@
     background-color: darken($modxred, 10%);
   }
 }
-
 .fred--tagger_input_wrapper {
   clear: both;
+  display: flex;
+  align-items: center;
   margin-bottom: 15px;
   .fred--tagger_input {
     background-color: lighten($black, 5%);
