@@ -14,6 +14,17 @@ export class ElementSettings {
         this.render();
         
         emitter.on('fred-element-settings-open', this.openSettings.bind(this));
+
+        emitter.on('fred-element-settings-dt-active', (tab, content) => {
+            const listener = e => {
+                if ((e.target.parentElement !== null) && !content.contains(e.target)) {
+                    tab.classList.remove('active');
+                    this.wrapper.removeEventListener('click', listener);
+                }
+            };
+
+            this.wrapper.addEventListener('click', listener);
+        });
     }
 
     render() {
@@ -40,18 +51,25 @@ export class ElementSettings {
         const settingsForm = form();
         const fields = fieldSet();
         const title = legend('fred.fe.element_settings');
+        const groups = [];
 
         fields.appendChild(title);
 
         this.settings.forEach(setting => {
             if (setting.group && setting.settings) {
-                fields.appendChild(this.renderSettingsGroup(setting));
+                groups.push(setting);
             } else {
                 const defaultValue = this.el.settings[setting.name] || setting.value;
                 fields.appendChild(this.renderSetting(setting, defaultValue));
             }
         });
-
+        if (groups.length > 0) {
+            const group = dl();
+            groups.forEach(setting => {
+                this.renderSettingsGroup(setting, group);
+            });
+            fields.appendChild(group);
+        }
         const buttonGroup = div(['fred--panel_button_wrapper']);
 
         const apply = button('fred.fe.apply', 'fred.fe.apply', ['fred--btn-panel', 'fred--btn-apply'], this.apply.bind(this));
@@ -69,10 +87,21 @@ export class ElementSettings {
         return settingsForm;
     }
 
-    renderSettingsGroup(group) {
-        const content = dl();
-        const settingGroup = dt(group.group, [], () => {
-            settingGroup.classList.toggle('active');
+    renderSettingsGroup(group, content) {
+        const settingGroup = dt(group.group, [], (e, el) => {
+            const activeTabs = el.parentElement.querySelectorAll('dt.active');
+
+            const isActive = el.classList.contains('active');
+
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
+                el.classList.add('active');
+                e.stopPropagation();
+                emitter.emit('fred-element-settings-dt-active', settingGroup, settingGroupContent);
+            }
         });
         const settingGroupContent = dd();
         
