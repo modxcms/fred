@@ -1,9 +1,10 @@
-import {button, div, input, select, span} from "./Elements";
+import { button, div, input, select, span } from "./Elements";
 import fredConfig from '../Config';
 import promiseCancel from 'promise-cancel';
 import fetch from 'isomorphic-fetch';
 import emitter from "../EE";
 import Choices from 'choices.js';
+import { fixChoices } from "../Utils";
 
 class Tagger {
     constructor(group) {
@@ -117,8 +118,61 @@ class Tagger {
 
         const tagChoices = new Choices(selectField, {
             shouldSort:false,
-            removeItemButton: false
+            removeItemButton: false,
+            searchResultLimit: 0
         });
+
+        fixChoices(tagChoices);
+        
+        if (tagsWrapper !== null) {
+            tagChoices._handleChoiceAction = function(activeItems, element) {
+                if (!activeItems || !element) {
+                    return;
+                }
+    
+                // If we are clicking on an option
+                const id = element.getAttribute('data-id');
+                const choice = this.store.getChoiceById(id);
+                const passedKeyCode  = activeItems[0] && activeItems[0].keyCode ? activeItems[0].keyCode : null;
+                const hasActiveDropdown = this.dropdown.classList.contains(this.config.classNames.activeState);
+    
+                // Update choice keyCode
+                choice.keyCode = passedKeyCode;
+    
+                const event = new CustomEvent('choice', {
+                    detail: null,
+                    bubbles: true,
+                    cancelable: true
+                });
+    
+                this.passedElement.dispatchEvent(event);
+                
+                if (choice && !choice.selected && !choice.disabled) {
+                    const canAddItem = this._canAddItem(activeItems, choice.value);
+    
+                    if (canAddItem.response) {
+                        this._addItem(
+                            choice.value,
+                            choice.label,
+                            choice.id,
+                            choice.groupId,
+                            choice.customProperties,
+                            choice.placeholder,
+                            choice.keyCode
+                        );
+                        this._triggerChange(choice.value);
+                    }
+                }
+    
+                // this.clearInput();
+    
+                // We wont to close the dropdown if we are dealing with a single select box
+                if (hasActiveDropdown && this.isSelectOneElement) {
+                    // this.hideDropdown();
+                    // this.containerOuter.focus();
+                }
+            };
+        }
         
         if (defaultValue !== null) {
             tagChoices.setValue([defaultValue]);
@@ -187,12 +241,17 @@ class Tagger {
                 fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [event.detail.value.trim()];
                 tagChoices.setChoices(initData, 'value', 'label', true);
             } else {
-                tagChoices.clearStore();
-                tagChoices.setChoices(initData, 'value', 'label', true);
-    
                 this.onTagAdd(tagsWrapper, event.detail.value);
             }
         });
+
+        if (tagsWrapper !== null) {
+            tagChoices.passedElement.addEventListener('hideDropdown', event => {
+                tagChoices.clearStore();
+                tagChoices.clearInput();
+                tagChoices.setChoices(initData, 'value', 'label', true);
+            });
+        }
     }
     
     renderSingleSelectInput() {
@@ -278,7 +337,7 @@ class Tagger {
             }
         });
 
-        if (this.group.allow_type === true) {
+        if (this.group.allow_new === true) {
             this.renderTagInput(tagsWrapper);
         } else {
             this.renderSelectInput(tagsWrapper);
