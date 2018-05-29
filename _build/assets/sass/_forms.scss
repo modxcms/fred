@@ -120,16 +120,6 @@ input{
   }
 }
 .fred--page_settings_form {
-  transition: .3s;
-  opacity: 1;
-  position: fixed;
-  width: 280px;
-  left: 80px;
-  height: 100vh;
-  overflow: auto;
-  overflow-x: hidden;
-  top: 0;
-  background-color: $darkblue;
   dl{
     position: relative !important;
     height: auto !important;

@@ -63,7 +63,7 @@
       }
       &.active {
         + dd {
-          display: block;
+          left: 240px;
         }
       }
       &:hover:not(:focus){
@@ -71,11 +71,10 @@
       }
       + dd {
         padding: 24px 16px;
-        display: none;
         opacity: 1;
         position: fixed;
         width: 300px;
-        left: 240px;
+        left: -300px;
         height: 100vh;
         overflow: auto;
         overflow-x: hidden;
@@ -83,6 +82,7 @@
         background-color: lighten($black, 5%);
         box-shadow: -250px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
         z-index: 99;
+        transition: $timing;
         &:hover {
           display: block;
         }
