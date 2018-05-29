@@ -143,6 +143,7 @@ $choices-button-offset: 8px !default;
   display: inline-block;
   padding: 4px 16px 4px 4px;
   width: 100%;
+  min-height: 30px;
   [dir="rtl"] & {
     padding-right: 4px;
     padding-left: 16px;
