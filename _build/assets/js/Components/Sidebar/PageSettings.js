@@ -90,7 +90,7 @@ export default class PageSettings extends Sidebar {
     getTaggerFields() {
         const taggerList = dl();
 
-        const taggerTab = dt('Tagger', [], e => {
+        const taggerTab = dt('fred.fe.tagger.tagger', [], e => {
             const activeTabs = taggerList.parentElement.querySelectorAll('dt.active');
 
             const isActive = taggerTab.classList.contains('active');
