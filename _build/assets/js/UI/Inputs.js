@@ -196,7 +196,11 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
         setting.options.forEach(value => {
             if (typeof value === 'object') {
                 const option = div('fred--color_swatch-color');
-                option.style.backgroundColor = value.color;
+                option.style.background = value.color;
+                
+                if (value.width && parseFloat(value.width) > 1) {
+                    option.style.width = (parseFloat(value.width) * 30) + 'px';
+                }
                 
                 if (value.label && value.label.trim() !== '') {
                     option.setAttribute('data-tooltip', value.label);
@@ -206,7 +210,7 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
                     defaultValueTranslated = true;
                     
                     if (defaultValue) {
-                        preview.style.backgroundColor = value.color;
+                        preview.style.background = value.color;
                     }
                 }
                 
@@ -216,7 +220,7 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
                         onChange(setting.name, value.value, option, setting);
                     }
 
-                    preview.style.backgroundColor = value.color;
+                    preview.style.background = value.color;
                 });
 
                 colors.appendChild(option);
@@ -230,7 +234,7 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
                         onChange(setting.name, value, option, setting);
                     }
     
-                    preview.style.backgroundColor = value;
+                    preview.style.background = value;
                 });
                 
                 colors.appendChild(option);
