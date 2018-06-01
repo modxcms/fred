@@ -150,7 +150,6 @@ switch ($modx->event->name) {
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 2] , 'abs')) . '",
                     "emptyUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 3] , 'abs')) . '",
                 },
-                lexicons: ' . json_encode($lexicons) . ',
                 beforeRender: function() {
                     ' . $beforeRender . '
                 }
