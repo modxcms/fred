@@ -29,15 +29,15 @@
       width: 80px;
     }
     &_save {
-      background-color: $modxred;
-      background-image: inline-svg('save',$white);
+      background-color: $green;
+      background-image: inline-svg('check',$white);
       position: absolute;
       top: -64px;
       left: 20px;
     }
     &_preview {
       background-color: $modxblue;
-      background-image: inline-svg('flask',$white);
+      background-image: inline-svg('eye',$white);
       position: absolute;
       top: -32px;
       right: -44px;
