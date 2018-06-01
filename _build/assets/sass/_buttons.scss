@@ -59,7 +59,7 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
       right: 0;
     }
     &_save{
-      background-image: inline-svg('save',$white);
+      background-image: inline-svg('check',$white);
       text-indent: -999px;
       background-color: $green;
       &:hover{
@@ -67,7 +67,7 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
       }
     }
     &_preview{
-      background-image: inline-svg('flask',$white);
+      background-image: inline-svg('eye',$white);
       text-indent: -999px;
     }
   }
