@@ -390,7 +390,11 @@ export default class Fred {
     }
     
     loadLexicons() {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-lexicons&topics=${fredConfig.config.lexicons.join(',')}`, {
+        let topics = '';
+        if (fredConfig.config.lexicons && Array.isArray(fredConfig.config.lexicons)) {
+            topics = '&topics=' + fredConfig.config.lexicons.join(',');
+        }
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-lexicons${topics}`, {
             method: "get",
             credentials: 'same-origin',
             headers: {
