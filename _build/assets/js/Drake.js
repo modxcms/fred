@@ -25,6 +25,7 @@ class Drake {
 
         try {
             this.drake = dragula(containers, {
+                direction: 'horizontal',
                 copy: function (el, source) {
                     return source.classList.contains('source');
                 },
