@@ -60,8 +60,8 @@ export default class Fred {
         previewWrapper.style.display = 'none';
 
         this.iframe = iFrame('#');
-        this.iframe.style.width = '1024px';
-        this.iframe.style.height = '768px';
+        this.iframe.style.width = '100%';
+        this.iframe.style.height = '100%';
 
         this.controls = div(['fred--content-preview_controls']);
 
