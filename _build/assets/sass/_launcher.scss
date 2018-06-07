@@ -28,6 +28,13 @@
       height: 80px;
       width: 80px;
     }
+    &_logout-user{
+      background-color: $modxred;
+      background-image: inline-svg('power-off', $white);
+      position: absolute;
+      top: 32px;
+      right: -64px;
+    }
     &_save {
       background-color: $green;
       background-image: inline-svg('check',$white);
@@ -55,13 +62,19 @@
     bottom: initial;
     .fred--launcher_btn {
       &_save {
-        left: -16px;
-        bottom: -52px;
+        left: -42px;
+        bottom: -36px;
         top: initial;
       }
       &_preview {
-        right: -16px;
+        right: 15px;
         bottom: -52px;
+        left: initial;
+        top: initial;
+      }
+      &_logout-user{
+        right: -42px;
+        bottom: -36px;
         left: initial;
         top: initial;
       }
@@ -77,6 +90,10 @@
         }
         &_preview {
           bottom: -32px;
+          top: initial;
+        }
+        &_logout-user{
+          bottom: 32px;
           top: initial;
         }
       }
@@ -97,6 +114,11 @@
           top: initial;
           right: initial;
         }
+        &_logout-user{
+          left: -64px;
+          bottom: 32px;
+          top: initial;
+        }
       }
     }
   }
@@ -106,12 +128,17 @@
     transform: translateX(-50%);
     .fred--launcher_btn {
       &_save {
-        left: -16px;
-        top: -52px;
+        left: -42px;
+        top: -36px;
       }
       &_preview {
-        right: -16px;
+        right: 15px;
         top: -52px;
+        left: initial;
+      }
+      &_logout-user{
+        right: -42px;
+        top: -36px;
         left: initial;
       }
     }
@@ -125,10 +152,15 @@
       left: initial;
       .fred--launcher_btn {
         &_save {
-
+          left:initial;
+          right: 16px;
         }
         &_preview {
           left: -44px;
+          right: initial;
+        }
+        &_logout-user{
+          left: -64px;
           right: initial;
         }
       }

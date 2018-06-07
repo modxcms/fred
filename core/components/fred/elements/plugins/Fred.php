@@ -141,6 +141,7 @@ switch ($modx->event->name) {
         <script>
             var fred = new Fred({
                 assetsUrl: "' . $fred->getOption('webAssetsUrl') . '",
+                managerUrl: "' . MODX_MANAGER_URL . '",
                 launcherPosition: "' . $fred->getOption('launcher_position') . '",
                 iconEditor: "' . $fred->getOption('icon_editor') . '",
                 imageEditor: "' . $fred->getOption('image_editor') . '",

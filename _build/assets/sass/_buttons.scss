@@ -70,6 +70,10 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
       background-image: inline-svg('eye',$white);
       text-indent: -999px;
     }
+    &_logout-user{
+      background-image: inline-svg('power-off', $white);
+      text-indent: -999px;
+    }
   }
   &-panel {
     position: relative;

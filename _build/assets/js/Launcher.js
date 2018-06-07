@@ -28,10 +28,15 @@ export default class Launcher {
                 emitter.emit('fred-preview-off');
             }
         });
+
+        const logout = button('', 'fred.fe.logout-user', ['fred--launcher_btn', 'fred--launcher_btn_logout-user'], () => {
+            emitter.emit('fred-logout-user');
+        });
         
         wrapper.appendChild(fred);
         wrapper.appendChild(save);
         wrapper.appendChild(preview);
+        wrapper.appendChild(logout);
 
         emitter.on('fred-sidebar-hide', silent => {
             if (silent !== true) {

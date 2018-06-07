@@ -349,6 +349,14 @@ export default class Fred {
         emitter.on('fred-preview-off', () => {
             this.iframe.parentNode.style.display = 'none';
         });
+
+        emitter.on('fred-open-manager', () => {
+            this.openManager();
+        });
+
+        emitter.on('fred-logout-user', () => {
+            this.logoutUser();
+        });
     }
 
     registerKeyboardShortcuts() {
@@ -461,5 +469,16 @@ export default class Fred {
         if (this.scriptsToReplace[next]) {
             this.replaceScript(next);
         }
+    }
+
+    openManager() {
+        const url = fredConfig.config.managerUrl + '?a=resource/update&id=' + fredConfig.config.resource.id;
+
+        window.open(url, '_blank');
+    }
+
+    logoutUser() {
+        const url = fredConfig.config.managerUrl + '?a=security/logout';
+        document.location.href = url;
     }
 }

@@ -24,6 +24,7 @@ $_lang['fred.fe.clear'] = 'Clear';
 $_lang['fred.fe.browse'] = 'Browse';
 $_lang['fred.fe.browse_files'] = 'Browse Files';
 $_lang['fred.fe.browse_images'] = 'Browse Images';
+$_lang['fred.fe.logout-user'] = 'Logout';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Page Title';
 $_lang['fred.fe.page_settings.long_title'] = 'Long Title';
