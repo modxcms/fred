@@ -119,6 +119,7 @@ final class RenderResource {
             $node->removeAttr('data-fred-name');
             $node->removeAttr('data-fred-target');
             $node->removeAttr('data-fred-rte');
+            $node->removeAttr('data-fred-rte-config');
             $node->removeAttr('data-fred-attrs');
             $node->removeAttr('contenteditable');
             $node->removeAttr('data-fred-media-source');
@@ -145,7 +146,19 @@ final class RenderResource {
                 $node->removeAttr('data-fred-link-anchor');
             }
         });
+        
+        $blockClasses = $html->filter('[data-fred-block-class]');
+        $blockClasses->each(function(HtmlPageCrawler $node, $i) use ($item) {
+            $classes = $node->attr('data-fred-block-class');
+            $classes = Utils::explodeAndClean($classes, ' ');
+            
+            foreach ($classes as $class) {
+                $node->addClass($class);
+            }
 
+            $node->removeAttr('data-fred-block-class');
+        });
+        
         $onDrop = $html->filter('[data-fred-on-drop]');
         $onDrop->each(function(HtmlPageCrawler $node, $i) use ($item) {
             $node->removeAttr('data-fred-on-drop');
