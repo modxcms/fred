@@ -368,7 +368,7 @@ export class ContentElement {
             applyScripts(content);
             
             this.initDropZones(wrapper, content);
-            this.initElements(wrapper,content);
+            this.initElements(wrapper, content);
 
             wrapper.appendChild(content);
             
@@ -597,6 +597,15 @@ export class ContentElement {
 
             this.setContentElValue(el);
         }
+        
+        const blockClasses = content.querySelectorAll('[data-fred-block-class]');
+        for (let blockClass of blockClasses) {
+            const classes = blockClass.dataset.fredBlockClass.split(' ').filter(e => {return e;});
+            
+            if (classes.length > 0) {
+                wrapper.classList.add(...classes);
+            }
+        }
     }
     
     setElValue(el, value) {
@@ -707,6 +716,17 @@ export class ContentElement {
                 }
             }
 
+            const blockClasses = element.querySelectorAll('[data-fred-block-class]');
+            for (let blockClass of blockClasses) {
+                const classes = blockClass.dataset.fredBlockClass.split(' ').filter(e => {return e;});
+
+                if (classes.length > 0) {
+                    blockClass.classList.add(...classes);
+                }
+
+                blockClass.removeAttribute('data-fred-block-class');
+            }
+            
             const fredOnDrop = element.querySelectorAll('[data-fred-on-drop]');
             for (let onDrop of fredOnDrop) {
                 onDrop.removeAttribute('data-fred-on-drop');
