@@ -168,6 +168,18 @@ final class RenderResource {
 
             $node->removeAttr('data-fred-block-class');
         });
+        
+        $fredClasses = $html->filter('[data-fred-class]');
+        $fredClasses->each(function(HtmlPageCrawler $node, $i) use ($item) {
+            $classes = $node->attr('data-fred-class');
+            $classes = Utils::explodeAndClean($classes, ' ');
+            
+            foreach ($classes as $class) {
+                $node->addClass($class);
+            }
+
+            $node->removeAttr('data-fred-class');
+        });
 
         $bindElements = $html->filter('[data-fred-bind]');
         $bindElements->each(function(HtmlPageCrawler $node, $i) use ($item) {
