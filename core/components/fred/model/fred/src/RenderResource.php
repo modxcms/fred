@@ -79,7 +79,16 @@ final class RenderResource {
     {
         $bindElements = $html->filter('[data-fred-bind="' . $name . '"]');
         $bindElements->each(function(HtmlPageCrawler $node, $i) use ($value) {
-            $node->setInnerHtml($value);
+            switch ($node->nodeName()) {
+                case 'i':
+                    $node->attr('class', $value);
+                    break;
+                case 'img':
+                    $node->attr('src', $value);
+                    break;
+                default:
+                    $node->html($value);
+            }
         });
     }
 

@@ -465,7 +465,16 @@ export class ContentElement {
     setValueForBindElements(wrapper, name, value) {
         const bindElements = wrapper.querySelectorAll(`[data-fred-bind="${name}"]`);
         for (let bindEl of bindElements) {
-            bindEl.innerHTML = value;
+            switch (bindEl.nodeName.toLowerCase()) {
+                case 'i':
+                    bindEl.className = value;
+                    break;
+                case 'img':
+                    bindEl.setAttribute('src', value);
+                    break;
+                default:
+                    bindEl.innerHTML = value;
+            }
         }
     }
     
