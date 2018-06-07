@@ -8,7 +8,7 @@ let wrapper;
  * @param onComponentAdd
  * @param onClose
  */
-export const render = (components, onComponentAdd, onClose, onSave, onPreview) => {
+export const render = (components, onComponentAdd, onClose, onSave, onPreview, onLogoutUser) => {
     const buildComponents = () => {
         const sidebar = dl('fred--accordion');
 
@@ -38,6 +38,7 @@ export const render = (components, onComponentAdd, onClose, onSave, onPreview) =
 
     const buttongroup = div(['fred--sidebar_button-group'])
     buttongroup.appendChild(button('', 'fred.fe.toggle_preview', ['fred--btn-sidebar', 'fred--btn-sidebar_preview'], onPreview));
+    buttongroup.appendChild(button('', 'fred.fe.logout-user', ['fred--btn-sidebar', 'fred--btn-sidebar_logout-user'], onLogoutUser));
     buttongroup.appendChild(button('', 'fred.fe.save', ['fred--btn-sidebar', 'fred--btn-sidebar_save'], onSave));
 
     wrapper.appendChild(buttongroup);
