@@ -428,9 +428,9 @@ export class ContentElement {
         }
     }
     
-    onRTEContentChangeFactory (el) {
-        return (content) => {
-            this.setContentValue(el, content);
+    onRTEContentChangeFactory (el, content) {
+        return value => {
+            this.setContentValue(el, value, content);
         }
     }
     
@@ -449,27 +449,38 @@ export class ContentElement {
         }
     }
     
-    setContentValue(el, content) {
+    setContentValue(el, value, content) {
         if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
         if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
 
-        this.content[el.dataset.fredName]._raw._value = content;
-
+        this.content[el.dataset.fredName]._raw._value = value;
+        
+        this.setValueForBindElements(content, el.dataset.fredName, value);
+        
         if (el.dataset.fredTarget) {
             emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
         }
     }
     
-    setContentElValue(el, onlyElValue = false, addListeners = true) {
+    setValueForBindElements(wrapper, name, value) {
+        const bindElements = wrapper.querySelectorAll(`[data-fred-bind="${name}"]`);
+        for (let bindEl of bindElements) {
+            bindEl.innerHTML = value;
+        }
+    }
+    
+    setContentElValue(el, content, onlyElValue = false, addListeners = true) {
         switch (el.nodeName.toLowerCase()) {
             case 'i':
                 if (this.content[el.dataset.fredName]._raw._value !== undefined) {
                     el.className = this.content[el.dataset.fredName]._raw._value;
                 } else {
-                    if (onlyElValue) {
+                    if (!onlyElValue) {
                         this.content[el.dataset.fredName]._raw._value = el.className;
                     }
                 }
+
+                this.setValueForBindElements(content, el.dataset.fredName, this.content[el.dataset.fredName]._raw._value);
 
                 if (addListeners) {
                     el.addEventListener('click', e => {
@@ -487,10 +498,12 @@ export class ContentElement {
                 if (this.content[el.dataset.fredName]._raw._value !== undefined) {
                     el.setAttribute('src', this.content[el.dataset.fredName]._raw._value);
                 } else {
-                    if (onlyElValue) {
+                    if (!onlyElValue) {
                         this.content[el.dataset.fredName]._raw._value = el.getAttribute('src');
                     }
                 }
+
+                this.setValueForBindElements(content, el.dataset.fredName, this.content[el.dataset.fredName]._raw._value);
 
                 if (addListeners) {
                     el.addEventListener('click', e => {
@@ -508,10 +521,12 @@ export class ContentElement {
                 if (this.content[el.dataset.fredName]._raw._value !== undefined) {
                     el.innerHTML = this.content[el.dataset.fredName]._raw._value;
                 } else {
-                    if (onlyElValue) {
+                    if (!onlyElValue) {
                         this.content[el.dataset.fredName]._raw._value = el.innerHTML;
                     }
                 }
+
+                this.setValueForBindElements(content, el.dataset.fredName, this.content[el.dataset.fredName]._raw._value);
         }
 
         if (el.dataset.fredAttrs) {
@@ -536,18 +551,18 @@ export class ContentElement {
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
                     if ((mutation.type === 'characterData') && (!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
-                        this.setContentValue(el, el.innerHTML);
+                        this.setContentValue(el, el.innerHTML, content);
                         return;
                     }
 
                     if (mutation.type === 'attributes') {
                         if ((el.nodeName.toLowerCase()) === 'img' && (mutation.attributeName === 'src')) {
-                            this.setContentValue(el, el.getAttribute(mutation.attributeName));
+                            this.setContentValue(el, el.getAttribute(mutation.attributeName), content);
                             return;
                         }
 
                         if ((el.nodeName.toLowerCase()) === 'i' && (mutation.attributeName === 'class')) {
-                            this.setContentValue(el, el.className);
+                            this.setContentValue(el, el.className, content);
                             return;
                         }
 
@@ -582,7 +597,7 @@ export class ContentElement {
                         rteConfig = this.options.rteConfig[el.dataset.fredRteConfig];
                     }
                     
-                    fredConfig.rtes[this.config.rte](el, rteConfig, this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
+                    fredConfig.rtes[this.config.rte](el, rteConfig, this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el, content), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
                 }
             }
 
@@ -595,7 +610,7 @@ export class ContentElement {
                 }
             }
 
-            this.setContentElValue(el);
+            this.setContentElValue(el, content);
         }
         
         const blockClasses = content.querySelectorAll('[data-fred-block-class]');
@@ -682,7 +697,7 @@ export class ContentElement {
 
             const fredElements = element.querySelectorAll('[data-fred-name]');
             for (let el of fredElements) {
-                this.setContentElValue(el, true, false);
+                this.setContentElValue(el, element, true, false);
 
                 el.removeAttribute('contenteditable');
                 el.removeAttribute('data-fred-name');
@@ -725,6 +740,11 @@ export class ContentElement {
                 }
 
                 blockClass.removeAttribute('data-fred-block-class');
+            }
+            
+            const bindElements = element.querySelectorAll('[data-fred-bind]');
+            for (let bindEl of bindElements) {
+                bindEl.removeAttribute('data-fred-bind');
             }
             
             const fredOnDrop = element.querySelectorAll('[data-fred-on-drop]');

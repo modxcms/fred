@@ -74,13 +74,21 @@ final class RenderResource {
 
         return $chunk->content;
     }
+    
+    private function setValueForBindElements(HtmlPageCrawler &$html, $name, $value)
+    {
+        $bindElements = $html->filter('[data-fred-bind="' . $name . '"]');
+        $bindElements->each(function(HtmlPageCrawler $node, $i) use ($value) {
+            $node->setInnerHtml($value);
+        });
+    }
 
     private function renderElement($html, $item)
     {
         $html = HtmlPageCrawler::create($html);
 
         $elements = $html->filter('[data-fred-name]');
-        $elements->each(function(HtmlPageCrawler $node, $i) use ($item) {
+        $elements->each(function(HtmlPageCrawler $node, $i) use ($item, $html) {
             $valueName = $node->attr('data-fred-name');
 
             $value = null;
@@ -106,6 +114,8 @@ final class RenderResource {
                         $node->html($value);
                 }
             }
+            
+            $this->setValueForBindElements($html, $valueName, $value);
 
             $attrs = $node->attr('data-fred-attrs');
             $attrs = explode(',', $attrs);
@@ -157,6 +167,11 @@ final class RenderResource {
             }
 
             $node->removeAttr('data-fred-block-class');
+        });
+
+        $bindElements = $html->filter('[data-fred-bind]');
+        $bindElements->each(function(HtmlPageCrawler $node, $i) use ($item) {
+            $node->removeAttr('data-fred-bind');
         });
         
         $onDrop = $html->filter('[data-fred-on-drop]');
