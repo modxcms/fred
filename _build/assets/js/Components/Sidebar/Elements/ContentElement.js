@@ -741,6 +741,17 @@ export class ContentElement {
 
                 blockClass.removeAttribute('data-fred-block-class');
             }
+
+            const fredClasses = element.querySelectorAll('[data-fred-class]');
+            for (let fredClass of fredClasses) {
+                const classes = fredClass.dataset.fredClass.split(' ').filter(e => {return e;});
+
+                if (classes.length > 0) {
+                    fredClass.classList.add(...classes);
+                }
+                
+                fredClass.removeAttribute('data-fred-class');
+            }
             
             const bindElements = element.querySelectorAll('[data-fred-bind]');
             for (let bindEl of bindElements) {
