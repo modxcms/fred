@@ -6,6 +6,7 @@ import fredConfig from '../../../Config';
 import { div, button } from '../../../UI/Elements';
 import { applyScripts } from '../../../Utils';
 import Mousetrap from 'mousetrap';
+import hoverintent from 'hoverintent';
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
@@ -96,7 +97,7 @@ export class ContentElement {
     }
 
     setWrapperActiveState(wrapper) {
-        wrapper.addEventListener('mouseover', e => {
+        /*wrapper.addEventListener('mouseover', e => {
             e.stopPropagation();
 
             let firstSet = false;
@@ -153,6 +154,83 @@ export class ContentElement {
 
                 Mousetrap.unbind('mod+alt+s');
             }
+        });*/
+        const t = this;
+        hoverintent( wrapper,
+            //mouseover
+            function(e){
+
+                let firstSet = false;
+
+                if (e.path) {
+                    e.path.forEach(el => {
+                        if (el.classList && el.classList.contains('fred--block')) {
+                            el.classList.add('fred--block-active');
+
+                            if (t.atTop(el)) {
+                                el.classList.add('fred--block-active_top');
+                            }
+
+                            if (firstSet === true) {
+                                el.classList.add('fred--block-active_parent');
+                            }
+
+                            if ((firstSet === false) && t.options.settings) {
+                                Mousetrap.bind('mod+alt+s', () => {
+                                    t.openSettings();
+                                });
+                            }
+
+                            firstSet = true;
+                        }
+                    });
+                } else {
+                    let el = e.target.parentNode;
+                    while(el) {
+                        if (el.classList && el.classList.contains('fred--block')) {
+                            el.classList.add('fred--block-active');
+
+                            if (t.atTop(el)) {
+                                el.classList.add('fred--block-active_top');
+                            }
+
+                            if (firstSet === true) {
+                                el.classList.add('fred--block-active_parent');
+                            }
+
+                            firstSet = true;
+                        }
+
+                        el = el.parentNode;
+                    }
+                }
+            }, //mouseout
+            function(e){
+                if (t.inEditor === false) {
+                    wrapper.classList.remove('fred--block-active');
+                    wrapper.classList.remove('fred--block-active_top');
+                    wrapper.classList.remove('fred--block-active_parent');
+
+                    let el = e.target.parentNode;
+                    let found = false;
+                    while(el) {
+                        if (el.classList && el.classList.contains('fred--block-active_parent')) {
+                            if (found === false) {
+                                el.classList.remove('fred--block-active_parent');
+                                found = true;
+                            }
+                        }
+
+                        el = el.parentNode;
+                    }
+
+                    Mousetrap.unbind('mod+alt+s');
+                }
+            }
+        ).options({
+            sensitivity: 100,
+            timeout: 250,
+            interval: 250
         });
     }
 

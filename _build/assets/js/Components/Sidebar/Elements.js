@@ -3,6 +3,7 @@ import drake from '../../Drake';
 import fetch from 'isomorphic-fetch';
 import { div, dl, dt, dd, figure, img, figCaption } from './../../UI/Elements'
 import emitter from "../../EE";
+import hoverintent from 'hoverintent';
 
 export default class Elements extends Sidebar {
     static title = 'fred.fe.elements';
@@ -42,6 +43,28 @@ export default class Elements extends Sidebar {
                             emitter.emit('fred-sidebar-dt-active', categoryTab, categoryContent);
                         }
                     });
+
+                    hoverintent(categoryTab,
+                        function(e){
+                            let el = e.target;
+                            const activeTabs = el.parentElement.querySelectorAll('dt.active');
+
+                            const isActive = el.classList.contains('active');
+
+                            for (let tab of activeTabs) {
+                                if(tab === el) continue;
+                                tab.classList.remove('active');
+                            }
+
+                            if (!isActive) {
+                                el.classList.add('active');
+                                emitter.emit('fred-sidebar-dt-active', categoryTab, categoryContent);
+                            }
+                        },
+                        function(e){
+
+                        }
+                    );
                     const categoryContent = dd();
                     const categoryEl = div(['fred--thumbs', 'source', 'blueprints-source']);
                     
