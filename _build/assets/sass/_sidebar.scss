@@ -242,7 +242,7 @@
     transition: $timing;
     opacity: 0;
     position: fixed;
-    width: 280px;
+    width: 260px;
     left: -300px;
     height: 100vh;
     overflow: auto;
@@ -303,7 +303,7 @@
         font-weight: lighter;
         transition: $timing;
         cursor: pointer;
-        &.active, &:focus {
+        &.active {
           color: $modxgreen;
           background-color: darken($black, 15%);
           //pointer-events: none;
@@ -313,14 +313,14 @@
             display: block;
             opacity: 1;
             position: fixed;
-            width: 300px;
-            left: 240px;
+            width: 280px;
+            left: 340px;
             height: 100vh;
             overflow: auto;
             overflow-x: hidden;
             top: 0;
             background-color: lighten($black, 5%);
-            box-shadow: -250px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
+            //box-shadow: -250px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
             z-index: 99;
           }
         }
@@ -418,7 +418,7 @@
   font-family: "Open Sans", Arial, sans-serif;
   background-color: lighten($black, 5%);
   border-right: 2px solid #0c4eac;
-  width: 280px;
+  width: 260px;
   height: 100vh;
   opacity: 1;
   overflow-x: hidden;

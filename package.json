@@ -47,6 +47,7 @@
     "flatpickr": "^4.4.3",
     "gulp-sass-inline-svg": "^1.0.3",
     "gulp-svgmin": "^1.2.4",
+    "hoverintent": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
     "mousetrap": "^1.6.1",
     "nouislider": "^11.1.0",
