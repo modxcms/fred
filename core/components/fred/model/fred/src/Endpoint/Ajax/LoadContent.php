@@ -64,10 +64,14 @@ class LoadContent extends Endpoint
     {
         foreach ($data as $dz => &$elements) {
             foreach ($elements as &$element) {
-                foreach ($element['values'] as $key => $value) {
-                    if (!is_array($value)) {
-                        $element['values'][$key] = ['_raw' => ['_value' => $value]];
+                if(!empty($element['values'])){
+                    foreach ($element['values'] as $key => $value) {
+                        if (!is_array($value)) {
+                            $element['values'][$key] = ['_raw' => ['_value' => $value]];
+                        }
                     }
+                }else{
+                    $element['values'] = (object) array();
                 }
 
                 $element['children'] = $this->fixData($element['children']);
@@ -76,6 +80,7 @@ class LoadContent extends Endpoint
 
         return $data;
     }
+
 
     protected function gatherElements(&$elements, $dropZones)
     {
