@@ -25,8 +25,11 @@ export class ContentElement {
         this.dzName = dzName;
         this.options = JSON.parse(JSON.stringify((this.el.elementOptions || {})));
         this.content = JSON.parse(JSON.stringify(content));
+        
+        if (Array.isArray(this.content)) this.content = {};
+        
         this.settings = {};
-
+        
         if (!this.options.rteConfig) {
             this.options.rteConfig = {};
         }

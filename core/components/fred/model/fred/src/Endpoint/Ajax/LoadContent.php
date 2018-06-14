@@ -26,8 +26,6 @@ class LoadContent extends Endpoint
         $data = $object->getProperty('data', 'fred');
         $elements = [];
 
-        $data = $this->fixData($data);
-
         $this->gatherElements($elements, $data);
 
         $pageSettings = [
@@ -53,34 +51,6 @@ class LoadContent extends Endpoint
             "tagger" => $this->getTagger($object)
         ]);
     }
-
-    /**
-     * Temporal method to fix data model change
-     *
-     * @param $data
-     * @return mixed
-     */
-    private function fixData($data)
-    {
-        foreach ($data as $dz => &$elements) {
-            foreach ($elements as &$element) {
-                if(!empty($element['values'])){
-                    foreach ($element['values'] as $key => $value) {
-                        if (!is_array($value)) {
-                            $element['values'][$key] = ['_raw' => ['_value' => $value]];
-                        }
-                    }
-                }else{
-                    $element['values'] = (object) array();
-                }
-
-                $element['children'] = $this->fixData($element['children']);
-            }
-        }
-
-        return $data;
-    }
-
 
     protected function gatherElements(&$elements, $dropZones)
     {
