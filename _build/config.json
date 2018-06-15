@@ -44,5 +44,12 @@
   },
   "database": {
     "tables": []
+  },
+  "build": {
+    "resolver": {
+      "before": [
+        "resolve.customevents.php"
+      ]
+    }
   }
 }
