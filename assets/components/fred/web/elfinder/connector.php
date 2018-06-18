@@ -27,6 +27,7 @@ if (!empty($mediaSourceIDs)) {
 
 $c->where($where);
 
+/** @var modMediaSource[] $mediaSources */
 $mediaSources = $modx->getIterator('modMediaSource', $c);
 foreach ($mediaSources as $mediaSource) {
     $mediaSource->initialize();
