@@ -8,7 +8,7 @@ let wrapper;
  * @param onComponentAdd
  * @param onClose
  */
-export const render = (components, onComponentAdd, onClose, onSave, onPreview, onLogoutUser) => {
+export const render = (components, onComponentAdd, onClose, onSave, onPreview) => {
     const buildComponents = () => {
         const sidebar = dl('fred--accordion');
 

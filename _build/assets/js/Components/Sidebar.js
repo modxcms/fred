@@ -1,6 +1,6 @@
 import emitter from '../EE';
 import fredConfig from './../Config';
-import { div, span, dt } from '../UI/Elements';
+import { div, span, dt, h3 } from '../UI/Elements';
 
 export default class Sidebar {
     static title = 'TITLE NOT SET';

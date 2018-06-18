@@ -473,11 +473,11 @@ export default class Fred {
 
     openManager() {
         const url = fredConfig.config.managerUrl + '?a=resource/update&id=' + fredConfig.config.resource.id;
-
         window.open(url, '_blank');
     }
 
     logoutUser() {
+        console.log('Goodbye!');
         const url = fredConfig.config.managerUrl + '?a=security/logout';
         document.location.href = url;
     }
