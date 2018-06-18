@@ -147,19 +147,31 @@
       background: inline-svg('object-group', $white) center center no-repeat;
     }
   }
+  &_more {
+    &:before {
+      background: inline-svg('ellipsis-h', $white) center center no-repeat;
+    }
+  }
   &_page_settings {
     &:before {
       background: inline-svg('cog', $white) center center no-repeat;
     }
     + dd dt {
       &:hover{
-        background: darken($green, 10%) !important;
+        //background: darken($green, 10%) !important;
       }
     }
   }
 }
 
 .fred--accordion {
+  h3 {
+    font-size: 21px;
+    padding: 16px 32px;
+    color: $white;
+    font-weight: lighter;
+    border-bottom: 1px solid rgba($white, .2);
+  }
   > dt {
     display: flex;
     align-items: center;
@@ -380,13 +392,6 @@
     }
   }
   &_menu {
-    h3 {
-      font-size: 21px;
-      padding: 16px 32px;
-      color: $white;
-      font-weight: lighter;
-      border-bottom: 1px solid rgba($white, .2);
-    }
     button {
       color: $white;
       position: relative;

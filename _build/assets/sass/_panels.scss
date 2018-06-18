@@ -67,7 +67,7 @@
         }
       }
       &:hover:not(:focus){
-        background-color: darken($black, 5%);
+        background-color: darken($black, 15%);
       }
       + dd {
         padding: 24px 16px;

@@ -12,6 +12,7 @@ $_lang['fred.fe.save'] = 'Save';
 $_lang['fred.fe.pages'] = 'Site';
 $_lang['fred.fe.elements'] = 'Elements';
 $_lang['fred.fe.page_settings'] = 'Settings';
+$_lang['fred.fe.more'] = 'More';
 $_lang['fred.fe.saving_page'] = 'Saving Page';
 $_lang['fred.fe.preparing_content'] = 'Preparing Content';
 $_lang['fred.fe.open_sidebar'] = 'Open Sidebar';
@@ -24,7 +25,6 @@ $_lang['fred.fe.clear'] = 'Clear';
 $_lang['fred.fe.browse'] = 'Browse';
 $_lang['fred.fe.browse_files'] = 'Browse Files';
 $_lang['fred.fe.browse_images'] = 'Browse Images';
-$_lang['fred.fe.logout-user'] = 'Logout';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Page Title';
 $_lang['fred.fe.page_settings.long_title'] = 'Long Title';
@@ -56,6 +56,9 @@ $_lang['fred.fe.pages.unpublish'] = 'Unpublish';
 $_lang['fred.fe.pages.create_child_page'] = 'Create Child Page';
 $_lang['fred.fe.pages.delete'] = 'Delete';
 $_lang['fred.fe.pages.undelete'] = 'Undelete';
+
+$_lang['fred.fe.more.openmanager'] = 'View in Manager';
+$_lang['fred.fe.more.logout'] = 'Logout';
 
 $_lang['fred.fe.content.duplicate'] = 'Duplicate';
 $_lang['fred.fe.content.delete'] = 'Delete';

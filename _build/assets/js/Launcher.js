@@ -29,7 +29,7 @@ export default class Launcher {
             }
         });
 
-        const logout = button('', 'fred.fe.elements', ['fred--launcher_btn', 'fred--launcher_btn_elements'], () => {
+        const element = button('', 'fred.fe.elements', ['fred--launcher_btn', 'fred--launcher_btn_elements'], () => {
             emitter.emit('fred-sidebar-toggle');
             let elements = document.querySelectorAll("dt.fred--sidebar_elements")[0];
             if(!elements.classList.contains('active')){
@@ -40,7 +40,7 @@ export default class Launcher {
         wrapper.appendChild(fred);
         wrapper.appendChild(save);
         wrapper.appendChild(preview);
-        wrapper.appendChild(logout);
+        wrapper.appendChild(element);
 
         emitter.on('fred-sidebar-hide', silent => {
             if (silent !== true) {

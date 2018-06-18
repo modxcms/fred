@@ -2,6 +2,7 @@ import emitter from './../EE';
 import PagesComponent from './../Components/Sidebar/Pages';
 import ElementsComponent from './../Components/Sidebar/Elements';
 import PageSettingsComponent from './../Components/Sidebar/PageSettings';
+import MoreComponent from './../Components/Sidebar/More';
 import promiseCancel from 'promise-cancel';
 import View from './SidebarView';
 
@@ -21,7 +22,7 @@ export default class Sidebar {
 
     render() {
         this.wrapper = View.render(
-            [PagesComponent, ElementsComponent, PageSettingsComponent],
+            [PagesComponent, ElementsComponent, PageSettingsComponent, MoreComponent],
             component => {
                 this.components.push(component);
             },
@@ -33,9 +34,6 @@ export default class Sidebar {
             },
             () => {
                 emitter.emit('fred-preview-on');
-            },
-            () => {
-                emitter.emit('fred-sidebar-hide');
             }
 
         );
