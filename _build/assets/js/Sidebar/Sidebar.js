@@ -35,7 +35,7 @@ export default class Sidebar {
                 emitter.emit('fred-preview-on');
             },
             () => {
-                emitter.emit('fred-logout-user');
+                emitter.emit('fred-sidebar-hide');
             }
 
         );

@@ -53,11 +53,6 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
       transform: scale(1.05);
       background-color: darken($darkblue, 10%);
     }
-    &_logout {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-    }
     &_save{
       background-image: inline-svg('check',$white);
       text-indent: -999px;
@@ -73,6 +68,14 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     &_logout-user{
       background-image: inline-svg('power-off', $white);
       text-indent: -999px;
+    }
+    &_close{
+      background-image: inline-svg('times', $white);
+      text-indent: -999px;
+      background-color: $lightcoral;
+      &:hover{
+        background-color: darken($lightcoral, 10%);
+      }
     }
   }
   &-panel {

@@ -125,28 +125,20 @@
     min-width: 172px;
     @include draggable();
     &-grip{
-      content: '....';
       width: 15px;
       height: 36px;
       display: inline-block;
       overflow: hidden;
-      line-height: 5px;
-      padding: 10px 4px;
-      padding-right: 28px;
-      vertical-align: middle;
-      margin-top: -.7em;
-      margin-right: .3em;
-      font-size: 12px;
-      font-weight: bold;
-      font-family: sans-serif;
-      letter-spacing: 2px;
+      padding: 10px 28px 10px 4px;
+      margin-top: -4px;
       color: $white;
       float:left;
       opacity: .75;
       transition: $timing;
-      &:after{
-        content: '.. .. .. ..';
-      }
+      background-image: inline-svg('ellipsis-v', $white);
+      background-repeat: no-repeat;
+      background-size: 8px;
+      background-position: left;
     }
     &:hover{
       .fred--toolbar-grip{

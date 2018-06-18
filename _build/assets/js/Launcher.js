@@ -29,8 +29,9 @@ export default class Launcher {
             }
         });
 
-        const logout = button('', 'fred.fe.logout-user', ['fred--launcher_btn', 'fred--launcher_btn_logout-user'], () => {
-            emitter.emit('fred-logout-user');
+        const logout = button('', 'fred.fe.elements', ['fred--launcher_btn', 'fred--launcher_btn_elements'], () => {
+            emitter.emit('fred-sidebar-toggle');
+            document.querySelectorAll("dt.fred--sidebar_elements")[0].click();
         });
         
         wrapper.appendChild(fred);
