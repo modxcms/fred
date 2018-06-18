@@ -48,7 +48,8 @@
   "build": {
     "resolver": {
       "before": [
-        "resolve.customevents.php"
+        "resolve.customevents.php",
+        "resolve.mediasources.php"
       ]
     }
   }
