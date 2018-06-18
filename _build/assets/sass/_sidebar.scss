@@ -142,6 +142,11 @@
       background: inline-svg('clone', $white) center center no-repeat;
     }
   }
+  &_blueprints {
+    &:before {
+      background: inline-svg('object-group', $white) center center no-repeat;
+    }
+  }
   &_page_settings {
     &:before {
       background: inline-svg('cog', $white) center center no-repeat;
