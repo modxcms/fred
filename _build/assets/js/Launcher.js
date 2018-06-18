@@ -31,7 +31,10 @@ export default class Launcher {
 
         const logout = button('', 'fred.fe.elements', ['fred--launcher_btn', 'fred--launcher_btn_elements'], () => {
             emitter.emit('fred-sidebar-toggle');
-            document.querySelectorAll("dt.fred--sidebar_elements")[0].click();
+            let elements = document.querySelectorAll("dt.fred--sidebar_elements")[0];
+            if(!elements.classList.contains('active')){
+                elements.click();
+            }
         });
         
         wrapper.appendChild(fred);

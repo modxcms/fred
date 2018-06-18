@@ -250,7 +250,7 @@
     width: 260px;
     left: -300px;
     height: 100vh;
-    //overflow: auto;
+    overflow: auto;
     //overflow-x: hidden;
     top: 0;
     background-color: $darkblue;
@@ -452,11 +452,15 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+//Safari Fixes
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) {
 
   .fred--sidebar {
     overflow-y: visible;
+  }
+  .fred--accordion dd{
+    overflow: visible;
   }
 }}
 @keyframes fred--fadein {
