@@ -28,9 +28,9 @@
       height: 80px;
       width: 80px;
     }
-    &_logout-user{
-      background-color: $modxred;
-      background-image: inline-svg('power-off', $white);
+    &_elements{
+      background-color: $modxblue;
+      background-image: inline-svg('clone', $white);
       position: absolute;
       top: 32px;
       right: -64px;
@@ -72,7 +72,7 @@
         left: initial;
         top: initial;
       }
-      &_logout-user{
+      &_elements{
         right: -42px;
         bottom: -36px;
         left: initial;
@@ -92,7 +92,7 @@
           bottom: -32px;
           top: initial;
         }
-        &_logout-user{
+        &_elements{
           bottom: 32px;
           top: initial;
         }
@@ -114,7 +114,7 @@
           top: initial;
           right: initial;
         }
-        &_logout-user{
+        &_elements{
           left: -64px;
           bottom: 32px;
           top: initial;
@@ -136,7 +136,7 @@
         top: -52px;
         left: initial;
       }
-      &_logout-user{
+      &_elements{
         right: -42px;
         top: -36px;
         left: initial;
@@ -159,7 +159,7 @@
           left: -44px;
           right: initial;
         }
-        &_logout-user{
+        &_elements{
           left: -64px;
           right: initial;
         }
