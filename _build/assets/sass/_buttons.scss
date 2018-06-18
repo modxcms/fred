@@ -57,6 +57,11 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
       background-image: inline-svg('check',$white);
       text-indent: -999px;
       background-color: $green;
+      width: 46px;
+      height: 46px;
+      border-radius: 46px;
+      background-size: 30px;
+      margin: 20px 17px 0;
       &:hover{
         background-color: darken($green, 10%);
       }
