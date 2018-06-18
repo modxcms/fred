@@ -447,6 +447,15 @@ export class ContentElement {
             content.innerHTML = html;
 
             applyScripts(content);
+
+            const blockClasses = content.querySelectorAll('[data-fred-block-class]');
+            for (let blockClass of blockClasses) {
+                const classes = blockClass.dataset.fredBlockClass.split(' ').filter(e => {return e;});
+
+                if (classes.length > 0) {
+                    wrapper.classList.add(...classes);
+                }
+            }
             
             this.initDropZones(wrapper, content);
             this.initElements(wrapper, content);
@@ -701,15 +710,6 @@ export class ContentElement {
             }
 
             this.setContentElValue(el, content);
-        }
-        
-        const blockClasses = content.querySelectorAll('[data-fred-block-class]');
-        for (let blockClass of blockClasses) {
-            const classes = blockClass.dataset.fredBlockClass.split(' ').filter(e => {return e;});
-            
-            if (classes.length > 0) {
-                wrapper.classList.add(...classes);
-            }
         }
     }
     
