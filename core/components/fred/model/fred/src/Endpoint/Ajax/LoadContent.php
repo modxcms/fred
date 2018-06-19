@@ -96,6 +96,22 @@ class LoadContent extends Endpoint
             $options = json_decode($options, true);
             if (empty($options)) $options = [];
 
+            $globalRte = $this->fred->getOption('rte_config');
+            if (!empty($globalRte)) {
+                $globalRte = $this->modx->getChunk($globalRte);
+                $globalRte = json_decode($globalRte, true);
+                
+                if (!empty($globalRte)) {
+                    $rteConfig = $globalRte;
+                    
+                    if (!empty($options['rteConfig'])) {
+                        $rteConfig = array_merge($rteConfig, $options['rteConfig']);
+                    }
+
+                    $options['rteConfig'] = $rteConfig;
+                }
+            }
+            
             $description = str_replace($matches[0], '', $description);
         }
 

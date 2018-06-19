@@ -39,6 +39,10 @@
       {
         "key": "rte",
         "value": ""
+      },
+      {
+        "key": "rte_config",
+        "value": ""
       }
     ]
   },
