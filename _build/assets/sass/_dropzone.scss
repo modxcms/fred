@@ -11,6 +11,10 @@
   figure + .fred--block{
     border-top: 1px dashed rgba($light-gray, .5);
   }
+  *[data-fred-dropzone] {
+    min-height: 200px;
+    background-color: rgba($green, .05);
+  }
 }
 
 .fred--thumb {
@@ -60,7 +64,7 @@
       padding: 24px 0;
       width: 100%;
       display: block;
-      animation: fred--thumb_transit .3s ease-in-out;
+      //animation: fred--thumb_transit .3s ease-in-out;
       background: $light-gray;
     }
     div, figcaption {

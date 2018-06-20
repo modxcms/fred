@@ -231,6 +231,10 @@
 
 }
 
+*[data-fred-dropzone] {
+    min-height: 5px;
+    transition: $timing;
+}
 @keyframes fred--slide_toolbar {
   0% {
     height: 0;
