@@ -1,7 +1,6 @@
 import emitter from './EE';
 import dragula from 'dragula';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
-import { applyScripts } from './Utils';
 
 class Drake {
     constructor() {
