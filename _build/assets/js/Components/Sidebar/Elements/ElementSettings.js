@@ -51,25 +51,20 @@ export class ElementSettings {
         const settingsForm = form();
         const fields = fieldSet();
         const title = legend('fred.fe.element_settings');
-        const groups = [];
 
         fields.appendChild(title);
 
         this.settings.forEach(setting => {
             if (setting.group && setting.settings) {
-                groups.push(setting);
+                const group = dl();
+                this.renderSettingsGroup(setting, group);
+                fields.appendChild(group);
             } else {
                 const defaultValue = this.el.settings[setting.name] || setting.value;
                 fields.appendChild(this.renderSetting(setting, defaultValue));
             }
         });
-        if (groups.length > 0) {
-            const group = dl();
-            groups.forEach(setting => {
-                this.renderSettingsGroup(setting, group);
-            });
-            fields.appendChild(group);
-        }
+       
         const buttonGroup = div(['fred--panel_button_wrapper']);
 
         const apply = button('fred.fe.apply', 'fred.fe.apply', ['fred--btn-panel', 'fred--btn-apply'], this.apply.bind(this));
