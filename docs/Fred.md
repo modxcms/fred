@@ -134,6 +134,8 @@ An array of setting objects and group objects for the Fred Element.
 - tagger
     - Select for Tagger tags
     - Type specific properties:
+        - autoTag - true/false to show/hide the auto tag
+        - hideInput - true/false to show/hide the input
         - group - ID of the Tagger group to use
         - limit - Limit of tags that can be selected
 

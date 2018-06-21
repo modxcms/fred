@@ -637,24 +637,42 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
 export const tagger = (setting, defaultValue = '', onChange, onInit) => {
     setting.limit = setting.limit || 0;
 
-    const currentTags = defaultValue.split(',').filter(e => {return e;});
+    const tempField = div();
     
-    const taggerField = new Tagger({
-        id: setting.group,
-        name: setting.label || setting.name,
-        tag_limit: setting.limit || 0,
-        field_type: 'tagger-field-tags',
-        hide_input: false,
-        show_autotag: false,
-        allow_new: false,
-        as_radio: false
-    }, currentTags, newTags => {
-        onChange(setting.name, newTags.join(','), field, setting, taggerField);
-    });
     
-    const field = taggerField.render();
+    fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-group&group=${setting.group}&includeTags=${setting.autoTag | 0}`)
+    .then(response => {
+        return response.json()
+    })
+    .then(json => {
+        const currentTags = defaultValue.split(',').filter(e => {return e;});
 
-    return field;
+        const taggerField = new Tagger({
+            id: setting.group,
+            name: setting.label || setting.name,
+            tag_limit: setting.limit || 0,
+            field_type: 'tagger-field-tags',
+            hide_input: setting.hideInput || false,
+            show_autotag: setting.autoTag || false,
+            allow_new: false,
+            as_radio: false,
+            tags: json.data.group.tags
+        }, currentTags, newTags => {
+            onChange(setting.name, newTags.join(','), field, setting, taggerField);
+        });
+
+        const field = taggerField.render();
+        
+        tempField.replaceWith(field);
+    })
+    .catch(error => {
+        emitter.emit('fred-loading', error.message);
+    });
+
+    
+    
+
+    return tempField;
 };
 
 export default {
