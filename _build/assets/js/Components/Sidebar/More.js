@@ -1,7 +1,6 @@
 import Sidebar from '../Sidebar';
 import emitter from '../../EE';
-import { dl, dt, dd} from '../../UI/Elements';
-import fredConfig from "../../Config";
+import { dl, dt } from '../../UI/Elements';
 
 export default class PageSettings extends Sidebar {
     static title = 'fred.fe.more';
