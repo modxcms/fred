@@ -4,6 +4,8 @@
 .fred--tagger_group_title {
   float: left;
   margin-bottom: 10px;
+  color: $white;
+  font-size: 14px;
 }
 
 .fred--tagger_tag {
@@ -24,7 +26,7 @@
 }
 
 .fred--tagger_input_toggle {
-  background-color: darken($green, 10%);
+  background-color: $modxgreen;
   width: 24px;
   height: 24px;
   border-radius: 24px;
@@ -32,16 +34,15 @@
   color: white;
   margin-left: 10px;
   transition: $timing;
-  background-image: inline-svg('plus');
+  background-image: inline-svg('plus', darken($darkblue, 5%));
+  background-size: 15px;
   background-repeat: no-repeat;
   background-position: center;
-  background-blend-mode: overlay;
-  background-size: 15px;
   text-indent: -9999px;
   &.fred--tagger_input_toggle_open {
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
-    background-color: darken($modxred, 10%);
+    background-color: $modxred;
   }
 }
 .fred--tagger_input_wrapper {
@@ -139,5 +140,23 @@
     &.fred--autocomplete_suggestion_selected {
       background: #f0f0f0;
     }
+  }
+}
+
+//panel fixes
+
+.fred--panel{
+  fieldset{
+    & > .fred--tagger_field{
+      width: calc(90% - 16px);
+      margin-left: calc(5% + 8px);
+      margin-right: calc(5% + 8px);
+      padding: 0;
+    }
+  }
+  dd .choices{
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
