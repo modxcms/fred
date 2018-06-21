@@ -9,6 +9,7 @@ import {div, label, input, select as selectElement, span, textArea, a, img, butt
 import emitter from "../EE";
 import { fixChoices } from "../Utils";
 import Tagger from "./Tagger";
+import cache from '../Cache';
 
 export const text = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
@@ -639,14 +640,21 @@ export const tagger = (setting, defaultValue = '', onChange, onInit) => {
 
     const tempField = div();
     
-    
-    fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-group&group=${setting.group}&includeTags=${setting.autoTag | 0}`)
-    .then(response => {
-        return response.json()
-    })
-    .then(json => {
-        const currentTags = defaultValue.split(',').filter(e => {return e;});
+    const tags = cache.load('tagger', {group: setting.group, autoTag: setting.autoTag}, () => {
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-group&group=${setting.group}&includeTags=${setting.autoTag | 0}`)
+            .then(response => {
+                return response.json()
+            })
+            .then(json => {
+                return json.data.group.tags;
+            })
+            .catch(error => {
+                emitter.emit('fred-loading', error.message);
+            });
+    });
 
+    tags.then(value => {
+        const currentTags = defaultValue.split(',').filter(e => {return e;});
         const taggerField = new Tagger({
             id: setting.group,
             name: setting.label || setting.name,
@@ -656,21 +664,15 @@ export const tagger = (setting, defaultValue = '', onChange, onInit) => {
             show_autotag: setting.autoTag || false,
             allow_new: false,
             as_radio: false,
-            tags: json.data.group.tags
+            tags: value
         }, currentTags, newTags => {
             onChange(setting.name, newTags.join(','), field, setting, taggerField);
         });
 
         const field = taggerField.render();
-        
-        tempField.replaceWith(field);
-    })
-    .catch(error => {
-        emitter.emit('fred-loading', error.message);
-    });
 
-    
-    
+        tempField.replaceWith(field);
+    });
 
     return tempField;
 };
