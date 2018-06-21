@@ -7,15 +7,22 @@ import Choices from 'choices.js';
 import { fixChoices } from "../Utils";
 
 class Tagger {
-    constructor(group) {
+    constructor(group, currentTags = null, onChange = () => {}) {
         this.group = group;
 
         this.inputToggle = null;
         this.inputWrapper = null;
 
-        if (!fredConfig.pageSettings.tagger) fredConfig.pageSettings.tagger = {};
-        if (!fredConfig.pageSettings.tagger[`tagger-${this.group.id}`]) fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [];
+        if (currentTags === null) {
+            if (!fredConfig.pageSettings.tagger) fredConfig.pageSettings.tagger = {};
+            if (!fredConfig.pageSettings.tagger[`tagger-${this.group.id}`]) fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [];
 
+            currentTags = fredConfig.pageSettings.tagger[`tagger-${this.group.id}`];
+        }
+        
+        this.currentTags = currentTags;
+        this.onChange = onChange.bind(this);
+        
         this.onTagToggle = this.onTagToggle.bind(this);
         this.onTagRemove = this.onTagRemove.bind(this);
     }
@@ -238,7 +245,8 @@ class Tagger {
 
         tagChoices.passedElement.addEventListener('change', event => {
             if (tagsWrapper === null) {
-                fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [event.detail.value.trim()];
+                this.currentTags = [event.detail.value.trim()];
+                this.onChange(this.currentTags);
                 tagChoices.setChoices(initData, 'value', 'label', true);
             } else {
                 this.onTagAdd(tagsWrapper, event.detail.value);
@@ -257,8 +265,8 @@ class Tagger {
     renderSingleSelectInput() {
         this.inputWrapper = div('fred--tagger_input_wrapper');
         let value = null;
-        if (fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].length > 0) {
-            value = fredConfig.pageSettings.tagger[`tagger-${this.group.id}`][0];
+        if (this.currentTags.length > 0) {
+            value = this.currentTags[0];
         }
         
         this.renderSelectInput(null, value);
@@ -269,8 +277,8 @@ class Tagger {
         
         const inputField = input('', 'text', 'fred--tagger_input');
 
-        if (fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].length > 0) {
-            inputField.value = fredConfig.pageSettings.tagger[`tagger-${this.group.id}`][0];
+        if (this.currentTags.length > 0) {
+            inputField.value = this.currentTags[0];
         }
 
         inputField.addEventListener('keydown', e => {
@@ -280,7 +288,8 @@ class Tagger {
         });
         
         inputField.addEventListener('keyup', e => {
-            fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [inputField.value.trim()];
+            this.currentTags = [inputField.value.trim()];
+            this.onChange(this.currentTags);
         });
 
         const showList = button('fred.fe.tagger.toggle_list', 'fred.fe.tagger.toggle_list', 'fred--tagger_open_list', () => {
@@ -305,7 +314,8 @@ class Tagger {
             hideOnSelect: true,
             selector: inputField,
             onSelect: (e, term, item) => {
-                fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [inputField.value.trim()];
+                this.currentTags = [inputField.value.trim()];
+                this.onChange(this.currentTags);
             },
             source: (term, suggest) => {
                 if (lastRequest !== null) {
@@ -366,7 +376,7 @@ class Tagger {
         this.group.tags.forEach(tag => {
             let active = false;
             
-            if (~fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].indexOf(tag)) {
+            if (~this.currentTags.indexOf(tag)) {
                 active = true;
             }
 
@@ -375,7 +385,7 @@ class Tagger {
     }
 
     renderTags(tagsWrapper) {
-        fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].forEach(tag => {
+        this.currentTags.forEach(tag => {
             tagsWrapper.appendChild(this.renderTag(tag, true, this.onTagRemove));
         });
     }
@@ -391,11 +401,13 @@ class Tagger {
 
             if (isActive) {
                 tagToggle.classList.remove('fred--tagger_tag_active');
-                fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [];
+                this.currentTags = [];
             } else {
                 tagToggle.classList.add('fred--tagger_tag_active');
-                fredConfig.pageSettings.tagger[`tagger-${this.group.id}`] = [tag];
+                this.currentTags = [tag];
             }
+            
+            this.onChange(this.currentTags);
 
             return;
         }
@@ -403,22 +415,25 @@ class Tagger {
         if (tagToggle.classList.contains('fred--tagger_tag_active')) {
             tagToggle.classList.remove('fred--tagger_tag_active');
 
-            fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].splice(fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].indexOf(tag), 1);
+            this.currentTags.splice(this.currentTags.indexOf(tag), 1);
 
             this.toggleInput();
         } else {
             if (this.checkTagLimit()) {
                 tagToggle.classList.add('fred--tagger_tag_active');
 
-                fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].push(tag);
+                this.currentTags.push(tag);
             }
 
             this.toggleInput();
         }
+
+        this.onChange(this.currentTags);
     }
 
     onTagRemove(tagToggle, tag) {
-        fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].splice(fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].indexOf(tag), 1);
+        this.currentTags.splice(this.currentTags.indexOf(tag), 1);
+        this.onChange(this.currentTags);
         tagToggle.remove();
         this.toggleInput();
     }
@@ -437,14 +452,15 @@ class Tagger {
                 tag = tag.trim();
                 if (!tag) return;
 
-                if (~fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].indexOf(tag)) {
+                if (~this.currentTags.indexOf(tag)) {
                     return;
                 }
 
                 const tagEl = tagsWrapper.querySelector(`[data-tag="${tag}"]`);
                 if (tagEl) {
                     tagEl.classList.add('fred--tagger_tag_active');
-                    fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].push(tag);
+                    this.currentTags.push(tag);
+                    this.onChange(this.currentTags);
                     this.toggleInput();
 
                     return;
@@ -461,7 +477,8 @@ class Tagger {
 
                 tagsWrapper.appendChild(tagToggle);
 
-                fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].push(tag);
+                this.currentTags.push(tag);
+                this.onChange(this.currentTags);
 
                 this.toggleInput();
             }
@@ -484,7 +501,7 @@ class Tagger {
     }
 
     checkTagLimit() {
-        return (this.group.tag_limit === 0) || (fredConfig.pageSettings.tagger[`tagger-${this.group.id}`].length < this.group.tag_limit);
+        return (this.group.tag_limit === 0) || (this.currentTags.length < this.group.tag_limit);
     }
 
     autoComplete(options) {
