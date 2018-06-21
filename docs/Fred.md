@@ -126,12 +126,16 @@ An array of setting objects and group objects for the Fred Element.
         - parents - If set, only resource from these parents (including parents itself) will show; Value can be string with a comma as a separator or an array
         - resources - If set, only resource with specified IDs will show; Value can be string with a comma as a separator or an array
         - depth - Depth to look for children for specified `parents`; Default: 1
-            
 - image
     - Image select
     - Type specific properties:
         - showPreview - If set to `false` preview won't appear under the text input
         - mediaSource - ID of the Media Source to use; Overrides `imageMediaSource` global setting.  
+- tagger
+    - Select for Tagger tags
+    - Type specific properties:
+        - group - ID of the Tagger group to use
+        - limit - Limit of tags that can be selected
 
 ##### Example
 ```json

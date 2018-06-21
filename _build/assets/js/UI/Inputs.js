@@ -5,9 +5,10 @@ import noUiSlider from 'nouislider';
 import fetch from "isomorphic-fetch";
 import Finder from "./../Finder";
 import fredConfig from './../Config';
-import { div, label, input, select as selectElement, span, textArea, a, img } from './Elements';
+import {div, label, input, select as selectElement, span, textArea, a, img, button} from './Elements';
 import emitter from "../EE";
 import { fixChoices } from "../Utils";
+import Tagger from "./Tagger";
 
 export const text = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
@@ -633,6 +634,29 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
     return wrapper;
 };
 
+export const tagger = (setting, defaultValue = '', onChange, onInit) => {
+    setting.limit = setting.limit || 0;
+
+    const currentTags = defaultValue.split(',').filter(e => {return e;});
+    
+    const taggerField = new Tagger({
+        id: setting.group,
+        name: setting.label || setting.name,
+        tag_limit: setting.limit || 0,
+        field_type: 'tagger-field-tags',
+        hide_input: false,
+        show_autotag: false,
+        allow_new: false,
+        as_radio: false
+    }, currentTags, newTags => {
+        onChange(setting.name, newTags.join(','), field, setting, taggerField);
+    });
+    
+    const field = taggerField.render();
+
+    return field;
+};
+
 export default {
     text,
     select,
@@ -644,5 +668,6 @@ export default {
     slider,
     page,
     image,
-    choices
+    choices,
+    tagger
 };
