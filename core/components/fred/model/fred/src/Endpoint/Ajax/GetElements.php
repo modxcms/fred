@@ -9,17 +9,23 @@ class GetElements extends Endpoint
     public function process()
     {
         $categoryId = $this->fred->getOption('elements_category_id');
+        $groupSort = $this->fred->getOption('element_group_sort');
+        if ($groupSort !== 'rank') $groupSort = 'category';
         
         if (empty($categoryId)) {
             return $this->data(['elements' => []]);
         }
         
         $elements = [];
-        
-        /** @var \modCategory[] $categories */
-        $categories = $this->modx->getIterator('modCategory', [
+
+        $c = $this->modx->newQuery('modCategory');
+        $c->where([
             'parent' => $categoryId
         ]);
+        $c->sortby($groupSort);
+        
+        /** @var \modCategory[] $categories */
+        $categories = $this->modx->getIterator('modCategory', $c);
         
         foreach ($categories as $category) {
             $categoryElements = [

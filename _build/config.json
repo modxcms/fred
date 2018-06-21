@@ -43,6 +43,10 @@
       {
         "key": "rte_config",
         "value": ""
+      },
+      {
+        "key": "element_group_sort",
+        "value": "name"
       }
     ]
   },
