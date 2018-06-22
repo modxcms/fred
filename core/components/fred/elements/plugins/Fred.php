@@ -122,11 +122,11 @@ switch ($modx->event->name) {
             foreach ($beforeRenderResults as $result) {
                 
                 if ($result['includes']) {
-//                    $includes .= $result['includes'];
+                    $includes .= $result['includes'];
                 }
                 
                 if ($result['beforeRender']) {
-//                    $beforeRender .= $result['beforeRender'];
+                    $beforeRender .= $result['beforeRender'];
                 }
                 
                 if ($result['lexicons'] && is_array($result['lexicons'])) {
