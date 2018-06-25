@@ -84,7 +84,7 @@ export class ElementSettings {
 
     renderSettingsGroup(group, content) {
         const settingGroup = dt(group.group, [], (e, el) => {
-            const activeTabs = el.parentElement.querySelectorAll('dt.active');
+            const activeTabs = content.parentElement.querySelectorAll('dt.active');
 
             const isActive = el.classList.contains('active');
 
