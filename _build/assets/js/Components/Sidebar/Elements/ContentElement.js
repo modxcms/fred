@@ -405,8 +405,8 @@ export class ContentElement {
                 }
             }
             
-            this.initDropZones(wrapper, content);
             this.initElements(wrapper, content);
+            this.initDropZones(wrapper, content);
 
             wrapper.appendChild(content);
             
