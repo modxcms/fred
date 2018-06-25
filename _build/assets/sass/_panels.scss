@@ -87,9 +87,9 @@
           display: block;
         }
       }
-      &:last-of-type{
-        margin-bottom: 16px;
-      }
+    }
+    &:last-of-type dt:last-of-type{
+      margin-bottom: 16px;
     }
   }
 }
