@@ -57,11 +57,22 @@
       {
         "key": "default_element",
         "value": ""
+      },
+      {
+        "key": "generated_images_path",
+        "value": "{assets_path}/fred/generated"
+      },
+      {
+        "key": "generated_images_url",
+        "value": "{assets_url}/fred/generated"
       }
     ]
   },
   "database": {
-    "tables": []
+    "tables": [
+      "FredBlueprintCategory",
+      "FredBlueprint"
+    ]
   },
   "build": {
     "resolver": {

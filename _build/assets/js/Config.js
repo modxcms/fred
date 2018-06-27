@@ -8,6 +8,11 @@ class Config {
         this._pageSettings = {};
         this._tagger = {};
         this._lang = {};
+        this._fred = null;
+    }
+    
+    set fred(fred) {
+        this._fred = fred;
     }
     
     set config(config) {
@@ -40,6 +45,10 @@ class Config {
     
     get pageSettings() {
         return this._pageSettings;
+    }
+    
+    get fred() {
+        return this._fred;
     }
     
     get tagger() {

@@ -48,6 +48,7 @@
     "gulp-sass-inline-svg": "^1.0.3",
     "gulp-svgmin": "^1.2.4",
     "hoverintent": "^2.0.0",
+    "html2canvas": "^1.0.0-alpha.12",
     "isomorphic-fetch": "^2.2.1",
     "jssha": "^2.3.1",
     "mousetrap": "^1.6.1",

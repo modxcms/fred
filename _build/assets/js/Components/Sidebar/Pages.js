@@ -26,7 +26,9 @@ export default class Pages extends Sidebar {
             return this.buildPanel();
         }
 
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree&context=${this.config.contextKey}`)
+        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree&context=${this.config.contextKey}`, {
+            credentials: 'same-origin'
+        })
             .then(response => {
                 return response.json();
             })
@@ -85,7 +87,9 @@ export default class Pages extends Sidebar {
             label: fredConfig.lng('fred.fe.pages.template'),
         }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
             choicesInstance.ajax(callback => {
-                fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-templates`)
+                fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-templates`, {
+                    credentials: 'same-origin'
+                })
                     .then(errorHandler)
                     .then(data => {
                         if (data.data.templates[0]) {

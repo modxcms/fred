@@ -68,11 +68,28 @@ $_lang['fred.fe.pages.undelete'] = 'Undelete';
 $_lang['fred.fe.more.openmanager'] = 'View in Manager';
 $_lang['fred.fe.more.logout'] = 'Logout';
 
+$_lang['fred.fe.blueprints'] = 'Blueprints';
+$_lang['fred.fe.blueprints.create_category'] = 'Create Category';
+$_lang['fred.fe.blueprints.category_name'] = 'Name';
+$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Creating Blueprint Category';
+$_lang['fred.fe.blueprints.create_blueprint'] = 'Create Blueprint';
+$_lang['fred.fe.blueprints.creating_blueprint'] = 'Creating Blueprint';
+$_lang['fred.fe.blueprints.category_public'] = 'Public';
+$_lang['fred.fe.blueprints.category_rank'] = 'Rank';
+
+$_lang['fred.fe.blueprints.blueprint_name'] = 'Name';
+$_lang['fred.fe.blueprints.blueprint_category'] = 'Category';
+$_lang['fred.fe.blueprints.blueprint_rank'] = 'Rank';
+$_lang['fred.fe.blueprints.blueprint_public'] = 'Public';
+$_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Building Content From Blueprint';
+$_lang['fred.fe.blueprints.blueprint_image'] = 'Image';
+
 $_lang['fred.fe.content.duplicate'] = 'Duplicate';
 $_lang['fred.fe.content.delete'] = 'Delete';
 $_lang['fred.fe.content.settings'] = 'Open Settings';
 $_lang['fred.fe.content.move_up'] = 'Move Up';
 $_lang['fred.fe.content.move_down'] = 'Move Down';
+$_lang['fred.fe.content.partial_blueprint'] = 'Create Partial Blueprint';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'There are unsaved changes, are you sure?';
 

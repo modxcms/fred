@@ -441,7 +441,9 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
     }
     
     pageChoices.ajax(callback => {
-        fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${defaultValue.id}${queryOptions}`)
+        fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&current=${defaultValue.id}${queryOptions}`, {
+            credentials: 'same-origin'
+        })
             .then(response => {
                 return response.json()
             })
@@ -483,7 +485,9 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
         if (query in lookupCache) {
             populateOptions(lookupCache[query]);
         } else {
-            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}${queryOptions}`)
+            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources&query=${query}${queryOptions}`, {
+                credentials: 'same-origin'
+            })
                 .then(response => {
                     return response.json()
                 })
@@ -549,10 +553,6 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
     }
 
     inputEl.addEventListener('keyup', e => {
-        if (typeof onChange === 'function') {
-            onChange(setting.name, inputEl.value, inputEl, setting);
-        }
-
         if((setting.showPreview === true) && inputEl.value) {
             preview.src = inputEl.value;
             if (!previewAdded) {
@@ -565,6 +565,10 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
                 preview.remove();
                 previewAdded = false;
             } 
+        }
+
+        if (typeof onChange === 'function') {
+            onChange(setting.name, inputEl.value, inputEl, setting);
         }
     });
     
@@ -602,6 +606,16 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
         previewAdded = true;
     }
 
+    labelEl.setPreview = src => {
+        if (setting.showPreview !== true) return;
+        preview.src = src;
+        
+        if (previewAdded === false) {
+            labelEl.appendChild(preview);
+            previewAdded = true;
+        }
+    };
+
     if (typeof onInit === 'function') {
         onInit(setting, labelEl, inputEl);
     }
@@ -614,6 +628,8 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
     const selectEl = selectElement();
 
+    let errorEl = null;
+    
     wrapper.appendChild(labelEl);
     wrapper.appendChild(selectEl);
     const config = setting.choices || {};
@@ -624,10 +640,24 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
     
     if (typeof onChange === 'function') {
         choicesInstance.passedElement.addEventListener('choice', event => {
+            if (errorEl !== null) {
+                errorEl.remove();
+                errorEl = null;
+            }
+            
             onChange(setting.name, event.detail.choice, selectEl, setting, choicesInstance);
         });
     }
-    
+
+    labelEl.onError = msg => {
+        if (errorEl === null) {
+            errorEl = div('error', msg);
+            labelEl.appendChild(errorEl);
+        } else {
+            errorEl.innerHTML = msg;
+        }
+    };
+
     if (typeof onInit === 'function') {
         onInit(setting, labelEl, selectEl, choicesInstance, defaultValue);
     }
@@ -641,7 +671,9 @@ export const tagger = (setting, defaultValue = '', onChange, onInit) => {
     const tempField = div();
     
     const tags = cache.load('tagger', {group: setting.group, autoTag: setting.autoTag}, () => {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-group&group=${setting.group}&includeTags=${setting.autoTag | 0}`)
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-group&group=${setting.group}&includeTags=${setting.autoTag | 0}`, {
+            credentials: 'same-origin'
+        })
             .then(response => {
                 return response.json()
             })
