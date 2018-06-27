@@ -19,7 +19,9 @@ export default class Elements extends Sidebar {
             return this.content;
         }
 
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-elements`)
+        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-elements`, {
+            credentials: 'same-origin'
+        })
             .then(response => {
                 return response.json();
             })
@@ -66,7 +68,7 @@ export default class Elements extends Sidebar {
                         }
                     );
                     const categoryContent = dd();
-                    const categoryEl = div(['fred--thumbs', 'source', 'blueprints-source']);
+                    const categoryEl = div(['fred--thumbs', 'source', 'elements-source']);
                     
                     category.elements.forEach(element => {
                         categoryEl.appendChild(Elements.elementWrapper(element.id, element.title, element.description, element.image, element.content, element.options || {}));

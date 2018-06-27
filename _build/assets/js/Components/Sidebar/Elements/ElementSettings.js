@@ -1,8 +1,8 @@
-import emitter from '../../../EE';
 import { debounce } from '../../../Utils';
 import ui from '../../../UI/Inputs';
 import { div, form, fieldSet, legend, button, dl, dt, dd } from '../../../UI/Elements';
 import fredConfig from '../../../Config';
+import utilitySidebar from './../../UtilitySidebar';
 
 export class ElementSettings {
     constructor() {
@@ -11,29 +11,11 @@ export class ElementSettings {
         this.originalValues = {};
         this.wrapper = null;
 
-        this.render();
-        
-        emitter.on('fred-element-settings-open', this.openSettings.bind(this));
-
-        emitter.on('fred-element-settings-dt-active', (tab, content) => {
-            const listener = e => {
-                if ((e.target.parentElement !== null) && !content.contains(e.target)) {
-                    tab.classList.remove('active');
-                    this.wrapper.removeEventListener('click', listener);
-                }
-            };
-
-            this.wrapper.addEventListener('click', listener);
-        });
-    }
-
-    render() {
-        this.wrapper = div(['fred--panel', 'fred--panel_element', 'fred--hidden']);
-
-        emitter.emit('fred-wrapper-insert', this.wrapper);
+        this.dtActive = this.dtActive.bind(this);
+        this.open = this.open.bind(this);
     }
     
-    openSettings(el) {
+    open(el) {
         this.el = el;
         this.settings = el.options.settings;
         this.options = el.options;
@@ -41,13 +23,10 @@ export class ElementSettings {
         this.remote = this.options.remote || false;
         this.debouncedRender = debounce(200, this.el.render);
 
-        this.wrapper.innerHTML = '';
-        this.wrapper.appendChild(this.renderSettings());
-
-        this.open();
+        utilitySidebar.open(this.render());
     }
     
-    renderSettings() {
+    render() {
         const settingsForm = form();
         const fields = fieldSet();
         const title = legend('fred.fe.element_settings');
@@ -82,6 +61,17 @@ export class ElementSettings {
         return settingsForm;
     }
 
+    dtActive(tab, content) {
+        const listener = e => {
+            if ((e.target.parentElement !== null) && !content.contains(e.target)) {
+                tab.classList.remove('active');
+                utilitySidebar.wrapper.removeEventListener('click', listener);
+            }
+        };
+
+        utilitySidebar.wrapper.addEventListener('click', listener);
+    }
+
     renderSettingsGroup(group, content) {
         const settingGroup = dt(group.group, [], (e, el) => {
             const activeTabs = content.parentElement.querySelectorAll('dt.active');
@@ -95,7 +85,7 @@ export class ElementSettings {
             if (!isActive) {
                 el.classList.add('active');
                 e.stopPropagation();
-                emitter.emit('fred-element-settings-dt-active', settingGroup, settingGroupContent);
+                this.dtActive(settingGroup, settingGroupContent);
             }
         });
         const settingGroupContent = dd();
@@ -168,7 +158,7 @@ export class ElementSettings {
             }
         });
 
-        this.close();
+        utilitySidebar.close();
     }
     
     settingChanged() {
@@ -179,7 +169,8 @@ export class ElementSettings {
         for (let name in o1) {
             if (o1.hasOwnProperty(name)) {
                 if (typeof o1[name] === 'object') {
-                    return this.compareObjects(o1[name], o2[name]);    
+                    const nestedCompare = this.compareObjects(o1[name], o2[name]);
+                    if (nestedCompare === true) return true;
                 } else {
                     if (!(o2.hasOwnProperty(name) && (o2[name] === o1[name]))) {
                         return true;
@@ -193,7 +184,7 @@ export class ElementSettings {
     
     cancel(btn) {
         if (!this.settingChanged()) {
-            this.close();
+            utilitySidebar.close();
             return;
         }
         
@@ -209,16 +200,9 @@ export class ElementSettings {
     realCancel() {
         this.el.settings = this.originalValues;
         this.el.render();
-        this.close();
-    }
-    
-    open() {
-        this.wrapper.classList.remove('fred--hidden');
-    }
-    
-    close() {
-        this.wrapper.classList.add('fred--hidden');
+        utilitySidebar.close();
     }
 }
 
-export default ElementSettings;
+const elementSettings = new ElementSettings();
+export default elementSettings;

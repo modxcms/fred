@@ -1,6 +1,9 @@
 import emitter from './EE';
 import dragula from 'dragula';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
+import fredConfig from "./Config";
+import fetch from "isomorphic-fetch";
+import {errorHandler, loadBlueprint} from "./Utils";
 
 class Drake {
     constructor() {
@@ -55,33 +58,57 @@ class Drake {
 
         this.drake.on('drop', (el, target, source, sibling) => {
             //emitter.emit('fred-dragula-drop', el, target, source, sibling);
-
-            if (source.classList.contains('blueprints-source') && el.parentNode) {
+            
+            if (source.classList.contains('source') && el.parentNode) {
                 const parent = target.fredEl || null;
-                const contentElement = new ContentElement(el.lastChild, target.dataset.fredDropzone, parent);
-                contentElement.render().then(() => {
-                    if (parent) {
-                        if (sibling === null) {
-                            parent.dzs[target.dataset.fredDropzone].children.push(contentElement.wrapper);
-                        } else {
-                            parent.dzs[target.dataset.fredDropzone].children.splice(parent.dzs[target.dataset.fredDropzone].children.indexOf(sibling), 0, contentElement.wrapper);
+                
+                if (source.classList.contains('elements-source')) {
+                    const contentElement = new ContentElement(el.lastChild, target.dataset.fredDropzone, parent);
+                    contentElement.render().then(() => {
+                        if (parent) {
+                            if (sibling === null) {
+                                parent.dzs[target.dataset.fredDropzone].children.push(contentElement.wrapper);
+                            } else {
+                                parent.dzs[target.dataset.fredDropzone].children.splice(parent.dzs[target.dataset.fredDropzone].children.indexOf(sibling), 0, contentElement.wrapper);
+                            }
                         }
-                    }
-                    
-                    el.parentNode.replaceChild(contentElement.wrapper, el);
 
-                    const event = new CustomEvent('FredElementDrop', { detail: {fredEl: contentElement} });
-                    document.body.dispatchEvent(event);
-                    
-                    const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
-                    for (let jsEl of jsElements) {
-                        if (window[jsEl.dataset.fredOnDrop]) {
-                            window[jsEl.dataset.fredOnDrop](contentElement);
+                        el.parentNode.replaceChild(contentElement.wrapper, el);
+
+                        const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
+                        document.body.dispatchEvent(event);
+
+                        const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
+                        for (let jsEl of jsElements) {
+                            if (window[jsEl.dataset.fredOnDrop]) {
+                                window[jsEl.dataset.fredOnDrop](contentElement);
+                            }
                         }
-                    }
+
+                        this.reloadContainers();
+                    });
+                }
+
+                if (source.classList.contains('blueprints-source')) {
+                    emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.building_content_from_blueprint'));
+
+                    el.remove();
                     
-                    this.reloadContainers();
-                });
+                    fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-blueprint&blueprint=${el.lastChild.dataset.fredBlueprintId}`, {
+                        credentials: 'same-origin'
+                    }).then(errorHandler)
+                        .then(json => {
+                            console.log(json);
+                            
+                            loadBlueprint(json.data, parent, target, sibling).then(() => {
+                                drake.reloadContainers();
+                                emitter.emit('fred-loading-hide');
+                            });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
             } else {
                 if (target && el.fredEl) {
                     if (el.fredEl.parent) {

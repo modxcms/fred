@@ -1,3 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model package="fred" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="fred" version="0.1">
+<model package="fred" baseClass="xPDOObject" platform="mysql" defaultEngine="InnoDB" phpdoc-package="fred" version="0.1">
+    <object class="FredBlueprintCategory" table="fred_blueprint_categories" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="rank" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+        
+        <field key="public" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="createdBy" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+
+        <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="local" />
+        <composite alias="Blueprints" class="FredBlueprint" local="id" foreign="category" cardinality="many" owner="local" />
+    </object>
+    
+    <object class="FredBlueprint" table="fred_blueprints" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="image" dbtype="text" phptype="string" null="false" default="" />
+        <field key="category" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
+        <field key="rank" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+        <field key="complete" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+
+        <field key="public" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="createdBy" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+
+        <field key="data" dbtype="mediumtext" phptype="json" null="false" default="" />
+        
+        <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="local" />
+        <aggregate alias="Category" class="FredBlueprintCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
+    </object>
 </model>

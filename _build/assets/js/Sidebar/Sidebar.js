@@ -3,6 +3,7 @@ import PagesComponent from './../Components/Sidebar/Pages';
 import ElementsComponent from './../Components/Sidebar/Elements';
 import PageSettingsComponent from './../Components/Sidebar/PageSettings';
 import MoreComponent from './../Components/Sidebar/More';
+import BlueprintsComponent from './../Components/Sidebar/Blueprints';
 import promiseCancel from 'promise-cancel';
 import View from './SidebarView';
 
@@ -22,7 +23,7 @@ export default class Sidebar {
 
     render() {
         this.wrapper = View.render(
-            [PagesComponent, ElementsComponent, PageSettingsComponent, MoreComponent],
+            [PagesComponent, BlueprintsComponent, ElementsComponent, PageSettingsComponent, MoreComponent],
             component => {
                 this.components.push(component);
             },
@@ -64,7 +65,7 @@ export default class Sidebar {
                 if (err.type === 'cancel') {
                     return;
                 }
-                
+                console.log(err);
                 cmp.setContent('SOMETHING WRONG HAPPENED');
             });
         });

@@ -28,7 +28,16 @@ class Cache {
             this._setValue(namespace, name, value, now + expires);
             return value;
         });
-        
+    }
+    
+    kill(namespace, properties) {
+        const shaObj = new jsSHA("SHA-256", "TEXT");
+        shaObj.update(JSON.stringify(properties));
+        const name = shaObj.getHash('HEX');
+
+        if (this._cache[namespace] && this._cache[namespace][name]) {
+            delete this._cache[namespace][name];
+        }
     }
 }
 

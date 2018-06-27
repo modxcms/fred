@@ -103,7 +103,9 @@ class Tagger {
                     lastRequest = null;
                 }
 
-                lastRequest = promiseCancel(fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${term}&group=${this.group.id}`));
+                lastRequest = promiseCancel(fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${term}&group=${this.group.id}`, {
+                    credentials: 'same-origin'
+                }));
 
                 lastRequest.promise.then(response => {
                     return response.json();
@@ -186,7 +188,9 @@ class Tagger {
         }
 
         tagChoices.ajax(callback => {
-            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&group=${this.group.id}`)
+            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&group=${this.group.id}`, {
+                credentials: 'same-origin'
+            })
                 .then(response => {
                     return response.json()
                 })
@@ -216,7 +220,9 @@ class Tagger {
             if (query in lookupCache) {
                 populateOptions(lookupCache[query]);
             } else {
-                fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${query}&group=${this.group.id}`)
+                fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${query}&group=${this.group.id}`, {
+                    credentials: 'same-origin'
+                })
                     .then(response => {
                         return response.json()
                     })
@@ -323,7 +329,9 @@ class Tagger {
                     lastRequest = null;
                 }
 
-                lastRequest = promiseCancel(fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${term}&group=${this.group.id}`));
+                lastRequest = promiseCancel(fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${term}&group=${this.group.id}`, {
+                    credentials: 'same-origin'
+                }));
 
                 lastRequest.promise.then(response => {
                     return response.json();

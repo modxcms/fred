@@ -7,6 +7,8 @@ import { div, button } from '../../../UI/Elements';
 import { applyScripts } from '../../../Utils';
 import Mousetrap from 'mousetrap';
 import hoverintent from 'hoverintent';
+import elementSettings from './ElementSettings';
+import partialBlueprints from "./ParialBlueprints";
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
@@ -124,7 +126,7 @@ export class ContentElement {
 
                             if ((firstSet === false) && t.options.settings) {
                                 Mousetrap.bind('mod+alt+s', () => {
-                                    t.openSettings();
+                                    elementSettings.open(t)
                                 });
                             }
 
@@ -376,10 +378,14 @@ export class ContentElement {
         const duplicate = button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.duplicate.bind(this));
         const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
         
+        
         toolbar.appendChild(moveHandle);
+        
+        const partialBlueprint = button('', 'fred.fe.content.partial_blueprint', ['fred--blueprint'], () => {partialBlueprints.open(this)});
+        toolbar.appendChild(partialBlueprint);
 
         if (this.options.settings) {
-            const settings = button('', 'fred.fe.content.settings', ['fred--element-settings'], this.openSettings.bind(this));
+            const settings = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {elementSettings.open(this)});
             toolbar.appendChild(settings);
         }
 
@@ -899,10 +905,6 @@ export class ContentElement {
     
             drake.reloadContainers();
         });
-    }
-
-    openSettings() {
-        emitter.emit('fred-element-settings-open', this);
     }
 
     addElementToDropZone(zoneName, element) {
