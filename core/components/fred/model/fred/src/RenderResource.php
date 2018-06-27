@@ -23,6 +23,9 @@ final class RenderResource {
         $this->modx = $modx;
         
         $this->data = $this->resource->getProperty('data', 'fred');
+        if(empty($this->data) && !empty($this->resource->content)){
+            $this->setDefaults();
+        }
         $elements = [];
         $this->gatherElements($elements, $this->data);
 
@@ -90,6 +93,30 @@ final class RenderResource {
                     $node->html($value);
             }
         });
+    }
+
+    private function setDefaults(){
+        $defElement = explode('|',$this->modx->getOption('fred.default_element'));
+        if(!empty($defElement[0]) && is_numeric($defElement[0]) && !empty($defElement[1])){
+            $this->data = array(
+                'content' => array(
+                    array(
+                        'widget' => intval($defElement[0]),
+                        'values' => array(
+                            $defElement[1] => array(
+                                '_raw' => array(
+                                    '_value' => $this->resource->content
+                                )
+                            )
+                        ),
+                        'settings' => array(),
+                        'children' => array()
+                    )
+                )
+            );
+            $this->resource->setProperty('data', $this->data,'fred');
+            $this->resource->save();
+        }
     }
 
     private function renderElement($html, $item)

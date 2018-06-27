@@ -47,6 +47,10 @@
       {
         "key": "element_group_sort",
         "value": "name"
+      },
+      {
+        "key": "default_element",
+        "value": ""
       }
     ]
   },
