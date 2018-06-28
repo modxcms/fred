@@ -19,4 +19,22 @@ final class Utils
 
         return array_filter($array);
     }
+
+    /**
+     * @param string $content
+     * @param \modParser $parser
+     * @return string
+     */
+    public static function htmlDecodeTags($content, $parser)
+    {
+        $matches = [];
+        $parser->collectElementTags($content, $matches);
+
+        foreach ($matches as $match) {
+            $decodedMatch = htmlspecialchars_decode($match[0], ENT_HTML5);
+            $content = str_replace($match[0], $decodedMatch, $content);
+        }
+        
+        return $content;
+    }
 }
