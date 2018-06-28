@@ -12,12 +12,14 @@ import { div, section, a, iFrame } from './UI/Elements'
 import Finder from './Finder';
 import Mousetrap from 'mousetrap';
 import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-bind.min'
+import {errorHandler} from "./Utils";
 
 export default class Fred {
     constructor(config = {}) {
         fredConfig.config = config || {};
         this.loading = null;
         this.wrapper = null;
+        this.fingerprint = '';
         
         this.libs = libs;
         this.Finder = Finder;
@@ -206,6 +208,7 @@ export default class Fred {
         body.id = fredConfig.config.resource.id;
         body.data = data;
         body.pageSettings = fredConfig.pageSettings;
+        body.fingerprint = this.fingerprint;
 
         Promise.all(promises).then(() => {
             fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
@@ -215,14 +218,22 @@ export default class Fred {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(body)
-            }).then(response => {
-                return response.json();
-            }).then(json => {
+            }).then(errorHandler)
+            .then(json => {
                 if (json.url) {
                     location.href = json.url;
                 }
+                
+                if (json.fingerprint) {
+                    this.fingerprint = json.fingerprint;
+                }
 
                 emitter.emit('fred-loading-hide');
+            })
+            .catch(err => {
+                if (err.response) {
+                    console.error(err.response.message);
+                }
             });
         });
     }
@@ -238,6 +249,7 @@ export default class Fred {
             const zones = json.data.data;
             if (json.data.pageSettings.tagger && Array.isArray(json.data.pageSettings.tagger)) json.data.pageSettings.tagger = {};
             
+            this.fingerprint = json.data.fingerprint || '';
             fredConfig.pageSettings = json.data.pageSettings || {};
             fredConfig.tagger = json.data.tagger || {};
             const dzPromises = [];

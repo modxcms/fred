@@ -32,6 +32,7 @@ class LoadContent extends Endpoint
         $this->loadTagger();
 
         $data = $object->getProperty('data', 'fred');
+        $fingerprint = !empty($data['fingerprint']) ? $data['fingerprint'] : '';
         $elements = [];
 
         $this->gatherElements($elements, $data);
@@ -56,7 +57,8 @@ class LoadContent extends Endpoint
             "pageSettings" => $pageSettings,
             "data" => $data,
             "elements" => $elements,
-            "tagger" => $this->getTagger($object)
+            "tagger" => $this->getTagger($object),
+            "fingerprint" => $fingerprint
         ]);
     }
 

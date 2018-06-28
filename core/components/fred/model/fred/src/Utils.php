@@ -45,4 +45,15 @@ final class Utils
         
         return $content;
     }
+
+    /**
+     * @param \modResource $resource
+     * @return string
+     */
+    public static function resourceFingerprint($resource)
+    {
+        $data = $resource->editedon;
+        
+        return sha1($data);
+    }
 }

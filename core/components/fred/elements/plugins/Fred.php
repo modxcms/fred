@@ -21,6 +21,10 @@ switch ($modx->event->name) {
                 $resource->setProperty('_isContentBlocks', false, 'contentblocks');
                 $resource->save();
             }
+
+            $data = $resource->getProperty('data', 'fred');
+            $fingerprint = !empty($data['fingerprint']) ? $data['fingerprint'] : '';
+            
             //Load Open in Fred button
             $modx->lexicon->load('fred:default');
             $modx->controller->addLexiconTopic('fred:default');
@@ -55,7 +59,21 @@ switch ($modx->event->name) {
                         ,disabled: true
                         ,value: contentvalue
                     });
-                })
+                });
+                
+                right.on('afterrender', function() {
+                    var panel = Ext.getCmp('modx-panel-resource');
+                    
+                    panel.on('success', function(){
+                        location.reload();
+                    });
+                    
+                    var fingerprint = document.createElement('input');
+                    fingerprint.setAttribute('type', 'hidden');
+                    fingerprint.setAttribute('name', 'fingerprint');
+                    fingerprint.setAttribute('value', '" . $fingerprint . "');
+                    panel.form.el.dom.appendChild(fingerprint);
+                });
             });
             
         </script>");
@@ -169,6 +187,23 @@ switch ($modx->event->name) {
 
             $modx->resource->_output = preg_replace('/(<\/head>(?:<\/head>)?)/i', "{$fredContent}\r\n$1", $modx->resource->_output);
         }
+        break;
+    case 'OnBeforeDocFormSave':
+        if ($mode !== 'upd') return;
+
+        $data = $resource->getProperty('data', 'fred');
+        if (!empty($data['fingerprint'])) {
+            if (empty($resource->fingerprint)) {
+                $modx->event->_output = 'No fingerprint was provided.';
+                return;
+            }
+
+            if ($data['fingerprint'] !== $resource->fingerprint) {
+                $modx->event->_output = 'Your page is outdated, please reload the page.'; 
+                return;
+            }
+        }
+        
         break;
     case 'OnDocFormSave':
         if ($mode !== 'upd') return;
