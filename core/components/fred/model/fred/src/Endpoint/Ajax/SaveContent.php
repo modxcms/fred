@@ -37,6 +37,17 @@ class SaveContent extends Endpoint
             return $this->failure('Permission denied (save)');
         }
 
+        $data = $object->getProperty('data', 'fred');
+        if (!empty($data['fingerprint'])) {
+            if (empty($this->body['fingerprint'])) {
+                return $this->failure('No fingerprint was provided.');    
+            }
+            
+            if ($data['fingerprint'] !== $this->body['fingerprint']) {
+                return $this->failure('Your page is outdated, please reload the page.');
+            }
+        }
+
         $this->loadTagger();
         
         if (isset($this->body['content'])) {
@@ -115,6 +126,9 @@ class SaveContent extends Endpoint
         if ($this->taggerLoaded) {
             $this->handleTagger($object);
         }
+
+        $this->body['data']['fingerprint'] = Utils::resourceFingerprint($object);
+        $object->setProperty('data', $this->body['data'], 'fred');
         
         $saved = $object->save();
 
@@ -124,7 +138,11 @@ class SaveContent extends Endpoint
 
         $this->modx->getCacheManager()->refresh();
 
-        $response = ['message' => 'Save successful'];
+        $response = [
+            'message' => 'Save successful',
+            'fingerprint' => $this->body['data']['fingerprint']
+            
+        ];
         if ($uriChanged) {
             $response['url'] = $this->modx->makeUrl($object->get('id'), $object->get('context_key'), '', 'full');
         }

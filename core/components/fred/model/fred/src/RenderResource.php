@@ -55,6 +55,10 @@ final class RenderResource {
         $html = Utils::htmlDecodeTags($html, $parser);
         
         $this->resource->set('content', $html);
+
+        $this->data['fingerprint'] = Utils::resourceFingerprint($this->resource);
+        $this->resource->setProperty('data', $this->data, 'fred');
+        
         if ($this->resource->save()){
             $this->modx->getCacheManager()->refresh();
             return true;
