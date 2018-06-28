@@ -43,6 +43,9 @@ final class RenderResource {
             } catch (\Exception $e) {}
         }
 
+        $parser = $this->modx->getParser();
+        $html = Utils::htmlDecodeTags($html, $parser);
+        
         $this->resource->set('content', $html);
         if ($this->resource->save()){
             $this->modx->getCacheManager()->refresh();

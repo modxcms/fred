@@ -2,6 +2,7 @@
 
 namespace Fred\Endpoint\Ajax;
 
+use Fred\Utils;
 
 class SaveContent extends Endpoint
 {
@@ -31,7 +32,12 @@ class SaveContent extends Endpoint
         $this->loadTagger();
         
         if (isset($this->body['content'])) {
-            $object->setContent($this->body['content']);
+            $content = $this->body['content'];
+            $parser = $this->modx->getParser();
+            
+            $content = Utils::htmlDecodeTags($content, $parser);
+            
+            $object->setContent($content);
         }
 
         if (isset($this->body['pageSettings']['introtext'])) {
