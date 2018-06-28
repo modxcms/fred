@@ -1,0 +1,28 @@
+site_name: Fred
+repo_name: modxcms/fred
+repo_url: https://github.com/modxcms/fred
+copyright: 'Copyright &copy; 2018 MODX, LLC'
+pages:
+    - 'Meet Fred': index.md
+    - Elements:
+      - Markup: elements/markup.md
+      - Settings: elements/settings.md
+      - Attributes: elements/attributes.md
+theme:
+  name: 'material'
+  language: en
+  palette:
+      primary: 'blue'
+
+extra:
+  social:
+    - type: globe
+      link: https://modx.com
+    - type: github-alt
+      link: https://github.com/modxcms
+    - type: twitter
+      link: https://twitter.com/modx
+    - type: facebook
+      link: https://www.facebook.com/modxcms
+    - type: linkedin
+      link: https://linkedin.com/company/modx
