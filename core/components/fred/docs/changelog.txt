@@ -1,5 +1,2 @@
 Changelog for Fred.
 
-Fred 0.1.0
-==============
-- Initial release.
