@@ -45,6 +45,10 @@ class fredRefreshProcessor extends modProcessor {
                         $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
                 )
             );
+            /* clear the cache the old-fashioned way, just in case */
+            if ($path && file_exists($path)) {
+                unlink($path);
+            }
 
             /* End CacheMaster Script */
 

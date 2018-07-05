@@ -108,6 +108,16 @@ export default class Pages extends Sidebar {
         fields.appendChild(pagetitle);
 
         const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn-panel', 'fred--btn-apply'], () => {
+            if(!fredConfig.config.permission.new_document){
+                alert(fredConfig.lng('fred.fe.permission.new_document'));
+                return;
+            }
+
+            if(!this.state.parent === 0 && !fredConfig.config.permission.new_document_in_root){
+                alert(fredConfig.lng('fred.fe.permission.new_document_in_root'));
+                return;
+            }
+
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.pages.creating_page'));
 
             fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
