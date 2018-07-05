@@ -8,6 +8,7 @@ pages:
       - Markup: elements/markup.md
       - Settings: elements/settings.md
       - Attributes: elements/attributes.md
+    - 'System Settings': system_settings/index.md
 theme:
   name: 'material'
   language: en
