@@ -178,6 +178,15 @@ switch ($modx->event->name) {
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 2] , 'abs')) . '",
                     "emptyUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 3] , 'abs')) . '",
                 },
+                permission: {
+                    "save" : ' . $modx->resource->checkPolicy('save') . ',
+                    "edit_document" : ' . $modx->hasPermission('edit_document') . ',
+                    "new_document" : ' . $modx->hasPermission('new_document') . ',
+                    "publish_document" : ' . $modx->hasPermission('publish_document') . ',
+                    "delete_document" : ' . ($modx->hasPermission('delete_document') && $modx->resource->checkPolicy(array('save' => true, 'delete' => true))) . ',
+                    "resource_duplicate" : ' . ($modx->hasPermission('resource_duplicate') &&  $modx->resource->checkPolicy('save')) . ',
+                    "new_document_in_root" : ' . $modx->hasPermission('new_document_in_root') . ',
+                },
                 lexicons: ' . json_encode($lexicons) . ',
                 beforeRender: function() {
                     ' . $beforeRender . '

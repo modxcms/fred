@@ -185,6 +185,11 @@ export default class Fred {
     }
 
     save() {
+        if(!fredConfig.config.permission.save){
+            alert(fredConfig.lng('fred.fe.permission.save'));
+            return;
+        }
+
         emitter.emit('fred-loading', fredConfig.lng('fred.fe.saving_page'));
         const body = {};
         const data = {};
