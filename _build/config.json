@@ -3,9 +3,15 @@
   "lowCaseName": "fred",
   "description": "Frontend Editor",
   "author": "John Peca",
-  "version": "0.1.3-alpha",
+  "version": "0.1.4-alpha",
   "package": {
-    "menus": [],
+    "menus": [{
+      "text": "fred.refresh"
+      ,"description": "fred.refresh_desc"
+      ,"parent": "refresh_site"
+      ,"handler": "var topic=\"/fred/mgr/generate/refresh/\";this.console=MODx.load({xtype:\"modx-console\",register:\"mgr\",topic:topic,show_filename:0}),this.console.show(Ext.getBody()),MODx.Ajax.request({url:MODx.config.assets_url+\"components/fred/connector.php\",params:{action:\"mgr/generate/refresh\",register:\"mgr\",topic:topic},listeners:{success:{fn:function(){this.console.fireEvent(\"complete\"),this.console=null},scope:this}}});"
+      ,"action": ""
+    }],
     "elements": {
       "plugins": [
         {
