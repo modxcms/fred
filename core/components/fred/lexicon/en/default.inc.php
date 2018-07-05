@@ -19,6 +19,13 @@ $_lang['fred'] = 'Fred';
 
 $_lang['fred.open_in_fred'] = 'Open In Fred';
 
+$_lang['fred.refresh'] = 'Rebuild Fred Resources';
+$_lang['fred.refresh_desc'] = 'Rebuild Resources using Fred Templates';
+$_lang['fred.refresh_fail_resource'] = 'No Fred resources found to refresh';
+$_lang['fred.refresh_fail_template'] = 'No Fred templates specified to refresh';
+$_lang['fred.refresh_complete'] = 'Rebuild Completed';
+$_lang['fred.refresh_id'] = 'Refreshing Resource ID [[+id]]';
+
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
 $_lang['setting_fred.elements_category_id'] = 'Element\'s Category ID';
