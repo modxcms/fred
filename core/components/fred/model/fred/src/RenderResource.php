@@ -69,6 +69,7 @@ final class RenderResource {
 
     private function gatherElements(&$elements, $dropZones) {
         foreach ($dropZones as $dropZone) {
+            if(!is_array($dropZone)) continue;
             foreach ($dropZone as $element) {
                 $elementId = intval($element['widget']);
 
