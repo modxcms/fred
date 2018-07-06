@@ -169,6 +169,7 @@ switch ($modx->event->name) {
             var fred = new Fred({
                 assetsUrl: "' . $fred->getOption('webAssetsUrl') . '",
                 managerUrl: "' . MODX_MANAGER_URL . '",
+                contextKey: "' . $modx->resource->context_key. '",
                 launcherPosition: "' . $fred->getOption('launcher_position') . '",
                 iconEditor: "' . $fred->getOption('icon_editor') . '",
                 imageEditor: "' . $fred->getOption('image_editor') . '",

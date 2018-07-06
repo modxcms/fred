@@ -26,7 +26,7 @@ export default class Pages extends Sidebar {
             return this.buildPanel();
         }
 
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree`)
+        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree&context=${this.config.contextKey}`)
             .then(response => {
                 return response.json();
             })
