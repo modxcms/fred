@@ -171,6 +171,16 @@ export class ContentElement {
                         el = el.parentNode;
                     }
 
+                    if (e.target.hasChildNodes()) {
+                        let children = e.target.childNodes;
+
+                        for (let i = 0; i < children.length; i++) {
+                            if(children[i].classList && children[i].classList.contains('fred--block-active')){
+                                children[i].classList.remove('fred--block-active');
+                            }
+                        }
+                    }
+
                     Mousetrap.unbind('mod+alt+s');
                 }
             }
