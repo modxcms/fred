@@ -65,6 +65,7 @@ class LoadContent extends Endpoint
     protected function gatherElements(&$elements, $dropZones)
     {
         foreach ($dropZones as $dropZone) {
+            if(!is_array($dropZone)) continue;
             foreach ($dropZone as $element) {
                 $elementId = intval($element['widget']);
 

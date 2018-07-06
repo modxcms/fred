@@ -238,7 +238,10 @@ export default class Fred {
             .catch(err => {
                 if (err.response) {
                     console.error(err.response.message);
+                    alert(err.response.message);
                 }
+
+                emitter.emit('fred-loading-hide');
             });
         });
     }
