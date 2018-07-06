@@ -1,7 +1,14 @@
-JSON object of specific options for the Fred Element.
+Settings are currently defined in the Fred Element chunk's description field as a reference to another chunk containing a JSON object of specific options for the Fred Element.
 
 ## Example
-```json
+### Description field on Fred Element
+```
+image:https://placehold.it/300x150&text=Fred%20Element
+options:optionsChunk
+```
+
+### JSON in optionsChunk
+```
 {
     "remote": true,
     "mediaSource": "1,2",
@@ -16,6 +23,8 @@ JSON object of specific options for the Fred Element.
     ]
 }
 ```
+
+# Available Settings
 
 ## remote
 If set to `true` XHR request will be fired to render the Element through both Twig and MODX parsers. This means you can have dynamic content that references other pages within a Fred page using MODX Snippets.
