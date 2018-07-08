@@ -4,9 +4,9 @@ Fred system settings control how your site reacts. Since Fred is loaded on the f
 
 The default element settings allows you to chose a default Fred element and target area for placing the content on existing documents. The setting is formatted as `ID|target` where ID is the identification number of the element and the target is the named element within that element to place the content.
 
-E.g. Chunk: Content Area (13)
+#### Example Chunk: Content Area (13)
 
-```
+```html
 <section class="container">
     <div contenteditable="true" data-fred-name="content" data-fred-rte="true">
     </div>

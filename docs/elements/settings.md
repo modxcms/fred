@@ -1,14 +1,14 @@
 Settings are currently defined in the Fred Element chunk's description field as a reference to another chunk containing a JSON object of specific options for the Fred Element.
 
-## Example
-### Description field on Fred Element
+### Example
+#### Description field on Fred Element
 ```
 image:https://placehold.it/300x150&text=Fred%20Element
 options:optionsChunk
 ```
 
-### JSON in optionsChunk
-```
+#### JSON in optionsChunk
+```json
 {
     "remote": true,
     "mediaSource": "1,2",
@@ -24,31 +24,31 @@ options:optionsChunk
 }
 ```
 
-# Available Settings
+## Available Settings
 
-## remote
+### remote
 If set to `true` XHR request will be fired to render the Element through both Twig and MODX parsers. This means you can have dynamic content that references other pages within a Fred page using MODX Snippets.
 
-## mediaSource
+### mediaSource
 ID of the Media Source to use for Finder. Multiple IDs can be passed separated by comma `,`.
 
-## imageMediaSource
+### imageMediaSource
 ID of the Media Source to use for Image fields. Multiple IDs can be passed separated by comma `,`. This option overrides `mediaSource`.
 
-## settings
+### settings
 An array of setting objects and group objects for the Fred Element.
 
-### Available group properties
+#### Available group properties
 - group - Name of a group of related sub-settings that open when clicked in a secondary panel. The value of the group property will be used as the label for the group
 - settings - An array of setting objects
 
-### Available setting properties
+#### Available setting properties
 - name - Name of the setting, can be used as a Twig variable
 - label - Setting's Label, displayed in the Element Settings panel
 - type - Type of the setting
 - value - Default value
 
-### Available types
+#### Available types
 - text 
     - `input type="text"`
     - any text value
@@ -103,7 +103,7 @@ An array of setting objects and group objects for the Fred Element.
         - group - ID of the Tagger group to use
         - limit - Limit of tags that can be selected
 
-### Example
+#### Example
 ```json
 {
     "settings": [
