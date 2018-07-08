@@ -1,6 +1,6 @@
 Fred elements are crafted in pure HTML with specific attributes. The markup can be enhanced using Twig and Element Settings.
 
-## Markup Example
+### Markup Example
 ```html
 <!-- Simple Element -->
 <div class="panel">
