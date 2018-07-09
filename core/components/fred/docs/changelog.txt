@@ -1,5 +1,9 @@
 Changelog for Fred.
 
-1.0.1 beta (09.07.2018)
+1.0.1 beta
 ==============
+- Prevent child blocks from remaining active on scroll
+- Add context_key check to site tree
+- Fixed foreach warning on RenderContent and LoadContent
+- Update documentation
 - Add ru lexicon
