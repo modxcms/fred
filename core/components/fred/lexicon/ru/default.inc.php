@@ -41,4 +41,4 @@ $_lang['setting_fred.rte_desc'] = 'Здесь вы можете задать, к
 $_lang['setting_fred.template_ids'] = 'IDs шаблонов';
 $_lang['setting_fred.template_ids_desc'] = 'Список разделенных запятыми идентификаторов шаблонов, где Fred будет досупен.';
 $_lang['setting_fred.default_element'] = 'Элемент по умолчанию';
-$_lang['setting_fred.default_element_desc'] = 'Задайте идентификатор элемента <b>по умолчанию</b> и <b>цель</b> для преобразования ресурсов в Fred. Например. 10';
+$_lang['setting_fred.default_element_desc'] = 'Задайте идентификатор элемента <b>по умолчанию</b> и <b>цель</b> для преобразования ресурсов в Fred. Например: 13|content';
