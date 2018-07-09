@@ -1,2 +1,5 @@
 Changelog for Fred.
 
+1.0.1 beta (09.07.2018)
+==============
+- Add ru lexicon
