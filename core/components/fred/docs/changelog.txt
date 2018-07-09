@@ -1,6 +1,6 @@
 Changelog for Fred.
 
-1.0.1 beta
+1.0.0 beta2
 ==============
 - Prevent child blocks from remaining active on scroll
 - Add context_key check to site tree
