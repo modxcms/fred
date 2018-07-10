@@ -76,7 +76,7 @@ class Drake {
                     const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
                     for (let jsEl of jsElements) {
                         if (window[jsEl.dataset.fredOnDrop]) {
-                            window[jsEl.dataset.fredOnDrop](jsEl);
+                            window[jsEl.dataset.fredOnDrop](contentElement);
                         }
                     }
                     

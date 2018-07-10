@@ -39,7 +39,16 @@ If set to `false` HTML element won't appear when Fred is not loaded. This allows
 ```
 
 ### data-fred-target
-Defines Resource field to store content. Content of the HTML element will be stored in regular Content field and additionally in the specified target. Valid targets include any standard content fields like Pagetitle, Longtitle or Description, or any Template Variable that stores its value purely as text. 
+Defines Resource field to store content. Content of the HTML element will be stored in regular Content field and additionally in the specified target. This attribute can't be used on a dropzone. 
+
+**Available targets:**
+
+ - pagetitle
+ - longtitle
+ - description
+ - introtext
+ - menutitle
+ - alias
 
 #### Example
 ```html
@@ -98,4 +107,48 @@ Defines Media Source to be used for the element. ID of the media source is expec
 #### Example
 ```html
 <img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-image-media-source="1,2">
+```
+
+### data-fred-block-class
+When Fred is loaded, value of this attribute will be appended to class of `div.fred--block` (which is wrapping the whole element). When Fred is not loaded, attribute will be added to class of itself. 
+
+#### Example
+```html
+<div class="image" data-fred-block-class="wrapper"></div>
+```
+
+### data-fred-class
+When Fred is loaded, value of this attribute will be added to the own class.
+
+### Example
+```html
+<div class="row" data-fred-class="visible-grid"></div>
+```
+
+### data-fred-bind
+Value of the element will copy from other element.
+
+#### Example
+```html
+<div contenteditable="true" data-fred-name="name">John Doe</div>
+<div class="modal">
+    <div class="modal-header" data-fred-bind="name"></div>
+    <div class="modal-content">Hello there</div>
+</div>
+```
+
+### data-fred-on-drop
+Name of the globally accessible function that should be called when this element is dropped to any dropzone. The function will receive fredEl as a first attribute.
+
+#### Example
+```html
+<div class="clock" data-fred-on-drop="initClock">
+```
+
+### data-fred-on-setting-change
+Name of the globally accessible function that should be called when element setting changes. The function will receive fredEl as first attribute.
+
+#### Example
+```html
+<div class="clock" data-fred-on-setting-change="reInitClock"></div>
 ```

@@ -163,7 +163,7 @@ export class ElementSettings {
             for (let jsEl of jsEls) {
                 
                 if (window[jsEl.dataset.fredOnSettingChange]) {
-                    window[jsEl.dataset.fredOnSettingChange]();
+                    window[jsEl.dataset.fredOnSettingChange](this.el);
                 }
             }
         });
