@@ -1,5 +1,7 @@
 Changelog for Fred.
 
+- Add default image for elements, if none is set
+
 1.0.0 beta2
 ==============
 - Prevent child blocks from remaining active on scroll
