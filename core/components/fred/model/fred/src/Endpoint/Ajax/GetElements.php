@@ -47,7 +47,7 @@ class GetElements extends Endpoint
                 $matches = [];
                 preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
 
-                $image = '';
+                $image = 'https://via.placeholder.com/350x150?text=' . urlencode($chunk->name);
                 $options = [];
                 $description = $chunk->description;
 
