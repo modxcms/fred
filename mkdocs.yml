@@ -10,6 +10,7 @@ pages:
       - Attributes: elements/attributes.md
     - 'Media Sources': media_sources/index.md
     - 'System Settings': system_settings/index.md
+    - Events: events/index.md
 theme:
   name: 'material'
   language: en
