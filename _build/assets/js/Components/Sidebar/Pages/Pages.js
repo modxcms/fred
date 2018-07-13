@@ -1,10 +1,9 @@
-import Sidebar from '../Sidebar';
-import fetch from 'isomorphic-fetch';
-import emitter from "../../EE";
-import { div, dl, dd, dt, button, h3, form, fieldSet, legend } from '../../UI/Elements';
-import { text, choices } from '../../UI/Inputs';
-import { errorHandler } from '../../Utils';
-import fredConfig from '../../Config';
+import Sidebar from '../../Sidebar';
+import emitter from "../../../EE";
+import { div, dl, dd, dt, button, h3, form, fieldSet, legend } from '../../../UI/Elements';
+import { text, choices } from '../../../UI/Inputs';
+import fredConfig from '../../../Config';
+import { getResourceTree, getTemplates, createResource } from '../../../Actions/pages';
 
 export default class Pages extends Sidebar {
     static title = 'fred.fe.pages';
@@ -22,18 +21,9 @@ export default class Pages extends Sidebar {
     }
 
     click() {
-        if (this.content !== null) {
-            return this.buildPanel();
-        }
-
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree&context=${this.config.contextKey}`, {
-            credentials: 'same-origin'
-        })
-            .then(response => {
-                return response.json();
-            })
-            .then(response => {
-                this.content = response.data.resources;
+        return getResourceTree(this.config.contextKey)
+            .then(resources => {
+                this.content = resources;
                 return this.buildPanel();
             });
     }
@@ -87,10 +77,7 @@ export default class Pages extends Sidebar {
             label: fredConfig.lng('fred.fe.pages.template'),
         }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
             choicesInstance.ajax(callback => {
-                fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-templates`, {
-                    credentials: 'same-origin'
-                })
-                    .then(errorHandler)
+                getTemplates()
                     .then(data => {
                         if (data.data.templates[0]) {
                             onChangeChoices('template', data.data.templates[0]);
@@ -124,18 +111,7 @@ export default class Pages extends Sidebar {
 
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.pages.creating_page'));
 
-            fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
-                method: "post",
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    parent: this.state.parent,
-                    template: this.state.template,
-                    pagetitle: this.state.pagetitle
-                })
-            }).then(errorHandler)
+            createResource(this.state.parent, this.state.template, this.state.pagetitle, 0)
             .then(json => {
                 location.href = json.url;
                 emitter.emit('fred-loading-hide');
@@ -147,7 +123,6 @@ export default class Pages extends Sidebar {
                 emitter.emit('fred-loading-hide');
             });
         });
-
 
         fields.appendChild(createButton);
 

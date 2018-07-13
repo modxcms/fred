@@ -1,9 +1,9 @@
 import emitter from './../EE';
-import PagesComponent from './../Components/Sidebar/Pages';
-import ElementsComponent from './../Components/Sidebar/Elements';
+import PagesComponent from './../Components/Sidebar/Pages/Pages';
+import ElementsComponent from './../Components/Sidebar/Elements/Elements';
 import PageSettingsComponent from './../Components/Sidebar/PageSettings';
 import MoreComponent from './../Components/Sidebar/More';
-import BlueprintsComponent from './../Components/Sidebar/Blueprints';
+import BlueprintsComponent from './../Components/Sidebar/Blueprints/Blueprints';
 import promiseCancel from 'promise-cancel';
 import View from './SidebarView';
 

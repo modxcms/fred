@@ -39,6 +39,12 @@ class Cache {
             delete this._cache[namespace][name];
         }
     }
+    
+    killNamespace(namespace) {
+        if (this._cache[namespace]) {
+            delete this._cache[namespace];
+        }
+    }
 }
 
 const cache = new Cache();

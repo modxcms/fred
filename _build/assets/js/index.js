@@ -1,7 +1,6 @@
 import emitter from './EE';
 import Sidebar from './Sidebar/Sidebar';
 import Launcher from './Launcher';
-import fetch from 'isomorphic-fetch';
 import drake from './Drake';
 import libs from './libs';
 import Editor from './Editors/Editor';
@@ -10,8 +9,9 @@ import { div, section, a, iFrame } from './UI/Elements'
 import Finder from './Finder';
 import Mousetrap from 'mousetrap';
 import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-bind.min'
-import { errorHandler, loadElements } from "./Utils";
-import utilitySidebar from './Components/UtilitySidebar'; 
+import { loadElements } from "./Utils";
+import utilitySidebar from './Components/UtilitySidebar';
+import { getPreview, saveContent, fetchContent, fetchLexicons } from './Actions/fred';
 
 export default class Fred {
     constructor(config = {}) {
@@ -118,12 +118,8 @@ export default class Fred {
         if (!this.previewDocument) {
             this.renderPreview();
             this.iframe.src = fredConfig.config.resource.emptyUrl;
-            
-            fetch(fredConfig.config.resource.previewUrl, {
-                credentials: 'same-origin'
-            }).then(response => {
-                return response.text();
-            }).then(text => {
+
+            getPreview().then(text => {
                 const parser = new DOMParser();
                 this.previewDocument = parser.parseFromString(text, 'text/html');
                 this.getPreviewContent();
@@ -218,14 +214,7 @@ export default class Fred {
         body.fingerprint = this.fingerprint;
 
         Promise.all(promises).then(() => {
-            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
-                method: "post",
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            }).then(errorHandler)
+            saveContent(body)
             .then(json => {
                 if (json.url) {
                     location.href = json.url;
@@ -251,11 +240,7 @@ export default class Fred {
     loadContent() {
         emitter.emit('fred-loading', fredConfig.lng('fred.fe.preparing_content'));
         
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${fredConfig.config.resource.id}`, {
-            credentials: 'same-origin'
-        }).then(response => {
-            return response.json();
-        }).then(json => {
+        return fetchContent().then(json => {
             if (json.data.pageSettings.tagger && Array.isArray(json.data.pageSettings.tagger)) json.data.pageSettings.tagger = {};
             
             this.fingerprint = json.data.fingerprint || '';
@@ -368,15 +353,7 @@ export default class Fred {
         if (fredConfig.config.lexicons && Array.isArray(fredConfig.config.lexicons)) {
             topics = '&topics=' + fredConfig.config.lexicons.join(',');
         }
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-lexicons${topics}`, {
-            method: "get",
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            return response.json();
-        }).then(json => {
+        return fetchLexicons(topics).then(json => {
             fredConfig.lang = json.data;
             return true;
         });

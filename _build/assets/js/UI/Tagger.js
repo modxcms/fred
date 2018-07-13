@@ -1,10 +1,10 @@
 import { button, div, input, select, span } from "./Elements";
 import fredConfig from '../Config';
 import promiseCancel from 'promise-cancel';
-import fetch from 'isomorphic-fetch';
 import emitter from "../EE";
 import Choices from 'choices.js';
 import { fixChoices } from "../Utils";
+import { getTags } from '../Actions/tagger';
 
 class Tagger {
     constructor(group, currentTags = null, onChange = () => {}) {
@@ -103,14 +103,10 @@ class Tagger {
                     lastRequest = null;
                 }
 
-                lastRequest = promiseCancel(fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${term}&group=${this.group.id}`, {
-                    credentials: 'same-origin'
-                }));
+                lastRequest = promiseCancel(getTags(this.group.id, term));
 
-                lastRequest.promise.then(response => {
-                    return response.json();
-                }).then(json => {
-                    suggest(json.data.tags);
+                lastRequest.promise.then(tags => {
+                    suggest(tags);
                 })
             }
         });
@@ -188,15 +184,10 @@ class Tagger {
         }
 
         tagChoices.ajax(callback => {
-            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&group=${this.group.id}`, {
-                credentials: 'same-origin'
-            })
-                .then(response => {
-                    return response.json()
-                })
-                .then(json => {
+            getTags(this.group.id)
+                .then(data => {
                     const tags = [];
-                    json.data.tags.forEach(tag => {
+                    data.forEach(tag => {
                         tags.push({
                             value: '' + tag,
                             label: '' + tag
@@ -220,15 +211,10 @@ class Tagger {
             if (query in lookupCache) {
                 populateOptions(lookupCache[query]);
             } else {
-                fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${query}&group=${this.group.id}`, {
-                    credentials: 'same-origin'
-                })
-                    .then(response => {
-                        return response.json()
-                    })
+                getTags(this.group.id, query)
                     .then(data => {
                         const tags = [];
-                        data.data.tags.forEach(tag => {
+                        data.forEach(tag => {
                             tags.push({
                                 value: '' + tag,
                                 label: '' + tag
@@ -329,14 +315,10 @@ class Tagger {
                     lastRequest = null;
                 }
 
-                lastRequest = promiseCancel(fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=tagger-get-tags&query=${term}&group=${this.group.id}`, {
-                    credentials: 'same-origin'
-                }));
+                lastRequest = promiseCancel(getTags(this.group.id, term));
 
-                lastRequest.promise.then(response => {
-                    return response.json();
-                }).then(json => {
-                    suggest(json.data.tags);
+                lastRequest.promise.then(tags => {
+                    suggest(tags);
                 })
             }
         });

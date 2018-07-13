@@ -1,35 +1,21 @@
-import Sidebar from '../Sidebar';
-import drake from '../../Drake';
-import fetch from 'isomorphic-fetch';
-import { div, dl, dt, dd, figure, img, figCaption } from './../../UI/Elements'
-import emitter from "../../EE";
+import Sidebar from '../../Sidebar';
+import drake from '../../../Drake';
+import { div, dl, dt, dd, figure, img, figCaption } from './../../../UI/Elements'
+import emitter from "../../../EE";
 import hoverintent from 'hoverintent';
+import { getElements } from '../../../Actions/elements';
 
 export default class Elements extends Sidebar {
     static title = 'fred.fe.elements';
     static icon = 'fred--sidebar_elements';
     static expandable = true;
 
-    init() {
-        this.content = null;
-    }
-
     click() {
-        if (this.content !== null) {
-            return this.content;
-        }
-
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-elements`, {
-            credentials: 'same-origin'
-        })
-            .then(response => {
-                return response.json();
-            })
-            .then(response => {
+        return getElements()
+            .then(data => {
                 const content = dl();
-                
 
-                response.data.elements.forEach(category => {
+                data.elements.forEach(category => {
                     const categoryTab = dt(category.category, [], (e, el) => {
                         const activeTabs = el.parentElement.querySelectorAll('dt.active');
                         
@@ -81,9 +67,7 @@ export default class Elements extends Sidebar {
                     content.appendChild(categoryContent);
                 });
 
-                this.content = content;
-
-                return this.content;
+                return content;
             });
     }
 

@@ -2,8 +2,8 @@ import emitter from './EE';
 import dragula from 'dragula';
 import ContentElement from './Components/Sidebar/Elements/ContentElement';
 import fredConfig from "./Config";
-import fetch from "isomorphic-fetch";
-import {errorHandler, loadBlueprint} from "./Utils";
+import { buildBlueprint } from "./Utils";
+import { loadBlueprint } from './Actions/blueprints';
 
 class Drake {
     constructor() {
@@ -94,13 +94,9 @@ class Drake {
 
                     el.remove();
                     
-                    fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-blueprint&blueprint=${el.lastChild.dataset.fredBlueprintId}`, {
-                        credentials: 'same-origin'
-                    }).then(errorHandler)
+                    loadBlueprint(el.lastChild.dataset.fredBlueprintId)
                         .then(json => {
-                            console.log(json);
-                            
-                            loadBlueprint(json.data, parent, target, sibling).then(() => {
+                            buildBlueprint(json.data, parent, target, sibling).then(() => {
                                 drake.reloadContainers();
                                 emitter.emit('fred-loading-hide');
                             });

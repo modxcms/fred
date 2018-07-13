@@ -1,14 +1,13 @@
-import Sidebar from '../Sidebar';
-import emitter from '../../EE';
-import {dd, dl, dt, form, fieldSet, legend, div, button, figCaption, figure, img} from '../../UI/Elements';
-import {choices, text, toggle, image} from "../../UI/Inputs";
-import fredConfig from "../../Config";
-import fetch from "isomorphic-fetch";
-import {errorHandler} from "../../Utils";
-import cache from '../../Cache';
+import Sidebar from '../../Sidebar';
+import emitter from '../../../EE';
+import {dd, dl, dt, form, fieldSet, legend, div, button, figCaption, figure, img} from '../../../UI/Elements';
+import {choices, text, toggle, image} from "../../../UI/Inputs";
+import fredConfig from "../../../Config";
+import cache from '../../../Cache';
 import hoverintent from "hoverintent";
-import drake from "../../Drake";
+import drake from "../../../Drake";
 import html2canvas from 'html2canvas';
+import { getBlueprints, createBlueprint, createBlueprintCategory } from '../../../Actions/blueprints';
 
 export default class Blueprints extends Sidebar {
     static title = 'fred.fe.blueprints';
@@ -36,19 +35,7 @@ export default class Blueprints extends Sidebar {
     }
 
     click() {
-        const blueprints = cache.load('blueprints', {name: 'blueprints'}, () => {
-            return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=get-blueprints`, {
-                credentials: 'same-origin'
-            })
-                .then(response => {
-                    return response.json();
-                })
-                .then(response => {
-                    return response.data.blueprints;
-                });
-        });
-        
-        return blueprints.then(value => {
+        return getBlueprints().then(value => {
             return this.buildPanel(value);
         });
     }
@@ -184,19 +171,7 @@ export default class Blueprints extends Sidebar {
         const createButton = button('fred.fe.blueprints.create_category', 'fred.fe.blueprints.create_category', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint_category'));
 
-            fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=blueprints-create-category`, {
-                method: "post",
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: this.state.category.name,
-                    rank: this.state.category.rank,
-                    public: +this.state.category.public,
-                    complete: 1
-                })
-            }).then(errorHandler)
+            createBlueprintCategory(this.state.category.name, this.state.category.rank, +this.state.category.public)
                 .then(json => {
                     cache.kill('blueprints', {name: 'blueprints'});
                     this.click().then(newContent => {
@@ -321,29 +296,7 @@ export default class Blueprints extends Sidebar {
         const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
 
-            const body = {
-                name: this.state.blueprint.name,
-                category: this.state.blueprint.category,
-                rank: this.state.blueprint.rank,
-                public: this.state.blueprint.public,
-                data: fredConfig.fred.getContent(),
-                generatedImage: '',
-                image: this.state.blueprint.image,
-                complete: true
-            };
-            
-            if (this.state.blueprint.image === '') {
-                body.generatedImage = this.state.blueprint.generatedImage;
-            }
-            
-            fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=blueprints-create-blueprint`, {
-                    method: "post",
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(body)
-                }).then(errorHandler)
+            createBlueprint(this.state.blueprint.name, this.state.blueprint.category, this.state.blueprint.rank, this.state.blueprint.public, fredConfig.fred.getContent(), this.state.blueprint.generatedImage, this.state.blueprint.image, true)
                     .then(json => {
                         cache.kill('blueprints', {name: 'blueprints'});
                         this.click().then(newContent => {
@@ -364,9 +317,6 @@ export default class Blueprints extends Sidebar {
                         emitter.emit('fred-loading-hide');
                     }
                 });
-            
-            
-            
         });
 
         fields.appendChild(createButton);

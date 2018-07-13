@@ -187,7 +187,7 @@ export const loadElements = data => {
     return Promise.all(dzPromises);
 };
 
-export const loadBlueprint = (data, parent, target, sibling) => {
+export const buildBlueprint = (data, parent, target, sibling) => {
     const complete = data.complete || false;
     let emptyPage = true;
     

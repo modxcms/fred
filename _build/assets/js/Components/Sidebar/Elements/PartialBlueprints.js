@@ -1,12 +1,11 @@
 import utilitySidebar from './../../UtilitySidebar';
 import {choices, image, text, toggle} from "../../../UI/Inputs";
 import {button, div, fieldSet, form, legend} from "../../../UI/Elements";
-import fetch from "isomorphic-fetch";
-import {errorHandler} from "../../../Utils";
 import cache from "../../../Cache";
 import emitter from "../../../EE";
 import fredConfig from "../../../Config";
 import html2canvas from "html2canvas";
+import { getBlueprints, createBlueprint } from '../../../Actions/blueprints';
 
 export class PartialBlueprints {
     open(el) {
@@ -22,19 +21,7 @@ export class PartialBlueprints {
             generatedImage: ''
         };
 
-        const blueprints = cache.load('blueprints', {name: 'blueprints'}, () => {
-            return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints`, {
-                credentials: 'same-origin'
-            })
-                .then(response => {
-                    return response.json();
-                })
-                .then(response => {
-                    return response.data.blueprints;
-                });
-        });
-
-        blueprints.then(value => {
+        getBlueprints().then(value => {
             value.forEach(category => {
                 if (this.state.category === null) {
                     this.state.category = category.id
@@ -129,29 +116,7 @@ export class PartialBlueprints {
         const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
 
-            const body = {
-                name: this.state.name,
-                category: this.state.category,
-                rank: this.state.rank,
-                public: this.state.public,
-                data: [this.el.getContent()],
-                generatedImage: '',
-                image: this.state.image,
-                complete: false
-            };
-
-            if (this.state.image === '') {
-                body.generatedImage = this.state.generatedImage;
-            }
-
-            fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=blueprints-create-blueprint`, {
-                method: "post",
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            }).then(errorHandler)
+            createBlueprint(this.state.name, this.state.category, this.state.rank, this.state.public, [this.el.getContent()], this.state.generatedImage, this.state.image, false)
                 .then(json => {
                     cache.kill('blueprints', {name: 'blueprints'});
                     utilitySidebar.close();
@@ -173,6 +138,7 @@ export class PartialBlueprints {
         const cancelButton = button('fred.fe.cancel', 'fred.fe.cancel', ['fred--btn-panel'], () => {
             utilitySidebar.close();
         });
+        
         const buttonGroup = div(['fred--panel_button_wrapper']);
         buttonGroup.appendChild(createButton);
         buttonGroup.appendChild(cancelButton);

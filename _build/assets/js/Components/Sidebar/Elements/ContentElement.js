@@ -8,7 +8,7 @@ import { applyScripts } from '../../../Utils';
 import Mousetrap from 'mousetrap';
 import hoverintent from 'hoverintent';
 import elementSettings from './ElementSettings';
-import partialBlueprints from "./ParialBlueprints";
+import partialBlueprints from "./PartialBlueprints";
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
