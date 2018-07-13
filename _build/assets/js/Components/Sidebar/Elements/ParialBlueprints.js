@@ -1,6 +1,6 @@
 import utilitySidebar from './../../UtilitySidebar';
 import {choices, image, text, toggle} from "../../../UI/Inputs";
-import {button, fieldSet, form, legend} from "../../../UI/Elements";
+import {button, div, fieldSet, form, legend} from "../../../UI/Elements";
 import fetch from "isomorphic-fetch";
 import {errorHandler} from "../../../Utils";
 import cache from "../../../Cache";
@@ -172,10 +172,11 @@ export class PartialBlueprints {
         });
         const cancelButton = button('fred.fe.cancel', 'fred.fe.cancel', ['fred--btn-panel'], () => {
             utilitySidebar.close();
-        }); 
-        
-        fields.appendChild(createButton);
-        fields.appendChild(cancelButton);
+        });
+        const buttonGroup = div(['fred--panel_button_wrapper']);
+        buttonGroup.appendChild(createButton);
+        buttonGroup.appendChild(cancelButton);
+        fields.appendChild(buttonGroup);
 
         pageForm.appendChild(fields);
 
