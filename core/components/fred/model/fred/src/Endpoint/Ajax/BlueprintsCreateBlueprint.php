@@ -60,9 +60,11 @@ class BlueprintsCreateBlueprint extends Endpoint
             
             $path = rtrim($path, '/') . '/';
             $url = rtrim($url, '/') . '/';
-            
+
+            $nfp = $this->modx->getOption('new_folder_permissions');
+            $amode = !empty($nfp) ? octdec($this->modx->getOption('new_folder_permissions')) : 0777;
             if (!is_dir($path)) {
-                mkdir($path, 0777, true);
+                mkdir($path, $amode, true);
             }
             
             if (!empty($this->body['generatedImage'])) {
@@ -70,10 +72,10 @@ class BlueprintsCreateBlueprint extends Endpoint
                 $img = str_replace('data:image/png;base64,', '', $img);
                 $img = str_replace(' ', '+', $img);
                 $data = base64_decode($img);
-                $file = $path . 'blueprint_' . $category->id . '.png';
+                $file = $path . 'blueprint_' . $blueprint->id . '.png';
                 file_put_contents($file, $data);
 
-                $blueprint->set('image', $url . 'blueprint_' . $category->id . '.png');
+                $blueprint->set('image', $url . 'blueprint_' . $blueprint->id . '.png');
             } else if (!empty($this->body['image'])) {
                 $blueprint->set('image', $this->body['image']);
             } else {
