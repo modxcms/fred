@@ -55,7 +55,7 @@ export class PartialBlueprints {
         const pageForm = form(['fred--pages_create']);
 
         const fields = fieldSet();
-        const title = legend('fred.fe.blueprints.create_blueprint');
+        const title = legend('fred.fe.blueprints.create_blueprint', ['fred--panel_blueprint']);
 
         const onChange = (name, value) => {
             this.state[name] = value;
