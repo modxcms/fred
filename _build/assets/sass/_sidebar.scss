@@ -356,6 +356,10 @@
             }
           }
         }
+        + dd {
+          transition: .001s;
+          transition-delay: .3s;
+        }
         &.active {
           + dd {
             display: block;
@@ -368,7 +372,8 @@
             overflow-x: hidden;
             top: 0;
             background-color: lighten($black, 5%);
-            //box-shadow: -250px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
+            transition: $timing;
+            transition-delay: .001s;
             z-index: 99;
           }
         }
@@ -398,26 +403,33 @@
   }
 }
 
-.fred--pages {
-  &_list {
+.fred--accordion dd .fred--pages {
+ dl.fred--pages_list {
     font-size: 20px;
+    dt:not([class^="fred--accordion"]){
+      padding: 16px 22px 16px 36px;
+      font-size: .9em;
+      &:before{
+        display:none;
+      }
+    }
     & > dt{
-      font-size: inherit !important;
+      font-size: inherit;
     }
     dl {
-      border-left: 1px solid #3a7cb1;
+      border-left: 2px solid rgba($white, .2);
       margin-left: 2px;
       font-size: .95em;
-      transition: $timing left !important;
+      transition: $timing left;
       &:not(.fred--hidden){
-        position: relative !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: auto !important;
+        position: relative;
+        left: 0;
+        width: 100%;
+        height: auto;
       }
       & > dt{
-        font-size: inherit !important;
-        padding-left: 38px !important;
+        font-size: inherit;
+        padding-left: 40px !important;
       }
     }
   }
