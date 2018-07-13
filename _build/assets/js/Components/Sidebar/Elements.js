@@ -36,6 +36,7 @@ export default class Elements extends Sidebar {
                         const isActive = el.classList.contains('active');
                         
                         for (let tab of activeTabs) {
+                            if(tab === el) continue;
                             tab.classList.remove('active');
                         }
                         

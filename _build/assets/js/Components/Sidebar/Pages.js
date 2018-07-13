@@ -153,7 +153,7 @@ export default class Pages extends Sidebar {
 
         pageForm.appendChild(fields);
 
-        const createPageButton = dt('fred.fe.pages.create_page', [], (e, el) => {
+        const createPageButton = dt('fred.fe.pages.create_page', ['fred--accordion-plus'], (e, el) => {
             const activeTabs = this.pageList.querySelectorAll('dt.active');
 
             const isActive = el.classList.contains('active');
