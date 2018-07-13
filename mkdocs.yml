@@ -8,6 +8,7 @@ pages:
       - Markup: elements/markup.md
       - Settings: elements/settings.md
       - Attributes: elements/attributes.md
+    - Templates: templates/index.md
     - 'Media Sources': media_sources/index.md
     - 'System Settings': system_settings/index.md
     - Events: events/index.md

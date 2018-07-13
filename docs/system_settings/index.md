@@ -2,7 +2,7 @@ Fred system settings control how your site reacts. Since Fred is loaded on the f
 
 ### Default Element
 
-The default element settings allows you to chose a default Fred element and target area for placing the content on existing documents. The setting is formatted as `ID|target` where ID is the identification number of the element and the target is the named element within that element to place the content.
+The default element settings allows you to chose a default Fred element and target area for placing the content on existing documents. The setting is formatted as `ID|target` where ID is the identification number of the Chunk and the target is the HTML element within that Chunk identified with a `data-fred-name` attribute.
 
 #### Example Chunk: Content Area (13)
 
@@ -21,7 +21,7 @@ By default element categories are sorted by `name`, but you can switch it to use
 
 ### Element's Category ID
 
-To display, Fred needs to be fed an Element Category ID, which can be found in the "Categories" section of the Elements tab. The Element Category also needs sub-categories to display properly. Any chunks left un-categorized will not display.
+To display, Fred needs to be fed an Element Category ID, which can be found in the "Categories" section of the Elements tab. The Element Category also needs sub-categories to display properly. Any Chunks left un-categorized will not display.
 
 ### Icon Editor
 
