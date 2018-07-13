@@ -1,6 +1,6 @@
 import emitter from '../EE';
 import fredConfig from './../Config';
-import { div, span, dt } from '../UI/Elements';
+import { div, span, dt, h3 } from '../UI/Elements';
 
 export default class Sidebar {
     static title = 'TITLE NOT SET';
@@ -59,10 +59,11 @@ export default class Sidebar {
     setContent(content) {
         if ((typeof content === 'object') && (content.outerHTML !== undefined)) {
             this.contentEl.innerHTML = '';
+            this.contentEl.appendChild(h3(this.constructor.title));
             this.contentEl.appendChild(content);
             return;
         }
-        
+        this.contentEl.appendChild(h3(this.constructor.title));
         this.contentEl.innerHTML = content;
     }
     

@@ -218,7 +218,7 @@ export default class Blueprints extends Sidebar {
 
         pageForm.appendChild(fields);
 
-        const createPageButton = dt('fred.fe.blueprints.create_category', [], (e, el) => {
+        const createPageButton = dt('fred.fe.blueprints.create_category', ['fred--accordion-plus'], (e, el) => {
             const activeTabs = content.querySelectorAll('dt.active');
 
             const isActive = el.classList.contains('active');
@@ -373,7 +373,7 @@ export default class Blueprints extends Sidebar {
 
         pageForm.appendChild(fields);
 
-        const createPageButton = dt('fred.fe.blueprints.create_blueprint', [], (e, el) => {
+        const createPageButton = dt('fred.fe.blueprints.create_blueprint', ['fred--accordion-plus'], (e, el) => {
             const activeTabs = content.querySelectorAll('dt.active');
 
             const isActive = el.classList.contains('active');

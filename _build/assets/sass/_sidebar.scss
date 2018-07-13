@@ -167,7 +167,7 @@
 .fred--accordion {
   h3 {
     font-size: 21px;
-    padding: 16px 32px;
+    padding: 16px 22px 16px 32px;
     color: $white;
     font-weight: lighter;
     border-bottom: 1px solid rgba($white, .2);
@@ -189,7 +189,6 @@
     text-align: center;
     line-height: 16px;
     transition: $timing;
-
     span {
       i {
         font-size: 13px;
@@ -315,7 +314,7 @@
       z-index: 3;
       dt {
         position: relative;
-        padding: 16px 28px;
+        padding: 16px 16px;
         font-size: 20px;
         font-weight: lighter;
         transition: $timing;
@@ -324,6 +323,38 @@
           color: $modxgreen;
           background-color: darken($black, 15%);
           //pointer-events: none;
+        }
+        &:before{
+          content: "";
+          width: 16px; height: 16px;
+          border-radius: 16px;
+          display:inline-block;
+          margin-right: 8px;
+          background-color: transparent;
+          transition: $timing;
+          opacity:.8;
+        }
+        &.fred--accordion{
+          &-cog{
+            &:before{
+              background: inline-svg('cog', $white) center center no-repeat;
+            }
+            &.active{
+              &before{
+                opacity: 1;
+              }
+            }
+          }
+          &-plus{
+            &:before{
+              background: inline-svg('plus-circle', $white) center center no-repeat;
+            }
+            &.active{
+              &before{
+                opacity: 1;
+              }
+            }
+          }
         }
         &.active {
           + dd {
@@ -343,6 +374,11 @@
         }
         &:hover:not(:focus){
           background-color: darken($black, 15%);
+        }
+      }
+      dd{
+        h3{
+          padding: 16px 22px 16px 22px;
         }
       }
     }
@@ -367,12 +403,6 @@
     font-size: 20px;
     & > dt{
       font-size: inherit !important;
-      &:last-of-type{
-        background: $green;
-        &:hover{
-          background: darken($green, 10%) !important;
-        }
-      }
     }
     dl {
       border-left: 1px solid #3a7cb1;

@@ -53,7 +53,7 @@ export default class PageSettings extends Sidebar {
     getAdvancedFields() {
         const advancedList = dl();
 
-        const advancedTab = dt('fred.fe.page_settings.advanced_settings', [], e => {
+        const advancedTab = dt('fred.fe.page_settings.advanced_settings', ['fred--accordion-cog'], e => {
             const activeTabs = advancedList.parentElement.querySelectorAll('dt.active');
 
             const isActive = advancedTab.classList.contains('active');
@@ -90,7 +90,7 @@ export default class PageSettings extends Sidebar {
     getTaggerFields() {
         const taggerList = dl();
 
-        const taggerTab = dt('fred.fe.tagger.tagger', [], e => {
+        const taggerTab = dt('fred.fe.tagger.tagger', ['fred--accordion-cog'], e => {
             const activeTabs = taggerList.parentElement.querySelectorAll('dt.active');
 
             const isActive = taggerTab.classList.contains('active');
