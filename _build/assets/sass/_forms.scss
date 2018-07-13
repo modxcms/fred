@@ -97,6 +97,7 @@ input{
     margin: 0 5%;
     font-weight: lighter;
     color: $white;
+    display: block;
   }
   input[type="text"], input[type="date"], textarea, select {
     background-color: lighten($black, 5%);
