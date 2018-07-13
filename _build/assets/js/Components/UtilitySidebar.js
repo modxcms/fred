@@ -11,7 +11,7 @@ class UtilitySidebar {
         if (this.rendered === true) return this.wrapper;
         
         this.rendered = true;
-        this.wrapper = div(['fred--panel', 'fred--panel_element', 'fred--hidden']);
+        this.wrapper = div(['fred--panel', 'fred--hidden']);
 
         emitter.emit('fred-wrapper-insert', this.wrapper);
         

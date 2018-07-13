@@ -29,7 +29,7 @@ export class ElementSettings {
     render() {
         const settingsForm = form();
         const fields = fieldSet();
-        const title = legend('fred.fe.element_settings');
+        const title = legend('fred.fe.element_settings', ['fred--panel_element']);
 
         fields.appendChild(title);
 
