@@ -4,6 +4,7 @@ repo_url: https://github.com/modxcms/fred
 copyright: 'Copyright &copy; 2018 MODX, LLC'
 pages:
     - 'Meet Fred': index.md
+    - 'Getting Started': gettingstarted.md
     - Elements:
       - Markup: elements/markup.md
       - Settings: elements/settings.md
