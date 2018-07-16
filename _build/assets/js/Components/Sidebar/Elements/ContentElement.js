@@ -1,7 +1,6 @@
 import drake from '../../../Drake';
 import emitter from '../../../EE';
 import { twig } from 'twig';
-import fetch from 'isomorphic-fetch';
 import fredConfig from '../../../Config';
 import { div, button } from '../../../UI/Elements';
 import { applyScripts } from '../../../Utils';
@@ -9,6 +8,7 @@ import Mousetrap from 'mousetrap';
 import hoverintent from 'hoverintent';
 import elementSettings from './ElementSettings';
 import partialBlueprints from "./PartialBlueprints";
+import { renderElement } from '../../../Actions/elements';
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
@@ -709,27 +709,7 @@ export class ContentElement {
     }
     
     remoteTemplateRender(parseModx = true) {
-        return fetch(`${this.config.assetsUrl}endpoints/ajax.php?action=render-element`, {
-            method: "post",
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                resource: this.config.resource.id,
-                parseModx,
-                element: this.id,
-                settings: this.settings
-            })
-        }).then(response => {
-            if (response.status > 299) {
-                return response.json().then(data => {
-                    throw new Error(data.message);    
-                });
-            }
-            
-            return response.json();
-        }).then(json => {
+        return renderElement(this.id, this.settings, parseModx).then(json => {
             this.setEl(json.data.html);
             return json.data.html;
         })
