@@ -613,11 +613,6 @@ export class ContentElement {
             
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
-                    if ((mutation.type === 'characterData') && (!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
-                        this.setContentValue(el, el.innerHTML, content);
-                        return;
-                    }
-
                     if (mutation.type === 'attributes') {
                         if ((el.nodeName.toLowerCase()) === 'img' && (mutation.attributeName === 'src')) {
                             this.setContentValue(el, el.getAttribute(mutation.attributeName), content);
@@ -647,6 +642,12 @@ export class ContentElement {
                 characterData: true,
                 subtree: true
             });
+
+            if ((!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
+                el.addEventListener('input', () => {
+                    this.setContentValue(el, el.innerHTML, content);
+                });
+            }
 
             if (!!el.dataset.fredRte && (el.dataset.fredRte !== 'false')) {
                 if (this.config.rte && fredConfig.rtes[this.config.rte]) {
