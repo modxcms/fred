@@ -4,7 +4,7 @@ fred.page.Blueprint = function (config) {
     config.isUpdate = (MODx.request.id) ? true : false;
 
     Ext.applyIf(config, {
-        formpanel: 'fred-panel-blueprint'
+        formpanel: 'fred-panel-blueprint',
         buttons: [
             {
                 text: _('save'),
