@@ -5,9 +5,11 @@ import fredConfig from "../Config";
 import emitter from "../EE";
 import drake from "../Drake";
 
-export const getBlueprints = () => {
-    return cache.load('blueprints', {name: 'blueprints'}, () => {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints`, {
+export const getBlueprints = (complete = null) => {
+    return cache.load('blueprints', {name: 'blueprints', complete}, () => {
+        const completeString = (complete !== null) ? `&complete=${+complete}` : '';
+        
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints${completeString}`, {
             credentials: 'same-origin'
         })
             .then(response => {
@@ -19,9 +21,10 @@ export const getBlueprints = () => {
     });
 };
 
-export const createBlueprint = (name, category, rank, isPublic, data, generatedImage, image, complete) => {
+export const createBlueprint = (name, description, category, rank, isPublic, data, generatedImage, image, complete) => {
     const body = {
         name,
+        description,
         category,
         rank,
         public: isPublic,

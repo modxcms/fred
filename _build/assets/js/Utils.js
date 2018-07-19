@@ -104,6 +104,20 @@ export const fixChoices = choices => {
     
         return choicesFragment;
     };
+    
+    choices.ajax = function(fn) {
+        if (this.initialised === true) {
+            if (this.isSelectElement) {
+                // Show loading text
+                requestAnimationFrame(() => {
+                    this._handleLoadingState(true);
+
+                    fn(this._ajaxCallback());
+                });
+            }
+        }
+        return this;
+    }
 };
 
 const loadChildren = (zones, parent, elements, fireEvents = false) => {

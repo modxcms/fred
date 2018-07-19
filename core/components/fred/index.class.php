@@ -36,8 +36,8 @@ abstract class FredBaseManagerController extends modExtraManagerController
 
         $this->addHtml('<script type="text/javascript">
             Ext.onReady(function() {
-                Fred.config = ' . $this->modx->toJSON($this->fred->options) . ';
-                Fred.config.connector_url = "' . $this->fred->getOption('connectorUrl') . '";
+                fred.config = ' . $this->modx->toJSON($this->fred->options) . ';
+                fred.config.connector_url = "' . $this->fred->getOption('connectorUrl') . '";
             });
         </script>');
 

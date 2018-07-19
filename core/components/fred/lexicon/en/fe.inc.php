@@ -64,6 +64,7 @@ $_lang['fred.fe.pages.unpublish'] = 'Unpublish';
 $_lang['fred.fe.pages.create_child_page'] = 'Create Child Page';
 $_lang['fred.fe.pages.delete'] = 'Delete';
 $_lang['fred.fe.pages.undelete'] = 'Undelete';
+$_lang['fred.fe.pages.blueprint'] = 'Blueprint';
 
 $_lang['fred.fe.more.openmanager'] = 'View in Manager';
 $_lang['fred.fe.more.logout'] = 'Logout';
@@ -78,6 +79,7 @@ $_lang['fred.fe.blueprints.category_public'] = 'Public';
 $_lang['fred.fe.blueprints.category_rank'] = 'Rank';
 
 $_lang['fred.fe.blueprints.blueprint_name'] = 'Name';
+$_lang['fred.fe.blueprints.blueprint_description'] = 'Description';
 $_lang['fred.fe.blueprints.blueprint_category'] = 'Category';
 $_lang['fred.fe.blueprints.blueprint_rank'] = 'Rank';
 $_lang['fred.fe.blueprints.blueprint_public'] = 'Public';

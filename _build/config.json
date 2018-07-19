@@ -5,19 +5,36 @@
   "author": "John Peca",
   "version": "1.0.0-beta2",
   "package": {
-    "menus": [{
-      "text": "fred.refresh"
-      ,"description": "fred.refresh_desc"
-      ,"parent": "refresh_site"
-      ,"handler": "var topic=\"/fred/mgr/generate/refresh/\";this.console=MODx.load({xtype:\"modx-console\",register:\"mgr\",topic:topic,show_filename:0}),this.console.show(Ext.getBody()),MODx.Ajax.request({url:MODx.config.assets_url+\"components/fred/connector.php\",params:{action:\"mgr/generate/refresh\",register:\"mgr\",topic:topic},listeners:{success:{fn:function(){this.console.fireEvent(\"complete\"),this.console=null},scope:this}}});"
-      ,"action": ""
-    }],
+    "menus": [
+      {
+        "text": "fred",
+        "action": ""
+      },
+      {
+        "text": "fred.menu.blueprints",
+        "description": "fred.menu.blueprints_desc",
+        "parent": "fred",
+        "action": "blueprints"
+      },
+      {
+        "text": "fred.menu.refresh",
+        "description": "fred.menu.refresh_desc",
+        "parent": "fred",
+        "handler": "var topic=\"/fred/mgr/generate/refresh/\";this.console=MODx.load({xtype:\"modx-console\",register:\"mgr\",topic:topic,show_filename:0}),this.console.show(Ext.getBody()),MODx.Ajax.request({url:MODx.config.assets_url+\"components/fred/connector.php\",params:{action:\"mgr/generate/refresh\",register:\"mgr\",topic:topic},listeners:{success:{fn:function(){this.console.fireEvent(\"complete\"),this.console=null},scope:this}}});",
+        "action": ""
+      }
+    ],
     "elements": {
       "plugins": [
         {
           "name": "Fred",
           "file": "Fred.php",
-          "events": ["OnWebPagePrerender", "OnDocFormPrerender", "OnDocFormSave", "OnBeforeDocFormSave"]
+          "events": [
+            "OnWebPagePrerender",
+            "OnDocFormPrerender",
+            "OnDocFormSave",
+            "OnBeforeDocFormSave"
+          ]
         }
       ]
     },
@@ -52,6 +69,14 @@
       },
       {
         "key": "element_group_sort",
+        "value": "name"
+      },
+      {
+        "key": "blueprint_category_sort",
+        "value": "name"
+      },
+      {
+        "key": "blueprint_sort",
         "value": "name"
       },
       {

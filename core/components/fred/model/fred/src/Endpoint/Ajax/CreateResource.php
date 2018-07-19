@@ -11,6 +11,9 @@
 namespace Fred\Endpoint\Ajax;
 
 
+use Fred\RenderResource;
+use Fred\Utils;
+
 class CreateResource extends Endpoint
 {
     function process()
@@ -26,6 +29,8 @@ class CreateResource extends Endpoint
         if (empty($this->body['pagetitle'])) {
             return $this->failure('No pagetitle was provided', ['pagetitle' => 'No pagetitle was provided']);
         }
+
+        $blueprint = isset($this->body['blueprint']) ? intval($this->body['blueprint']) : 0;
 
         $context = 'web';
 
@@ -56,7 +61,23 @@ class CreateResource extends Endpoint
         
         $object = $response->getObject();
         
-         $data = [
+        if (!empty($blueprint)) {
+            /** @var \modResource $resource */
+            $resource = $this->modx->getObject('modResource', $object['id']);
+            
+            $blueprintObject = $this->modx->getObject('FredBlueprint', $blueprint);
+            if ($blueprintObject) {
+                $data = $blueprintObject->get('data');
+
+                $data['fingerprint'] = Utils::resourceFingerprint($resource);
+                $resource->setProperty('data', $data, 'fred');
+                
+                $renderer = new RenderResource($resource, $this->modx);
+                $renderer->render();
+            }
+        }
+        
+        $data = [
             'message' => 'Resource created',
             'url' => $this->modx->makeUrl($object['id'], $context, '', 'full')
         ];

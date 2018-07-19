@@ -20,6 +20,7 @@ class BlueprintsCreateBlueprint extends Endpoint
         $rank = isset($this->body['rank']) ? intval($this->body['rank']) : 0;
         $public = isset($this->body['public']) ? intval($this->body['public']) : 0;
         $complete = isset($this->body['complete']) ? intval($this->body['complete']) : 0;
+        $description = isset($this->body['description']) ? $this->body['description'] : '';
         
         if (empty($rank)) {
             $c = $this->modx->newQuery('FredBlueprint');
@@ -40,6 +41,7 @@ class BlueprintsCreateBlueprint extends Endpoint
 
         $blueprint = $this->modx->newObject('FredBlueprint');
         $blueprint->set('name', $this->body['name']);
+        $blueprint->set('description', $description);
         $blueprint->set('category', $category);
         $blueprint->set('rank', $rank);
         $blueprint->set('public', $public);

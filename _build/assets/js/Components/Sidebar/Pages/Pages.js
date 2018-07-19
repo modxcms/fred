@@ -4,6 +4,7 @@ import { div, dl, dd, dt, button, h3, form, fieldSet, legend } from '../../../UI
 import { text, choices } from '../../../UI/Inputs';
 import fredConfig from '../../../Config';
 import { getResourceTree, getTemplates, createResource } from '../../../Actions/pages';
+import { getBlueprints } from '../../../Actions/blueprints';
 
 export default class Pages extends Sidebar {
     static title = 'fred.fe.pages';
@@ -16,6 +17,7 @@ export default class Pages extends Sidebar {
         this.state = {
             pagetitle: '',
             parent: 0,
+            blueprint: 0,
             template: 0
         };
     }
@@ -63,6 +65,14 @@ export default class Pages extends Sidebar {
         };
 
         fields.appendChild(title);
+
+        const pagetitle = text({
+            name: 'pagetitle',
+            label: 'fred.fe.pages.page_title'
+        }, this.state.pagetitle, onChange);
+
+        fields.appendChild(pagetitle);
+        
         fields.appendChild(choices({
             name: 'parent',
             label: fredConfig.lng('fred.fe.pages.parent'),
@@ -72,6 +82,40 @@ export default class Pages extends Sidebar {
             }
         }, this.state.parent, onChangeChoices));
 
+        fields.appendChild(choices({
+            name: 'blueprint',
+            label: fredConfig.lng('fred.fe.pages.blueprint'),
+        }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
+            choicesInstance.ajax(callback => {
+                getBlueprints(true)
+                    .then(categories => {
+                        const groups = [];
+
+                        categories.forEach(category => {
+                            const options = [];
+
+                            category.blueprints.forEach(blueprint => {
+                                options.push({
+                                    label: blueprint.name,
+                                    value: '' + blueprint.id
+                                });
+                            });
+
+                            groups.push({
+                                label: category.category,
+                                disabled: false,
+                                choices: options
+                            });
+                        });
+                        
+                        callback(groups, 'value', 'label');
+                    })
+                    .catch(error => {
+                        emitter.emit('fred-loading', error.message);
+                    });
+            });
+        }));
+        
         fields.appendChild(choices({
             name: 'template',
             label: fredConfig.lng('fred.fe.pages.template'),
@@ -91,13 +135,6 @@ export default class Pages extends Sidebar {
             });
         }));
 
-        const pagetitle = text({
-            name: 'pagetitle',
-            label: 'fred.fe.pages.page_title'
-        }, this.state.pagetitle, onChange);
-
-        fields.appendChild(pagetitle);
-
         const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn-panel', 'fred--btn-apply'], () => {
             if(!fredConfig.config.permission.new_document){
                 alert(fredConfig.lng('fred.fe.permission.new_document'));
@@ -111,7 +148,7 @@ export default class Pages extends Sidebar {
 
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.pages.creating_page'));
 
-            createResource(this.state.parent, this.state.template, this.state.pagetitle, 0)
+            createResource(this.state.parent, this.state.template, this.state.pagetitle, this.state.blueprint)
             .then(json => {
                 location.href = json.url;
                 emitter.emit('fred-loading-hide');

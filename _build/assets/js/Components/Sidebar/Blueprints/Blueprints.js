@@ -1,7 +1,7 @@
 import Sidebar from '../../Sidebar';
 import emitter from '../../../EE';
 import {dd, dl, dt, form, fieldSet, legend, div, button, figCaption, figure, img} from '../../../UI/Elements';
-import {choices, text, toggle, image} from "../../../UI/Inputs";
+import {choices, text, toggle, image, area} from "../../../UI/Inputs";
 import fredConfig from "../../../Config";
 import cache from '../../../Cache';
 import hoverintent from "hoverintent";
@@ -25,6 +25,7 @@ export default class Blueprints extends Sidebar {
             },
             blueprint: {
                 name: '',
+                description: '',
                 category: null,
                 rank: '',
                 public: true,
@@ -51,6 +52,11 @@ export default class Blueprints extends Sidebar {
                 id: category.id,
                 value: '' + category.id
             });
+            
+            if (category.blueprints.length === 0) {
+                return true;
+            }
+            
             const categoryTab = dt(category.category, [], (e, el) => {
                 const activeTabs = el.parentElement.querySelectorAll('dt.active');
 
@@ -241,6 +247,11 @@ export default class Blueprints extends Sidebar {
 
         fields.appendChild(name);
 
+        fields.appendChild(area({
+            name: 'description',
+            label: 'fred.fe.blueprints.blueprint_description'
+        }, this.state.blueprint.description, onChange));
+
         const onImageChange = (name, value) => {
             if (value === '') {
                 imageEl.setPreview(this.state.blueprint.generatedImage);
@@ -296,7 +307,7 @@ export default class Blueprints extends Sidebar {
         const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
 
-            createBlueprint(this.state.blueprint.name, this.state.blueprint.category, this.state.blueprint.rank, this.state.blueprint.public, fredConfig.fred.getContent(), this.state.blueprint.generatedImage, this.state.blueprint.image, true)
+            createBlueprint(this.state.blueprint.name, this.state.blueprint.description, this.state.blueprint.category, this.state.blueprint.rank, this.state.blueprint.public, fredConfig.fred.getContent(), this.state.blueprint.generatedImage, this.state.blueprint.image, true)
                     .then(json => {
                         cache.kill('blueprints', {name: 'blueprints'});
                         this.click().then(newContent => {
