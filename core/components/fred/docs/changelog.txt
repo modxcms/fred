@@ -1,5 +1,7 @@
 Changelog for Fred.
 
+- Add CMP for Blueprints
+- Add blueprints
 - Add default image for elements, if none is set
 
 1.0.0 beta2
