@@ -68,6 +68,23 @@ $_lang['fred.fe.pages.undelete'] = 'Восстановить';
 $_lang['fred.fe.more.openmanager'] = 'Просмотреть в менеджере';
 $_lang['fred.fe.more.logout'] = 'Выйти';
 
+$_lang['fred.fe.blueprints'] = 'Макеты';
+$_lang['fred.fe.blueprints.create_category'] = 'Создать категорию';
+$_lang['fred.fe.blueprints.category_name'] = 'Имя';
+$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Создать категорию макетов';
+$_lang['fred.fe.blueprints.create_blueprint'] = 'Создать макет';
+$_lang['fred.fe.blueprints.creating_blueprint'] = 'Создание макета';
+$_lang['fred.fe.blueprints.category_public'] = 'Достурный';
+$_lang['fred.fe.blueprints.category_rank'] = 'Ранк';
+
+$_lang['fred.fe.blueprints.blueprint_name'] = 'Имя';
+$_lang['fred.fe.blueprints.blueprint_description'] = 'Описание';
+$_lang['fred.fe.blueprints.blueprint_category'] = 'Категория';
+$_lang['fred.fe.blueprints.blueprint_rank'] = 'Ранк';
+$_lang['fred.fe.blueprints.blueprint_public'] = 'Доступный';
+$_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Создание контента из макета';
+$_lang['fred.fe.blueprints.blueprint_image'] = 'Изображение';
+
 $_lang['fred.fe.content.duplicate'] = 'Дубликат';
 $_lang['fred.fe.content.delete'] = 'Удалить';
 $_lang['fred.fe.content.settings'] = 'Открыть настройки';
