@@ -87,6 +87,12 @@ $_lang['setting_fred.blueprint_category_sort'] = 'Blueprint\'s Category Sort';
 $_lang['setting_fred.blueprint_category_sort_desc'] = 'Sort Blueprint Categories by name or rank';
 $_lang['setting_fred.blueprint_sort'] = 'Blueprint Sort';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Sort Blueprints by name or rank';
+$_lang['setting_fred.rte_config'] = 'RTE Config';
+$_lang['setting_fred.rte_config_desc'] = 'Name of the chunk to load global RTE configurations.';
+$_lang['setting_fred.generated_images_path'] = 'Generated Images Path';
+$_lang['setting_fred.generated_images_path_desc'] = 'Physical path to the directory where generated images (automatic blueprint & element screenshots) will be stored.';
+$_lang['setting_fred.generated_images_url'] = 'Generated Images URL';
+$_lang['setting_fred.generated_images_url_desc'] = 'URL path to the directory for generated images.';
 
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Name is required';
