@@ -20,7 +20,7 @@ class FredBlueprintsReorderProcessor extends modObjectProcessor
         $c = $this->modx->newQuery($this->classKey);
         $c->where(array(
             'id:!=' => $blueprintId,
-            'category:!=' => $categoryId,
+            'category' => $categoryId,
             'rank:>=' => min($oldIndex, $newIndex),
             'rank:<=' => max($oldIndex, $newIndex),
         ));

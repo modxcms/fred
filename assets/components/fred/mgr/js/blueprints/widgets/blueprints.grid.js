@@ -297,7 +297,7 @@ Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
                         params: {
                             action: 'mgr/blueprints/ddreorder',
                             blueprintId: currentBlueprint.id,
-                            categoryId: currentBlueprint.category,
+                            categoryId: currentBlueprint.data.category,
                             oldIndex: oldIndex,
                             newIndex: newIndex
                         },
