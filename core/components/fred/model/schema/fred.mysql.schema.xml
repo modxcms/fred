@@ -27,4 +27,23 @@
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="local" />
         <aggregate alias="Category" class="FredBlueprintCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
     </object>
+
+    <object class="FredElementCategory" table="fred_element_categories" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="rank" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+
+        <composite alias="Elements" class="FredElement" local="id" foreign="category" cardinality="many" owner="local" />
+    </object>
+    
+    <object class="FredElement" table="fred_elements" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="image" dbtype="text" phptype="string" null="false" default="" />
+        <field key="category" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
+        <field key="rank" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+
+        <field key="content" dbtype="mediumtext" phptype="string" null="false" default="" />
+
+        <aggregate alias="Category" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
+    </object>
 </model>

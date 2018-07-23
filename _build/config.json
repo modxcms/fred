@@ -96,7 +96,9 @@
   "database": {
     "tables": [
       "FredBlueprintCategory",
-      "FredBlueprint"
+      "FredBlueprint",
+      "FredElementCategory",
+      "FredElement"
     ]
   },
   "build": {
