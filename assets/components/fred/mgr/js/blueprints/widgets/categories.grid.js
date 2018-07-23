@@ -187,7 +187,7 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
         }
 
         MODx.msg.confirm({
-            title: _('collections.template.remove'),
+            title: _('fred.blueprint_categories.remove'),
             text: text,
             url: this.config.url,
             params: {
