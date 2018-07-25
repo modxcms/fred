@@ -119,12 +119,12 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.elements.quick_update'),
-            handler: this.quickUpdateBlueprint
+            handler: this.quickUpdateElement
         });
 
         m.push({
             text: _('fred.elements.update'),
-            handler: this.updateBlueprint
+            handler: this.updateElement
         });
 
         m.push('-');
@@ -173,11 +173,11 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
     },
 
     newElement: function(btn, e) {
-                     
+        fred.loadPage('element/create');                 
     },
 
-    quickUpdateBlueprint: function (btn, e) {
-        var updateCategory = MODx.load({
+    quickUpdateElement: function (btn, e) {
+        var updateElement = MODx.load({
             xtype: 'fred-window-element',
             record: this.menu.record,
             listeners: {
@@ -190,14 +190,14 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
             }
         });
 
-        updateCategory.fp.getForm().reset();
-        updateCategory.fp.getForm().setValues(this.menu.record);
-        updateCategory.show(e.target);
+        updateElement.fp.getForm().reset();
+        updateElement.fp.getForm().setValues(this.menu.record);
+        updateElement.show(e.target);
 
         return true;
     },
 
-    updateBlueprint: function (btn, e) {
+    updateElement: function (btn, e) {
         fred.loadPage('element/update', {id: this.menu.record.id});
     },
 
