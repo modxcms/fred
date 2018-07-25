@@ -145,3 +145,23 @@ fred.combo.BlueprintCategories = function (config) {
 };
 Ext.extend(fred.combo.BlueprintCategories, MODx.combo.ComboBox);
 Ext.reg('fred-combo-blueprint-categories', fred.combo.BlueprintCategories);
+
+fred.combo.ElementCategories = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        name: 'category',
+        hiddenName: 'category',
+        displayField: 'name',
+        valueField: 'id',
+        fields: ['name', 'id'],
+        pageSize: 20,
+        url: fred.config.connectorUrl,
+        baseParams: {
+            action: 'mgr/element_categories/getlist',
+            addAll: config.addAll || 0
+        }
+    });
+    fred.combo.ElementCategories.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.combo.ElementCategories, MODx.combo.ComboBox);
+Ext.reg('fred-combo-element-categories', fred.combo.ElementCategories);

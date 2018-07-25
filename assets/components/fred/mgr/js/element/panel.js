@@ -1,14 +1,14 @@
-fred.panel.Blueprint = function (config) {
+fred.panel.Element = function (config) {
     config = config || {};
 
-    config.id = config.id || 'fred-panel-blueprint';
+    config.id = config.id || 'fred-panel-element';
 
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
         url: fred.config.connectorUrl,
         baseParams: {
-            action: 'mgr/blueprints/update'
+            action: 'mgr/elements/update'
         },
         useLoadingMask: true,
         items: this.getItems(config),
@@ -23,22 +23,21 @@ fred.panel.Blueprint = function (config) {
             }
         }
     });
-    fred.panel.Blueprint.superclass.constructor.call(this, config);
+    fred.panel.Element.superclass.constructor.call(this, config);
 };
 
-Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
+Ext.extend(fred.panel.Element, MODx.FormPanel, {
     setup: function () {
         if (this.config.isUpdate) {
             MODx.Ajax.request({
                 url: this.config.url,
                 params: {
-                    action: 'mgr/blueprints/get',
+                    action: 'mgr/elements/get',
                     id: MODx.request.id
                 },
                 listeners: {
                     'success': {
                         fn: function (r) {
-                            r.object.data = JSON.stringify(r.object.data, null, 2);
                             this.getForm().setValues(r.object);
 
                             Ext.getCmp('image_preview').el.dom.querySelector('img').src = (r.object.image || "https://via.placeholder.com/800x100?text=No+image");
@@ -54,18 +53,19 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
             this.fireEvent('ready');
             MODx.fireEvent('ready');
         }
-    },
+    }
 
-    success: function (o, r) {
+
+    , success: function (o, r) {
         if (this.config.isUpdate == false) {
-            fred.loadPage('blueprint/update', {id: o.result.object.id});
+            fred.loadPage('element/update', {id: o.result.object.id});
         }
-    },
+    }
 
-    getItems: function (config) {
+    , getItems: function (config) {
         return [
             {
-                html: '<h2>' + ((config.isUpdate == true) ? _('fred.blueprints.update') : _('fred.blueprints.create')) + '</h2>',
+                html: '<h2>' + ((config.isUpdate == true) ? _('fred.elements.update') : _('fred.elements.create')) + '</h2>',
                 border: false,
                 cls: 'modx-page-header'
             },
@@ -80,9 +80,9 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
             },
             this.getColumnsGrid(config)
         ];
-    },
+    }
 
-    getGeneralFields: function (config) {
+    , getGeneralFields: function (config) {
         return [
             {
                 deferredRender: false,
@@ -124,14 +124,14 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                         items: [
                                             {
                                                 xtype: 'textfield',
-                                                fieldLabel: _('fred.blueprints.name'),
+                                                fieldLabel: _('fred.elements.name'),
                                                 name: 'name',
                                                 anchor: '100%',
                                                 allowBlank: false
                                             },
                                             {
                                                 xtype: 'textarea',
-                                                fieldLabel: _('fred.blueprints.description'),
+                                                fieldLabel: _('fred.elements.description'),
                                                 name: 'description',
                                                 anchor: '100%',
                                                 height: 100
@@ -146,26 +146,17 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                         },
                                         items: [
                                             {
-                                                xtype: 'fred-combo-blueprint-categories',
-                                                fieldLabel: _('fred.blueprints.category'),
+                                                xtype: 'fred-combo-element-categories',
+                                                fieldLabel: _('fred.elements.category'),
                                                 name: 'category',
                                                 hiddenName: 'category',
                                                 anchor: '100%'
                                             },
                                             {
-                                                xtype: 'fred-combo-boolean',
-                                                useInt: true,
-                                                fieldLabel: _('fred.blueprints.public'),
-                                                name: 'public',
-                                                hiddenName: 'public',
-                                                anchor: '100%',
-                                                value: 1
-                                            },
-                                            {
                                                 xtype: 'numberfield',
                                                 allowDecimals: false,
                                                 allowNegative: false,
-                                                fieldLabel: _('fred.blueprints.rank'),
+                                                fieldLabel: _('fred.elements.rank'),
                                                 name: 'rank',
                                                 anchor: '100%',
                                                 allowBlank: true
@@ -196,7 +187,7 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                         items: [
                                             {
                                                 xtype: 'modx-combo-browser',
-                                                fieldLabel: _('fred.blueprints.image'),
+                                                fieldLabel: _('fred.elements.image'),
                                                 triggerClass: 'x-form-image-trigger',
                                                 name: 'image',
                                                 anchor: '100%',
@@ -241,72 +232,58 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
     getColumnsGrid: function (config) {
         var items = [
             {
-                html: '<br />',
-                bodyCssClass: 'transparent-background'
-            }
-        ];
-
-        items.push([
-            {
+                xtype: 'modx-tabs',
+                forceLayout: true,
                 deferredRender: false,
-                border: true,
-                defaults: {
-                    autoHeight: true,
-                    layout: 'form',
-                    labelWidth: 150,
-                    bodyCssClass: 'main-wrapper',
-                    layoutOnTabChange: true
-                },
+                collapsible: false,
                 items: [
                     {
+                        title: _('fred.elements.markup'),
+                        layout: 'form',
+                        bodyCssClass: 'tab-panel-wrapper main-wrapper',
+                        autoHeight: true,
                         defaults: {
-                            msgTarget: 'side',
-                            autoHeight: true
+                            border: false,
+                            msgTarget: 'under',
+                            width: 400
                         },
-                        cls: 'form-with-labels',
-                        border: false,
                         items: [
                             {
-                                layout: 'column',
-                                border: false,
-                                height: 100,
-                                defaults: {
-                                    layout: 'form',
-                                    labelAlign: 'top',
-                                    labelSeparator: '',
-                                    anchor: '100%',
-                                    border: false
-                                },
-                                items: [
-                                    {
-                                        columnWidth: 1,
-                                        border: false,
-                                        defaults: {
-                                            msgTarget: 'under'
-                                        },
-                                        items: [
-                                            {
-                                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
-                                                mimeType: 'application/json',
-                                                name: 'data',
-                                                id: 'data',
-                                                hideLabel: true,
-                                                anchor: '100%',
-                                                height: 400,
-                                                grow: false,
-                                                value: ''
-                                            }
-                                        ]
+                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
+                                mimeType: 'text/html',
+                                name: 'content',
+                                id: 'fred-element-content',
+                                hideLabel: true,
+                                anchor: '100%',
+                                height: 400,
+                                grow: false,
+                                value: '',
+                                listeners: {
+                                    render: function() {
+                                        if ((this.xtype === 'modx-texteditor') && this.editor)
+                                            this.editor.getSession().setMode('ace/mode/twig')
                                     }
-                                ]
+                                }
                             }
                         ]
+                    },
+                    {
+                        title: _('fred.elements.settings'),
+                        layout: 'form',
+                        bodyCssClass: 'tab-panel-wrapper main-wrapper',
+                        autoHeight: true,
+                        defaults: {
+                            border: false,
+                            msgTarget: 'under',
+                            width: 400
+                        },
+                        items: []
                     }
                 ]
             }
-        ]);
+        ];
 
         return items;
     }
 });
-Ext.reg('fred-panel-blueprint', fred.panel.Blueprint);
+Ext.reg('fred-panel-element', fred.panel.Element);

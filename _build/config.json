@@ -11,6 +11,12 @@
         "action": ""
       },
       {
+        "text": "fred.menu.elements",
+        "description": "fred.menu.elements_desc",
+        "parent": "fred",
+        "action": "elements"
+      },
+      {
         "text": "fred.menu.blueprints",
         "description": "fred.menu.blueprints_desc",
         "parent": "fred",

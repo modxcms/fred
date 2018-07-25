@@ -26,6 +26,8 @@ $_lang['fred.menu.blueprints'] = 'Blueprints';
 $_lang['fred.menu.blueprints_desc'] = 'Manage blueprints and their categories.';
 $_lang['fred.menu.refresh'] = 'Rebuild Fred Resources';
 $_lang['fred.menu.refresh_desc'] = 'Rebuild Resources using Fred Templates';
+$_lang['fred.menu.elements'] = 'Elements';
+$_lang['fred.menu.elements_desc'] = 'Manage elements, their categories and settings.';
 
 $_lang['fred.refresh_fail_resource'] = 'No Fred resources found to refresh';
 $_lang['fred.refresh_fail_template'] = 'No Fred templates specified to refresh';
@@ -67,6 +69,37 @@ $_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Are you sure you 
 $_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Are you sure you want to remove "[[+name]]" Blueprint Category?' ;
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Blueprints';
 
+$_lang['fred.elements.page_title'] = 'Elements';
+$_lang['fred.elements.elements'] = 'Elements';
+$_lang['fred.elements.none'] = 'No elements were found.';
+$_lang['fred.elements.image'] = 'Image';
+$_lang['fred.elements.name'] = 'Name';
+$_lang['fred.elements.description'] = 'Description';
+$_lang['fred.elements.category'] = 'Category';
+$_lang['fred.elements.rank'] = 'Rank';
+$_lang['fred.elements.search_name'] = 'Search by Name';
+$_lang['fred.elements.categories'] = 'Categories';
+$_lang['fred.elements.remove'] = 'Remove Element';
+$_lang['fred.elements.remove_confirm'] = 'Are you sure you want to delete [[+name]] Element?';
+$_lang['fred.elements.quick_update'] = 'Quick Update Element';
+$_lang['fred.elements.update'] = 'Update Element';
+$_lang['fred.elements.create'] = 'Create Element';
+$_lang['fred.elements.markup'] = 'Element\'s Markup';
+$_lang['fred.elements.settings'] = 'Element Settings';
+
+$_lang['fred.element_cateogries.all'] = 'All Categories';
+$_lang['fred.element_categories.none'] = 'No categories were found.';
+$_lang['fred.element_categories.name'] = 'Name';
+$_lang['fred.element_categories.number_of_elements'] = '# Elements';
+$_lang['fred.element_categories.rank'] = 'Rank';
+$_lang['fred.element_categories.search_name'] = 'Search by Name';
+$_lang['fred.element_categories.create'] = 'Create Category';
+$_lang['fred.element_categories.update'] = 'Update Category';
+$_lang['fred.element_categories.remove'] = 'Remove Category';
+$_lang['fred.element_categories.remove_confirm'] = 'Are you sure you want to remove "[[+name]]" Element Category and all [[+elements]] attached Elements?' ;
+$_lang['fred.element_categories.remove_confirm_singular'] = 'Are you sure you want to remove "[[+name]]" Element Category and [[+elements]] attached Element?' ;
+$_lang['fred.element_categories.remove_confirm_empty'] = 'Are you sure you want to remove "[[+name]]" Element Category?' ;
+
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
 $_lang['setting_fred.elements_category_id'] = 'Element\'s Category ID';
@@ -94,8 +127,9 @@ $_lang['setting_fred.generated_images_path_desc'] = 'Physical path to the direct
 $_lang['setting_fred.generated_images_url'] = 'Generated Images URL';
 $_lang['setting_fred.generated_images_url_desc'] = 'URL path to the directory for generated images.';
 
-
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Name is required';
 $_lang['fred.err.bad_sort_column'] = 'Sort grid by <strong>[[+column]]</strong> to use drag & drop sorting.';
 $_lang['fred.err.clear_filter'] = 'Clear filters to use drag & drop sorting.';
 $_lang['fred.err.required_filter'] = 'You have to filter by [[+filter]].';
+$_lang['fred.err.element_categories_ns_name'] = 'Name is required';
+$_lang['fred.err.elements_ns_name'] = 'Name is required';
