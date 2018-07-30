@@ -41,6 +41,11 @@ class FredElementsUpdateProcessor extends modObjectUpdateProcessor
             $this->setProperty('rank', $last);
         }
 
+        $optionsOverride = $this->getProperty('options_override');
+        if (empty($optionsOverride)) {
+            $this->setProperty('options_override', '{}');
+        }
+
         return parent::beforeSet();
     }
 }

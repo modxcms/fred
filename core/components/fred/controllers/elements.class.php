@@ -28,6 +28,10 @@ class FredElementsManagerController extends FredBaseManagerController
 
     public function loadCustomCssJs()
     {
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'elements/widgets/element_rte_config.window.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'elements/widgets/element_rte_configs.grid.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'elements/widgets/element_option_set.window.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'elements/widgets/element_option_sets.grid.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'elements/widgets/category.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'elements/widgets/categories.grid.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'elements/widgets/element.window.js');

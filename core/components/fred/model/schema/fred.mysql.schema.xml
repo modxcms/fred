@@ -35,6 +35,21 @@
         <composite alias="Elements" class="FredElement" local="id" foreign="category" cardinality="many" owner="local" />
     </object>
     
+    <object class="FredElementOptionSet" table="fred_element_option_sets" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="complete" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+
+        <field key="data" dbtype="mediumtext" phptype="json" null="false" default="" />
+    </object>
+    
+    <object class="FredElementRTEConfig" table="fred_element_rte_configs" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+
+        <field key="data" dbtype="mediumtext" phptype="json" null="false" default="" />
+    </object>
+    
     <object class="FredElement" table="fred_elements" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
@@ -42,6 +57,9 @@
         <field key="category" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
         <field key="rank" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
 
+        <field key="option_set" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+        <field key="options_override" dbtype="mediumtext" phptype="json" null="false" default="" />
+        
         <field key="content" dbtype="mediumtext" phptype="string" null="false" default="" />
 
         <aggregate alias="Category" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="foreign" />

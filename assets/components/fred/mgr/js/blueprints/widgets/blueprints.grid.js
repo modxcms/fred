@@ -161,12 +161,12 @@ Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.blueprints.quick_update'),
-            handler: this.quickUpdateBlueprint
+            handler: this.quickUpdateElementRTEConfig
         });
 
         m.push({
             text: _('fred.blueprints.update'),
-            handler: this.updateBlueprint
+            handler: this.updateElementRTEConfig
         });
 
         m.push('-');
@@ -214,7 +214,7 @@ Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
     },
 
-    quickUpdateBlueprint: function (btn, e) {
+    quickUpdateElementRTEConfig: function (btn, e) {
         var updateCategory = MODx.load({
             xtype: 'fred-window-blueprint',
             record: this.menu.record,
@@ -235,7 +235,7 @@ Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
         return true;
     },
 
-    updateBlueprint: function (btn, e) {
+    updateElementRTEConfig: function (btn, e) {
         fred.loadPage('blueprint/update', {id: this.menu.record.id});
     },
 

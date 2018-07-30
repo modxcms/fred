@@ -37,13 +37,32 @@ fred.panel.Elements = function (config) {
                                 cls: 'main-wrapper'
                             }
                         ]
-                    }                    
-                    ,
+                    },
                     {
                         title: _('fred.elements.categories'),
                         items: [
                             {
                                 xtype: 'fred-grid-element-categories',
+                                preventRender: true,
+                                cls: 'main-wrapper'
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.elements.option_sets'),
+                        items: [
+                            {
+                                xtype: 'fred-grid-element-option-sets',
+                                preventRender: true,
+                                cls: 'main-wrapper'
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.elements.rte_configs'),
+                        items: [
+                            {
+                                xtype: 'fred-grid-element-rte-configs',
                                 preventRender: true,
                                 cls: 'main-wrapper'
                             }

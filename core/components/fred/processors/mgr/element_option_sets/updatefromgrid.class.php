@@ -5,7 +5,7 @@
  */
 require_once(dirname(__FILE__) . '/update.class.php');
 
-class FredElementsUpdateFromGridProcessor extends FredElementsUpdateProcessor
+class FredElementOptionSetsUpdateFromGridProcessor extends FredElementOptionSetsUpdateProcessor
 {
     public function initialize()
     {
@@ -20,4 +20,4 @@ class FredElementsUpdateFromGridProcessor extends FredElementsUpdateProcessor
     }
 }
 
-return 'FredElementsUpdateFromGridProcessor';
+return 'FredElementOptionSetsUpdateFromGridProcessor';

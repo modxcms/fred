@@ -6,6 +6,8 @@ $xpdo_meta_map = array (
     0 => 'FredBlueprintCategory',
     1 => 'FredBlueprint',
     2 => 'FredElementCategory',
-    3 => 'FredElement',
+    3 => 'FredElementOptionSet',
+    4 => 'FredElementRTEConfig',
+    5 => 'FredElement',
   ),
 );

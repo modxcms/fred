@@ -38,6 +38,14 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 listeners: {
                     'success': {
                         fn: function (r) {
+                            if (Array.isArray(r.object.options_override) && r.object.options_override.length === 0) {
+                                r.object.options_override = '';
+                            } else {
+                                if (typeof r.object.options_override === 'object') {
+                                    r.object.options_override = JSON.stringify(r.object.options_override, null, 2);
+                                }
+                            }
+                            
                             this.getForm().setValues(r.object);
 
                             Ext.getCmp('image_preview').el.dom.querySelector('img').src = (r.object.image || "https://via.placeholder.com/800x100?text=No+image");
@@ -53,16 +61,16 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
             this.fireEvent('ready');
             MODx.fireEvent('ready');
         }
-    }
+    },
 
 
-    , success: function (o, r) {
+    success: function (o, r) {
         if (this.config.isUpdate == false) {
             fred.loadPage('element/update', {id: o.result.object.id});
         }
-    }
+    },
 
-    , getItems: function (config) {
+    getItems: function (config) {
         return [
             {
                 html: '<h2>' + ((config.isUpdate == true) ? _('fred.elements.update') : _('fred.elements.create')) + '</h2>',
@@ -80,9 +88,9 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
             },
             this.getColumnsGrid(config)
         ];
-    }
+    },
 
-    , getGeneralFields: function (config) {
+    getGeneralFields: function (config) {
         return [
             {
                 deferredRender: false,
@@ -236,6 +244,13 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 forceLayout: true,
                 deferredRender: false,
                 collapsible: false,
+                defaults: {
+                    layout: 'form',
+                    labelAlign: 'top',
+                    labelSeparator: '',
+                    anchor: '100%',
+                    border: false
+                },
                 items: [
                     {
                         title: _('fred.elements.markup'),
@@ -259,7 +274,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 grow: false,
                                 value: '',
                                 listeners: {
-                                    render: function() {
+                                    render: function () {
                                         if ((this.xtype === 'modx-texteditor') && this.editor)
                                             this.editor.getSession().setMode('ace/mode/twig')
                                     }
@@ -268,16 +283,42 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                         ]
                     },
                     {
-                        title: _('fred.elements.settings'),
+                        title: _('fred.elements.options'),
                         layout: 'form',
                         bodyCssClass: 'tab-panel-wrapper main-wrapper',
                         autoHeight: true,
                         defaults: {
+                            layout: 'form',
+                            labelAlign: 'top',
+                            labelSeparator: '',
+                            anchor: '100%',
                             border: false,
                             msgTarget: 'under',
                             width: 400
                         },
-                        items: []
+                        items: [
+                            {
+                                xtype: 'fred-combo-element-option-sets',
+                                name: 'option_set',
+                                hiddenName: 'option_set',
+                                baseParams: {
+                                    action: 'mgr/element_option_sets/getlist',
+                                    addEmpty: 1,
+                                    complete: 1
+                                },
+                                fieldLabel: _('fred.elements.option_set')
+                            },
+                            {
+                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
+                                fieldLabel: _('fred.elements.options_override'),
+                                mimeType: 'application/json',
+                                name: 'options_override',
+                                id: 'fred-element-options-override',
+                                anchor: '100%',
+                                height: 400,
+                                grow: false,
+                            }
+                        ]
                     }
                 ]
             }

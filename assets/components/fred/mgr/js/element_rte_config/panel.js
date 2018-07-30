@@ -1,14 +1,14 @@
-fred.panel.Blueprint = function (config) {
+fred.panel.ElementRTEConfig = function (config) {
     config = config || {};
 
-    config.id = config.id || 'fred-panel-blueprint';
+    config.id = config.id || 'fred-panel-element-rte-config';
 
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
         url: fred.config.connectorUrl,
         baseParams: {
-            action: 'mgr/blueprints/update'
+            action: 'mgr/element_rte_configs/update'
         },
         useLoadingMask: true,
         items: this.getItems(config),
@@ -23,16 +23,16 @@ fred.panel.Blueprint = function (config) {
             }
         }
     });
-    fred.panel.Blueprint.superclass.constructor.call(this, config);
+    fred.panel.ElementRTEConfig.superclass.constructor.call(this, config);
 };
 
-Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
+Ext.extend(fred.panel.ElementRTEConfig, MODx.FormPanel, {
     setup: function () {
         if (this.config.isUpdate) {
             MODx.Ajax.request({
                 url: this.config.url,
                 params: {
-                    action: 'mgr/blueprints/get',
+                    action: 'mgr/element_rte_configs/get',
                     id: MODx.request.id
                 },
                 listeners: {
@@ -47,8 +47,6 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                             }
                             
                             this.getForm().setValues(r.object);
-
-                            Ext.getCmp('image_preview').el.dom.querySelector('img').src = (r.object.image || "https://via.placeholder.com/800x100?text=No+image");
 
                             this.fireEvent('ready', r.object);
                             MODx.fireEvent('ready');
@@ -65,14 +63,14 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
 
     success: function (o, r) {
         if (this.config.isUpdate == false) {
-            fred.loadPage('blueprint/update', {id: o.result.object.id});
+            fred.loadPage('element/rte_config/update', {id: o.result.object.id});
         }
     },
 
     getItems: function (config) {
         return [
             {
-                html: '<h2>' + ((config.isUpdate == true) ? _('fred.blueprints.update') : _('fred.blueprints.create')) + '</h2>',
+                html: '<h2>' + ((config.isUpdate == true) ? _('fred.element_rte_configs.update') : _('fred.element_rte_configs.create')) + '</h2>',
                 border: false,
                 cls: 'modx-page-header'
             },
@@ -113,77 +111,6 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                             {
                                 layout: 'column',
                                 border: false,
-                                height: 100,
-                                defaults: {
-                                    layout: 'form',
-                                    labelAlign: 'top',
-                                    labelSeparator: '',
-                                    anchor: '100%',
-                                    border: false
-                                },
-                                items: [
-                                    {
-                                        columnWidth: 0.7,
-                                        border: false,
-                                        defaults: {
-                                            msgTarget: 'under'
-                                        },
-                                        items: [
-                                            {
-                                                xtype: 'textfield',
-                                                fieldLabel: _('fred.blueprints.name'),
-                                                name: 'name',
-                                                anchor: '100%',
-                                                allowBlank: false
-                                            },
-                                            {
-                                                xtype: 'textarea',
-                                                fieldLabel: _('fred.blueprints.description'),
-                                                name: 'description',
-                                                anchor: '100%',
-                                                height: 100
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        columnWidth: 0.3,
-                                        border: false,
-                                        defaults: {
-                                            msgTarget: 'under'
-                                        },
-                                        items: [
-                                            {
-                                                xtype: 'fred-combo-blueprint-categories',
-                                                fieldLabel: _('fred.blueprints.category'),
-                                                name: 'category',
-                                                hiddenName: 'category',
-                                                anchor: '100%'
-                                            },
-                                            {
-                                                xtype: 'fred-combo-boolean',
-                                                useInt: true,
-                                                fieldLabel: _('fred.blueprints.public'),
-                                                name: 'public',
-                                                hiddenName: 'public',
-                                                anchor: '100%',
-                                                value: 1
-                                            },
-                                            {
-                                                xtype: 'numberfield',
-                                                allowDecimals: false,
-                                                allowNegative: false,
-                                                fieldLabel: _('fred.blueprints.rank'),
-                                                name: 'rank',
-                                                anchor: '100%',
-                                                allowBlank: true
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                layout: 'column',
-                                border: false,
                                 anchor: '100%',
                                 defaults: {
                                     layout: 'form',
@@ -202,37 +129,18 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                         },
                                         items: [
                                             {
-                                                xtype: 'modx-combo-browser',
-                                                fieldLabel: _('fred.blueprints.image'),
-                                                triggerClass: 'x-form-image-trigger',
-                                                name: 'image',
+                                                xtype: 'textfield',
+                                                fieldLabel: _('fred.element_rte_configs.name'),
+                                                name: 'name',
                                                 anchor: '100%',
-                                                allowBlank: false,
-                                                updatePreview: function () {
-                                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = (this.getValue() || "https://via.placeholder.com/800x100?text=No+image");
-                                                },
-                                                listeners: {
-                                                    'select': {
-                                                        fn: function (data) {
-                                                            this.setValue(MODx.config.base_url + data.relativeUrl);
-                                                            this.updatePreview();
-                                                        }
-                                                    },
-                                                    'change': {
-                                                        fn: function (cb, nv) {
-                                                            this.updatePreview();
-                                                        }
-                                                    }
-                                                }
+                                                allowBlank: false
                                             },
                                             {
-                                                id: 'image_preview',
-                                                html: '<img src="' + "https://via.placeholder.com/800x100?text=No+image" + '" style="max-height: 800px;max-width: 100%;margin-top: 15px;">',
-                                                listeners: {
-                                                    render: function () {
-                                                        this.el.dom.style.textAlign = 'center';
-                                                    }
-                                                }
+                                                xtype: 'textarea',
+                                                fieldLabel: _('fred.element_rte_configs.description'),
+                                                name: 'description',
+                                                anchor: '100%',
+                                                height: 100
                                             }
                                         ]
                                     }
@@ -316,4 +224,4 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
         return items;
     }
 });
-Ext.reg('fred-panel-blueprint', fred.panel.Blueprint);
+Ext.reg('fred-panel-element-rte-config', fred.panel.ElementRTEConfig);

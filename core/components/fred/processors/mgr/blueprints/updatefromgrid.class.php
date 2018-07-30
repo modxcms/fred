@@ -5,7 +5,7 @@
  */
 require_once(dirname(__FILE__) . '/update.class.php');
 
-class FredBlueprintsUpdateProcessorUpdateFromGridProcessor extends FredBlueprintsUpdateProcessor
+class FredBlueprintsUpdateFromGridProcessor extends FredBlueprintsUpdateProcessor
 {
     public function initialize()
     {
@@ -20,4 +20,4 @@ class FredBlueprintsUpdateProcessorUpdateFromGridProcessor extends FredBlueprint
     }
 }
 
-return 'FredBlueprintsUpdateProcessorUpdateFromGridProcessor';
+return 'FredBlueprintsUpdateFromGridProcessor';

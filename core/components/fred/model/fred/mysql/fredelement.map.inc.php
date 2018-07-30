@@ -18,6 +18,8 @@ $xpdo_meta_map['FredElement']= array (
     'image' => '',
     'category' => NULL,
     'rank' => 0,
+    'option_set' => 0,
+    'options_override' => '',
     'content' => '',
   ),
   'fieldMeta' => 
@@ -60,6 +62,22 @@ $xpdo_meta_map['FredElement']= array (
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
+    ),
+    'option_set' => 
+    array (
+      'dbtype' => 'int',
+      'attributes' => 'unsigned',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'options_override' => 
+    array (
+      'dbtype' => 'mediumtext',
+      'phptype' => 'json',
+      'null' => false,
+      'default' => '',
     ),
     'content' => 
     array (
