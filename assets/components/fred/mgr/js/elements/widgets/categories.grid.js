@@ -93,6 +93,13 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
         m.push('-');
 
         m.push({
+            text: _('fred.element_categories.duplicate'),
+            handler: this.duplicateCategory
+        });
+        
+        m.push('-');
+
+        m.push({
             text: _('fred.element_categories.remove'),
             handler: this.removeCategory
         });
@@ -139,9 +146,33 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
         updateCategory.show(e.target);
 
         return true;
-    }
+    },
+    
+    duplicateCategory: function (btn, e) {
+        var duplicateCategory = MODx.load({
+            xtype: 'fred-window-element-category-duplicate',
+            title: _('fred.element_categories.duplicate'),
+            action: 'mgr/element_categories/duplicate',
+            isUpdate: true,
+            record: this.menu.record,
+            listeners: {
+                success: {
+                    fn: function () {
+                        this.refresh();
+                    },
+                    scope: this
+                }
+            }
+        });
 
-    , removeCategory: function (btn, e) {
+        duplicateCategory.fp.getForm().reset();
+        duplicateCategory.fp.getForm().setValues(this.menu.record);
+        duplicateCategory.show(e.target);
+
+        return true;
+    },
+
+    removeCategory: function (btn, e) {
         if (!this.menu.record) return false;
 
         var elements = parseInt(this.menu.record.elements);

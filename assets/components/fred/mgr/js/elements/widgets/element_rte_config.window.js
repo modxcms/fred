@@ -94,3 +94,47 @@ Ext.extend(fred.window.ElementRTEConfig, MODx.Window, {
     }
 });
 Ext.reg('fred-window-element-rte-config', fred.window.ElementRTEConfig);
+
+fred.window.ElementRTEConfigDuplicate = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        title: _('fred.element_rte_configs.duplicate'),
+        closeAction: 'close',
+        isUpdate: false,
+        url: fred.config.connectorUrl,
+        action: 'mgr/element_rte_configs/duplicate',
+        modal: true,
+        fields: this.getFields(config),
+        autoHeight: true,
+        width: 800,
+        keys: [
+            {
+                key: Ext.EventObject.ENTER,
+                shift: true,
+                fn: this.submit,
+                scope: this
+            }
+        ]
+    });
+    fred.window.ElementRTEConfigDuplicate.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.window.ElementRTEConfigDuplicate, MODx.Window, {
+    getFields: function (config) {
+        return [
+            {
+                xtype: 'textfield',
+                name: 'id',
+                anchor: '100%',
+                hidden: true
+            },
+            {
+                xtype: 'textfield',
+                fieldLabel: _('fred.element_rte_configs.new_name'),
+                name: 'name',
+                anchor: '100%',
+                allowBlank: true
+            }
+        ]
+    }
+});
+Ext.reg('fred-window-element-rte-config-duplicate', fred.window.ElementRTEConfigDuplicate);

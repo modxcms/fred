@@ -17,10 +17,10 @@ class FredElementOptionSetsUpdateProcessor extends modObjectUpdateProcessor
         $name = $this->getProperty('name');
 
         if (empty($name)) {
-            $this->addFieldError('name', $this->modx->lexicon('fred.err.element_settings_ns_name'));
+            $this->addFieldError('name', $this->modx->lexicon('fred.err.element_option_sets_ns_name'));
         } else {
             if ($this->modx->getCount($this->classKey, array('name' => $name, 'id:!=' => $this->object->id)) > 0) {
-                $this->addFieldError('name', $this->modx->lexicon('fred.err.element_settings_ae_name'));
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.element_option_sets_ae_name'));
             }
         }
 

@@ -43,7 +43,7 @@ fred.grid.ElementOptionSets = function (config) {
         tbar: [
             {
                 text: _('fred.element_option_sets.create'),
-                handler: this.newElementRTEConfig
+                handler: this.newElementOptionSet
             },
             '->',
             {
@@ -102,6 +102,13 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
         m.push('-');
 
         m.push({
+            text: _('fred.element_option_sets.duplicate'),
+            handler: this.duplicateElementOptionSet
+        });
+        
+        m.push('-');
+
+        m.push({
             text: _('fred.element_option_sets.remove')
             , handler: this.removeElementRTEConfig
         });
@@ -144,7 +151,7 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
     },
 
-    newElementRTEConfig: function(btn, e) {
+    newElementOptionSet: function(btn, e) {
         fred.loadPage('element_option_set/create');
     },
 
@@ -165,6 +172,27 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
         updateElementOptionSet.fp.getForm().reset();
         updateElementOptionSet.fp.getForm().setValues(this.menu.record);
         updateElementOptionSet.show(e.target);
+
+        return true;
+    },
+
+    duplicateElementOptionSet: function (btn, e) {
+        var duplicateElementOptionSet = MODx.load({
+            xtype: 'fred-window-element-option-set-duplicate',
+            record: this.menu.record,
+            listeners: {
+                success: {
+                    fn: function () {
+                        this.refresh();
+                    },
+                    scope: this
+                }
+            }
+        });
+
+        duplicateElementOptionSet.fp.getForm().reset();
+        duplicateElementOptionSet.fp.getForm().setValues(this.menu.record);
+        duplicateElementOptionSet.show(e.target);
 
         return true;
     },

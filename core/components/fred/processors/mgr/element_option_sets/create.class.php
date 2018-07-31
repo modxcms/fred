@@ -17,10 +17,10 @@ class FredElementOptionSetsCreateProcessor extends modObjectCreateProcessor
         $name = $this->getProperty('name');
 
         if (empty($name)) {
-            $this->addFieldError('name', $this->modx->lexicon('fred.err.element_settings_ns_name'));
+            $this->addFieldError('name', $this->modx->lexicon('fred.err.element_option_sets_ns_name'));
         } else {
             if ($this->doesAlreadyExist(array('name' => $name))) {
-                $this->addFieldError('name', $this->modx->lexicon('fred.err.element_settings_ae_name'));
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.element_option_sets_ae_name'));
             }
         }
 

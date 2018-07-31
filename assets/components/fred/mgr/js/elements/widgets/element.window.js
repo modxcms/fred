@@ -146,3 +146,47 @@ Ext.extend(fred.window.Element, MODx.Window, {
     }
 });
 Ext.reg('fred-window-element', fred.window.Element);
+
+fred.window.ElementDuplicate = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        title: _('fred.elements.duplicate'),
+        closeAction: 'close',
+        isUpdate: false,
+        url: fred.config.connectorUrl,
+        action: 'mgr/elements/duplicate',
+        modal: true,
+        fields: this.getFields(config),
+        autoHeight: true,
+        width: 800,
+        keys: [
+            {
+                key: Ext.EventObject.ENTER,
+                shift: true,
+                fn: this.submit,
+                scope: this
+            }
+        ]
+    });
+    fred.window.ElementDuplicate.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.window.ElementDuplicate, MODx.Window, {
+    getFields: function (config) {
+        return [
+            {
+                xtype: 'textfield',
+                name: 'id',
+                anchor: '100%',
+                hidden: true
+            },
+            {
+                xtype: 'textfield',
+                fieldLabel: _('fred.elements.new_name'),
+                name: 'name',
+                anchor: '100%',
+                allowBlank: true
+            }
+        ]
+    }
+});
+Ext.reg('fred-window-element-duplicate', fred.window.ElementDuplicate);

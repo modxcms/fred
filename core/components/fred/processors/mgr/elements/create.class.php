@@ -23,6 +23,9 @@ class FredElementsCreateProcessor extends modObjectCreateProcessor
         $rank = $this->getProperty('rank', '');
         if ($rank === '') {
             $c = $this->modx->newQuery($this->classKey);
+            $c->where([
+                'category' => $this->getProperty('category'),
+            ]);
             $c->limit(1);
             $c->sortby('rank', 'DESC');
 

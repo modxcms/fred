@@ -137,3 +137,47 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
     }
 });
 Ext.reg('fred-window-element-option-set', fred.window.ElementOptionSet);
+
+fred.window.ElementOptionSetDuplicate = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        title: _('fred.element_option_sets.duplicate'),
+        closeAction: 'close',
+        isUpdate: false,
+        url: fred.config.connectorUrl,
+        action: 'mgr/element_option_sets/duplicate',
+        modal: true,
+        fields: this.getFields(config),
+        autoHeight: true,
+        width: 800,
+        keys: [
+            {
+                key: Ext.EventObject.ENTER,
+                shift: true,
+                fn: this.submit,
+                scope: this
+            }
+        ]
+    });
+    fred.window.ElementOptionSetDuplicate.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.window.ElementOptionSetDuplicate, MODx.Window, {
+    getFields: function (config) {
+        return [
+            {
+                xtype: 'textfield',
+                name: 'id',
+                anchor: '100%',
+                hidden: true
+            },
+            {
+                xtype: 'textfield',
+                fieldLabel: _('fred.element_option_sets.new_name'),
+                name: 'name',
+                anchor: '100%',
+                allowBlank: true
+            }
+        ]
+    }
+});
+Ext.reg('fred-window-element-option-set-duplicate', fred.window.ElementOptionSetDuplicate);

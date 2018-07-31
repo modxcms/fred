@@ -130,6 +130,13 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
         m.push('-');
 
         m.push({
+            text: _('fred.elements.duplicate'),
+            handler: this.duplicateElement
+        });
+        
+        m.push('-');
+
+        m.push({
             text: _('fred.elements.remove')
             , handler: this.removeTemplate
         });
@@ -193,6 +200,27 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
         updateElement.fp.getForm().reset();
         updateElement.fp.getForm().setValues(this.menu.record);
         updateElement.show(e.target);
+
+        return true;
+    },
+
+    duplicateElement: function (btn, e) {
+        var duplicateElement = MODx.load({
+            xtype: 'fred-window-element-duplicate',
+            record: this.menu.record,
+            listeners: {
+                success: {
+                    fn: function () {
+                        this.refresh();
+                    },
+                    scope: this
+                }
+            }
+        });
+
+        duplicateElement.fp.getForm().reset();
+        duplicateElement.fp.getForm().setValues(this.menu.record);
+        duplicateElement.show(e.target);
 
         return true;
     },

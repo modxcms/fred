@@ -23,9 +23,10 @@ class FredElementsUpdateProcessor extends modObjectUpdateProcessor
         $rank = $this->getProperty('rank', '');
         if ($rank === '') {
             $c = $this->modx->newQuery($this->classKey);
-            $c->where(array(
-                'id:!=' => $this->object->id
-            ));
+            $c->where([
+                'id:!=' => $this->object->id,
+                'category' => $this->getProperty('category', $this->object->get('category')),
+            ]);
             $c->limit(1);
             $c->sortby('rank', 'DESC');
 

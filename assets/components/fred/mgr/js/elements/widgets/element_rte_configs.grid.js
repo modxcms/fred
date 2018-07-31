@@ -36,7 +36,7 @@ fred.grid.ElementRTEConfigs = function (config) {
         tbar: [
             {
                 text: _('fred.element_rte_configs.create'),
-                handler: this.newElementRTEConfig
+                handler: this.newElementOptionSet
             },
             '->',
             {
@@ -84,6 +84,13 @@ Ext.extend(fred.grid.ElementRTEConfigs, MODx.grid.Grid, {
         m.push('-');
 
         m.push({
+            text: _('fred.element_rte_configs.duplicate'),
+            handler: this.duplicateElementRTEConfig
+        });
+        
+        m.push('-');
+
+        m.push({
             text: _('fred.element_rte_configs.remove')
             , handler: this.removeElementRTEConfig
         });
@@ -126,7 +133,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
     },
 
-    newElementRTEConfig: function(btn, e) {
+    newElementOptionSet: function(btn, e) {
         fred.loadPage('element/rte_config/create');
     },
 
@@ -147,6 +154,27 @@ Ext.extend(fred.grid.ElementRTEConfigs, MODx.grid.Grid, {
         updateElementRTEConfig.fp.getForm().reset();
         updateElementRTEConfig.fp.getForm().setValues(this.menu.record);
         updateElementRTEConfig.show(e.target);
+
+        return true;
+    },
+
+    duplicateElementRTEConfig: function (btn, e) {
+        var duplicateElementRTEConfig = MODx.load({
+            xtype: 'fred-window-element-rte-config-duplicate',
+            record: this.menu.record,
+            listeners: {
+                success: {
+                    fn: function () {
+                        this.refresh();
+                    },
+                    scope: this
+                }
+            }
+        });
+
+        duplicateElementRTEConfig.fp.getForm().reset();
+        duplicateElementRTEConfig.fp.getForm().setValues(this.menu.record);
+        duplicateElementRTEConfig.show(e.target);
 
         return true;
     },
