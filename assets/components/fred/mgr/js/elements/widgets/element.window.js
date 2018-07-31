@@ -6,7 +6,7 @@ fred.window.Element = function (config) {
         isUpdate: false,
         url: fred.config.connectorUrl,
         action: 'mgr/elements/update',
-        modal: true,
+        modal: false,
         fields: this.getFields(config),
         autoHeight: true,
         width: 800,
@@ -62,7 +62,8 @@ Ext.extend(fred.window.Element, MODx.Window, {
                                 fieldLabel: _('fred.elements.description'),
                                 name: 'description',
                                 anchor: '100%',
-                                allowBlank: true
+                                allowBlank: true,
+                                height: 100
                             }
                         ]
                     },
@@ -89,6 +90,18 @@ Ext.extend(fred.window.Element, MODx.Window, {
                                 name: 'rank',
                                 anchor: '100%',
                                 allowBlank: true
+                            },
+                            {
+                                xtype: 'fred-combo-element-option-sets',
+                                name: 'option_set',
+                                hiddenName: 'option_set',
+                                anchor: '100%',
+                                baseParams: {
+                                    action: 'mgr/element_option_sets/getlist',
+                                    addEmpty: 1,
+                                    complete: 1
+                                },
+                                fieldLabel: _('fred.elements.option_set')
                             }
                         ]
                     }
@@ -121,22 +134,27 @@ Ext.extend(fred.window.Element, MODx.Window, {
                                 name: 'image',
                                 anchor: '100%',
                                 allowBlank: false,
-                                updatePreview: function () {
-                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = (this.getValue() || "https://via.placeholder.com/800x100?text=No+image");
-                                },
                                 listeners: {
                                     select: function (data) {
                                         this.setValue(MODx.config.base_url + data.relativeUrl);
-                                        this.updatePreview();
-                                    },
-                                    change: function (cb, nv) {
-                                        this.updatePreview();
                                     }
                                 }
                             },
                             {
-                                id: 'image_preview',
-                                html: '<img src="' + (config.record.image || "https://via.placeholder.com/800x100?text=No+image") + '" style="max-height: 400px;max-width: 770px;margin-top: 15px;">'
+                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
+                                mimeType: 'text/html',
+                                name: 'content',
+                                fieldLabel: _('fred.elements.content'),
+                                anchor: '100%',
+                                height: 400,
+                                grow: false,
+                                value: '',
+                                listeners: {
+                                    render: function () {
+                                        if ((this.xtype === 'modx-texteditor') && this.editor)
+                                            this.editor.getSession().setMode('ace/mode/twig')
+                                    }
+                                }
                             }
                         ]
                     }

@@ -11,7 +11,7 @@ fred.grid.Elements = function (config) {
         save_action: 'mgr/elements/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name'],
+        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content'],
         ddGroup: 'FredElementsDDGroup',
         enableDragDrop: true,
         paging: true,
