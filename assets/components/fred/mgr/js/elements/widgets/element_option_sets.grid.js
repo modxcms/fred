@@ -30,7 +30,8 @@ fred.grid.ElementOptionSets = function (config) {
             {
                 header: _('fred.element_option_sets.description'),
                 dataIndex: 'description',
-                width: 120
+                width: 120,
+                editor: {xtype: 'textfield'}
             },
             {
                 header: _('fred.element_option_sets.complete'),

@@ -30,7 +30,8 @@ fred.grid.ElementRTEConfigs = function (config) {
             {
                 header: _('fred.element_rte_configs.description'),
                 dataIndex: 'description',
-                width: 120
+                width: 120,
+                editor: {xtype: 'textfield'}
             }
         ],
         tbar: [
