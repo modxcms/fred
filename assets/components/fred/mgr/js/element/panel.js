@@ -46,6 +46,10 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 }
                             }
                             
+                            if (r.object.option_set === 0) {
+                                Ext.getCmp('fred-element-panel-preview-option-set').disable();
+                            }
+                            
                             this.getForm().setValues(r.object);
 
                             Ext.getCmp('image_preview').el.dom.querySelector('img').src = (r.object.image || "https://via.placeholder.com/800x100?text=No+image");
@@ -58,6 +62,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 }
             });
         } else {
+            Ext.getCmp('fred-element-panel-preview-option-set').disable();
             this.fireEvent('ready');
             MODx.fireEvent('ready');
         }
@@ -298,15 +303,71 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                         },
                         items: [
                             {
-                                xtype: 'fred-combo-element-option-sets',
-                                name: 'option_set',
-                                hiddenName: 'option_set',
-                                baseParams: {
-                                    action: 'mgr/element_option_sets/getlist',
-                                    addEmpty: 1,
-                                    complete: 1
+                                layout: 'column',
+                                border: false,
+                                anchor: '100%',
+                                defaults: {
+                                    layout: 'form',
+                                    labelAlign: 'top',
+                                    labelSeparator: '',
+                                    anchor: '100%',
+                                    border: false
                                 },
-                                fieldLabel: _('fred.elements.option_set')
+                                items: [
+                                    {
+                                        columnWidth: .9,
+                                        border: false,
+                                        defaults: {
+                                            msgTarget: 'under',
+                                            anchor: '100%'
+                                        },
+                                        items: [
+                                            {
+                                                xtype: 'fred-combo-element-option-sets',
+                                                name: 'option_set',
+                                                hiddenName: 'option_set',
+                                                baseParams: {
+                                                    action: 'mgr/element_option_sets/getlist',
+                                                    addEmpty: 1,
+                                                    complete: 1
+                                                },
+                                                fieldLabel: _('fred.elements.option_set'),
+                                                listeners: {
+                                                    select: {
+                                                        fn: function(combo) {
+                                                            var previewButton = Ext.getCmp('fred-element-panel-preview-option-set');
+                                                            
+                                                            if (combo.getValue() === 0) {
+                                                                previewButton.disable();
+                                                            } else {
+                                                                previewButton.enable();
+                                                            }
+                                                        },
+                                                        scope: this
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        columnWidth: .1,
+                                        border: false,
+                                        defaults: {
+                                            msgTarget: 'under',
+                                            anchor: '100%'
+                                        },
+                                        items: [
+                                            {
+                                                xtype: 'button',
+                                                id: 'fred-element-panel-preview-option-set',
+                                                text: _('fred.element_option_sets.preview'),
+                                                fieldLabel: '&nbsp;',
+                                                handler: this.previewOptionSet,
+                                                scope: this
+                                            }
+                                        ]
+                                    }
+                                ]
                             },
                             {
                                 xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
@@ -325,6 +386,56 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
         ];
 
         return items;
+    },
+
+    previewOptionSet: function(btn, e) {
+        var optionSetId = this.getField('option_set').getValue();
+        
+        if (optionSetId === 0) return;
+        
+        MODx.Ajax.request({
+            url: this.config.url,
+            params: {
+                action: 'mgr/element_option_sets/get',
+                id: optionSetId
+            },
+            listeners: {
+                'success': {
+                    fn: function (r) {
+                        var record = {data: ''};
+                        
+                        if (Array.isArray(r.object.data) && r.object.data.length === 0) {
+                            record.data = '';
+                        } else {
+                            if (typeof r.object.data === 'object') {
+                                record.data = JSON.stringify(r.object.data, null, 2);
+                            }
+                        }
+
+                        var updateElementOptionSet = MODx.load({
+                            xtype: 'fred-window-element-option-set-preview',
+                            record: record,
+                            listeners: {
+                                success: {
+                                    fn: function () {
+                                        this.refresh();
+                                    },
+                                    scope: this
+                                }
+                            }
+                        });
+
+                        updateElementOptionSet.fp.getForm().reset();
+                        updateElementOptionSet.fp.getForm().setValues(record);
+                        updateElementOptionSet.show(e.target);
+                    },
+                    scope: this
+                }
+            }
+        });
+        
+
+        
     }
 });
 Ext.reg('fred-panel-element', fred.panel.Element);

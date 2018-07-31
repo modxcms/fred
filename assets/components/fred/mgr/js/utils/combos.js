@@ -173,7 +173,10 @@ fred.combo.ElementOptionSets = function (config) {
         hiddenName: 'option_set',
         displayField: 'name',
         valueField: 'id',
-        fields: ['name', 'id'],
+        fields: ['name', 'id', 'description'],
+        tpl: new Ext.XTemplate('<tpl for="."><div class="x-combo-list-item"><span style="font-weight: bold">{name:htmlEncode}</span>',
+        '<tpl if="description"> - <span style="font-style:italic">{description:htmlEncode}</span></tpl>',
+        '</div></tpl>'),
         pageSize: 20,
         url: fred.config.connectorUrl,
         baseParams: {

@@ -123,6 +123,7 @@ $_lang['fred.element_option_sets.data'] = 'Data';
 $_lang['fred.element_option_sets.no_set'] = 'None';
 $_lang['fred.element_option_sets.duplicate'] = 'Duplicate Option Set';
 $_lang['fred.element_option_sets.new_name'] = 'New Name';
+$_lang['fred.element_option_sets.preview'] = 'Preview Option Set';
 
 $_lang['fred.element_rte_configs.none'] = 'No rte configs were found.';
 $_lang['fred.element_rte_configs.name'] = 'Name';

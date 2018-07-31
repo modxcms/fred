@@ -180,3 +180,43 @@ Ext.extend(fred.window.ElementOptionSetDuplicate, MODx.Window, {
     }
 });
 Ext.reg('fred-window-element-option-set-duplicate', fred.window.ElementOptionSetDuplicate);
+
+fred.window.ElementOptionSetPreview = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        title: _('fred.element_option_sets.preview'),
+        closeAction: 'close',
+        isUpdate: false,
+        url: fred.config.connectorUrl,
+        action: 'mgr/element_option_sets/update',
+        modal: false,
+        fields: this.getFields(config),
+        autoHeight: true,
+        width: 800,
+        buttons: [{
+            text: _('cancel'),
+            scope: this,
+            handler: function() { 
+                this.close(); 
+            }
+        }]
+    });
+    fred.window.ElementOptionSetPreview.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.window.ElementOptionSetPreview, MODx.Window, {
+    getFields: function (config) {
+        return [
+            {
+                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
+                mimeType: 'application/json',
+                name: 'data',
+                hideLabel: true,
+                anchor: '100%',
+                height: 400,
+                grow: false,
+                value: ''
+            }
+        ]
+    }
+});
+Ext.reg('fred-window-element-option-set-preview', fred.window.ElementOptionSetPreview);

@@ -27,6 +27,7 @@ class FredElementCreateManagerController extends FredBaseManagerController
 
     public function loadCustomCssJs()
     {
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'elements/widgets/element_option_set.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'element/panel.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'element/page.js');
         
