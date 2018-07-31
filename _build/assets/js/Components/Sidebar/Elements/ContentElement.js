@@ -384,7 +384,7 @@ export class ContentElement {
         const partialBlueprint = button('', 'fred.fe.content.partial_blueprint', ['fred--blueprint'], () => {partialBlueprints.open(this)});
         toolbar.appendChild(partialBlueprint);
 
-        if (this.options.settings) {
+        if (this.options.settings && (this.options.settings.length > 0)) {
             const settings = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {elementSettings.open(this)});
             toolbar.appendChild(settings);
         }
@@ -606,6 +606,36 @@ export class ContentElement {
         }
     }
     
+    getRTEConfig(el) {
+        let rteConfig = {};
+
+        if (el.dataset.fredRteConfig && fredConfig.config.rteConfig[el.dataset.fredRteConfig]) {
+            rteConfig = fredConfig.config.rteConfig[el.dataset.fredRteConfig];
+
+            if (this.options.rteConfig && this.options.rteConfig[el.dataset.fredRteConfig]) {
+                rteConfig = {
+                    ...rteConfig,
+                    ...this.options.rteConfig[el.dataset.fredRteConfig]
+                };
+            }
+
+            return rteConfig;
+        }
+
+        if (fredConfig.config.rteConfig[this.config.rte]) {
+            rteConfig = fredConfig.config.rteConfig[this.config.rte];
+
+            if (this.options.rteConfig && this.options.rteConfig[this.config.rte]) {
+                rteConfig = {
+                    ...rteConfig,
+                    ...this.options.rteConfig[this.config.rte]
+                };
+            }
+        }
+        
+        return rteConfig;
+    }
+    
     initElements(wrapper, content) {
         const fredElements = content.querySelectorAll('[data-fred-name]');
         for (let el of fredElements) {
@@ -649,18 +679,11 @@ export class ContentElement {
                 });
             }
 
+            const rteConfig = this.getRTEConfig(el);
+            console.log(rteConfig);
+            
             if (!!el.dataset.fredRte && (el.dataset.fredRte !== 'false')) {
                 if (this.config.rte && fredConfig.rtes[this.config.rte]) {
-                    let rteConfig = {};
-                    
-                    if (this.options.rteConfig.default) {
-                        rteConfig = this.options.rteConfig.default;
-                    }
-                    
-                    if (el.dataset.fredRteConfig && this.options.rteConfig[el.dataset.fredRteConfig]) {
-                        rteConfig = this.options.rteConfig[el.dataset.fredRteConfig];
-                    }
-                    
                     fredConfig.rtes[this.config.rte](el, rteConfig, this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el, content), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
                 }
             }

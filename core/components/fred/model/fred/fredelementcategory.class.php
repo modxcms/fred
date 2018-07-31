@@ -9,6 +9,10 @@
  */
 
 /**
+ * @property int $id
+ * @property string $name
+ * @property int $rank
+ * 
  * @package fred
  */
 class FredElementCategory extends xPDOSimpleObject {}

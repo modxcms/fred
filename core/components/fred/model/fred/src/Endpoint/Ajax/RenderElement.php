@@ -29,11 +29,12 @@ class RenderElement extends Endpoint
             return $this->failure('No element was provided');
         }
         
-        $chunk = $this->modx->getObject('modChunk', $elementId);
-        $templateName = $chunk->name . '_' . $chunk->id;
+        /** @var \FredElement $element */
+        $element = $this->modx->getObject('FredElement', $elementId);
+        $templateName = $element->name . '_' . $element->id;
         
         $twig = new \Twig_Environment(new \Twig_Loader_Array([
-            $templateName => $chunk->content
+            $templateName => $element->content
         ]));
         $twig->setCache(false);
         

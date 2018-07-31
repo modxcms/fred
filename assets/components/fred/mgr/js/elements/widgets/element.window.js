@@ -9,7 +9,15 @@ fred.window.Element = function (config) {
         modal: true,
         fields: this.getFields(config),
         autoHeight: true,
-        width: 800
+        width: 800,
+        keys: [
+            {
+                key: Ext.EventObject.ENTER,
+                shift: true,
+                fn: this.submit,
+                scope: this
+            }
+        ]
     });
     fred.window.Element.superclass.constructor.call(this, config);
 };

@@ -119,6 +119,7 @@ class FredElementsManagerController extends FredBaseManagerController
                 }
 
                 $newElement = $this->modx->newObject('FredElement');
+                $newElement->set('id', $chunk->id);
                 $newElement->set('name', $chunk->name);
                 $newElement->set('description', $description);
                 $newElement->set('image', $image);

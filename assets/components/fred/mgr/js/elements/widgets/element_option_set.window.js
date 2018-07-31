@@ -9,7 +9,15 @@ fred.window.ElementOptionSet = function (config) {
         modal: true,
         fields: this.getFields(config),
         autoHeight: true,
-        width: 800
+        width: 800,
+        keys: [
+            {
+                key: Ext.EventObject.ENTER,
+                shift: true,
+                fn: this.submit,
+                scope: this
+            }
+        ]
     });
     fred.window.ElementOptionSet.superclass.constructor.call(this, config);
 };
@@ -109,7 +117,7 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
                                 height: 400,
                                 grow: false,
                                 value: '',
-                                setValue: function(v) {
+                                setValue: function (v) {
                                     if (Array.isArray(v) && v.length === 0) {
                                         v = '';
                                     } else {
@@ -117,7 +125,7 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
                                             v = JSON.stringify(v, null, 2);
                                         }
                                     }
-                                    
+
                                     this.superclass().setValue.call(this, v);
                                 }
                             }

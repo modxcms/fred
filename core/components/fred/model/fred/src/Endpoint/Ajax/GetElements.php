@@ -16,87 +16,38 @@ class GetElements extends Endpoint
     
     public function process()
     {
-        $categoryId = $this->fred->getOption('elements_category_id');
         $groupSort = $this->fred->getOption('element_group_sort');
-        if ($groupSort !== 'rank') $groupSort = 'category';
-        
-        if (empty($categoryId)) {
-            return $this->data(['elements' => []]);
-        }
+        if ($groupSort !== 'rank') $groupSort = 'name';
         
         $elements = [];
 
-        $c = $this->modx->newQuery('modCategory');
-        $c->where([
-            'parent' => $categoryId
-        ]);
+        $c = $this->modx->newQuery('FredElementCategory');
         $c->sortby($groupSort);
         
-        /** @var \modCategory[] $categories */
-        $categories = $this->modx->getIterator('modCategory', $c);
+        /** @var \FredElementCategory[] $categories */
+        $categories = $this->modx->getIterator('FredElementCategory', $c);
         
         foreach ($categories as $category) {
             $categoryElements = [
-                'category' => $category->category,
+                'category' => $category->name,
                 'elements' => []
             ];
             
-            /** @var \modChunk[] $chunks */
-            $chunks = $this->modx->getIterator('modChunk', ['category' => $category->id]);
-            foreach ($chunks as $chunk) {
-                $matches = [];
-                preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
-
-                $image = 'https://via.placeholder.com/350x150?text=' . urlencode($chunk->name);
-                $options = [];
-                $description = $chunk->description;
-
-                if (count($matches) == 2) {
-                    $image = $matches[1];
-                    $description = str_replace($matches[0], '', $description);
-                }
-
-                $matches = [];
-                preg_match('/options:([^\n]+)\n?/', $description, $matches);
-
-                if (count($matches) == 2) {
-                    $options = $this->modx->getChunk($matches[1]);
-                    $options = json_decode($options, true);
-                    if (empty($options)) $options = [];
-
-                    $globalRte = $this->fred->getOption('rte_config');
-                    if (!empty($globalRte)) {
-                        $globalRte = $this->modx->getChunk($globalRte);
-                        $globalRte = json_decode($globalRte, true);
-
-                        if (!empty($globalRte)) {
-                            $rteConfig = $globalRte;
-
-                            if (!empty($options['rteConfig'])) {
-                                $rteConfig = array_merge($rteConfig, $options['rteConfig']);
-                            }
-
-                            $options['rteConfig'] = $rteConfig;
-                        }
-                    }
-                    
-                    $description = str_replace($matches[0], '', $description);
-                }
-
+            /** @var \FredElement[] $fredElements */
+            $fredElements = $this->modx->getIterator('FredElement', ['category' => $category->id]);
+            foreach ($fredElements as $element) {
                 $categoryElements['elements'][] = [
-                    "id" => $chunk->id,
-                    "title" => $chunk->name,
-                    "description" => $description,
-                    "image" => $image,
-                    "content" => $chunk->content,
-                    "options" => $options
+                    "id" => $element->id,
+                    "title" => $element->name,
+                    "description" => $element->description,
+                    "image" => $element->getImage(),
+                    "content" => $element->content,
+                    "options" => $element->processOptions()
                 ];
             }
             
             $elements[] = $categoryElements;
         }
-        
-        
 
         return $this->data(['elements' => $elements]);
     }

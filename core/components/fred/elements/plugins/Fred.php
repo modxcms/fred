@@ -161,6 +161,18 @@ switch ($modx->event->name) {
                 }
             }
             
+            /** @var FredElementRTEConfig[] $rteConfigs */
+            $rteConfigs = $modx->getIterator('FredElementRTEConfig');
+            $rteConfigString = [];
+            
+            foreach ($rteConfigs as $rteConfig) {
+                if (empty($rteConfig->get('data'))) continue;
+                
+                $rteConfigString[] = $rteConfig->name . ':' . $rteConfig->data;
+            }
+
+            $rteConfigString = implode(',', $rteConfigString);
+            
             $fredContent = '
         <script type="text/javascript" src="' . $fred->getOption('webAssetsUrl') . 'fred.min.js"></script>
         <link rel="stylesheet" href="' . $fred->getOption('webAssetsUrl') . 'fred.css" type="text/css" />
@@ -174,6 +186,7 @@ switch ($modx->event->name) {
                 iconEditor: "' . $fred->getOption('icon_editor') . '",
                 imageEditor: "' . $fred->getOption('image_editor') . '",
                 rte: "' . $fred->getOption('rte') . '",
+                rteConfig: {' . $rteConfigString . '},
                 resource: {
                     "id": ' . $modx->resource->id . ',
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 2] , 'abs')) . '",
