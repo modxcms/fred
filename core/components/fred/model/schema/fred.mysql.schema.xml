@@ -62,6 +62,7 @@
         
         <field key="content" dbtype="mediumtext" phptype="string" null="false" default="" />
 
-        <aggregate alias="Category" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Category" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="local" />
+        <aggregate alias="OptionSet" class="FredElementOptionSet" local="option_set" foreign="id" cardinality="one" owner="foreign" />
     </object>
 </model>

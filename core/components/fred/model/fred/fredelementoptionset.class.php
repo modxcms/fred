@@ -12,6 +12,7 @@ class FredElementOptionSet extends xPDOSimpleObject {
     public function processData()
     {
         $data = $this->get('data');
+        $data = \Fred\Utils::modxParseString($this->xpdo, $data);
         
         if ($this->get('complete') === true) {
             if (!empty($data['settings']) && is_array($data['settings'])) {

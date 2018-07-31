@@ -30,11 +30,22 @@ class FredElementsGetListProcessor extends modObjectGetListProcessor
     public function prepareQueryAfterCount(xPDOQuery $c)
     {
         $c->leftJoin('FredElementCategory', 'Category');
+        $c->leftJoin('FredElementOptionSet', 'OptionSet');
         
         $c->select($this->modx->getSelectColumns('FredElement', 'FredElement'));
         $c->select($this->modx->getSelectColumns('FredElementCategory', 'Category', 'category_'));
+        $c->select($this->modx->getSelectColumns('FredElementOptionSet', 'OptionSet', 'option_set_', ['name']));
 
         return parent::prepareQueryAfterCount($c);
+    }
+
+    public function prepareRow(xPDOObject $object)
+    {
+        $data = $object->toArray();
+        
+        $data['has_override'] = !empty($object->get('options_override'));
+        
+        return $data;
     }
 }
 

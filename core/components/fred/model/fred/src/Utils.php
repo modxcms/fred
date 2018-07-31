@@ -56,4 +56,31 @@ final class Utils
         
         return sha1($data);
     }
+
+    /**
+     * @param \modX $modx
+     * @param string|array $data
+     * @param array $phs
+     * @return string|array
+     */
+    public static function modxParseString($modx, $data, $phs = [])
+    {
+        $isArray = false;
+        
+        if (is_array($data)) {
+            $isArray = true;
+            $data = json_encode($data);
+        }
+        /** @var \modChunk $chunk */
+        $chunk = $modx->newObject('modChunk', array('name' => 'inline-' . uniqid()));
+        $chunk->setCacheable(false);
+
+        $output = $chunk->process($phs, $data);
+        
+        if ($isArray === true) {
+            $output = json_decode($output, true);
+        }
+        
+        return $output;
+    }
 }

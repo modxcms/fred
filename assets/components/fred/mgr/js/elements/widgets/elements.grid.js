@@ -11,7 +11,7 @@ fred.grid.Elements = function (config) {
         save_action: 'mgr/elements/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content'],
+        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name'],
         ddGroup: 'FredElementsDDGroup',
         enableDragDrop: true,
         paging: true,
@@ -54,6 +54,17 @@ fred.grid.Elements = function (config) {
                 header: _('fred.elements.category'),
                 dataIndex: 'category_name',
                 sortable: true,
+                width: 60
+            },
+            {
+                header: _('fred.elements.option_set'),
+                dataIndex: 'option_set_name',
+                width: 60
+            },
+            {
+                header: _('fred.elements.has_override'),
+                dataIndex: 'has_override',
+                renderer: this.rendYesNo,
                 width: 60
             },
             {

@@ -49,6 +49,7 @@ class FredElement extends xPDOSimpleObject {
         }
 
         $override = $this->get('options_override');
+        if (empty($override)) $override = [];
         
         if (isset($override['rteConfig']) && is_array($override['rteConfig']) && isset($options['rteConfig']) && is_array($options['rteConfig'])) {
             $override['rteConfig'] = array_merge($options['rteConfig'], $override['rteConfig']);

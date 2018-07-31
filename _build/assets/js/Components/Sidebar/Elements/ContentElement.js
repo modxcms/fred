@@ -679,12 +679,9 @@ export class ContentElement {
                 });
             }
 
-            const rteConfig = this.getRTEConfig(el);
-            console.log(rteConfig);
-            
             if (!!el.dataset.fredRte && (el.dataset.fredRte !== 'false')) {
                 if (this.config.rte && fredConfig.rtes[this.config.rte]) {
-                    fredConfig.rtes[this.config.rte](el, rteConfig, this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el, content), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
+                    fredConfig.rtes[this.config.rte](el, this.getRTEConfig(el), this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el, content), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
                 }
             }
 
