@@ -85,6 +85,7 @@ An array of setting objects and group objects for the Fred Element.
 - page
     - MODX Page select
     - Value is returned as an object in format: `{"id": 1, "url": "fred.html"}`
+        - Refrencing ID or URL alone is done through the dot syntax: `{{ page-name-example.id}}`
     - Type specific properties:
         - clearButton - If set to `true` button to clear select will appear
         - parents - If set, only resource from these parents (including parents itself) will show; Value can be string with a comma as a separator or an array
