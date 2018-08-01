@@ -55,56 +55,17 @@ class LoadBlueprint extends Endpoint
 
     protected function getElement($id)
     {
-        /** @var \modChunk $chunk */
-        $chunk = $this->modx->getObject('modChunk', $id);
-        if (!$chunk) {
-            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Chunk {$id} wasn't found.");
+        /** @var \FredElement $element */
+        $element = $this->modx->getObject('FredElement', $id);
+        if (!$element) {
+            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$id} wasn't found.");
             return ['html' => '', 'options' => [], 'title' => ''];
         }
 
-        $matches = [];
-        preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
-
-        $image = '';
-        $options = [];
-        $description = $chunk->description;
-
-        if (count($matches) == 2) {
-            $image = $matches[1];
-            $description = str_replace($matches[0], '', $description);
-        }
-
-        $matches = [];
-        preg_match('/options:([^\n]+)\n?/', $description, $matches);
-
-        if (count($matches) == 2) {
-            $options = $this->modx->getChunk($matches[1]);
-            $options = json_decode($options, true);
-            if (empty($options)) $options = [];
-
-            $globalRte = $this->fred->getOption('rte_config');
-            if (!empty($globalRte)) {
-                $globalRte = $this->modx->getChunk($globalRte);
-                $globalRte = json_decode($globalRte, true);
-                
-                if (!empty($globalRte)) {
-                    $rteConfig = $globalRte;
-                    
-                    if (!empty($options['rteConfig'])) {
-                        $rteConfig = array_merge($rteConfig, $options['rteConfig']);
-                    }
-
-                    $options['rteConfig'] = $rteConfig;
-                }
-            }
-            
-            $description = str_replace($matches[0], '', $description);
-        }
-
         return [
-            'html' => $chunk->content,
-            'title' => $chunk->name,
-            'options' => $options
+            'html' => $element->content,
+            'title' => $element->name,
+            'options' => $element->processOptions()
         ];
     }
 }

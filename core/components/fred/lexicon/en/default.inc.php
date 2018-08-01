@@ -140,8 +140,8 @@ $_lang['fred.element_rte_configs.new_name'] = 'New Name';
 
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
-$_lang['setting_fred.elements_category_id'] = 'Element\'s Category ID';
-$_lang['setting_fred.elements_category_id_desc'] = 'ID of Category to use as an element source.';
+$_lang['setting_fred.elements_category_id'] = '*DEPRECATED* Element\'s Category ID';
+$_lang['setting_fred.elements_category_id_desc'] = '*DEPRECATED* ID of Category to use as an element source.';
 $_lang['setting_fred.element_group_sort'] = 'Element\'s Group Sort';
 $_lang['setting_fred.element_group_sort_desc'] = 'Sort elements by name or rank';
 $_lang['setting_fred.icon_editor'] = 'Icon Editor';

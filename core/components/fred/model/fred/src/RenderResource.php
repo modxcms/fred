@@ -84,14 +84,14 @@ final class RenderResource {
 
     private function getElement($id)
     {
-        /** @var \modChunk $chunk */
-        $chunk = $this->modx->getObject('modChunk', $id);
-        if (!$chunk) {
-            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Chunk {$id} wasn't found.");
+        /** @var \FredElement $element */
+        $element = $this->modx->getObject('FredElement', $id);
+        if (!$element) {
+            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$id} wasn't found.");
             return '';
         }
 
-        return $chunk->content;
+        return $element->content;
     }
     
     private function setValueForBindElements(HtmlPageCrawler &$html, $name, $value)
