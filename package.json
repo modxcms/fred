@@ -17,12 +17,12 @@
   ],
   "devDependencies": {
     "babel-cli": "^6.16.0",
-    "babel-core": "^6.4.0",
+    "babel-core": "^6.26.3",
     "babel-loader": "^6.2.1",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-stage-0": "^6.5.0",
-    "clean-webpack-plugin": "^0.1.8",
+    "clean-webpack-plugin": "^0.1.19",
     "del": "^2.2.0",
     "gulp": "^3.9.*",
     "gulp-babel": "^6.1.1",
@@ -44,16 +44,16 @@
   "dependencies": {
     "choices.js": "^3.0.4",
     "dragula": "^3.7.2",
-    "flatpickr": "^4.4.3",
+    "flatpickr": "^4.5.1",
     "gulp-sass-inline-svg": "^1.0.3",
     "gulp-svgmin": "^1.2.4",
-    "hoverintent": "^2.0.0",
+    "hoverintent": "^2.1.0",
     "html2canvas": "^1.0.0-alpha.12",
     "isomorphic-fetch": "^2.2.1",
     "jssha": "^2.3.1",
-    "mousetrap": "^1.6.1",
+    "mousetrap": "^1.6.2",
     "nouislider": "^11.1.0",
     "promise-cancel": "^2.0.1",
-    "twig": "^1.10.5"
+    "twig": "^1.12.0"
   }
 }
