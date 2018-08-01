@@ -31,3 +31,23 @@ export const renderElement = (element, settings, parseModx) => {
         })
     }).then(errorHandler)
 };
+
+export const replaceImage = (element, image) => {
+    const body = {
+        element,
+        image
+    };
+
+    if (image === '') {
+        body.generatedImage = generatedImage;
+    }
+
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=element-replace-image`, {
+        method: "post",
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    }).then(errorHandler);
+};

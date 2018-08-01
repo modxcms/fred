@@ -92,6 +92,9 @@ $_lang['fred.fe.content.settings'] = 'Open Settings';
 $_lang['fred.fe.content.move_up'] = 'Move Up';
 $_lang['fred.fe.content.move_down'] = 'Move Down';
 $_lang['fred.fe.content.partial_blueprint'] = 'Create Partial Blueprint';
+$_lang['fred.fe.content.element_screenshot'] = 'Element Screenshot';
+$_lang['fred.fe.content.replace_element_thumbnail'] = 'Replace Element Thumbnail';
+$_lang['fred.fe.content.element_replacing_thumbnail'] = 'Replacing Element\'s Thumbnail';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'There are unsaved changes, are you sure?';
 

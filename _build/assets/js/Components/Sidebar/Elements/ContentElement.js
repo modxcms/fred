@@ -2,13 +2,16 @@ import drake from '../../../Drake';
 import emitter from '../../../EE';
 import { twig } from 'twig';
 import fredConfig from '../../../Config';
-import { div, button } from '../../../UI/Elements';
+import {div, button, img} from '../../../UI/Elements';
 import { applyScripts } from '../../../Utils';
 import Mousetrap from 'mousetrap';
 import hoverintent from 'hoverintent';
 import elementSettings from './ElementSettings';
 import partialBlueprints from "./PartialBlueprints";
-import { renderElement } from '../../../Actions/elements';
+import { renderElement, replaceImage } from '../../../Actions/elements';
+import Modal from '../../../Modal';
+import html2canvas from "html2canvas";
+import cache from '../../../Cache';
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
@@ -378,8 +381,10 @@ export class ContentElement {
         const duplicate = button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.duplicate.bind(this));
         const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
         
-        
         toolbar.appendChild(moveHandle);
+        
+        const elementScreenshot = button('', 'fred.fe.content.element_screenshot', ['fred--element_screenshot'], this.takeScreenshot.bind(this));
+        toolbar.appendChild(elementScreenshot);
         
         const partialBlueprint = button('', 'fred.fe.content.partial_blueprint', ['fred--blueprint'], () => {partialBlueprints.open(this)});
         toolbar.appendChild(partialBlueprint);
@@ -433,6 +438,34 @@ export class ContentElement {
             this.wrapper = wrapper;
             
             return wrapper;
+        });
+    }
+
+    takeScreenshot() {
+        let dataImage = '';
+        
+        const modal = new Modal('Element Screenshot', '', () => {
+            emitter.emit('fred-loading', fredConfig.lng('fred.fe.content.element_replacing_thumbnail'));
+            
+            replaceImage(this.id, dataImage).then(() => {
+                cache.kill('elements', {name: 'elements'});
+                emitter.emit('fred-loading-hide');
+            });
+        }, {showCancelButton: true, saveButtonText: 'fred.fe.content.replace_element_thumbnail'});
+
+        html2canvas(this.wrapper, {
+            logging: false,
+            ignoreElements: el => {
+                if (el.classList.contains('fred')) return true;
+                if (el.classList.contains('fred--toolbar')) return true;
+
+                return false;
+            }
+        }).then(canvas => {
+            dataImage = canvas.toDataURL();
+            
+            modal.setContent(img(dataImage));
+            modal.render();    
         });
     }
     

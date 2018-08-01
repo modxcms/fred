@@ -243,6 +243,13 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
   background-color: $modxblue;
 }
 
+.fred--element_screenshot {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: inline-svg('object-group', $white);
+  background-color: $modxblue;
+}
+
 .fred--loading {
   z-index: 1000;
   position: relative;

@@ -2,9 +2,9 @@ import emitter from './EE';
 import { section, div, button, h4 } from './UI/Elements';
 import fredConfig from "./Config";
 
-export class Modal {
+export class  Modal {
     
-    constructor(title, content = '', onSave = () => {}) {
+    constructor(title, content = '', onSave = () => {}, config = {}) {
         this.wrapper = null;
 
         if (fredConfig.lngExists(title)) {
@@ -14,6 +14,10 @@ export class Modal {
         this.title = title;
         this.content = content;
         this.onSave = onSave;
+        
+        this.showCancelButton = config.showCancelButton || false;
+        this.cancelButtonText = config.cancelButtonText || 'fred.fe.cancel';
+        this.saveButtonText = config.saveButtonText || 'fred.fe.save';
     }
     
     setTitle(title) {
@@ -59,16 +63,22 @@ export class Modal {
 
         const footer = div(['fred--modal-footer']);
 
-        const save = button('fred.fe.save', 'fred.fe.save', ['fred--btn-small'], () => {
+        if (this.showCancelButton === true) {
+            const cancel = button(this.cancelButtonText, this.cancelButtonText, ['fred--btn-small', 'fred--btn-danger'], () => {
+                this.close();
+            });
+            footer.appendChild(cancel);
+        }
+        
+        const save = button(this.saveButtonText, this.saveButtonText, ['fred--btn-small'], () => {
             this.onSave();
             this.close();
         });
+        footer.appendChild(save);
         
         header.appendChild(close);
         header.appendChild(this.titleEl);
         
-        footer.appendChild(save);
-
         modal.appendChild(header);
         modal.appendChild(this.body);
         
