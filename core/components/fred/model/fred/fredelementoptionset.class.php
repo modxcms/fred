@@ -62,7 +62,15 @@ class FredElementOptionSet extends xPDOSimpleObject {
                 /** @var FredElementOptionSet $import */
                 $import = $this->xpdo->getObject('FredElementOptionSet', ['name' => $setting['fred-import']]);
                 if ($import) {
-                    $newSettings[] = $import->processData();
+                    $processedImport = $import->processData();
+                    
+                    if (is_array($processedImport) && isset($processedImport[0])) {
+                        foreach ($processedImport as $item) {
+                            $newSettings[] = $item;
+                        }
+                    } else {
+                        $newSettings[] = $processedImport;
+                    }
                 }
             } else {
                 if (!empty($setting['group']) && isset($setting['settings']) && is_array($setting['settings'])) {
@@ -74,5 +82,16 @@ class FredElementOptionSet extends xPDOSimpleObject {
         }
 
         return $newSettings;
+    }
+
+    public function remove(array $ancestors= array ())
+    {
+        $removed = parent::remove($ancestors);
+        
+        if ($removed) {
+            $this->xpdo->updateCollection('FredElement', ['option_set' => 0], ['option_set' => $this->id]);
+        }
+        
+        return $removed;
     }
 }
