@@ -7,12 +7,21 @@ pages:
     - 'Getting Started': gettingstarted.md
     - Elements:
       - Markup: elements/markup.md
-      - Settings: elements/settings.md
+      - Options: elements/options.md
       - Attributes: elements/attributes.md
     - Templates: templates/index.md
     - 'Media Sources': media_sources/index.md
     - 'System Settings': system_settings/index.md
     - Events: events/index.md
+    - CMP:
+        - Elements:
+            - Elements: cmp/elements/elements.md
+            - Categories: cmp/elements/categories.md
+            - Option Sets: cmp/elements/option_sets.md
+            - RTE Configs: cmp/elements/rte_configs.md
+        - Blueprints:
+            - Blueprints: cmp/blueprints/blueprints.md
+            - Categories: cmp/blueprints/categories.md
 theme:
   name: 'material'
   language: en
