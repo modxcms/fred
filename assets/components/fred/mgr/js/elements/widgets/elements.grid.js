@@ -48,7 +48,8 @@ fred.grid.Elements = function (config) {
             {
                 header: _('fred.elements.description'),
                 dataIndex: 'description',
-                width: 120
+                width: 120,
+                editor: {xtype: 'textfield'}
             },
             {
                 header: _('fred.elements.category'),
