@@ -18,6 +18,8 @@ import sass from 'gulp-ruby-sass';
 import sassInlineSvg from 'gulp-sass-inline-svg';
 import svgmin from 'gulp-svgmin';
 
+import log from 'fancy-log';
+
 const $ = gulpLoadPlugins();
 const libFolder = './_build/assets/lib';
 const sources = './_build/assets/js/**/*.js';
@@ -98,7 +100,7 @@ function onBuild(done, taskName) {
     return (err, stats) => {
         if (err)
             throw new gutil.PluginError(taskName, err);
-        $.util.log(`${taskName}`, stats.toString({colors: true}));
+        log(`${taskName}`, stats.toString({colors: true}));
         done && done();
     }
 }
