@@ -63,6 +63,14 @@ If set to `true` the Rich Text Editor will be loaded for the editable HTML eleme
 <div data-fred-name="rte-content" contenteditable="true" data-fred-rte="true">Default Content</div>
 ```
 
+### data-fred-rte-config
+Specify RTE config that should be used for the element.
+
+#### Example
+```html
+<div data-fred-name="rte-content" contenteditable="true" data-fred-rte="true" data-fred-rte-config="simple">Default Content</div>
+```
+
 ### data-fred-dropzone
 Defines a new Drop Zone for Fred Elements. This attribute cannot be empty and has to be unique across a single Element. You can create an unlimited number of Dropzones, though more than a few might get quite cumbersome. This is useful for creating alternate layouts like full width, split pages, sidebar pages, etc.
 
