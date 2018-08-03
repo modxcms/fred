@@ -315,7 +315,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 },
                                 items: [
                                     {
-                                        columnWidth: .9,
+                                        columnWidth: .8,
                                         border: false,
                                         defaults: {
                                             msgTarget: 'under',
@@ -350,7 +350,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                         ]
                                     },
                                     {
-                                        columnWidth: .1,
+                                        columnWidth: .2,
                                         border: false,
                                         defaults: {
                                             msgTarget: 'under',
