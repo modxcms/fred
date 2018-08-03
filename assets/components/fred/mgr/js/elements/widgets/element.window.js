@@ -10,6 +10,26 @@ fred.window.Element = function (config) {
         fields: this.getFields(config),
         autoHeight: true,
         width: 800,
+        buttons: [
+            {
+                text: config.cancelBtnText || _('cancel'),
+                scope: this,
+                handler: function () {
+                    config.closeAction !== 'close' ? this.hide() : this.close();
+                }
+            },
+            {
+                text: config.saveBtnText || _('save'),
+                scope: this,
+                handler: function() { this.submit(false); }
+            },
+            {
+                text: config.saveBtnText || _('save_and_close'),
+                cls: 'primary-button',
+                scope: this,
+                handler: this.submit
+            }
+        ],
         keys: [
             {
                 key: Ext.EventObject.ENTER,
