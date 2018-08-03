@@ -29,7 +29,7 @@ ID of the Media Source to use for Finder. Multiple IDs can be passed separated b
 ID of the Media Source to use for Image fields. Multiple IDs can be passed separated by comma `,`. This option overrides `mediaSource`.
 
 ### settings
-An array of setting objects and group objects for the Fred Element.
+An array of setting objects and group objects for the Fred Element. Settings can also contain a special import object, to import another option set.
 
 #### Available group properties
 - group - Name of a group of related sub-settings that open when clicked in a secondary panel. The value of the group property will be used as the label for the group
@@ -40,6 +40,21 @@ An array of setting objects and group objects for the Fred Element.
 - label - Setting's Label, displayed in the Element Settings panel
 - type - Type of the setting
 - value - Default value
+
+#### Import
+Importing another option set is done with a special object with `fred-import` key.
+
+##### Example
+
+```json
+{
+    "settings": [
+      {
+        "fred-import": "name-of-option-set-to-import"
+      }
+    ]
+}
+```
 
 #### Available types
 - text 
