@@ -302,6 +302,27 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
   }
 }
 
+@media screen and (max-height: 675px) {
+  button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
+    &-sidebar{
+      margin-top: 10px;
+      &_save{
+        margin-top: 10px;
+      }
+    }
+  }
+}
+@media screen and (max-height: 560px) {
+  button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
+    &-sidebar{
+      display:none;
+      &_save{
+        display:block;
+      }
+    }
+  }
+}
+
 @keyframes fred--btnloading {
   0%,
   80%,

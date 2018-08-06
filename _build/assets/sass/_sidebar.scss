@@ -499,6 +499,13 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+@media screen and (max-height: 675px) {
+  .fred--accordion{
+    & > dt{
+      padding: 12px 8px !important;
+    }
+  }
+}
 //Safari Fixes
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) {

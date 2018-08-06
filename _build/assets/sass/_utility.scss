@@ -213,3 +213,14 @@
     }
   }
 }
+@media screen and (max-height: 770px) {
+  .fred--content-preview{
+    &_controls{
+      .fred--devices{
+        *[class^="fred--tablet"]{
+          display: none;
+        }
+      }
+    }
+  }
+}
