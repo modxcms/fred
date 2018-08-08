@@ -11,8 +11,22 @@
 /**
  * @property int $id
  * @property string $name
+ * @property string $uuid
  * @property int $rank
  * 
  * @package fred
  */
-class FredElementCategory extends xPDOSimpleObject {}
+class FredElementCategory extends xPDOSimpleObject {
+    public function save($cacheFlag = null)
+    {
+        $uuid = $this->get('uuid');
+
+        if (empty($uuid)) {
+            try {
+                $this->set('uuid', \Fred\Utils::uuidFactory()->uuid4());
+            } catch (Exception $e) {}
+        }
+
+        return parent::save($cacheFlag);
+    }
+}

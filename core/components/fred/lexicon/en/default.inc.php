@@ -22,21 +22,24 @@ $_lang['fred.global.change_order'] = 'Change order: [[+name]]';
 
 $_lang['fred.open_in_fred'] = 'Open In Fred';
 
-$_lang['fred.menu.blueprints'] = 'Blueprints';
-$_lang['fred.menu.blueprints_desc'] = 'Manage blueprints and their categories.';
 $_lang['fred.menu.refresh'] = 'Rebuild Fred Resources';
 $_lang['fred.menu.refresh_desc'] = 'Rebuild Resources using Fred Templates';
-$_lang['fred.menu.elements'] = 'Elements';
-$_lang['fred.menu.elements_desc'] = 'Manage elements, their categories and settings.';
+$_lang['fred.menu.fred'] = 'Fred';
+$_lang['fred.menu.fred_desc'] = '';
 
 $_lang['fred.refresh_fail_resource'] = 'No Fred resources found to refresh';
 $_lang['fred.refresh_fail_template'] = 'No Fred templates specified to refresh';
 $_lang['fred.refresh_complete'] = 'Rebuild Completed';
 $_lang['fred.refresh_id'] = 'Refreshing Resource ID [[+id]]';
 
-$_lang['fred.blueprints.page_title'] = 'Blueprints';
-$_lang['fred.blueprints.blueprints'] = 'Blueprints';
-$_lang['fred.blueprints.categories'] = 'Categories';
+$_lang['fred.home.page_title'] = 'Fred';
+$_lang['fred.home.element_categories'] = 'Element Categories';
+$_lang['fred.home.elements'] = 'Elements';
+$_lang['fred.home.option_sets'] = 'Option Sets';
+$_lang['fred.home.rte_configs'] = 'RTE Configs';
+$_lang['fred.home.blueprints'] = 'Blueprints';
+$_lang['fred.home.blueprint_categories'] = 'Blueprint Categories';
+
 $_lang['fred.blueprints.none'] = 'No blueprints were found.';
 $_lang['fred.blueprints.name'] = 'Name';
 $_lang['fred.blueprints.description'] = 'Description';
@@ -69,8 +72,6 @@ $_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Are you sure you 
 $_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Are you sure you want to remove "[[+name]]" Blueprint Category?' ;
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Blueprints';
 
-$_lang['fred.elements.page_title'] = 'Elements';
-$_lang['fred.elements.elements'] = 'Elements';
 $_lang['fred.elements.none'] = 'No elements were found.';
 $_lang['fred.elements.image'] = 'Image';
 $_lang['fred.elements.name'] = 'Name';
@@ -78,15 +79,12 @@ $_lang['fred.elements.description'] = 'Description';
 $_lang['fred.elements.category'] = 'Category';
 $_lang['fred.elements.rank'] = 'Rank';
 $_lang['fred.elements.search_name'] = 'Search by Name';
-$_lang['fred.elements.categories'] = 'Categories';
 $_lang['fred.elements.remove'] = 'Remove Element';
 $_lang['fred.elements.remove_confirm'] = 'Are you sure you want to delete [[+name]] Element?';
 $_lang['fred.elements.quick_update'] = 'Quick Update Element';
 $_lang['fred.elements.update'] = 'Update Element';
 $_lang['fred.elements.create'] = 'Create Element';
 $_lang['fred.elements.markup'] = 'Element\'s Markup';
-$_lang['fred.elements.option_sets'] = 'Option Sets';
-$_lang['fred.elements.rte_configs'] = 'RTE Configs';
 $_lang['fred.elements.options'] = 'Options';
 $_lang['fred.elements.options_override'] = 'Options Override';
 $_lang['fred.elements.option_set'] = 'Option Set';

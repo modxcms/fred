@@ -1,1 +1,0 @@
-<div id="fred-panel-elements"></div>

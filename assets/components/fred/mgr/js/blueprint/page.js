@@ -20,7 +20,7 @@ fred.page.Blueprint = function (config) {
             {
                 text: _('cancel'),
                 params: {
-                    a: 'blueprints',
+                    a: 'home',
                     namespace: 'fred'
                 }
             }

@@ -18,7 +18,7 @@ export class ContentElement {
         this.config = fredConfig.config;
         this.el = el;
         this.template = twig({data: this.el.elementMarkup});
-        this.id = parseInt(this.el.dataset.fredElementId);
+        this.id = this.el.dataset.fredElementId;
         this.title = this.el.dataset.fredElementTitle;
         this.wrapper = null;
 

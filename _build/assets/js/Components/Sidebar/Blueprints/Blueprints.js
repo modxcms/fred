@@ -179,7 +179,7 @@ export default class Blueprints extends Sidebar {
 
             createBlueprintCategory(this.state.category.name, this.state.category.rank, +this.state.category.public)
                 .then(json => {
-                    cache.kill('blueprints', {name: 'blueprints'});
+                    cache.killNamespace('blueprints');
                     this.click().then(newContent => {
                         content.replaceWith(newContent);
                         drake.reloadContainers();
@@ -309,7 +309,7 @@ export default class Blueprints extends Sidebar {
 
             createBlueprint(this.state.blueprint.name, this.state.blueprint.description, this.state.blueprint.category, this.state.blueprint.rank, this.state.blueprint.public, fredConfig.fred.getContent(), this.state.blueprint.generatedImage, this.state.blueprint.image, true)
                     .then(json => {
-                        cache.kill('blueprints', {name: 'blueprints'});
+                        cache.killNamespace('blueprints');
                         this.click().then(newContent => {
                             content.replaceWith(newContent);
                             drake.reloadContainers();

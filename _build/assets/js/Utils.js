@@ -174,19 +174,20 @@ export const loadElements = data => {
 
                 zoneEl.innerHTML = '';
                 zones[zoneName].forEach(element => {
-                    const chunk = div(['chunk']);
-                    chunk.setAttribute('hidden', 'hidden');
-                    chunk.dataset.fredElementId = element.widget;
-                    chunk.dataset.fredElementTitle = data.elements[element.widget].title;
-                    chunk.elementMarkup = data.elements[element.widget].html;
-                    chunk.elementOptions = data.elements[element.widget].options || {};
-
-                    const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}));
-                    promises.push(contentElement.render().then(wrapper => {
-                        loadChildren(element.children, contentElement, data.elements);
-                        return wrapper;
-                    }));
-
+                    if (data.elements[element.widget].html) {
+                        const chunk = div(['chunk']);
+                        chunk.setAttribute('hidden', 'hidden');
+                        chunk.dataset.fredElementId = element.widget;
+                        chunk.dataset.fredElementTitle = data.elements[element.widget].title;
+                        chunk.elementMarkup = data.elements[element.widget].html;
+                        chunk.elementOptions = data.elements[element.widget].options || {};
+    
+                        const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}));
+                        promises.push(contentElement.render().then(wrapper => {
+                            loadChildren(element.children, contentElement, data.elements);
+                            return wrapper;
+                        }));
+                    }
                 });
 
                 dzPromises.push(Promise.all(promises).then(wrappers => {

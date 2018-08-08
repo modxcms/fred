@@ -14,6 +14,7 @@ $xpdo_meta_map['FredElementCategory']= array (
   'fields' => 
   array (
     'name' => NULL,
+    'uuid' => NULL,
     'rank' => 0,
   ),
   'fieldMeta' => 
@@ -25,6 +26,14 @@ $xpdo_meta_map['FredElementCategory']= array (
       'phptype' => 'string',
       'null' => false,
     ),
+    'uuid' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'index' => 'unique',
+    ),
     'rank' => 
     array (
       'dbtype' => 'int',
@@ -33,6 +42,25 @@ $xpdo_meta_map['FredElementCategory']= array (
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
+    ),
+  ),
+  'indexes' => 
+  array (
+    'uuid' => 
+    array (
+      'alias' => 'uuid',
+      'primary' => false,
+      'unique' => true,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'uuid' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
     ),
   ),
   'composites' => 

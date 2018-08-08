@@ -67,7 +67,7 @@ class LoadContent extends Endpoint
         foreach ($dropZones as $dropZone) {
             if(!is_array($dropZone)) continue;
             foreach ($dropZone as $element) {
-                $elementId = intval($element['widget']);
+                $elementId = $element['widget'];
 
                 if (!isset($elements[$elementId])) {
                     $elements[$elementId] = $this->getElement($elementId);
@@ -78,13 +78,13 @@ class LoadContent extends Endpoint
         }
     }
 
-    protected function getElement($id)
+    protected function getElement($uuid)
     {
         /** @var \FredElement $element */
-        $element = $this->modx->getObject('FredElement', $id);
+        $element = $this->modx->getObject('FredElement', ['uuid' => $uuid]);
         if (!$element) {
-            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$id} wasn't found.");
-            return ['html' => '', 'options' => [], 'title' => ''];
+            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$uuid} wasn't found.");
+            return [];
         }
 
         return [

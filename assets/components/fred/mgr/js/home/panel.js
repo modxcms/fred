@@ -1,4 +1,4 @@
-fred.panel.Elements = function (config) {
+fred.panel.Home = function (config) {
     config = config || {};
     Ext.apply(config, {
         border: false,
@@ -6,14 +6,14 @@ fred.panel.Elements = function (config) {
         cls: 'container',
         items: [
             {
-                html: '<h2>' + _('fred.elements.page_title') + '</h2>',
+                html: '<h2>' + _('fred.home.page_title') + '</h2>',
                 border: false,
                 cls: 'modx-page-header'
             },
             {
                 xtype: 'modx-tabs',
                 stateful: true,
-                stateId: 'fred-tab-elements',
+                stateId: 'fred-tab-home',
                 stateEvents: ['tabchange'],
                 getState: function () {
                     return {
@@ -29,7 +29,7 @@ fred.panel.Elements = function (config) {
                 hideMode: 'offsets',
                 items: [
                     {
-                        title: _('fred.elements.elements'),
+                        title: _('fred.home.elements'),
                         items: [
                             {
                                 xtype: 'fred-grid-elements',
@@ -39,7 +39,7 @@ fred.panel.Elements = function (config) {
                         ]
                     },
                     {
-                        title: _('fred.elements.categories'),
+                        title: _('fred.home.element_categories'),
                         items: [
                             {
                                 xtype: 'fred-grid-element-categories',
@@ -49,7 +49,7 @@ fred.panel.Elements = function (config) {
                         ]
                     },
                     {
-                        title: _('fred.elements.option_sets'),
+                        title: _('fred.home.option_sets'),
                         items: [
                             {
                                 xtype: 'fred-grid-element-option-sets',
@@ -59,10 +59,30 @@ fred.panel.Elements = function (config) {
                         ]
                     },
                     {
-                        title: _('fred.elements.rte_configs'),
+                        title: _('fred.home.rte_configs'),
                         items: [
                             {
                                 xtype: 'fred-grid-element-rte-configs',
+                                preventRender: true,
+                                cls: 'main-wrapper'
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.home.blueprints'),
+                        items: [
+                            {
+                                xtype: 'fred-grid-blueprints',
+                                preventRender: true,
+                                cls: 'main-wrapper'
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.home.blueprint_categories'),
+                        items: [
+                            {
+                                xtype: 'fred-grid-blueprint-categories',
                                 preventRender: true,
                                 cls: 'main-wrapper'
                             }
@@ -72,7 +92,7 @@ fred.panel.Elements = function (config) {
             }
         ]
     });
-    fred.panel.Elements.superclass.constructor.call(this, config);
+    fred.panel.Home.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.panel.Elements, MODx.Panel);
-Ext.reg('fred-panel-elements', fred.panel.Elements);
+Ext.extend(fred.panel.Home, MODx.Panel);
+Ext.reg('fred-panel-home', fred.panel.Home);

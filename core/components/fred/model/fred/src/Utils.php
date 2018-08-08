@@ -83,4 +83,18 @@ final class Utils
         
         return $output;
     }
+    
+    public static function uuidFactory()
+    {
+        $factory = new \Ramsey\Uuid\UuidFactory();
+        
+        $generator = new \Ramsey\Uuid\Generator\CombGenerator(
+            $factory->getRandomGenerator(),
+            $factory->getNumberConverter()
+        );
+        
+        $factory->setRandomGenerator($generator);
+        
+        return $factory;
+    }
 }

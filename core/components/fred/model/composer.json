@@ -1,7 +1,9 @@
 {
   "require": {
     "twig/twig": "^2.0",
-    "wa72/htmlpagedom": "^1.3"
+    "wa72/htmlpagedom": "^1.3",
+    "ramsey/uuid": "^3.8",
+    "moontoast/math": "^1.1"
   },
   "autoload": {
     "psr-4": {

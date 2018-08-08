@@ -30,8 +30,13 @@
 
     <object class="FredElementCategory" table="fred_element_categories" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
         <field key="rank" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
 
+        <index alias="uuid" name="uuid" primary="false" unique="true" type="BTREE">
+            <column key="uuid" length="" collation="A" null="false" />
+        </index>
+        
         <composite alias="Elements" class="FredElement" local="id" foreign="category" cardinality="many" owner="local" />
     </object>
     
@@ -52,6 +57,7 @@
     
     <object class="FredElement" table="fred_elements" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="image" dbtype="text" phptype="string" null="false" default="" />
         <field key="category" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
@@ -62,6 +68,10 @@
         
         <field key="content" dbtype="mediumtext" phptype="string" null="false" default="" />
 
+        <index alias="uuid" name="uuid" primary="false" unique="true" type="BTREE">
+            <column key="uuid" length="" collation="A" null="false" />
+        </index>
+        
         <aggregate alias="Category" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="local" />
         <aggregate alias="OptionSet" class="FredElementOptionSet" local="option_set" foreign="id" cardinality="one" owner="foreign" />
     </object>

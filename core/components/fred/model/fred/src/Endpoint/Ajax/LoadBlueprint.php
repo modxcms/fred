@@ -43,7 +43,7 @@ class LoadBlueprint extends Endpoint
     
     protected function iterateElements(&$elements, $dropZone) {
         foreach ($dropZone as $element) {
-            $elementId = intval($element['widget']);
+            $elementId = $element['widget'];
 
             if (!isset($elements[$elementId])) {
                 $elements[$elementId] = $this->getElement($elementId);
@@ -53,12 +53,12 @@ class LoadBlueprint extends Endpoint
         }
     }
 
-    protected function getElement($id)
+    protected function getElement($uuid)
     {
         /** @var \FredElement $element */
-        $element = $this->modx->getObject('FredElement', $id);
+        $element = $this->modx->getObject('FredElement', ['uuid' => $uuid]);
         if (!$element) {
-            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$id} wasn't found.");
+            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$uuid} wasn't found.");
             return ['html' => '', 'options' => [], 'title' => ''];
         }
 

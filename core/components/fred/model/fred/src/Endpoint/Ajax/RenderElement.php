@@ -17,7 +17,7 @@ class RenderElement extends Endpoint
     function process()
     {
         $resourceId = isset($this->body['resource']) ? intval($this->body['resource']) : 0;
-        $elementId = isset($this->body['element']) ? intval($this->body['element']) : 0;
+        $elementUUID = isset($this->body['element']) ? $this->body['element'] : '';
         $parseModx = empty($this->body['parseModx']) ? false : true;
         $settings = empty($this->body['settings']) ? [] : $this->body['settings'];
         
@@ -25,12 +25,12 @@ class RenderElement extends Endpoint
             return $this->failure('No resource was provided');
         }
 
-        if (empty($elementId)) {
+        if (empty($elementUUID)) {
             return $this->failure('No element was provided');
         }
         
         /** @var \FredElement $element */
-        $element = $this->modx->getObject('FredElement', $elementId);
+        $element = $this->modx->getObject('FredElement', ['uuid' => $elementUUID]);
         $templateName = $element->name . '_' . $element->id;
         
         $twig = new \Twig_Environment(new \Twig_Loader_Array([

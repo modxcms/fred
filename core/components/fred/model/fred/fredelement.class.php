@@ -11,6 +11,7 @@
 /**
  * @property int $id
  * @property string $name
+ * @property string $uuid
  * @property string $description
  * @property string $image
  * @property int $category
@@ -74,5 +75,18 @@ class FredElement extends xPDOSimpleObject {
         }
         
         return $image;
+    }
+
+    public function save($cacheFlag = null)
+    {
+        $uuid = $this->get('uuid');
+
+        if (empty($uuid)) {
+            try {
+                $this->set('uuid', \Fred\Utils::uuidFactory()->uuid4());
+            } catch (Exception $e) {}
+        }
+            
+        return parent::save($cacheFlag);
     }
 }

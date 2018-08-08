@@ -20,7 +20,7 @@ fred.page.ElementOptionSet = function (config) {
             {
                 text: _('cancel'),
                 params: {
-                    a: 'elements',
+                    a: 'home',
                     namespace: 'fred'
                 }
             }

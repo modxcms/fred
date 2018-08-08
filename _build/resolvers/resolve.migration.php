@@ -1,5 +1,64 @@
 <?php
 set_time_limit(0);
+
+if (!function_exists('replaceIdWithUuidOnElements')) {
+    /**
+     * @param modX $modx
+     * @param array $cache
+     * @param array $data
+     */
+    function replaceIdWithUuidOnElements($modx, &$cache, &$data)
+    {
+        foreach ($data as &$dropZone) {
+            if(!is_array($dropZone)) continue;
+
+            foreach ($dropZone as &$element) {
+                $elementId = intval($element['widget']);
+
+                if (!isset($cache[$elementId])) {
+                    /** @var FredElement $fredElement */
+                    $fredElement = $modx->getObject('FredElement', ['id' => $elementId]);
+                    if ($fredElement) {
+                        $cache[$elementId] = $fredElement->uuid;
+                        $element['widget'] = $cache[$elementId];
+                    }
+                } else {
+                    $element['widget'] = $cache[$elementId];
+                }
+
+                replaceIdWithUuidOnElements($modx, $cache, $element['children']);
+            }
+        }
+    }
+}
+
+if (!function_exists('iterateElements')) {
+    /**
+     * @param modX $modx
+     * @param array $cache
+     * @param array $data
+     */
+    function iterateElements($modx, &$cache, &$data)
+    {
+        foreach ($data as &$element) {
+            $elementId = $element['widget'];
+
+            if (!isset($elements[$elementId])) {
+                /** @var FredElement $fredElement */
+                $fredElement = $modx->getObject('FredElement', ['id' => $elementId]);
+                if ($fredElement) {
+                    $cache[$elementId] = $fredElement->uuid;
+                    $element['widget'] = $cache[$elementId];
+                }
+            } else {
+                $element['widget'] = $cache[$elementId];
+            }
+
+            replaceIdWithUuidOnElements($modx, $cache, $element['children']);
+        }
+    }
+}
+
 if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_UPGRADE:
@@ -116,6 +175,39 @@ if ($object->xpdo) {
                         $fredRTEConfig->set('data', $config);
                         $fredRTEConfig->save();
                     }
+                }
+
+                $fredTemplates = $modx->getOption('fred.template_ids');
+                $fredTemplates = explode(',', $fredTemplates);
+
+                $cache = [];
+
+                if (!empty($fredTemplates)) {
+                    /** @var modResource[] $fredResources */
+                    $fredResources = $modx->getIterator('modResource', ['template:IN' => $fredTemplates]);
+
+                    foreach ($fredResources as $resource) {
+                        $data = $resource->getProperty('data', 'fred');
+                        $this->replaceIdWithUuidOnElements($modx, $cache, $data);
+                        $resource->setProperty('data', $data, 'fred');
+                        $resource->save();
+                    }
+                }
+
+                /** @var FredBlueprint[] $blueprints */
+                $blueprints = $modx->getIterator('FredBlueprint');
+                foreach ($blueprints as $blueprint) {
+                    $data = $blueprint->get('data');
+                    $complete = $blueprint->get('complete');
+
+                    if ($complete === true) {
+                        $this->replaceIdWithUuidOnElements($modx, $cache, $data);
+                    } else {
+                        $this->iterateElements($modx, $cache, $data);
+                    }
+
+                    $blueprint->set('data', $data);
+                    $blueprint->save();
                 }
             }
 

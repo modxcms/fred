@@ -7,20 +7,9 @@
   "package": {
     "menus": [
       {
-        "text": "fred",
-        "action": ""
-      },
-      {
-        "text": "fred.menu.elements",
-        "description": "fred.menu.elements_desc",
-        "parent": "fred",
-        "action": "elements"
-      },
-      {
-        "text": "fred.menu.blueprints",
-        "description": "fred.menu.blueprints_desc",
-        "parent": "fred",
-        "action": "blueprints"
+        "text": "fred.menu.fred",
+        "description": "fred.menu.fred_desc",
+        "action": "home"
       },
       {
         "text": "fred.menu.refresh",
@@ -114,6 +103,10 @@
       "before": [
         "resolve.customevents.php",
         "resolve.mediasources.php"
+      ],
+      "after": [
+        "resolve.synctables.php",
+        "resolve.migration.php"
       ]
     }
   }

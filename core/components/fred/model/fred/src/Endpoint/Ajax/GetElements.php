@@ -37,7 +37,7 @@ class GetElements extends Endpoint
             $fredElements = $this->modx->getIterator('FredElement', ['category' => $category->id]);
             foreach ($fredElements as $element) {
                 $categoryElements['elements'][] = [
-                    "id" => $element->id,
+                    "id" => $element->uuid,
                     "title" => $element->name,
                     "description" => $element->description,
                     "image" => $element->getImage(),
