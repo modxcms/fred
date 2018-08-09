@@ -214,6 +214,10 @@ switch ($modx->event->name) {
     case 'OnBeforeDocFormSave':
         if ($mode !== 'upd') return;
 
+        $templates = array_map('trim', $templates);
+        $templates = array_flip($templates);
+        if (!isset($templates[$resource->template])) return;
+        
         $data = $resource->getProperty('data', 'fred');
         if (!empty($data['fingerprint'])) {
             if (empty($resource->fingerprint)) {
