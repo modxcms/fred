@@ -9,32 +9,40 @@ class FredBlueprintsUpdateProcessor extends modObjectUpdateProcessor
     public $classKey = 'FredBlueprint';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.blueprints';
-    /** @var FredBlueprintCategory $object */
+    /** @var FredBlueprint $object */
     public $object;
 
     public function beforeSet()
     {
         $name = $this->getProperty('name');
+        $category = $this->getProperty('category');
 
         if (empty($name)) {
-            $this->addFieldError('name', $this->modx->lexicon('fred.err.blueprint_categories_ns_name'));
+            $this->addFieldError('name', $this->modx->lexicon('fred.err.blueprints_ns_name'));
         }
 
+        if (empty($category)) {
+            $this->addFieldError('category', $this->modx->lexicon('fred.err.blueprints_ns_category'));
+        }
+        
         $rank = $this->getProperty('rank', '');
         if ($rank === '') {
             $c = $this->modx->newQuery($this->classKey);
-            $c->where(array(
-                'id:!=' => $this->object->id
-            ));
+            
+            $c->where([
+                'id:!=' => $this->object->id,
+                'category' => $category,
+            ]);
+            
             $c->limit(1);
             $c->sortby('rank', 'DESC');
 
             $last = 0;
 
-            /** @var FredBlueprintCategory[] $categories */
-            $categories = $this->modx->getIterator($this->classKey, $c);
-            foreach ($categories as $category) {
-                $last = $category->rank + 1;
+            /** @var FredBlueprint[] $blueprints */
+            $blueprints = $this->modx->getIterator($this->classKey, $c);
+            foreach ($blueprints as $blueprint) {
+                $last = $blueprint->rank + 1;
                 break;
             }
 

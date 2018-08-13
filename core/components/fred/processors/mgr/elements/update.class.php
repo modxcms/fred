@@ -15,9 +15,14 @@ class FredElementsUpdateProcessor extends modObjectUpdateProcessor
     public function beforeSet()
     {
         $name = $this->getProperty('name');
+        $category = $this->getProperty('category');
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.elements_ns_name'));
+        }
+        
+        if (empty($category)) {
+            $this->addFieldError('category', $this->modx->lexicon('fred.err.elements_ns_category'));
         }
 
         $rank = $this->getProperty('rank', '');

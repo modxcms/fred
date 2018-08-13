@@ -52,6 +52,12 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                             
                             this.getForm().setValues(r.object);
 
+                            var category = this.find('name', 'category');
+                            if (category[0]) {
+                                category = category[0];
+                                category.baseParams.theme = r.object.theme;
+                            }
+
                             Ext.getCmp('image_preview').el.dom.querySelector('img').src = (r.object.image || "https://via.placeholder.com/800x100?text=No+image");
 
                             this.fireEvent('ready', r.object);
@@ -63,6 +69,21 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
             });
         } else {
             Ext.getCmp('fred-element-panel-preview-option-set').disable();
+            
+            var theme = MODx.request.theme;
+            if (theme) {
+                var categoryField = this.find('name', 'category');
+                if (!categoryField[0]) return;
+
+                var category = MODx.request.category;
+                
+                this.getForm().setValues({theme: theme, category: category});
+
+                categoryField = categoryField[0];
+                categoryField.enable();
+                categoryField.baseParams.theme = theme;
+            }
+            
             this.fireEvent('ready');
             MODx.fireEvent('ready');
         }
@@ -159,11 +180,34 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                         },
                                         items: [
                                             {
+                                                xtype: 'fred-combo-themes',
+                                                fieldLabel: _('fred.elements.theme'),
+                                                name: 'theme',
+                                                hiddenName: 'theme',
+                                                anchor: '100%',
+                                                listeners: {
+                                                    select: function(combo, record) {
+                                                        var category = this.find('name', 'category');
+                                                        if (!category[0]) return;
+
+                                                        category = category[0];
+                                                        category.setValue();
+                                                        category.enable();
+                                                        category.baseParams.theme = record.id;
+                                                        category.store.load();
+                                                    },
+                                                    scope: this
+                                                },
+                                                allowBlank: false
+                                            },
+                                            {
                                                 xtype: 'fred-combo-element-categories',
                                                 fieldLabel: _('fred.elements.category'),
                                                 name: 'category',
                                                 hiddenName: 'category',
-                                                anchor: '100%'
+                                                anchor: '100%',
+                                                disabled: !config.isUpdate,
+                                                allowBlank: false
                                             },
                                             {
                                                 xtype: 'numberfield',

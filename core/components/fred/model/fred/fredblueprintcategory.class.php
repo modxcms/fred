@@ -17,6 +17,7 @@
  * 
  * @property modUser User
  * @property FredBlueprint[] Blueprints
+ * @property FredTheme $Theme
  * 
  * @package fred
  */

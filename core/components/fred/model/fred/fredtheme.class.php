@@ -1,24 +1,13 @@
 <?php
-/*
- * This file is part of the Fred package.
- *
- * Copyright (c) MODX, LLC
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 /**
  * @property int $id
  * @property string $name
  * @property string $uuid
- * @property int $rank
- * 
- * @property FredTheme $Theme
+ * @property string $description
  * 
  * @package fred
  */
-class FredElementCategory extends xPDOSimpleObject {
+class FredTheme extends xPDOSimpleObject {
     public function save($cacheFlag = null)
     {
         $uuid = $this->get('uuid');

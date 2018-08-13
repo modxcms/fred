@@ -13,15 +13,24 @@ class FredElementCategoriesDuplicateProcessor extends modObjectDuplicateProcesso
     public function process() {
         $this->newObject->fromArray($this->object->toArray());
         $name = $this->getProperty('name');
+        $theme = $this->getProperty('theme');
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.element_categories_ns_name'));
             return $this->failure();
         }
+        
+        if (empty($theme)) {
+            $this->addFieldError('theme', $this->modx->lexicon('fred.err.element_categories_ns_theme'));
+            return $this->failure();
+        }
 
         $this->newObject->set('name', $name);
-
+        $this->newObject->set('theme', $theme);
+        $this->newObject->set('uuid', '');
+        
         $c = $this->modx->newQuery($this->classKey);
+        $c->where(['theme' => $theme]);
         $c->limit(1);
         $c->sortby('rank', 'DESC');
 

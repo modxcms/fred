@@ -11,7 +11,7 @@ fred.grid.Elements = function (config) {
         save_action: 'mgr/elements/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name'],
+        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name'],
         ddGroup: 'FredElementsDDGroup',
         enableDragDrop: true,
         paging: true,
@@ -50,6 +50,12 @@ fred.grid.Elements = function (config) {
                 dataIndex: 'description',
                 width: 120,
                 editor: {xtype: 'textfield'}
+            },
+            {
+                header: _('fred.elements.theme'),
+                dataIndex: 'theme_name',
+                sortable: true,
+                width: 60
             },
             {
                 header: _('fred.elements.category'),
@@ -108,10 +114,40 @@ fred.grid.Elements = function (config) {
                 }
             },
             {
+                id: 'fred-element-filter-category',
                 xtype: 'fred-combo-element-categories',
                 emptyText: _('fred.element_cateogries.all'),
                 addAll: 1,
                 filterName: 'category',
+                listeners: {
+                    select: this.filterCombo,
+                    scope: this
+                }
+            },
+            {
+                id: 'fred-element-filter-theme',
+                xtype: 'fred-combo-themes',
+                emptyText: _('fred.themes.all'),
+                addAll: 1,
+                filterName: 'theme',
+                syncFilter: function(combo, record) {
+                    var categoryFilter = Ext.getCmp('fred-element-filter-category');
+                    var s = this.getStore();
+
+                    if (record.data[combo.valueField] !== 0) {
+                        s.baseParams.category = 0;
+                        categoryFilter.setValue();
+                    }
+                    
+                    categoryFilter.baseParams.theme = record.data[combo.valueField];
+                    categoryFilter.store.load();
+                    
+                    combo.setValue(record.data[combo.valueField]);
+                    
+                    s.baseParams[combo.filterName] = record.data[combo.valueField];
+                    
+                    this.getBottomToolbar().changePage(1);
+                }.bind(this),
                 listeners: {
                     select: this.filterCombo,
                     scope: this
@@ -182,6 +218,28 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
     filterCombo: function (combo, record) {
         var s = this.getStore();
         s.baseParams[combo.filterName] = record.data[combo.valueField];
+        
+        if (combo.filterName === 'theme') {
+            var categoryFilter = Ext.getCmp('fred-element-filter-category');
+            
+            if (record.data[combo.valueField] !== 0) {
+                s.baseParams.category = 0;
+                categoryFilter.setValue();
+            }
+            
+            categoryFilter.baseParams.theme = record.data[combo.valueField];
+            categoryFilter.store.load();
+            
+            var ids = ['fred-element-filter-theme', 'fred-rte-config-filter-theme', 'fred-option-set-filter-theme', 'fred-element-category-filter-theme', 'fred-blueprint-filter-theme', 'fred-blueprint-category-filter-theme'];
+            
+            ids.forEach(function(id){
+                if (id === combo.id) return true;
+                
+                var remoteCombo = Ext.getCmp(id);
+                remoteCombo.syncFilter(remoteCombo, record);
+            });
+        }
+
         this.getBottomToolbar().changePage(1);
     },
 
@@ -192,7 +250,18 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
     },
 
     newElement: function(btn, e) {
-        fred.loadPage('element/create');                 
+        var options = {};
+
+        var s = this.getStore();
+        if (s.baseParams.theme) {
+            options.theme = s.baseParams.theme;
+
+            if (s.baseParams.category) {
+                options.category = s.baseParams.category;
+            }
+        }
+        
+        fred.loadPage('element/create', options);                 
     },
 
     quickUpdateElement: function (btn, e) {
@@ -208,6 +277,12 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
                 }
             }
         });
+
+        var category = updateElement.find('name', 'category');
+        if (category[0]) {
+            category = category[0];
+            category.baseParams.theme = this.menu.record.theme_id;
+        }
 
         updateElement.fp.getForm().reset();
         updateElement.fp.getForm().setValues(this.menu.record);
@@ -229,6 +304,12 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
                 }
             }
         });
+
+        var category = duplicateElement.find('name', 'category');
+        if (category[0]) {
+            category = category[0];
+            category.baseParams.theme = this.menu.record.theme_id;
+        }
 
         duplicateElement.fp.getForm().reset();
         duplicateElement.fp.getForm().setValues(this.menu.record);

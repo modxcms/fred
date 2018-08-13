@@ -11,7 +11,7 @@ fred.grid.Blueprints = function (config) {
         save_action: 'mgr/blueprints/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname'],
+        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname', 'theme_id', 'theme_name'],
         ddGroup: 'FredBlueprintsDDGroup',
         enableDragDrop: true,
         paging: true,
@@ -49,6 +49,12 @@ fred.grid.Blueprints = function (config) {
                 header: _('fred.blueprints.description'),
                 dataIndex: 'description',
                 width: 120
+            },
+            {
+                header: _('fred.blueprints.theme'),
+                dataIndex: 'theme_name',
+                sortable: true,
+                width: 60
             },
             {
                 header: _('fred.blueprints.category'),
@@ -116,16 +122,6 @@ fred.grid.Blueprints = function (config) {
                 }
             },
             {
-                xtype: 'fred-combo-blueprint-categories',
-                emptyText: _('fred.blueprint_cateogries.all'),
-                addAll: 1,
-                filterName: 'category',
-                listeners: {
-                    select: this.filterCombo,
-                    scope: this
-                }
-            },
-            {
                 xtype: 'fred-combo-extended-boolean',
                 dataLabel: _('fred.blueprints.public'),
                 emptyText: _('fred.blueprints.public'),
@@ -142,6 +138,46 @@ fred.grid.Blueprints = function (config) {
                 emptyText: _('fred.blueprints.complete'),
                 filterName: 'complete',
                 useInt: true,
+                listeners: {
+                    select: this.filterCombo,
+                    scope: this
+                }
+            },
+            {
+                id: 'fred-blueprint-filter-category',
+                xtype: 'fred-combo-blueprint-categories',
+                emptyText: _('fred.blueprint_cateogries.all'),
+                addAll: 1,
+                filterName: 'category',
+                listeners: {
+                    select: this.filterCombo,
+                    scope: this
+                }
+            },
+            {
+                id: 'fred-blueprint-filter-theme',
+                xtype: 'fred-combo-themes',
+                emptyText: _('fred.themes.all'),
+                addAll: 1,
+                filterName: 'theme',
+                syncFilter: function(combo, record) {
+                    var categoryFilter = Ext.getCmp('fred-blueprint-filter-category');
+                    var s = this.getStore();
+
+                    if (record.data[combo.valueField] !== 0) {
+                        s.baseParams.category = 0;
+                        categoryFilter.setValue();
+                    }
+
+                    categoryFilter.baseParams.theme = record.data[combo.valueField];
+                    categoryFilter.store.load();
+
+                    combo.setValue(record.data[combo.valueField]);
+
+                    s.baseParams[combo.filterName] = record.data[combo.valueField];
+
+                    this.getBottomToolbar().changePage(1);
+                }.bind(this),
                 listeners: {
                     select: this.filterCombo,
                     scope: this
@@ -205,6 +241,28 @@ Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
     filterCombo: function (combo, record) {
         var s = this.getStore();
         s.baseParams[combo.filterName] = record.data[combo.valueField];
+
+        if (combo.filterName === 'theme') {
+            var categoryFilter = Ext.getCmp('fred-blueprint-filter-category');
+
+            if (record.data[combo.valueField] !== 0) {
+                s.baseParams.category = 0;
+                categoryFilter.setValue();
+            }
+
+            categoryFilter.baseParams.theme = record.data[combo.valueField];
+            categoryFilter.store.load();
+
+            var ids = ['fred-element-filter-theme', 'fred-rte-config-filter-theme', 'fred-option-set-filter-theme', 'fred-element-category-filter-theme', 'fred-blueprint-filter-theme', 'fred-blueprint-category-filter-theme'];
+
+            ids.forEach(function(id){
+                if (id === combo.id) return true;
+
+                var remoteCombo = Ext.getCmp(id);
+                remoteCombo.syncFilter(remoteCombo, record);
+            });
+        }
+
         this.getBottomToolbar().changePage(1);
     },
 

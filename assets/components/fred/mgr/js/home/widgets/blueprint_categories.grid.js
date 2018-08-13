@@ -11,7 +11,7 @@ fred.grid.BlueprintCategories = function (config) {
         save_action: 'mgr/blueprint_categories/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints'],
+        fields: ['id', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints', 'theme', 'theme_name'],
         ddGroup: 'FredBlueprintCategoriesDDGroup',
         enableDragDrop: true,
         paging: true,
@@ -30,6 +30,12 @@ fred.grid.BlueprintCategories = function (config) {
                 sortable: true,
                 width: 80,
                 editor: {xtype: 'textfield'}
+            },
+            {
+                header: _('fred.blueprint_categories.theme'),
+                dataIndex: 'theme_name',
+                sortable: true,
+                width: 80
             },
             {
                 header: _('fred.blueprint_categories.public'),
@@ -65,7 +71,7 @@ fred.grid.BlueprintCategories = function (config) {
         tbar: [
             {
                 text: _('fred.blueprint_categories.create'),
-                handler: this.createCategory
+                handler: this.createTheme
             },
             '->',
             {
@@ -101,6 +107,25 @@ fred.grid.BlueprintCategories = function (config) {
                     select: this.filterCombo,
                     scope: this
                 }
+            },
+            {
+                id: 'fred-blueprint-category-filter-theme',
+                xtype: 'fred-combo-themes',
+                emptyText: _('fred.themes.all'),
+                addAll: 1,
+                filterName: 'theme',
+                syncFilter: function(combo, record) {
+                    combo.setValue(record.data[combo.valueField]);
+
+                    var s = this.getStore();
+                    s.baseParams[combo.filterName] = record.data[combo.valueField];
+
+                    this.getBottomToolbar().changePage(1);
+                }.bind(this),
+                listeners: {
+                    select: this.filterCombo,
+                    scope: this
+                }
             }
         ]
     });
@@ -115,19 +140,19 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.blueprint_categories.update'),
-            handler: this.updateCategory
+            handler: this.updateTheme
         });
 
         m.push('-');
 
         m.push({
             text: _('fred.blueprint_categories.remove'),
-            handler: this.removeCategory
+            handler: this.removeTheme
         });
         return m;
     },
 
-    createCategory: function (btn, e) {
+    createTheme: function (btn, e) {
         var createCategory = MODx.load({
             xtype: 'fred-window-blueprint-category',
             listeners: {
@@ -145,7 +170,7 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
         return true;
     },
 
-    updateCategory: function (btn, e) {
+    updateTheme: function (btn, e) {
         var updateCategory = MODx.load({
             xtype: 'fred-window-blueprint-category',
             title: _('fred.blueprint_categories.update'),
@@ -167,9 +192,9 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
         updateCategory.show(e.target);
 
         return true;
-    }
+    },
 
-    , removeCategory: function (btn, e) {
+    removeTheme: function (btn, e) {
         if (!this.menu.record) return false;
 
         var blueprints = parseInt(this.menu.record.blueprints);
@@ -215,8 +240,19 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
 
     filterCombo: function (combo, record) {
         var s = this.getStore();
-        s.baseParams[combo.filterName] = record.data.v;
+        s.baseParams[combo.filterName] = record.data[combo.valueField];
         this.getBottomToolbar().changePage(1);
+
+        if (combo.filterName === 'theme') {
+            var ids = ['fred-element-filter-theme', 'fred-rte-config-filter-theme', 'fred-option-set-filter-theme', 'fred-element-category-filter-theme', 'fred-blueprint-filter-theme', 'fred-blueprint-category-filter-theme'];
+
+            ids.forEach(function(id){
+                if (id === combo.id) return true;
+
+                var remoteCombo = Ext.getCmp(id);
+                remoteCombo.syncFilter(remoteCombo, record);
+            });
+        }
     },
 
     isGridFiltered: function () {
@@ -230,6 +266,11 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
             return true;
         }
 
+        var themeFilter = this.getStore().baseParams.theme;
+        if (!((themeFilter !== undefined) && (themeFilter !== null) && (themeFilter !== '') && (themeFilter !== 0))) {
+            return true;
+        }
+
         return false;
     },
 
@@ -238,6 +279,11 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
             return _('fred.err.bad_sort_column', {column: 'rank'});
         }
 
+        var themeFilter = this.getStore().baseParams.theme;
+        if (!((themeFilter !== undefined) && (themeFilter !== null) && (themeFilter !== '') && (themeFilter !== 0))) {
+            return _('fred.err.required_filter', {filter: 'theme'});
+        }
+        
         if (this.isGridFiltered()) {
             return _('fred.err.clear_filter');
         }
@@ -256,11 +302,14 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
                 },
 
                 'afterrowmove': function (objThis, oldIndex, newIndex, records) {
+                    var currentElement = records.pop();
+                    
                     MODx.Ajax.request({
                         url: fred.config.connectorUrl,
                         params: {
                             action: 'mgr/blueprint_categories/ddreorder',
-                            categoryId: records.pop().id,
+                            categoryId: currentElement.id,
+                            themeId: currentElement.data.theme,
                             oldIndex: oldIndex,
                             newIndex: newIndex
                         },

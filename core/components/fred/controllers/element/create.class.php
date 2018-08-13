@@ -22,12 +22,12 @@ class FredElementCreateManagerController extends FredBaseManagerController
 
     public function getPageTitle()
     {
-        return $this->modx->lexicon('fred.menu.elements');
+        return $this->modx->lexicon('fred.elements.create');
     }
 
     public function loadCustomCssJs()
     {
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'elements/widgets/element_option_set.window.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_option_set.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'element/panel.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'element/page.js');
         

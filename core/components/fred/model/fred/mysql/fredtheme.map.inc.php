@@ -2,10 +2,10 @@
 /**
  * @package fred
  */
-$xpdo_meta_map['FredElementCategory']= array (
+$xpdo_meta_map['FredTheme']= array (
   'package' => 'fred',
   'version' => '0.1',
-  'table' => 'fred_element_categories',
+  'table' => 'fred_themes',
   'extends' => 'xPDOSimpleObject',
   'tableMeta' => 
   array (
@@ -15,8 +15,7 @@ $xpdo_meta_map['FredElementCategory']= array (
   array (
     'name' => NULL,
     'uuid' => NULL,
-    'rank' => 0,
-    'theme' => NULL,
+    'description' => '',
   ),
   'fieldMeta' => 
   array (
@@ -35,22 +34,13 @@ $xpdo_meta_map['FredElementCategory']= array (
       'null' => false,
       'index' => 'unique',
     ),
-    'rank' => 
+    'description' => 
     array (
-      'dbtype' => 'int',
-      'attributes' => 'unsigned',
-      'precision' => '10',
-      'phptype' => 'integer',
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
       'null' => false,
-      'default' => 0,
-    ),
-    'theme' => 
-    array (
-      'dbtype' => 'int',
-      'attributes' => 'unsigned',
-      'precision' => '10',
-      'phptype' => 'integer',
-      'null' => false,
+      'default' => '',
     ),
   ),
   'indexes' => 
@@ -74,23 +64,36 @@ $xpdo_meta_map['FredElementCategory']= array (
   ),
   'composites' => 
   array (
-    'Elements' => 
+    'ElementCategories' => 
     array (
-      'class' => 'FredElement',
+      'class' => 'FredElementCategory',
       'local' => 'id',
-      'foreign' => 'category',
+      'foreign' => 'theme',
       'cardinality' => 'many',
       'owner' => 'local',
     ),
-  ),
-  'aggregates' => 
-  array (
-    'Theme' => 
+    'BlueprintCategories' => 
     array (
-      'class' => 'FredTheme',
-      'local' => 'theme',
-      'foreign' => 'id',
-      'cardinality' => 'one',
+      'class' => 'FredBlueprintCategory',
+      'local' => 'id',
+      'foreign' => 'theme',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
+    'RTEConfigs' => 
+    array (
+      'class' => 'FredElementRTEConfig',
+      'local' => 'id',
+      'foreign' => 'theme',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
+    'OptionSets' => 
+    array (
+      'class' => 'FredElementOptionSet',
+      'local' => 'id',
+      'foreign' => 'theme',
+      'cardinality' => 'many',
       'owner' => 'local',
     ),
   ),

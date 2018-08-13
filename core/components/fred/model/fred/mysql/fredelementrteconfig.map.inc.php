@@ -15,6 +15,7 @@ $xpdo_meta_map['FredElementRTEConfig']= array (
   array (
     'name' => NULL,
     'description' => '',
+    'theme' => NULL,
     'data' => '',
   ),
   'fieldMeta' => 
@@ -34,12 +35,31 @@ $xpdo_meta_map['FredElementRTEConfig']= array (
       'null' => false,
       'default' => '',
     ),
+    'theme' => 
+    array (
+      'dbtype' => 'int',
+      'attributes' => 'unsigned',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+    ),
     'data' => 
     array (
       'dbtype' => 'mediumtext',
       'phptype' => 'json',
       'null' => false,
       'default' => '',
+    ),
+  ),
+  'aggregates' => 
+  array (
+    'Theme' => 
+    array (
+      'class' => 'FredTheme',
+      'local' => 'theme',
+      'foreign' => 'id',
+      'cardinality' => 'one',
+      'owner' => 'local',
     ),
   ),
 );

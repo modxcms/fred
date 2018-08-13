@@ -96,20 +96,33 @@ Ext.extend(fred.window.Element, MODx.Window, {
                         },
                         items: [
                             {
+                                xtype: 'fred-combo-themes',
+                                fieldLabel: _('fred.elements.theme'),
+                                name: 'theme_id',
+                                hiddenName: 'theme_id',
+                                anchor: '100%',
+                                listeners: {
+                                    select: function(combo, record) {
+                                        var category = this.find('name', 'category');
+                                        if (!category[0]) return;
+
+                                        category = category[0];
+                                        category.setValue();
+                                        category.enable();
+                                        category.baseParams.theme = record.id;
+                                        category.store.load();
+                                    },
+                                    scope: this
+                                },
+                                allowBlank: false
+                            },
+                            {
                                 xtype: 'fred-combo-element-categories',
                                 fieldLabel: _('fred.elements.category'),
                                 name: 'category',
                                 hiddenName: 'category',
-                                anchor: '100%'
-                            },
-                            {
-                                xtype: 'numberfield',
-                                allowDecimals: false,
-                                allowNegative: false,
-                                fieldLabel: _('fred.elements.rank'),
-                                name: 'rank',
                                 anchor: '100%',
-                                allowBlank: true
+                                allowBlank: false
                             },
                             {
                                 xtype: 'fred-combo-element-option-sets',
@@ -223,6 +236,35 @@ Ext.extend(fred.window.ElementDuplicate, MODx.Window, {
                 name: 'name',
                 anchor: '100%',
                 allowBlank: true
+            },
+            {
+                xtype: 'fred-combo-themes',
+                fieldLabel: _('fred.elements.theme'),
+                name: 'theme_id',
+                hiddenName: 'theme_id',
+                anchor: '100%',
+                listeners: {
+                    select: function(combo, record) {
+                        var category = this.find('name', 'category');
+                        if (!category[0]) return;
+
+                        category = category[0];
+                        category.setValue();
+                        category.enable();
+                        category.baseParams.theme = record.id;
+                        category.store.load();
+                    },
+                    scope: this
+                },
+                allowBlank: false
+            },
+            {
+                xtype: 'fred-combo-element-categories',
+                fieldLabel: _('fred.elements.category'),
+                name: 'category',
+                hiddenName: 'category',
+                anchor: '100%',
+                allowBlank: false
             }
         ]
     }

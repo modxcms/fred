@@ -26,6 +26,7 @@ fred.panel.Home = function (config) {
                 },
                 border: true,
                 activeItem: 0,
+                id: 'fred-test-panel',
                 hideMode: 'offsets',
                 items: [
                     {
@@ -83,6 +84,16 @@ fred.panel.Home = function (config) {
                         items: [
                             {
                                 xtype: 'fred-grid-blueprint-categories',
+                                preventRender: true,
+                                cls: 'main-wrapper'
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.home.themes'),
+                        items: [
+                            {
+                                xtype: 'fred-grid-themes',
                                 preventRender: true,
                                 cls: 'main-wrapper'
                             }

@@ -9,7 +9,7 @@ fred.grid.ElementOptionSets = function (config) {
         save_action: 'mgr/element_option_sets/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'complete', 'data'],
+        fields: ['id', 'name', 'description', 'complete', 'data', 'theme', 'theme_name'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.element_option_sets.none'),
@@ -34,6 +34,12 @@ fred.grid.ElementOptionSets = function (config) {
                 editor: {xtype: 'textfield'}
             },
             {
+                header: _('fred.element_option_sets.theme'),
+                dataIndex: 'theme_name',
+                sortable: true,
+                width: 80
+            },
+            {
                 header: _('fred.element_option_sets.complete'),
                 dataIndex: 'complete',
                 sortable: true,
@@ -44,7 +50,7 @@ fred.grid.ElementOptionSets = function (config) {
         tbar: [
             {
                 text: _('fred.element_option_sets.create'),
-                handler: this.newElementOptionSet
+                handler: this.newElementRTEConfig
             },
             '->',
             {
@@ -76,6 +82,25 @@ fred.grid.ElementOptionSets = function (config) {
                 emptyText: _('fred.element_option_sets.complete'),
                 filterName: 'complete',
                 useInt: true,
+                listeners: {
+                    select: this.filterCombo,
+                    scope: this
+                }
+            },
+            {
+                id: 'fred-option-set-filter-theme',
+                xtype: 'fred-combo-themes',
+                emptyText: _('fred.themes.all'),
+                addAll: 1,
+                filterName: 'theme',
+                syncFilter: function(combo, record) {
+                    combo.setValue(record.data[combo.valueField]);
+
+                    var s = this.getStore();
+                    s.baseParams[combo.filterName] = record.data[combo.valueField];
+
+                    this.getBottomToolbar().changePage(1);
+                }.bind(this),
                 listeners: {
                     select: this.filterCombo,
                     scope: this
@@ -144,6 +169,17 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
         var s = this.getStore();
         s.baseParams[combo.filterName] = record.data[combo.valueField];
         this.getBottomToolbar().changePage(1);
+
+        if (combo.filterName === 'theme') {
+            var ids = ['fred-element-filter-theme', 'fred-rte-config-filter-theme', 'fred-option-set-filter-theme', 'fred-element-category-filter-theme', 'fred-blueprint-filter-theme', 'fred-blueprint-category-filter-theme'];
+
+            ids.forEach(function(id){
+                if (id === combo.id) return true;
+
+                var remoteCombo = Ext.getCmp(id);
+                remoteCombo.syncFilter(remoteCombo, record);
+            });
+        }
     },
 
     search: function (field, value) {
@@ -152,8 +188,15 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
     },
 
-    newElementOptionSet: function(btn, e) {
-        fred.loadPage('element_option_set/create');
+    newElementRTEConfig: function(btn, e) {
+        var options = {};
+
+        var s = this.getStore();
+        if (s.baseParams.theme) {
+            options.theme = s.baseParams.theme;
+        }
+        
+        fred.loadPage('element_option_set/create', options);
     },
 
     quickUpdateElementRTEConfig: function (btn, e) {

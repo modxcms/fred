@@ -9,7 +9,24 @@ class FredBlueprintsGetProcessor extends modObjectGetProcessor
     public $classKey = 'FredBlueprint';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.blueprints';
+    /** @var FredBlueprint $object */
+    public $object;
+    
+    public function beforeOutput()
+    {
+        $category = $this->object->Category;
 
+        if ($category) {
+            $theme = $category->Theme;
+
+            if ($theme) {
+                $this->object->set('theme', $theme->id);
+            }
+        }
+
+        return true;
+    }
+    
 }
 
 return 'FredBlueprintsGetProcessor';

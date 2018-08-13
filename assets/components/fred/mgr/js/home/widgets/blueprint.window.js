@@ -68,6 +68,27 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                         },
                         items: [
                             {
+                                xtype: 'fred-combo-themes',
+                                fieldLabel: _('fred.blueprints.theme'),
+                                name: 'theme_id',
+                                hiddenName: 'theme_id',
+                                anchor: '100%',
+                                listeners: {
+                                    select: function(combo, record) {
+                                        var category = this.find('name', 'category');
+                                        if (!category[0]) return;
+
+                                        category = category[0];
+                                        category.setValue();
+                                        category.enable();
+                                        category.baseParams.theme = record.id;
+                                        category.store.load();
+                                    },
+                                    scope: this
+                                },
+                                allowBlank: false
+                            },
+                            {
                                 xtype: 'fred-combo-blueprint-categories',
                                 fieldLabel: _('fred.blueprints.category'),
                                 name: 'category',
@@ -82,15 +103,6 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                 hiddenName: 'public',
                                 anchor: '100%',
                                 value: 1
-                            },
-                            {
-                                xtype: 'numberfield',
-                                allowDecimals: false,
-                                allowNegative: false,
-                                fieldLabel: _('fred.blueprints.rank'),
-                                name: 'rank',
-                                anchor: '100%',
-                                allowBlank: true
                             }
                         ]
                     }

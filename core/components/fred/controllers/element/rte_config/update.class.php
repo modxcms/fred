@@ -22,7 +22,7 @@ class FredElementRTEConfigUpdateManagerController extends FredBaseManagerControl
 
     public function getPageTitle()
     {
-        return $this->modx->lexicon('fred.menu.elements');
+        return $this->modx->lexicon('fred.element_rte_configs.update');
     }
 
     public function loadCustomCssJs()

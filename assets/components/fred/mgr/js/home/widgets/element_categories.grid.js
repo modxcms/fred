@@ -11,7 +11,7 @@ fred.grid.ElementCategories = function (config) {
         save_action: 'mgr/element_categories/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'rank', 'elements'],
+        fields: ['id', 'name', 'rank', 'elements', 'theme_name', 'theme'],
         ddGroup: 'FredElementCategoriesDDGroup',
         enableDragDrop: true,
         paging: true,
@@ -32,6 +32,12 @@ fred.grid.ElementCategories = function (config) {
                 editor: {xtype: 'textfield'}
             },
             {
+                header: _('fred.element_categories.theme'),
+                dataIndex: 'theme_name',
+                sortable: true,
+                width: 80
+            },
+            {
                 header: _('fred.element_categories.number_of_elements'),
                 dataIndex: 'elements',
                 sortable: true,
@@ -48,7 +54,7 @@ fred.grid.ElementCategories = function (config) {
         tbar: [
             {
                 text: _('fred.element_categories.create'),
-                handler: this.createCategory
+                handler: this.createTheme
             },
             '->',
             {
@@ -73,6 +79,25 @@ fred.grid.ElementCategories = function (config) {
                         scope: this
                     }
                 }
+            },
+            {
+                id: 'fred-element-category-filter-theme',
+                xtype: 'fred-combo-themes',
+                emptyText: _('fred.themes.all'),
+                addAll: 1,
+                filterName: 'theme',
+                syncFilter: function(combo, record) {
+                    combo.setValue(record.data[combo.valueField]);
+
+                    var s = this.getStore();
+                    s.baseParams[combo.filterName] = record.data[combo.valueField];
+
+                    this.getBottomToolbar().changePage(1);
+                }.bind(this),
+                listeners: {
+                    select: this.filterCombo,
+                    scope: this
+                }
             }
         ]
     });
@@ -87,7 +112,7 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.element_categories.update'),
-            handler: this.updateCategory
+            handler: this.updateTheme
         });
 
         m.push('-');
@@ -101,14 +126,22 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.element_categories.remove'),
-            handler: this.removeCategory
+            handler: this.removeTheme
         });
         return m;
     },
 
-    createCategory: function (btn, e) {
+    createTheme: function (btn, e) {
+        var record = {};
+        
+        var s = this.getStore();
+        if (s.baseParams.theme) {
+            record.theme = s.baseParams.theme;
+        }
+        
         var createCategory = MODx.load({
             xtype: 'fred-window-element-category',
+            record: record,
             listeners: {
                 success: {
                     fn: function () {
@@ -119,12 +152,14 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
             }
         });
 
+        createCategory.fp.getForm().reset();
+        createCategory.fp.getForm().setValues(record);
         createCategory.show(e.target);
 
         return true;
     },
 
-    updateCategory: function (btn, e) {
+    updateTheme: function (btn, e) {
         var updateCategory = MODx.load({
             xtype: 'fred-window-element-category',
             title: _('fred.element_categories.update'),
@@ -172,7 +207,7 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
         return true;
     },
 
-    removeCategory: function (btn, e) {
+    removeTheme: function (btn, e) {
         if (!this.menu.record) return false;
 
         var elements = parseInt(this.menu.record.elements);
@@ -215,8 +250,19 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
 
     filterCombo: function (combo, record) {
         var s = this.getStore();
-        s.baseParams[combo.filterName] = record.data.v;
+        s.baseParams[combo.filterName] = record.data[combo.valueField];
         this.getBottomToolbar().changePage(1);
+
+        if (combo.filterName === 'theme') {
+            var ids = ['fred-element-filter-theme', 'fred-rte-config-filter-theme', 'fred-option-set-filter-theme', 'fred-element-category-filter-theme', 'fred-blueprint-filter-theme', 'fred-blueprint-category-filter-theme'];
+
+            ids.forEach(function(id){
+                if (id === combo.id) return true;
+
+                var remoteCombo = Ext.getCmp(id);
+                remoteCombo.syncFilter(remoteCombo, record);
+            });
+        }
     },
 
     isGridFiltered: function () {
@@ -230,12 +276,22 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
             return true;
         }
 
+        var themeFilter = this.getStore().baseParams.theme;
+        if (!((themeFilter !== undefined) && (themeFilter !== null) && (themeFilter !== '') && (themeFilter !== 0))) {
+            return true;
+        }
+
         return false;
     },
 
     getDragDropText: function () {
         if (this.store.sortInfo && this.store.sortInfo.field != 'rank') {
             return _('fred.err.bad_sort_column', {column: 'rank'});
+        }
+
+        var themeFilter = this.getStore().baseParams.theme;
+        if (!((themeFilter !== undefined) && (themeFilter !== null) && (themeFilter !== '') && (themeFilter !== 0))) {
+            return _('fred.err.required_filter', {filter: 'theme'});
         }
 
         if (this.isGridFiltered()) {
@@ -256,11 +312,13 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
                 },
 
                 'afterrowmove': function (objThis, oldIndex, newIndex, records) {
+                    var currentElement = records.pop();
                     MODx.Ajax.request({
                         url: fred.config.connectorUrl,
                         params: {
                             action: 'mgr/element_categories/ddreorder',
-                            categoryId: records.pop().id,
+                            categoryId: currentElement.id,
+                            themeId: currentElement.data.theme,
                             oldIndex: oldIndex,
                             newIndex: newIndex
                         },

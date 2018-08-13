@@ -35,7 +35,7 @@ $xpdo_meta_map['FredElement']= array (
     'uuid' => 
     array (
       'dbtype' => 'varchar',
-      'precision' => '255',
+      'precision' => '36',
       'phptype' => 'string',
       'null' => false,
       'index' => 'unique',

@@ -7,6 +7,7 @@ fred.window.BlueprintCategory = function (config) {
         url: fred.config.connectorUrl,
         action: 'mgr/blueprint_categories/create',
         modal: true,
+        autoHeight: true,
         fields: this.getFields(config)
     });
     fred.window.BlueprintCategory.superclass.constructor.call(this, config);
@@ -25,6 +26,15 @@ Ext.extend(fred.window.BlueprintCategory, MODx.Window, {
                 fieldLabel: _('fred.blueprint_categories.name'),
                 name: 'name',
                 anchor: '100%',
+                allowBlank: false
+            },
+            {
+                xtype: 'fred-combo-themes',
+                fieldLabel: _('fred.blueprint_categories.theme'),
+                name: 'theme',
+                hiddenName: 'theme',
+                anchor: '100%',
+                disabled: config.isUpdate,
                 allowBlank: false
             },
             {

@@ -33,6 +33,11 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
         if (!empty($search)) {
             $c->where(['name:LIKE' => "%{$search}%"]);
         }
+
+        $theme = $this->getProperty('theme', null);
+        if (!empty($theme)) {
+            $c->where(['Theme.id' => $theme]);
+        }
         
         return parent::prepareQueryBeforeCount($c);
     }
@@ -42,10 +47,12 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
     {
         $c->leftJoin('FredBlueprintCategory', 'Category');
         $c->leftJoin('modUserProfile', 'UserProfile', 'UserProfile.internalKey = FredBlueprint.createdBy');
-        
+        $c->leftJoin('FredTheme', 'Theme', 'Category.theme = Theme.id');
+
         $c->select($this->modx->getSelectColumns('FredBlueprint', 'FredBlueprint'));
         $c->select($this->modx->getSelectColumns('FredBlueprintCategory', 'Category', 'category_'));
         $c->select($this->modx->getSelectColumns('modUserProfile', 'UserProfile', 'user_profile_'));
+        $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['id', 'name']));
 
         return parent::prepareQueryAfterCount($c);
     }

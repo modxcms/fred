@@ -15,11 +15,16 @@ class FredElementRTEConfigsUpdateProcessor extends modObjectUpdateProcessor
     public function beforeSet()
     {
         $name = $this->getProperty('name');
+        $theme = $this->getProperty('theme');
 
+        if (empty($theme)) {
+            $this->addFieldError('theme', $this->modx->lexicon('fred.err.element_rte_configs_ns_theme'));
+        }
+        
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ns_name'));
         } else {
-            if ($this->modx->getCount($this->classKey, array('name' => $name, 'id:!=' => $this->object->id)) > 0) {
+            if ($this->modx->getCount($this->classKey, ['name' => $name, 'theme' => $theme, 'id:!=' => $this->object->id]) > 0) {
                 $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ae_name'));
             }
         }

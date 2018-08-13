@@ -37,8 +37,23 @@ class FredElementOptionSetsGetListProcessor extends modObjectGetListProcessor
         if (!empty($search)) {
             $c->where(['name:LIKE' => "%{$search}%"]);
         }
+
+        $theme = $this->getProperty('theme', null);
+        if (!empty($theme)) {
+            $c->where(['theme' => $theme]);
+        }
         
         return parent::prepareQueryBeforeCount($c);
+    }
+
+    public function prepareQueryAfterCount(xPDOQuery $c)
+    {
+        $c->leftJoin('FredTheme', 'Theme');
+
+        $c->select($this->modx->getSelectColumns('FredElementOptionSet', 'FredElementOptionSet'));
+        $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['id', 'name']));
+
+        return parent::prepareQueryAfterCount($c);
     }
 }
 

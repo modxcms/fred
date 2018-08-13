@@ -39,6 +39,7 @@ $_lang['fred.home.option_sets'] = 'Option Sets';
 $_lang['fred.home.rte_configs'] = 'RTE Configs';
 $_lang['fred.home.blueprints'] = 'Blueprints';
 $_lang['fred.home.blueprint_categories'] = 'Blueprint Categories';
+$_lang['fred.home.themes'] = 'Themes';
 
 $_lang['fred.blueprints.none'] = 'No blueprints were found.';
 $_lang['fred.blueprints.name'] = 'Name';
@@ -56,6 +57,7 @@ $_lang['fred.blueprints.remove_confirm'] = 'Are you sure you want to delete [[+n
 $_lang['fred.blueprints.quick_update'] = 'Quick Update Blueprint';
 $_lang['fred.blueprints.update'] = 'Update Blueprint';
 $_lang['fred.blueprints.create'] = 'Create Blueprint';
+$_lang['fred.blueprints.theme'] = 'Theme';
 
 $_lang['fred.blueprint_cateogries.all'] = 'All Categories';
 $_lang['fred.blueprint_categories.none'] = 'No categories were found.';
@@ -71,6 +73,7 @@ $_lang['fred.blueprint_categories.remove_confirm'] = 'Are you sure you want to r
 $_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Are you sure you want to remove "[[+name]]" Blueprint Category and [[+blueprints]] attached Blueprint?' ;
 $_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Are you sure you want to remove "[[+name]]" Blueprint Category?' ;
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Blueprints';
+$_lang['fred.blueprint_categories.theme'] = 'Theme';
 
 $_lang['fred.elements.none'] = 'No elements were found.';
 $_lang['fred.elements.image'] = 'Image';
@@ -91,6 +94,7 @@ $_lang['fred.elements.option_set'] = 'Option Set';
 $_lang['fred.elements.duplicate'] = 'Duplicate Element';
 $_lang['fred.elements.new_name'] = 'New Name';
 $_lang['fred.elements.has_override'] = 'Has Override';
+$_lang['fred.elements.theme'] = 'Theme';
 
 $_lang['fred.element_cateogries.all'] = 'All Categories';
 $_lang['fred.element_categories.none'] = 'No categories were found.';
@@ -106,6 +110,7 @@ $_lang['fred.element_categories.remove_confirm_singular'] = 'Are you sure you wa
 $_lang['fred.element_categories.remove_confirm_empty'] = 'Are you sure you want to remove "[[+name]]" Element Category?' ;
 $_lang['fred.element_categories.duplicate'] = 'Duplicate Category';
 $_lang['fred.element_categories.new_name'] = 'New Name';
+$_lang['fred.element_categories.theme'] = 'Theme';
 
 $_lang['fred.element_option_sets.none'] = 'No option sets were found.';
 $_lang['fred.element_option_sets.name'] = 'Name';
@@ -122,6 +127,7 @@ $_lang['fred.element_option_sets.no_set'] = 'None';
 $_lang['fred.element_option_sets.duplicate'] = 'Duplicate Option Set';
 $_lang['fred.element_option_sets.new_name'] = 'New Name';
 $_lang['fred.element_option_sets.preview'] = 'Preview Option Set';
+$_lang['fred.element_option_sets.theme'] = 'Theme';
 
 $_lang['fred.element_rte_configs.none'] = 'No rte configs were found.';
 $_lang['fred.element_rte_configs.name'] = 'Name';
@@ -135,6 +141,19 @@ $_lang['fred.element_rte_configs.quick_update'] = 'Quick Update RTE Config';
 $_lang['fred.element_rte_configs.data'] = 'Data';
 $_lang['fred.element_rte_configs.duplicate'] = 'Duplicate RTE Config';
 $_lang['fred.element_rte_configs.new_name'] = 'New Name';
+$_lang['fred.element_rte_configs.theme'] = 'Theme';
+
+$_lang['fred.themes.none'] = 'No themes were found.';
+$_lang['fred.themes.name'] = 'Name';
+$_lang['fred.themes.description'] = 'Description';
+$_lang['fred.themes.create'] = 'Create Theme';
+$_lang['fred.themes.update'] = 'Update Theme';
+$_lang['fred.themes.remove'] = 'Remove Theme';
+$_lang['fred.themes.remove_confirm'] = 'Are you sure tou want to remove "[[+name]]" Theme?';
+$_lang['fred.themes.search_name'] = 'Search by Name';
+$_lang['fred.themes.new_name'] = 'New Name';
+$_lang['fred.themes.duplicate'] = 'Duplicate Theme';
+$_lang['fred.themes.all'] = 'All Themes';
 
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
@@ -164,14 +183,22 @@ $_lang['setting_fred.generated_images_url'] = 'Generated Images URL';
 $_lang['setting_fred.generated_images_url_desc'] = 'URL path to the directory for generated images.';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Name is required';
+$_lang['fred.err.blueprints_ns_name'] = 'Name is required';
+$_lang['fred.err.blueprints_ns_category'] = 'Category is required';
 $_lang['fred.err.bad_sort_column'] = 'Sort grid by <strong>[[+column]]</strong> to use drag & drop sorting.';
 $_lang['fred.err.clear_filter'] = 'Clear filters to use drag & drop sorting.';
 $_lang['fred.err.required_filter'] = 'You have to filter by [[+filter]].';
 $_lang['fred.err.element_categories_ns_name'] = 'Name is required';
+$_lang['fred.err.element_categories_ns_theme'] = 'Theme is required';
 $_lang['fred.err.elements_ns_name'] = 'Name is required';
+$_lang['fred.err.elements_ns_category'] = 'Category is required';
 $_lang['fred.err.element_settings_ns_name'] = 'Name is required';
 $_lang['fred.err.element_settings_ae_name'] = 'Element Setting with this name already exists.';
 $_lang['fred.err.element_option_sets_ns_name'] = 'Name is required';
-$_lang['fred.err.element_option_sets_ae_name'] = 'Option Set with this name already exists.';
+$_lang['fred.err.element_option_sets_ns_theme'] = 'Theme is required';
+$_lang['fred.err.element_option_sets_ae_name'] = 'Option Set with this name already exists in the theme.';
 $_lang['fred.err.element_rte_configs_ns_name'] = 'Name is required';
-$_lang['fred.err.element_rte_configs_ae_name'] = 'RTE Config with this name already exists.';
+$_lang['fred.err.element_rte_configs_ns_theme'] = 'Theme is required';
+$_lang['fred.err.element_rte_configs_ae_name'] = 'RTE Config with this name already exists in the theme.';
+$_lang['fred.err.theme_ns_name'] = 'Name is required';
+$_lang['fred.err.blueprint_categories_ns_theme'] = 'Theme is required';

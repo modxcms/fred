@@ -56,6 +56,11 @@ Ext.extend(fred.panel.ElementRTEConfig, MODx.FormPanel, {
                 }
             });
         } else {
+            var theme = MODx.request.theme;
+            if (theme) {
+                this.getForm().setValues({theme: theme});
+            }
+            
             this.fireEvent('ready');
             MODx.fireEvent('ready');
         }
@@ -121,7 +126,7 @@ Ext.extend(fred.panel.ElementRTEConfig, MODx.FormPanel, {
                                 },
                                 items: [
                                     {
-                                        columnWidth: 1,
+                                        columnWidth: .7,
                                         border: false,
                                         defaults: {
                                             msgTarget: 'under',
@@ -134,7 +139,49 @@ Ext.extend(fred.panel.ElementRTEConfig, MODx.FormPanel, {
                                                 name: 'name',
                                                 anchor: '100%',
                                                 allowBlank: false
-                                            },
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        columnWidth: .3,
+                                        border: false,
+                                        defaults: {
+                                            msgTarget: 'under',
+                                            anchor: '100%'
+                                        },
+                                        items: [
+                                            {
+                                                xtype: 'fred-combo-themes',
+                                                fieldLabel: _('fred.element_rte_configs.theme'),
+                                                name: 'theme',
+                                                hiddenName: 'theme',
+                                                anchor: '100%',
+                                                allowBlank: false
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                layout: 'column',
+                                border: false,
+                                anchor: '100%',
+                                defaults: {
+                                    layout: 'form',
+                                    labelAlign: 'top',
+                                    labelSeparator: '',
+                                    anchor: '100%',
+                                    border: false
+                                },
+                                items: [
+                                    {
+                                        columnWidth: 1,
+                                        border: false,
+                                        defaults: {
+                                            msgTarget: 'under',
+                                            anchor: '100%'
+                                        },
+                                        items: [
                                             {
                                                 xtype: 'textarea',
                                                 fieldLabel: _('fred.element_rte_configs.description'),

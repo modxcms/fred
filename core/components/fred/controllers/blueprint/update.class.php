@@ -22,7 +22,7 @@ class FredBlueprintUpdateManagerController extends FredBaseManagerController
 
     public function getPageTitle()
     {
-        return $this->modx->lexicon('fred.menu.blueprints');
+        return $this->modx->lexicon('fred.blueprints.update');
     }
 
     public function loadCustomCssJs()

@@ -76,6 +76,13 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
                                 name: 'name',
                                 anchor: '100%',
                                 allowBlank: false
+                            },
+                            {
+                                xtype: 'textarea',
+                                fieldLabel: _('fred.element_option_sets.description'),
+                                name: 'description',
+                                anchor: '100%',
+                                allowBlank: true
                             }
                         ]
                     },
@@ -87,6 +94,14 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
                             anchor: '100%'
                         },
                         items: [
+                            {
+                                xtype: 'fred-combo-themes',
+                                fieldLabel: _('fred.element_option_sets.theme'),
+                                name: 'theme',
+                                hiddenName: 'theme',
+                                anchor: '100%',
+                                allowBlank: false
+                            },
                             {
                                 xtype: 'fred-combo-boolean',
                                 useInt: true,
@@ -120,13 +135,6 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
                             anchor: '100%'
                         },
                         items: [
-                            {
-                                xtype: 'textarea',
-                                fieldLabel: _('fred.element_option_sets.description'),
-                                name: 'description',
-                                anchor: '100%',
-                                allowBlank: true
-                            },
                             {
                                 xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
                                 mimeType: 'application/json',
@@ -195,6 +203,14 @@ Ext.extend(fred.window.ElementOptionSetDuplicate, MODx.Window, {
                 name: 'name',
                 anchor: '100%',
                 allowBlank: true
+            },
+            {
+                xtype: 'fred-combo-themes',
+                fieldLabel: _('fred.element_option_sets.theme'),
+                name: 'theme',
+                hiddenName: 'theme',
+                anchor: '100%',
+                allowBlank: false
             }
         ]
     }

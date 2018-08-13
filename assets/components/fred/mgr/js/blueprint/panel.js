@@ -142,6 +142,30 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                                 name: 'description',
                                                 anchor: '100%',
                                                 height: 100
+                                            },
+                                            {
+                                                xtype: 'modx-combo-browser',
+                                                fieldLabel: _('fred.blueprints.image'),
+                                                triggerClass: 'x-form-image-trigger',
+                                                name: 'image',
+                                                anchor: '100%',
+                                                allowBlank: false,
+                                                updatePreview: function () {
+                                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = (this.getValue() || "https://via.placeholder.com/800x100?text=No+image");
+                                                },
+                                                listeners: {
+                                                    'select': {
+                                                        fn: function (data) {
+                                                            this.setValue(MODx.config.base_url + data.relativeUrl);
+                                                            this.updatePreview();
+                                                        }
+                                                    },
+                                                    'change': {
+                                                        fn: function (cb, nv) {
+                                                            this.updatePreview();
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     },
@@ -153,11 +177,33 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                         },
                                         items: [
                                             {
+                                                xtype: 'fred-combo-themes',
+                                                fieldLabel: _('fred.blueprints.theme'),
+                                                name: 'theme',
+                                                hiddenName: 'theme',
+                                                anchor: '100%',
+                                                listeners: {
+                                                    select: function(combo, record) {
+                                                        var category = this.find('name', 'category');
+                                                        if (!category[0]) return;
+
+                                                        category = category[0];
+                                                        category.setValue();
+                                                        category.enable();
+                                                        category.baseParams.theme = record.id;
+                                                        category.store.load();
+                                                    },
+                                                    scope: this
+                                                },
+                                                allowBlank: false
+                                            },
+                                            {
                                                 xtype: 'fred-combo-blueprint-categories',
                                                 fieldLabel: _('fred.blueprints.category'),
                                                 name: 'category',
                                                 hiddenName: 'category',
-                                                anchor: '100%'
+                                                anchor: '100%',
+                                                allowBlank: false
                                             },
                                             {
                                                 xtype: 'fred-combo-boolean',
@@ -201,30 +247,6 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                             anchor: '100%'
                                         },
                                         items: [
-                                            {
-                                                xtype: 'modx-combo-browser',
-                                                fieldLabel: _('fred.blueprints.image'),
-                                                triggerClass: 'x-form-image-trigger',
-                                                name: 'image',
-                                                anchor: '100%',
-                                                allowBlank: false,
-                                                updatePreview: function () {
-                                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = (this.getValue() || "https://via.placeholder.com/800x100?text=No+image");
-                                                },
-                                                listeners: {
-                                                    'select': {
-                                                        fn: function (data) {
-                                                            this.setValue(MODx.config.base_url + data.relativeUrl);
-                                                            this.updatePreview();
-                                                        }
-                                                    },
-                                                    'change': {
-                                                        fn: function (cb, nv) {
-                                                            this.updatePreview();
-                                                        }
-                                                    }
-                                                }
-                                            },
                                             {
                                                 id: 'image_preview',
                                                 html: '<img src="' + "https://via.placeholder.com/800x100?text=No+image" + '" style="max-height: 800px;max-width: 100%;margin-top: 15px;">',

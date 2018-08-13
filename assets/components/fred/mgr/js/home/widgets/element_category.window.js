@@ -7,6 +7,7 @@ fred.window.ElementCategory = function (config) {
         url: fred.config.connectorUrl,
         action: 'mgr/element_categories/create',
         modal: true,
+        autoHeight: true,
         fields: this.getFields(config)
     });
     fred.window.ElementCategory.superclass.constructor.call(this, config);
@@ -25,6 +26,15 @@ Ext.extend(fred.window.ElementCategory, MODx.Window, {
                 fieldLabel: _('fred.element_categories.name'),
                 name: 'name',
                 anchor: '100%',
+                allowBlank: false
+            },
+            {
+                xtype: 'fred-combo-themes',
+                fieldLabel: _('fred.element_categories.theme'),
+                name: 'theme',
+                hiddenName: 'theme',
+                anchor: '100%',
+                disabled: config.isUpdate,
                 allowBlank: false
             },
             {
@@ -52,7 +62,6 @@ fred.window.ElementCategoryDuplicate = function (config) {
         modal: true,
         fields: this.getFields(config),
         autoHeight: true,
-        width: 800,
         keys: [
             {
                 key: Ext.EventObject.ENTER,
@@ -79,6 +88,14 @@ Ext.extend(fred.window.ElementCategoryDuplicate, MODx.Window, {
                 name: 'name',
                 anchor: '100%',
                 allowBlank: true
+            },
+            {
+                xtype: 'fred-combo-themes',
+                fieldLabel: _('fred.element_categories.theme'),
+                name: 'theme',
+                hiddenName: 'theme',
+                anchor: '100%',
+                allowBlank: false
             }
         ]
     }

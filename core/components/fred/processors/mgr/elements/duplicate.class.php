@@ -13,27 +13,35 @@ class FredElementsDuplicateProcessor extends modObjectDuplicateProcessor
     public function process() {
         $this->newObject->fromArray($this->object->toArray());
         $name = $this->getProperty('name');
+        $category = $this->getProperty('category');
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.elements_ns_name'));
             return $this->failure();
         }
+        
+        if (empty($category)) {
+            $this->addFieldError('category', $this->modx->lexicon('fred.err.elements_ns_category'));
+            return $this->failure();
+        }
 
         $this->newObject->set('name', $name);
+        $this->newObject->set('category', $category);
+        $this->newObject->set('uuid', '');
 
         $c = $this->modx->newQuery($this->classKey);
         $c->where([
-            'category' => $this->object->get('category'),
+            'category' => $category,
         ]);
         $c->limit(1);
         $c->sortby('rank', 'DESC');
 
         $last = 0;
 
-        /** @var FredElementCategory[] $categories */
-        $categories = $this->modx->getIterator($this->classKey, $c);
-        foreach ($categories as $category) {
-            $last = $category->rank + 1;
+        /** @var FredElementCategory[] $elements */
+        $elements = $this->modx->getIterator($this->classKey, $c);
+        foreach ($elements as $element) {
+            $last = $element->rank + 1;
             break;
         }
         $this->newObject->set('rank', $last);

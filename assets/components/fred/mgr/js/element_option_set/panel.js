@@ -56,6 +56,11 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                 }
             });
         } else {
+            var theme = MODx.request.theme;
+            if (theme) {
+                this.getForm().setValues({theme: theme});
+            }
+            
             this.fireEvent('ready');
             MODx.fireEvent('ready');
         }
@@ -133,6 +138,12 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                                                 name: 'name',
                                                 anchor: '100%',
                                                 allowBlank: false
+                                            },
+                                            {
+                                                xtype: 'textarea',
+                                                fieldLabel: _('fred.element_option_sets.description'),
+                                                name: 'description',
+                                                anchor: '100%'
                                             }
                                         ]
                                     },
@@ -144,6 +155,14 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                                         },
                                         items: [
                                             {
+                                                xtype: 'fred-combo-themes',
+                                                fieldLabel: _('fred.element_option_sets.theme'),
+                                                name: 'theme',
+                                                hiddenName: 'theme',
+                                                anchor: '100%',
+                                                allowBlank: false
+                                            },
+                                            {
                                                 xtype: 'fred-combo-boolean',
                                                 useInt: true,
                                                 fieldLabel: _('fred.element_option_sets.complete'),
@@ -151,37 +170,6 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                                                 hiddenName: 'complete',
                                                 anchor: '100%',
                                                 value: 1
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                layout: 'column',
-                                border: false,
-                                anchor: '100%',
-                                defaults: {
-                                    layout: 'form',
-                                    labelAlign: 'top',
-                                    labelSeparator: '',
-                                    anchor: '100%',
-                                    border: false
-                                },
-                                items: [
-                                    {
-                                        columnWidth: 1,
-                                        border: false,
-                                        defaults: {
-                                            msgTarget: 'under',
-                                            anchor: '100%'
-                                        },
-                                        items: [
-                                            {
-                                                xtype: 'textarea',
-                                                fieldLabel: _('fred.element_option_sets.description'),
-                                                name: 'description',
-                                                anchor: '100%',
-                                                height: 100
                                             }
                                         ]
                                     }

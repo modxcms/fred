@@ -12,13 +12,15 @@ class FredBlueprintCategoriesReorderProcessor extends modObjectProcessor
 
     public function process()
     {
-        $categoryid = $this->getProperty('categoryId');
+        $categoryId = $this->getProperty('categoryId');
+        $themeId = $this->getProperty('themeId');
         $oldIndex = $this->getProperty('oldIndex');
         $newIndex = $this->getProperty('newIndex');
 
         $c = $this->modx->newQuery($this->classKey);
         $c->where(array(
-            'id:!=' => $categoryid,
+            'id:!=' => $categoryId,
+            'theme' => $themeId,
             'rank:>=' => min($oldIndex, $newIndex),
             'rank:<=' => max($oldIndex, $newIndex),
         ));
@@ -42,7 +44,7 @@ class FredBlueprintCategoriesReorderProcessor extends modObjectProcessor
             }
         }
 
-        $categoryObject = $this->modx->getObject($this->classKey, $categoryid);
+        $categoryObject = $this->modx->getObject($this->classKey, $categoryId);
         $categoryObject->set('rank', $newIndex);
         $categoryObject->save();
 

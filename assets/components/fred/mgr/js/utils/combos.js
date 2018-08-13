@@ -1,4 +1,4 @@
-fred.combo.ExtendedBoolean = function (config) {
+ fred.combo.ExtendedBoolean = function (config) {
     config.useInt = config.useInt || false;
 
     var data = [
@@ -188,3 +188,23 @@ fred.combo.ElementOptionSets = function (config) {
 };
 Ext.extend(fred.combo.ElementOptionSets, MODx.combo.ComboBox);
 Ext.reg('fred-combo-element-option-sets', fred.combo.ElementOptionSets);
+
+fred.combo.Themes = function (config) {
+ config = config || {};
+ Ext.applyIf(config, {
+     name: 'theme',
+     hiddenName: 'theme',
+     displayField: 'name',
+     valueField: 'id',
+     fields: ['name', 'id'],
+     pageSize: 20,
+     url: fred.config.connectorUrl,
+     baseParams: {
+         action: 'mgr/themes/getlist',
+         addAll: config.addAll || 0
+     }
+ });
+ fred.combo.Themes.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.combo.Themes, MODx.combo.ComboBox);
+Ext.reg('fred-combo-themes', fred.combo.Themes);

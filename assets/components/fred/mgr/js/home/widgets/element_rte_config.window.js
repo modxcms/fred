@@ -63,7 +63,7 @@ Ext.extend(fred.window.ElementRTEConfig, MODx.Window, {
                 },
                 items: [
                     {
-                        columnWidth: 1,
+                        columnWidth: .7,
                         border: false,
                         defaults: {
                             msgTarget: 'under',
@@ -76,7 +76,49 @@ Ext.extend(fred.window.ElementRTEConfig, MODx.Window, {
                                 name: 'name',
                                 anchor: '100%',
                                 allowBlank: false
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        columnWidth: .3,
+                        border: false,
+                        defaults: {
+                            msgTarget: 'under',
+                            anchor: '100%'
+                        },
+                        items: [
+                            {
+                                xtype: 'fred-combo-themes',
+                                fieldLabel: _('fred.element_rte_configs.theme'),
+                                name: 'theme',
+                                hiddenName: 'theme',
+                                anchor: '100%',
+                                allowBlank: false
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                layout: 'column',
+                border: false,
+                anchor: '100%',
+                defaults: {
+                    layout: 'form',
+                    labelAlign: 'top',
+                    labelSeparator: '',
+                    anchor: '100%',
+                    border: false
+                },
+                items: [
+                    {
+                        columnWidth: 1,
+                        border: false,
+                        defaults: {
+                            msgTarget: 'under',
+                            anchor: '100%'
+                        },
+                        items: [
                             {
                                 xtype: 'textarea',
                                 fieldLabel: _('fred.element_rte_configs.description'),
@@ -108,8 +150,8 @@ Ext.extend(fred.window.ElementRTEConfig, MODx.Window, {
                         ]
                     }
                 ]
-            }]
-            ;
+            }
+        ];
     }
 });
 Ext.reg('fred-window-element-rte-config', fred.window.ElementRTEConfig);
@@ -152,6 +194,14 @@ Ext.extend(fred.window.ElementRTEConfigDuplicate, MODx.Window, {
                 name: 'name',
                 anchor: '100%',
                 allowBlank: true
+            },
+            {
+                xtype: 'fred-combo-themes',
+                fieldLabel: _('fred.element_rte_configs.theme'),
+                name: 'theme',
+                hiddenName: 'theme',
+                anchor: '100%',
+                allowBlank: false
             }
         ]
     }
