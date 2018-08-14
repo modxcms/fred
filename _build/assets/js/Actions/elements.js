@@ -5,7 +5,7 @@ import { errorHandler } from "../Utils";
 
 export const getElements = () => {
     return cache.load('elements', {name: 'elements'}, () => {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-elements`, {
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-elements&theme=${fredConfig.config.theme}`, {
             credentials: 'same-origin'
         })
             .then(response => {

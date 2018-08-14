@@ -16,12 +16,21 @@ class GetElements extends Endpoint
     
     public function process()
     {
+        $theme = isset($_GET['theme']) ? intval($_GET['theme']) : 0;
+        
         $groupSort = $this->fred->getOption('element_group_sort');
         if ($groupSort !== 'rank') $groupSort = 'name';
         
         $elements = [];
 
         $c = $this->modx->newQuery('FredElementCategory');
+        
+        if (!empty($theme)) {
+            $c->where([
+                'theme' => $theme
+            ]);
+        }
+        
         $c->sortby($groupSort);
         
         /** @var \FredElementCategory[] $categories */

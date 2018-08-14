@@ -8,13 +8,20 @@
  * file that was distributed with this source code.
  */
 
-$templates = $modx->getOption('fred.template_ids');
-$templates = explode(',', $templates);
+$corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+/** @var Fred $fred */
+$fred = $modx->getService(
+    'fred',
+    'Fred',
+    $corePath . 'model/fred/',
+    array(
+        'core_path' => $corePath
+    )
+);
 
 switch ($modx->event->name) {
     case 'OnDocFormPrerender':
-        $templates =  array_map('intval', $templates);
-        if(!empty($resource) && in_array($resource->template,$templates)){
+        if(!empty($resource) && !empty($fred->getTheme($resource->template))) {
             //Disable ContentBlocks
             $isContentBlocks = $resource->getProperty('_isContentBlocks', 'contentblocks', null);
             if($isContentBlocks !== false){
@@ -80,9 +87,8 @@ switch ($modx->event->name) {
         }
         break;
     case 'OnWebPagePrerender':
-        $templates = array_map('trim', $templates);
-        $templates = array_flip($templates);
-        if (isset($templates[$modx->resource->template])) {
+        $theme = $fred->getTheme($modx->resource->template);
+        if (!empty($theme)) {
             if (isset($_GET['fred'])) {
                 if (intval($_GET['fred']) === 0) return;
             }
@@ -98,18 +104,6 @@ switch ($modx->event->name) {
                     return;
                 }
             }
-            
-            $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
-            /** @var Fred $fred */
-            $fred = $modx->getService(
-                'fred',
-                'Fred',
-                $corePath . 'model/fred/',
-                array(
-                    'core_path' => $corePath
-                )
-            );
-
         
             $html = Wa72\HtmlPageDom\HtmlPageCrawler::create($modx->resource->_output);
             $dzs = $html->filter('[data-fred-dropzone]');
@@ -179,6 +173,7 @@ switch ($modx->event->name) {
         ' . $includes . '
         <script>
             var fred = new Fred({
+                theme: ' . $theme . ',
                 assetsUrl: "' . $fred->getOption('webAssetsUrl') . '",
                 managerUrl: "' . MODX_MANAGER_URL . '",
                 contextKey: "' . $modx->resource->context_key. '",
@@ -214,9 +209,7 @@ switch ($modx->event->name) {
     case 'OnBeforeDocFormSave':
         if ($mode !== 'upd') return;
 
-        $templates = array_map('trim', $templates);
-        $templates = array_flip($templates);
-        if (!isset($templates[$resource->template])) return;
+        if (empty($fred->getTheme($resource->template))) return;
         
         $data = $resource->getProperty('data', 'fred');
         if (!empty($data['fingerprint'])) {
@@ -235,21 +228,8 @@ switch ($modx->event->name) {
     case 'OnDocFormSave':
         if ($mode !== 'upd') return;
 
-        $templates = array_map('trim', $templates);
-        $templates = array_flip($templates);
-        if (!isset($templates[$resource->template])) return;
+        if (empty($fred->getTheme($resource->template))) return;
         
-        $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
-        /** @var Fred $fred */
-        $fred = $modx->getService(
-            'fred',
-            'Fred',
-            $corePath . 'model/fred/',
-            array(
-                'core_path' => $corePath
-            )
-        );
-
         $renderResource = new \Fred\RenderResource($resource, $modx);
         $renderResource->render();
         

@@ -77,4 +77,13 @@ class Fred
     {
         require_once $this->getOption('modelPath') . 'vendor/autoload.php';
     }
+
+    public function getTheme($template)
+    {
+        /** @var FredThemedTemplate $themedTemplate */
+        $themedTemplate = $this->modx->getObject('FredThemedTemplate', ['template' => $template]);
+        if (!$themedTemplate) return null;
+
+        return $themedTemplate->theme;
+    }
 }

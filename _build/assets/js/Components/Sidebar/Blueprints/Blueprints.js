@@ -180,6 +180,7 @@ export default class Blueprints extends Sidebar {
             createBlueprintCategory(this.state.category.name, this.state.category.rank, +this.state.category.public)
                 .then(json => {
                     cache.killNamespace('blueprints');
+                    this.state.blueprint.category = null;
                     this.click().then(newContent => {
                         content.replaceWith(newContent);
                         drake.reloadContainers();

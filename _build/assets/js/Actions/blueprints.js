@@ -2,14 +2,12 @@ import fetch from "isomorphic-fetch";
 import cache from '../Cache';
 import { errorHandler } from "../Utils";
 import fredConfig from "../Config";
-import emitter from "../EE";
-import drake from "../Drake";
 
 export const getBlueprints = (complete = null) => {
     return cache.load('blueprints', {name: 'blueprints', complete}, () => {
         const completeString = (complete !== null) ? `&complete=${+complete}` : '';
         
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints${completeString}`, {
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints&theme=${fredConfig.config.theme}${completeString}`, {
             credentials: 'same-origin'
         })
             .then(response => {
@@ -58,7 +56,8 @@ export const createBlueprintCategory = (name, rank, isPublic) => {
         body: JSON.stringify({
             name,
             rank,
-            public: isPublic
+            public: isPublic,
+            theme: fredConfig.config.theme
         })
     }).then(errorHandler);
 };

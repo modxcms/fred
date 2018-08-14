@@ -9,15 +9,22 @@ class GetBlueprints extends Endpoint
     public function process()
     {
         $data = [];
-        
+
+        $theme = isset($_GET['theme']) ? intval($_GET['theme']) : 0;
+
         $complete = isset($_GET['complete']) ? intval($_GET['complete']) : -1;
         if (($complete !== 0) && ($complete !== 1)) $complete = -1;
 
         $c = $this->modx->newQuery('FredBlueprintCategory');
+
         $c->where([
             'public' => true,
             'OR:createdBy:=' => $this->modx->user->id
         ]);
+
+        if (!empty($theme)) {
+            $c->where(['theme' => $theme]);
+        }
 
         $categorySort = $this->fred->getOption('blueprint_category_sort', 'name');
         $blueprintSort = $this->fred->getOption('blueprint_sort', 'name');
