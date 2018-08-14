@@ -54,7 +54,7 @@ fred.grid.ElementCategories = function (config) {
         tbar: [
             {
                 text: _('fred.element_categories.create'),
-                handler: this.createTheme
+                handler: this.assignTheme
             },
             '->',
             {
@@ -126,12 +126,12 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.element_categories.remove'),
-            handler: this.removeTheme
+            handler: this.unassignTheme
         });
         return m;
     },
 
-    createTheme: function (btn, e) {
+    assignTheme: function (btn, e) {
         var record = {};
         
         var s = this.getStore();
@@ -207,7 +207,7 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
         return true;
     },
 
-    removeTheme: function (btn, e) {
+    unassignTheme: function (btn, e) {
         if (!this.menu.record) return false;
 
         var elements = parseInt(this.menu.record.elements);

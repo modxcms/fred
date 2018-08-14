@@ -40,6 +40,7 @@ $_lang['fred.home.rte_configs'] = 'RTE Configs';
 $_lang['fred.home.blueprints'] = 'Blueprints';
 $_lang['fred.home.blueprint_categories'] = 'Blueprint Categories';
 $_lang['fred.home.themes'] = 'Themes';
+$_lang['fred.home.themed_templates'] = 'Themed Templates';
 
 $_lang['fred.blueprints.none'] = 'No blueprints were found.';
 $_lang['fred.blueprints.name'] = 'Name';
@@ -155,6 +156,13 @@ $_lang['fred.themes.new_name'] = 'New Name';
 $_lang['fred.themes.duplicate'] = 'Duplicate Theme';
 $_lang['fred.themes.all'] = 'All Themes';
 
+$_lang['fred.themed_templates.theme'] = 'Theme';
+$_lang['fred.themed_templates.template'] = 'Template';
+$_lang['fred.themed_templates.create'] = 'Assign Theme to a Template';
+$_lang['fred.themed_templates.update'] = 'Update Assigned Theme';
+$_lang['fred.themed_templates.remove'] = 'Unassign Theme';
+$_lang['fred.themed_templates.remove_confirm'] = 'Are you sure you want to unassign theme: [[+theme]] from a template: [[+template]]?';
+
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
 $_lang['setting_fred.elements_category_id'] = '*DEPRECATED* Element\'s Category ID';
@@ -202,3 +210,6 @@ $_lang['fred.err.element_rte_configs_ns_theme'] = 'Theme is required';
 $_lang['fred.err.element_rte_configs_ae_name'] = 'RTE Config with this name already exists in the theme.';
 $_lang['fred.err.theme_ns_name'] = 'Name is required';
 $_lang['fred.err.blueprint_categories_ns_theme'] = 'Theme is required';
+$_lang['fred.err.themed_templates_ns_template'] = 'Template is required';
+$_lang['fred.err.themed_templates_ns_theme'] = 'Theme is required';
+$_lang['fred.err.themed_templates_ae_template'] = 'Theme is already assigned for this Template';

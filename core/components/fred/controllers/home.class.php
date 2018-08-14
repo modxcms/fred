@@ -28,6 +28,9 @@ class FredHomeManagerController extends FredBaseManagerController
 
     public function loadCustomCssJs()
     {
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_template.window.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_templates.grid.js');
+        
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/theme.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themes.grid.js');
         

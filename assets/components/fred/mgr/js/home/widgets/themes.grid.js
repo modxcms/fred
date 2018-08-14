@@ -38,7 +38,7 @@ fred.grid.Themes = function (config) {
         tbar: [
             {
                 text: _('fred.themes.create'),
-                handler: this.createTheme
+                handler: this.assignTheme
             },
             '->',
             {
@@ -88,12 +88,12 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.themes.remove'),
-            handler: this.removeTheme
+            handler: this.unassignTheme
         });
         return m;
     },
 
-    createTheme: function (btn, e) {
+    assignTheme: function (btn, e) {
         var createTheme = MODx.load({
             xtype: 'fred-window-theme',
             listeners: {
@@ -156,7 +156,7 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         return true;
     },
 
-    removeTheme: function (btn, e) {
+    unassignTheme: function (btn, e) {
         if (!this.menu.record) return false;
 
         MODx.msg.confirm({

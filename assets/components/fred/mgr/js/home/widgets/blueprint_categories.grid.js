@@ -71,7 +71,7 @@ fred.grid.BlueprintCategories = function (config) {
         tbar: [
             {
                 text: _('fred.blueprint_categories.create'),
-                handler: this.createTheme
+                handler: this.assignTheme
             },
             '->',
             {
@@ -147,12 +147,12 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.blueprint_categories.remove'),
-            handler: this.removeTheme
+            handler: this.unassignTheme
         });
         return m;
     },
 
-    createTheme: function (btn, e) {
+    assignTheme: function (btn, e) {
         var createCategory = MODx.load({
             xtype: 'fred-window-blueprint-category',
             listeners: {
@@ -194,7 +194,7 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
         return true;
     },
 
-    removeTheme: function (btn, e) {
+    unassignTheme: function (btn, e) {
         if (!this.menu.record) return false;
 
         var blueprints = parseInt(this.menu.record.blueprints);

@@ -11,4 +11,8 @@ $xpdo_meta_map = array (
     5 => 'FredElement',
     6 => 'FredTheme',
   ),
+  'xPDOObject' => 
+  array (
+    0 => 'FredThemedTemplate',
+  ),
 );

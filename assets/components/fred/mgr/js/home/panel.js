@@ -98,6 +98,16 @@ fred.panel.Home = function (config) {
                                 cls: 'main-wrapper'
                             }
                         ]
+                    },
+                    {
+                        title: _('fred.home.themed_templates'),
+                        items: [
+                            {
+                                xtype: 'fred-grid-themed-templates',
+                                preventRender: true,
+                                cls: 'main-wrapper'
+                            }
+                        ]
                     }
                 ]
             }
