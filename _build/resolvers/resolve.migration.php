@@ -89,8 +89,15 @@ if ($object->xpdo) {
             /** @var modTransportPackage $oldPackage */
             $oldPackage = $modx->getObject('transport.modTransportPackage', $c);
 
-            $modelPath = $modx->getOption('fred.core_path',null,$modx->getOption('core_path').'components/fred/').'model/';
-            $modx->addPackage('fred',$modelPath);
+            $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+            $fred = $modx->getService(
+                'fred',
+                'Fred',
+                $corePath . 'model/fred/',
+                array(
+                    'core_path' => $corePath
+                )
+            );
 
             if ($oldPackage && $oldPackage->compareVersion('1.0.0-beta4', '>')) {
                 $defaultTheme = $modx->getObject('FredTheme', ['name' => 'Default']);
@@ -221,7 +228,7 @@ if ($object->xpdo) {
 
                     foreach ($fredResources as $resource) {
                         $data = $resource->getProperty('data', 'fred');
-                        $this->replaceIdWithUuidOnElements($modx, $cache, $data);
+                        replaceIdWithUuidOnElements($modx, $cache, $data);
                         $resource->setProperty('data', $data, 'fred');
                         $resource->save();
                     }
@@ -234,9 +241,9 @@ if ($object->xpdo) {
                     $complete = $blueprint->get('complete');
 
                     if ($complete === true) {
-                        $this->replaceIdWithUuidOnElements($modx, $cache, $data);
+                        replaceIdWithUuidOnElements($modx, $cache, $data);
                     } else {
-                        $this->iterateElements($modx, $cache, $data);
+                        iterateElements($modx, $cache, $data);
                     }
 
                     $blueprint->set('data', $data);

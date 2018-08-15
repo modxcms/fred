@@ -7,13 +7,20 @@ if ($object->xpdo) {
             /** @var modX $modx */
             $modx =& $object->xpdo;
 
-            $modelPath = $modx->getOption(',.core_path',null,$modx->getOption('core_path').'components/,/').'model/';
-            $modx->addPackage('fred',$modelPath);
+            $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+            $fred = $modx->getService(
+                'fred',
+                'Fred',
+                $corePath . 'model/fred/',
+                array(
+                    'core_path' => $corePath
+                )
+            );
 
             $templates = $modx->getCount('FredTheme');
             if ($templates === 0) {
                 /** @var FredTheme $theme */
-                $theme = $modx->newObject('CollectionTemplate');
+                $theme = $modx->newObject('FredTheme');
                 $theme->set('name', 'Default');
                 $theme->set('description', 'Fred\'s Default Theme');
 

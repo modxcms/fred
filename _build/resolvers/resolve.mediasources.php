@@ -7,7 +7,8 @@ if ($object->xpdo) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
             /** @var modMediaSource[] $mediaSources */
-            $mediaSources = $modx->getIterator('modMediaSource', $c);
+            $mediaSources = $modx->getIterator('modMediaSource');
+            
             foreach ($mediaSources as $mediaSource) {
                 $properties = $mediaSource->getProperties();
 
