@@ -18,7 +18,6 @@ class FredHomeManagerController extends FredBaseManagerController
 {
     public function process(array $scriptProperties = array())
     {
-//        $this->migrate();
     }
 
     public function getPageTitle()
@@ -68,22 +67,5 @@ class FredHomeManagerController extends FredBaseManagerController
     public function getTemplateFile()
     {
         return $this->fred->getOption('templatesPath') . 'home.tpl';
-    }
-
-    private function migrate()
-    {
-        $modx = $this->modx;
-
-        $modx->removeCollection('FredTheme', []);
-        
-        $theme = $modx->newObject('FredTheme');
-        $theme->set('name', 'Default');
-        $theme->set('description', 'Fred\'s Default Theme');
-        $theme->save();
-        
-        $modx->updateCollection('FredElementCategory', ['theme' => $theme->id]);
-        $modx->updateCollection('FredBlueprintCategory', ['theme' => $theme->id]);
-        $modx->updateCollection('FredElementRTEConfig', ['theme' => $theme->id]);
-        $modx->updateCollection('FredElementOptionSet', ['theme' => $theme->id]);
     }
 }

@@ -93,6 +93,28 @@ if ($object->xpdo) {
             $modx->addPackage('fred',$modelPath);
 
             if ($oldPackage && $oldPackage->compareVersion('1.0.0-beta4', '>')) {
+                $defaultTheme = $modx->getObject('FredTheme', ['name' => 'Default']);
+                if (!$defaultTheme) {
+                    $c = $modx->newQuery('FredTheme');
+                    $c->limit(1);
+                    $themes = $modx->getIterator('FredTheme', $c);
+                    $defaultTheme = null;
+
+                    foreach ($themes as $theme) {
+                        $defaultTheme = $theme;
+                        break;
+                    }
+
+                    if (empty($defaultTheme)) {
+                        $defaultTheme = $modx->newObject('FredTheme');
+                        $defaultTheme->set('name', 'Default');
+                        $defaultTheme->set('description', 'Fred\'s Default Theme');
+                        $defaultTheme->save();
+                    }
+                }
+
+                $defaultTheme = $defaultTheme->id;
+                
                 $optionsMap = [];
 
                 $rootCategory = (int)$modx->getOption('fred.elements_category_id');
@@ -108,6 +130,7 @@ if ($object->xpdo) {
                     $newCategory = $modx->newObject('FredElementCategory');
                     $newCategory->set('name', $category->category);
                     $newCategory->set('rank', $category->rank);
+                    $newCategory->set('theme', $defaultTheme);
                     $newCategory->save();
 
                     /** @var \modChunk[] $chunks */
@@ -141,6 +164,7 @@ if ($object->xpdo) {
                                     $optionSetObject->set('name', $matches[1]);
                                     $optionSetObject->set('data', json_decode($options->content, true));
                                     $optionSetObject->set('complete', true);
+                                    $optionSetObject->set('theme', $defaultTheme);
                                     $optionSetObject->save();
 
                                     $optionsMap[$matches[1]] = $optionSetObject->id;
@@ -173,6 +197,7 @@ if ($object->xpdo) {
                         $fredRTEConfig = $modx->newObject('FredElementRTEConfig');
                         $fredRTEConfig->set('name', 'TinyMCE');
                         $fredRTEConfig->set('data', $config);
+                        $fredRTEConfig->set('theme', $defaultTheme);
                         $fredRTEConfig->save();
                     }
                 }
@@ -183,6 +208,14 @@ if ($object->xpdo) {
                 $cache = [];
 
                 if (!empty($fredTemplates)) {
+                    foreach ($fredTemplates as $fredTemplate) {
+                        /** @var FredThemedTemplate $themedTemplate */
+                        $themedTemplate = $modx->newObject('FredThemedTemplate');
+                        $themedTemplate->set('template', $fredTemplate);
+                        $themedTemplate->set('theme', $defaultTheme);
+                        $themedTemplate->save();
+                    }
+                    
                     /** @var modResource[] $fredResources */
                     $fredResources = $modx->getIterator('modResource', ['template:IN' => $fredTemplates]);
 
@@ -209,6 +242,11 @@ if ($object->xpdo) {
                     $blueprint->set('data', $data);
                     $blueprint->save();
                 }
+
+                $modx->updateCollection('FredElementCategory', ['theme' => $defaultTheme]);
+                $modx->updateCollection('FredBlueprintCategory', ['theme' => $defaultTheme]);
+                $modx->updateCollection('FredElementRTEConfig', ['theme' => $defaultTheme]);
+                $modx->updateCollection('FredElementOptionSet', ['theme' => $defaultTheme]);
             }
 
             break;
