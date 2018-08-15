@@ -14,14 +14,14 @@ pages:
     - 'System Settings': system_settings/index.md
     - Events: events/index.md
     - CMP:
-        - Elements:
-            - Elements: cmp/elements/elements.md
-            - Categories: cmp/elements/categories.md
-            - Option Sets: cmp/elements/option_sets.md
-            - RTE Configs: cmp/elements/rte_configs.md
-        - Blueprints:
-            - Blueprints: cmp/blueprints/blueprints.md
-            - Categories: cmp/blueprints/categories.md
+          - Elements: cmp/elements.md
+          - Element Categories: cmp/element_categories.md
+          - Option Sets: cmp/option_sets.md
+          - RTE Configs: cmp/rte_configs.md
+          - Blueprints: cmp/blueprints.md
+          - Blueprint Categories: cmp/blueprint_categories.md
+          - Themes: cmp/themes.md
+          - Themed Templates: cmp/themed_templates.md
 theme:
   name: 'material'
   language: en
