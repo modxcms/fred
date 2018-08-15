@@ -49,12 +49,17 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
         $c->leftJoin('modUserProfile', 'UserProfile', 'UserProfile.internalKey = FredBlueprint.createdBy');
         $c->leftJoin('FredTheme', 'Theme', 'Category.theme = Theme.id');
 
-        $c->select($this->modx->getSelectColumns('FredBlueprint', 'FredBlueprint'));
-        $c->select($this->modx->getSelectColumns('FredBlueprintCategory', 'Category', 'category_'));
-        $c->select($this->modx->getSelectColumns('modUserProfile', 'UserProfile', 'user_profile_'));
+        $c->select($this->modx->getSelectColumns('FredBlueprint', 'FredBlueprint', '', ['data'], true));
+        $c->select($this->modx->getSelectColumns('FredBlueprintCategory', 'Category', 'category_', ['name']));
+        $c->select($this->modx->getSelectColumns('modUserProfile', 'UserProfile', 'user_profile_', ['fullname']));
         $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['id', 'name']));
 
         return parent::prepareQueryAfterCount($c);
+    }
+
+    public function prepareRow(xPDOObject $object)
+    {
+        return $object->toArray('', false, true);
     }
 }
 
