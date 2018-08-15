@@ -14,6 +14,7 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
   'fields' => 
   array (
     'name' => NULL,
+    'uuid' => NULL,
     'rank' => 0,
     'theme' => NULL,
     'public' => 0,
@@ -27,6 +28,14 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'precision' => '255',
       'phptype' => 'string',
       'null' => false,
+    ),
+    'uuid' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '36',
+      'phptype' => 'string',
+      'null' => false,
+      'index' => 'unique',
     ),
     'rank' => 
     array (
@@ -65,6 +74,22 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
   ),
   'indexes' => 
   array (
+    'uuid' => 
+    array (
+      'alias' => 'uuid',
+      'primary' => false,
+      'unique' => true,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'uuid' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
     'theme' => 
     array (
       'alias' => 'theme',

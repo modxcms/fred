@@ -51,6 +51,25 @@ $xpdo_meta_map['FredElementRTEConfig']= array (
       'default' => '',
     ),
   ),
+  'indexes' => 
+  array (
+    'theme' => 
+    array (
+      'alias' => 'theme',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'theme' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+  ),
   'aggregates' => 
   array (
     'Theme' => 

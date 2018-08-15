@@ -14,6 +14,7 @@ $xpdo_meta_map['FredBlueprint']= array (
   'fields' => 
   array (
     'name' => NULL,
+    'uuid' => NULL,
     'description' => '',
     'image' => '',
     'category' => NULL,
@@ -31,6 +32,14 @@ $xpdo_meta_map['FredBlueprint']= array (
       'precision' => '255',
       'phptype' => 'string',
       'null' => false,
+    ),
+    'uuid' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '36',
+      'phptype' => 'string',
+      'null' => false,
+      'index' => 'unique',
     ),
     'description' => 
     array (
@@ -100,6 +109,22 @@ $xpdo_meta_map['FredBlueprint']= array (
   ),
   'indexes' => 
   array (
+    'uuid' => 
+    array (
+      'alias' => 'uuid',
+      'primary' => false,
+      'unique' => true,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'uuid' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
     'category' => 
     array (
       'alias' => 'category',

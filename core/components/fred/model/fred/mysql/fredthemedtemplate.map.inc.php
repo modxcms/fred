@@ -54,6 +54,22 @@ $xpdo_meta_map['FredThemedTemplate']= array (
         ),
       ),
     ),
+    'theme' => 
+    array (
+      'alias' => 'theme',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'theme' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
   ),
   'aggregates' => 
   array (

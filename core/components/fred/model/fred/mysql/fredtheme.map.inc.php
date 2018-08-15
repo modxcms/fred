@@ -96,5 +96,13 @@ $xpdo_meta_map['FredTheme']= array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
+    'Templates' => 
+    array (
+      'class' => 'FredThemedTemplate',
+      'local' => 'id',
+      'foreign' => 'theme',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
   ),
 );

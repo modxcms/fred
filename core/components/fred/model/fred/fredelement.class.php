@@ -21,6 +21,7 @@
  * @property string $content
  * 
  * @property FredElementCategory $Category
+ * @property FredElementOptionSet $OptionSet
  * 
  * @package fred
  */

@@ -5,6 +5,12 @@
  * @property string $uuid
  * @property string $description
  * 
+ * @property FredElementCategory $ElementCategories[]
+ * @property FredBlueprintCategory $BlueprintCategories[]
+ * @property FredElementRTEConfig $RTEConfigs[]
+ * @property FredElementOptionSet $OptionSets[]
+ * @property FredThemedTemplate $Templates[]
+ * 
  * @package fred
  */
 class FredTheme extends xPDOSimpleObject {

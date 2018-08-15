@@ -13,8 +13,10 @@
  * @property string $name
  * @property string $uuid
  * @property int $rank
+ * @property int $theme
  * 
  * @property FredTheme $Theme
+ * @property FredElement[] $Elements
  * 
  * @package fred
  */

@@ -5,7 +5,9 @@
  * @property string $description
  * @property boolean $complete
  * @property array $data
+ * @property int $theme
  * 
+ * @property FredTheme $Theme
  * @package fred
  */
 class FredElementOptionSet extends xPDOSimpleObject {

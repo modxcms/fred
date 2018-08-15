@@ -4,6 +4,9 @@
  * @property string $name
  * @property string $description
  * @property array $data
+ * @property int $theme
+ * 
+ * @property FredTheme $Theme
  * 
  * @package fred
  */
