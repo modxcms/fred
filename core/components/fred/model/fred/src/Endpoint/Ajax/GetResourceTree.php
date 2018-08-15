@@ -86,8 +86,13 @@ class GetResourceTree extends Endpoint
 
     protected function identifyTemplates()
     {
-        $templateIds = explode(',', $this->fred->getOption('template_ids'));
-        $templateIds = array_map('trim', $templateIds);
+        $c = $this->modx->newQuery('FredThemedTemplate');
+        $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate', '', ['template']));
+
+        $c->prepare();
+        $c->stmt->execute();
+
+        $templateIds = $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
         $templateIds = array_map('intval', $templateIds);
         $this->templates = array_filter($templateIds);
     }

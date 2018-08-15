@@ -1,4 +1,4 @@
-Fred is only loaded by templates that are defined in the setting `fred.template_ids`. Any resources using a template listed in that setting will block access to the content area in the manager, and load Fred on the frontend.
+Fred is only loaded by templates that have Theme attached (Extras > Fred > Themed Templates). Any resources using a template listed in that table will block access to the content area in the manager, and load Fred on the frontend.
 
 ### Dropzones
 

@@ -5,8 +5,17 @@ class fredRefreshProcessor extends modProcessor {
     }
 
     public function process() {
-        $templates = $this->modx->getOption('fred.template_ids');
-        $templates = explode(',', $templates);
+        $fred = $this->initFred();
+        
+        $c = $this->modx->newQuery('FredThemedTemplate');
+        $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate', '', ['template']));
+
+        $c->prepare();
+        $c->stmt->execute();
+
+        $templates = $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
+        $templates = array_map('intval', $templates);
+        $templates = array_filter($templates);
 
         if (empty($templates)) {
             return $this->failure($this->modx->lexicon('fred.refresh_fail_template'));
@@ -19,8 +28,6 @@ class fredRefreshProcessor extends modProcessor {
         if(empty($results)){
             return $this->failure($this->modx->lexicon('fred.refresh_fail_resource'));
         }
-
-        $fred = $this->initFred();
 
         foreach ($results as $resource) {
 
