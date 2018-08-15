@@ -63,6 +63,25 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'default' => 0,
     ),
   ),
+  'indexes' => 
+  array (
+    'theme' => 
+    array (
+      'alias' => 'theme',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'theme' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+  ),
   'composites' => 
   array (
     'Blueprints' => 

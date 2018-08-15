@@ -8,6 +8,10 @@
         <field key="public" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
         <field key="createdBy" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
 
+        <index alias="theme" name="theme" primary="false" unique="false" type="BTREE">
+            <column key="theme" length="" collation="A" null="false" />
+        </index>
+        
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="local" />
         <composite alias="Blueprints" class="FredBlueprint" local="id" foreign="category" cardinality="many" owner="local" />
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="local" />
@@ -25,6 +29,10 @@
         <field key="createdBy" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
 
         <field key="data" dbtype="mediumtext" phptype="json" null="false" default="" />
+
+        <index alias="category" name="category" primary="false" unique="false" type="BTREE">
+            <column key="category" length="" collation="A" null="false" />
+        </index>
         
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="local" />
         <aggregate alias="Category" class="FredBlueprintCategory" local="category" foreign="id" cardinality="one" owner="foreign" />

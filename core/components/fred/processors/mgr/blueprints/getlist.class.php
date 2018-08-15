@@ -56,14 +56,6 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
 
         return parent::prepareQueryAfterCount($c);
     }
-
-
-    public function prepareRow(xPDOObject $object)
-    {
-        $template = $object->toArray();
-
-        return $template;
-    }
 }
 
 return 'FredBlueprintsGetListProcessor';
