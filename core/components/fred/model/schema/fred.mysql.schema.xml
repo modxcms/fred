@@ -11,6 +11,18 @@
         <index alias="theme" name="theme" primary="false" unique="false" type="BTREE">
             <column key="theme" length="" collation="A" null="false" />
         </index>
+
+        <index alias="public" name="public" primary="false" unique="false" type="BTREE">
+            <column key="public" length="" collation="A" null="false" />
+        </index>
+        
+        <index alias="rank" name="rank" primary="false" unique="false" type="BTREE">
+            <column key="rank" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="createdBy" name="createdBy" primary="false" unique="false" type="BTREE">
+            <column key="createdBy" length="" collation="A" null="false" />
+        </index>
         
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="local" />
         <composite alias="Blueprints" class="FredBlueprint" local="id" foreign="category" cardinality="many" owner="local" />
@@ -32,6 +44,18 @@
 
         <index alias="category" name="category" primary="false" unique="false" type="BTREE">
             <column key="category" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="rank" name="rank" primary="false" unique="false" type="BTREE">
+            <column key="rank" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="complete" name="complete" primary="false" unique="false" type="BTREE">
+            <column key="complete" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="createdBy" name="createdBy" primary="false" unique="false" type="BTREE">
+            <column key="createdBy" length="" collation="A" null="false" />
         </index>
         
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="local" />
