@@ -134,7 +134,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                 triggerClass: 'x-form-image-trigger',
                                 name: 'image',
                                 anchor: '100%',
-                                allowBlank: false,
+                                allowBlank: true,
                                 updatePreview: function () {
                                     Ext.getCmp('image_preview').el.dom.querySelector('img').src = (this.getValue() || "https://via.placeholder.com/800x100?text=No+image");
                                 },

@@ -16,6 +16,7 @@ class FredBlueprintsUpdateProcessor extends modObjectUpdateProcessor
     {
         $name = $this->getProperty('name');
         $category = $this->getProperty('category');
+        $image = $this->getProperty('image');
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.blueprints_ns_name'));
@@ -47,6 +48,10 @@ class FredBlueprintsUpdateProcessor extends modObjectUpdateProcessor
             }
 
             $this->setProperty('rank', $last);
+        }
+
+        if (empty($image)) {
+            $this->setProperty('image', 'https://via.placeholder.com/300x150?text=' . urlencode($name));
         }
 
         $this->setProperty('complete', $this->object->get('complete'));

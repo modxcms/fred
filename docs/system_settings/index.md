@@ -43,10 +43,6 @@ The Fred launcher can be positioned in any corner of the site to prevent hiding 
 
 Fred can use plugins that tap into different element types. The Image Editor targets any wrapper elements that also have a `data-fred-name` attribute and are set to `contenteditable="true" data-fred-rte="true"`.
 
-### Template IDs (fred.template_ids)
-
-The Template IDs are a comma separated list of templates to launch Fred on. Fred Templates can not have the content area edited in the backend, and existing templates that are switched to Fred Templates will have the content wrapped in the *Default Element*.
-
 ### Generated Images Path (fred.generated_images_path)
 
 Path to the folder where automatically generated images (screenshots of blueprints and elements) will be stored. `{assets_path}` placeholder can be used to replace with current assets folder path.

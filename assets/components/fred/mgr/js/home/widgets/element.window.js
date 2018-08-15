@@ -166,7 +166,7 @@ Ext.extend(fred.window.Element, MODx.Window, {
                                 triggerClass: 'x-form-image-trigger',
                                 name: 'image',
                                 anchor: '100%',
-                                allowBlank: false,
+                                allowBlank: true,
                                 listeners: {
                                     select: function (data) {
                                         this.setValue(MODx.config.base_url + data.relativeUrl);

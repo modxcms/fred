@@ -248,9 +248,9 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                 triggerClass: 'x-form-image-trigger',
                                                 name: 'image',
                                                 anchor: '100%',
-                                                allowBlank: false,
+                                                allowBlank: true,
                                                 updatePreview: function () {
-                                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = (this.getValue() || "https://via.placeholder.com/800x100?text=No+image");
+                                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = (this.getValue() || "https://via.placeholder.com/300x150?text=No+image");
                                                 },
                                                 listeners: {
                                                     'select': {

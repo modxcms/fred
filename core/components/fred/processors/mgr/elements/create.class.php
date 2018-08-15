@@ -16,6 +16,7 @@ class FredElementsCreateProcessor extends modObjectCreateProcessor
     {
         $name = $this->getProperty('name');
         $category = $this->getProperty('category');
+        $image = $this->getProperty('image');
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.elements_ns_name'));
@@ -44,6 +45,10 @@ class FredElementsCreateProcessor extends modObjectCreateProcessor
             }
 
             $this->setProperty('rank', $last);
+        }
+        
+        if (empty($image)) {
+            $this->setProperty('image', 'https://via.placeholder.com/300x150?text=' . urlencode($name));
         }
 
         return parent::beforeSet();

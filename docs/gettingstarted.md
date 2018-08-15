@@ -35,9 +35,11 @@ The `min-height` style is optional, but helps with making it easier to drop the 
 
 Now that we've created the basic template, let's tell Fred about it!
 
-Go to System > System Settings in MODX and select Fred in the namespace dropdown (the one that defaults to "core"). There are a number of options available to you here, but we're most concerned with the following one:
-
-- Set `fred.template_ids` to the ID of the template you added the dropzone to in step 2
+- Go to Extras > Fred and switch to `Themed Templates` tab.
+- Click the `Assign Theme to a Template` button
+- Select all Templates you'll want to use with fred
+- Select `Default` Theme
+- Click `Save`
 
 Now you should be able of visiting a resource that uses your template from step 2 and see either the "Open in Fred" button (in the manager), or the Fred launcher in the bottom left of the page (in the frontend). That tells us we're on the right path, now we need to create some categories and elements.
 
