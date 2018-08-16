@@ -12,6 +12,7 @@ import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-
 import { loadElements } from "./Utils";
 import utilitySidebar from './Components/UtilitySidebar';
 import { getPreview, saveContent, fetchContent, fetchLexicons } from './Actions/fred';
+import ContentElement from "./Components/Sidebar/Elements/ContentElement";
 
 export default class Fred {
     constructor(config = {}) {
@@ -189,7 +190,9 @@ export default class Fred {
         }
 
         emitter.emit('fred-loading', fredConfig.lng('fred.fe.saving_page'));
-        const body = {};
+        const body = {
+            tvs: {}
+        };
         const data = {};
 
         const promises = [];
@@ -200,7 +203,11 @@ export default class Fred {
             const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
             for (let target of targets) {
                 if (!fredConfig.pageSettings.hasOwnProperty(target.dataset.fredTarget)) {
-                    body[target.dataset.fredTarget] = target.innerHTML;
+                    if ((target.dataset.fredTarget.indexOf('tv_') === 0) && (target.dataset.fredTarget.substr(3) !== '')) {
+                        body.tvs[target.dataset.fredTarget.substr(3)] = ContentElement.getElValue(target);     
+                    } else {
+                        body[target.dataset.fredTarget] = ContentElement.getElValue(target);
+                    }
                 }
             }
             promises.push(this.getCleanDropZoneContent(this.dropzones[i]).then(content => {

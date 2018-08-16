@@ -748,6 +748,17 @@ export class ContentElement {
                 el.innerHTML = value;
         }
     }
+    
+    static getElValue(el) {
+        switch (el.nodeName.toLowerCase()) {
+            case 'i':
+                return el.className;
+            case 'img':
+                return el.getAttribute('src');
+            default:
+                return el.innerHTML;
+        }
+    }
 
     templateRender(parseModx = true) {
         if (this.options.remote === true) {

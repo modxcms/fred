@@ -135,6 +135,12 @@ class SaveContent extends Endpoint
         if (!$saved) {
             return $this->failure('Error saving resource with id ' . $object->get('id'));
         }
+        
+        if (isset($this->body['tvs']) && is_array($this->body['tvs'])) {
+            foreach ($this->body['tvs'] as $tvName => $tvValue) {
+                $object->setTVValue($tvName, $tvValue);
+            }
+        }
 
         $this->modx->getCacheManager()->refresh();
 
