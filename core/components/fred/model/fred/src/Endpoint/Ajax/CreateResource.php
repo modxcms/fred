@@ -10,7 +10,6 @@
 
 namespace Fred\Endpoint\Ajax;
 
-
 use Fred\RenderResource;
 use Fred\Utils;
 
@@ -21,6 +20,8 @@ class CreateResource extends Endpoint
         if (!isset($this->body['parent'])) {
             return $this->failure('No id was provided');
         }
+        
+        $parentId = intval($this->body['parent']);
 
         if (!isset($this->body['template'])) {
             return $this->failure('No template was provided');
@@ -29,15 +30,27 @@ class CreateResource extends Endpoint
         if (empty($this->body['pagetitle'])) {
             return $this->failure('No pagetitle was provided', ['pagetitle' => 'No pagetitle was provided']);
         }
+        
+        if (empty($this->body['contextKey'])) {
+            $context = 'web';
+        } else {
+            $context = $this->body['contextKey'];
+        }
+        
+        if (!empty($parentId)) {
+            /** @var \modResource $parent */
+            $parent = $this->modx->getObject('modResource', ['id' => intval($parentId)]);
+            if ($parent) {
+                $context = $parent->context_key;
+            }
+        }
 
         $blueprint = isset($this->body['blueprint']) ? intval($this->body['blueprint']) : 0;
-
-        $context = 'web';
 
         $c = $this->modx->newQuery('modResource');
         $c->where([
             'context_key' => $context,
-            'parent' => $this->body['parent']
+            'parent' => $parentId
         ]);
         $c->sortby('menuindex', 'DESC');
         $c->limit(1);
@@ -46,7 +59,7 @@ class CreateResource extends Endpoint
         
         $props = [
             'context_key' => $context,
-            'parent' => $this->body['parent'],
+            'parent' => $parentId,
             'template' => $this->body['template'],
             'pagetitle' => $this->body['pagetitle'],
             'richtext' => 0,

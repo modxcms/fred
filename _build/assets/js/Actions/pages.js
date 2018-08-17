@@ -36,7 +36,8 @@ export const createResource = (parent, template, pagetitle, blueprint) => {
             parent,
             template,
             pagetitle,
-            blueprint
+            blueprint,
+            contextKey: fredConfig.config.contextKey
         })
     }).then(errorHandler)
 };
