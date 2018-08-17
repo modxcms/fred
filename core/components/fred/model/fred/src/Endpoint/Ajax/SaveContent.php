@@ -136,8 +136,8 @@ class SaveContent extends Endpoint
             return $this->failure('Error saving resource with id ' . $object->get('id'));
         }
         
-        if (isset($this->body['tvs']) && is_array($this->body['tvs'])) {
-            foreach ($this->body['tvs'] as $tvName => $tvValue) {
+        if (isset($this->body['pageSettings']['tvs']) && is_array($this->body['pageSettings']['tvs'])) {
+            foreach ($this->body['pageSettings']['tvs'] as $tvName => $tvValue) {
                 $object->setTVValue($tvName, $tvValue);
             }
         }

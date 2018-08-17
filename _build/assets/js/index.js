@@ -190,9 +190,7 @@ export default class Fred {
         }
 
         emitter.emit('fred-loading', fredConfig.lng('fred.fe.saving_page'));
-        const body = {
-            tvs: {}
-        };
+        const body = {};
         const data = {};
 
         const promises = [];
@@ -202,13 +200,14 @@ export default class Fred {
 
             const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
             for (let target of targets) {
-                if (!fredConfig.pageSettings.hasOwnProperty(target.dataset.fredTarget)) {
-                    if ((target.dataset.fredTarget.indexOf('tv_') === 0) && (target.dataset.fredTarget.substr(3) !== '')) {
-                        body.tvs[target.dataset.fredTarget.substr(3)] = ContentElement.getElValue(target);     
-                    } else {
-                        body[target.dataset.fredTarget] = ContentElement.getElValue(target);
-                    }
+                if (fredConfig.pageSettings.hasOwnProperty(target.dataset.fredTarget)) continue;
+                
+                if ((target.dataset.fredTarget.indexOf('tv_') === 0) && (target.dataset.fredTarget.substr(3) !== '')) {
+                    fredConfig.pageSettings.tvs[target.dataset.fredTarget.substr(3)] = ContentElement.getElValue(target);
+                    continue;
                 }
+                
+                body[target.dataset.fredTarget] = ContentElement.getElValue(target);
             }
             promises.push(this.getCleanDropZoneContent(this.dropzones[i]).then(content => {
                 body[this.dropzones[i].dataset.fredDropzone] = content;    
@@ -252,7 +251,8 @@ export default class Fred {
             
             this.fingerprint = json.data.fingerprint || '';
             fredConfig.pageSettings = json.data.pageSettings || {};
-            fredConfig.tagger = json.data.tagger || {};
+            fredConfig.tagger = json.data.tagger || [];
+            fredConfig.tvs = json.data.tvs || [];
 
             loadElements(json.data).then(() => {
                 drake.reloadContainers();

@@ -48,6 +48,7 @@ $_lang['fred.fe.page_settings.publish_on'] = 'Publish On';
 $_lang['fred.fe.page_settings.unpublish_on'] = 'Unpublish On';
 $_lang['fred.fe.page_settings.menu_index'] = 'Menu Index';
 $_lang['fred.fe.page_settings.deleted'] = 'Deleted';
+$_lang['fred.fe.page_settings.tvs'] = 'TVs';
 
 $_lang['fred.fe.pages.no_parent'] = 'No Parent';
 $_lang['fred.fe.pages.create_page'] = 'Create Page';

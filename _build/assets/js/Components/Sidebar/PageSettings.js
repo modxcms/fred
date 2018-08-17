@@ -1,8 +1,8 @@
 import Sidebar from '../Sidebar';
 import emitter from '../../EE';
-import { toggle, text, area, dateTime } from '../../UI/Inputs';
 import { dl, dt, dd, form, fieldSet } from '../../UI/Elements';
 import Tagger from '../../UI/Tagger';
+import ui from "../../UI/Inputs";
 
 export default class PageSettings extends Sidebar {
     static title = 'fred.fe.page_settings';
@@ -13,6 +13,8 @@ export default class PageSettings extends Sidebar {
         this.setSetting = this.setSetting.bind(this);
         this.setSettingWithEmitter = this.setSettingWithEmitter.bind(this);
         this.addSettingChangeListener = this.addSettingChangeListener.bind(this);
+        this.setTVWithEmitter = this.setTVWithEmitter.bind(this);
+        this.addTVChangeListener = this.addTVChangeListener.bind(this);
 
         this.pageSettings = this.fredConfig.pageSettings;
         this.content = this.render();
@@ -31,6 +33,10 @@ export default class PageSettings extends Sidebar {
         if (this.fredConfig.tagger.length > 0) {
             settingsForm.appendChild(this.getTaggerFields());
         }
+        
+        if (this.fredConfig.tvs.length > 0) {
+            settingsForm.appendChild(this.getTVFields());
+        }
 
         return settingsForm;
     }
@@ -38,14 +44,14 @@ export default class PageSettings extends Sidebar {
     getGeneralFields() {
         const fields = fieldSet();
 
-        fields.appendChild(text({name: 'pagetitle', label: 'fred.fe.page_settings.page_title'}, this.pageSettings.pagetitle, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fields.appendChild(text({name: 'longtitle', label: 'fred.fe.page_settings.long_title'}, this.pageSettings.longtitle, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fields.appendChild(area({name: 'description', label: 'fred.fe.page_settings.description'}, this.pageSettings.description, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fields.appendChild(area({name: 'introtext', label: 'fred.fe.page_settings.intro_text'}, this.pageSettings.introtext, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fields.appendChild(text({name: 'menutitle', label: 'fred.fe.page_settings.menu_title'}, this.pageSettings.menutitle, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fields.appendChild(text({name: 'alias', label: 'fred.fe.page_settings.alias'}, this.pageSettings.alias, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fields.appendChild(toggle({name: 'published', label: 'fred.fe.page_settings.published'}, this.pageSettings.published, this.setSetting));
-        fields.appendChild(toggle({name: 'hidemenu', label: 'fred.fe.page_settings.hide_from_menu'}, this.pageSettings.hidemenu, this.setSetting));
+        fields.appendChild(ui.text({name: 'pagetitle', label: 'fred.fe.page_settings.page_title'}, this.pageSettings.pagetitle, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(ui.text({name: 'longtitle', label: 'fred.fe.page_settings.long_title'}, this.pageSettings.longtitle, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(ui.area({name: 'description', label: 'fred.fe.page_settings.description'}, this.pageSettings.description, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(ui.area({name: 'introtext', label: 'fred.fe.page_settings.intro_text'}, this.pageSettings.introtext, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(ui.text({name: 'menutitle', label: 'fred.fe.page_settings.menu_title'}, this.pageSettings.menutitle, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(ui.text({name: 'alias', label: 'fred.fe.page_settings.alias'}, this.pageSettings.alias, this.setSettingWithEmitter, this.addSettingChangeListener));
+        fields.appendChild(ui.toggle({name: 'published', label: 'fred.fe.page_settings.published'}, this.pageSettings.published, this.setSetting));
+        fields.appendChild(ui.toggle({name: 'hidemenu', label: 'fred.fe.page_settings.hide_from_menu'}, this.pageSettings.hidemenu, this.setSetting));
 
         return fields;
     }
@@ -73,11 +79,11 @@ export default class PageSettings extends Sidebar {
         const advancedContent = dd();
         const fields = fieldSet(['fred--page_settings_form_advanced']);
 
-        fields.appendChild(dateTime({name: 'publishedon', label: 'fred.fe.page_settings.published_on'}, this.pageSettings.publishedon, this.setSetting));
-        fields.appendChild(dateTime({name: 'publishon', label: 'fred.fe.page_settings.publish_on'}, this.pageSettings.publishon, this.setSetting));
-        fields.appendChild(dateTime({name: 'unpublishon', label: 'fred.fe.page_settings.unpublish_on'}, this.pageSettings.unpublishon, this.setSetting));
-        fields.appendChild(text({name: 'menuindex', label: 'fred.fe.page_settings.menu_index'}, this.pageSettings.menuindex, this.setSetting));
-        fields.appendChild(toggle({name: 'deleted', label: 'fred.fe.page_settings.deleted'}, this.pageSettings.deleted, this.setSetting));
+        fields.appendChild(ui.dateTime({name: 'publishedon', label: 'fred.fe.page_settings.published_on'}, this.pageSettings.publishedon, this.setSetting));
+        fields.appendChild(ui.dateTime({name: 'publishon', label: 'fred.fe.page_settings.publish_on'}, this.pageSettings.publishon, this.setSetting));
+        fields.appendChild(ui.dateTime({name: 'unpublishon', label: 'fred.fe.page_settings.unpublish_on'}, this.pageSettings.unpublishon, this.setSetting));
+        fields.appendChild(ui.text({name: 'menuindex', label: 'fred.fe.page_settings.menu_index'}, this.pageSettings.menuindex, this.setSetting));
+        fields.appendChild(ui.toggle({name: 'deleted', label: 'fred.fe.page_settings.deleted'}, this.pageSettings.deleted, this.setSetting));
 
         advancedContent.appendChild(fields);
 
@@ -125,9 +131,58 @@ export default class PageSettings extends Sidebar {
 
         return taggerList;
     }
+    
+    getTVFields() {
+        const tvList = dl();
 
-    setSetting(name, value) {
-        this.pageSettings[name] = value;
+        const tvTab = dt('fred.fe.page_settings.tvs', ['fred--accordion-cog'], e => {
+            const activeTabs = tvList.parentElement.querySelectorAll('dt.active');
+
+            const isActive = tvTab.classList.contains('active');
+            
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
+                tvTab.classList.add('active');
+                e.stopPropagation();
+                emitter.emit('fred-sidebar-dt-active', tvTab, tvContent);
+            }
+        });
+
+        const tvContent = dd();
+        const fields = fieldSet(['fred--page_settings_form_advanced']);
+
+        this.fredConfig.tvs.forEach(tv => {
+            switch (tv.type) {
+                case 'image':
+                    fields.appendChild(ui.image(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                case 'textarea':
+                    fields.appendChild(ui.area(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                default:
+                    fields.appendChild(ui.text(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));        
+            }
+        });
+
+        tvContent.appendChild(fields);
+
+        tvList.appendChild(tvTab);
+        tvList.appendChild(tvContent);
+
+        return tvList;
+    }
+
+    setSetting(name, value, namespace = null) {
+        if (namespace) {
+            if (!this.pageSettings[namespace]) this.pageSettings[namespace] = {};
+            
+            this.pageSettings[namespace][name] = value;
+        } else {
+            this.pageSettings[name] = value;
+        }
     }
 
     setSettingWithEmitter(name, value, input) {
@@ -141,6 +196,26 @@ export default class PageSettings extends Sidebar {
             if ((input !== sourceEl) && (setting.name === settingName)) {
                 this.setSetting(settingName, settingValue);
                 input.value = settingValue;
+            }
+        });
+    }
+
+    setTVWithEmitter(name, value, input) {
+        this.setSetting(name, value, 'tvs');
+
+        emitter.emit('fred-page-setting-change', 'tv_' + name, value, input);
+    }
+
+    addTVChangeListener(setting, label, input) {
+        emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
+
+            if ((input !== sourceEl) && (('tv_' + setting.name) === settingName)) {
+                this.setSetting(setting.name, settingValue, 'tvs');
+                input.value = settingValue;
+                
+                if (label.setPreview && (typeof label.setPreview === 'function')) {
+                    label.setPreview(input.value);
+                }
             }
         });
     }

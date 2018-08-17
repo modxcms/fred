@@ -6,7 +6,8 @@ class Config {
         this._editors = fredEditors;
         this._rtes = {};
         this._pageSettings = {};
-        this._tagger = {};
+        this._tagger = [];
+        this._tvs = [];
         this._lang = {};
         this._fred = null;
     }
@@ -25,6 +26,10 @@ class Config {
     
     set tagger(tagger) {
         this._tagger = tagger;
+    }
+    
+    set tvs(tvs) {
+        this._tvs = tvs;
     }
     
     set lang(lang) {
@@ -53,6 +58,10 @@ class Config {
     
     get tagger() {
         return this._tagger;
+    }
+    
+    get tvs() {
+        return this._tvs;
     }
 
     registerEditor(name, editor) {

@@ -36,6 +36,7 @@ class LoadContent extends Endpoint
         $elements = [];
 
         $this->gatherElements($elements, $data);
+        $TVs = $this->gatherTVs($object); 
 
         $pageSettings = [
             'pagetitle' => $object->pagetitle,
@@ -50,7 +51,8 @@ class LoadContent extends Endpoint
             'publishedon' => $object->publishedon,
             'publishon' => $object->pub_date,
             'unpublishon' => $object->unpub_date,
-            'tagger' => $this->getTaggerTags($object)
+            'tagger' => $this->getTaggerTags($object),
+            'tvs' => $TVs['values']
         ];
         
         return $this->data([
@@ -58,6 +60,7 @@ class LoadContent extends Endpoint
             "data" => $data,
             "elements" => $elements,
             "tagger" => $this->getTagger($object),
+            "tvs" => $TVs['def'],
             "fingerprint" => $fingerprint
         ]);
     }
@@ -92,6 +95,45 @@ class LoadContent extends Endpoint
             "html" => $element->content,
             "options" => $element->processOptions()
         ];
+    }
+
+    /**
+     * @param \modResource $resource
+     * @return array
+     */
+    protected function gatherTVs($resource)
+    {
+        $output = [
+            'values' => [],
+            'def' => []
+        ];
+        
+        $tvs = $resource->getTemplateVars();
+        
+        foreach ($tvs as $tv) {
+            $props = $tv->getProperties();
+            
+            if (isset($props['fred']) && (intval($props['fred']) === 1)) {
+                $def = [
+                    'name' => $tv->name,
+                    'label' => $tv->caption,
+                    'type' => 'text'
+                ];
+                
+                if (!empty($props['fred.type'])) {
+                    $def['type'] = $props['fred.type'];    
+                }
+
+                if (!empty($props['fred.mediaSource'])) {
+                    $def['mediaSource'] = $props['fred.mediaSource'];
+                }
+                
+                $output['def'][] = $def;
+                $output['values'][$tv->name] = $tv->value;       
+            }
+        }
+        
+        return $output; 
     }
     
     /**
