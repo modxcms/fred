@@ -242,7 +242,8 @@ fred.combo.Template = function (config, getStore) {
         pageSize: 20,
         url: fred.config.connectorUrl,
         baseParams: {
-            action: 'mgr/extra/gettemplates'
+            action: 'mgr/extra/gettemplates',
+            hideUsed: 1
         }
     });
     Ext.applyIf(config, {

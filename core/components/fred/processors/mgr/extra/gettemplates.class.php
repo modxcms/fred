@@ -26,6 +26,23 @@ class FredExtraTemplateGetListProcessor extends modObjectGetListProcessor
 
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
+        $hideUsed = (int)$this->getProperty('hideUsed', 0);
+        if ($hideUsed === 1) {
+            $used = $this->modx->newQuery('FredThemedTemplate');
+            $used->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate', '', ['template']));
+            $used->prepare();
+            $used->stmt->execute();
+
+            $used = $used->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+            $used = array_map('intval', $used);
+
+            if (!empty($used)) {
+                $c->where([
+                    'id:NOT IN' => $used
+                ]);
+            }
+        }
+        
         $query = $this->getProperty('query');
 
         $where = array();
