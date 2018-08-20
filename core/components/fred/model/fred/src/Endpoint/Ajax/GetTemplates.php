@@ -23,43 +23,29 @@ class GetTemplates extends Endpoint
      */
     function process()
     {
-        $this->identifyTemplates();
-
-        if (empty($this->templates)) {
-            return $this->data(['templates' => []]);
-        }
-
-        $c = $this->modx->newQuery('modTemplate');
-        $c->where([
-            'id:IN' => $this->templates
-        ]);
-        $c->sortby('templatename');
+        $c = $this->modx->newQuery('FredThemedTemplate');
+        $c->leftJoin('modTemplate', 'Template');
         
-        /** @var \modTemplate[] $templates */
-        $templates = $this->modx->getIterator('modTemplate', $c);
+        $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate'));
+        $c->select($this->modx->getSelectColumns('modTemplate', 'Template', 'template_'));
+        
+        $c->sortby('template_templatename');
+        
+        /** @var \FredThemedTemplate[] $themes */
+        $themes = $this->modx->getIterator('FredTheme', $c);
         $data = [];
         
-        foreach ($templates as $template) {
+        foreach ($themes as $theme) {
             $data[] = [
-                'id' => $template->id,
-                'value' => (string)$template->id,
-                'name' => $template->templatename,
+                'id' => $theme->template_id,
+                'value' => (string)$theme->template_id,
+                'name' => $theme->template_templatename,
+                'customProperties' => [
+                    'theme' => intval($theme->theme)
+                ]
             ];    
         }
 
         return $this->data(['templates' => $data]);
-    }
-
-    protected function identifyTemplates()
-    {
-        $c = $this->modx->newQuery('FredThemedTemplate');
-        $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate', '', ['template']));
-
-        $c->prepare();
-        $c->stmt->execute();
-
-        $templateIds = $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
-        $templateIds = array_map('intval', $templateIds);
-        $this->templates = array_filter($templateIds);
     }
 }

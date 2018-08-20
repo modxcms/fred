@@ -5,6 +5,7 @@ import { text, choices } from '../../../UI/Inputs';
 import fredConfig from '../../../Config';
 import { getResourceTree, getTemplates, createResource } from '../../../Actions/pages';
 import { getBlueprints } from '../../../Actions/blueprints';
+import cache from "../../../Cache";
 
 export default class Pages extends Sidebar {
     static title = 'fred.fe.pages';
@@ -18,7 +19,8 @@ export default class Pages extends Sidebar {
             pagetitle: '',
             parent: 0,
             blueprint: 0,
-            template: 0
+            template: 0,
+            theme: fredConfig.config.theme
         };
     }
 
@@ -56,11 +58,53 @@ export default class Pages extends Sidebar {
         const fields = fieldSet();
         const title = legend('fred.fe.pages.create_page');
 
+        let blueprintChoices = null;
+        const blueprintInput = choices({
+            name: 'blueprint',
+            label: fredConfig.lng('fred.fe.pages.blueprint'),
+        }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
+            blueprintChoices = choicesInstance;
+        });
+        
         const onChange = (name, value) => {
             this.state[name] = value;
         };
 
         const onChangeChoices = (name, value) => {
+            if ((name === 'template') && value.customProperties && value.customProperties.theme) {
+                this.state.theme = value.customProperties.theme;
+
+                blueprintChoices.clearStore();
+                blueprintChoices.ajax(callback => {
+                    getBlueprints(true, this.state.theme)
+                        .then(categories => {
+                            const groups = [];
+
+                            categories.forEach(category => {
+                                const options = [];
+
+                                category.blueprints.forEach(blueprint => {
+                                    options.push({
+                                        label: blueprint.name,
+                                        value: '' + blueprint.id
+                                    });
+                                });
+
+                                groups.push({
+                                    label: category.category,
+                                    disabled: false,
+                                    choices: options
+                                });
+                            });
+
+                            callback(groups, 'value', 'label');
+                        })
+                        .catch(error => {
+                            emitter.emit('fred-loading', error.message);
+                        });
+                });
+            }
+            
             this.state[name] = value.value;
         };
 
@@ -81,40 +125,6 @@ export default class Pages extends Sidebar {
                 shouldSort: false
             }
         }, this.state.parent, onChangeChoices));
-
-        fields.appendChild(choices({
-            name: 'blueprint',
-            label: fredConfig.lng('fred.fe.pages.blueprint'),
-        }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
-            choicesInstance.ajax(callback => {
-                getBlueprints(true)
-                    .then(categories => {
-                        const groups = [];
-
-                        categories.forEach(category => {
-                            const options = [];
-
-                            category.blueprints.forEach(blueprint => {
-                                options.push({
-                                    label: blueprint.name,
-                                    value: '' + blueprint.id
-                                });
-                            });
-
-                            groups.push({
-                                label: category.category,
-                                disabled: false,
-                                choices: options
-                            });
-                        });
-                        
-                        callback(groups, 'value', 'label');
-                    })
-                    .catch(error => {
-                        emitter.emit('fred-loading', error.message);
-                    });
-            });
-        }));
         
         fields.appendChild(choices({
             name: 'template',
@@ -134,6 +144,8 @@ export default class Pages extends Sidebar {
                     });
             });
         }));
+
+        fields.appendChild(blueprintInput);
 
         const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn-panel', 'fred--btn-apply'], () => {
             if(!fredConfig.config.permission.new_document){

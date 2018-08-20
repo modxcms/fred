@@ -3,11 +3,11 @@ import cache from '../Cache';
 import { errorHandler } from "../Utils";
 import fredConfig from "../Config";
 
-export const getBlueprints = (complete = null) => {
-    return cache.load('blueprints', {name: 'blueprints', complete}, () => {
+export const getBlueprints = (complete = null, theme = fredConfig.config.theme) => {
+    return cache.load('blueprints', {name: 'blueprints', complete, theme}, () => {
         const completeString = (complete !== null) ? `&complete=${+complete}` : '';
         
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints&theme=${fredConfig.config.theme}${completeString}`, {
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints&theme=${theme}${completeString}`, {
             credentials: 'same-origin'
         })
             .then(response => {
