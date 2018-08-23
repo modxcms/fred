@@ -46,7 +46,7 @@ class FredElementOptionSet extends xPDOSimpleObject {
     {
         if (isset($settings['fred-import'])) {
             /** @var FredElementOptionSet $import */
-            $import = $this->xpdo->getObject('FredElementOptionSet', ['name' => $settings['fred-import']]);
+            $import = $this->xpdo->getObject('FredElementOptionSet', ['name' => $settings['fred-import'], 'theme' => $this->get('theme')]);
             
             if ($import) {
                 $settings = $import->processData();
@@ -62,7 +62,7 @@ class FredElementOptionSet extends xPDOSimpleObject {
         foreach ($settings as $setting) {
             if (isset($setting['fred-import'])) {
                 /** @var FredElementOptionSet $import */
-                $import = $this->xpdo->getObject('FredElementOptionSet', ['name' => $setting['fred-import']]);
+                $import = $this->xpdo->getObject('FredElementOptionSet', ['name' => $setting['fred-import'], 'theme' => $this->get('theme')]);
                 if ($import) {
                     $processedImport = $import->processData();
                     

@@ -198,7 +198,7 @@ $xpdo_meta_map['FredBlueprint']= array (
       'local' => 'user',
       'foreign' => 'id',
       'cardinality' => 'one',
-      'owner' => 'local',
+      'owner' => 'foreign',
     ),
     'Category' => 
     array (

@@ -155,7 +155,7 @@ $xpdo_meta_map['FredElement']= array (
       'local' => 'category',
       'foreign' => 'id',
       'cardinality' => 'one',
-      'owner' => 'local',
+      'owner' => 'foreign',
     ),
     'OptionSet' => 
     array (

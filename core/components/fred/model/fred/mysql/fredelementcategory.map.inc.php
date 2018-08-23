@@ -123,7 +123,7 @@ $xpdo_meta_map['FredElementCategory']= array (
       'local' => 'theme',
       'foreign' => 'id',
       'cardinality' => 'one',
-      'owner' => 'local',
+      'owner' => 'foreign',
     ),
   ),
 );
