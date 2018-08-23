@@ -4,6 +4,7 @@
  * @property string $name
  * @property string $uuid
  * @property string $description
+ * @property array $config
  * 
  * @property FredElementCategory $ElementCategories[]
  * @property FredBlueprintCategory $BlueprintCategories[]

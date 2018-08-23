@@ -277,3 +277,63 @@ fred.combo.Template = function (config, getStore) {
 };
 Ext.extend(fred.combo.Template, Ext.ux.form.SuperBoxSelect);
 Ext.reg('fred-combo-template', fred.combo.Template);
+
+fred.combo.RootCategory = function (config, getStore) {
+    config = config || {};
+
+    if (!config.clearBtnCls) {
+        if (MODx.config.connector_url) {
+            config.clearBtnCls = 'x-form-trigger';
+        } else {
+            config.clearBtnCls = null;
+        }
+    }
+
+    if (!config.expandBtnCls) {
+        if (MODx.config.connector_url) {
+            config.expandBtnCls = 'x-form-trigger';
+        } else {
+            config.expandBtnCls = null;
+        }
+    }
+
+    Ext.applyIf(config, {
+        name: 'categories',
+        hiddenName: 'categories[]',
+        displayField: 'category',
+        valueField: 'category',
+        fields: ['category'],
+        mode: 'remote',
+        triggerAction: 'all',
+        typeAhead: true,
+        editable: true,
+        forceSelection: false,
+        pageSize: 20,
+        url: fred.config.connectorUrl,
+        baseParams: {
+            action: 'mgr/extra/getcategories',
+            parent: 0
+        }
+    });
+    Ext.applyIf(config, {
+        store: new Ext.data.JsonStore({
+            url: config.url,
+            root: 'results',
+            totalProperty: 'total',
+            fields: config.fields,
+            errorReader: MODx.util.JSONReader,
+            baseParams: config.baseParams || {},
+            remoteSort: config.remoteSort || false,
+            autoDestroy: true
+        })
+    });
+    if (getStore === true) {
+        config.store.load();
+        return config.store;
+    }
+    fred.combo.RootCategory.superclass.constructor.call(this, config);
+    this.config = config;
+    return this;
+};
+Ext.extend(fred.combo.RootCategory, Ext.ux.form.SuperBoxSelect);
+Ext.reg('fred-combo-root-category', fred.combo.RootCategory);

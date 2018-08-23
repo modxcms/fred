@@ -31,6 +31,8 @@ class FredHomeManagerController extends FredBaseManagerController
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_templates.grid.js');
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/theme.window.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/dependencies.grid.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/folders.grid.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themes.grid.js');
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprint_category.window.js');

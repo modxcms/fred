@@ -9,7 +9,7 @@ fred.grid.Themes = function (config) {
         save_action: 'mgr/themes/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description'],
+        fields: ['id', 'name', 'description', 'config'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -73,6 +73,13 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         var m = [];
 
         m.push({
+            text: _('fred.themes.build'),
+            handler: this.buildTheme
+        });
+
+        m.push('-');
+        
+        m.push({
             text: _('fred.themes.update'),
             handler: this.updateTheme
         });
@@ -131,6 +138,37 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         updateTheme.fp.getForm().reset();
         updateTheme.fp.getForm().setValues(this.menu.record);
         updateTheme.show(e.target);
+
+        return true;
+    },
+    
+    buildTheme: function (btn, e) {
+        if (!this.menu.record.config || (typeof this.menu.record.config !== 'object')) this.menu.record.config = {};
+        
+        this.menu.record.config.id = this.menu.record.id;
+        this.menu.record.config.name = this.menu.record.config.name || this.menu.record.name.toLowerCase().replace(/ /g, '-');
+        this.menu.record.config.release = this.menu.record.config.release || 'pl';
+        this.menu.record.config.version = this.menu.record.config.version || '1.0.0';
+        this.menu.record.config['categories[]'] = (this.menu.record.config.categories && Array.isArray(this.menu.record.config.categories)) ? this.menu.record.config.categories.join() : '';
+        
+        var buildTheme = MODx.load({
+            xtype: 'fred-window-theme-build',
+            title: _('fred.themes.build'),
+            action: 'mgr/themes/build',
+            isUpdate: true,
+            record: this.menu.record.config,
+            listeners: {
+                success: {
+                    fn: function () {
+                        this.refresh();
+                    },
+                    scope: this
+                }
+            }
+        });
+
+        buildTheme.fp.getForm().setValues(this.menu.record.config);
+        buildTheme.show(e.target);
 
         return true;
     },

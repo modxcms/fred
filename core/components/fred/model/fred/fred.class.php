@@ -33,6 +33,7 @@ class Fred
             'namespace' => $this->namespace,
             'corePath' => $corePath,
             'modelPath' => $corePath . 'model/',
+            'buildHelpers' => $corePath . 'processors/mgr/themes/build_helpers/',
             'chunksPath' => $corePath . 'elements/chunks/',
             'snippetsPath' => $corePath . 'elements/snippets/',
             'templatesPath' => $corePath . 'templates/',
