@@ -41,7 +41,8 @@ Ext.extend(fred.window.BlueprintCategory, MODx.Window, {
                 hiddenName: config.isUpdate ? 'theme_id' : 'theme',
                 anchor: '100%',
                 disabled: config.isUpdate,
-                allowBlank: config.isUpdate
+                allowBlank: config.isUpdate,
+                isUpdate: config.isUpdate
             },
             {
                 xtype: 'fred-combo-boolean',

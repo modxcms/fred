@@ -54,7 +54,7 @@ fred.grid.ElementCategories = function (config) {
         tbar: [
             {
                 text: _('fred.element_categories.create'),
-                handler: this.assignTheme
+                handler: this.createCategory
             },
             '->',
             {
@@ -85,6 +85,7 @@ fred.grid.ElementCategories = function (config) {
                 xtype: 'fred-combo-themes',
                 emptyText: _('fred.themes.all'),
                 addAll: 1,
+                isUpdate: true,
                 filterName: 'theme',
                 syncFilter: function(combo, record) {
                     combo.setValue(record.data[combo.valueField]);
@@ -112,7 +113,7 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.element_categories.update'),
-            handler: this.updateTheme
+            handler: this.updateCategory
         });
 
         m.push('-');
@@ -126,12 +127,12 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.element_categories.remove'),
-            handler: this.unassignTheme
+            handler: this.removeCategory
         });
         return m;
     },
 
-    assignTheme: function (btn, e) {
+    createCategory: function (btn, e) {
         var record = {};
         
         var s = this.getStore();
@@ -159,7 +160,7 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
         return true;
     },
 
-    updateTheme: function (btn, e) {
+    updateCategory: function (btn, e) {
         this.menu.record.theme_id = this.menu.record.theme;
         
         var updateCategory = MODx.load({
@@ -209,7 +210,7 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
         return true;
     },
 
-    unassignTheme: function (btn, e) {
+    removeCategory: function (btn, e) {
         if (!this.menu.record) return false;
 
         var elements = parseInt(this.menu.record.elements);

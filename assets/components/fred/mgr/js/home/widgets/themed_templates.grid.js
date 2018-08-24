@@ -37,8 +37,7 @@ fred.grid.ThemedTemplates = function (config) {
             {
                 text: _('fred.themed_templates.create'),
                 handler: this.assignTheme
-            },
-            '->'
+            }
         ]
     });
     fred.grid.ThemedTemplates.superclass.constructor.call(this, config);

@@ -156,7 +156,8 @@ Ext.extend(fred.panel.ElementRTEConfig, MODx.FormPanel, {
                                                 name: 'theme',
                                                 hiddenName: 'theme',
                                                 anchor: '100%',
-                                                allowBlank: false
+                                                allowBlank: false,
+                                                isUpdate: config.isUpdate
                                             }
                                         ]
                                     }

@@ -93,7 +93,8 @@ Ext.extend(fred.window.ElementRTEConfig, MODx.Window, {
                                 name: 'theme',
                                 hiddenName: 'theme',
                                 anchor: '100%',
-                                allowBlank: false
+                                allowBlank: false,
+                                isUpdate: config.isUpdate
                             }
                         ]
                     }
@@ -161,7 +162,7 @@ fred.window.ElementRTEConfigDuplicate = function (config) {
     Ext.applyIf(config, {
         title: _('fred.element_rte_configs.duplicate'),
         closeAction: 'close',
-        isUpdate: false,
+        isUpdate: true,
         url: fred.config.connectorUrl,
         action: 'mgr/element_rte_configs/duplicate',
         modal: true,
@@ -201,7 +202,8 @@ Ext.extend(fred.window.ElementRTEConfigDuplicate, MODx.Window, {
                 name: 'theme',
                 hiddenName: 'theme',
                 anchor: '100%',
-                allowBlank: false
+                allowBlank: false,
+                isUpdate: config.isUpdate
             }
         ]
     }

@@ -198,7 +198,8 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                     },
                                                     scope: this
                                                 },
-                                                allowBlank: false
+                                                allowBlank: false,
+                                                isUpdate: config.isUpdate
                                             },
                                             {
                                                 xtype: 'fred-combo-element-categories',

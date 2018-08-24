@@ -41,7 +41,8 @@ Ext.extend(fred.window.ElementCategory, MODx.Window, {
                 hiddenName: config.isUpdate ? 'theme_id' : 'theme',
                 anchor: '100%',
                 disabled: config.isUpdate,
-                allowBlank: config.isUpdate
+                allowBlank: config.isUpdate,
+                isUpdate: config.isUpdate
             },
             {
                 xtype: 'numberfield',
@@ -64,7 +65,7 @@ fred.window.ElementCategoryDuplicate = function (config) {
     Ext.applyIf(config, {
         title: _('fred.element_categories.duplicate'),
         closeAction: 'close',
-        isUpdate: false,
+        isUpdate: true,
         url: fred.config.connectorUrl,
         action: 'mgr/element_categories/duplicate',
         modal: true,
@@ -103,7 +104,8 @@ Ext.extend(fred.window.ElementCategoryDuplicate, MODx.Window, {
                 name: 'theme',
                 hiddenName: 'theme',
                 anchor: '100%',
-                allowBlank: false
+                allowBlank: false,
+                isUpdate: config.isUpdate
             }
         ]
     }

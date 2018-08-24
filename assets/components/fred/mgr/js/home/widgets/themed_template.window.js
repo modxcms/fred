@@ -38,7 +38,8 @@ Ext.extend(fred.window.ThemedTemplate, MODx.Window, {
                 fieldLabel: _('fred.themed_templates.theme'),
                 name: 'theme',
                 anchor: '100%',
-                allowBlank: true
+                allowBlank: true,
+                isUpdate: config.isUpdate
             }
         ]);
         

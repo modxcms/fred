@@ -160,7 +160,8 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                                                 name: 'theme',
                                                 hiddenName: 'theme',
                                                 anchor: '100%',
-                                                allowBlank: false
+                                                allowBlank: false,
+                                                isUpdate: config.isUpdate
                                             },
                                             {
                                                 xtype: 'fred-combo-boolean',

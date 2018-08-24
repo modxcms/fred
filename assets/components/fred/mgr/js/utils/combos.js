@@ -198,6 +198,7 @@ fred.combo.Themes = function (config) {
         valueField: 'id',
         fields: ['name', 'id'],
         pageSize: 20,
+        isUpdate: false,
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'mgr/themes/getlist',
@@ -205,6 +206,14 @@ fred.combo.Themes = function (config) {
         }
     });
     fred.combo.Themes.superclass.constructor.call(this, config);
+
+    if (config.isUpdate === false) {
+        this.store.load();
+        this.store.on('load', function(store, r) {
+            this.setValue(r[0].id);
+            this.fireEvent('select', this, r[0]);
+        }, this, {single: true});
+    }
 };
 Ext.extend(fred.combo.Themes, MODx.combo.ComboBox);
 Ext.reg('fred-combo-themes', fred.combo.Themes);

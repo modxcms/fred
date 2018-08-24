@@ -50,7 +50,7 @@ fred.grid.ElementOptionSets = function (config) {
         tbar: [
             {
                 text: _('fred.element_option_sets.create'),
-                handler: this.newElementRTEConfig
+                handler: this.createElementOptionSet
             },
             '->',
             {
@@ -92,6 +92,7 @@ fred.grid.ElementOptionSets = function (config) {
                 xtype: 'fred-combo-themes',
                 emptyText: _('fred.themes.all'),
                 addAll: 1,
+                isUpdate: true,
                 filterName: 'theme',
                 syncFilter: function(combo, record) {
                     combo.setValue(record.data[combo.valueField]);
@@ -117,12 +118,12 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.element_option_sets.quick_update'),
-            handler: this.quickUpdateElementRTEConfig
+            handler: this.quickUpdateElementOptionSet
         });
 
         m.push({
             text: _('fred.element_option_sets.update'),
-            handler: this.updateElementRTEConfig
+            handler: this.updateElementOptionSet
         });
 
         m.push('-');
@@ -136,13 +137,13 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.element_option_sets.remove')
-            , handler: this.removeElementRTEConfig
+            , handler: this.removeElementOptionSet
         });
 
         return m;
     },
 
-    removeElementRTEConfig: function (btn, e) {
+    removeElementOptionSet: function (btn, e) {
         if (!this.menu.record) return false;
 
         MODx.msg.confirm({
@@ -188,7 +189,7 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
     },
 
-    newElementRTEConfig: function(btn, e) {
+    createElementOptionSet: function(btn, e) {
         var options = {};
 
         var s = this.getStore();
@@ -199,10 +200,11 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
         fred.loadPage('element_option_set/create', options);
     },
 
-    quickUpdateElementRTEConfig: function (btn, e) {
+    quickUpdateElementOptionSet: function (btn, e) {
         var updateElementOptionSet = MODx.load({
             xtype: 'fred-window-element-option-set',
             record: this.menu.record,
+            isUpdate: true,
             listeners: {
                 success: {
                     fn: function () {
@@ -224,6 +226,7 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
         var duplicateElementOptionSet = MODx.load({
             xtype: 'fred-window-element-option-set-duplicate',
             record: this.menu.record,
+            isUpdate: true,
             listeners: {
                 success: {
                     fn: function () {
@@ -241,7 +244,7 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
         return true;
     },
 
-    updateElementRTEConfig: function (btn, e) {
+    updateElementOptionSet: function (btn, e) {
         fred.loadPage('element_option_set/update', {id: this.menu.record.id});
     }
 });

@@ -159,6 +159,7 @@ fred.grid.Blueprints = function (config) {
                 xtype: 'fred-combo-themes',
                 emptyText: _('fred.themes.all'),
                 addAll: 1,
+                isUpdate: true,
                 filterName: 'theme',
                 syncFilter: function(combo, record) {
                     var categoryFilter = Ext.getCmp('fred-blueprint-filter-category');
@@ -197,25 +198,25 @@ Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
 
         m.push({
             text: _('fred.blueprints.quick_update'),
-            handler: this.quickUpdateElementRTEConfig
+            handler: this.quickUpdateBlueprint
         });
 
         m.push({
             text: _('fred.blueprints.update'),
-            handler: this.updateElementRTEConfig
+            handler: this.updateBlueprint
         });
 
         m.push('-');
 
         m.push({
             text: _('fred.blueprints.remove')
-            , handler: this.removeTemplate
+            , handler: this.removeBlueprint
         });
 
         return m;
     },
 
-    removeTemplate: function (btn, e) {
+    removeBlueprint: function (btn, e) {
         if (!this.menu.record) return false;
 
         MODx.msg.confirm({
@@ -272,10 +273,11 @@ Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
     },
 
-    quickUpdateElementRTEConfig: function (btn, e) {
-        var updateCategory = MODx.load({
+    quickUpdateBlueprint: function (btn, e) {
+        var quickUpdateBlueprint = MODx.load({
             xtype: 'fred-window-blueprint',
             record: this.menu.record,
+            isUpdate: true,
             listeners: {
                 success: {
                     fn: function () {
@@ -286,14 +288,14 @@ Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
             }
         });
 
-        updateCategory.fp.getForm().reset();
-        updateCategory.fp.getForm().setValues(this.menu.record);
-        updateCategory.show(e.target);
+        quickUpdateBlueprint.fp.getForm().reset();
+        quickUpdateBlueprint.fp.getForm().setValues(this.menu.record);
+        quickUpdateBlueprint.show(e.target);
 
         return true;
     },
 
-    updateElementRTEConfig: function (btn, e) {
+    updateBlueprint: function (btn, e) {
         fred.loadPage('blueprint/update', {id: this.menu.record.id});
     },
 

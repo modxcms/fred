@@ -129,6 +129,7 @@ fred.grid.Elements = function (config) {
                 xtype: 'fred-combo-themes',
                 emptyText: _('fred.themes.all'),
                 addAll: 1,
+                isUpdate: true,
                 filterName: 'theme',
                 syncFilter: function(combo, record) {
                     var categoryFilter = Ext.getCmp('fred-element-filter-category');
@@ -268,6 +269,7 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
         var updateElement = MODx.load({
             xtype: 'fred-window-element',
             record: this.menu.record,
+            isUpdate: true,
             listeners: {
                 success: {
                     fn: function () {
@@ -295,6 +297,7 @@ Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
         var duplicateElement = MODx.load({
             xtype: 'fred-window-element-duplicate',
             record: this.menu.record,
+            isUpdate: true,
             listeners: {
                 success: {
                     fn: function () {

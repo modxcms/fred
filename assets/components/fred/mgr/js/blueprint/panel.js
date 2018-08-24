@@ -195,7 +195,8 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                                     },
                                                     scope: this
                                                 },
-                                                allowBlank: false
+                                                allowBlank: false,
+                                                isUpdate: config.isUpdate
                                             },
                                             {
                                                 xtype: 'fred-combo-blueprint-categories',

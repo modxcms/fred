@@ -100,7 +100,8 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
                                 name: 'theme',
                                 hiddenName: 'theme',
                                 anchor: '100%',
-                                allowBlank: false
+                                allowBlank: false,
+                                isUpdate: config.isUpdate
                             },
                             {
                                 xtype: 'fred-combo-boolean',
@@ -170,13 +171,12 @@ fred.window.ElementOptionSetDuplicate = function (config) {
     Ext.applyIf(config, {
         title: _('fred.element_option_sets.duplicate'),
         closeAction: 'close',
-        isUpdate: false,
+        isUpdate: true,
         url: fred.config.connectorUrl,
         action: 'mgr/element_option_sets/duplicate',
         modal: true,
         fields: this.getFields(config),
         autoHeight: true,
-        width: 800,
         keys: [
             {
                 key: Ext.EventObject.ENTER,
@@ -210,7 +210,8 @@ Ext.extend(fred.window.ElementOptionSetDuplicate, MODx.Window, {
                 name: 'theme',
                 hiddenName: 'theme',
                 anchor: '100%',
-                allowBlank: false
+                allowBlank: false,
+                isUpdate: config.isUpdate
             }
         ]
     }

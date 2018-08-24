@@ -114,7 +114,8 @@ Ext.extend(fred.window.Element, MODx.Window, {
                                     },
                                     scope: this
                                 },
-                                allowBlank: false
+                                allowBlank: false,
+                                isUpdate: config.isUpdate
                             },
                             {
                                 xtype: 'fred-combo-element-categories',

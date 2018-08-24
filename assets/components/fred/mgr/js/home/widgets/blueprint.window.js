@@ -73,6 +73,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                 name: 'theme_id',
                                 hiddenName: 'theme_id',
                                 anchor: '100%',
+                                isUpdate: config.isUpdate,
                                 listeners: {
                                     select: function(combo, record) {
                                         var category = this.find('name', 'category');

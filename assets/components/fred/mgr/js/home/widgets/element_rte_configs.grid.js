@@ -74,6 +74,7 @@ fred.grid.ElementRTEConfigs = function (config) {
                 xtype: 'fred-combo-themes',
                 emptyText: _('fred.themes.all'),
                 addAll: 1,
+                isUpdate: true,
                 filterName: 'theme',
                 syncFilter: function(combo, record) {
                     combo.setValue(record.data[combo.valueField]);
@@ -185,6 +186,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, MODx.grid.Grid, {
         var updateElementRTEConfig = MODx.load({
             xtype: 'fred-window-element-rte-config',
             record: this.menu.record,
+            isUpdate: true,
             listeners: {
                 success: {
                     fn: function () {
@@ -206,6 +208,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, MODx.grid.Grid, {
         var duplicateElementRTEConfig = MODx.load({
             xtype: 'fred-window-element-rte-config-duplicate',
             record: this.menu.record,
+            isUpdate: true,
             listeners: {
                 success: {
                     fn: function () {
