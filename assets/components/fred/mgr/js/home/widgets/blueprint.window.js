@@ -155,8 +155,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                         ]
                     }
                 ]
-            }]
-            ;
+            }];
     }
 });
 Ext.reg('fred-window-blueprint', fred.window.Blueprint);

@@ -14,13 +14,19 @@ fred.window.BlueprintCategory = function (config) {
 };
 Ext.extend(fred.window.BlueprintCategory, MODx.Window, {
     getFields: function (config) {
-        return [
-            {
-                xtype: 'textfield',
-                name: 'id',
-                anchor: '100%',
-                hidden: true
-            },
+        var fields = [{
+            xtype: 'hidden',
+            name: 'id'
+        }];
+
+        if (config.isUpdate) {
+            fields.push([{
+                xtype: 'hidden',
+                name: 'theme'
+            }]);
+        }
+        
+        fields.push([
             {
                 xtype: 'textfield',
                 fieldLabel: _('fred.blueprint_categories.name'),
@@ -31,11 +37,11 @@ Ext.extend(fred.window.BlueprintCategory, MODx.Window, {
             {
                 xtype: 'fred-combo-themes',
                 fieldLabel: _('fred.blueprint_categories.theme'),
-                name: 'theme',
-                hiddenName: 'theme',
+                name: config.isUpdate ? 'theme_id' : 'theme',
+                hiddenName: config.isUpdate ? 'theme_id' : 'theme',
                 anchor: '100%',
                 disabled: config.isUpdate,
-                allowBlank: false
+                allowBlank: config.isUpdate
             },
             {
                 xtype: 'fred-combo-boolean',
@@ -55,7 +61,9 @@ Ext.extend(fred.window.BlueprintCategory, MODx.Window, {
                 anchor: '100%',
                 allowBlank: true
             }
-        ];
+        ]);
+        
+        return fields;
     }
 });
 Ext.reg('fred-window-blueprint-category', fred.window.BlueprintCategory);

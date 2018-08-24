@@ -171,6 +171,8 @@ Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
     },
 
     updateTheme: function (btn, e) {
+        this.menu.record.theme_id = this.menu.record.theme;
+        
         var updateCategory = MODx.load({
             xtype: 'fred-window-blueprint-category',
             title: _('fred.blueprint_categories.update'),

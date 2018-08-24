@@ -160,6 +160,8 @@ Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
     },
 
     updateTheme: function (btn, e) {
+        this.menu.record.theme_id = this.menu.record.theme;
+        
         var updateCategory = MODx.load({
             xtype: 'fred-window-element-category',
             title: _('fred.element_categories.update'),
