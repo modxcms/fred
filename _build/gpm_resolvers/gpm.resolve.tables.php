@@ -22,12 +22,16 @@ if ($object->xpdo) {
             $modx->addPackage('fred', $modelPath, null);
 
 
-
             $manager = $modx->getManager();
 
             $manager->createObjectContainer('FredBlueprintCategory');
             $manager->createObjectContainer('FredBlueprint');
-
+            $manager->createObjectContainer('FredElementCategory');
+            $manager->createObjectContainer('FredElement');
+            $manager->createObjectContainer('FredElementOptionSet');
+            $manager->createObjectContainer('FredElementRTEConfig');
+            $manager->createObjectContainer('FredTheme');
+            $manager->createObjectContainer('FredThemedTemplate');
 
             break;
     }

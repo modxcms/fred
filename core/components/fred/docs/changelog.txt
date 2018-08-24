@@ -1,5 +1,12 @@
 Changelog for Fred.
 
+1.0.0 beta4
+==============
+- Add CMP for Elements, RTE Configs, Option Sets, Themes
+- Add UUID for elements, element categories, blueprints and blueprint categories
+- Make blueprint's & element's image not required and fill it with placeholder image if empty
+- TVs as a target & in Page Settings
+
 1.0.0 beta3
 ==============
 - Add CMP for Blueprints
