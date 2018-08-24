@@ -8,13 +8,13 @@
  * file that was distributed with this source code.
  */
 
-require_once dirname(dirname(dirname(__FILE__))) . '/index.class.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/index.class.php';
 
 /**
  * @package fred
  * @subpackage controllers
  */
-class FredElementOptionSetCreateManagerController extends FredBaseManagerController
+class FredElementOptionSetUpdateManagerController extends FredBaseManagerController
 {
     public function process(array $scriptProperties = [])
     {
@@ -22,7 +22,7 @@ class FredElementOptionSetCreateManagerController extends FredBaseManagerControl
 
     public function getPageTitle()
     {
-        return $this->modx->lexicon('fred.element_option_sets.create');
+        return $this->modx->lexicon('fred.element_option_sets.update');
     }
 
     public function loadCustomCssJs()

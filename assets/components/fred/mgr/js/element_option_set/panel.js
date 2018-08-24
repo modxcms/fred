@@ -68,7 +68,7 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
 
     success: function (o, r) {
         if (this.config.isUpdate == false) {
-            fred.loadPage('element_option_set/update', {id: o.result.object.id});
+            fred.loadPage('element/option_set/update', {id: o.result.object.id});
         }
     },
 

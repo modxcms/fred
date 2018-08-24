@@ -197,7 +197,7 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
             options.theme = s.baseParams.theme;
         }
         
-        fred.loadPage('element_option_set/create', options);
+        fred.loadPage('element/option_set/create', options);
     },
 
     quickUpdateElementOptionSet: function (btn, e) {
@@ -245,7 +245,7 @@ Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
     },
 
     updateElementOptionSet: function (btn, e) {
-        fred.loadPage('element_option_set/update', {id: this.menu.record.id});
+        fred.loadPage('element/option_set/update', {id: this.menu.record.id});
     }
 });
 Ext.reg('fred-grid-element-option-sets', fred.grid.ElementOptionSets);
