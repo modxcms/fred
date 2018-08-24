@@ -7,7 +7,7 @@ class ElementReplaceImage extends Endpoint
 {
     function process()
     {
-        $elementId = isset($this->body['element']) ? intval($this->body['element']) : 0;
+        $elementId = isset($this->body['element']) ? $this->body['element'] : '';
         
         if (empty($elementId)) {
             return $this->failure('No element was provided');
@@ -17,7 +17,7 @@ class ElementReplaceImage extends Endpoint
             return $this->failure('No image was provided');
         }
 
-        $element = $this->modx->getObject('FredElement', $elementId);
+        $element = $this->modx->getObject('FredElement', ['uuid' => $elementId]);
         
         if ($element) {
             $path = $this->fred->getOption('generated_images_path');
