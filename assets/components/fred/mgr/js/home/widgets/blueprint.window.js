@@ -17,10 +17,12 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
     getFields: function (config) {
         return [
             {
-                xtype: 'textfield',
-                name: 'id',
-                anchor: '100%',
-                hidden: true
+                xtype: 'hidden',
+                name: 'id'
+            },
+            {
+                xtype: 'hidden',
+                name: 'rank'
             },
             {
                 layout: 'column',

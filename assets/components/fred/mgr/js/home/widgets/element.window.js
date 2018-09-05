@@ -45,10 +45,12 @@ Ext.extend(fred.window.Element, MODx.Window, {
     getFields: function (config) {
         return [
             {
-                xtype: 'textfield',
+                xtype: 'hidden',
                 name: 'id',
-                anchor: '100%',
-                hidden: true
+            },
+            {
+                xtype: 'hidden',
+                name: 'rank'
             },
             {
                 layout: 'column',
