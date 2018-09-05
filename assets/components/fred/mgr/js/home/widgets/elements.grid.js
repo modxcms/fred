@@ -31,6 +31,8 @@ fred.grid.Elements = function (config) {
                 width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                     if (value) {
+                        value = fred.prependBaseUrl(value);
+                        
                         metaData.attr = 'ext:qtip=\'<img src=\"' + value + '\">\'';
                         return '<img src="' + value + '"  style="max-width:200px;max-height:100px;">';
                     }

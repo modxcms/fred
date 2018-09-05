@@ -40,4 +40,21 @@ class FredBlueprint extends xPDOSimpleObject {
 
         return parent::save($cacheFlag);
     }
+
+    public function getImage()
+    {
+        $image = 'https://via.placeholder.com/350x150?text=' . urlencode($this->name);
+
+        if (!empty($this->image)) {
+            $image = $this->image;
+
+            $image = str_replace('{{assets_url}}', $this->xpdo->getOption('assets_url'), $image);
+
+            if ((strtolower(substr($image, 0,7)) !== 'http://') && (strtolower(substr($image, 0,8)) !== 'https://') && (substr($image, 0,2) !== '//')  && (substr($image, 0,1) !== '/')) {
+                $image = $this->xpdo->getOption('base_url') . $image;
+            }
+        }
+
+        return $image;
+    }
 }

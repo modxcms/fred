@@ -80,11 +80,11 @@
       },
       {
         "key": "generated_images_path",
-        "value": "{assets_path}/fred/generated"
+        "value": "{{assets_path}}/fred/generated"
       },
       {
         "key": "generated_images_url",
-        "value": "{assets_url}/fred/generated"
+        "value": "{{assets_url}}/fred/generated"
       }
     ]
   },

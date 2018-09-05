@@ -23,8 +23,7 @@ class ElementReplaceImage extends Endpoint
             $path = $this->fred->getOption('generated_images_path');
             $url = $this->fred->getOption('generated_images_url');
     
-            $path = str_replace('{assets_path}', $this->modx->getOption('assets_path'), $path);
-            $url = str_replace('{assets_url}', $this->modx->getOption('assets_url'), $url);
+            $path = str_replace('{{assets_path}}', $this->modx->getOption('assets_path'), $path);
 
             $path = str_replace('//', '/', $path);
             $url = str_replace('//', '/', $url);

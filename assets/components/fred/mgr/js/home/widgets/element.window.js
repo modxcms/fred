@@ -170,7 +170,7 @@ Ext.extend(fred.window.Element, MODx.Window, {
                                 allowBlank: true,
                                 listeners: {
                                     select: function (data) {
-                                        this.setValue(MODx.config.base_url + data.relativeUrl);
+                                        this.setValue(data.fullRelativeUrl);
                                     }
                                 }
                             },

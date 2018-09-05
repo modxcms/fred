@@ -255,6 +255,24 @@ if ($object->xpdo) {
                 $modx->updateCollection('FredElementRTEConfig', ['theme' => $defaultTheme]);
                 $modx->updateCollection('FredElementOptionSet', ['theme' => $defaultTheme]);
             }
+            
+            if ($oldPackage && $oldPackage->compareVersion('1.0.0-beta5', '>')) {
+                $generatedImagesUrl = $modx->getObject('modSystemSetting', ['key' => 'fred.generated_images_url']);
+                if ($generatedImagesUrl) {
+                    $value = $generatedImagesUrl->get('value');
+                    $value = str_replace('{assets_url}', '{{assets_url}}', $value);
+                    $generatedImagesUrl->set('value', $value);
+                    $generatedImagesUrl->save();
+                }
+                
+                $generatedImagesPath = $modx->getObject('modSystemSetting', ['key' => 'fred.generated_images_path']);
+                if ($generatedImagesPath) {
+                    $value = $generatedImagesPath->get('value');
+                    $value = str_replace('{assets_path}', '{{assets_path]}}', $value);
+                    $generatedImagesPath->set('value', $value);
+                    $generatedImagesPath->save();
+                }
+            }
 
             break;
     }

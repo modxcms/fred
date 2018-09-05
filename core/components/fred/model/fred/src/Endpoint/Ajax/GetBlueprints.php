@@ -65,7 +65,7 @@ class GetBlueprints extends Endpoint
                     "id" => $blueprint->id,
                     "name" => $blueprint->name,
                     "description" => $blueprint->description,
-                    "image" => $blueprint->image,
+                    "image" => $blueprint->getImage(),
                     "public" => $blueprint->get('public'),
                     "complete" => $blueprint->get('complete'),
                 ];

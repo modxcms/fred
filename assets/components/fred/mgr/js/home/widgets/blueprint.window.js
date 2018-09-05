@@ -137,11 +137,19 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                 anchor: '100%',
                                 allowBlank: true,
                                 updatePreview: function () {
-                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = (this.getValue() || "https://via.placeholder.com/800x100?text=No+image");
+                                    var value = this.getValue();
+
+                                    if (value) {
+                                        value = fred.prependBaseUrl(value);
+                                    } else {
+                                        value = "https://via.placeholder.com/300x150?text=No+image";
+                                    }
+
+                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = value;
                                 },
                                 listeners: {
                                     select: function (data) {
-                                        this.setValue(MODx.config.base_url + data.relativeUrl);
+                                        this.setValue(data.fullRelativeUrl);
                                         this.updatePreview();
                                     },
                                     change: function (cb, nv) {
@@ -151,7 +159,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                             },
                             {
                                 id: 'image_preview',
-                                html: '<img src="' + (config.record.image || "https://via.placeholder.com/800x100?text=No+image") + '" style="max-height: 400px;max-width: 770px;margin-top: 15px;">'
+                                html: '<img src="' + (config.record.image ? fred.prependBaseUrl(config.record.image) : "https://via.placeholder.com/300x150?text=No+image") + '" style="max-height: 400px;max-width: 770px;margin-top: 15px;">'
                             }
                         ]
                     }

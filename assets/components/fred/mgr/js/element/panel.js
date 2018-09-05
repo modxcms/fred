@@ -58,7 +58,13 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 category.baseParams.theme = r.object.theme;
                             }
 
-                            Ext.getCmp('image_preview').el.dom.querySelector('img').src = (r.object.image || "https://via.placeholder.com/800x100?text=No+image");
+                            if (r.object.image) {
+                                r.object.image = fred.prependBaseUrl(r.object.image);
+                            } else {
+                                r.object.image = "https://via.placeholder.com/300x150?text=No+image";
+                            }
+                            
+                            Ext.getCmp('image_preview').el.dom.querySelector('img').src = r.object.image;
 
                             this.fireEvent('ready', r.object);
                             MODx.fireEvent('ready');
@@ -251,12 +257,20 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                 anchor: '100%',
                                                 allowBlank: true,
                                                 updatePreview: function () {
-                                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = (this.getValue() || "https://via.placeholder.com/300x150?text=No+image");
+                                                    var value = this.getValue();
+                                                    
+                                                    if (value) {
+                                                        value = fred.prependBaseUrl(value);
+                                                    } else {
+                                                        value = "https://via.placeholder.com/300x150?text=No+image";
+                                                    }
+                                                    
+                                                    Ext.getCmp('image_preview').el.dom.querySelector('img').src = value;
                                                 },
                                                 listeners: {
                                                     'select': {
                                                         fn: function (data) {
-                                                            this.setValue(MODx.config.base_url + data.relativeUrl);
+                                                            this.setValue(data.fullRelativeUrl);
                                                             this.updatePreview();
                                                         }
                                                     },
