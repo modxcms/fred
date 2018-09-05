@@ -235,3 +235,6 @@ $_lang['fred.err.themed_templates_ae_template'] = 'Theme is already assigned for
 $_lang['fred.err.fred_dependency_title'] = 'Required Dependency';
 $_lang['fred.err.fred_dependency_body'] = 'Fred dependency is required and can\'t be removed.';
 $_lang['fred.err.target_folder_placeholder_missing'] = 'One of target folders doesn\'t contain {{assets_path}} or {{core_path}} placeholder.';
+$_lang['fred.err.build_ns_name'] = 'Name is required.';
+$_lang['fred.err.build_ns_theme'] = 'Theme is required.';
+$_lang['fred.err.build_failed'] = 'Build failed.';

@@ -31,9 +31,22 @@ class FredThemeBuildProcessor extends modObjectProcessor
         $release = $this->getProperty('release', 'pl');
         $theme = $this->getProperty('id');
 
+        if (empty($name)) {
+            $this->addFieldError('name', $this->modx->lexicon('fred.err.build_ns_name'));
+            return $this->failure();
+        }
+        
+        if (empty($id)) {
+            return $this->failure($this->modx->lexicon('fred.err.build_ns_theme'));
+        }
+        
         $built = $this->build($name, $version, $release, $theme);
         
         if ($built !== true) {
+            if ($built === false) {
+                $built = $this->modx->lexicon('fred.err.build_failed');
+            }
+            
             return $this->failure($built);
         }
 
