@@ -71,19 +71,19 @@ class FredThemeBuildProcessor extends modObjectProcessor
             $buildConfig['folders'] = $folders;
             $targetFail = false;
             foreach ($folders as $folder) {
-                $source = str_replace('[[+core_path]]', $corePath, $folder['source']);
-                $source = str_replace('[[+assets_path]]', $assetsPath, $source);
+                $source = str_replace('{{core_path}}', $corePath, $folder['source']);
+                $source = str_replace('{{assets_path}}', $assetsPath, $source);
                 
                 $target = '';
                 
-                if (substr($folder['target'], 0, 16) === '[[+assets_path]]') {
-                    $target = str_replace('[[+assets_path]]', '', $folder['target']);
+                if (substr($folder['target'], 0, 15) === '{{assets_path}}') {
+                    $target = str_replace('{{assets_path}}', '', $folder['target']);
                     $target = trim($target, '/');
                     $target = empty($target) ? $target : ($target . '/');
                     
                     $target = "return MODX_ASSETS_PATH . '{$target}';";
-                } else if (substr($folder['target'], 0, 14) === '[[+core_path]]') {
-                    $target = str_replace('[[+core_path]]', '', $folder['target']);
+                } else if (substr($folder['target'], 0, 13) === '{{core_path}}') {
+                    $target = str_replace('{{core_path}}', '', $folder['target']);
                     $target = trim($target, '/');
                     $target = empty($target) ? $target : ($target . '/');
 
