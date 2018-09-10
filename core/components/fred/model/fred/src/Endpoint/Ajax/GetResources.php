@@ -33,7 +33,7 @@ class GetResources extends Endpoint
         $depth = isset($_GET['depth']) ? intval($_GET['depth']) : 1;
         $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 25;
         
-        $parents = Utils::explodeAndClean($parents, ',', 'intval');
+        $parents = Utils::explodeAndClean($parents, ',', 'intval', 0, 'strlen');
         $resources = Utils::explodeAndClean($resources, ',', 'intval');
         
         $currentResource = null;
@@ -85,6 +85,7 @@ class GetResources extends Endpoint
         }
         
         $c->limit($limit);
+        $c->sortby('menuindex', 'ASC');
         
         if (!empty($query)) {
             $where['pagetitle:LIKE'] = '%' . $query . '%';
