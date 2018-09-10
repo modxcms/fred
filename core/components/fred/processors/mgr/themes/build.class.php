@@ -36,7 +36,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
             return $this->failure();
         }
         
-        if (empty($id)) {
+        if (empty($theme)) {
             return $this->failure($this->modx->lexicon('fred.err.build_ns_theme'));
         }
         
