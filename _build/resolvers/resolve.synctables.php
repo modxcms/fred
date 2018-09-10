@@ -106,7 +106,9 @@ if ($object->xpdo) {
                 "FredElementCategory",
                 "FredElement",
                 "FredElementOptionSet",
-                "FredElementRTEConfig"
+                "FredElementRTEConfig",
+                "FredTheme",
+                "FredThemedTemplate"
             );
 
             $modelPath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path') . 'components/fred/') . 'model/';
