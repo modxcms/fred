@@ -18,6 +18,7 @@ require_once MODX_CORE_PATH . 'config/' . MODX_CONFIG_KEY . '.inc.php';
 require_once MODX_CONNECTORS_PATH . 'index.php';
 
 $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+/** @var Fred $fred */
 $fred = $modx->getService(
     'fred',
     'Fred',
@@ -27,10 +28,9 @@ $fred = $modx->getService(
     )
 );
 
-/* handle request */
 $modx->request->handleRequest(
     array(
-        'processors_path' => $fred->getOption('processorsPath', null, $corePath . 'processors/'),
+        'processors_path' => $fred->getOption('processorsPath', [], $corePath . 'processors/'),
         'location' => '',
     )
 );

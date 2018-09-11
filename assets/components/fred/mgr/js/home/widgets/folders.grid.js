@@ -28,7 +28,7 @@ fred.grid.Folders = function (config) {
                 var valid = true;
 
                 this.store.each(function (record, index) {
-                    if ((index !== data.row) && record.data.name.toLowerCase() === data.value.toLowerCase()) {
+                    if ((index !== data.row) && record.data.source.toLowerCase() === data.value.toLowerCase()) {
                         valid = false;
                         return false;
                     }

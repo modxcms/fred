@@ -26,8 +26,8 @@ class GetBlueprints extends Endpoint
             $c->where(['theme' => $theme]);
         }
 
-        $categorySort = $this->fred->getOption('blueprint_category_sort', 'name');
-        $blueprintSort = $this->fred->getOption('blueprint_sort', 'name');
+        $categorySort = $this->fred->getOption('blueprint_category_sort', [], 'name');
+        $blueprintSort = $this->fred->getOption('blueprint_sort', [], 'name');
         
         $c->sortby($categorySort);
         
