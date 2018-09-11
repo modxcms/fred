@@ -82,12 +82,44 @@ class FredThemeBuildProcessor extends modObjectProcessor
         $folders = json_decode($this->getProperty('folders'), true);
         if (!empty($folders) && is_array($folders)) {
             $buildConfig['folders'] = $folders;
-            $targetFail = false;
+            
             foreach ($folders as $folder) {
-                $source = str_replace('{{core_path}}', $corePath, $folder['source']);
-                $source = str_replace('{{assets_path}}', $assetsPath, $source);
+                $rawSource = $folder['source'];
                 
-                $target = '';
+                if (substr($folder['source'], 0, 15) === '{{assets_path}}') {
+                    $source = str_replace('{{assets_path}}', '', $folder['source']);
+                    $source = trim($source, '/');
+                    $source = empty($source) ? $source : ($source . '/');
+
+                    $source = $assetsPath . $source;
+                } else if (substr($folder['source'], 0, 13) === '{{core_path}}') {
+                    $source = str_replace('{{core_path}}', '', $folder['source']);
+                    $source = trim($source, '/');
+                    $source = empty($source) ? $source : ($source . '/');
+
+                    $source = $corePath . $source;
+                } else if (substr($folder['source'], 0, 12) === '{{web_root}}') {
+                    $source = str_replace('{{web_root}}', '', $folder['source']);
+                    $source = trim($source, '/');
+                    $source = empty($source) ? $source : ($source . '/');
+
+                    $source = MODX_BASE_PATH . $source;
+                } else if (substr($folder['source'], 0, 1) === '{') {
+                    return $this->modx->lexicon('fred.err.folder_placeholder_fail');
+                } else {
+                    $source = trim($folder['source'], '/');
+                    $source = empty($source) ? $source : ($source . '/');
+
+                    $source = MODX_BASE_PATH . $source;
+                }
+                
+                if (!is_dir($source)) {
+                    return $this->modx->lexicon('fred.err.source_folder_not_dir', ['source' => $rawSource]);
+                }
+                
+                if (!is_readable($source)) {
+                    return $this->modx->lexicon('fred.err.source_folder_not_readable', ['source' => $rawSource]);
+                }
                 
                 if (substr($folder['target'], 0, 15) === '{{assets_path}}') {
                     $target = str_replace('{{assets_path}}', '', $folder['target']);
@@ -101,11 +133,19 @@ class FredThemeBuildProcessor extends modObjectProcessor
                     $target = empty($target) ? $target : ($target . '/');
 
                     $target = "return MODX_CORE_PATH . '{$target}';";
-                }
-                
-                if (empty($target)) {
-                    $targetFail = true;
-                    break;
+                } else if (substr($folder['target'], 0, 12) === '{{web_root}}') {
+                    $target = str_replace('{{web_root}}', '', $folder['target']);
+                    $target = trim($target, '/');
+                    $target = empty($target) ? $target : ($target . '/');
+
+                    $target = "return MODX_BASE_PATH . '{$target}';";
+                } else if (substr($folder['target'], 0, 1) === '{') {
+                    return $this->modx->lexicon('fred.err.folder_placeholder_fail');
+                } else {
+                    $target = trim($folder['target'], '/');
+                    $target = empty($target) ? $target : ($target . '/');
+
+                    $target = "return MODX_BASE_PATH . '{$target}';";
                 }
                 
                 $vehicle = $builder->createVehicle([
@@ -118,10 +158,6 @@ class FredThemeBuildProcessor extends modObjectProcessor
                     'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
                 ]);
                 $builder->putVehicle($vehicle);        
-            }
-            
-            if ($targetFail === true) {
-                return $this->modx->lexicon('fred.err.target_folder_placeholder_missing');
             }
         }
 

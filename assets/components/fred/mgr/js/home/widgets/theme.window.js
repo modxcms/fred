@@ -114,10 +114,10 @@ fred.window.ThemeBuild = function (config) {
     });
     fred.window.ThemeBuild.superclass.constructor.call(this, config);
 
-    this.on('beforeSubmit', function() {
+    this.on('beforeSubmit', function () {
         var dependencies = this.find('name', 'dependencies')[0];
         dependencies.setValue(Ext.getCmp('fred-window-theme-build-dependencies').encode());
-        
+
         var folders = this.find('name', 'folders')[0];
         folders.setValue(Ext.getCmp('fred-window-theme-build-folders').encode());
     }, this);
@@ -152,15 +152,15 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                         },
                         items: [
                             {
-                xtype: 'textfield',
-                fieldLabel: _('fred.themes.name'),
-                name: 'name',
-                anchor: '100%',
-                allowBlank: false
+                                xtype: 'textfield',
+                                fieldLabel: _('fred.themes.name'),
+                                name: 'name',
+                                anchor: '100%',
+                                allowBlank: false
                             }
                         ]
-            },
-            {
+                    },
+                    {
                         columnWidth: .3,
                         border: false,
                         defaults: {
@@ -169,15 +169,15 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                         },
                         items: [
                             {
-                xtype: 'textfield',
-                fieldLabel: _('fred.themes.version'),
-                name: 'version',
-                anchor: '100%',
-                allowBlank: false
+                                xtype: 'textfield',
+                                fieldLabel: _('fred.themes.version'),
+                                name: 'version',
+                                anchor: '100%',
+                                allowBlank: false
                             }
                         ]
-            },
-            {
+                    },
+                    {
                         columnWidth: .3,
                         border: false,
                         defaults: {
@@ -186,13 +186,13 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                         },
                         items: [
                             {
-                xtype: 'textfield',
-                fieldLabel: _('fred.themes.release'),
-                name: 'release',
-                anchor: '100%',
-                allowBlank: false
-            }
-        ]
+                                xtype: 'textfield',
+                                fieldLabel: _('fred.themes.release'),
+                                name: 'release',
+                                anchor: '100%',
+                                allowBlank: false
+                            }
+                        ]
                     },
                 ]
             },
@@ -202,7 +202,7 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                 name: 'categories',
                 hiddenName: 'categories[]',
                 anchor: '100%'
-                
+
             },
             {
                 xtype: 'modx-tabs',
