@@ -34,7 +34,7 @@ fred.grid.Blueprints = function (config) {
                         value = fred.prependBaseUrl(value);
                         
                         metaData.attr = 'ext:qtip=\'<img src=\"' + value + '\">\'';
-                        return '<img src="' + value + '"  style="max-width:200px;max-height:100px;">';
+                        return '<img src="' + value + '"  style="max-width:200px;max-height:150px;">';
                     }
 
                     return value;

@@ -33,19 +33,38 @@ fred.panel.Home = function (config) {
                         title: _('fred.home.elements'),
                         items: [
                             {
-                                xtype: 'fred-grid-elements',
-                                preventRender: true,
-                                cls: 'main-wrapper'
-                            }
-                        ]
-                    },
-                    {
-                        title: _('fred.home.element_categories'),
-                        items: [
-                            {
-                                xtype: 'fred-grid-element-categories',
-                                preventRender: true,
-                                cls: 'main-wrapper'
+                                xtype: 'modx-vtabs',
+                                deferredRender: true,
+                                stateful: true,
+                                stateId: 'fred-tab-home-elements',
+                                stateEvents: ['tabchange'],
+                                getState: function () {
+                                    return {
+                                        activeItem: this.items.indexOf(this.getActiveTab())
+                                    };
+                                },
+                                items: [
+                                    {
+                                        title: _('fred.home.elements'),
+                                        items: [
+                                            {
+                                                xtype: 'fred-grid-elements',
+                                                preventRender: true,
+                                                cls: 'main-wrapper'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        title: _('fred.home.element_categories'),
+                                        items: [
+                                            {
+                                                xtype: 'fred-grid-element-categories',
+                                                preventRender: true,
+                                                cls: 'main-wrapper'
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -73,19 +92,38 @@ fred.panel.Home = function (config) {
                         title: _('fred.home.blueprints'),
                         items: [
                             {
-                                xtype: 'fred-grid-blueprints',
-                                preventRender: true,
-                                cls: 'main-wrapper'
-                            }
-                        ]
-                    },
-                    {
-                        title: _('fred.home.blueprint_categories'),
-                        items: [
-                            {
-                                xtype: 'fred-grid-blueprint-categories',
-                                preventRender: true,
-                                cls: 'main-wrapper'
+                                xtype: 'modx-vtabs',
+                                deferredRender: true,
+                                stateful: true,
+                                stateId: 'fred-tab-home-blueprints',
+                                stateEvents: ['tabchange'],
+                                getState: function () {
+                                    return {
+                                        activeItem: this.items.indexOf(this.getActiveTab())
+                                    };
+                                },
+                                items: [
+                                    {
+                                        title: _('fred.home.blueprints'),
+                                        items: [
+                                            {
+                                                xtype: 'fred-grid-blueprints',
+                                                preventRender: true,
+                                                cls: 'main-wrapper'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        title: _('fred.home.blueprint_categories'),
+                                        items: [
+                                            {
+                                                xtype: 'fred-grid-blueprint-categories',
+                                                preventRender: true,
+                                                cls: 'main-wrapper'
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -93,22 +131,42 @@ fred.panel.Home = function (config) {
                         title: _('fred.home.themes'),
                         items: [
                             {
-                                xtype: 'fred-grid-themes',
-                                preventRender: true,
-                                cls: 'main-wrapper'
-                            }
-                        ]
-                    },
-                    {
-                        title: _('fred.home.themed_templates'),
-                        items: [
-                            {
-                                xtype: 'fred-grid-themed-templates',
-                                preventRender: true,
-                                cls: 'main-wrapper'
+                                xtype: 'modx-vtabs',
+                                deferredRender: true,
+                                stateful: true,
+                                stateId: 'fred-tab-home-themes',
+                                stateEvents: ['tabchange'],
+                                getState: function () {
+                                    return {
+                                        activeItem: this.items.indexOf(this.getActiveTab())
+                                    };
+                                },
+                                items: [
+                                    {
+                                        title: _('fred.home.themes'),
+                                        items: [
+                                            {
+                                                xtype: 'fred-grid-themes',
+                                                preventRender: true,
+                                                cls: 'main-wrapper'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        title: _('fred.home.themed_templates'),
+                                        items: [
+                                            {
+                                                xtype: 'fred-grid-themed-templates',
+                                                preventRender: true,
+                                                cls: 'main-wrapper'
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     }
+
                 ]
             }
         ]
