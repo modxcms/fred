@@ -120,13 +120,13 @@ export default class Fred {
             this.renderPreview();
             this.iframe.src = fredConfig.config.resource.emptyUrl;
 
-            getPreview().then(text => {
+            return getPreview().then(text => {
                 const parser = new DOMParser();
                 this.previewDocument = parser.parseFromString(text, 'text/html');
-                this.getPreviewContent();
+                return this.getPreviewContent();
             });
         } else {
-            this.getPreviewContent();   
+            return this.getPreviewContent();   
         }
     }
     
@@ -142,11 +142,12 @@ export default class Fred {
             }));
         }
         
-        Promise.all(promises).then(() => {
+        return Promise.all(promises).then(() => {
             this.iframe.contentWindow.document.open();
             this.iframe.contentWindow.document.write(this.previewDocument.documentElement.innerHTML);
             this.iframe.contentWindow.document.close();
-            this.iframe.parentNode.style.display = 'block';
+            
+            return this.iframe;
         });
     }
     
@@ -301,10 +302,16 @@ export default class Fred {
         });
 
         emitter.on('fred-preview-on', () => {
-            this.previewContent();
+            this.previewContent().then(iframe => {
+                iframe.parentNode.style.opacity = null;
+                iframe.parentNode.style.zIndex = null;
+                iframe.parentNode.style.display = 'block';
+            });
         });
         
         emitter.on('fred-preview-off', () => {
+            this.iframe.parentNode.style.opacity = null;
+            this.iframe.parentNode.style.zIndex = null;
             this.iframe.parentNode.style.display = 'none';
         });
 

@@ -290,17 +290,20 @@ export default class Blueprints extends Sidebar {
         }, this.state.blueprint.public, onChange));
 
         if (this.state.blueprint.image === '') {
-            html2canvas(document.body, {
-                logging: false,
-                ignoreElements: el => {
-                    if (el.classList.contains('fred')) return true;
-                    if (el.classList.contains('fred--toolbar')) return true;
-    
-                    return false;
-                }
-            }).then(canvas => {
-                this.state.blueprint.generatedImage = canvas.toDataURL();
-                imageEl.setPreview(this.state.blueprint.generatedImage);
+            fredConfig.fred.previewContent().then(iframe => {
+                iframe.parentNode.style.display = 'block';
+                iframe.parentNode.style.opacity = '0';
+                iframe.parentNode.style.zIndex = '-99999999';
+                
+                html2canvas(iframe.contentWindow.document.body, {
+                    logging: false
+                }).then(canvas => {
+                    this.state.blueprint.generatedImage = canvas.toDataURL();
+                    imageEl.setPreview(this.state.blueprint.generatedImage);
+                    iframe.parentNode.style.display = 'none';
+                    iframe.parentNode.style.opacity = null;
+                    iframe.parentNode.style.zIndex = null;
+                });
             });
         }
         
