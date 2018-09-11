@@ -9,7 +9,7 @@ fred.grid.Themes = function (config) {
         save_action: 'mgr/themes/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'config'],
+        fields: ['id', 'name', 'description', 'config', 'latest_build'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -33,6 +33,17 @@ fred.grid.Themes = function (config) {
                 sortable: true,
                 width: 80,
                 editor: {xtype: 'textfield'}
+            },
+            {
+                header: _('fred.themes.latest_build'),
+                dataIndex: 'latest_build',
+                sortable: false,
+                width: 80,
+                renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+                    if (value === false) return '';
+                    
+                    return '<a href="' + fred.getPageUrl('theme/download', {theme: record.id}) +'">' + value + '</a>';
+                }
             }
         ],
         tbar: [
@@ -146,7 +157,7 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         if (!this.menu.record.config || (typeof this.menu.record.config !== 'object')) this.menu.record.config = {};
         
         this.menu.record.config.id = this.menu.record.id;
-        this.menu.record.config.name = this.menu.record.config.name || this.menu.record.name.toLowerCase().replace(/ /g, '-');
+        this.menu.record.config.name = this.menu.record.config.name || this.menu.record.name.toLowerCase().replace(/ /g, '');
         this.menu.record.config.release = this.menu.record.config.release || 'pl';
         this.menu.record.config.version = this.menu.record.config.version || '1.0.0';
         this.menu.record.config['categories[]'] = (this.menu.record.config.categories && Array.isArray(this.menu.record.config.categories)) ? this.menu.record.config.categories.join() : '';

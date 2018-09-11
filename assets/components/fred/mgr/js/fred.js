@@ -39,6 +39,41 @@ Ext.extend(Fred, Ext.Component, {
         }
         
         return url;
+    },
+
+    getPageUrl: function(action, parameters) {
+        if (!parameters) {
+            parameters = 'namespace=fred';
+        } else {
+            if (typeof parameters === 'object') {
+                var stringParams = [];
+
+                for (var key in parameters) {
+                    if (parameters.hasOwnProperty(key)) {
+                        stringParams.push(key + '=' + parameters[key]);
+                    }
+                }
+
+                parameters = stringParams.join('&');
+            }
+            parameters += '&namespace=fred';
+        }
+        
+        // Handles url, passed as first argument
+        var parts = [];
+        if (action) {
+            if (isNaN(parseInt(action)) && (action.substr(0, 1) == '?' || (action.substr(0, "index.php?".length) == 'index.php?'))) {
+                parts.push(action);
+            } else {
+                parts.push('?a=' + action);
+            }
+        }
+
+        if (parameters) {
+            parts.push(parameters);
+        }
+
+        return parts.join('&');
     }
 });
 Ext.reg('fred', Fred);

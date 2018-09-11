@@ -174,6 +174,8 @@ $_lang['fred.themes.source_folder'] = 'Source Folder';
 $_lang['fred.themes.target_folder'] = 'Target Folder';
 $_lang['fred.themes.add_folder'] = 'Add Folder';
 $_lang['fred.themes.remove_folder'] = 'Remove Folder';
+$_lang['fred.themes.latest_build'] = 'Latest Build';
+$_lang['fred.themes.download'] = 'Download Theme';
 
 $_lang['fred.themed_templates.theme'] = 'Theme';
 $_lang['fred.themed_templates.template'] = 'Template';
@@ -238,5 +240,7 @@ $_lang['fred.err.folder_placeholder_fail'] = 'Only {{assets_path}}, {{core_path}
 $_lang['fred.err.build_ns_name'] = 'Name is required.';
 $_lang['fred.err.build_ns_theme'] = 'Theme is required.';
 $_lang['fred.err.build_failed'] = 'Build failed.';
+$_lang['fred.err.theme_no_build'] = 'There\'s no build for the theme.';
 $_lang['fred.err.source_folder_not_dir'] = 'Source [[+source]] is not a valid directory.';
 $_lang['fred.err.source_folder_not_readable'] = 'Source [[+source]] is not readable.';
+$_lang['fred.err.theme_name_invalid_char'] = 'Dash "-" is not allowed in package name.';

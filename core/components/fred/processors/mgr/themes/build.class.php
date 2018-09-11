@@ -34,6 +34,11 @@ class FredThemeBuildProcessor extends modObjectProcessor
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.build_ns_name'));
             return $this->failure();
+        } else {
+            if (strpos($name, '-') !== false) {
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.theme_name_invalid_char'));
+                return $this->failure();
+            }
         }
         
         if (empty($theme)) {

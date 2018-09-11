@@ -110,6 +110,31 @@ fred.window.ThemeBuild = function (config) {
                 fn: this.submit,
                 scope: this
             }
+        ],
+        buttons: [
+            {
+                text: config.cancelBtnText || _('cancel'),
+                scope: this,
+                handler: function () {
+                    config.closeAction !== 'close' ? this.hide() : this.close();
+                }
+            },
+            {
+                text: _('fred.themes.build'),
+                scope: this,
+                handler: this.submit
+            },
+            {
+                text: 'Build & Download Theme',
+                cls: 'primary-button',
+                scope: this,
+                handler: function(){
+                    this.on('success', function() {
+                        fred.loadPage('theme/download', {theme: this.record.id});
+                    }, this, {single: true});
+                    this.submit();
+                }
+            }
         ]
     });
     fred.window.ThemeBuild.superclass.constructor.call(this, config);
@@ -126,10 +151,8 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
     getFields: function (config) {
         return [
             {
-                xtype: 'textfield',
-                name: 'id',
-                anchor: '100%',
-                hidden: true
+                xtype: 'hidden',
+                name: 'id'
             },
             {
                 layout: 'column',
@@ -156,6 +179,13 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                 fieldLabel: _('fred.themes.name'),
                                 name: 'name',
                                 anchor: '100%',
+                                validator: function(value) {
+                                    if (value.indexOf('-') !== -1) {
+                                        return _('fred.err.theme_name_invalid_char');
+                                    }
+                                    
+                                    return true;
+                                },
                                 allowBlank: false
                             }
                         ]

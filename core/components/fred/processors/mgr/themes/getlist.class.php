@@ -11,6 +11,18 @@ class FredThemeGetListProcessor extends modObjectGetListProcessor
     public $defaultSortField = 'name';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'fred.theme';
+    
+    protected $packagesDir;
+    
+    public function initialize()
+    {
+        $corePath = $this->modx->getOption('core_path');
+
+        $this->packagesDir = $corePath . 'packages/';
+        
+        return parent::initialize();
+    }
+
 
     public function beforeIteration(array $list)
     {
@@ -35,6 +47,27 @@ class FredThemeGetListProcessor extends modObjectGetListProcessor
         
         return parent::prepareQueryBeforeCount($c);
     }
+
+    public function prepareRow(xPDOObject $object)
+    {
+        $data = $object->toArray();
+
+        $data['latest_build'] = false;
+        
+        if (is_array($data['config'])) {
+            if (!empty($data['config']['name']) && !empty($data['config']['version']) && !empty($data['config']['release'])) {
+                $fileName = "{$data['config']['name']}-{$data['config']['version']}-{$data['config']['release']}.transport.zip";
+                
+                if (file_exists($this->packagesDir . $fileName)) {
+                    $data['latest_build'] = "{$data['config']['name']}-{$data['config']['version']}-{$data['config']['release']}";
+                }
+            }
+        }
+        
+        return $data;
+    }
+
+
 }
 
 return 'FredThemeGetListProcessor';
