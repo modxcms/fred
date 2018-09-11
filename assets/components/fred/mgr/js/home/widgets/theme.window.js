@@ -308,7 +308,7 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                             {
                                 id: 'fred-window-theme-build-dependencies',
                                 xtype: 'fred-grid-dependencies',
-                                initValue: (config.record && config.record.dependencies) ? config.record.dependencies : [],
+                                initValue: (config.record && config.record.dependencies) ? config.record.dependencies : [{name: "fred", version: '*'}],
                                 maxHeight: 300
                             }
                         ]
