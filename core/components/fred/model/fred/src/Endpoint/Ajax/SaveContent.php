@@ -33,10 +33,10 @@ class SaveContent extends Endpoint
             return $this->failure('Could not load resource with id ' . (int)$this->body['id']);
         }
 
-        if (!$object->checkPolicy('save')) {
+        if (!$this->modx->hasPermission('save_document') || !$object->checkPolicy('save')) {
             return $this->failure('Permission denied (save)');
         }
-
+        
         $data = $object->getProperty('data', 'fred');
         if (!empty($data['fingerprint'])) {
             if (empty($this->body['fingerprint'])) {

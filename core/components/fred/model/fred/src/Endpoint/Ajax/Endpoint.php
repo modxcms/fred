@@ -45,6 +45,16 @@ abstract class Endpoint
 
     public function run()
     {
+        if (!$this->modx->user) {
+            http_response_code(401);
+            return '';
+        }
+
+        if ($this->modx->user->sudo !== 1) {
+            http_response_code(403);
+            return '';
+        }
+        
         /** @var bool|string $checked */
         $checked = $this->checkMethod();
         if ($checked !== true) {

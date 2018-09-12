@@ -14,6 +14,16 @@ class Ajax extends Endpoint
 {
     public function run()
     {
+        if (!$this->modx->user) {
+            http_response_code(401);
+            return;
+        }
+
+        if ($this->modx->user->sudo !== 1) {
+            http_response_code(403);
+            return;
+        }
+        
         $action = $this->modx->getOption('action', $_REQUEST, '');
         if (empty($action)) return;
 
