@@ -15,6 +15,16 @@ $modx = new modX();
 $modx->initialize('web');
 $modx->getService('error','error.modError', '', '');
 
+if (!$modx->user) {
+    http_response_code(401);
+    return;
+}
+
+if ($modx->user->sudo !== 1) {
+    http_response_code(403);
+    return;
+}
+
 include_once dirname(dirname(__FILE__)) . '/vendor/elfinder/php/autoload.php';
 
 $roots = [];
