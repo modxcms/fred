@@ -1,5 +1,10 @@
 Changelog for Fred.
 
+1.0.0 beta5
+==============
+- Lower dependencies to support PHP 5.6+
+- Security fixes
+
 1.0.0 beta4
 ==============
 - Add CMP for Elements, RTE Configs, Option Sets, Themes
