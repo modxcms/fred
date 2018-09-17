@@ -196,7 +196,7 @@ fred.combo.Themes = function (config) {
         hiddenName: 'theme',
         displayField: 'name',
         valueField: 'id',
-        fields: ['name', 'id'],
+        fields: ['name', 'id', 'theme_folder'],
         pageSize: 20,
         isUpdate: false,
         url: fred.config.connectorUrl,

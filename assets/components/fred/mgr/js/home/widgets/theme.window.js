@@ -242,6 +242,26 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                 hiddenName: 'categories[]',
                                 anchor: '100%'
 
+                            },
+                            {
+                                html: '<br><p>' + _('fred.themes.included_theme_folder', {theme_folder: config.record.theme_folder || ''}) + '</p>'
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.themes.dependencies'),
+                        items: [
+                            {
+                                html: '<p>' + _('fred.themes.theme_build_dependencies_desc') + '</p>'
+                            },
+                            {
+                                xtype: 'hidden',
+                                name: 'dependencies'
+                            },
+                            {
+                                id: 'fred-window-theme-build-dependencies',
+                                xtype: 'fred-grid-dependencies',
+                                initValue: (config.record && config.record.dependencies) ? config.record.dependencies : [{name: "fred", version: '*'}]
                             }
                         ]
                     },
@@ -296,20 +316,6 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                 growMax: 300,
                                 growMin: 200,
                                 allowBlank: false
-                            }
-                        ]
-                    },
-                    {
-                        title: _('fred.themes.dependencies'),
-                        items: [
-                            {
-                                xtype: 'hidden',
-                                name: 'dependencies'
-                            },
-                            {
-                                id: 'fred-window-theme-build-dependencies',
-                                xtype: 'fred-grid-dependencies',
-                                initValue: (config.record && config.record.dependencies) ? config.record.dependencies : [{name: "fred", version: '*'}]
                             }
                         ]
                     }

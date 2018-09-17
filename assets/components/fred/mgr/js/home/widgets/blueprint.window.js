@@ -11,6 +11,9 @@ fred.window.Blueprint = function (config) {
         autoHeight: true,
         width: 800
     });
+    
+    this.theme_folder = config.record.theme_theme_folder;
+    
     fred.window.Blueprint.superclass.constructor.call(this, config);
 };
 Ext.extend(fred.window.Blueprint, MODx.Window, {
@@ -81,11 +84,18 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                         var category = this.find('name', 'category');
                                         if (!category[0]) return;
 
+                                        this.theme_folder = record.data.theme_folder;
+                                        
                                         category = category[0];
                                         category.setValue();
                                         category.enable();
                                         category.baseParams.theme = record.id;
                                         category.store.load();
+
+                                        var image = Ext.getCmp('fred-blueprint-image-field');
+                                        if (image) {
+                                            image.updatePreview(this.theme_folder);
+                                        }
                                     },
                                     scope: this
                                 },
@@ -132,17 +142,18 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                         },
                         items: [
                             {
+                                id: 'fred-blueprint-image-field',
                                 xtype: 'modx-combo-browser',
                                 fieldLabel: _('fred.blueprints.image'),
                                 triggerClass: 'x-form-image-trigger',
                                 name: 'image',
                                 anchor: '100%',
                                 allowBlank: true,
-                                updatePreview: function () {
+                                updatePreview: function (theme_folder) {
                                     var value = this.getValue();
 
                                     if (value) {
-                                        value = fred.prependBaseUrl(value);
+                                        value = fred.prependBaseUrl(value, theme_folder);
                                     } else {
                                         value = "https://via.placeholder.com/300x150?text=No+image";
                                     }
@@ -152,16 +163,19 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                 listeners: {
                                     select: function (data) {
                                         this.setValue(data.fullRelativeUrl);
-                                        this.updatePreview();
+                                        this.updatePreview('');
                                     },
-                                    change: function (cb, nv) {
-                                        this.updatePreview();
+                                    change: {
+                                        fn:function (cb, nv) {
+                                            cb.updatePreview(this.theme_folder);
+                                        },
+                                        scope: this
                                     }
                                 }
                             },
                             {
                                 id: 'image_preview',
-                                html: '<img src="' + (config.record.image ? fred.prependBaseUrl(config.record.image) : "https://via.placeholder.com/300x150?text=No+image") + '" style="max-height: 400px;max-width: 770px;margin-top: 15px;">'
+                                html: '<img src="' + (config.record.image ? fred.prependBaseUrl(config.record.image, config.record.theme_theme_folder) : "https://via.placeholder.com/300x150?text=No+image") + '" style="max-height: 400px;max-width: 770px;margin-top: 15px;">'
                             }
                         ]
                     }

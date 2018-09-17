@@ -21,6 +21,7 @@ class FredBlueprintsGetProcessor extends modObjectGetProcessor
 
             if ($theme) {
                 $this->object->set('theme', $theme->id);
+                $this->object->set('theme_folder', $theme->theme_folder);
             }
         }
 

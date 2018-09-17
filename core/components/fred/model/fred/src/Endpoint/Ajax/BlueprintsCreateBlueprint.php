@@ -16,6 +16,17 @@ class BlueprintsCreateBlueprint extends Endpoint
         if (empty($category)) {
             return $this->failure('No category was provided', ['category' => 'No category was provided']);
         }
+        
+        /** @var \FredBlueprintCategory $categoryObject */
+        $categoryObject = $this->modx->getObject('FredBlueprintCategory', ['id' => $category]);
+        if (!$categoryObject) {
+            return $this->failure('No category was provided', ['category' => 'No category was provided']);
+        }
+
+        $theme = $categoryObject->Theme;
+        if (!$theme) {
+            return $this->failure('Category doesn\'t have theme.', ['category' => 'Category doesn\'t have theme.']);
+        }
 
         $rank = isset($this->body['rank']) ? intval($this->body['rank']) : 0;
         $public = isset($this->body['public']) ? intval($this->body['public']) : 0;
@@ -51,17 +62,8 @@ class BlueprintsCreateBlueprint extends Endpoint
         $saved = $blueprint->save();
         
         if ($saved === true) {
-            $path = $this->fred->getOption('generated_images_path');
-            $url = $this->fred->getOption('generated_images_url');
-    
-            $path = str_replace('{{assets_path}}', $this->modx->getOption('assets_path'), $path);
-
-            $path = str_replace('//', '/', $path);
-            $url = str_replace('//', '/', $url);
+            $path = $theme->getThemeFolderPath() . 'generated/';
             
-            $path = rtrim($path, '/') . '/';
-            $url = rtrim($url, '/') . '/';
-
             $nfp = $this->modx->getOption('new_folder_permissions');
             $amode = !empty($nfp) ? octdec($this->modx->getOption('new_folder_permissions')) : 0777;
             if (!is_dir($path)) {
@@ -78,7 +80,7 @@ class BlueprintsCreateBlueprint extends Endpoint
                 $file = $path . $fileName;
                 file_put_contents($file, $data);
 
-                $blueprint->set('image', $url . $fileName);
+                $blueprint->set('image', '{{theme_folder}}generated/' . $fileName);
             } else if (!empty($this->body['image'])) {
                 $blueprint->set('image', $this->body['image']);
             } else {

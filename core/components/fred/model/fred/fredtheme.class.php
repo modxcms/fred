@@ -41,5 +41,35 @@ class FredTheme extends xPDOSimpleObject {
         return parent::set($k, $v, $vType);
     }
 
+    public function getThemeFolderPath()
+    {
+        $themeFolder = $this->get('theme_folder');
 
+        if (empty($themeFolder)) {
+            $this->set('theme_folder', $this->get('name'));
+            $this->save();
+
+            $themeFolder = $this->get('theme_folder');
+        }
+
+        $path = rtrim($this->xpdo->getOption('assets_path'), '/') . '/themes/' . $themeFolder . '/';
+
+        return $path;
+    }
+    
+    public function getThemeFolderUri()
+    {
+        $themeFolder = $this->get('theme_folder');
+
+        if (empty($themeFolder)) {
+            $this->set('theme_folder', $this->get('name'));
+            $this->save();
+
+            $themeFolder = $this->get('theme_folder');
+        }
+
+        $uri = rtrim($this->xpdo->getOption('assets_url'), '/') . '/themes/' . $themeFolder . '/';
+
+        return $uri;
+    }
 }

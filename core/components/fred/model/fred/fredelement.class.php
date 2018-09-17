@@ -74,6 +74,14 @@ class FredElement extends xPDOSimpleObject {
         if (!empty($this->image)) {
             $image = $this->image;
 
+            $category = $this->Category;
+            if ($category) {
+                $theme = $category->Theme;
+                if ($theme) {
+                    $image = str_replace('{{theme_folder}}', $theme->getThemeFolderUri(), $image);
+                }
+            }
+            
             $image = str_replace('{{assets_url}}', $this->xpdo->getOption('assets_url'), $image);
 
             if ((strtolower(substr($image, 0,7)) !== 'http://') && (strtolower(substr($image, 0,8)) !== 'https://') && (substr($image, 0,2) !== '//')  && (substr($image, 0,1) !== '/')) {

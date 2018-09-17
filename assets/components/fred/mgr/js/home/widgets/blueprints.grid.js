@@ -11,7 +11,7 @@ fred.grid.Blueprints = function (config) {
         save_action: 'mgr/blueprints/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname', 'theme_id', 'theme_name'],
+        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname', 'theme_id', 'theme_name', 'theme_theme_folder'],
         ddGroup: 'FredBlueprintsDDGroup',
         enableDragDrop: true,
         paging: true,
@@ -31,7 +31,7 @@ fred.grid.Blueprints = function (config) {
                 width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                     if (value) {
-                        value = fred.prependBaseUrl(value);
+                        value = fred.prependBaseUrl(value, record.data.theme_theme_folder);
                         
                         metaData.attr = 'ext:qtip=\'<img src=\"' + value + '\">\'';
                         return '<img src="' + value + '"  style="max-width:200px;max-height:150px;">';

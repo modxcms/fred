@@ -277,6 +277,29 @@ if ($object->xpdo) {
                     }
                 }
             }
+            
+            if ($oldPackage && $oldPackage->compareVersion('1.0.0-beta6', '>')) {
+                $assetsPath = rtrim($modx->getOption('assets_path'), '/');
+                $nfp = $modx->getOption('new_folder_permissions');
+                $amode = !empty($nfp) ? octdec($modx->getOption('new_folder_permissions')) : 0777;
+                
+                /** @var FredTheme[] $themes */
+                $themes = $modx->getIterator('FredTheme', ['theme_folder' => '']);
+                foreach ($themes as $theme) {
+                    $theme->set('theme_folder', $theme->get('name'));
+                    $theme->save();
+
+                    $themeFolder = $theme->get('theme_folder');
+                    
+                    if (!empty($themeFolder)) {
+                        $path = $assetsPath . '/themes/' . $themeFolder . '/';
+                        
+                        if (!is_dir($path)) {
+                            mkdir($path, $amode, true);
+                        }
+                    }
+                }
+            }
 
             break;
     }

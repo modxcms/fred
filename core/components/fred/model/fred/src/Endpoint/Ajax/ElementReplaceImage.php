@@ -16,20 +16,23 @@ class ElementReplaceImage extends Endpoint
         if (empty($this->body['image'])) {
             return $this->failure('No image was provided');
         }
-
+        
+        /** @var \FredElement $element */
         $element = $this->modx->getObject('FredElement', ['uuid' => $elementId]);
         
         if ($element) {
-            $path = $this->fred->getOption('generated_images_path');
-            $url = $this->fred->getOption('generated_images_url');
-    
-            $path = str_replace('{{assets_path}}', $this->modx->getOption('assets_path'), $path);
+            /** @var \FredBlueprintCategory $categoryObject */
+            $categoryObject = $element->Category;
+            if (!$categoryObject) {
+                return $this->failure('No category was provided');
+            }
 
-            $path = str_replace('//', '/', $path);
-            $url = str_replace('//', '/', $url);
+            $theme = $categoryObject->Theme;
+            if (!$theme) {
+                return $this->failure('Category doesn\'t have theme.');
+            }
             
-            $path = rtrim($path, '/') . '/';
-            $url = rtrim($url, '/') . '/';
+            $path = $theme->getThemeFolderPath() . 'generated/';
 
             $nfp = $this->modx->getOption('new_folder_permissions');
             $amode = !empty($nfp) ? octdec($this->modx->getOption('new_folder_permissions')) : 0777;
@@ -46,8 +49,7 @@ class ElementReplaceImage extends Endpoint
             $file = $path . $fileName;
             file_put_contents($file, $data);
 
-            $element->set('image', $url . $fileName);
-
+            $element->set('image', '{{theme_folder}}generated/' . $fileName);
 
             $element->save();
            

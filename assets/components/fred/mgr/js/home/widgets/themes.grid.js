@@ -126,7 +126,7 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
                     fn: function (r,b,x) {
                         this.refresh();
                         if (r && r.a && r.a.result && r.a.result.object && r.a.result.object.theme_folder !== '') {
-                            MODx.msg.alert('Nice', _('fred.themes.theme_dir_msg', {theme_folder: r.a.result.object.theme_folder}));
+                            MODx.msg.alert(_('fred.themes.theme_dir_msg_title'), _('fred.themes.theme_dir_msg', {theme_folder: r.a.result.object.theme_folder}));
                         }
                     },
                     scope: this
@@ -167,6 +167,7 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         if (!this.menu.record.config || (typeof this.menu.record.config !== 'object')) this.menu.record.config = {};
         
         this.menu.record.config.id = this.menu.record.id;
+        this.menu.record.config.theme_folder = this.menu.record.theme_folder;
         this.menu.record.config.name = this.menu.record.config.name || this.menu.record.name.toLowerCase().replace(/ /g, '');
         this.menu.record.config.release = this.menu.record.config.release || 'pl';
         this.menu.record.config.version = this.menu.record.config.version || '1.0.0';

@@ -19,7 +19,7 @@ $_lang['fred'] = 'Fred';
 
 $_lang['fred.global.any'] = 'Any';
 $_lang['fred.global.change_order'] = 'Change order: [[+name]]';
-$_lang['fred.global.help'] = 'Help!';
+$_lang['fred.global.help'] = 'Help';
 
 $_lang['fred.open_in_fred'] = 'Open In Fred';
 
@@ -160,25 +160,28 @@ $_lang['fred.themes.version'] = 'Version';
 $_lang['fred.themes.build'] = 'Build Theme';
 $_lang['fred.themes.release'] = 'Release';
 $_lang['fred.themes.general'] = 'General';
-$_lang['fred.themes.categories'] = 'Root element categories for Snippets, Chunks and Plugins';
-$_lang['fred.themes.add_dependency'] = 'Add Dependency';
+$_lang['fred.themes.categories'] = 'Included Element categories for required Snippets, Chunks and Plugins';
+$_lang['fred.themes.add_dependency'] = 'Add Extra';
 $_lang['fred.themes.version'] = 'Version';
 $_lang['fred.themes.package_name'] = 'Package Name';
 $_lang['fred.themes.remove_dependency'] = 'Remove Dependency';
 $_lang['fred.themes.changelog'] = 'Changelog';
 $_lang['fred.themes.license'] = 'License';
 $_lang['fred.themes.readme'] = 'Read Me';
-$_lang['fred.themes.dependencies'] = 'Dependencies';
+$_lang['fred.themes.dependencies'] = 'Extras';
 $_lang['fred.themes.docs'] = 'Docs';
 $_lang['fred.themes.latest_build'] = 'Latest Build';
 $_lang['fred.themes.download'] = 'Download Theme';
 $_lang['fred.themes.theme_folder'] = 'Theme\'s Folder';
+$_lang['fred.themes.theme_dir_msg_title'] = 'Theme Directory Created';
 $_lang['fred.themes.theme_dir_msg'] = 'The directory for this theme is <strong>themes/[[+theme_folder]]/</strong> inside your assets directory (usually <strong>assets/themes/[[+theme_folder]]/</strong>).<br>The contents of this directory will be included if you build this theme for distribution, so please place all theme-related assets here.';
 $_lang['fred.themes.overview'] = 'Overview';
-$_lang['fred.themes.theme_build_desc'] = 'Create a complete package for the MODX Installer or submit to the  Extras repository.';
+$_lang['fred.themes.included_theme_folder'] = 'Your Theme will include everything inside <b><code>assets/themes/[[+theme_folder]]/</code></b> directory.';
+$_lang['fred.themes.theme_build_desc'] = 'Build a complete package for the MODX Installer to share or submit to the Extras repository.';
 $_lang['fred.themes.theme_build_readme_desc'] = 'A good readme file should include important details about how your theme is intended to be used, where to submit bug reports and how to get support.';
 $_lang['fred.themes.theme_build_changelog_desc'] = 'List any new features and bugfixes since your initial release.';
-$_lang['fred.themes.theme_build_license_desc'] = 'For open source, a variety of options are available at <a href="https://choosealicense.com/">https://choosealicense.com/</a> or <a href="https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/">https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/</a>. Note: commercial licenses for premium themes are OK, too!';
+$_lang['fred.themes.theme_build_license_desc'] = 'For open source, a variety of options are available at <a href=” https://choosealicense.com/“>Choose a License</a> or <a href=“https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/“>Creative Commons</a>. Note: commercial licenses for premium themes are OK, too!';
+$_lang['fred.themes.theme_build_dependencies_desc'] = 'Include any Extras required for this Theme to function fully.';
 
 $_lang['fred.themed_templates.theme'] = 'Theme';
 $_lang['fred.themed_templates.template'] = 'Template';
@@ -209,10 +212,10 @@ $_lang['setting_fred.blueprint_sort'] = 'Blueprint Sort';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Sort Blueprints by name or rank';
 $_lang['setting_fred.rte_config'] = '*DEPRECATED* RTE Config';
 $_lang['setting_fred.rte_config_desc'] = '*DEPRECATED* Name of the chunk to load global RTE configurations.';
-$_lang['setting_fred.generated_images_path'] = 'Generated Images Path';
-$_lang['setting_fred.generated_images_path_desc'] = 'Physical path to the directory where generated images (automatic blueprint & element screenshots) will be stored.';
-$_lang['setting_fred.generated_images_url'] = 'Generated Images URL';
-$_lang['setting_fred.generated_images_url_desc'] = 'URL path to the directory for generated images.';
+$_lang['setting_fred.generated_images_path'] = '*DEPRECATED* Generated Images Path';
+$_lang['setting_fred.generated_images_path_desc'] = '*DEPRECATED* Physical path to the directory where generated images (automatic blueprint & element screenshots) will be stored.';
+$_lang['setting_fred.generated_images_url'] = '*DEPRECATED* Generated Images URL';
+$_lang['setting_fred.generated_images_url_desc'] = '*DEPRECATED* URL path to the directory for generated images.';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Name is required';
 $_lang['fred.err.blueprints_ns_name'] = 'Name is required';

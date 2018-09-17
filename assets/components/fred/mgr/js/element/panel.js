@@ -23,6 +23,9 @@ fred.panel.Element = function (config) {
             }
         }
     });
+
+    this.theme_folder = '';
+    
     fred.panel.Element.superclass.constructor.call(this, config);
 };
 
@@ -59,7 +62,8 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                             }
 
                             if (r.object.image) {
-                                r.object.image = fred.prependBaseUrl(r.object.image);
+                                this.theme_folder = r.object.theme_folder;
+                                r.object.image = fred.prependBaseUrl(r.object.image, r.object.theme_folder);
                             } else {
                                 r.object.image = "https://via.placeholder.com/300x150?text=No+image";
                             }
@@ -196,11 +200,18 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                         var category = this.find('name', 'category');
                                                         if (!category[0]) return;
 
+                                                        this.theme_folder = record.data.theme_folder;
+                                                        
                                                         category = category[0];
                                                         category.setValue();
                                                         category.enable();
                                                         category.baseParams.theme = record.id;
                                                         category.store.load();
+
+                                                        var image = Ext.getCmp('fred-element-image-field');
+                                                        if (image) {
+                                                            image.updatePreview(this.theme_folder);
+                                                        }
                                                     },
                                                     scope: this
                                                 },
@@ -250,17 +261,18 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                         },
                                         items: [
                                             {
+                                                id: 'fred-element-image-field',
                                                 xtype: 'modx-combo-browser',
                                                 fieldLabel: _('fred.elements.image'),
                                                 triggerClass: 'x-form-image-trigger',
                                                 name: 'image',
                                                 anchor: '100%',
                                                 allowBlank: true,
-                                                updatePreview: function () {
+                                                updatePreview: function (theme_folder = '') {
                                                     var value = this.getValue();
                                                     
                                                     if (value) {
-                                                        value = fred.prependBaseUrl(value);
+                                                        value = fred.prependBaseUrl(value, theme_folder);
                                                     } else {
                                                         value = "https://via.placeholder.com/300x150?text=No+image";
                                                     }
@@ -271,13 +283,14 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                     'select': {
                                                         fn: function (data) {
                                                             this.setValue(data.fullRelativeUrl);
-                                                            this.updatePreview();
+                                                            this.updatePreview('');
                                                         }
                                                     },
                                                     'change': {
                                                         fn: function (cb, nv) {
-                                                            this.updatePreview();
-                                                        }
+                                                            cb.updatePreview(this.theme_folder);
+                                                        },
+                                                        scope: this
                                                     }
                                                 }
                                             },

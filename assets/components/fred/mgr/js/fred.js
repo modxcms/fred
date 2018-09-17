@@ -32,8 +32,12 @@ Ext.extend(Fred, Ext.Component, {
         MODx.loadPage(action, parameters);
     },
     
-    prependBaseUrl: function(url) {
+    prependBaseUrl: function(url, theme_folder = '') {
         url = url.replace('{{assets_url}}', MODx.config.assets_url);
+        
+        if (theme_folder) {
+            url = url.replace('{{theme_folder}}', MODx.config.assets_url + 'themes/' + theme_folder + '/');
+        }
         
         if ((url.substr(0,7).toLowerCase() !== 'http://') && (url.substr(0,8).toLowerCase() !== 'https://') && (url.substr(0,2).toLowerCase() !== '//')  && (url.substr(0,1).toLowerCase() !== '/')) {
             url = MODx.config.base_url + url;

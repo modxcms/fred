@@ -69,26 +69,6 @@ fred.panel.Home = function (config) {
                         ]
                     },
                     {
-                        title: _('fred.home.option_sets'),
-                        items: [
-                            {
-                                xtype: 'fred-grid-element-option-sets',
-                                preventRender: true,
-                                cls: 'main-wrapper'
-                            }
-                        ]
-                    },
-                    {
-                        title: _('fred.home.rte_configs'),
-                        items: [
-                            {
-                                xtype: 'fred-grid-element-rte-configs',
-                                preventRender: true,
-                                cls: 'main-wrapper'
-                            }
-                        ]
-                    },
-                    {
                         title: _('fred.home.blueprints'),
                         items: [
                             {
@@ -124,6 +104,26 @@ fred.panel.Home = function (config) {
                                         ]
                                     }
                                 ]
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.home.option_sets'),
+                        items: [
+                            {
+                                xtype: 'fred-grid-element-option-sets',
+                                preventRender: true,
+                                cls: 'main-wrapper'
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.home.rte_configs'),
+                        items: [
+                            {
+                                xtype: 'fred-grid-element-rte-configs',
+                                preventRender: true,
+                                cls: 'main-wrapper'
                             }
                         ]
                     },
