@@ -14,4 +14,4 @@ If you create a config with a same name as your RTE, for example `TinyMCE`, this
 
 ### Overriding Default Configs
 
-Each option set can specify which RTE to use for the entire Element. In addition, a [data-fred-rte-config](/elements/attributes/#data-fred-rte-config) attribute on a `content-editable="true"` input or text area will override both the Default and Option-specified settings.
+Each option set can specify which RTE to use for the entire Element. In addition, a [data-fred-rte-config](/elements/attributes/#data-fred-rte-config) attribute on an HTML element with a `content-editable="true"` attribue set will override both the Default and Option set specified settings.
