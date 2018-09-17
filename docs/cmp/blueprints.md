@@ -24,3 +24,7 @@ Partial Blueprints are made from the Element bar when hovering/focusing an Eleme
 ## Using Blueprints
 
 Like Elements, find the Blueprint you wish to use and drag-and-drop it into a Dropzone on a Fred-enabled page.
+
+## Updating Blueprints
+
+Unlike Elements, the content of Blueprints cannot be updated, but you can update things like the name and category from the Blueprints grid in the 3PC. To update a Blueprint or its preview screengrab, make a replacement from Blueprints and Elements, then save it again from the left bar in Fred.
