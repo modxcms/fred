@@ -1,10 +1,17 @@
-Under RTE Configs tab you can manage all configuration sets for all installed RTEs.
+# Rich Text Editor (RTE) Configurations
+
+Under the RTE Configs tab you can manage all configuration sets for any installed RTEs.
  
 ![RTE Configs Grid](img/rte_configs_grid.png)
 
-When creating new RTE config, you have to give it a unique name, which is used as a config identifier in [data-fred-rte-config](/elements/attributes/#data-fred-rte-config) attribute.
+RTE configs must have a unique name, which is used in [data-fred-rte-config](/elements/attributes/#data-fred-rte-config) attribute to determin which RTE to use, if any.
 
-Please make sure that the config is a valid JSON, you can use [JSON Lint](https://jsonlint.com/) in case you don't have [ACE editor](https://modx.com/extras/package/ace) installed.
+Make sure RTE configs are valid JSON; you can use [JSON Lint](https://jsonlint.com/) as an external service or the [ACE editor](https://modx.com/extras/package/ace) MODX Extra which shows invalid JSON in the line-number columns as a white X in a red box.
 
-### Default configs
-If you create a config with a same name as your RTE, for example `TinyMCE`, this config will be used as a default one (instead of the one TinyMCE is shipped with) when you don't specify [data-fred-rte-config](/elements/attributes/#data-fred-rte-config) attribute.
+## Default Configs
+
+If you create a config with a same name as your RTE, for example `TinyMCE`, this config will be used as a default one (instead of the one TinyMCE is shipped with).
+
+### Overriding Default Configs
+
+Each option set can specify which RTE to use for the entire Element. In addition, a [data-fred-rte-config](/elements/attributes/#data-fred-rte-config) attribute on a `content-editable="true"` input or text area will override both the Default and Option-specified settings.
