@@ -9,7 +9,7 @@ fred.grid.Themes = function (config) {
         save_action: 'mgr/themes/updatefromgrid',
         autosave: true,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'config', 'latest_build'],
+        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -35,6 +35,13 @@ fred.grid.Themes = function (config) {
                 editor: {xtype: 'textfield'}
             },
             {
+                header: _('fred.themes.theme_folder'),
+                dataIndex: 'theme_folder',
+                sortable: true,
+                width: 80,
+                editor: {xtype: 'textfield'}
+            },
+            {
                 header: _('fred.themes.latest_build'),
                 dataIndex: 'latest_build',
                 sortable: false,
@@ -49,7 +56,7 @@ fred.grid.Themes = function (config) {
         tbar: [
             {
                 text: _('fred.themes.create'),
-                handler: this.assignTheme
+                handler: this.createTheme
             },
             '->',
             {
@@ -111,13 +118,16 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         return m;
     },
 
-    assignTheme: function (btn, e) {
+    createTheme: function (btn, e) {
         var createTheme = MODx.load({
             xtype: 'fred-window-theme',
             listeners: {
                 success: {
-                    fn: function () {
+                    fn: function (r,b,x) {
                         this.refresh();
+                        if (r && r.a && r.a.result && r.a.result.object && r.a.result.object.theme_folder !== '') {
+                            MODx.msg.alert('Nice', _('fred.themes.theme_dir_msg', {theme_folder: r.a.result.object.theme_folder}));
+                        }
                     },
                     scope: this
                 }

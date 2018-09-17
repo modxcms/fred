@@ -103,6 +103,7 @@ fred.window.ThemeBuild = function (config) {
         fields: this.getFields(config),
         autoHeight: true,
         width: 800,
+        buttonAlign: 'left',
         keys: [
             {
                 key: Ext.EventObject.ENTER,
@@ -113,6 +114,9 @@ fred.window.ThemeBuild = function (config) {
         ],
         buttons: [
             {
+                xtype: 'fred-button-help',
+                path: 'cmp/themes/#build'
+            },'->',{
                 text: config.cancelBtnText || _('cancel'),
                 scope: this,
                 handler: function () {
@@ -142,9 +146,6 @@ fred.window.ThemeBuild = function (config) {
     this.on('beforeSubmit', function () {
         var dependencies = this.find('name', 'dependencies')[0];
         dependencies.setValue(Ext.getCmp('fred-window-theme-build-dependencies').encode());
-
-        var folders = this.find('name', 'folders')[0];
-        folders.setValue(Ext.getCmp('fred-window-theme-build-folders').encode());
     }, this);
 };
 Ext.extend(fred.window.ThemeBuild, MODx.Window, {
@@ -155,24 +156,22 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                 name: 'id'
             },
             {
-                layout: 'column',
-                border: false,
-                anchor: '100%',
+                html: '<br/><p>' + _('fred.themes.theme_build_desc') + '</p>'
+            },
+            {
+                xtype: 'modx-tabs',
+                deferredRender: false,
                 defaults: {
-                    layout: 'form',
-                    labelAlign: 'top',
+                    border: false,
+                    autoHeight: true,
                     labelSeparator: '',
-                    anchor: '100%',
-                    border: false
+                    layout: 'form'
                 },
+                border: false,
+                hideMode: 'offsets',
                 items: [
                     {
-                        columnWidth: .4,
-                        border: false,
-                        defaults: {
-                            msgTarget: 'under',
-                            anchor: '100%'
-                        },
+                        title: _('fred.themes.overview'),
                         items: [
                             {
                                 xtype: 'textfield',
@@ -183,118 +182,120 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                     if (value.indexOf('-') !== -1) {
                                         return _('fred.err.theme_name_invalid_char');
                                     }
-                                    
+
                                     return true;
                                 },
                                 allowBlank: false
-                            }
-                        ]
-                    },
-                    {
-                        columnWidth: .3,
-                        border: false,
-                        defaults: {
-                            msgTarget: 'under',
-                            anchor: '100%'
-                        },
-                        items: [
+                            },
                             {
-                                xtype: 'textfield',
-                                fieldLabel: _('fred.themes.version'),
-                                name: 'version',
+                                layout: 'column',
+                                border: false,
                                 anchor: '100%',
-                                allowBlank: false
-                            }
-                        ]
-                    },
-                    {
-                        columnWidth: .3,
-                        border: false,
-                        defaults: {
-                            msgTarget: 'under',
-                            anchor: '100%'
-                        },
-                        items: [
+                                defaults: {
+                                    layout: 'form',
+                                    labelAlign: 'top',
+                                    labelSeparator: '',
+                                    anchor: '100%',
+                                    border: false
+                                },
+                                items: [
+                                    {
+                                        columnWidth: .5,
+                                        border: false,
+                                        defaults: {
+                                            msgTarget: 'under',
+                                            anchor: '100%'
+                                        },
+                                        items: [
+                                            {
+                                                xtype: 'textfield',
+                                                fieldLabel: _('fred.themes.version'),
+                                                name: 'version',
+                                                anchor: '100%',
+                                                allowBlank: false
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        columnWidth: .5,
+                                        border: false,
+                                        defaults: {
+                                            msgTarget: 'under',
+                                            anchor: '100%'
+                                        },
+                                        items: [
+                                            {
+                                                xtype: 'textfield',
+                                                fieldLabel: _('fred.themes.release'),
+                                                name: 'release',
+                                                anchor: '100%',
+                                                allowBlank: false
+                                            }
+                                        ]
+                                    },
+                                ]
+                            },
                             {
-                                xtype: 'textfield',
-                                fieldLabel: _('fred.themes.release'),
-                                name: 'release',
-                                anchor: '100%',
-                                allowBlank: false
-                            }
-                        ]
-                    },
-                ]
-            },
-            {
-                xtype: 'fred-combo-root-category',
-                fieldLabel: _('fred.themes.categories'),
-                name: 'categories',
-                hiddenName: 'categories[]',
-                anchor: '100%'
+                                xtype: 'fred-combo-root-category',
+                                fieldLabel: _('fred.themes.categories'),
+                                name: 'categories',
+                                hiddenName: 'categories[]',
+                                anchor: '100%'
 
-            },
-            {
-                xtype: 'modx-tabs',
-                deferredRender: false,
-                defaults: {
-                    border: false,
-                    autoHeight: true,
-                    layout: 'form'
-                },
-                border: false,
-                hideMode: 'offsets',
-                items: [
+                            }
+                        ]
+                    },
                     {
-                        title: _('fred.themes.docs'),
+                        title: _('fred.themes.changelog'),
                         items: [
+                            {
+                                html: '<p>' + _('fred.themes.theme_build_changelog_desc') + '</p>'
+                            },
                             {
                                 xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
                                 fieldLabel: _('fred.themes.changelog'),
                                 name: 'docs_changelog',
                                 anchor: '100%',
                                 grow: true,
-                                growMax: 250,
-                                growMin: 100
-                            },
-                            {
-                                xtype: 'modx-combo-browser',
-                                fieldLabel: _('fred.themes.readme'),
-                                name: 'docs_readme',
-                                anchor: '100%',
-                                allowBlank: false,
-                                listeners: {
-                                    select: function (data) {
-                                        this.setValue(data.fullRelativeUrl);
-                                    }
-                                }
-                            },
-                            {
-                                xtype: 'modx-combo-browser',
-                                fieldLabel: _('fred.themes.license'),
-                                name: 'docs_license',
-                                anchor: '100%',
-                                allowBlank: false,
-                                listeners: {
-                                    select: function (data) {
-                                        this.setValue(data.fullRelativeUrl);
-                                    }
-                                }
+                                growMax: 300,
+                                growMin: 200,
+                                allowBlank: false
                             }
                         ]
                     },
                     {
-                        title: _('fred.themes.folders'),
+                        title: _('fred.themes.readme'),
                         items: [
                             {
-                                xtype: 'hidden',
-                                name: 'folders'
+                                html: '<p>' + _('fred.themes.theme_build_readme_desc') + '</p>'
                             },
                             {
-                                id: 'fred-window-theme-build-folders',
-                                xtype: 'fred-grid-folders',
-                                initValue: (config.record && config.record.folders) ? config.record.folders : [],
-                                maxHeight: 300
+                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
+                                fieldLabel: _('fred.themes.readme'),
+                                name: 'docs_readme',
+                                anchor: '100%',
+                                grow: true,
+                                growMax: 300,
+                                growMin: 200,
+                                allowBlank: false
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.themes.license'),
+                        items: [
+                            {
+                                html: '<p>' + _('fred.themes.theme_build_license_desc') + '</p>'
+                            },
+                            {
+                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
+                                fieldLabel: _('fred.themes.license'),
+                                name: 'docs_license',
+                                anchor: '100%',
+                                grow: true,
+                                growMax: 300,
+                                growMin: 200,
+                                allowBlank: false
                             }
                         ]
                     },
@@ -308,8 +309,7 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                             {
                                 id: 'fred-window-theme-build-dependencies',
                                 xtype: 'fred-grid-dependencies',
-                                initValue: (config.record && config.record.dependencies) ? config.record.dependencies : [{name: "fred", version: '*'}],
-                                maxHeight: 300
+                                initValue: (config.record && config.record.dependencies) ? config.record.dependencies : [{name: "fred", version: '*'}]
                             }
                         ]
                     }

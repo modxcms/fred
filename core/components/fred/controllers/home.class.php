@@ -32,7 +32,6 @@ class FredHomeManagerController extends FredBaseManagerController
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/theme.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/dependencies.grid.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/folders.grid.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themes.grid.js');
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprint_category.window.js');
@@ -55,6 +54,7 @@ class FredHomeManagerController extends FredBaseManagerController
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/page.js');
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/griddraganddrop.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
         $this->addLastJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
 
         $this->addHtml('

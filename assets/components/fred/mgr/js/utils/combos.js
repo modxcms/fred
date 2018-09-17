@@ -337,3 +337,35 @@ fred.combo.RootCategory = function (config, getStore) {
 };
 Ext.extend(fred.combo.RootCategory, Ext.ux.form.SuperBoxSelect);
 Ext.reg('fred-combo-root-category', fred.combo.RootCategory);
+
+fred.combo.InstalledPackages = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        name: 'package',
+        hiddenName: 'package',
+        displayField: 'package_name',
+        valueField: 'package_name',
+        fields: ['package_name'],
+        pageSize: 20,
+        isUpdate: false,
+        url: fred.config.connectorUrl,
+        editable: true,
+        forceSelection: false,
+        typeAhead: false,
+        selectOnFocus: false,
+        baseParams: {
+            action: 'mgr/extra/getinstalledpackages'
+        }
+    });
+    fred.combo.Themes.superclass.constructor.call(this, config);
+
+    if (config.isUpdate === false) {
+        this.store.load();
+        this.store.on('load', function(store, r) {
+            this.setValue(r[0].id);
+            this.fireEvent('select', this, r[0]);
+        }, this, {single: true});
+    }
+};
+Ext.extend(fred.combo.InstalledPackages, MODx.combo.ComboBox);
+Ext.reg('fred-combo-installed-packages', fred.combo.InstalledPackages);

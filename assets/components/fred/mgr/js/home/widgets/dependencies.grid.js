@@ -4,15 +4,14 @@ fred.grid.Dependencies = function (config) {
     Ext.applyIf(config, {
         remoteSort: false,
         fields: ['name', 'version'],
-        autoHeight: true,
-        maxHeight: 300,
+        height: 250,
         columns: [
             {
                 header: _('fred.themes.package_name'),
                 dataIndex: 'name',
                 width: 120,
                 sortable: true,
-                editor: {xtype: 'textfield'}
+                editor: {xtype: 'fred-combo-installed-packages'}
             },
             {
                 header: _('fred.themes.version'),
@@ -25,7 +24,7 @@ fred.grid.Dependencies = function (config) {
         listeners: {
             beforerender: this.fillGrid,
             beforeedit: function(data) {
-                if ((data.field === 'name') && (data.row === 0) && (data.value === 'fred')) {
+                if ((data.field === 'name') && (data.value === 'fred')) {
                     return false;
                 }
                 
@@ -92,7 +91,7 @@ Ext.extend(fred.grid.Dependencies, MODx.grid.LocalGrid, {
     },
 
     removeDependency: function() {
-        if ((this.menu.record.name === 'fred') && (this.menu.recordIndex === 0)) {
+        if (this.menu.record.name === 'fred') {
             MODx.msg.alert(_('fred.err.fred_dependency_title'), _('fred.err.fred_dependency_body'));
             return;
         }

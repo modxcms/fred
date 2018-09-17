@@ -5,6 +5,7 @@
  * @property string $uuid
  * @property string $description
  * @property array $config
+ * @property string $theme_folder
  * 
  * @property FredElementCategory $ElementCategories[]
  * @property FredBlueprintCategory $BlueprintCategories[]
@@ -27,4 +28,18 @@ class FredTheme extends xPDOSimpleObject {
 
         return parent::save($cacheFlag);
     }
+
+    public function set($k, $v = null, $vType = '')
+    {
+        if ($k === 'theme_folder') {
+            $v = strtolower($v);
+            $v = str_replace(' ', '_', $v);
+            $v = str_replace('.', '', $v);
+            $v = str_replace('/', '', $v);
+        }
+        
+        return parent::set($k, $v, $vType);
+    }
+
+
 }

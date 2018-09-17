@@ -29,7 +29,8 @@ class FredBlueprintUpdateManagerController extends FredBaseManagerController
     {
         $this->addJavascript($this->fred->getOption('jsUrl') . 'blueprint/panel.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'blueprint/page.js');
-        
+
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
         $this->addLastJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
 
         $this->addHtml('

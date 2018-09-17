@@ -31,6 +31,10 @@ class FredThemeBuildProcessor extends modObjectProcessor
         $release = $this->getProperty('release', 'pl');
         $theme = $this->getProperty('id');
 
+        $changelog = $this->getProperty('docs_changelog');
+        $readme = $this->getProperty('docs_readme');
+        $license = $this->getProperty('docs_license');
+
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.build_ns_name'));
             return $this->failure();
@@ -43,6 +47,21 @@ class FredThemeBuildProcessor extends modObjectProcessor
         
         if (empty($theme)) {
             return $this->failure($this->modx->lexicon('fred.err.build_ns_theme'));
+        }
+        
+        if (empty($changelog)) {
+            $this->addFieldError('docs_changelog', $this->modx->lexicon('fred.err.theme_docs_changelog_ns'));
+            return $this->failure();
+        }
+        
+        if (empty($readme)) {
+            $this->addFieldError('docs_readme', $this->modx->lexicon('fred.err.theme_docs_readme_ns'));
+            return $this->failure();
+        }
+        
+        if (empty($license)) {
+            $this->addFieldError('docs_license', $this->modx->lexicon('fred.err.theme_docs_license_ns'));
+            return $this->failure();
         }
         
         $built = $this->build($name, $version, $release, $theme);
@@ -81,95 +100,28 @@ class FredThemeBuildProcessor extends modObjectProcessor
         ]);
         $builder->putVehicle($vehicle);
 
-        $assetsPath = $this->modx->getOption('assets_path');
-        $corePath = $this->modx->getOption('core_path');
-        
-        $folders = json_decode($this->getProperty('folders'), true);
-        if (!empty($folders) && is_array($folders)) {
-            $buildConfig['folders'] = $folders;
-            
-            foreach ($folders as $folder) {
-                $rawSource = $folder['source'];
-                
-                if (substr($folder['source'], 0, 15) === '{{assets_path}}') {
-                    $source = str_replace('{{assets_path}}', '', $folder['source']);
-                    $source = trim($source, '/');
-                    $source = empty($source) ? $source : ($source . '/');
-
-                    $source = $assetsPath . $source;
-                } else if (substr($folder['source'], 0, 13) === '{{core_path}}') {
-                    $source = str_replace('{{core_path}}', '', $folder['source']);
-                    $source = trim($source, '/');
-                    $source = empty($source) ? $source : ($source . '/');
-
-                    $source = $corePath . $source;
-                } else if (substr($folder['source'], 0, 12) === '{{web_root}}') {
-                    $source = str_replace('{{web_root}}', '', $folder['source']);
-                    $source = trim($source, '/');
-                    $source = empty($source) ? $source : ($source . '/');
-
-                    $source = MODX_BASE_PATH . $source;
-                } else if (substr($folder['source'], 0, 1) === '{') {
-                    return $this->modx->lexicon('fred.err.folder_placeholder_fail');
-                } else {
-                    $source = trim($folder['source'], '/');
-                    $source = empty($source) ? $source : ($source . '/');
-
-                    $source = MODX_BASE_PATH . $source;
-                }
-                
-                if (!is_dir($source)) {
-                    return $this->modx->lexicon('fred.err.source_folder_not_dir', ['source' => $rawSource]);
-                }
-                
-                if (!is_readable($source)) {
-                    return $this->modx->lexicon('fred.err.source_folder_not_readable', ['source' => $rawSource]);
-                }
-                
-                if (substr($folder['target'], 0, 15) === '{{assets_path}}') {
-                    $target = str_replace('{{assets_path}}', '', $folder['target']);
-                    $target = trim($target, '/');
-                    $target = empty($target) ? $target : ($target . '/');
-                    
-                    $target = "return MODX_ASSETS_PATH . '{$target}';";
-                } else if (substr($folder['target'], 0, 13) === '{{core_path}}') {
-                    $target = str_replace('{{core_path}}', '', $folder['target']);
-                    $target = trim($target, '/');
-                    $target = empty($target) ? $target : ($target . '/');
-
-                    $target = "return MODX_CORE_PATH . '{$target}';";
-                } else if (substr($folder['target'], 0, 12) === '{{web_root}}') {
-                    $target = str_replace('{{web_root}}', '', $folder['target']);
-                    $target = trim($target, '/');
-                    $target = empty($target) ? $target : ($target . '/');
-
-                    $target = "return MODX_BASE_PATH . '{$target}';";
-                } else if (substr($folder['target'], 0, 1) === '{') {
-                    return $this->modx->lexicon('fred.err.folder_placeholder_fail');
-                } else {
-                    $target = trim($folder['target'], '/');
-                    $target = empty($target) ? $target : ($target . '/');
-
-                    $target = "return MODX_BASE_PATH . '{$target}';";
-                }
-                
-                $vehicle = $builder->createVehicle([
-                    "source" => $source,
-                    "target" => $target
-                ], [
-                    "vehicle_class" => "xPDOFileVehicle"
-                ]);
-                $vehicle->validate('php', [
-                    'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
-                ]);
-                $builder->putVehicle($vehicle);        
-            }
-        }
-
         /** @var FredTheme $theme */
         $theme = $this->modx->getObject('FredTheme', ['id' => $themeId]);
 
         $theme->set('config', []);
+
+        $assetsPath = rtrim($this->modx->getOption('assets_path'), '/');
+
+        $themeFolder = 'themes/' . $theme->get('theme_folder');
+        $themeFolderPath = $assetsPath . '/' . $themeFolder . '/';
+
+        if (is_dir($themeFolderPath) && is_readable($themeFolderPath)) {
+            $vehicle = $builder->createVehicle([
+                "source" => $themeFolderPath,
+                "target" => "return MODX_ASSETS_PATH . '{$themeFolder}';"
+            ], [
+                "vehicle_class" => "xPDOFileVehicle"
+            ]);
+            $vehicle->validate('php', [
+                'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
+            ]);
+            $builder->putVehicle($vehicle);
+        }
         
         /** @var FredElementCategory[] $elementCategories */
         $elementCategories = $theme->getMany('ElementCategories');
@@ -489,29 +441,15 @@ class FredThemeBuildProcessor extends modObjectProcessor
         $license = $this->getProperty('docs_license');
 
         $buildAttributes = [
-            'requires' => $requires
+            'requires' => $requires,
+            'changelog' => $changelog,
+            'readme' => $readme,
+            'license' => $license
         ];
         
-        if (!empty($changelog)) {
-            $buildAttributes['changelog'] = $changelog;
-            $buildConfig['docs_changelog'] = $changelog;
-        }
-        
-        if (!empty($readme)) {
-            $readmePath = MODX_BASE_PATH . ltrim($readme, '/');
-            if (is_readable($readmePath)) {
-                $buildConfig['docs_readme'] = $readme;
-                $buildAttributes['readme'] = file_get_contents($readmePath);
-            }
-        }
-        
-        if (!empty($license)) {
-            $licensePath = MODX_BASE_PATH . ltrim($license, '/');
-            if (is_readable($licensePath)) {
-                $buildConfig['docs_license'] = $license;
-                $buildAttributes['license'] = file_get_contents($licensePath);
-            }
-        }
+        $buildConfig['docs_changelog'] = $changelog;
+        $buildConfig['docs_readme'] = $readme;
+        $buildConfig['docs_license'] = $license;
         
         $builder->setPackageAttributes($buildAttributes);
 
