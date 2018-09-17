@@ -11,7 +11,7 @@ Categories are an organizational strucure for Fred to group items with similar u
 - Forms
 - Etc.
 
-Under the Categories tab you can manage all Categories for Fred Elements.
+Under the Categories leftside tab on main Elements tab you can manage all Categories for Elements in Fred.
 
 ![Categories Grid](img/categories_grid.png)
 
