@@ -8,3 +8,6 @@ Categories are an organizational strucure for Fred to group items with similar u
 - Catalog Pages
 - Form Pages
 - Etc.
+
+**Please note that if you remove a category, all Blueprints attached to it will be removed also, potentially breaking your site.**
+
