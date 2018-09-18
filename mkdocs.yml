@@ -18,10 +18,11 @@ pages:
           - Element Categories: cmp/element_categories.md
           - Option Sets: cmp/option_sets.md
           - RTE Configs: cmp/rte_configs.md
+          - Rebuild: cmp/rebuild.md
           - Blueprints: cmp/blueprints.md
           - Blueprint Categories: cmp/blueprint_categories.md
           - Themes: cmp/themes.md
-          - Themed Templates: cmp/themed_templates.md
+          - Themed Templates: cmp/themed_templates.md          
 theme:
   name: 'material'
   language: en

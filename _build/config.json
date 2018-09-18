@@ -10,13 +10,6 @@
         "text": "fred.menu.fred",
         "description": "fred.menu.fred_desc",
         "action": "home"
-      },
-      {
-        "text": "fred.menu.refresh",
-        "description": "fred.menu.refresh_desc",
-        "parent": "fred.menu.fred",
-        "handler": "var topic=\"/fred/mgr/generate/refresh/\";this.console=MODx.load({xtype:\"modx-console\",register:\"mgr\",topic:topic,show_filename:0}),this.console.show(Ext.getBody()),MODx.Ajax.request({url:MODx.config.assets_url+\"components/fred/connector.php\",params:{action:\"mgr/generate/refresh\",register:\"mgr\",topic:topic},listeners:{success:{fn:function(){this.console.fireEvent(\"complete\"),this.console=null},scope:this}}});",
-        "action": ""
       }
     ],
     "elements": {

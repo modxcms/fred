@@ -23,10 +23,8 @@ $_lang['fred.global.help'] = 'Help';
 
 $_lang['fred.open_in_fred'] = 'Open In Fred';
 
-$_lang['fred.menu.refresh'] = 'Rebuild Fred Resources';
-$_lang['fred.menu.refresh_desc'] = 'Rebuild Resources using Fred Templates';
 $_lang['fred.menu.fred'] = 'Fred';
-$_lang['fred.menu.fred_desc'] = '';
+$_lang['fred.menu.fred_desc'] = 'Elements, Blueprints, Themes and more!';
 
 $_lang['fred.refresh_fail_resource'] = 'No Fred resources found to refresh';
 $_lang['fred.refresh_fail_template'] = 'No Fred templates specified to refresh';
@@ -42,6 +40,7 @@ $_lang['fred.home.blueprints'] = 'Blueprints';
 $_lang['fred.home.blueprint_categories'] = 'Blueprint Categories';
 $_lang['fred.home.themes'] = 'Themes';
 $_lang['fred.home.themed_templates'] = 'Themed Templates';
+$_lang['fred.home.rebuild'] = 'Rebuild';
 
 $_lang['fred.blueprints.none'] = 'No blueprints were found.';
 $_lang['fred.blueprints.name'] = 'Name';
@@ -97,6 +96,9 @@ $_lang['fred.elements.duplicate'] = 'Duplicate Element';
 $_lang['fred.elements.new_name'] = 'New Name';
 $_lang['fred.elements.has_override'] = 'Has Override';
 $_lang['fred.elements.theme'] = 'Theme';
+
+$_lang['fred.rebuild.rebuild'] = 'Rebuild';
+$_lang['fred.rebuild.rebuild_desc'] = 'To publish changes of updated Elements to existing pages, click the Rebuild button below.';
 
 $_lang['fred.element_cateogries.all'] = 'All Categories';
 $_lang['fred.element_categories.none'] = 'No categories were found.';
