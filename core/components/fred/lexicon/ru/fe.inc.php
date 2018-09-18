@@ -48,6 +48,7 @@ $_lang['fred.fe.page_settings.publish_on'] = 'Опубликовать в';
 $_lang['fred.fe.page_settings.unpublish_on'] = 'Снять с публикации';
 $_lang['fred.fe.page_settings.menu_index'] = 'Пункт меню';
 $_lang['fred.fe.page_settings.deleted'] = 'Удалён';
+$_lang['fred.fe.page_settings.tvs'] = 'Дополнительные поля';
 
 $_lang['fred.fe.pages.no_parent'] = 'Нет родителя';
 $_lang['fred.fe.pages.create_page'] = 'Создать страницу';
@@ -64,6 +65,7 @@ $_lang['fred.fe.pages.unpublish'] = 'Снять с публикации';
 $_lang['fred.fe.pages.create_child_page'] = 'Создать дочернюю страницу';
 $_lang['fred.fe.pages.delete'] = 'Удалить';
 $_lang['fred.fe.pages.undelete'] = 'Восстановить';
+$_lang['fred.fe.pages.blueprint'] = 'Макет';
 
 $_lang['fred.fe.more.openmanager'] = 'Просмотреть в менеджере';
 $_lang['fred.fe.more.logout'] = 'Выйти';
@@ -90,6 +92,10 @@ $_lang['fred.fe.content.delete'] = 'Удалить';
 $_lang['fred.fe.content.settings'] = 'Открыть настройки';
 $_lang['fred.fe.content.move_up'] = 'Переместить вверх';
 $_lang['fred.fe.content.move_down'] = 'Переместить вниз';
+$_lang['fred.fe.content.partial_blueprint'] = 'Создание схемы макетов';
+$_lang['fred.fe.content.element_screenshot'] = 'Скриншот Элемента';
+$_lang['fred.fe.content.replace_element_thumbnail'] = 'Заменить миниатюру элемента';
+$_lang['fred.fe.content.element_replacing_thumbnail'] = 'Заменить миниатюры элементов';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Возможно, внесенные изменения не сохранятся.';
 
