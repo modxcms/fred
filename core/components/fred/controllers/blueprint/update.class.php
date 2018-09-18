@@ -27,11 +27,11 @@ class FredBlueprintUpdateManagerController extends FredBaseManagerController
 
     public function loadCustomCssJs()
     {
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'blueprint/panel.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'blueprint/page.js');
-
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
-        $this->addLastJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
+        
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'blueprint/panel.js');
+        $this->addLastJavascript($this->fred->getOption('jsUrl') . 'blueprint/page.js');
 
         $this->addHtml('
         <script type="text/javascript">

@@ -86,7 +86,7 @@ fred.grid.Themes = function (config) {
     });
     fred.grid.Themes.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
+Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
     getMenu: function () {
         var m = [];
 

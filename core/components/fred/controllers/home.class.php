@@ -27,6 +27,10 @@ class FredHomeManagerController extends FredBaseManagerController
 
     public function loadCustomCssJs()
     {
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/griddraganddrop.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
+        
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_template.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_templates.grid.js');
         
@@ -51,12 +55,8 @@ class FredHomeManagerController extends FredBaseManagerController
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/elements.grid.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/panel.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/page.js');
+        $this->addLastJavascript($this->fred->getOption('jsUrl') . 'home/page.js');
         
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/griddraganddrop.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
-        $this->addLastJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
-
         $this->addHtml('
         <script type="text/javascript">
             Ext.onReady(function() {

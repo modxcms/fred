@@ -30,20 +30,20 @@ fred.grid.ElementOptionSets = function (config) {
             {
                 header: _('fred.element_option_sets.description'),
                 dataIndex: 'description',
-                width: 120,
+                width: 100,
                 editor: {xtype: 'textfield'}
             },
             {
                 header: _('fred.element_option_sets.theme'),
                 dataIndex: 'theme_name',
                 sortable: true,
-                width: 80
+                width: 60
             },
             {
                 header: _('fred.element_option_sets.complete'),
                 dataIndex: 'complete',
                 sortable: true,
-                width: 30,
+                width: 40,
                 renderer: this.rendYesNo
             }
         ],
@@ -111,7 +111,7 @@ fred.grid.ElementOptionSets = function (config) {
     });
     fred.grid.ElementOptionSets.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
+Ext.extend(fred.grid.ElementOptionSets, fred.grid.GearGrid, {
 
     getMenu: function () {
         var m = [];

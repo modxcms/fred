@@ -135,7 +135,7 @@ fred.grid.BlueprintCategories = function (config) {
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
 };
-Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
+Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
     getMenu: function () {
         var m = [];
 

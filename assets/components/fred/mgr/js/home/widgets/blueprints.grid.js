@@ -44,38 +44,39 @@ fred.grid.Blueprints = function (config) {
                 header: _('fred.blueprints.name'),
                 dataIndex: 'name',
                 sortable: true,
-                width: 80,
+                width: 70,
                 editor: {xtype: 'textfield'}
             },
             {
                 header: _('fred.blueprints.description'),
                 dataIndex: 'description',
-                width: 120
+                width: 100,
+                hidden: document.body.clientWidth < 1550
             },
             {
                 header: _('fred.blueprints.theme'),
                 dataIndex: 'theme_name',
                 sortable: true,
-                width: 60
+                width: 50
             },
             {
                 header: _('fred.blueprints.category'),
                 dataIndex: 'category_name',
                 sortable: true,
-                width: 60
+                width: 50
             },
             {
                 header: _('fred.blueprints.complete'),
                 dataIndex: 'complete',
                 sortable: true,
-                width: 30,
+                width: 40,
                 renderer: this.rendYesNo
             },
             {
                 header: _('fred.blueprints.public'),
                 dataIndex: 'public',
                 sortable: true,
-                width: 30,
+                width: 40,
                 editor: {
                     xtype: 'modx-combo-boolean',
                     renderer: this.rendYesNo
@@ -86,13 +87,14 @@ fred.grid.Blueprints = function (config) {
                 header: _('fred.blueprints.created_by'),
                 dataIndex: 'user_profile_fullname',
                 sortable: true,
-                width: 40
+                width: 40,
+                hidden: document.body.clientWidth < 1550
             },
             {
                 header: _('fred.blueprints.rank'),
                 dataIndex: 'rank',
                 sortable: true,
-                width: 40,
+                width: 30,
                 editor: {
                     xtype: 'numberfield'
                 }
@@ -193,7 +195,7 @@ fred.grid.Blueprints = function (config) {
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
 };
-Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
+Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
 
     getMenu: function () {
         var m = [];

@@ -27,11 +27,11 @@ class FredElementRTEConfigUpdateManagerController extends FredBaseManagerControl
 
     public function loadCustomCssJs()
     {
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'element_rte_config/panel.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'element_rte_config/page.js');
-
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
-        $this->addLastJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
+        
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'element_rte_config/panel.js');
+        $this->addLastJavascript($this->fred->getOption('jsUrl') . 'element_rte_config/page.js');
 
         $this->addHtml('
         <script type="text/javascript">

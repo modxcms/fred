@@ -42,7 +42,7 @@ fred.grid.ThemedTemplates = function (config) {
     });
     fred.grid.ThemedTemplates.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.grid.ThemedTemplates, MODx.grid.Grid, {
+Ext.extend(fred.grid.ThemedTemplates, fred.grid.GearGrid, {
     getMenu: function () {
         var m = [];
 

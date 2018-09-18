@@ -51,7 +51,8 @@ fred.grid.Elements = function (config) {
                 header: _('fred.elements.description'),
                 dataIndex: 'description',
                 width: 120,
-                editor: {xtype: 'textfield'}
+                editor: {xtype: 'textfield'},
+                hidden: document.body.clientWidth < 1550
             },
             {
                 header: _('fred.elements.theme'),
@@ -68,13 +69,15 @@ fred.grid.Elements = function (config) {
             {
                 header: _('fred.elements.option_set'),
                 dataIndex: 'option_set_name',
-                width: 60
+                width: 60,
+                hidden: document.body.clientWidth < 1550
             },
             {
                 header: _('fred.elements.has_override'),
                 dataIndex: 'has_override',
                 renderer: this.rendYesNo,
-                width: 60
+                width: 60,
+                hidden: document.body.clientWidth < 1550
             },
             {
                 header: _('fred.elements.rank'),
@@ -163,7 +166,7 @@ fred.grid.Elements = function (config) {
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
 };
-Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
+Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
 
     getMenu: function () {
         var m = [];

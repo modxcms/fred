@@ -107,7 +107,7 @@ fred.grid.ElementCategories = function (config) {
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
 };
-Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
+Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
     getMenu: function () {
         var m = [];
 

@@ -93,7 +93,7 @@ fred.grid.ElementRTEConfigs = function (config) {
     });
     fred.grid.ElementRTEConfigs.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.grid.ElementRTEConfigs, MODx.grid.Grid, {
+Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
 
     getMenu: function () {
         var m = [];
