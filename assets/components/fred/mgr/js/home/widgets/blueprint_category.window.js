@@ -8,6 +8,25 @@ fred.window.BlueprintCategory = function (config) {
         action: 'mgr/blueprint_categories/create',
         modal: true,
         autoHeight: true,
+        buttonAlign: 'left',
+        buttons: [
+            {
+                xtype: 'fred-button-help',
+                path: 'cmp/blueprint_categories/'
+            },
+            '->',
+            {
+                text: config.cancelBtnText || _('cancel'),
+                scope: this,
+                handler: function() { config.closeAction !== 'close' ? this.hide() : this.close(); }
+            },
+            {
+                text: config.saveBtnText || _('save'),
+                cls: 'primary-button',
+                scope: this,
+                handler: this.submit
+            }
+        ],
         fields: this.getFields(config)
     });
     fred.window.BlueprintCategory.superclass.constructor.call(this, config);

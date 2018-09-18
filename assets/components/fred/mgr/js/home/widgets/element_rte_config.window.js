@@ -10,7 +10,13 @@ fred.window.ElementRTEConfig = function (config) {
         fields: this.getFields(config),
         autoHeight: true,
         width: 800,
+        buttonAlign: 'left',
         buttons: [
+            {
+                xtype: 'fred-button-help',
+                path: 'cmp/rte_configs/'
+            },
+            '->',
             {
                 text: config.cancelBtnText || _('cancel'),
                 scope: this,

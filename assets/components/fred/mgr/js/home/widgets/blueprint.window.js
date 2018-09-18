@@ -9,6 +9,25 @@ fred.window.Blueprint = function (config) {
         modal: true,
         fields: this.getFields(config),
         autoHeight: true,
+        buttonAlign: 'left',
+        buttons: [
+            {
+                xtype: 'fred-button-help',
+                path: 'cmp/blueprints/'
+            },
+            '->',
+            {
+                text: config.cancelBtnText || _('cancel'),
+                scope: this,
+                handler: function() { config.closeAction !== 'close' ? this.hide() : this.close(); }
+            },
+            {
+                text: config.saveBtnText || _('save'),
+                cls: 'primary-button',
+                scope: this,
+                handler: this.submit
+            }
+        ],
         width: 800
     });
     

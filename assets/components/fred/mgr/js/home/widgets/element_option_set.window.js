@@ -10,7 +10,13 @@ fred.window.ElementOptionSet = function (config) {
         fields: this.getFields(config),
         autoHeight: true,
         width: 800,
+        buttonAlign: 'left',
         buttons: [
+            {
+                xtype: 'fred-button-help',
+                path: 'cmp/option_sets/'
+            },
+            '->',
             {
                 text: config.cancelBtnText || _('cancel'),
                 scope: this,

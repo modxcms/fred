@@ -4,6 +4,7 @@ fred.panel.Home = function (config) {
         border: false,
         baseCls: 'modx-formpanel',
         cls: 'container',
+        id: 'fred-home-panel',
         items: [
             {
                 html: '<h2>' + _('fred.home.page_title') + '</h2>',
@@ -26,7 +27,6 @@ fred.panel.Home = function (config) {
                 },
                 border: true,
                 activeItem: 0,
-                id: 'fred-test-panel',
                 hideMode: 'offsets',
                 items: [
                     {
@@ -46,6 +46,7 @@ fred.panel.Home = function (config) {
                                 items: [
                                     {
                                         title: _('fred.home.elements'),
+                                        helpPath: 'cmp/elements/',
                                         items: [
                                             {
                                                 xtype: 'fred-grid-elements',
@@ -56,6 +57,7 @@ fred.panel.Home = function (config) {
                                     },
                                     {
                                         title: _('fred.home.element_categories'),
+                                        helpPath: 'cmp/element_categories/',
                                         items: [
                                             {
                                                 xtype: 'fred-grid-element-categories',
@@ -85,6 +87,7 @@ fred.panel.Home = function (config) {
                                 items: [
                                     {
                                         title: _('fred.home.blueprints'),
+                                        helpPath: 'cmp/blueprints/',
                                         items: [
                                             {
                                                 xtype: 'fred-grid-blueprints',
@@ -95,6 +98,7 @@ fred.panel.Home = function (config) {
                                     },
                                     {
                                         title: _('fred.home.blueprint_categories'),
+                                        helpPath: 'cmp/blueprint_categories/',
                                         items: [
                                             {
                                                 xtype: 'fred-grid-blueprint-categories',
@@ -109,6 +113,7 @@ fred.panel.Home = function (config) {
                     },
                     {
                         title: _('fred.home.option_sets'),
+                        helpPath: 'cmp/option_sets/',
                         items: [
                             {
                                 xtype: 'fred-grid-element-option-sets',
@@ -119,6 +124,7 @@ fred.panel.Home = function (config) {
                     },
                     {
                         title: _('fred.home.rte_configs'),
+                        helpPath: 'cmp/rte_configs/',
                         items: [
                             {
                                 xtype: 'fred-grid-element-rte-configs',
@@ -144,6 +150,7 @@ fred.panel.Home = function (config) {
                                 items: [
                                     {
                                         title: _('fred.home.themes'),
+                                        helpPath: 'cmp/themes/',
                                         items: [
                                             {
                                                 xtype: 'fred-grid-themes',
@@ -154,6 +161,7 @@ fred.panel.Home = function (config) {
                                     },
                                     {
                                         title: _('fred.home.themed_templates'),
+                                        helpPath: 'cmp/themed_templates/',
                                         items: [
                                             {
                                                 xtype: 'fred-grid-themed-templates',
@@ -173,5 +181,26 @@ fred.panel.Home = function (config) {
     });
     fred.panel.Home.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.panel.Home, MODx.Panel);
+Ext.extend(fred.panel.Home, MODx.Panel, {
+    getHelpPath: function() {
+        var defaultPath = '';
+        
+        var tabs = this.find('stateId', 'fred-tab-home');
+        if (tabs.length !== 1) {
+            return defaultPath;
+        }
+
+        tabs = tabs[0];
+
+        var topLevelTab = tabs.getActiveTab();
+        var childTab = topLevelTab.find('xtype', 'modx-vtabs');
+        
+        if (!topLevelTab.helpPath && (childTab.length === 1)) {
+
+            return childTab[0].getActiveTab().helpPath || defaultPath; 
+        } else {
+            return topLevelTab.helpPath || defaultPath;
+        }
+    }
+});
 Ext.reg('fred-panel-home', fred.panel.Home);

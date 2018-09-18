@@ -23,6 +23,10 @@ fred.page.Blueprint = function (config) {
                     a: 'home',
                     namespace: 'fred'
                 }
+            },
+            {
+                xtype: 'fred-button-help',
+                path: 'cmp/blueprints/'
             }
         ],
         components: [

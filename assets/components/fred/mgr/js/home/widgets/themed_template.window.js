@@ -8,6 +8,25 @@ fred.window.ThemedTemplate = function (config) {
         action: 'mgr/themed_templates/create',
         modal: true,
         autoHeight: true,
+        buttonAlign: 'left',
+        buttons: [
+            {
+                xtype: 'fred-button-help',
+                path: 'cmp/themed_templates/'
+            },
+            '->',
+            {
+                text: config.cancelBtnText || _('cancel'),
+                scope: this,
+                handler: function() { config.closeAction !== 'close' ? this.hide() : this.close(); }
+            },
+            {
+                text: config.saveBtnText || _('save'),
+                cls: 'primary-button',
+                scope: this,
+                handler: this.submit
+            }
+        ],
         fields: this.getFields(config)
     });
     fred.window.ThemedTemplate.superclass.constructor.call(this, config);

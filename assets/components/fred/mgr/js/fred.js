@@ -84,11 +84,13 @@ Ext.extend(Fred, Ext.Component, {
     getHelp: function(path = '', handler = true) {
         if (handler === true) {
             return function() {
-                var win = window.open('https://modxcms.github.io/fred/' + path, '_blank');
+                var realPath = (typeof path === 'function') ? path() : path;
+                var win = window.open('https://modxcms.github.io/fred/' + realPath, '_blank');
                 win.focus();
             };       
         } else {
-            var win = window.open('https://modxcms.github.io/fred/' + path, '_blank');
+            var realPath = (typeof path === 'function') ? path() : path;
+            var win = window.open('https://modxcms.github.io/fred/' + realPath, '_blank');
             win.focus();
         }
     }

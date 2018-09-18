@@ -23,6 +23,10 @@ fred.page.Element = function (config) {
                     a: 'home',
                     namespace: 'fred'
                 }
+            },
+            {
+                xtype: 'fred-button-help',
+                path: 'cmp/elements/'
             }
         ],
         components: [

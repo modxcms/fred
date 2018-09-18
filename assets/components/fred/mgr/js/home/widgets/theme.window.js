@@ -103,7 +103,6 @@ fred.window.ThemeBuild = function (config) {
         fields: this.getFields(config),
         autoHeight: true,
         width: 800,
-        buttonAlign: 'left',
         keys: [
             {
                 key: Ext.EventObject.ENTER,
@@ -112,6 +111,7 @@ fred.window.ThemeBuild = function (config) {
                 scope: this
             }
         ],
+        buttonAlign: 'left',
         buttons: [
             {
                 xtype: 'fred-button-help',
