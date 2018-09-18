@@ -93,41 +93,46 @@ fred.panel.Home = function (config) {
                                         helpPath: 'cmp/rebuild/',
                                         items: [
                                             {
-                                                html: '<br><p>' + _('fred.rebuild.rebuild_desc') + '</p><br>'
-                                            },
-                                            {
-                                                xtype: 'button',
-                                                text: _('fred.rebuild.rebuild'),
-                                                handler: function() {
-                                                    var topic = '/fred/mgr/generate/refresh/';
-                                                    
-                                                    var console = MODx.load({
-                                                        xtype: 'modx-console',
-                                                        register: 'mgr',
-                                                        topic: topic,
-                                                        show_filename: 0
-                                                    });
-                                                    
-                                                    console.show(Ext.getBody());
-                                                    
-                                                    MODx.Ajax.request({
-                                                        url: fred.config.connectorUrl,
-                                                        params: {
-                                                            action: 'mgr/generate/refresh',
-                                                            register: 'mgr',
-                                                            topic: topic
-                                                        },
-                                                        listeners: {
-                                                            success: {
-                                                                fn: function() {
-                                                                    console.fireEvent('complete');
-                                                                    console = null
+                                                cls: 'main-wrapper',
+                                                items: [
+                                                    {
+                                                        html: '<p>' + _('fred.rebuild.rebuild_desc') + '</p><br>'
+                                                    },
+                                                    {
+                                                        xtype: 'button',
+                                                        text: _('fred.rebuild.rebuild'),
+                                                        handler: function() {
+                                                            var topic = '/fred/mgr/generate/refresh/';
+
+                                                            var console = MODx.load({
+                                                                xtype: 'modx-console',
+                                                                register: 'mgr',
+                                                                topic: topic,
+                                                                show_filename: 0
+                                                            });
+
+                                                            console.show(Ext.getBody());
+
+                                                            MODx.Ajax.request({
+                                                                url: fred.config.connectorUrl,
+                                                                params: {
+                                                                    action: 'mgr/generate/refresh',
+                                                                    register: 'mgr',
+                                                                    topic: topic
                                                                 },
-                                                                scope:this
-                                                            }
+                                                                listeners: {
+                                                                    success: {
+                                                                        fn: function() {
+                                                                            console.fireEvent('complete');
+                                                                            console = null
+                                                                        },
+                                                                        scope:this
+                                                                    }
+                                                                }
+                                                            });
                                                         }
-                                                    });
-                                                }
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
