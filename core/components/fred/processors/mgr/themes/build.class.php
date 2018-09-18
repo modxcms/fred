@@ -127,7 +127,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
         $elementCategories = $theme->getMany('ElementCategories');
         
         /** @var FredBlueprintCategory[] $blueprintCategories */
-        $blueprintCategories = $theme->getMany('BlueprintCategories');
+        $blueprintCategories = $theme->getMany('BlueprintCategories', ['public' => true]);
 
         $theme->getMany('RTEConfigs');
         
@@ -172,7 +172,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
                 $blueprintCategory->set('createdBy', 0);
                 
                 /** @var FredBlueprint[] $blueprints */
-                $blueprints = $blueprintCategory->getMany('Blueprints');
+                $blueprints = $blueprintCategory->getMany('Blueprints', ['public' => true]);
                 
                 foreach ($blueprints as $blueprint) {
                     $blueprint->set('createdBy', 0);
