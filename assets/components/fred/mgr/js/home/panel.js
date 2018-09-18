@@ -93,7 +93,7 @@ fred.panel.Home = function (config) {
                                         helpPath: 'cmp/rebuild/',
                                         items: [
                                             {
-                                                html: '<p>' + _('fred.rebuild.rebuild_desc') + '</p><br>'
+                                                html: '<br><p>' + _('fred.rebuild.rebuild_desc') + '</p><br>'
                                             },
                                             {
                                                 xtype: 'button',
