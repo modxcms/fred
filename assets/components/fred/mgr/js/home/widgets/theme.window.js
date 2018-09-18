@@ -244,7 +244,10 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
 
                             },
                             {
-                                html: '<br><p>' + _('fred.themes.included_theme_folder', {theme_folder: config.record.theme_folder || ''}) + '</p>'
+                                xtype: 'statictextfield',
+                                fieldLabel: _('fred.themes.included_theme_folder'),
+                                anchor: '100%',
+                                value: ('/assets/themes/' + config.record.theme_folder + '/') || ''
                             }
                         ]
                     },

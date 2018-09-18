@@ -58,7 +58,7 @@ fred.grid.Dependencies = function (config) {
     fred.grid.Dependencies.superclass.constructor.call(this, config);
 
 };
-Ext.extend(fred.grid.Dependencies, MODx.grid.LocalGrid, {
+Ext.extend(fred.grid.Dependencies, fred.grid.LocalGearGrid, {
     _loadStore: function (config) {
         return new Ext.data.JsonStore({
             fields: config.fields,
