@@ -21,7 +21,8 @@
             "OnWebPagePrerender",
             "OnDocFormPrerender",
             "OnDocFormSave",
-            "OnBeforeDocFormSave"
+            "OnBeforeDocFormSave",
+            "OnTemplateRemove"
           ]
         }
       ]

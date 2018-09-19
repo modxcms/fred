@@ -234,6 +234,18 @@ switch ($modx->event->name) {
         $renderResource->render();
         
         break;
+    case 'OnTemplateRemove':
+        /** @var modTemplate $template */
+        $templateId = $template->id;
+        if (!empty($templateId)) {
+            /** @var FredThemedTemplate $themedTemplate */
+            $themedTemplate = $modx->getObject('FredThemedTemplate', ['template' => $templateId]);
+            if ($themedTemplate) {
+                $themedTemplate->remove();
+            }
+        } 
+        
+        break;
 }
 
 return;

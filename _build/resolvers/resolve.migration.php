@@ -126,75 +126,77 @@ if ($object->xpdo) {
 
                 $rootCategory = (int)$modx->getOption('fred.elements_category_id');
 
-                $c = $modx->newQuery('modCategory');
-                $c->where([
-                    'parent' => $rootCategory
-                ]);
-
-                /** @var \modCategory[] $categories */
-                $categories = $modx->getIterator('modCategory', $c);
-                foreach ($categories as $category) {
-                    $newCategory = $modx->newObject('FredElementCategory');
-                    $newCategory->set('name', $category->category);
-                    $newCategory->set('rank', $category->rank);
-                    $newCategory->set('theme', $defaultTheme);
-                    $newCategory->save();
-
-                    /** @var \modChunk[] $chunks */
-                    $chunks = $modx->getIterator('modChunk', ['category' => $category->id]);
-                    foreach ($chunks as $chunk) {
-                        $matches = [];
-                        preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
-
-                        $image = '';
-                        $options = [];
-                        $description = $chunk->description;
-
-                        if (count($matches) == 2) {
-                            $image = $matches[1];
-                            $description = str_replace($matches[0], '', $description);
-                        }
-
-                        $matches = [];
-                        preg_match('/options:([^\n]+)\n?/', $description, $matches);
-
-
-                        $optionSet = 0;
-                        if (count($matches) == 2) {
-                            if (!empty($optionsMap[$matches[1]])) {
-                                $optionSet = $optionsMap[$matches[1]];
-                            } else {
-                                /** @var modChunk $options */
-                                $options = $modx->getObject('modChunk', ['name' => $matches[1]]);
-                                if ($options) {
-                                    $optionSetObject = $modx->newObject('FredElementOptionSet');
-                                    $optionSetObject->set('name', $matches[1]);
-                                    $optionSetObject->set('data', json_decode($options->content, true));
-                                    $optionSetObject->set('complete', true);
-                                    $optionSetObject->set('theme', $defaultTheme);
-                                    $optionSetObject->save();
-
-                                    $optionsMap[$matches[1]] = $optionSetObject->id;
-                                    $optionSet = $optionSetObject->id;
-                                }
+                if ($rootCategory > 0) {
+                    $c = $modx->newQuery('modCategory');
+                    $c->where([
+                        'parent' => $rootCategory
+                    ]);
+    
+                    /** @var \modCategory[] $categories */
+                    $categories = $modx->getIterator('modCategory', $c);
+                    foreach ($categories as $category) {
+                        $newCategory = $modx->newObject('FredElementCategory');
+                        $newCategory->set('name', $category->category);
+                        $newCategory->set('rank', $category->rank);
+                        $newCategory->set('theme', $defaultTheme);
+                        $newCategory->save();
+    
+                        /** @var \modChunk[] $chunks */
+                        $chunks = $modx->getIterator('modChunk', ['category' => $category->id]);
+                        foreach ($chunks as $chunk) {
+                            $matches = [];
+                            preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
+    
+                            $image = '';
+                            $options = [];
+                            $description = $chunk->description;
+    
+                            if (count($matches) == 2) {
+                                $image = $matches[1];
+                                $description = str_replace($matches[0], '', $description);
                             }
-
-                            $description = str_replace($matches[0], '', $description);
+    
+                            $matches = [];
+                            preg_match('/options:([^\n]+)\n?/', $description, $matches);
+    
+    
+                            $optionSet = 0;
+                            if (count($matches) == 2) {
+                                if (!empty($optionsMap[$matches[1]])) {
+                                    $optionSet = $optionsMap[$matches[1]];
+                                } else {
+                                    /** @var modChunk $options */
+                                    $options = $modx->getObject('modChunk', ['name' => $matches[1]]);
+                                    if ($options) {
+                                        $optionSetObject = $modx->newObject('FredElementOptionSet');
+                                        $optionSetObject->set('name', $matches[1]);
+                                        $optionSetObject->set('data', json_decode($options->content, true));
+                                        $optionSetObject->set('complete', true);
+                                        $optionSetObject->set('theme', $defaultTheme);
+                                        $optionSetObject->save();
+    
+                                        $optionsMap[$matches[1]] = $optionSetObject->id;
+                                        $optionSet = $optionSetObject->id;
+                                    }
+                                }
+    
+                                $description = str_replace($matches[0], '', $description);
+                            }
+    
+                            $newElement = $modx->newObject('FredElement');
+                            $newElement->set('id', $chunk->id);
+                            $newElement->set('name', $chunk->name);
+                            $newElement->set('description', $description);
+                            $newElement->set('image', $image);
+                            $newElement->set('content', $chunk->content);
+                            $newElement->set('category', $newCategory->id);
+                            $newElement->set('option_set', $optionSet);
+                            $newElement->save();
                         }
-
-                        $newElement = $modx->newObject('FredElement');
-                        $newElement->set('id', $chunk->id);
-                        $newElement->set('name', $chunk->name);
-                        $newElement->set('description', $description);
-                        $newElement->set('image', $image);
-                        $newElement->set('content', $chunk->content);
-                        $newElement->set('category', $newCategory->id);
-                        $newElement->set('option_set', $optionSet);
-                        $newElement->save();
+    
                     }
-
                 }
-
+                
                 $globalRteConfig = $modx->getOption('fred.rte_config');
                 if (!empty($globalRteConfig)) {
                     $config = $modx->getChunk($globalRteConfig);
@@ -216,11 +218,13 @@ if ($object->xpdo) {
 
                 if (!empty($fredTemplates)) {
                     foreach ($fredTemplates as $fredTemplate) {
-                        /** @var FredThemedTemplate $themedTemplate */
-                        $themedTemplate = $modx->newObject('FredThemedTemplate');
-                        $themedTemplate->set('template', $fredTemplate);
-                        $themedTemplate->set('theme', $defaultTheme);
-                        $themedTemplate->save();
+                        if (intval($fredTemplate) > 0) {
+                            /** @var FredThemedTemplate $themedTemplate */
+                            $themedTemplate = $modx->newObject('FredThemedTemplate');
+                            $themedTemplate->set('template', $fredTemplate);
+                            $themedTemplate->set('theme', $defaultTheme);
+                            $themedTemplate->save();
+                        }
                     }
                     
                     /** @var modResource[] $fredResources */
