@@ -303,6 +303,23 @@ if ($object->xpdo) {
                         }
                     }
                 }
+
+                $deprecatedSystemSettings = [
+                    'elements_category_id',
+                    'template_ids',
+                    'rte_config',
+                    'generated_images_path',
+                    'generated_images_url'
+                ];
+                
+                foreach ($deprecatedSystemSettings as $key) {
+                    /** @var modSystemSetting $systemSetting */
+                    $systemSetting = $modx->getObject('modSystemSetting', ['key' => "fred.{$key}"]);
+                    if ($systemSetting) {
+                        $systemSetting->remove();
+                    }
+                }
+                
             }
 
             break;

@@ -29,14 +29,6 @@
     },
     "systemSettings": [
       {
-        "key": "elements_category_id",
-        "value": ""
-      },
-      {
-        "key": "template_ids",
-        "value": ""
-      },
-      {
         "key": "launcher_position",
         "value": "bottom_left"
       },
@@ -50,10 +42,6 @@
       },
       {
         "key": "rte",
-        "value": ""
-      },
-      {
-        "key": "rte_config",
         "value": ""
       },
       {
@@ -71,14 +59,6 @@
       {
         "key": "default_element",
         "value": ""
-      },
-      {
-        "key": "generated_images_path",
-        "value": "{{assets_path}}/fred/generated"
-      },
-      {
-        "key": "generated_images_url",
-        "value": "{{assets_url}}/fred/generated"
       }
     ]
   },

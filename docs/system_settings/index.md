@@ -42,11 +42,3 @@ The Fred launcher can be positioned in any corner of the site to prevent hiding 
 ### Rich Text Editor (fred.rte)
 
 Fred can use plugins that tap into different element types. The Image Editor targets any wrapper elements that also have a `data-fred-name` attribute and are set to `contenteditable="true" data-fred-rte="true"`.
-
-### Generated Images Path (fred.generated_images_path)
-
-Path to the folder where automatically generated images (screenshots of blueprints and elements) will be stored. `{assets_path}` placeholder can be used to replace with current assets folder path.
-
-### Generated Images URL (fred.generated_images_url)
-
-URL to the folder where automatically generated images (screenshots of blueprints and elements) will be stored. `assets_url` placeholder can be used to replace with current assets folder URL.
