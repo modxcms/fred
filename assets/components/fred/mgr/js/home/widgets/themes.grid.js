@@ -113,7 +113,7 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
 
         m.push({
             text: _('fred.themes.remove'),
-            handler: this.unassignTheme
+            handler: this.removeTheme
         });
         return m;
     },
@@ -164,6 +164,11 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
     },
     
     buildTheme: function (btn, e) {
+        if ((this.menu.record.name.toLowerCase() === 'default') || (this.menu.record.theme_folder.toLowerCase() === 'default')) {
+            MODx.msg.alert(_('fred.themes.build_default_title'), _('fred.themes.build_default_desc'));
+            return;    
+        }
+        
         if (!this.menu.record.config || (typeof this.menu.record.config !== 'object')) this.menu.record.config = {};
         
         this.menu.record.config.id = this.menu.record.id;
@@ -216,20 +221,15 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
         return true;
     },
 
-    unassignTheme: function (btn, e) {
+    removeTheme: function (btn, e) {
         if (!this.menu.record) return false;
 
-        MODx.msg.confirm({
-            title: _('fred.themes.remove'),
-            text: _('fred.themes.remove_confirm', {name: this.menu.record.name}),
-            url: this.config.url,
-            params: {
-                action: 'mgr/themes/remove',
-                id: this.menu.record.id
-            },
+        var removeTheme = MODx.load({
+            xtype: 'fred-window-remove-theme',
+            record: this.menu.record,
             listeners: {
                 success: {
-                    fn: function (r) {
+                    fn: function () {
                         this.refresh();
                     },
                     scope: this
@@ -237,6 +237,10 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
             }
         });
 
+        removeTheme.fp.getForm().reset();
+        removeTheme.fp.getForm().setValues(this.menu.record);
+        removeTheme.show(e.target);
+        
         return true;
     },
 

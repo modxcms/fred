@@ -116,7 +116,7 @@ fred.window.ThemeBuild = function (config) {
             {
                 xtype: 'fred-button-help',
                 path: 'cmp/themes/#build'
-            },'->',{
+            }, '->', {
                 text: config.cancelBtnText || _('cancel'),
                 scope: this,
                 handler: function () {
@@ -132,8 +132,8 @@ fred.window.ThemeBuild = function (config) {
                 text: 'Build & Download Theme',
                 cls: 'primary-button',
                 scope: this,
-                handler: function(){
-                    this.on('success', function() {
+                handler: function () {
+                    this.on('success', function () {
                         fred.loadPage('theme/download', {theme: this.record.id});
                     }, this, {single: true});
                     this.submit();
@@ -178,7 +178,7 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                 fieldLabel: _('fred.themes.name'),
                                 name: 'name',
                                 anchor: '100%',
-                                validator: function(value) {
+                                validator: function (value) {
                                     if (value.indexOf('-') !== -1) {
                                         return _('fred.err.theme_name_invalid_char');
                                     }
@@ -264,7 +264,10 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                             {
                                 id: 'fred-window-theme-build-dependencies',
                                 xtype: 'fred-grid-dependencies',
-                                initValue: (config.record && config.record.dependencies) ? config.record.dependencies : [{name: "fred", version: '*'}]
+                                initValue: (config.record && config.record.dependencies) ? config.record.dependencies : [{
+                                    name: "fred",
+                                    version: '*'
+                                }]
                             }
                         ]
                     },
@@ -328,3 +331,60 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
     }
 });
 Ext.reg('fred-window-theme-build', fred.window.ThemeBuild);
+
+fred.window.RemoveTheme = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        title: _('fred.themes.remove'),
+        closeAction: 'close',
+        isUpdate: false,
+        url: fred.config.connectorUrl,
+        action: 'mgr/themes/remove',
+        modal: true,
+        autoHeight: true,
+        animCollapse: false,
+        cls: 'x-window-dlg',
+        fields: this.getFields(config),
+        buttonAlign: 'center',
+        buttons: [
+            {
+                text: _('yes'),
+                scope: this,
+                handler: this.submit
+            },
+            {
+                text: _('no'),
+                scope: this,
+                handler: function () {
+                    config.closeAction !== 'close' ? this.hide() : this.close();
+                }
+            }
+        ]
+    });
+    fred.window.RemoveTheme.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.window.RemoveTheme, MODx.Window, {
+    getFields: function (config) {
+        return [
+            {
+                xtype: 'hidden',
+                name: 'id'
+            },
+            {
+                html: '<div class=" x-dlg-icon"><div class="ext-mb-icon ext-mb-question"></div><div class="ext-mb-content"><span class="ext-mb-text">' + _('fred.themes.remove_confirm', {name: config.record.name}) + '</span><br></div></div>'
+            },
+            {
+                xtype: 'xcheckbox',
+                name: 'delete_theme_folder',
+                boxLabel: 'Delete Theme Directory',
+                hideLabel: true,
+                labelSeparator: ''
+            }
+        ];
+    },
+
+    animShow: function () {
+        this.afterShow();
+    }
+});
+Ext.reg('fred-window-remove-theme', fred.window.RemoveTheme);
