@@ -118,3 +118,5 @@ $_lang['fred.fe.tagger.toggle_input'] = 'Toggle Input';
 $_lang['fred.fe.permission.save'] = 'Insufficient permissions to save this resource!';
 $_lang['fred.fe.permission.new_document'] = 'Insufficient permissions to create a resource!';
 $_lang['fred.fe.permission.new_document_in_root'] = 'Insufficient permissions to create a resource at root!';
+
+$_lang['fred.fe.more.help'] = 'Help';
