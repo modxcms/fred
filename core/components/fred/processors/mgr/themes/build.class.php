@@ -107,13 +107,14 @@ class FredThemeBuildProcessor extends modObjectProcessor
 
         $assetsPath = rtrim($this->modx->getOption('assets_path'), '/');
 
-        $themeFolder = 'themes/' . $theme->get('theme_folder');
+        $themesFolder = 'themes/';
+        $themeFolder = $themesFolder . $theme->get('theme_folder');
         $themeFolderPath = $assetsPath . '/' . $themeFolder . '/';
 
         if (is_dir($themeFolderPath) && is_readable($themeFolderPath)) {
             $vehicle = $builder->createVehicle([
                 "source" => $themeFolderPath,
-                "target" => "return MODX_ASSETS_PATH . '{$themeFolder}';"
+                "target" => "return MODX_ASSETS_PATH . '{$themesFolder}';"
             ], [
                 "vehicle_class" => "xPDOFileVehicle"
             ]);
