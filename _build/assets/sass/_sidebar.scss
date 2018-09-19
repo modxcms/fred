@@ -172,6 +172,9 @@
     font-weight: lighter;
     border-bottom: 1px solid rgba($white, .2);
   }
+  a{
+    color: white;
+  }
   > dt {
     display: flex;
     align-items: center;
@@ -379,6 +382,14 @@
         }
         &:hover:not(:focus){
           background-color: darken($black, 15%);
+        }
+        > a{
+          padding: 16px 16px 16px 40px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          width: 100%;
         }
       }
       dd{
