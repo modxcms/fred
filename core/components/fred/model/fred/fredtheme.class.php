@@ -22,7 +22,7 @@ class FredTheme extends xPDOSimpleObject {
 
         if (empty($uuid)) {
             try {
-                $this->set('uuid', \Fred\Utils::uuidFactory()->uuid4());
+                $this->set('uuid', \Fred\Utils::uuid());
             } catch (Exception $e) {}
         }
 

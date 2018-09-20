@@ -186,6 +186,9 @@ $_lang['fred.themes.theme_build_license_desc'] = 'For open source, a variety of 
 $_lang['fred.themes.theme_build_dependencies_desc'] = 'Include any Extras required for this Theme to function fully.';
 $_lang['fred.themes.build_default_title'] = 'Can\'t build Default Theme';
 $_lang['fred.themes.build_default_desc'] = 'To protect against unintended changes to your site from upgrades, please create a clone of the Default theme before building.';
+$_lang['fred.themes.delete_theme_folder'] = 'Delete Theme Directory';
+$_lang['fred.themes.duplicate_theme_folder'] = 'Duplicate theme directory';
+$_lang['fred.themes.duplicate_theme_objects'] = 'Duplicate theme Objects (Elements, Blueprints, etc.)';
 
 $_lang['fred.themed_templates.theme'] = 'Theme';
 $_lang['fred.themed_templates.template'] = 'Template';

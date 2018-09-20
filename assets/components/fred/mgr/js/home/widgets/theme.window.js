@@ -74,10 +74,8 @@ Ext.extend(fred.window.ThemeDuplicate, MODx.Window, {
     getFields: function (config) {
         return [
             {
-                xtype: 'textfield',
-                name: 'id',
-                anchor: '100%',
-                hidden: true
+                xtype: 'hidden',
+                name: 'id'
             },
             {
                 xtype: 'textfield',
@@ -85,6 +83,20 @@ Ext.extend(fred.window.ThemeDuplicate, MODx.Window, {
                 name: 'name',
                 anchor: '100%',
                 allowBlank: true
+            },
+            {
+                xtype: 'xcheckbox',
+                name: 'duplicate_theme_objects',
+                boxLabel: _('fred.themes.duplicate_theme_objects'),
+                hideLabel: true,
+                labelSeparator: ''
+            },
+            {
+                xtype: 'xcheckbox',
+                name: 'duplicate_theme_folder',
+                boxLabel: _('fred.themes.duplicate_theme_folder'),
+                hideLabel: true,
+                labelSeparator: ''
             }
         ]
     }
@@ -376,7 +388,7 @@ Ext.extend(fred.window.RemoveTheme, MODx.Window, {
             {
                 xtype: 'xcheckbox',
                 name: 'delete_theme_folder',
-                boxLabel: 'Delete Theme Directory',
+                boxLabel: _('fred.themes.delete_theme_folder'),
                 hideLabel: true,
                 labelSeparator: ''
             }

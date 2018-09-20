@@ -97,4 +97,9 @@ final class Utils
         
         return $factory;
     }
+    
+    public static function uuid()
+    {
+        return self::uuidFactory()->uuid4()->toString();
+    }
 }
