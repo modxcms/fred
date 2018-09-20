@@ -60,6 +60,12 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 category = category[0];
                                 category.baseParams.theme = r.object.theme;
                             }
+                            
+                            var optionSet = this.find('name', 'option_set');
+                            if (optionSet[0]) {
+                                optionSet = optionSet[0];
+                                optionSet.baseParams.theme = r.object.theme;
+                            }
 
                             if (r.object.image) {
                                 this.theme_folder = r.object.theme_folder;
@@ -85,13 +91,16 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 var categoryField = this.find('name', 'category');
                 if (!categoryField[0]) return;
 
+                var optionSetField = this.find('name', 'option_set');
+                if (!optionSetField[0]) return;
+
                 var category = MODx.request.category;
                 
                 this.getForm().setValues({theme: theme, category: category});
 
-                categoryField = categoryField[0];
-                categoryField.enable();
-                categoryField.baseParams.theme = theme;
+                optionSetField = optionSetField[0];
+                optionSetField.enable();
+                optionSetField.baseParams.theme = theme;
             }
             
             this.fireEvent('ready');
@@ -208,6 +217,18 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                         category.baseParams.theme = record.id;
                                                         category.store.load();
 
+                                                        var optionSet = this.find('name', 'option_set');
+                                                        if (!optionSet[0]) return;
+
+                                                        optionSet = optionSet[0];
+                                                        optionSet.setValue(0);
+                                                        optionSet.enable();
+                                                        optionSet.baseParams.theme = record.id;
+                                                        optionSet.store.load();
+
+                                                        var previewButton = Ext.getCmp('fred-element-panel-preview-option-set');
+                                                        if (previewButton) previewButton.disable();
+                                                        
                                                         var image = Ext.getCmp('fred-element-image-field');
                                                         if (image) {
                                                             image.updatePreview(this.theme_folder);

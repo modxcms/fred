@@ -119,6 +119,15 @@ Ext.extend(fred.window.Element, MODx.Window, {
                                         category.enable();
                                         category.baseParams.theme = record.id;
                                         category.store.load();
+
+                                        var optionSet = this.find('name', 'option_set');
+                                        if (!optionSet[0]) return;
+
+                                        optionSet = optionSet[0];
+                                        optionSet.setValue(0);
+                                        optionSet.enable();
+                                        optionSet.baseParams.theme = record.id;
+                                        optionSet.store.load();
                                     },
                                     scope: this
                                 },

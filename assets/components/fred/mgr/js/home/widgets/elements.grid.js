@@ -192,13 +192,13 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
 
         m.push({
             text: _('fred.elements.remove')
-            , handler: this.removeTemplate
+            , handler: this.removeElement
         });
 
         return m;
     },
 
-    removeTemplate: function (btn, e) {
+    removeElement: function (btn, e) {
         if (!this.menu.record) return false;
 
         MODx.msg.confirm({
@@ -289,6 +289,12 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
         if (category[0]) {
             category = category[0];
             category.baseParams.theme = this.menu.record.theme_id;
+        }
+        
+        var optionSet = updateElement.find('name', 'option_set');
+        if (optionSet[0]) {
+            optionSet = optionSet[0];
+            optionSet.baseParams.theme = this.menu.record.theme_id;
         }
 
         updateElement.fp.getForm().reset();
