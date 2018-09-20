@@ -201,9 +201,13 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
     },
 
     duplicateTheme: function (btn, e) {
+        var record = {
+            id: this.menu.record.id,
+            name: _('fred.themes.theme_duplicate_name', {theme: this.menu.record.name})
+        };
         var duplicateTheme = MODx.load({
             xtype: 'fred-window-theme-duplicate',
-            record: this.menu.record,
+            record: record,
             listeners: {
                 success: {
                     fn: function () {
@@ -215,7 +219,7 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
         });
 
         duplicateTheme.fp.getForm().reset();
-        duplicateTheme.fp.getForm().setValues(this.menu.record);
+        duplicateTheme.fp.getForm().setValues(record);
         duplicateTheme.show(e.target);
 
         return true;

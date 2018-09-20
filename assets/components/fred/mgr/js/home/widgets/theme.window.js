@@ -141,7 +141,7 @@ fred.window.ThemeBuild = function (config) {
                 handler: this.submit
             },
             {
-                text: 'Build & Download Theme',
+                text: _('fred.themes.build_and_download'),
                 cls: 'primary-button',
                 scope: this,
                 handler: function () {
