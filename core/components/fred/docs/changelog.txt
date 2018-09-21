@@ -1,5 +1,20 @@
 Changelog for Fred.
 
+1.0.0 beta6
+==============
+- Add theme directory for theme's assets
+- Use new placeholder {{theme_dir}} when generating elements & blueprints images
+- Add placeholder for templates & chunk [[++fred.theme_dir]] to reference theme directory
+- Add Build theme action (creates a transport package from theme)
+- Consolidate tabs in the CMP
+- Generate screenshot for complete blueprint from page preview (instead of from Fred's view)
+- Remove deprecated system settings
+- Add help buttons to CMP and frontend (under "More" sidebar)
+- Remove theme-template relation when template is deleted
+- When deleting theme, give an option to delete theme directory
+- When duplicating theme, give an options to duplicate theme's objects and theme directory
+- Fix selecting option set from current theme in element's quick update window and update panel 
+
 1.0.0 beta5
 ==============
 - Lower dependencies to support PHP 5.6+
