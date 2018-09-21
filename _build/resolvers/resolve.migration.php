@@ -319,7 +319,19 @@ if ($object->xpdo) {
                         $systemSetting->remove();
                     }
                 }
-                
+
+                $deprecatedMenus = [
+                    'fred.refresh',
+                    'fred.menu.refresh'
+                ];
+
+                foreach ($deprecatedMenus as $key) {
+                    /** @var modMenu $menu */
+                    $menu = $modx->getObject('modMenu', ['text' => $key]);
+                    if ($menu) {
+                        $menu->remove();
+                    }
+                }
             }
 
             break;
