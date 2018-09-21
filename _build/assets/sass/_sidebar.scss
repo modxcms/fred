@@ -322,6 +322,7 @@
         font-weight: lighter;
         transition: $timing;
         cursor: pointer;
+        height: 56px;
         &.active {
           color: $modxgreen;
           background-color: darken($black, 15%);
