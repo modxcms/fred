@@ -49,7 +49,7 @@ class ElementReplaceImage extends Endpoint
             $file = $path . $fileName;
             file_put_contents($file, $data);
 
-            $element->set('image', '{{theme_folder}}generated/' . $fileName);
+            $element->set('image', '{{theme_dir}}generated/' . $fileName);
 
             $element->save();
            

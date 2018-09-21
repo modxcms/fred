@@ -78,7 +78,7 @@ class FredElement extends xPDOSimpleObject {
             if ($category) {
                 $theme = $category->Theme;
                 if ($theme) {
-                    $image = str_replace('{{theme_folder}}', $theme->getThemeFolderUri(), $image);
+                    $image = str_replace('{{theme_dir}}', $theme->getThemeFolderUri(), $image);
                 }
             }
             

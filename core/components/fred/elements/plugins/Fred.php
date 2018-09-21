@@ -86,6 +86,14 @@ switch ($modx->event->name) {
         </script>");
         }
         break;
+    case 'OnLoadWebDocument':
+        $theme = $fred->getTheme($modx->resource->template);
+        if (!empty($theme)) {
+            $themeUri = $theme->getThemeFolderUri();
+            $modx->setPlaceholder('+fred.theme_dir', $themeUri);
+            $modx->setOption('fred.theme_dir', $themeUri);
+        }
+        break;
     case 'OnWebPagePrerender':
         $theme = $fred->getTheme($modx->resource->template);
         if (!empty($theme)) {
@@ -173,7 +181,7 @@ switch ($modx->event->name) {
         ' . $includes . '
         <script>
             var fred = new Fred({
-                theme: ' . $theme . ',
+                theme: ' . $theme->id . ',
                 assetsUrl: "' . $fred->getOption('webAssetsUrl') . '",
                 managerUrl: "' . MODX_MANAGER_URL . '",
                 contextKey: "' . $modx->resource->context_key. '",

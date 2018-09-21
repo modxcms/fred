@@ -36,7 +36,7 @@ Ext.extend(Fred, Ext.Component, {
         url = url.replace('{{assets_url}}', MODx.config.assets_url);
         
         if (theme_folder) {
-            url = url.replace('{{theme_folder}}', MODx.config.assets_url + 'themes/' + theme_folder + '/');
+            url = url.replace('{{theme_dir}}', MODx.config.assets_url + 'themes/' + theme_folder + '/');
         }
         
         if ((url.substr(0,7).toLowerCase() !== 'http://') && (url.substr(0,8).toLowerCase() !== 'https://') && (url.substr(0,2).toLowerCase() !== '//')  && (url.substr(0,1).toLowerCase() !== '/')) {

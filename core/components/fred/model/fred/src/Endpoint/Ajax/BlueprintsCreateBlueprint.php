@@ -80,7 +80,7 @@ class BlueprintsCreateBlueprint extends Endpoint
                 $file = $path . $fileName;
                 file_put_contents($file, $data);
 
-                $blueprint->set('image', '{{theme_folder}}generated/' . $fileName);
+                $blueprint->set('image', '{{theme_dir}}generated/' . $fileName);
             } else if (!empty($this->body['image'])) {
                 $blueprint->set('image', $this->body['image']);
             } else {
