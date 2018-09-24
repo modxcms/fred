@@ -1,7 +1,7 @@
 site_name: Fred
 repo_name: modxcms/fred
 repo_url: https://github.com/modxcms/fred
-copyright: 'Copyright &copy; 2018 MODX, LLC'
+copyright: 'Copyright &copy; 2018 <a href="https://modx.com" title="MODX">MODX</a>, LLC'
 pages:
     - 'Meet Fred': index.md
     - 'Getting Started': gettingstarted.md
@@ -36,7 +36,7 @@ theme:
 extra:
   social:
     - type: globe
-      link: https://modx.com
+      link: https://fred.modx.com
     - type: github-alt
       link: https://github.com/modxcms
     - type: twitter
