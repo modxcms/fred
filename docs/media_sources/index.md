@@ -1,6 +1,7 @@
-Media Sources can either be assigned globally via a setting in the Media Source itself, or in an Element's settings by referencing the Media Source ID(s). On install two new settings are added to each Media Source. If you create new Media Sources you will either need to manually add these settings or rerun the installer.
+Media Sources can either be assigned globally via a setting in the Media Source itself, or in an Element's settings by referencing the Media Source ID(s). On install two new settings are added to each Media Source. If you'll want to access Media Sources from Fred, you will need to manually add these settings.
 
 ## Media Source Settings
+
 ### fred
 A Yes/No setting that defines if the Media Source is globally available to Elements rendered in Fred. _(defaults to no)_
 ### fredReadOnly

@@ -29,6 +29,6 @@ Element images are thumbnail previews used to drag-and-drop onto pages. You can 
 
 ## Updating Elements
 
-Unlike Blueprints, Elements are like master templates which can be updated at any time. When an Element's markup or option set is updated, all places in a site should update to reflect these changes. 
+Elements are like master templates which can be updated at any time. When an Element's markup or option set is updated, all places in a site should update to reflect these changes. 
 
 To see the updated results, either resave the page, or use the "Rebuild" tab in the Fred 3PC.

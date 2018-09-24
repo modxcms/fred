@@ -6,9 +6,13 @@ pages:
     - 'Meet Fred': index.md
     - 'Getting Started': gettingstarted.md
     - Elements:
+      - Elements: elements/index.md
       - Markup: elements/markup.md
       - Options: elements/options.md
       - Attributes: elements/attributes.md
+    - Blueprints: blueprints/index.md
+    - 'Option Sets': option_sets/index.md
+    - 'RTE Configs': rte_configs/index.md
     - Templates: templates/index.md
     - 'Media Sources': media_sources/index.md
     - 'System Settings': system_settings/index.md

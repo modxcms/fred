@@ -1,6 +1,6 @@
 # Option Sets
 
-[Option Sets](/element/options/) allow you to create common configurations and frequently used sub-configs (e.g., color swatch pickers or a list of fonts) for use across multiple Elements.
+[Option Sets](/option_sets) allow you to create common configurations and frequently used sub-configs (e.g., color swatch pickers or a list of fonts) for use across multiple Elements.
 
 ![Option Sets Grid](img/option_sets_grid.png)
 
