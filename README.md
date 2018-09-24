@@ -1,5 +1,5 @@
 # Fred
-The friendly front-end editor
+The friendly front-end editor … documentation at https://modxcms.github.io/fred/
 
 ## Folder structure
 - `_build/assets/js` - source codes for Frontend part
