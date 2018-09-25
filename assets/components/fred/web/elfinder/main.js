@@ -30,7 +30,7 @@
             resizable : false,
             width : '100%',
             height : '100%',
-            url : './connector.php' + location.search,
+            url : '../endpoints/elfinder.php' + location.search,
             lang: lang,
             uiOptions: {
                 toolbar: [
