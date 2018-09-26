@@ -561,17 +561,17 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
         }
     });
     
-    openFinderButton.addEventListener('click', e => {
+    const openFinder = e => {
         e.preventDefault();
 
         const finder = new Finder((file, fm) => {
             if (typeof onChange === 'function') {
                 onChange(setting.name, file.url, inputEl, setting);
             }
-            
+
             inputEl.value = file.url;
             preview.src = file.url;
-            
+
             if ((setting.showPreview === true) && !previewAdded) {
                 labelEl.appendChild(preview);
                 previewAdded = true;
@@ -579,7 +579,10 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
         }, 'fred.fe.browse_images', finderOptions);
 
         finder.render();
-    });
+    };
+    
+    openFinderButton.addEventListener('click', openFinder);
+    preview.addEventListener('click', openFinder);
 
     inputWrapper.appendChild(inputEl);
     inputWrapper.appendChild(openFinderButton);
