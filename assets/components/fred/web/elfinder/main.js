@@ -35,10 +35,9 @@
             uiOptions: {
                 toolbar: [
                     ['home', 'back', 'forward', 'up', 'reload'],
-                    ['mkdir', 'mkfile', 'upload'],
-                    ['open', 'download', 'getfile'],
+                    ['mkdir', 'upload', 'download'],
                     ['undo', 'redo'],
-                    ['copy', 'cut', 'paste', 'rm', 'empty'],
+                    ['copy', 'cut', 'paste', 'rm'],
                     ['duplicate', 'rename', 'edit', 'resize', 'chmod'],
                     ['selectall', 'selectnone', 'selectinvert'],
                     ['quicklook', 'info'],
@@ -47,9 +46,9 @@
                 ]
             },
             contextmenu : {
-                navbar : ['open', 'opennew', 'download', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', '|', 'rename', '|', 'places', 'info', 'chmod', 'netunmount'],
-                cwd    : ['undo', 'redo', '|', 'back', 'up', 'reload', '|', 'upload', 'mkdir', 'mkfile', 'paste', '|', 'empty', '|', 'view', 'sort', 'selectall', 'colwidth', '|', 'places', 'info', 'chmod', 'netunmount', '|', 'fullscreen', '|', 'preference'],
-                files  : ['getfile', '|' ,'open', 'opennew', 'download', 'opendir', 'quicklook', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', '|', 'rename', 'edit', 'resize', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount']
+                navbar : ['open', 'opennew', 'download', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', '|', 'rename', '|', 'places', 'info', 'chmod', 'netunmount'],
+                cwd    : ['undo', 'redo', '|', 'back', 'up', 'reload', '|', 'upload', 'mkdir', 'paste', '|', 'view', 'sort', 'selectall', 'colwidth', '|', 'places', 'info', 'chmod', 'netunmount', '|', 'fullscreen', '|', 'preference'],
+                files  : ['getfile', '|' ,'open', 'opennew', 'download', 'opendir', 'quicklook', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', '|', 'rename', 'edit', 'resize', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount']
             },
         },
 
