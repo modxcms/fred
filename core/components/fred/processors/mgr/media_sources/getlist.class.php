@@ -35,6 +35,10 @@ class FredMediaSourcesGetListProcessor extends modObjectGetListProcessor
 
     public function prepareQueryBeforeCount(xPDOQuery $c) {
         $query = $this->getProperty('search');
+
+        $c->where([
+            'class_key' => 'sources.modFileMediaSource'
+        ]);
         
         if (!empty($query)) {
             $c->where(['modMediaSource.name:LIKE' => '%'.$query.'%']);

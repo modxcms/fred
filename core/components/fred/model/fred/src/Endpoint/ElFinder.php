@@ -37,7 +37,9 @@ class ElFinder extends Endpoint
         $mediaSourceIDs = array_filter($mediaSourceIDs);
 
         $c = $modx->newQuery('modMediaSource');
-        $where = [];
+        $where = [
+            'class_key' => 'sources.modFileMediaSource'
+        ];
 
         if (!empty($mediaSourceIDs)) {
             $where['id:IN'] = $mediaSourceIDs;
