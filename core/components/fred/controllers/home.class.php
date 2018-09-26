@@ -31,6 +31,8 @@ class FredHomeManagerController extends FredBaseManagerController
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/griddraganddrop.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
         
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/media_sources.grid.js');
+        
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_template.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_templates.grid.js');
         

@@ -221,6 +221,17 @@ fred.panel.Home = function (config) {
                                 ]
                             }
                         ]
+                    },
+                    {
+                        title: _('fred.home.media_sources'),
+                        helpPath: 'cmp/media_sources/',
+                        items: [
+                            {
+                                xtype: 'fred-grid-media-sources',
+                                preventRender: true,
+                                cls: 'main-wrapper'
+                            }
+                        ]
                     }
 
                 ]

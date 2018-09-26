@@ -41,6 +41,7 @@ $_lang['fred.home.blueprint_categories'] = 'Blueprint Categories';
 $_lang['fred.home.themes'] = 'Themes';
 $_lang['fred.home.themed_templates'] = 'Themed Templates';
 $_lang['fred.home.rebuild'] = 'Rebuild';
+$_lang['fred.home.media_sources'] = 'Media Sources';
 
 $_lang['fred.blueprints.none'] = 'No blueprints were found.';
 $_lang['fred.blueprints.name'] = 'Name';
@@ -198,6 +199,15 @@ $_lang['fred.themed_templates.create'] = 'Assign Theme to a Template';
 $_lang['fred.themed_templates.update'] = 'Update Assigned Theme';
 $_lang['fred.themed_templates.remove'] = 'Unassign Theme';
 $_lang['fred.themed_templates.remove_confirm'] = 'Are you sure you want to unassign theme: [[+theme]] from a template: [[+template]]?';
+
+$_lang['fred.media_sources.name'] = 'Name';
+$_lang['fred.media_sources.description'] = 'Description';
+$_lang['fred.media_sources.update'] = 'Update Media Source';
+$_lang['fred.media_sources.fred'] = 'Enabled for Fred';
+$_lang['fred.media_sources.fred_read_only'] = 'Read Only for Fred';
+$_lang['fred.media_sources.search'] = 'Search';
+$_lang['fred.media_sources.none'] = 'No Media Sources were found.';
+$_lang['fred.media_sources.go_to'] = 'Manage Media Sources';
 
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
