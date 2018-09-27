@@ -32,7 +32,6 @@ class ElFinder extends Endpoint
         $mediaSourceIDs = $modx->getOption('mediaSource', $_GET, '');
         $mediaSourceIDs = explode(',', $mediaSourceIDs);
         $mediaSourceIDs = array_map('trim', $mediaSourceIDs);
-        $mediaSourceIDs = array_map('intval', $mediaSourceIDs);
         $mediaSourceIDs = array_keys(array_flip($mediaSourceIDs));
         $mediaSourceIDs = array_filter($mediaSourceIDs);
 
@@ -42,7 +41,7 @@ class ElFinder extends Endpoint
         ];
 
         if (!empty($mediaSourceIDs)) {
-            $where['id:IN'] = $mediaSourceIDs;
+            $where['name:IN'] = $mediaSourceIDs;
         }
 
         $c->where($where);
