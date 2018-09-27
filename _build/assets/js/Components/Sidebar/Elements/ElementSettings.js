@@ -39,7 +39,7 @@ export class ElementSettings {
                 this.renderSettingsGroup(setting, group);
                 fields.appendChild(group);
             } else {
-                const defaultValue = this.el.settings[setting.name] || setting.value;
+                const defaultValue = (this.el.settings[setting.name] === undefined) ? setting.value : this.el.settings[setting.name];
                 fields.appendChild(this.renderSetting(setting, defaultValue));
             }
         });
@@ -91,7 +91,7 @@ export class ElementSettings {
         const settingGroupContent = dd();
         
         group.settings.forEach(setting => {
-            const defaultValue = this.el.settings[setting.name] || setting.value;
+            const defaultValue = (this.el.settings[setting.name] === undefined) ? setting.value : this.el.settings[setting.name];
             settingGroupContent.appendChild(this.renderSetting(setting, defaultValue));
         });
 
