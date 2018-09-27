@@ -38,22 +38,41 @@ if ($object->xpdo) {
                 $mediaSource->save();
             }
 
-            $assetsPath = $modx->getOption('assets_path');
-            $assetsUrl = $modx->getOption('assets_url');
-            $basePath = $modx->getOption('base_path');
-            $baseUrl = $modx->getOption('base_url');
-
             /** @var modMediaSource $assetsMS */
             $assetsMS = $modx->getObject('sources.modMediaSource', ['name' => 'Assets']);
             if (!$assetsMS) {
-                $assetsMS = $modx->newObject('sources.modMediaSource');
+                $assetsPath = $modx->getOption('assets_path');
+                $assetsUrl = $modx->getOption('assets_url');
+                $basePath = $modx->getOption('base_path');
+                $baseUrl = $modx->getOption('base_url');
+                
+                $assetsMS = $modx->newObject('sources.modFileMediaSource');
                 $assetsMS->set('class_key','sources.modFileMediaSource');
                 $assetsMS->set('name','Assets');
                 $assetsMS->set('description','Assets');
 
+                if (strpos($assetsPath, $basePath) === 0) {
+                    $msAssetsPathRelative = true;
+                    $msAssetsPath = trim(str_replace($basePath, '', $assetsPath), '/\\') . '/';
+                } else {
+                    $msAssetsPathRelative = false;
+                    $msAssetsPath = $assetsPath;
+                }
+                
+                if (strpos($assetsUrl, $baseUrl) === 0) {
+                    $msAssetsUrlRelative = true;
+                    $msAssetsUrl = trim(str_replace($baseUrl, '', $assetsUrl), '/\\') . '/';
+                } else {
+                    $msAssetsUrlRelative = false;
+                    $msAssetsUrl = $assetsUrl;
+                }
+
+                $assetsMS->setProperties($assetsMS->getDefaultProperties());
                 $assetsMS->setProperties([
-                    'basePath' => ltrim(str_replace($basePath, '', $assetsPath), '/\\'),
-                    'baseUrl' => ltrim(str_replace($baseUrl, '', $assetsUrl), '/\\'),
+                    'basePath' => $msAssetsPath,
+                    'basePathRelative' => $msAssetsPathRelative,
+                    'baseUrl' => $msAssetsUrl,
+                    'baseUrlRelative' => $msAssetsUrlRelative,
                     'fred' => [
                         'name' => 'fred',
                         'desc' => '',
