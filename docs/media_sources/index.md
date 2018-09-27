@@ -1,4 +1,4 @@
-Media Sources can either be assigned globally via a setting in the Media Source itself, or in an Element's settings by referencing the Media Source ID(s). On install two new settings are added to each Media Source. If you'll want to access Media Sources from Fred, you will need to manually add these settings.
+Media Sources can either be assigned globally via a setting in the Media Source itself, or in an Element's settings by referencing the Media Source Name(s). On install two new settings are added to each Media Source. If you'll want to access Media Sources from Fred, you will need to manually add these settings.
 
 ## Media Source Settings
 

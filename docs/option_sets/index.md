@@ -14,10 +14,10 @@ Option Sets with `No` in this flag are meant to be used for including to other O
 If set to `true` XHR request will be fired to render the Element through both Twig and MODX parsers. This means you can have dynamic content that references other pages within a Fred page using MODX Snippets.
 
 ### mediaSource
-ID of the Media Source to use for Finder. Multiple IDs can be passed separated by comma `,`.
+Name of the Media Source to use for Finder. Multiple Names can be passed separated by comma `,`.
 
 ### imageMediaSource
-ID of the Media Source to use for Image fields. Multiple IDs can be passed separated by comma `,`. This option overrides `mediaSource`.
+Name of the Media Source to use for Image fields. Multiple Names can be passed separated by comma `,`. This option overrides `mediaSource`.
 
 ### settings
 An array of setting objects and group objects for the Fred Element. Settings can also contain a special import object, to import another option set.
@@ -79,7 +79,7 @@ An array of setting objects and group objects for the Fred Element. Settings can
     - Image select
     - Type specific properties:
         - showPreview - If set to `false` preview won't appear under the text input
-        - mediaSource - ID of the Media Source to use; Overrides `imageMediaSource` global setting.  
+        - mediaSource - Name of the Media Source to use; Overrides `imageMediaSource` global setting.  
 - tagger
     - Select for Tagger tags
     - Type specific properties:

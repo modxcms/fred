@@ -100,21 +100,21 @@ Defines ID of MODX Resource. Value of this attribute will be used as a link's hr
 ### data-fred-media-source
 This option override globals from Element Settings.
 
-Defines Media Source to be used for the element. ID of the media source is expected and can accommodate multiple IDs separated by comma `,`.
+Defines Media Source to be used for the element. Name of the media source is expected and can accommodate multiple Names separated by comma `,`.
 
 #### Example
 ```html
-<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-media-source="1,2">
+<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-media-source="Assets,Images">
 ```
 
 ### data-fred-image-media-source
 This option override globals from Element Settings and `data-fred-media-source` (but only for images).
 
-Defines Media Source to be used for the element. ID of the media source is expected and can accommodate multiple IDs separated by comma `,`.
+Defines Media Source to be used for the element. Name of the media source is expected and can accommodate multiple Names separated by comma `,`.
 
 #### Example
 ```html
-<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-image-media-source="1,2">
+<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-image-media-source="Assets,Images">
 ```
 
 ### data-fred-block-class
