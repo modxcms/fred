@@ -1,6 +1,11 @@
 # Fred
 The friendly front-end editor … documentation at https://modxcms.github.io/fred/
 
+## Upgrade Notes
+
+### -> beta7
+If you defined media sources in option sets, element's markup or options override you'll need to adjust these from media source id to media source name
+
 ## Folder structure
 - `_build/assets/js` - source codes for Frontend part
 - `_build/assets/sass` - source codes for Frontend styles

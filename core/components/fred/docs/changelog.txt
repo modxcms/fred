@@ -1,5 +1,14 @@
 Changelog for Fred.
 
+1.0.0 beta7
+==============
+- Move elFinder's processors under core for better security
+- Streamline elFinder buttons shown
+- Create a Media Source on Fred installation: /assets
+- Add a tab to the Manager component for managing the Media Sources available to Fred
+- Fix toggle option setting control when the default value was set to true
+- Change referencing Media Sources by ID to Name in option sets and Element markup
+
 1.0.0 beta6
 ==============
 - Add theme directory for theme's assets
