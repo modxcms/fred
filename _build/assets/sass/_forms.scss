@@ -15,7 +15,9 @@ input{
 .fred--input-group{
   display: flex;
   align-items: center;
-
+  input{
+    width: calc(100% - 36px) !important;
+  }
   .fred--browse-small,
   .fred--close-small{
     position: relative;
