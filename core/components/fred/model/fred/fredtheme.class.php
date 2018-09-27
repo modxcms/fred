@@ -7,11 +7,11 @@
  * @property array $config
  * @property string $theme_folder
  * 
- * @property FredElementCategory $ElementCategories[]
- * @property FredBlueprintCategory $BlueprintCategories[]
- * @property FredElementRTEConfig $RTEConfigs[]
- * @property FredElementOptionSet $OptionSets[]
- * @property FredThemedTemplate $Templates[]
+ * @property FredElementCategory[] $ElementCategories
+ * @property FredBlueprintCategory[] $BlueprintCategories
+ * @property FredElementRTEConfig[] $RTEConfigs
+ * @property FredElementOptionSet[] $OptionSets
+ * @property FredThemedTemplate[] $Templates
  * 
  * @package fred
  */

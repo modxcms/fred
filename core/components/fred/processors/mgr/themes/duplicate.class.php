@@ -41,6 +41,7 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
         $this->duplicateThemeObjects();
         $this->createThemeFolder();
         $this->duplicateThemeFolder();
+        $this->duplicateTemplates();
         
         return $this->success('');
     }
@@ -198,6 +199,50 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
 
             $fs->mirror($originalThemeFolderPath, $themeFolderPath);
         } catch (Exception $e) {}
+    }
+    
+    protected function duplicateTemplates()
+    {
+        $duplicateTemplates = (int)$this->getProperty('duplicate_templates', 0);
+
+        if ($duplicateTemplates !== 1) return;
+        
+        $assignedTemplates = $this->object->Templates;
+        foreach ($assignedTemplates as $assignedTemplate) {
+            $template = $assignedTemplate->Template;
+            if ($template) {
+                $newName = "{$template->get('templatename')} ({$this->newObject->get('name')})";
+                $cnt = 0;
+                
+                $exists = $this->modx->getCount('modTemplate', ['templatename' => $newName]);
+                while($exists > 0) {
+                    $cnt++;
+                    $newName = "{$template->get('templatename')} ({$this->newObject->get('name')}) #{$cnt}";
+                    $exists = $this->modx->getCount('modTemplate', ['templatename' => $newName]);
+                }
+                
+                /** @var modTemplate $newTemplate */
+                $newTemplate = $this->modx->newObject('modTemplate');
+                $newTemplate->fromArray($template->toArray());
+                $newTemplate->set('templatename', $newName);
+                $newTemplate->save();
+                
+                /** @var modTemplateVarTemplate[] $tvs */
+                $tvs = $template->getMany('TemplateVarTemplates');
+                foreach ($tvs as $tv) {
+                    $newTv = $this->modx->newObject('modTemplateVarTemplate');
+                    $newTv->set('tmplvarid', $tv->get('tmplvarid'));
+                    $newTv->set('templateid', $newTemplate->get('id'));
+                    $newTv->set('rank', $tv->get('rank'));
+                    $newTv->save();
+                }
+
+                $themedTemplate = $this->modx->newObject('FredThemedTemplate');
+                $themedTemplate->set('template', $newTemplate->id);
+                $themedTemplate->set('theme', $this->newObject->id);
+                $themedTemplate->save();
+            }
+        }
     }
 }
 

@@ -97,6 +97,13 @@ Ext.extend(fred.window.ThemeDuplicate, MODx.Window, {
                 boxLabel: _('fred.themes.duplicate_theme_folder'),
                 hideLabel: true,
                 labelSeparator: ''
+            },
+            {
+                xtype: 'xcheckbox',
+                name: 'duplicate_templates',
+                boxLabel: _('fred.themes.duplicate_templates'),
+                hideLabel: true,
+                labelSeparator: ''
             }
         ]
     }
