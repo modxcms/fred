@@ -71,7 +71,7 @@ final class RenderResource {
         foreach ($dropZones as $dropZone) {
             if(!is_array($dropZone)) continue;
             foreach ($dropZone as $element) {
-                $elementId = intval($element['widget']);
+                $elementId = $element['widget'];
 
                 if (!isset($elements[$elementId])) {
                     $elements[$elementId] = $this->getElement($elementId);
@@ -85,7 +85,7 @@ final class RenderResource {
     private function getElement($id)
     {
         /** @var \FredElement $element */
-        $element = $this->modx->getObject('FredElement', $id);
+        $element = $this->modx->getObject('FredElement', ['uuid' => $id]);
         if (!$element) {
             $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$id} wasn't found.");
             return '';
@@ -114,10 +114,17 @@ final class RenderResource {
     private function setDefaults(){
         $defElement = explode('|',$this->modx->getOption('fred.default_element'));
         if(!empty($defElement[0]) && is_numeric($defElement[0]) && !empty($defElement[1])){
+            /** @var \FredElement $defaultElement */
+            $defaultElement = $this->modx->getObject('FredElement', ['id' => $defElement[0]]);
+            if (!$defaultElement) {
+                $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$defElement[0]} wasn't found.");
+                return '';
+            }
+            
             $this->data = array(
                 'content' => array(
                     array(
-                        'widget' => intval($defElement[0]),
+                        'widget' => $defaultElement->get('uuid'),
                         'values' => array(
                             $defElement[1] => array(
                                 '_raw' => array(
