@@ -47,7 +47,7 @@ class FredMediaSourcesUpdateFromGridProcessor extends modObjectUpdateProcessor
                 'name_trans' => 'fred'
             ];
         } else {
-            $props['fred']['value'] = $this->fredReadOnly;
+            $props['fred']['value'] = $this->fred;
         }
         
         if (!isset($props['fredReadOnly']['value'])) {
