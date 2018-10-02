@@ -550,7 +550,11 @@ export class ContentElement {
         this.setValueForBindElements(content, el.dataset.fredName, value);
         
         if (el.dataset.fredTarget) {
-            emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
+            if (el.silent !== true) {
+                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName]._raw._value, el);
+            } else {
+                el.silent = null;
+            }
         }
     }
     
@@ -744,12 +748,15 @@ export class ContentElement {
         
         switch (el.nodeName.toLowerCase()) {
             case 'i':
+                el.silent = true;
                 el.className = value;
                 break;
             case 'img':
+                el.silent = true;
                 el.setAttribute('src', value);
                 break;
             default:
+                el.silent = true;
                 el.innerHTML = value;
         }
     }
