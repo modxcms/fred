@@ -1,6 +1,6 @@
 import Sidebar from '../../Sidebar';
 import emitter from '../../../EE';
-import {dd, dl, dt, form, fieldSet, legend, div, button, figCaption, figure, img} from '../../../UI/Elements';
+import {dd, dl, dt, form, fieldSet, legend, div, button, figCaption, figure, img, span} from '../../../UI/Elements';
 import {choices, text, toggle, image, area} from "../../../UI/Inputs";
 import fredConfig from "../../../Config";
 import cache from '../../../Cache';
@@ -290,6 +290,9 @@ export default class Blueprints extends Sidebar {
         }, this.state.blueprint.public, onChange));
 
         if (this.state.blueprint.image === '') {
+            const loader = span(['fred--loading']);
+            imageEl.appendChild(loader);
+            
             fredConfig.fred.previewContent().then(iframe => {
                 iframe.parentNode.style.display = 'block';
                 iframe.parentNode.style.opacity = '0';
@@ -299,6 +302,7 @@ export default class Blueprints extends Sidebar {
                     logging: false
                 }).then(canvas => {
                     this.state.blueprint.generatedImage = canvas.toDataURL();
+                    loader.remove();
                     imageEl.setPreview(this.state.blueprint.generatedImage);
                     iframe.parentNode.style.display = 'none';
                     iframe.parentNode.style.opacity = null;
@@ -306,7 +310,6 @@ export default class Blueprints extends Sidebar {
                 });
             });
         }
-        
         
         const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));

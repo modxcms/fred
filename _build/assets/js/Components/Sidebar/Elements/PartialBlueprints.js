@@ -1,6 +1,6 @@
 import utilitySidebar from './../../UtilitySidebar';
 import {choices, image, text, toggle} from "../../../UI/Inputs";
-import {button, div, fieldSet, form, legend} from "../../../UI/Elements";
+import {button, div, fieldSet, form, legend, span} from "../../../UI/Elements";
 import cache from "../../../Cache";
 import emitter from "../../../EE";
 import fredConfig from "../../../Config";
@@ -100,6 +100,9 @@ export class PartialBlueprints {
         }, this.state.public, onChange));
 
         if (this.state.image === '') {
+            const loader = span(['fred--loading']);
+            imageEl.appendChild(loader);
+            
             html2canvas(this.el.wrapper, {
                 logging: false,
                 ignoreElements: el => {
@@ -110,6 +113,7 @@ export class PartialBlueprints {
                 }
             }).then(canvas => {
                 this.state.generatedImage = canvas.toDataURL();
+                loader.remove();
                 imageEl.setPreview(this.state.generatedImage);
             });
         }

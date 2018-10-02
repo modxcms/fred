@@ -18,6 +18,9 @@ export class  Modal {
         this.showCancelButton = config.showCancelButton || false;
         this.cancelButtonText = config.cancelButtonText || 'fred.fe.cancel';
         this.saveButtonText = config.saveButtonText || 'fred.fe.save';
+        
+        this.cancelButton = null;
+        this.saveButton = null;
     }
     
     setTitle(title) {
@@ -64,17 +67,17 @@ export class  Modal {
         const footer = div(['fred--modal-footer']);
 
         if (this.showCancelButton === true) {
-            const cancel = button(this.cancelButtonText, this.cancelButtonText, ['fred--btn-small', 'fred--btn-danger'], () => {
+            this.cancelButton = button(this.cancelButtonText, this.cancelButtonText, ['fred--btn-small', 'fred--btn-danger'], () => {
                 this.close();
             });
-            footer.appendChild(cancel);
+            footer.appendChild(this.cancelButton);
         }
         
-        const save = button(this.saveButtonText, this.saveButtonText, ['fred--btn-small'], () => {
+        this.saveButton = button(this.saveButtonText, this.saveButtonText, ['fred--btn-small'], () => {
             this.onSave();
             this.close();
         });
-        footer.appendChild(save);
+        footer.appendChild(this.saveButton);
         
         header.appendChild(close);
         header.appendChild(this.titleEl);
@@ -89,6 +92,18 @@ export class  Modal {
         emitter.emit('fred-wrapper-insert', this.wrapper);
         
         return this.wrapper;
+    }
+    
+    disableSave() {
+        if (this.saveButton) {
+            this.saveButton.setAttribute('disabled', 'disabled');
+        }
+    }
+    
+    enableSave() {
+        if (this.saveButton) {
+            this.saveButton.removeAttribute('disabled');
+        }
     }
     
     close() {

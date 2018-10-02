@@ -2,7 +2,7 @@ import drake from '../../../Drake';
 import emitter from '../../../EE';
 import { twig } from 'twig';
 import fredConfig from '../../../Config';
-import {div, button, img} from '../../../UI/Elements';
+import {div, button, img, span} from '../../../UI/Elements';
 import { applyScripts } from '../../../Utils';
 import Mousetrap from 'mousetrap';
 import hoverintent from 'hoverintent';
@@ -453,6 +453,11 @@ export class ContentElement {
             });
         }, {showCancelButton: true, saveButtonText: 'fred.fe.content.replace_element_thumbnail'});
 
+        const loader = span(['fred--loading']);
+        modal.setContent(loader);
+        modal.render();
+        modal.disableSave();
+
         html2canvas(this.wrapper, {
             logging: false,
             ignoreElements: el => {
@@ -465,7 +470,7 @@ export class ContentElement {
             dataImage = canvas.toDataURL();
             
             modal.setContent(img(dataImage));
-            modal.render();    
+            modal.enableSave();
         });
     }
     
