@@ -14,13 +14,12 @@ class ElFinder extends Endpoint
 {
     public function run()
     {
-        $modx = $this->modx;
-        if (!$modx->user) {
+        if (!$this->modx->user) {
             http_response_code(401);
             return;
         }
 
-        if ($modx->user->sudo !== 1) {
+        if ($this->modx->user->sudo !== 1) {
             http_response_code(403);
             return;
         }
@@ -29,13 +28,13 @@ class ElFinder extends Endpoint
 
         $roots = [];
 
-        $mediaSourceIDs = $modx->getOption('mediaSource', $_GET, '');
+        $mediaSourceIDs = $this->modx->getOption('mediaSource', $_GET, '');
         $mediaSourceIDs = explode(',', $mediaSourceIDs);
         $mediaSourceIDs = array_map('trim', $mediaSourceIDs);
         $mediaSourceIDs = array_keys(array_flip($mediaSourceIDs));
         $mediaSourceIDs = array_filter($mediaSourceIDs);
 
-        $c = $modx->newQuery('modMediaSource');
+        $c = $this->modx->newQuery('modMediaSource');
         $where = [
             'class_key' => 'sources.modFileMediaSource'
         ];
@@ -46,8 +45,8 @@ class ElFinder extends Endpoint
 
         $c->where($where);
 
-        /** @var \modMediaSource[] $mediaSources */
-        $mediaSources = $modx->getIterator('modMediaSource', $c);
+        /** @var \modFileMediaSource[] $mediaSources */
+        $mediaSources = $this->modx->getIterator('modMediaSource', $c);
         foreach ($mediaSources as $mediaSource) {
             $mediaSource->initialize();
             $properties = $mediaSource->getProperties();
