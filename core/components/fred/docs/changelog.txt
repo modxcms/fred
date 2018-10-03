@@ -1,5 +1,13 @@
 Changelog for Fred.
 
+1.0.0 beta8
+==============
+- Now with 100% more German. Danke für die Übersetzung.
+- Fix HTML generation when saving Fred Resource from the Manager,  which didn't work and was a bummer. Now it's not.
+- Show a loading icon when generating Blueprint screenshots. This helps calm user anxiety over "Didn't I just push that button? …" as it can take a few seconds when doing full-page Blueprints.
+- Duplicating an image that saved to a TV caused an infinite loop. Inception is good for movies, not for software, so we fixed that.
+- Fix toggling fred and fredReadOnly attributes from in the Media Source tab of the Manager page because it's the right thing to do.
+
 1.0.0 beta7
 ==============
 - Move elFinder's processors under core for better security

@@ -44,7 +44,7 @@
   "dependencies": {
     "choices.js": "^3.0.4",
     "dragula": "^3.7.2",
-    "flatpickr": "^4.5.1",
+    "flatpickr": "^4.5.2",
     "gulp-sass-inline-svg": "^1.0.3",
     "gulp-svgmin": "^1.2.4",
     "hoverintent": "^2.1.0",
