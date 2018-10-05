@@ -260,3 +260,5 @@ $_lang['fred.err.theme_name_invalid_char'] = 'Dash "-" is not allowed in package
 $_lang['fred.err.theme_docs_changelog_ns'] = 'Changelog is required';
 $_lang['fred.err.theme_docs_readme_ns'] = 'Read Me is required';
 $_lang['fred.err.theme_docs_license_ns'] = 'License is required';
+$_lang['fred.err.theme_no_built_file'] = 'Transport package not found.';
+$_lang['fred.err.theme_read_file'] = 'Transport package is unreadable.';

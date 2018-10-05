@@ -44,6 +44,10 @@ class FredThemeDownloadManagerController extends FredBaseManagerController
 
         $absolutePath = $packagesDir . $fileName;
         
+        if (!file_exists($absolutePath)) {
+            die($this->modx->lexicon('fred.err.theme_no_built_file'));
+        }
+        
         $fileContent = @file_get_contents($absolutePath);
 
         if($fileContent !== FALSE) {
@@ -67,6 +71,8 @@ class FredThemeDownloadManagerController extends FredBaseManagerController
             echo $fileContent;
 
             die();
+        } else {
+            die($this->modx->lexicon('fred.err.theme_read_file'));
         }
         
     }
