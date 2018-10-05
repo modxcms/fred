@@ -184,7 +184,8 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                     border: false,
                     autoHeight: true,
                     labelSeparator: '',
-                    layout: 'form'
+                    layout: 'form',
+                    msgTarget: 'under'
                 },
                 border: false,
                 hideMode: 'offsets',
@@ -197,14 +198,10 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                 fieldLabel: _('fred.themes.name'),
                                 name: 'name',
                                 anchor: '100%',
-                                validator: function (value) {
-                                    if (value.indexOf('-') !== -1) {
-                                        return _('fred.err.theme_name_invalid_char');
-                                    }
-
-                                    return true;
-                                },
-                                allowBlank: false
+                                regex: /^[a-z_]+$/,
+                                regexText: _('fred.err.theme_name_invalid_format'),
+                                allowBlank: false,
+                                msgTarget: 'under'
                             },
                             {
                                 layout: 'column',
@@ -231,7 +228,9 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                                 fieldLabel: _('fred.themes.version'),
                                                 name: 'version',
                                                 anchor: '100%',
-                                                allowBlank: false
+                                                allowBlank: false,
+                                                regex: /^[0-9]+\.[0-9]+\.[0-9]+$/,
+                                                regexText: _('fred.err.themes_version_number_format')
                                             }
                                         ]
                                     },
@@ -248,7 +247,9 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                                 fieldLabel: _('fred.themes.release'),
                                                 name: 'release',
                                                 anchor: '100%',
-                                                allowBlank: false
+                                                allowBlank: false,
+                                                regex: /^(pl|beta|alpha)[0-9]*$/,
+                                                regexText: _('fred.err.themes_release_format')
                                             }
                                         ]
                                     },

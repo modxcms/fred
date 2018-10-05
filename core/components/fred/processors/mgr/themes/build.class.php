@@ -38,11 +38,21 @@ class FredThemeBuildProcessor extends modObjectProcessor
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.build_ns_name'));
             return $this->failure();
-        } else {
-            if (strpos($name, '-') !== false) {
-                $this->addFieldError('name', $this->modx->lexicon('fred.err.theme_name_invalid_char'));
-                return $this->failure();
-            }
+        }
+         
+        if (!preg_match('/^[a-z_]+$/', $name)) {
+            $this->addFieldError('name', $this->modx->lexicon('fred.err.theme_name_invalid_format'));
+            return $this->failure();
+        }
+
+        if (!preg_match('/^[0-9]+\.[0-9]+\.[0-9]+$/', $version)) {
+            $this->addFieldError('version', $this->modx->lexicon('fred.err.themes_version_number_format'));
+            return $this->failure();
+        }
+        
+        if (!preg_match('/^(pl|beta|alpha)[0-9]*$/', $release)) {
+            $this->addFieldError('release', $this->modx->lexicon('fred.err.themes_release_format'));
+            return $this->failure();
         }
         
         if (empty($theme)) {
