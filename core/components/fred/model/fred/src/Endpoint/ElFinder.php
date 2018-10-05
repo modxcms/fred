@@ -69,8 +69,9 @@ class ElFinder extends Endpoint
         $mediaSources = $this->modx->getIterator('modMediaSource', $c);
         foreach ($mediaSources as $mediaSource) {
             $mediaSource->initialize();
+            if(!$mediaSource->checkPolicy('list')) continue;
+            
             $properties = $mediaSource->getProperties();
-
             if (isset($properties['fred']) && ($properties['fred']['value'] === true)) {
                 $bases = $mediaSource->getBases();
 
