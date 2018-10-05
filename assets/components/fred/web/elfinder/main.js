@@ -1,6 +1,38 @@
 "use strict";
 
 (function(){
+    var queryString = location.search;
+    var query = {};
+    var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+    for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split('=');
+        query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+    }
+    
+    var fredToken = query.fredToken || '';
+    delete query.fredToken;
+    
+    var serialize = function(obj, prefix) {
+        var str = [],
+            p;
+        for (p in obj) {
+            if (obj.hasOwnProperty(p)) {
+                var k = prefix ? prefix + "[" + p + "]" : p,
+                    v = obj[p];
+                str.push((v !== null && typeof v === "object") ?
+                    serialize(v, k) :
+                    encodeURIComponent(k) + "=" + encodeURIComponent(v));
+            }
+        }
+        return str.join("&");
+    };
+
+    queryString = serialize(query);
+    
+    if (queryString.length > 0) {
+        queryString = '?' + queryString;
+    }
+    
     var jqver = '3.2.1',
         uiver = '1.12.1',
 
@@ -30,7 +62,10 @@
             resizable : false,
             width : '100%',
             height : '100%',
-            url : '../endpoints/elfinder.php' + location.search,
+            url : '../endpoints/elfinder.php' + queryString,
+            customHeaders: {
+                'X-Fred-Token': fredToken
+            },
             lang: lang,
             uiOptions: {
                 toolbar: [

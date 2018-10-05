@@ -33,14 +33,19 @@ abstract class Endpoint
     /** @var \Tagger|null */
     protected $tagger = null;
 
+    /** @var array */
+    private $jwtPayload = [];
+
     /**
      * Endpoint constructor.
      * @param \Fred $fred
+     * @param $payload
      */
-    public function __construct(\Fred &$fred)
+    public function __construct(\Fred &$fred, $payload)
     {
         $this->fred =& $fred;
         $this->modx =& $fred->modx;
+        $this->jwtPayload = $payload;
     }
 
     public function run()
@@ -142,5 +147,12 @@ abstract class Endpoint
         if (!($this->tagger instanceof \Tagger)) return;
 
         $this->taggerLoaded = true;
+    }
+    
+    protected function verifyClaim($name, $value)
+    {
+        if (!isset($this->jwtPayload[$name])) return false;
+        
+        return $this->jwtPayload[$name] === $value;
     }
 }

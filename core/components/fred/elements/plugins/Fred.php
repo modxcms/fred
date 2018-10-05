@@ -174,6 +174,13 @@ switch ($modx->event->name) {
             }
 
             $rteConfigString = implode(',', $rteConfigString);
+
+            $payload = [
+                'iss' => $modx->user->id,
+                'resource' => $modx->resource->id
+            ];
+            
+            $jwt = \Firebase\JWT\JWT::encode($payload, $fred->getSecret());
             
             $fredContent = '
         <script type="text/javascript" src="' . $fred->getOption('webAssetsUrl') . 'fred.min.js"></script>
@@ -190,6 +197,7 @@ switch ($modx->event->name) {
                 imageEditor: "' . $fred->getOption('image_editor') . '",
                 rte: "' . $fred->getOption('rte') . '",
                 rteConfig: {' . $rteConfigString . '},
+                jwt: "' . $jwt . '",
                 resource: {
                     "id": ' . $modx->resource->id . ',
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 2] , 'abs')) . '",

@@ -6,7 +6,10 @@ import {errorHandler} from "../Utils";
 export const getResourceTree = contextKey => {
     return cache.load('resources', {name: 'resource-tree'}, () => {
         return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree&context=${contextKey}`, {
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            headers: {
+                'X-Fred-Token': fredConfig.jwt
+            }
         })
             .then(response => {
                 return response.json();
@@ -19,7 +22,10 @@ export const getResourceTree = contextKey => {
 export const getTemplates = contextKey => {
     return cache.load('templates', {name: 'templates'}, () => {
         return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-templates`, {
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            headers: {
+                'X-Fred-Token': fredConfig.jwt
+            }
         })
             .then(errorHandler);
     });
@@ -30,7 +36,8 @@ export const createResource = (parent, template, pagetitle, blueprint) => {
         method: "post",
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
         },
         body: JSON.stringify({
             parent,
@@ -56,6 +63,9 @@ export const getResources = (currentResource = null, query = {}) => {
     }
     
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources${queryString}`, {
-        credentials: 'same-origin'
+        credentials: 'same-origin',
+        headers: {
+            'X-Fred-Token': fredConfig.jwt
+        }
     }).then(errorHandler)
 };

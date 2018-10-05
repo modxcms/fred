@@ -10,6 +10,8 @@
 
 namespace Fred\Endpoint;
 
+use Firebase\JWT\JWT;
+
 class ElFinder extends Endpoint
 {
     public function run()
@@ -20,6 +22,24 @@ class ElFinder extends Endpoint
         }
 
         if ($this->modx->user->sudo !== 1) {
+            http_response_code(403);
+            return;
+        }
+
+        if (empty($_SERVER['HTTP_X_FRED_TOKEN'])) {
+            http_response_code(403);
+            return;
+        }
+
+        try {
+            $payload = JWT::decode($_SERVER['HTTP_X_FRED_TOKEN'], $this->fred->getSecret(), ['HS256']);
+            $payload = (array)$payload;
+
+            if ($payload['iss'] !== $this->modx->user->id) {
+                http_response_code(403);
+                return;
+            }
+        } catch (\Exception $e) {
             http_response_code(403);
             return;
         }

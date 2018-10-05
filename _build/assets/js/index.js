@@ -16,6 +16,9 @@ import ContentElement from "./Components/Sidebar/Elements/ContentElement";
 
 export default class Fred {
     constructor(config = {}) {
+        fredConfig.jwt = config.jwt;
+        delete config.jwt;
+        
         fredConfig.config = config || {};
         fredConfig.fred = this;
         this.loading = null;

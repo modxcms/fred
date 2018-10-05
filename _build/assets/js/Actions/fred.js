@@ -4,7 +4,10 @@ import {errorHandler} from "../Utils";
 
 export const getPreview = () => {
     return fetch(fredConfig.config.resource.previewUrl, {
-        credentials: 'same-origin'
+        credentials: 'same-origin',
+        headers: {
+            'X-Fred-Token': fredConfig.jwt
+        }
     }).then(response => {
         return response.text();
     })
@@ -15,7 +18,8 @@ export const saveContent = body => {
         method: "post",
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
         },
         body: JSON.stringify(body)
     }).then(errorHandler);
@@ -23,7 +27,10 @@ export const saveContent = body => {
 
 export const fetchContent = () => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${fredConfig.config.resource.id}`, {
-        credentials: 'same-origin'
+        credentials: 'same-origin',
+        headers: {
+            'X-Fred-Token': fredConfig.jwt
+        }
     }).then(response => {
         return response.json();
     })
@@ -34,7 +41,8 @@ export const fetchLexicons = topics => {
         method: "get",
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
         }
     }).then(response => {
         return response.json();

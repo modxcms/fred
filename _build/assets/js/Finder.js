@@ -38,7 +38,9 @@ export class Finder {
         modal.style.height = this.options.height || '600px';
         this.body.style.padding = '0';
 
-        const finderOptions = [];
+        const finderOptions = [
+            `fredToken=${fredConfig.jwt}`
+        ];
         if (this.options.mediaSource) {
             finderOptions.push(`mediaSource=${this.options.mediaSource}`);
         }

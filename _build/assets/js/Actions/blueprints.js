@@ -8,7 +8,10 @@ export const getBlueprints = (complete = null, theme = fredConfig.config.theme) 
         const completeString = (complete !== null) ? `&complete=${+complete}` : '';
         
         return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints&theme=${theme}${completeString}`, {
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            headers: {
+                'X-Fred-Token': fredConfig.jwt
+            }
         })
             .then(response => {
                 return response.json();
@@ -40,7 +43,8 @@ export const createBlueprint = (name, description, category, rank, isPublic, dat
         method: "post",
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
         },
         body: JSON.stringify(body)
     }).then(errorHandler);
@@ -51,7 +55,8 @@ export const createBlueprintCategory = (name, rank, isPublic) => {
         method: "post",
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
         },
         body: JSON.stringify({
             name,
@@ -65,7 +70,10 @@ export const createBlueprintCategory = (name, rank, isPublic) => {
 export const loadBlueprint = blueprint => {
     return cache.load('blueprints', {name: 'load-blueprint', blueprint}, () => {
         return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-blueprint&blueprint=${blueprint}`, {
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            headers: {
+                'X-Fred-Token': fredConfig.jwt
+            }
         })
             .then(errorHandler)
             .catch(err => {

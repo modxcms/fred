@@ -22,15 +22,21 @@ class SaveContent extends Endpoint
         if (!isset($this->body['id'])) {
             return $this->failure('No id was provided');
         }
+        
+        $id = (int)$this->body['id'];
+
+        if (!$this->verifyClaim('resource', $id)) {
+            return $this->failure('Invalid id was provided');
+        }
 
         if (!isset($this->body['data'])) {
             return $this->failure('No data was provided');
         }
 
         /** @var \modResource $object */
-        $object = $this->modx->getObject('modResource', (int)$this->body['id']);
+        $object = $this->modx->getObject('modResource', $id);
         if (!$object instanceof \modResource) {
-            return $this->failure('Could not load resource with id ' . (int)$this->body['id']);
+            return $this->failure('Could not load resource with id ' . $id);
         }
 
         if (!$this->modx->hasPermission('save_document') || !$object->checkPolicy('save')) {

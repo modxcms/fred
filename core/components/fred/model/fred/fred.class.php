@@ -91,4 +91,37 @@ class Fred
 
         return $themedTemplate->Theme;
     }
+
+    public function getSecret()
+    {
+        $secret = $this->modx->getOption('fred.secret');
+        
+        if (empty($secret)) {
+            /** @var modSystemSetting $secretObject */
+            $secretObject = $this->modx->getObject('modSystemSetting', ['key' => 'fred.secret']);
+            if (!$secretObject) {
+                $secretObject = $this->modx->newObject('modSystemSetting');
+                $secretObject->set('key', 'fred.secret');
+                $secretObject->set('namespace', 'fred');
+                $secretObject->set('xtype', 'text-password');
+                $secretObject->set('value', md5(uniqid(rand(), true)) . sha1(md5(uniqid(rand(), true))));
+                $secretObject->save();
+
+                $this->modx->reloadConfig();
+            } else {
+                $secret = $secretObject->get('value');
+                
+                if (empty($secret)) {
+                    $secretObject->set('value', md5(uniqid(rand(), true)) . sha1(md5(uniqid(rand(), true))));
+                    $secretObject->save();
+
+                    $this->modx->reloadConfig();
+                }
+            }
+
+            $secret = $secretObject->get('value');
+        }
+        
+        return $secret;
+    }
 }

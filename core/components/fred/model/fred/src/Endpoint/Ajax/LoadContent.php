@@ -22,6 +22,9 @@ class LoadContent extends Endpoint
             return $this->failure('No id was provided');
         }
 
+        if (!$this->verifyClaim('resource', $id)) {
+            return $this->failure('Invalid id was provided');
+        }
 
         /** @var \modResource $object */
         $object = $this->modx->getObject('modResource', $id);

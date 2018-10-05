@@ -6,7 +6,10 @@ import { errorHandler } from "../Utils";
 export const getElements = () => {
     return cache.load('elements', {name: 'elements'}, () => {
         return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-elements&theme=${fredConfig.config.theme}`, {
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            headers: {
+                'X-Fred-Token': fredConfig.jwt
+            }
         })
             .then(response => {
                 return response.json();
@@ -21,7 +24,8 @@ export const renderElement = (element, settings, parseModx) => {
         method: "post",
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
         },
         body: JSON.stringify({
             resource: fredConfig.config.resource.id,
@@ -46,7 +50,8 @@ export const replaceImage = (element, image) => {
         method: "post",
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
         },
         body: JSON.stringify(body)
     }).then(errorHandler);

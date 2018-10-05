@@ -10,6 +10,7 @@ class Config {
         this._tvs = [];
         this._lang = {};
         this._fred = null;
+        this._jwt = null;
     }
     
     set fred(fred) {
@@ -30,6 +31,12 @@ class Config {
     
     set tvs(tvs) {
         this._tvs = tvs;
+    }
+    
+    set jwt(jwt) {
+        if (this._jwt === null) {
+            this._jwt = jwt;
+        }
     }
     
     set lang(lang) {
@@ -62,6 +69,10 @@ class Config {
     
     get tvs() {
         return this._tvs;
+    }
+    
+    get jwt() {
+        return this._jwt;
     }
 
     registerEditor(name, editor) {
