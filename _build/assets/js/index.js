@@ -46,6 +46,8 @@ export default class Fred {
                     newScript.innerHTML = script.dataset.fredScript;
                 }
 
+                newScript.removeAttribute('data-fred-script');
+
                 this.scriptsToReplace.push({old: script, 'new': newScript});
             }
             
