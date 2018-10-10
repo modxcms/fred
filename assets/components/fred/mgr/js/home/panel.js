@@ -63,8 +63,8 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
     getTopTabs: function(config) {
         var output = [];
 
-        var elementTabItems = this.getElementsTab(config);
-        if (elementTabItems.length > 0) {
+        var elementsTabItems = this.getElementsTab(config);
+        if (elementsTabItems.length > 0) {
             output.push({
                 title: _('fred.home.elements'),
                 items: [
@@ -79,14 +79,14 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                                 activeItem: this.items.indexOf(this.getActiveTab())
                             };
                         },
-                        items: elementTabItems
+                        items: elementsTabItems
                     }
                 ]
             });
         }
         
-        var blueprintTabItems = this.getBlueprintsTab(config);
-        if (blueprintTabItems.length > 0) {
+        var blueprintsTabItems = this.getBlueprintsTab(config);
+        if (blueprintsTabItems.length > 0) {
             output.push({
                 title: _('fred.home.blueprints'),
                 items: [
@@ -101,53 +101,34 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                                 activeItem: this.items.indexOf(this.getActiveTab())
                             };
                         },
-                        items: blueprintTabItems
+                        items: blueprintsTabItems
                     }
                 ]
             });
         }
         
-        output.push({
-            title: _('fred.home.themes'),
-            items: [
-                {
-                    xtype: 'modx-vtabs',
-                    deferredRender: true,
-                    stateful: true,
-                    stateId: 'fred-tab-home-themes',
-                    stateEvents: ['tabchange'],
-                    getState: function () {
-                        return {
-                            activeItem: this.items.indexOf(this.getActiveTab())
-                        };
-                    },
-                    items: [
-                        {
-                            title: _('fred.home.themes'),
-                            helpPath: 'cmp/themes/',
-                            items: [
-                                {
-                                    xtype: 'fred-grid-themes',
-                                    preventRender: true,
-                                    cls: 'main-wrapper'
-                                }
-                            ]
+        var themesTabItems = this.getThemesTab(config);
+        if (themesTabItems.length > 0) {
+            output.push({
+                title: _('fred.home.themes'),
+                items: [
+                    {
+                        xtype: 'modx-vtabs',
+                        deferredRender: true,
+                        stateful: true,
+                        stateId: 'fred-tab-home-themes',
+                        stateEvents: ['tabchange'],
+                        getState: function () {
+                            return {
+                                activeItem: this.items.indexOf(this.getActiveTab())
+                            };
                         },
-                        {
-                            title: _('fred.home.themed_templates'),
-                            helpPath: 'cmp/themed_templates/',
-                            items: [
-                                {
-                                    xtype: 'fred-grid-themed-templates',
-                                    preventRender: true,
-                                    cls: 'main-wrapper'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        });
+                        items: themesTabItems
+                    }
+                ]
+            });
+        }
+        
         output.push({
             title: _('fred.home.media_sources'),
             helpPath: 'cmp/media_sources/',
@@ -308,6 +289,38 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
         }
         
         return output;             
+    },
+    
+    getThemesTab: function(config) {
+        var output = [];
+
+        if (config.permission.fred_themes) {
+            output.push({
+                title: _('fred.home.themes'),
+                helpPath: 'cmp/themes/',
+                items: [
+                    {
+                        xtype: 'fred-grid-themes',
+                        preventRender: true,
+                        cls: 'main-wrapper'
+                    }
+                ]
+            });
+        }
+        
+        output.push({
+            title: _('fred.home.themed_templates'),
+            helpPath: 'cmp/themed_templates/',
+            items: [
+                {
+                    xtype: 'fred-grid-themed-templates',
+                    preventRender: true,
+                    cls: 'main-wrapper'
+                }
+            ]
+        });
+        
+        return output;
     }
 });
 Ext.reg('fred-panel-home', fred.panel.Home);
