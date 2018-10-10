@@ -194,17 +194,20 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
             });
         }
         
-        output.push({
-            title: _('fred.home.option_sets'),
-            helpPath: 'cmp/option_sets/',
-            items: [
-                {
-                    xtype: 'fred-grid-element-option-sets',
-                    preventRender: true,
-                    cls: 'main-wrapper'
-                }
-            ]
-        });
+        if (config.permission.fred_element_option_sets) {
+            output.push({
+                title: _('fred.home.option_sets'),
+                helpPath: 'cmp/option_sets/',
+                items: [
+                    {
+                        xtype: 'fred-grid-element-option-sets',
+                        preventRender: true,
+                        cls: 'main-wrapper'
+                    }
+                ]
+            });
+        }
+        
         output.push({
             title: _('fred.home.rte_configs'),
             helpPath: 'cmp/rte_configs/',

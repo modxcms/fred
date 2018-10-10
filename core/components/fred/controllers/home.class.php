@@ -68,7 +68,8 @@ class FredHomeManagerController extends FredBaseManagerController
                         fred_elements: ' . (int)$this->modx->hasPermission('fred_elements') . ',
                         fred_blueprints: ' . (int)$this->modx->hasPermission('fred_blueprints') . ',
                         fred_blueprint_categories: ' . (int)$this->modx->hasPermission('fred_blueprint_categories') . ',
-                        fred_element_categories: ' . (int)$this->modx->hasPermission('fred_element_categories') . '
+                        fred_element_categories: ' . (int)$this->modx->hasPermission('fred_element_categories') . ',
+                        fred_element_option_sets: ' . (int)$this->modx->hasPermission('fred_element_option_sets') . '
                     }
                 });
             });
