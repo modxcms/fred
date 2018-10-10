@@ -311,6 +311,13 @@ input{
         background-color: $modxgreen;
       }
     }
+    
+    &:disabled, &[disabled]{
+      ~ span{
+        opacity: .5;
+        cursor: not-allowed;
+      }
+    }
   }
 }
 label.fred--label-choices{

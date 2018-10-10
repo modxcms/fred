@@ -61,3 +61,14 @@ $modxbrightgreen: #95C953;
   line-height: $baseGutter*1.6;
   height: auto;
 }
+
+@mixin btn-disabled{  
+  &:disabled, &[disabled]{
+    background-color: $dark-gray !important;
+    opacity: .8;
+    cursor: not-allowed;
+    &:hover{
+      transform: initial;
+    }
+  }
+}

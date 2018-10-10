@@ -22,6 +22,7 @@
     &:hover {
       transform: scale(1.05);
     }
+    @include btn-disabled();
     &_fred {
       background-color: $white;
       background-image: inline-svg('modx-revo-icon-48',$white);
