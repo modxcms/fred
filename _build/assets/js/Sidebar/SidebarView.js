@@ -36,10 +36,16 @@ export const render = (components, onComponentAdd, onClose, onSave, onPreview) =
     
     wrapper.appendChild(buildComponents());
 
-    const buttongroup = div(['fred--sidebar_button-group'])
+    const buttongroup = div(['fred--sidebar_button-group']);
     buttongroup.appendChild(button('', 'fred.fe.toggle_preview', ['fred--btn-sidebar', 'fred--btn-sidebar_preview'], onPreview));
     buttongroup.appendChild(button('', 'fred.fe.close_sidebar', ['fred--btn-sidebar', 'fred--btn-sidebar_close'], onClose));
-    buttongroup.appendChild(button('', 'fred.fe.save', ['fred--btn-sidebar', 'fred--btn-sidebar_save'], onSave));
+    
+    const saveButton = button('', 'fred.fe.save', ['fred--btn-sidebar', 'fred--btn-sidebar_save'], onSave);
+    if (!fredConfig.permission.save_document) {
+        saveButton.setAttribute('disabled', 'disabled');
+    }
+    
+    buttongroup.appendChild(saveButton);
 
     wrapper.appendChild(buttongroup);
   

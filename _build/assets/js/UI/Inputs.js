@@ -91,6 +91,8 @@ export const toggle = (setting, defaultValue = false, onChange, onInit) => {
 
     const inputEl = input(defaultValue, 'checkbox');
 
+    labelEl.inputEl = inputEl;
+    
     if (typeof onChange === 'function') {
         inputEl.addEventListener('change', e => {
             onChange(setting.name, e.target.checked, inputEl, setting);

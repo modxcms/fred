@@ -11,6 +11,7 @@ class Config {
         this._lang = {};
         this._fred = null;
         this._jwt = null;
+        this._permission = null;
     }
     
     set fred(fred) {
@@ -36,6 +37,14 @@ class Config {
     set jwt(jwt) {
         if (this._jwt === null) {
             this._jwt = jwt;
+        }
+    }
+    
+    set permission(permission) {
+        if (this._permission === null) {
+            this._permission = permission;
+            console.log(permission);
+            Object.freeze(this._permission);
         }
     }
     
@@ -73,6 +82,10 @@ class Config {
     
     get jwt() {
         return this._jwt;
+    }
+    
+    get permission() {
+        return this._permission;
     }
 
     registerEditor(name, editor) {

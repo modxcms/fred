@@ -148,12 +148,12 @@ export default class Pages extends Sidebar {
         fields.appendChild(blueprintInput);
 
         const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn-panel', 'fred--btn-apply'], () => {
-            if(!fredConfig.config.permission.new_document){
+            if(!fredConfig.permission.new_document){
                 alert(fredConfig.lng('fred.fe.permission.new_document'));
                 return;
             }
 
-            if(!this.state.parent === 0 && !fredConfig.config.permission.new_document_in_root){
+            if(!this.state.parent === 0 && !fredConfig.permission.new_document_in_root){
                 alert(fredConfig.lng('fred.fe.permission.new_document_in_root'));
                 return;
             }

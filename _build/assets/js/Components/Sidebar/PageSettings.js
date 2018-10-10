@@ -28,14 +28,21 @@ export default class PageSettings extends Sidebar {
         const settingsForm = form(['fred--page_settings_form']);
 
         settingsForm.appendChild(this.getGeneralFields());
-        settingsForm.appendChild(this.getAdvancedFields());
         
-        if (this.fredConfig.tagger.length > 0) {
-            settingsForm.appendChild(this.getTaggerFields());
+        if (this.fredConfig.permission.fred_settings_advanced) {
+            settingsForm.appendChild(this.getAdvancedFields());
         }
-        
-        if (this.fredConfig.tvs.length > 0) {
-            settingsForm.appendChild(this.getTVFields());
+
+        if (this.fredConfig.permission.fred_settings_tags) {
+            if (this.fredConfig.tagger.length > 0) {
+                settingsForm.appendChild(this.getTaggerFields());
+            }
+        }
+
+        if (this.fredConfig.permission.fred_settings_tvs) {
+            if (this.fredConfig.tvs.length > 0) {
+                settingsForm.appendChild(this.getTVFields());
+            }
         }
 
         return settingsForm;
@@ -50,9 +57,30 @@ export default class PageSettings extends Sidebar {
         fields.appendChild(ui.area({name: 'introtext', label: 'fred.fe.page_settings.intro_text'}, this.pageSettings.introtext, this.setSettingWithEmitter, this.addSettingChangeListener));
         fields.appendChild(ui.text({name: 'menutitle', label: 'fred.fe.page_settings.menu_title'}, this.pageSettings.menutitle, this.setSettingWithEmitter, this.addSettingChangeListener));
         fields.appendChild(ui.text({name: 'alias', label: 'fred.fe.page_settings.alias'}, this.pageSettings.alias, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fields.appendChild(ui.toggle({name: 'published', label: 'fred.fe.page_settings.published'}, this.pageSettings.published, this.setSetting));
-        fields.appendChild(ui.toggle({name: 'hidemenu', label: 'fred.fe.page_settings.hide_from_menu'}, this.pageSettings.hidemenu, this.setSetting));
+        
+        const publishedToggle = ui.toggle({name: 'published', label: 'fred.fe.page_settings.published'}, this.pageSettings.published, (name, value) => {this.setSetting(name, value)});
 
+        if (!this.fredConfig.permission.publish_document && !this.pageSettings.published) {
+            publishedToggle.inputEl.setAttribute('disabled', 'disabled');
+        }
+
+        if (!this.fredConfig.permission.unpublish_document && this.pageSettings.published) {
+            publishedToggle.inputEl.setAttribute('disabled', 'disabled');
+        }
+        
+        fields.appendChild(publishedToggle);
+        fields.appendChild(ui.toggle({name: 'hidemenu', label: 'fred.fe.page_settings.hide_from_menu'}, this.pageSettings.hidemenu, (name, value) => {this.setSetting(name, value)}));
+
+        emitter.on('fred-after-save', () => {
+            if (!this.fredConfig.permission.publish_document && !this.pageSettings.published) {
+                publishedToggle.inputEl.setAttribute('disabled', 'disabled');
+            }
+
+            if (!this.fredConfig.permission.unpublish_document && this.pageSettings.published) {
+                publishedToggle.inputEl.setAttribute('disabled', 'disabled');
+            }
+        });
+        
         return fields;
     }
 
@@ -79,17 +107,38 @@ export default class PageSettings extends Sidebar {
         const advancedContent = dd();
         const fields = fieldSet(['fred--page_settings_form_advanced']);
 
-        fields.appendChild(ui.dateTime({name: 'publishedon', label: 'fred.fe.page_settings.published_on'}, this.pageSettings.publishedon, this.setSetting));
-        fields.appendChild(ui.dateTime({name: 'publishon', label: 'fred.fe.page_settings.publish_on'}, this.pageSettings.publishon, this.setSetting));
-        fields.appendChild(ui.dateTime({name: 'unpublishon', label: 'fred.fe.page_settings.unpublish_on'}, this.pageSettings.unpublishon, this.setSetting));
-        fields.appendChild(ui.text({name: 'menuindex', label: 'fred.fe.page_settings.menu_index'}, this.pageSettings.menuindex, this.setSetting));
-        fields.appendChild(ui.toggle({name: 'deleted', label: 'fred.fe.page_settings.deleted'}, this.pageSettings.deleted, this.setSetting));
+        fields.appendChild(ui.dateTime({name: 'publishedon', label: 'fred.fe.page_settings.published_on'}, this.pageSettings.publishedon, (name, value) => {this.setSetting(name, value)}));
+        fields.appendChild(ui.dateTime({name: 'publishon', label: 'fred.fe.page_settings.publish_on'}, this.pageSettings.publishon, (name, value) => {this.setSetting(name, value)}));
+        fields.appendChild(ui.dateTime({name: 'unpublishon', label: 'fred.fe.page_settings.unpublish_on'}, this.pageSettings.unpublishon, (name, value) => {this.setSetting(name, value)}));
+        fields.appendChild(ui.text({name: 'menuindex', label: 'fred.fe.page_settings.menu_index'}, this.pageSettings.menuindex, (name, value) => {this.setSetting(name, value)}));
+        
+        const deletedToggle = ui.toggle({name: 'deleted', label: 'fred.fe.page_settings.deleted'}, this.pageSettings.deleted, (name, value) => {this.setSetting(name, value)});
+        
+        if (!this.fredConfig.permission.delete_document && !this.pageSettings.deleted) {
+            deletedToggle.inputEl.setAttribute('disabled', 'disabled');
+        }
+
+        if (!this.fredConfig.permission.undelete_document && this.pageSettings.deleted) {
+            deletedToggle.inputEl.setAttribute('disabled', 'disabled');
+        }
+        
+        fields.appendChild(deletedToggle);
 
         advancedContent.appendChild(fields);
 
         advancedList.appendChild(advancedTab);
         advancedList.appendChild(advancedContent);
 
+        emitter.on('fred-after-save', () => {
+            if (!this.fredConfig.permission.delete_document && !this.pageSettings.deleted) {
+                deletedToggle.inputEl.setAttribute('disabled', 'disabled');
+            }
+
+            if (!this.fredConfig.permission.undelete_document && this.pageSettings.deleted) {
+                deletedToggle.inputEl.setAttribute('disabled', 'disabled');
+            }
+        });
+        
         return advancedList;
     }
     

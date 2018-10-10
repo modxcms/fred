@@ -49,6 +49,7 @@ class LoadContent extends Endpoint
             'menutitle' => $object->menutitle,
             'alias' => $object->alias,
             'published' => $object->published == 1,
+            'deleted' => $object->deleted == 1,
             'hidemenu' => $object->hidemenu == 1,
             'menuindex' => (int)$object->menuindex,
             'publishedon' => $object->publishedon,

@@ -19,12 +19,15 @@ export default class Fred {
         fredConfig.jwt = config.jwt;
         delete config.jwt;
         
+        fredConfig.permission = config.permission;
+        delete config.permission;
+        
         fredConfig.config = config || {};
         fredConfig.fred = this;
         this.loading = null;
         this.wrapper = null;
         this.fingerprint = '';
-        
+        this.cfg = fredConfig;
         this.libs = libs;
         this.Finder = Finder;
         this.previewDocument = null;
@@ -190,8 +193,7 @@ export default class Fred {
     }
 
     save() {
-        if(!fredConfig.config.permission.save){
-            alert(fredConfig.lng('fred.fe.permission.save'));
+        if(!fredConfig.permission.save_document){
             return;
         }
 
@@ -206,7 +208,10 @@ export default class Fred {
 
             const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
             for (let target of targets) {
-                if (fredConfig.pageSettings.hasOwnProperty(target.dataset.fredTarget)) continue;
+                if (fredConfig.pageSettings.hasOwnProperty(target.dataset.fredTarget)) {
+                    fredConfig.pageSettings[target.dataset.fredTarget] = ContentElement.getElValue(target);
+                    continue;
+                }
                 
                 if ((target.dataset.fredTarget.indexOf('tv_') === 0) && (target.dataset.fredTarget.substr(3) !== '')) {
                     fredConfig.pageSettings.tvs[target.dataset.fredTarget.substr(3)] = ContentElement.getElValue(target);
@@ -237,6 +242,7 @@ export default class Fred {
                 }
 
                 emitter.emit('fred-loading-hide');
+                emitter.emit('fred-after-save');
             })
             .catch(err => {
                 if (err.response) {

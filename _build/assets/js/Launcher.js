@@ -1,5 +1,6 @@
 import emitter from './EE';
 import { div, button } from './UI/Elements';
+import fredConfig from './Config';
 
 export default class Launcher {
     constructor(position = 'bottom_left') {
@@ -20,6 +21,10 @@ export default class Launcher {
         const save = button('', 'fred.fe.save', ['fred--launcher_btn', 'fred--launcher_btn_save'], () => {
             emitter.emit('fred-save');
         });
+        
+        if (!fredConfig.permission.save_document) {
+            save.setAttribute('disabled', 'disabled');
+        }
         
         const preview = button('', 'fred.fe.toggle_preview', ['fred--launcher_btn', 'fred--launcher_btn_preview'], () => {
             if (this.previewMode === false) {

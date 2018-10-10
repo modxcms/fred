@@ -6,6 +6,7 @@ import MoreComponent from './../Components/Sidebar/More';
 import BlueprintsComponent from './../Components/Sidebar/Blueprints/Blueprints';
 import promiseCancel from 'promise-cancel';
 import View from './SidebarView';
+import fredConfig from './../Config';
 
 export default class Sidebar {
     constructor(fredWrapper) {
@@ -22,8 +23,16 @@ export default class Sidebar {
     }
 
     render() {
+        const components = [PagesComponent, BlueprintsComponent, ElementsComponent];
+        
+        if (fredConfig.permission.fred_settings) {
+            components.push(PageSettingsComponent);
+        }
+        
+        components.push(MoreComponent);
+        
         this.wrapper = View.render(
-            [PagesComponent, BlueprintsComponent, ElementsComponent, PageSettingsComponent, MoreComponent],
+            components,
             component => {
                 this.components.push(component);
             },

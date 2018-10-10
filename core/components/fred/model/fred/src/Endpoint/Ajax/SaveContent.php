@@ -93,12 +93,46 @@ class SaveContent extends Endpoint
             $object->set('hidemenu', (boolean)$this->body['pageSettings']['hidemenu']);
         }
         
+        if (isset($this->body['pageSettings']['deleted'])) {
+            $currentValue = (boolean)$object->get('deleted');
+            $incomingValue = (boolean)$this->body['pageSettings']['deleted'];
+
+            if ($incomingValue) {
+                if (!$this->modx->hasPermission('delete_document') || !$object->checkPolicy('delete')) {
+                    $incomingValue = $currentValue;
+                }
+            } else {
+                if (!$this->modx->hasPermission('undelete_document') || !$object->checkPolicy('undelete')) {
+                    $incomingValue = $currentValue;
+                }
+            }
+            
+            if ($incomingValue !== $currentValue) {
+                $object->set('deleted', $incomingValue);
+                $object->set('deletedon', $incomingValue ? time() : false);
+                $object->set('deletedby', $incomingValue ? $this->modx->user->get('id') : 0);
+            }
+        }
+        
         if (isset($this->body['pageSettings']['publishon'])) {
-            $object->set('pub_date', (int)$this->body['pageSettings']['publishon']);
+            $currentValue = (int)$object->get('pub_date');
+            $incomingValue = (int)$this->body['pageSettings']['publishon'];
+            
+            if (!$this->modx->hasPermission('publish_document') || !$object->checkPolicy('publish')) {
+                $incomingValue = $currentValue;
+            }
+            
+            $object->set('pub_date', $incomingValue);
         }
         
         if (isset($this->body['pageSettings']['unpublishon'])) {
-            $object->set('unpub_date', (int)$this->body['pageSettings']['unpublishon']);
+            $currentValue = (int)$object->get('unpub_date');
+            $incomingValue = (int)$this->body['pageSettings']['unpublishon'];
+            
+            if (!$this->modx->hasPermission('unpublish_document') || !$object->checkPolicy('unpublish')) {
+                $incomingValue = $currentValue;
+            }
+            $object->set('unpub_date', $incomingValue);
         }
 
         $uriChanged = false;
@@ -108,15 +142,23 @@ class SaveContent extends Endpoint
         }
 
         if (isset($this->body['pageSettings']['published'])) {
-            if (!$object->checkPolicy('publish')) {
-                return $this->failure('Permission denined (publish)');
-            }
-
             $currentValue = (boolean)$object->get('published');
             $incomingValue = (boolean)$this->body['pageSettings']['published'];
+            
+            if ($incomingValue) {
+                if (!$this->modx->hasPermission('publish_document') || !$object->checkPolicy('publish')) {
+                    $incomingValue = $currentValue;
+                }
+            } else {
+                if (!$this->modx->hasPermission('unpublish_document') || !$object->checkPolicy('unpublish')) {
+                    $incomingValue = $currentValue;
+                }
+            }
+
             if ($incomingValue !== $currentValue) {
                 $object->set('published', (boolean)$this->body['pageSettings']['published']);
-                $object->set('publishedon', $currentValue ? time() : false);
+                $object->set('publishedon', $incomingValue ? time() : false);
+                $object->set('publishedby', $incomingValue ? $this->modx->user->get('id') : 0);
             }
         }
 

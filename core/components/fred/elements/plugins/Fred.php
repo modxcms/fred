@@ -103,7 +103,7 @@ switch ($modx->event->name) {
             
             if (!$modx->user) return;
             if (!($modx->user->hasSessionContext('mgr') || $modx->user->hasSessionContext($modx->resource->context_key))) return;
-            if ($modx->user->sudo !== 1) return;
+            if (!$modx->hasPermission('fred')) return;
 
 
             if (isset($_GET['fred'])) {
@@ -204,13 +204,20 @@ switch ($modx->event->name) {
                     "emptyUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 3] , 'abs')) . '",
                 },
                 permission: {
-                    "save" : ' . $modx->resource->checkPolicy('save') . ',
-                    "edit_document" : ' . $modx->hasPermission('edit_document') . ',
-                    "new_document" : ' . $modx->hasPermission('new_document') . ',
-                    "publish_document" : ' . $modx->hasPermission('publish_document') . ',
-                    "delete_document" : ' . ($modx->hasPermission('delete_document') && $modx->resource->checkPolicy(array('save' => true, 'delete' => true))) . ',
-                    "resource_duplicate" : ' . ($modx->hasPermission('resource_duplicate') &&  $modx->resource->checkPolicy('save')) . ',
-                    "new_document_in_root" : ' . $modx->hasPermission('new_document_in_root') . ',
+                    "fred_settings": ' . (int)$modx->hasPermission('fred_settings') . ',
+                    "fred_settings_advanced": ' . (int)$modx->hasPermission('fred_settings_advanced') . ',
+                    "fred_settings_tags": ' . (int)$modx->hasPermission('fred_settings_tags') . ',
+                    "fred_settings_tvs": ' . (int)$modx->hasPermission('fred_settings_tvs') . ',
+                
+                    "save_document": ' . (int)($modx->hasPermission('save_document') && $modx->resource->checkPolicy('save')) . ',
+                    "delete_document" : ' . (int)($modx->hasPermission('delete_document') && $modx->resource->checkPolicy('delete')) . ',
+                    "undelete_document" : ' . (int)($modx->hasPermission('undelete_document') && $modx->resource->checkPolicy('undelete')) . ',
+                    "publish_document" : ' . (int)($modx->hasPermission('publish_document') && $modx->resource->checkPolicy('publish')) . ',
+                    "unpublish_document" : ' . (int)($modx->hasPermission('unpublish_document') && $modx->resource->checkPolicy('unpublish')) . ',
+                
+                    "new_document" : ' . (int)$modx->hasPermission('new_document') . ',
+                    "resource_duplicate" : ' . (int)($modx->hasPermission('resource_duplicate') &&  $modx->resource->checkPolicy('save')) . ',
+                    "new_document_in_root" : ' . (int)$modx->hasPermission('new_document_in_root') . '
                 },
                 lexicons: ' . json_encode($lexicons) . ',
                 beforeRender: function() {
