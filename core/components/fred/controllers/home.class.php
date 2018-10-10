@@ -72,7 +72,8 @@ class FredHomeManagerController extends FredBaseManagerController
                         fred_element_option_sets: ' . (int)$this->modx->hasPermission('fred_element_option_sets') . ',
                         fred_element_rtes: ' . (int)$this->modx->hasPermission('fred_element_rtes') . ',
                         fred_element_rebuild: ' . (int)$this->modx->hasPermission('fred_element_rebuild') . ',
-                        fred_themes: ' . (int)$this->modx->hasPermission('fred_themes') . '
+                        fred_themes: ' . (int)$this->modx->hasPermission('fred_themes') . ',
+                        fred_themed_templates: ' . (int)$this->modx->hasPermission('fred_themed_templates') . '
                     }
                 });
             });

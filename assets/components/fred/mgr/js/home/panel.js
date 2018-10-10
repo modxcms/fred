@@ -308,17 +308,19 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
             });
         }
         
-        output.push({
-            title: _('fred.home.themed_templates'),
-            helpPath: 'cmp/themed_templates/',
-            items: [
-                {
-                    xtype: 'fred-grid-themed-templates',
-                    preventRender: true,
-                    cls: 'main-wrapper'
-                }
-            ]
-        });
+        if (config.permission.fred_themed_templates) {
+            output.push({
+                title: _('fred.home.themed_templates'),
+                helpPath: 'cmp/themed_templates/',
+                items: [
+                    {
+                        xtype: 'fred-grid-themed-templates',
+                        preventRender: true,
+                        cls: 'main-wrapper'
+                    }
+                ]
+            });
+        }
         
         return output;
     }
