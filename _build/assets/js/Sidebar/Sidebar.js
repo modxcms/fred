@@ -23,7 +23,11 @@ export default class Sidebar {
     }
 
     render() {
-        const components = [PagesComponent, BlueprintsComponent, ElementsComponent];
+        const components = [PagesComponent, BlueprintsComponent];
+        
+        if (fredConfig.permission.fred_elements) {
+            components.push(ElementsComponent);
+        }
         
         if (fredConfig.permission.fred_settings) {
             components.push(PageSettingsComponent);

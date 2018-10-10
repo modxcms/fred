@@ -34,19 +34,22 @@ export default class Launcher {
             }
         });
 
-        const element = button('', 'fred.fe.elements', ['fred--launcher_btn', 'fred--launcher_btn_elements'], () => {
-            emitter.emit('fred-sidebar-toggle');
-            let elements = document.querySelectorAll("dt.fred--sidebar_elements")[0];
-            if(!elements.classList.contains('active')){
-                elements.click();
-            }
-        });
-        
         wrapper.appendChild(fred);
         wrapper.appendChild(save);
         wrapper.appendChild(preview);
-        wrapper.appendChild(element);
 
+        if (fredConfig.permission.fred_elements) {
+            const element = button('', 'fred.fe.elements', ['fred--launcher_btn', 'fred--launcher_btn_elements'], () => {
+                emitter.emit('fred-sidebar-toggle');
+                let elements = document.querySelectorAll("dt.fred--sidebar_elements")[0];
+                if (!elements.classList.contains('active')) {
+                    elements.click();
+                }
+            });
+
+            wrapper.appendChild(element);
+        }
+        
         emitter.on('fred-sidebar-hide', silent => {
             if (silent !== true) {
                 this.hidden = false;

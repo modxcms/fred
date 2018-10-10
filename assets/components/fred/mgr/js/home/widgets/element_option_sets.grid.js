@@ -178,7 +178,9 @@ Ext.extend(fred.grid.ElementOptionSets, fred.grid.GearGrid, {
                 if (id === combo.id) return true;
 
                 var remoteCombo = Ext.getCmp(id);
-                remoteCombo.syncFilter(remoteCombo, record);
+                if (remoteCombo) {
+                    remoteCombo.syncFilter(remoteCombo, record);
+                }
             });
         }
     },

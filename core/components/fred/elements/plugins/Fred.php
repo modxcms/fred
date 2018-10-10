@@ -208,6 +208,7 @@ switch ($modx->event->name) {
                     "fred_settings_advanced": ' . (int)$modx->hasPermission('fred_settings_advanced') . ',
                     "fred_settings_tags": ' . (int)$modx->hasPermission('fred_settings_tags') . ',
                     "fred_settings_tvs": ' . (int)$modx->hasPermission('fred_settings_tvs') . ',
+                    "fred_elements": ' . (int)$modx->hasPermission('fred_elements') . ',
                 
                     "save_document": ' . (int)($modx->hasPermission('save_document') && $modx->resource->checkPolicy('save')) . ',
                     "delete_document" : ' . (int)($modx->hasPermission('delete_document') && $modx->resource->checkPolicy('delete')) . ',

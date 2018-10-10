@@ -1,5 +1,7 @@
 fred.page.Home = function (config) {
     config = config || {};
+    config.permission = config.permission || {};
+    
     Ext.applyIf(config, {
         buttons: [
             {
@@ -11,7 +13,8 @@ fred.page.Home = function (config) {
         components: [
             {
                 xtype: 'fred-panel-home',
-                renderTo: 'fred-panel-home'
+                renderTo: 'fred-panel-home',
+                permission: config.permission
             }
         ]
     });

@@ -62,7 +62,12 @@ class FredHomeManagerController extends FredBaseManagerController
         $this->addHtml('
         <script type="text/javascript">
             Ext.onReady(function() {
-                MODx.load({ xtype: "fred-page-home"});
+                MODx.load({ 
+                    xtype: "fred-page-home",
+                    permission: {
+                        fred_elements: ' . (int)$this->modx->hasPermission('fred_elements') . '
+                    }
+                });
             });
         </script>
         ');
