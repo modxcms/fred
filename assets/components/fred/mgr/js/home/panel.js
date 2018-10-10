@@ -61,26 +61,30 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
     },
     
     getTopTabs: function(config) {
-        return [
-            {
-                title: _('fred.home.elements'),
-                items: [
-                    {
-                        xtype: 'modx-vtabs',
-                        deferredRender: true,
-                        stateful: true,
-                        stateId: 'fred-tab-home-elements',
-                        stateEvents: ['tabchange'],
-                        getState: function () {
-                            return {
-                                activeItem: this.items.indexOf(this.getActiveTab())
-                            };
-                        },
-                        items: this.getElementsTab(config)
-                    }
-                ]
-            },
-            {
+        var output = [];
+
+        output.push({
+            title: _('fred.home.elements'),
+            items: [
+                {
+                    xtype: 'modx-vtabs',
+                    deferredRender: true,
+                    stateful: true,
+                    stateId: 'fred-tab-home-elements',
+                    stateEvents: ['tabchange'],
+                    getState: function () {
+                        return {
+                            activeItem: this.items.indexOf(this.getActiveTab())
+                        };
+                    },
+                    items: this.getElementsTab(config)
+                }
+            ]
+        });
+        
+        var blueprintsItems = this.getBlueprintsTab(config);
+        if (blueprintsItems.length > 0) {
+            output.push({
                 title: _('fred.home.blueprints'),
                 items: [
                     {
@@ -94,63 +98,66 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                                 activeItem: this.items.indexOf(this.getActiveTab())
                             };
                         },
-                        items: this.getBlueprintsTab(config)
+                        items: blueprintsItems
                     }
                 ]
-            },
-            {
-                title: _('fred.home.themes'),
-                items: [
-                    {
-                        xtype: 'modx-vtabs',
-                        deferredRender: true,
-                        stateful: true,
-                        stateId: 'fred-tab-home-themes',
-                        stateEvents: ['tabchange'],
-                        getState: function () {
-                            return {
-                                activeItem: this.items.indexOf(this.getActiveTab())
-                            };
+            });
+        }
+        
+        output.push({
+            title: _('fred.home.themes'),
+            items: [
+                {
+                    xtype: 'modx-vtabs',
+                    deferredRender: true,
+                    stateful: true,
+                    stateId: 'fred-tab-home-themes',
+                    stateEvents: ['tabchange'],
+                    getState: function () {
+                        return {
+                            activeItem: this.items.indexOf(this.getActiveTab())
+                        };
+                    },
+                    items: [
+                        {
+                            title: _('fred.home.themes'),
+                            helpPath: 'cmp/themes/',
+                            items: [
+                                {
+                                    xtype: 'fred-grid-themes',
+                                    preventRender: true,
+                                    cls: 'main-wrapper'
+                                }
+                            ]
                         },
-                        items: [
-                            {
-                                title: _('fred.home.themes'),
-                                helpPath: 'cmp/themes/',
-                                items: [
-                                    {
-                                        xtype: 'fred-grid-themes',
-                                        preventRender: true,
-                                        cls: 'main-wrapper'
-                                    }
-                                ]
-                            },
-                            {
-                                title: _('fred.home.themed_templates'),
-                                helpPath: 'cmp/themed_templates/',
-                                items: [
-                                    {
-                                        xtype: 'fred-grid-themed-templates',
-                                        preventRender: true,
-                                        cls: 'main-wrapper'
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                title: _('fred.home.media_sources'),
-                helpPath: 'cmp/media_sources/',
-                items: [
-                    {
-                        xtype: 'fred-grid-media-sources',
-                        preventRender: true,
-                        cls: 'main-wrapper'
-                    }
-                ]
-            }
-        ];                 
+                        {
+                            title: _('fred.home.themed_templates'),
+                            helpPath: 'cmp/themed_templates/',
+                            items: [
+                                {
+                                    xtype: 'fred-grid-themed-templates',
+                                    preventRender: true,
+                                    cls: 'main-wrapper'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+        output.push({
+            title: _('fred.home.media_sources'),
+            helpPath: 'cmp/media_sources/',
+            items: [
+                {
+                    xtype: 'fred-grid-media-sources',
+                    preventRender: true,
+                    cls: 'main-wrapper'
+                }
+            ]
+        });
+        
+        return output;                 
     },
     
     getElementsTab: function(config) {
@@ -272,17 +279,19 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
             });
         }
         
-        output.push({
-            title: _('fred.home.blueprint_categories'),
-            helpPath: 'cmp/blueprint_categories/',
-            items: [
-                {
-                    xtype: 'fred-grid-blueprint-categories',
-                    preventRender: true,
-                    cls: 'main-wrapper'
-                }
-            ]
-        });
+        if (config.permission.fred_blueprint_categories) {
+            output.push({
+                title: _('fred.home.blueprint_categories'),
+                helpPath: 'cmp/blueprint_categories/',
+                items: [
+                    {
+                        xtype: 'fred-grid-blueprint-categories',
+                        preventRender: true,
+                        cls: 'main-wrapper'
+                    }
+                ]
+            });
+        }
         
         return output;             
     }
