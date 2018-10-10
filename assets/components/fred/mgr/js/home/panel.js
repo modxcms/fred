@@ -94,30 +94,7 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                                 activeItem: this.items.indexOf(this.getActiveTab())
                             };
                         },
-                        items: [
-                            {
-                                title: _('fred.home.blueprints'),
-                                helpPath: 'cmp/blueprints/',
-                                items: [
-                                    {
-                                        xtype: 'fred-grid-blueprints',
-                                        preventRender: true,
-                                        cls: 'main-wrapper'
-                                    }
-                                ]
-                            },
-                            {
-                                title: _('fred.home.blueprint_categories'),
-                                helpPath: 'cmp/blueprint_categories/',
-                                items: [
-                                    {
-                                        xtype: 'fred-grid-blueprint-categories',
-                                        preventRender: true,
-                                        cls: 'main-wrapper'
-                                    }
-                                ]
-                            }
-                        ]
+                        items: this.getBlueprintsTab(config)
                     }
                 ]
             },
@@ -276,6 +253,38 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
         });
         
         return output;
+    },
+    
+    getBlueprintsTab: function(config) {
+        var output = [];
+
+        if (config.permission.fred_blueprints) {
+            output.push({
+                title: _('fred.home.blueprints'),
+                helpPath: 'cmp/blueprints/',
+                items: [
+                    {
+                        xtype: 'fred-grid-blueprints',
+                        preventRender: true,
+                        cls: 'main-wrapper'
+                    }
+                ]
+            });
+        }
+        
+        output.push({
+            title: _('fred.home.blueprint_categories'),
+            helpPath: 'cmp/blueprint_categories/',
+            items: [
+                {
+                    xtype: 'fred-grid-blueprint-categories',
+                    preventRender: true,
+                    cls: 'main-wrapper'
+                }
+            ]
+        });
+        
+        return output;             
     }
 });
 Ext.reg('fred-panel-home', fred.panel.Home);

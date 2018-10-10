@@ -65,7 +65,8 @@ class FredHomeManagerController extends FredBaseManagerController
                 MODx.load({ 
                     xtype: "fred-page-home",
                     permission: {
-                        fred_elements: ' . (int)$this->modx->hasPermission('fred_elements') . '
+                        fred_elements: ' . (int)$this->modx->hasPermission('fred_elements') . ',
+                        fred_blueprints: ' . (int)$this->modx->hasPermission('fred_blueprints') . '
                     }
                 });
             });
