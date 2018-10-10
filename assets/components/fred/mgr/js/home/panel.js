@@ -208,17 +208,20 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
             });
         }
         
-        output.push({
-            title: _('fred.home.rte_configs'),
-            helpPath: 'cmp/rte_configs/',
-            items: [
-                {
-                    xtype: 'fred-grid-element-rte-configs',
-                    preventRender: true,
-                    cls: 'main-wrapper'
-                }
-            ]
-        });
+        if (config.permission.fred_element_rtes) {
+            output.push({
+                title: _('fred.home.rte_configs'),
+                helpPath: 'cmp/rte_configs/',
+                items: [
+                    {
+                        xtype: 'fred-grid-element-rte-configs',
+                        preventRender: true,
+                        cls: 'main-wrapper'
+                    }
+                ]
+            });
+        }
+        
         output.push({
             title: _('fred.home.rebuild'),
             helpPath: 'cmp/rebuild/',
