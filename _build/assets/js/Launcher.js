@@ -18,12 +18,16 @@ export default class Launcher {
             emitter.emit('fred-sidebar-toggle');
         });
 
+        
+        
+        wrapper.appendChild(fred);
+
         const save = button('', 'fred.fe.save', ['fred--launcher_btn', 'fred--launcher_btn_save'], () => {
             emitter.emit('fred-save');
         });
         
-        if (!fredConfig.permission.save_document) {
-            save.setAttribute('disabled', 'disabled');
+        if (fredConfig.permission.save_document) {
+            wrapper.appendChild(save);
         }
         
         const preview = button('', 'fred.fe.toggle_preview', ['fred--launcher_btn', 'fred--launcher_btn_preview'], () => {
@@ -33,9 +37,7 @@ export default class Launcher {
                 emitter.emit('fred-preview-off');
             }
         });
-
-        wrapper.appendChild(fred);
-        wrapper.appendChild(save);
+        
         wrapper.appendChild(preview);
 
         if (fredConfig.permission.fred_elements) {

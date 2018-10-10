@@ -40,13 +40,10 @@ export const render = (components, onComponentAdd, onClose, onSave, onPreview) =
     buttongroup.appendChild(button('', 'fred.fe.toggle_preview', ['fred--btn-sidebar', 'fred--btn-sidebar_preview'], onPreview));
     buttongroup.appendChild(button('', 'fred.fe.close_sidebar', ['fred--btn-sidebar', 'fred--btn-sidebar_close'], onClose));
     
-    const saveButton = button('', 'fred.fe.save', ['fred--btn-sidebar', 'fred--btn-sidebar_save'], onSave);
-    if (!fredConfig.permission.save_document) {
-        saveButton.setAttribute('disabled', 'disabled');
+    if (fredConfig.permission.save_document) {
+        buttongroup.appendChild(button('', 'fred.fe.save', ['fred--btn-sidebar', 'fred--btn-sidebar_save'], onSave));
     }
     
-    buttongroup.appendChild(saveButton);
-
     wrapper.appendChild(buttongroup);
   
     wrapper.setAttribute('aria-hidden', 'true');
