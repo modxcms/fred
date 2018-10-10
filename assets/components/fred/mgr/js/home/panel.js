@@ -63,27 +63,30 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
     getTopTabs: function(config) {
         var output = [];
 
-        output.push({
-            title: _('fred.home.elements'),
-            items: [
-                {
-                    xtype: 'modx-vtabs',
-                    deferredRender: true,
-                    stateful: true,
-                    stateId: 'fred-tab-home-elements',
-                    stateEvents: ['tabchange'],
-                    getState: function () {
-                        return {
-                            activeItem: this.items.indexOf(this.getActiveTab())
-                        };
-                    },
-                    items: this.getElementsTab(config)
-                }
-            ]
-        });
+        var elementTabItems = this.getElementsTab(config);
+        if (elementTabItems.length > 0) {
+            output.push({
+                title: _('fred.home.elements'),
+                items: [
+                    {
+                        xtype: 'modx-vtabs',
+                        deferredRender: true,
+                        stateful: true,
+                        stateId: 'fred-tab-home-elements',
+                        stateEvents: ['tabchange'],
+                        getState: function () {
+                            return {
+                                activeItem: this.items.indexOf(this.getActiveTab())
+                            };
+                        },
+                        items: elementTabItems
+                    }
+                ]
+            });
+        }
         
-        var blueprintsItems = this.getBlueprintsTab(config);
-        if (blueprintsItems.length > 0) {
+        var blueprintTabItems = this.getBlueprintsTab(config);
+        if (blueprintTabItems.length > 0) {
             output.push({
                 title: _('fred.home.blueprints'),
                 items: [
@@ -98,7 +101,7 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                                 activeItem: this.items.indexOf(this.getActiveTab())
                             };
                         },
-                        items: blueprintsItems
+                        items: blueprintTabItems
                     }
                 ]
             });
@@ -177,17 +180,20 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
             });
         }
         
-        output.push({
-            title: _('fred.home.element_categories'),
-            helpPath: 'cmp/element_categories/',
-            items: [
-                {
-                    xtype: 'fred-grid-element-categories',
-                    preventRender: true,
-                    cls: 'main-wrapper'
-                }
-            ]
-        });
+        if (config.permission.fred_element_categories) {
+            output.push({
+                title: _('fred.home.element_categories'),
+                helpPath: 'cmp/element_categories/',
+                items: [
+                    {
+                        xtype: 'fred-grid-element-categories',
+                        preventRender: true,
+                        cls: 'main-wrapper'
+                    }
+                ]
+            });
+        }
+        
         output.push({
             title: _('fred.home.option_sets'),
             helpPath: 'cmp/option_sets/',
