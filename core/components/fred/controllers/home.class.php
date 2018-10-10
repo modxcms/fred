@@ -16,8 +16,11 @@ require_once dirname(dirname(__FILE__)) . '/index.class.php';
  */
 class FredHomeManagerController extends FredBaseManagerController
 {
+    protected $permissions = [];
+
     public function process(array $scriptProperties = array())
     {
+        $this->loadPermissions();
     }
 
     public function getPageTitle()
@@ -30,51 +33,68 @@ class FredHomeManagerController extends FredBaseManagerController
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/griddraganddrop.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
-        
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/media_sources.grid.js');
+
+        if ($this->permissions['fred_media_sources']) {
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/media_sources.grid.js');
+        }
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_template.window.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_templates.grid.js');
+
+        if ($this->permissions['fred_themed_templates']) {
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_templates.grid.js');
+        }
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/theme.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/dependencies.grid.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themes.grid.js');
+
+        if ($this->permissions['fred_themes']) {
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themes.grid.js');
+        }
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprint_category.window.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprint_categories.grid.js');
+
+        if ($this->permissions['fred_blueprint_categories']) {
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprint_categories.grid.js');
+        }
+        
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprint.window.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprints.grid.js');
+
+        if ($this->permissions['fred_blueprints']) {
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprints.grid.js');
+        }
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_rte_config.window.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_rte_configs.grid.js');
+
+        if ($this->permissions['fred_element_rtes']) {
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_rte_configs.grid.js');
+        }
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_option_set.window.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_option_sets.grid.js');
+
+        if ($this->permissions['fred_element_option_sets']) {
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_option_sets.grid.js');
+        }
         
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_category.window.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_categories.grid.js');
-        
+
+        if ($this->permissions['fred_element_categories']) {
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_categories.grid.js');
+        }
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element.window.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/elements.grid.js');
+        
+        if ($this->permissions['fred_elements']) {
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/elements.grid.js');
+        }
+        
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/panel.js');
         $this->addLastJavascript($this->fred->getOption('jsUrl') . 'home/page.js');
-        
+
         $this->addHtml('
         <script type="text/javascript">
             Ext.onReady(function() {
                 MODx.load({ 
                     xtype: "fred-page-home",
-                    permission: {
-                        fred_elements: ' . (int)$this->modx->hasPermission('fred_elements') . ',
-                        fred_blueprints: ' . (int)$this->modx->hasPermission('fred_blueprints') . ',
-                        fred_blueprint_categories: ' . (int)$this->modx->hasPermission('fred_blueprint_categories') . ',
-                        fred_element_categories: ' . (int)$this->modx->hasPermission('fred_element_categories') . ',
-                        fred_element_option_sets: ' . (int)$this->modx->hasPermission('fred_element_option_sets') . ',
-                        fred_element_rtes: ' . (int)$this->modx->hasPermission('fred_element_rtes') . ',
-                        fred_element_rebuild: ' . (int)$this->modx->hasPermission('fred_element_rebuild') . ',
-                        fred_themes: ' . (int)$this->modx->hasPermission('fred_themes') . ',
-                        fred_themed_templates: ' . (int)$this->modx->hasPermission('fred_themed_templates') . '
-                    }
+                    permission: ' . json_encode($this->permissions) . '
                 });
             });
         </script>
@@ -84,5 +104,21 @@ class FredHomeManagerController extends FredBaseManagerController
     public function getTemplateFile()
     {
         return $this->fred->getOption('templatesPath') . 'home.tpl';
+    }
+
+    protected function loadPermissions()
+    {
+        $this->permissions = [
+            'fred_elements' => (int)$this->modx->hasPermission('fred_elements'),
+            'fred_blueprints' => (int)$this->modx->hasPermission('fred_blueprints'),
+            'fred_blueprint_categories' => (int)$this->modx->hasPermission('fred_blueprint_categories'),
+            'fred_element_categories' => (int)$this->modx->hasPermission('fred_element_categories'),
+            'fred_element_option_sets' => (int)$this->modx->hasPermission('fred_element_option_sets'),
+            'fred_element_rtes' => (int)$this->modx->hasPermission('fred_element_rtes'),
+            'fred_element_rebuild' => (int)$this->modx->hasPermission('fred_element_rebuild'),
+            'fred_themes' => (int)$this->modx->hasPermission('fred_themes'),
+            'fred_themed_templates' => (int)$this->modx->hasPermission('fred_themed_templates'),
+            'fred_media_sources' => (int)$this->modx->hasPermission('fred_media_sources')
+        ];
     }
 }

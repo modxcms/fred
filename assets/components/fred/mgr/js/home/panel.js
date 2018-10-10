@@ -129,17 +129,19 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
             });
         }
         
-        output.push({
-            title: _('fred.home.media_sources'),
-            helpPath: 'cmp/media_sources/',
-            items: [
-                {
-                    xtype: 'fred-grid-media-sources',
-                    preventRender: true,
-                    cls: 'main-wrapper'
-                }
-            ]
-        });
+        if (config.permission.fred_media_sources) {
+            output.push({
+                title: _('fred.home.media_sources'),
+                helpPath: 'cmp/media_sources/',
+                items: [
+                    {
+                        xtype: 'fred-grid-media-sources',
+                        preventRender: true,
+                        cls: 'main-wrapper'
+                    }
+                ]
+            });
+        }
         
         return output;                 
     },
