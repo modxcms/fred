@@ -53,4 +53,12 @@ class FredElementCreateManagerController extends FredBaseManagerController
         return $this->fred->getOption('templatesPath') . 'element.tpl';
     }
 
+    public function checkPermissions()
+    {
+        if (!$this->modx->hasPermission('fred_element_save')) {
+            return false;
+        }
+
+        return parent::checkPermissions();
+    }
 }

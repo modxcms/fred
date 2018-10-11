@@ -2,6 +2,17 @@ fred.grid.Elements = function (config) {
     config = config || {};
     config.permission = config.permission || {};
     
+    if (config.permission.fred_element_save) {
+        config.ddGroup = 'FredElementsDDGroup';
+        config.enableDragDrop = true;
+        config.save_action = 'mgr/elements/updatefromgrid';
+        config.autosave = true;
+    }
+    
+    if (!config.permission.fred_element_save && !config.permission.fred_element_delete) {
+        config.showGear = false;
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -9,12 +20,8 @@ fred.grid.Elements = function (config) {
             sort: 'rank',
             dir: 'asc'
         },
-        save_action: 'mgr/elements/updatefromgrid',
-        autosave: true,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name', 'theme_theme_folder'],
-        ddGroup: 'FredElementsDDGroup',
-        enableDragDrop: true,
         paging: true,
         remoteSort: true,
         emptyText: _('fred.elements.none'),
@@ -46,7 +53,7 @@ fred.grid.Elements = function (config) {
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.elements.description'),
@@ -85,16 +92,65 @@ fred.grid.Elements = function (config) {
                 dataIndex: 'rank',
                 sortable: true,
                 width: 40,
-                editor: {
-                    xtype: 'numberfield'
-                }
+                editor: this.getEditor(config, {xtype: 'numberfield'})
             }
         ],
-        tbar: [
-            {
+        tbar: this.getTbar(config)
+    });
+    fred.grid.Elements.superclass.constructor.call(this, config);
+
+    this.on('render', this.registerGridDropTarget, this);
+    this.on('beforedestroy', this.destroyScrollManager, this);
+};
+Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
+
+    getMenu: function () {
+        var m = [];
+
+        if (this.config.permission.fred_element_save) {
+            m.push({
+                text: _('fred.elements.quick_update'),
+                handler: this.quickUpdateElement
+            });
+
+            m.push({
+                text: _('fred.elements.update'),
+                handler: this.updateElement
+            });
+
+            m.push('-');
+
+            m.push({
+                text: _('fred.elements.duplicate'),
+                handler: this.duplicateElement
+            });
+        }
+        
+        if (this.config.permission.fred_element_save && this.config.permission.fred_element_delete) {
+            m.push('-');
+        }
+        
+        if (this.config.permission.fred_element_delete) {
+            m.push({
+                text: _('fred.elements.remove')
+                , handler: this.removeElement
+            });
+        }
+
+        return m;
+    },
+    
+    getTbar: function(config) {
+        var output = [];
+        
+        if (config.permission.fred_element_save) {
+            output.push({
                 text: _('fred.elements.create'),
                 handler: this.newElement
-            },
+            });
+        }
+        
+        output.push([[
             '->',
             {
                 xtype: 'textfield',
@@ -145,14 +201,14 @@ fred.grid.Elements = function (config) {
                         s.baseParams.category = 0;
                         categoryFilter.setValue();
                     }
-                    
+
                     categoryFilter.baseParams.theme = record.data[combo.valueField];
                     categoryFilter.store.load();
-                    
+
                     combo.setValue(record.data[combo.valueField]);
-                    
+
                     s.baseParams[combo.filterName] = record.data[combo.valueField];
-                    
+
                     this.getBottomToolbar().changePage(1);
                 }.bind(this),
                 listeners: {
@@ -160,45 +216,9 @@ fred.grid.Elements = function (config) {
                     scope: this
                 }
             }
-        ]
-    });
-    fred.grid.Elements.superclass.constructor.call(this, config);
-
-    this.on('render', this.registerGridDropTarget, this);
-    this.on('beforedestroy', this.destroyScrollManager, this);
-};
-Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
-
-    getMenu: function () {
-        var m = [];
-
-        m.push({
-            text: _('fred.elements.quick_update'),
-            handler: this.quickUpdateElement
-        });
-
-        m.push({
-            text: _('fred.elements.update'),
-            handler: this.updateElement
-        });
-
-        m.push('-');
-
-        m.push({
-            text: _('fred.elements.duplicate'),
-            handler: this.duplicateElement
-        });
+        ]]);
         
-        if (this.config.permission.fred_element_delete) {
-            m.push('-');
-    
-            m.push({
-                text: _('fred.elements.remove')
-                , handler: this.removeElement
-            });
-        }
-
-        return m;
+        return output;
     },
 
     removeElement: function (btn, e) {
@@ -427,6 +447,12 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
 
     destroyScrollManager: function () {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
+    },
+    
+    getEditor: function(config, editor) {
+        if (config.permission.fred_element_save) return editor;
+        
+        return false;
     }
 });
 Ext.reg('fred-grid-elements', fred.grid.Elements);

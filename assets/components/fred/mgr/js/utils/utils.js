@@ -15,8 +15,9 @@ Ext.reg('fred-button-help', fred.button.Help);
 
 fred.grid.GearGrid = function(config) {
     config = config || {};
-
-    if (config.columns && Array.isArray(config.columns)) {
+    config.showGear = (config.showGear === undefined) ? true : config.showGear;
+    
+    if (config.showGear && config.columns && Array.isArray(config.columns)) {
         config.columns.push({
             width: 40,
             fixed: true,
@@ -28,17 +29,19 @@ fred.grid.GearGrid = function(config) {
 
     fred.grid.GearGrid.superclass.constructor.call(this, config);
 
-    this.on('click', function(e) {
-        var target = e.getTarget();
-
-        if (target && target.dataset.action) {
-            if (target.dataset.action === 'context') {
-                var record = this.getSelectionModel().getSelected();
-                var ri = this.store.indexOf(record);
-                this._showMenu(this, ri, e);
+    if (config.showGear) {
+        this.on('click', function(e) {
+            var target = e.getTarget();
+    
+            if (target && target.dataset.action) {
+                if (target.dataset.action === 'context') {
+                    var record = this.getSelectionModel().getSelected();
+                    var ri = this.store.indexOf(record);
+                    this._showMenu(this, ri, e);
+                }
             }
-        }
-    }, this);
+        }, this);
+    }
 };
 Ext.extend(fred.grid.GearGrid, MODx.grid.Grid);
 

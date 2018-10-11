@@ -9,6 +9,15 @@ class FredElementsDuplicateProcessor extends modObjectDuplicateProcessor
     public $classKey = 'FredElement';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.elements';
+
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_element_save')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
     
     public function process() {
         $this->newObject->fromArray($this->object->toArray());
