@@ -9,7 +9,8 @@
       {
         "text": "fred.menu.fred",
         "description": "fred.menu.fred_desc",
-        "action": "home"
+        "action": "home",
+        "permissions": "fred_cmp"
       }
     ],
     "elements": {

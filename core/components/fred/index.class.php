@@ -51,6 +51,6 @@ abstract class FredBaseManagerController extends modExtraManagerController
 
     public function checkPermissions()
     {
-        return true;
+        return $this->modx->hasPermission('fred_cmp');
     }
 }
