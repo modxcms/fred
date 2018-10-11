@@ -403,8 +403,10 @@ export class ContentElement {
         const duplicate = button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.duplicate.bind(this));
         toolbar.appendChild(duplicate);
 
-        const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
-        toolbar.appendChild(trashHandle);
+        if (fredConfig.permission.fred_element_delete) {
+            const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
+            toolbar.appendChild(trashHandle);
+        }
         
         if (fredConfig.permission.fred_element_move) {
             const positionGroup = div(['fred--position-group']);
@@ -930,6 +932,8 @@ export class ContentElement {
     }
 
     remove() {
+        if (!fredConfig.permission.fred_element_delete) return;
+        
         if (this.parent) {
             const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
             if (index > -1) {

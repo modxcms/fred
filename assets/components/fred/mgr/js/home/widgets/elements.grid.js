@@ -1,6 +1,7 @@
 fred.grid.Elements = function (config) {
     config = config || {};
-
+    config.permission = config.permission || {};
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -188,12 +189,14 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
             handler: this.duplicateElement
         });
         
-        m.push('-');
-
-        m.push({
-            text: _('fred.elements.remove')
-            , handler: this.removeElement
-        });
+        if (this.config.permission.fred_element_delete) {
+            m.push('-');
+    
+            m.push({
+                text: _('fred.elements.remove')
+                , handler: this.removeElement
+            });
+        }
 
         return m;
     },
