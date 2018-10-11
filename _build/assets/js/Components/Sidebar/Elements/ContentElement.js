@@ -383,8 +383,10 @@ export class ContentElement {
         
         toolbar.appendChild(moveHandle);
         
-        const elementScreenshot = button('', 'fred.fe.content.element_screenshot', ['fred--element_screenshot'], this.takeScreenshot.bind(this));
-        toolbar.appendChild(elementScreenshot);
+        if (fredConfig.permission.fred_element_screenshot) {
+            const elementScreenshot = button('', 'fred.fe.content.element_screenshot', ['fred--element_screenshot'], this.takeScreenshot.bind(this));
+            toolbar.appendChild(elementScreenshot);
+        }
         
         const partialBlueprint = button('', 'fred.fe.content.partial_blueprint', ['fred--blueprint'], () => {partialBlueprints.open(this)});
         toolbar.appendChild(partialBlueprint);
@@ -442,6 +444,8 @@ export class ContentElement {
     }
 
     takeScreenshot() {
+        if (!fredConfig.permission.fred_element_screenshot) return;
+        
         let dataImage = '';
         
         const modal = new Modal('Element Screenshot', '', () => {
