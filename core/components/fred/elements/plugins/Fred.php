@@ -211,6 +211,7 @@ switch ($modx->event->name) {
                     "fred_elements": ' . (int)$modx->hasPermission('fred_elements') . ',
                     "fred_blueprints": ' . (int)$modx->hasPermission('fred_blueprints') . ',
                     "fred_element_screenshot": ' . (int)$modx->hasPermission('fred_element_screenshot') . ',
+                    "fred_element_move": ' . (int)$modx->hasPermission('fred_element_move') . ',
                 
                     "save_document": ' . (int)($modx->hasPermission('save_document') && $modx->resource->checkPolicy('save')) . ',
                     "delete_document" : ' . (int)($modx->hasPermission('delete_document') && $modx->resource->checkPolicy('delete')) . ',

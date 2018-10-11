@@ -208,6 +208,8 @@ export class ContentElement {
     }
     
     moveDown() {
+        if (!fredConfig.permission.fred_element_move) return;
+        
         const moveDownRoot = () => {
             this.wrapper.parentElement.insertBefore(this.wrapper.nextElementSibling, this.wrapper);
         };
@@ -292,6 +294,8 @@ export class ContentElement {
     }
     
     moveUp() {
+        if (!fredConfig.permission.fred_element_move) return;
+        
         const moveUpRoot = () => {
             this.wrapper.parentElement.insertBefore(this.wrapper, this.wrapper.previousElementSibling);
         };
@@ -376,12 +380,12 @@ export class ContentElement {
 
         this.setWrapperActiveState(wrapper);
 
-        const toolbar = div(['fred--toolbar', 'handle']);
-        const moveHandle = div(['fred--toolbar-grip', 'handle']);
-        const duplicate = button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.duplicate.bind(this));
-        const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
-        
-        toolbar.appendChild(moveHandle);
+        const toolbar = div((fredConfig.permission.fred_element_move ? ['fred--toolbar', 'handle'] : ['fred--toolbar']));
+
+        if (fredConfig.permission.fred_element_move) {
+            const moveHandle = div(['fred--toolbar-grip', 'handle']);
+            toolbar.appendChild(moveHandle);
+        }
         
         if (fredConfig.permission.fred_element_screenshot) {
             const elementScreenshot = button('', 'fred.fe.content.element_screenshot', ['fred--element_screenshot'], this.takeScreenshot.bind(this));
@@ -396,17 +400,24 @@ export class ContentElement {
             toolbar.appendChild(settings);
         }
 
-        const positionGroup = div(['fred--position-group']);
-        
-        const moveUp = button('', 'fred.fe.content.move_up', ['fred--position-up'], this.moveUp);
-        const moveDown = button('', 'fred.fe.content.move_down', ['fred--position-down'], this.moveDown);
-
-        positionGroup.appendChild(moveUp);
-        positionGroup.appendChild(moveDown);
-        
+        const duplicate = button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.duplicate.bind(this));
         toolbar.appendChild(duplicate);
+
+        const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
         toolbar.appendChild(trashHandle);
-        toolbar.appendChild(positionGroup);
+        
+        if (fredConfig.permission.fred_element_move) {
+            const positionGroup = div(['fred--position-group']);
+            
+            const moveUp = button('', 'fred.fe.content.move_up', ['fred--position-up'], this.moveUp);
+            const moveDown = button('', 'fred.fe.content.move_down', ['fred--position-down'], this.moveDown);
+    
+            positionGroup.appendChild(moveUp);
+            positionGroup.appendChild(moveDown);
+            
+            
+            toolbar.appendChild(positionGroup);
+        }
 
         wrapper.appendChild(toolbar);
 
