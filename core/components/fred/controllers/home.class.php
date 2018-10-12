@@ -121,6 +121,7 @@ class FredHomeManagerController extends FredBaseManagerController
             'fred_media_sources' => (int)$this->modx->hasPermission('fred_media_sources'),
             'fred_element_delete' => (int)$this->modx->hasPermission('fred_element_delete'),
             'fred_element_save' => (int)$this->modx->hasPermission('fred_element_save'),
+            'fred_element_category_save' => (int)$this->modx->hasPermission('fred_element_category_save'),
         ];
     }
 }

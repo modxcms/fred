@@ -10,6 +10,15 @@ class FredElementCategoriesReorderProcessor extends modObjectProcessor
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.element_categories';
 
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_element_category_save')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
+    
     public function process()
     {
         $categoryId = $this->getProperty('categoryId');

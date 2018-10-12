@@ -1,6 +1,14 @@
 fred.grid.ElementCategories = function (config) {
     config = config || {};
+    config.permission = config.permission || {};
 
+    if (config.permission.fred_element_category_save) {
+        config.ddGroup = 'FredElementCategoriesDDGroup';
+        config.enableDragDrop = true;
+        config.save_action = 'mgr/element_categories/updatefromgrid';
+        config.autosave = true;
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -8,12 +16,8 @@ fred.grid.ElementCategories = function (config) {
             sort: 'rank',
             dir: 'asc'
         },
-        save_action: 'mgr/element_categories/updatefromgrid',
-        autosave: true,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'rank', 'elements', 'theme_name', 'theme'],
-        ddGroup: 'FredElementCategoriesDDGroup',
-        enableDragDrop: true,
         paging: true,
         remoteSort: true,
         emptyText: _('fred.element_categories.none'),
@@ -29,7 +33,7 @@ fred.grid.ElementCategories = function (config) {
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.element_categories.theme'),
@@ -48,14 +52,54 @@ fred.grid.ElementCategories = function (config) {
                 dataIndex: 'rank',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'numberfield'}
+                editor: this.getEditor(config, {xtype: 'numberfield'})
             }
         ],
-        tbar: [
-            {
+        tbar: this.getTbar(config)
+    });
+    fred.grid.ElementCategories.superclass.constructor.call(this, config);
+
+    this.on('render', this.registerGridDropTarget, this);
+    this.on('beforedestroy', this.destroyScrollManager, this);
+};
+Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
+    getMenu: function () {
+        var m = [];
+
+        if (this.config.permission.fred_element_category_save) {
+            m.push({
+                text: _('fred.element_categories.update'),
+                handler: this.updateCategory
+            });
+
+            m.push('-');
+
+            m.push({
+                text: _('fred.element_categories.duplicate'),
+                handler: this.duplicateCategory
+            });
+
+            m.push('-');
+        }
+        
+        m.push({
+            text: _('fred.element_categories.remove'),
+            handler: this.removeCategory
+        });
+        return m;
+    },
+    
+    getTbar: function(config) {
+        var output = [];
+
+        if (config.permission.fred_element_category_save) {
+            output.push({
                 text: _('fred.element_categories.create'),
                 handler: this.createCategory
-            },
+            });
+        }
+        
+        output.push([
             '->',
             {
                 xtype: 'textfield',
@@ -100,36 +144,9 @@ fred.grid.ElementCategories = function (config) {
                     scope: this
                 }
             }
-        ]
-    });
-    fred.grid.ElementCategories.superclass.constructor.call(this, config);
-
-    this.on('render', this.registerGridDropTarget, this);
-    this.on('beforedestroy', this.destroyScrollManager, this);
-};
-Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
-    getMenu: function () {
-        var m = [];
-
-        m.push({
-            text: _('fred.element_categories.update'),
-            handler: this.updateCategory
-        });
-
-        m.push('-');
-
-        m.push({
-            text: _('fred.element_categories.duplicate'),
-            handler: this.duplicateCategory
-        });
+        ]);
         
-        m.push('-');
-
-        m.push({
-            text: _('fred.element_categories.remove'),
-            handler: this.removeCategory
-        });
-        return m;
+        return output;
     },
 
     createCategory: function (btn, e) {
@@ -351,6 +368,12 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
 
     destroyScrollManager: function () {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
+    },
+
+    getEditor: function(config, editor) {
+        if (config.permission.fred_element_category_save) return editor;
+
+        return false;
     }
 });
 Ext.reg('fred-grid-element-categories', fred.grid.ElementCategories);
