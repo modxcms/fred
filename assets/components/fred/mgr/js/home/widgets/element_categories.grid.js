@@ -8,6 +8,10 @@ fred.grid.ElementCategories = function (config) {
         config.save_action = 'mgr/element_categories/updatefromgrid';
         config.autosave = true;
     }
+
+    if (!config.permission.fred_element_category_save && !config.permission.fred_element_category_delete) {
+        config.showGear = false;
+    }
     
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
@@ -78,14 +82,19 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
                 text: _('fred.element_categories.duplicate'),
                 handler: this.duplicateCategory
             });
-
+        }
+        
+        if (this.config.permission.fred_element_category_save && this.config.permission.fred_element_category_delete) {
             m.push('-');
         }
         
-        m.push({
-            text: _('fred.element_categories.remove'),
-            handler: this.removeCategory
-        });
+        if (this.config.permission.fred_element_category_delete) {
+            m.push({
+                text: _('fred.element_categories.remove'),
+                handler: this.removeCategory
+            });
+        }
+        
         return m;
     },
     
