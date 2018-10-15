@@ -1,6 +1,7 @@
 fred.grid.Blueprints = function (config) {
     config = config || {};
-
+    config.permission = config.permission || {};
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -100,7 +101,45 @@ fred.grid.Blueprints = function (config) {
                 }
             }
         ],
-        tbar: [
+        tbar: this.getTbar(config)
+    });
+    fred.grid.Blueprints.superclass.constructor.call(this, config);
+
+    this.on('render', this.registerGridDropTarget, this);
+    this.on('beforedestroy', this.destroyScrollManager, this);
+};
+Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
+
+    getMenu: function () {
+        var m = [];
+
+        m.push({
+            text: _('fred.blueprints.quick_update'),
+            handler: this.quickUpdateBlueprint
+        });
+
+        m.push({
+            text: _('fred.blueprints.update'),
+            handler: this.updateBlueprint
+        });
+
+        
+        if (this.config.permission.fred_blueprints_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+
+            m.push({
+                text: _('fred.blueprints.remove')
+                , handler: this.removeBlueprint
+            });
+        }
+
+        return m;
+    },
+    
+    getTbar: function(config) {
+        return [
             '->',
             {
                 xtype: 'textfield',
@@ -188,36 +227,7 @@ fred.grid.Blueprints = function (config) {
                     scope: this
                 }
             }
-        ]
-    });
-    fred.grid.Blueprints.superclass.constructor.call(this, config);
-
-    this.on('render', this.registerGridDropTarget, this);
-    this.on('beforedestroy', this.destroyScrollManager, this);
-};
-Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
-
-    getMenu: function () {
-        var m = [];
-
-        m.push({
-            text: _('fred.blueprints.quick_update'),
-            handler: this.quickUpdateBlueprint
-        });
-
-        m.push({
-            text: _('fred.blueprints.update'),
-            handler: this.updateBlueprint
-        });
-
-        m.push('-');
-
-        m.push({
-            text: _('fred.blueprints.remove')
-            , handler: this.removeBlueprint
-        });
-
-        return m;
+        ];                 
     },
 
     removeBlueprint: function (btn, e) {
