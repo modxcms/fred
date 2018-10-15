@@ -140,7 +140,9 @@ export default class Blueprints extends Sidebar {
             this.buildCreateCategory(content);
         }
         
-        this.buildCreateBlueprint(content);
+        if (fredConfig.permission.fred_blueprints_save) {
+            this.buildCreateBlueprint(content);
+        }
 
         return content;
     }

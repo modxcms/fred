@@ -392,8 +392,10 @@ export class ContentElement {
             toolbar.appendChild(elementScreenshot);
         }
         
-        const partialBlueprint = button('', 'fred.fe.content.partial_blueprint', ['fred--blueprint'], () => {partialBlueprints.open(this)});
-        toolbar.appendChild(partialBlueprint);
+        if (fredConfig.permission.fred_blueprints_save) {
+            const partialBlueprint = button('', 'fred.fe.content.partial_blueprint', ['fred--blueprint'], () => {partialBlueprints.open(this)});
+            toolbar.appendChild(partialBlueprint);
+        }
 
         if (this.options.settings && (this.options.settings.length > 0)) {
             const settings = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {elementSettings.open(this)});

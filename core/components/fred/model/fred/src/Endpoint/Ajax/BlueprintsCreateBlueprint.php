@@ -7,6 +7,10 @@ class BlueprintsCreateBlueprint extends Endpoint
 {
     function process()
     {
+        if (!$this->modx->hasPermission('fred_blueprints_save')) {
+            return $this->failure('Permission denied.');
+        }
+        
         $category = isset($this->body['category']) ? intval($this->body['category']) : 0;
         
         if (empty($this->body['name'])) {

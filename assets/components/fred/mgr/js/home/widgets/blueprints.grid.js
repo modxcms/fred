@@ -2,6 +2,17 @@ fred.grid.Blueprints = function (config) {
     config = config || {};
     config.permission = config.permission || {};
     
+    if (config.permission.fred_blueprints_save) {
+        config.save_action = 'mgr/blueprints/updatefromgrid';
+        config.autosave = true;
+        config.ddGroup = 'FredBlueprintsDDGroup';
+        config.enableDragDrop = true;
+    }
+
+    if (!config.permission.fred_blueprints_save && !config.permission.fred_blueprints_delete) {
+        config.showGear = false;
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -9,12 +20,8 @@ fred.grid.Blueprints = function (config) {
             sort: 'rank',
             dir: 'asc'
         },
-        save_action: 'mgr/blueprints/updatefromgrid',
-        autosave: true,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname', 'theme_id', 'theme_name', 'theme_theme_folder'],
-        ddGroup: 'FredBlueprintsDDGroup',
-        enableDragDrop: true,
         paging: true,
         remoteSort: true,
         emptyText: _('fred.blueprints.none'),
@@ -46,7 +53,7 @@ fred.grid.Blueprints = function (config) {
                 dataIndex: 'name',
                 sortable: true,
                 width: 70,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.blueprints.description'),
@@ -96,9 +103,7 @@ fred.grid.Blueprints = function (config) {
                 dataIndex: 'rank',
                 sortable: true,
                 width: 30,
-                editor: {
-                    xtype: 'numberfield'
-                }
+                editor: this.getEditor(config, {xtype: 'numberfield'})
             }
         ],
         tbar: this.getTbar(config)
@@ -113,16 +118,17 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
     getMenu: function () {
         var m = [];
 
-        m.push({
-            text: _('fred.blueprints.quick_update'),
-            handler: this.quickUpdateBlueprint
-        });
+        if (this.config.permission.fred_blueprints_save) {
+            m.push({
+                text: _('fred.blueprints.quick_update'),
+                handler: this.quickUpdateBlueprint
+            });
 
-        m.push({
-            text: _('fred.blueprints.update'),
-            handler: this.updateBlueprint
-        });
-
+            m.push({
+                text: _('fred.blueprints.update'),
+                handler: this.updateBlueprint
+            });
+        }
         
         if (this.config.permission.fred_blueprints_delete) {
             if (m.length > 0) {
@@ -401,6 +407,12 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
 
     destroyScrollManager: function () {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
+    },
+
+    getEditor: function(config, editor) {
+        if (config.permission.fred_blueprints_save) return editor;
+
+        return false;
     }
 });
 Ext.reg('fred-grid-blueprints', fred.grid.Blueprints);

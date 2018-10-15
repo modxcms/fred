@@ -10,6 +10,15 @@ class FredBlueprintsReorderProcessor extends modObjectProcessor
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.blueprints';
 
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_blueprints_save')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
+    
     public function process()
     {
         $blueprintId = $this->getProperty('blueprintId');

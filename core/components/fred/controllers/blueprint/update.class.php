@@ -49,4 +49,12 @@ class FredBlueprintUpdateManagerController extends FredBaseManagerController
         return $this->fred->getOption('templatesPath') . 'blueprint.tpl';
     }
 
+    public function checkPermissions()
+    {
+        if (!$this->modx->hasPermission('fred_blueprints_save')) {
+            return false;
+        }
+
+        return parent::checkPermissions();
+    }
 }
