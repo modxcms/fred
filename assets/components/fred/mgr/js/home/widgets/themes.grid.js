@@ -1,13 +1,17 @@
 fred.grid.Themes = function (config) {
     config = config || {};
-
+    config.permission = config.permission || {};
+    
+    if (config.permission.fred_themes_save) {
+        config.save_action = 'mgr/themes/updatefromgrid';
+        config.autosave = true;
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'mgr/themes/getlist'
         },
-        save_action: 'mgr/themes/updatefromgrid',
-        autosave: true,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder'],
         paging: true,
@@ -25,21 +29,21 @@ fred.grid.Themes = function (config) {
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.themes.description'),
                 dataIndex: 'description',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.themes.theme_folder'),
                 dataIndex: 'theme_folder',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.themes.latest_build'),
@@ -53,11 +57,55 @@ fred.grid.Themes = function (config) {
                 }
             }
         ],
-        tbar: [
-            {
+        tbar: this.getTbar(config)
+    });
+    fred.grid.Themes.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
+    getMenu: function () {
+        var m = [];
+
+        m.push({
+            text: _('fred.themes.build'),
+            handler: this.buildTheme
+        });
+
+        m.push('-');
+        
+        if (this.config.permission.fred_themes_save) {
+            m.push({
+                text: _('fred.themes.update'),
+                handler: this.updateTheme
+            });
+
+            m.push('-');
+
+            m.push({
+                text: _('fred.themes.duplicate'),
+                handler: this.duplicateTheme
+            });
+
+            m.push('-');
+        }
+        
+        m.push({
+            text: _('fred.themes.remove'),
+            handler: this.removeTheme
+        });
+        return m;
+    },
+    
+    getTbar: function(config) {
+        var output = [];
+
+        if (config.permission.fred_themes_save) {
+            output.push({
                 text: _('fred.themes.create'),
                 handler: this.createTheme
-            },
+            });
+        }
+        
+        output.push([
             '->',
             {
                 xtype: 'textfield',
@@ -82,40 +130,9 @@ fred.grid.Themes = function (config) {
                     }
                 }
             }
-        ]
-    });
-    fred.grid.Themes.superclass.constructor.call(this, config);
-};
-Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
-    getMenu: function () {
-        var m = [];
-
-        m.push({
-            text: _('fred.themes.build'),
-            handler: this.buildTheme
-        });
-
-        m.push('-');
+        ]);
         
-        m.push({
-            text: _('fred.themes.update'),
-            handler: this.updateTheme
-        });
-
-        m.push('-');
-
-        m.push({
-            text: _('fred.themes.duplicate'),
-            handler: this.duplicateTheme
-        });
-        
-        m.push('-');
-
-        m.push({
-            text: _('fred.themes.remove'),
-            handler: this.removeTheme
-        });
-        return m;
+        return output;
     },
 
     createTheme: function (btn, e) {
@@ -258,6 +275,12 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
         var s = this.getStore();
         s.baseParams[combo.filterName] = record.data.v;
         this.getBottomToolbar().changePage(1);
+    },
+
+    getEditor: function(config, editor) {
+        if (config.permission.fred_themes_save) return editor;
+
+        return false;
     }
 });
 Ext.reg('fred-grid-themes', fred.grid.Themes);

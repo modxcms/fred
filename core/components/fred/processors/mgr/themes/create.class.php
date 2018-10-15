@@ -12,6 +12,15 @@ class FredThemeCreateProcessor extends modObjectCreateProcessor
     /** @var FredTheme $object */
     public $object;
 
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_themes_save')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
+    
     public function beforeSet()
     {
         $name = $this->getProperty('name');
