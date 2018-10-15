@@ -85,10 +85,10 @@ fred.grid.Blueprints = function (config) {
                 dataIndex: 'public',
                 sortable: true,
                 width: 40,
-                editor: {
+                editor: this.getPublicEditor(config, {
                     xtype: 'modx-combo-boolean',
                     renderer: this.rendYesNo
-                },
+                }),
                 renderer: this.rendYesNo
             },
             {
@@ -299,6 +299,7 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
         var quickUpdateBlueprint = MODx.load({
             xtype: 'fred-window-blueprint',
             record: this.menu.record,
+            canPublic: this.config.permission.fred_blueprints_create_public,
             isUpdate: true,
             listeners: {
                 success: {
@@ -413,6 +414,13 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
         if (config.permission.fred_blueprints_save) return editor;
 
         return false;
+    },
+
+    getPublicEditor: function(config, editor) {
+        if (!config.permission.fred_blueprints_save) return false;
+        if (!config.permission.fred_blueprints_create_public) return false;
+
+        return editor;
     }
 });
 Ext.reg('fred-grid-blueprints', fred.grid.Blueprints);

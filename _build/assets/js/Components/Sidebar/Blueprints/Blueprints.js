@@ -28,7 +28,7 @@ export default class Blueprints extends Sidebar {
                 description: '',
                 category: null,
                 rank: '',
-                public: true,
+                public: !!fredConfig.permission.fred_blueprints_create_public,
                 image: '',
                 generatedImage: ''
             }
@@ -294,10 +294,16 @@ export default class Blueprints extends Sidebar {
             label: 'fred.fe.blueprints.blueprint_rank'
         }, this.state.blueprint.rank, onChange));
 
-        fields.appendChild(toggle({
+        const publicToggle = toggle({
             name: 'public',
             label: 'fred.fe.blueprints.blueprint_public'
-        }, this.state.blueprint.public, onChange));
+        }, this.state.blueprint.public, onChange);
+        
+        if (!fredConfig.permission.fred_blueprints_create_public) {
+            publicToggle.inputEl.setAttribute('disabled', 'disabled');
+        }
+        
+        fields.appendChild(publicToggle);
 
         if (this.state.blueprint.image === '') {
             const loader = span(['fred--loading']);

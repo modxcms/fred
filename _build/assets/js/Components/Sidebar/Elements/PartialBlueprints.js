@@ -16,7 +16,7 @@ export class PartialBlueprints {
             name: '',
             category: null,
             rank: '',
-            public: true,
+            public: !!fredConfig.permission.fred_blueprints_create_public,
             image: '',
             description: '',
             generatedImage: ''
@@ -94,10 +94,16 @@ export class PartialBlueprints {
             label: 'fred.fe.blueprints.blueprint_rank'
         }, this.state.rank, onChange));
 
-        fields.appendChild(toggle({
+        const publicToggle = toggle({
             name: 'public',
             label: 'fred.fe.blueprints.blueprint_public'
-        }, this.state.public, onChange));
+        }, this.state.public, onChange);
+        
+        if (!fredConfig.permission.fred_blueprints_create_public) {
+            publicToggle.inputEl.setAttribute('disabled', 'disabled');
+        }
+        
+        fields.appendChild(publicToggle);
 
         if (this.state.image === '') {
             const loader = span(['fred--loading']);

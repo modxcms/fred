@@ -1,5 +1,6 @@
 fred.page.Blueprint = function (config) {
     config = config || {};
+    config.permission = config.permission || {};
 
     config.isUpdate = (MODx.request.id) ? true : false;
 
@@ -33,6 +34,7 @@ fred.page.Blueprint = function (config) {
             {
                 xtype: 'fred-panel-blueprint',
                 isUpdate: config.isUpdate,
+                permission: config.permission
             }
         ]
     });

@@ -134,7 +134,8 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                 name: 'public',
                                 hiddenName: 'public',
                                 anchor: '100%',
-                                value: 1
+                                disabled: !config.canPublic,
+                                value: config.canPublic ? 1 : 0
                             }
                         ]
                     }

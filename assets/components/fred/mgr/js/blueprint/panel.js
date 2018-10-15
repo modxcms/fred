@@ -1,6 +1,7 @@
 fred.panel.Blueprint = function (config) {
     config = config || {};
-
+    config.permission = config.permission || {};
+    
     config.id = config.id || 'fred-panel-blueprint';
 
     Ext.applyIf(config, {
@@ -240,7 +241,8 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                                 name: 'public',
                                                 hiddenName: 'public',
                                                 anchor: '100%',
-                                                value: 1
+                                                disabled: !config.permission.fred_blueprints_create_public,
+                                                value: config.permission.fred_blueprints_create_public ? 1 : 0
                                             },
                                             {
                                                 xtype: 'numberfield',

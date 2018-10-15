@@ -36,6 +36,10 @@ class BlueprintsCreateBlueprint extends Endpoint
         $public = isset($this->body['public']) ? intval($this->body['public']) : 0;
         $complete = isset($this->body['complete']) ? intval($this->body['complete']) : 0;
         $description = isset($this->body['description']) ? $this->body['description'] : '';
+
+        if (!$this->modx->hasPermission('fred_blueprints_create_public')) {
+            $public = 0;
+        }
         
         if (empty($rank)) {
             $c = $this->modx->newQuery('FredBlueprint');

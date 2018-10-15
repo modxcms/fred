@@ -16,8 +16,11 @@ require_once dirname(dirname(dirname(__FILE__))) . '/index.class.php';
  */
 class FredBlueprintUpdateManagerController extends FredBaseManagerController
 {
+    protected $permissions = [];
+    
     public function process(array $scriptProperties = array())
     {
+        $this->loadPermissions();
     }
 
     public function getPageTitle()
@@ -37,7 +40,8 @@ class FredBlueprintUpdateManagerController extends FredBaseManagerController
         <script type="text/javascript">
             Ext.onReady(function() {
                 MODx.load({ 
-                    xtype: "fred-page-blueprint"
+                    xtype: "fred-page-blueprint",
+                    permission: ' . json_encode($this->permissions) . '
                 });
             });
         </script>
@@ -56,5 +60,12 @@ class FredBlueprintUpdateManagerController extends FredBaseManagerController
         }
 
         return parent::checkPermissions();
+    }
+
+    protected function loadPermissions()
+    {
+        $this->permissions = [
+            'fred_blueprints_create_public' => (int)$this->modx->hasPermission('fred_blueprints_create_public'),
+        ];
     }
 }

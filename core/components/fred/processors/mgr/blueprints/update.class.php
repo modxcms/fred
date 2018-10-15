@@ -66,6 +66,10 @@ class FredBlueprintsUpdateProcessor extends modObjectUpdateProcessor
         $this->setProperty('complete', $this->object->get('complete'));
         $this->setProperty('createdBy', $this->object->get('createdBy'));
 
+        if (!$this->modx->hasPermission('fred_blueprints_create_public')) {
+            $this->setProperty('public', $this->object->get('public'));
+        }
+        
         return parent::beforeSet();
     }
 }
