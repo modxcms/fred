@@ -7,6 +7,10 @@ class BlueprintsCreateCategory extends Endpoint
 {
     function process()
     {
+        if (!$this->modx->hasPermission('fred_blueprint_categories_save')) {
+            return $this->failure('Permission denied.');
+        }
+        
         if (empty($this->body['name'])) {
             return $this->failure('No name was provided', ['name' => 'No name was provided']);
         }
@@ -19,6 +23,10 @@ class BlueprintsCreateCategory extends Endpoint
 
         $rank = isset($this->body['rank']) ? intval($this->body['rank']) : 0;
         $public = isset($this->body['public']) ? intval($this->body['public']) : 0;
+
+        if (!$this->modx->hasPermission('fred_blueprint_categories_create_public')) {
+            $public = 0;
+        }
         
         if (empty($rank)) {
             $c = $this->modx->newQuery('FredBlueprintCategory');

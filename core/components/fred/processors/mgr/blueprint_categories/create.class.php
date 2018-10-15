@@ -54,10 +54,13 @@ class FredBlueprintCategoriesCreateProcessor extends modObjectCreateProcessor
         }
 
         $this->setProperty('createdBy', $this->modx->user->id);
+
+        if (!$this->modx->hasPermission('fred_blueprint_categories_create_public')) {
+            $this->setProperty('public', 0);
+        }
         
         return parent::beforeSet();
     }
-
 }
 
 return 'FredBlueprintCategoriesCreateProcessor';

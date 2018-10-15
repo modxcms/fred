@@ -21,7 +21,7 @@ export default class Blueprints extends Sidebar {
             category: {
                 name: '',
                 rank: '',
-                public: true
+                public: !!fredConfig.permission.fred_blueprint_categories_create_public
             },
             blueprint: {
                 name: '',
@@ -135,7 +135,11 @@ export default class Blueprints extends Sidebar {
         this.categories = [];
 
         this.buildBlueprints(content, blueprints);
-        this.buildCreateCategory(content);
+
+        if (fredConfig.permission.fred_blueprint_categories_save) {
+            this.buildCreateCategory(content);
+        }
+        
         this.buildCreateBlueprint(content);
 
         return content;
@@ -169,6 +173,10 @@ export default class Blueprints extends Sidebar {
             name: 'public',
             label: 'fred.fe.blueprints.category_public'
         }, this.state.category.public, onChange);
+        
+        if (!fredConfig.permission.fred_blueprint_categories_create_public) {
+            publicToggle.inputEl.setAttribute('disabled', 'disabled');
+        }
 
         fields.appendChild(name);
         fields.appendChild(rank);

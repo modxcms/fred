@@ -124,6 +124,11 @@ class FredHomeManagerController extends FredBaseManagerController
             'fred_element_category_save' => (int)$this->modx->hasPermission('fred_element_category_save'),
             'fred_element_category_delete' => (int)$this->modx->hasPermission('fred_element_category_delete'),
             'fred_element_option_sets_save' => (int)$this->modx->hasPermission('fred_element_option_sets_save'),
+            'fred_element_rte_config_save' => (int)$this->modx->hasPermission('fred_element_rte_config_save'),
+            'fred_element_rte_config_delete' => (int)$this->modx->hasPermission('fred_element_rte_config_delete'),
+            'fred_blueprint_categories_save' => (int)$this->modx->hasPermission('fred_blueprint_categories_save'),
+            'fred_blueprint_categories_create_public' => (int)$this->modx->hasPermission('fred_blueprint_categories_create_public'),
+            'fred_blueprint_categories_delete' => (int)$this->modx->hasPermission('fred_blueprint_categories_delete'),
         ];
     }
 }

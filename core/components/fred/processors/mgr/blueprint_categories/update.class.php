@@ -58,6 +58,10 @@ class FredBlueprintCategoriesUpdateProcessor extends modObjectUpdateProcessor
 
         $this->setProperty('createdBy', $this->object->get('createdBy'));
 
+        if (!$this->modx->hasPermission('fred_blueprint_categories_create_public')) {
+            $this->setProperty('public', $this->object->get('public'));
+        }
+        
         return parent::beforeSet();
     }
 }

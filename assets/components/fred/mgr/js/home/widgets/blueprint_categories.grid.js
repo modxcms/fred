@@ -50,7 +50,7 @@ fred.grid.BlueprintCategories = function (config) {
                 dataIndex: 'public',
                 sortable: true,
                 width: 80,
-                editor: this.getEditor(config, {
+                editor: this.getPublicEditor(config, {
                     xtype: 'modx-combo-boolean',
                     renderer: this.rendYesNo
                 }),
@@ -183,6 +183,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
     createCategory: function (btn, e) {
         var createCategory = MODx.load({
             xtype: 'fred-window-blueprint-category',
+            canPublic: this.config.permission.fred_blueprint_categories_create_public,
             listeners: {
                 success: {
                     fn: function () {
@@ -203,6 +204,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
         
         var updateCategory = MODx.load({
             xtype: 'fred-window-blueprint-category',
+            canPublic: this.config.permission.fred_blueprint_categories_create_public,
             title: _('fred.blueprint_categories.update'),
             action: 'mgr/blueprint_categories/update',
             isUpdate: true,
@@ -375,6 +377,13 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
         if (config.permission.fred_blueprint_categories_save) return editor;
 
         return false;
+    },
+
+    getPublicEditor: function(config, editor) {
+        if (!config.permission.fred_blueprint_categories_save) return false;
+        if (!config.permission.fred_blueprint_categories_create_public) return false;
+
+        return editor;
     }
 });
 Ext.reg('fred-grid-blueprint-categories', fred.grid.BlueprintCategories);
