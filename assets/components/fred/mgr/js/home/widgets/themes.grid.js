@@ -7,6 +7,10 @@ fred.grid.Themes = function (config) {
         config.autosave = true;
     }
     
+    if (!config.permission.fred_themes_save && !config.permission.fred_themes_build && !config.permission.fred_themes_delete) {
+        config.showGear = false;
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -70,11 +74,13 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
                 text: _('fred.themes.build'),
                 handler: this.buildTheme
             });
-    
-            m.push('-');
         }
         
         if (this.config.permission.fred_themes_save) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            
             m.push({
                 text: _('fred.themes.update'),
                 handler: this.updateTheme
@@ -86,14 +92,19 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
                 text: _('fred.themes.duplicate'),
                 handler: this.duplicateTheme
             });
-
-            m.push('-');
         }
         
-        m.push({
-            text: _('fred.themes.remove'),
-            handler: this.removeTheme
-        });
+        if (this.config.permission.fred_themes_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            
+            m.push({
+                text: _('fred.themes.remove'),
+                handler: this.removeTheme
+            });
+        }
+        
         return m;
     },
     

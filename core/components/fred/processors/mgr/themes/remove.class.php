@@ -15,6 +15,15 @@ class FredThemeRemoveProcessor extends modObjectRemoveProcessor
     /** @var FredTheme */
     public $object;
 
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_themes_delete')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
+    
     public function afterRemove()
     {
         $deleteThemeFolder = (int)$this->getProperty('delete_theme_folder', 0);

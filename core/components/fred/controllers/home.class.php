@@ -131,6 +131,7 @@ class FredHomeManagerController extends FredBaseManagerController
             'fred_blueprint_categories_delete' => (int)$this->modx->hasPermission('fred_blueprint_categories_delete'),
             'fred_themes_save' => (int)$this->modx->hasPermission('fred_themes_save'),
             'fred_themes_build' => (int)$this->modx->hasPermission('fred_themes_build'),
+            'fred_themes_delete' => (int)$this->modx->hasPermission('fred_themes_delete'),
         ];
     }
 }
