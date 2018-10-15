@@ -12,7 +12,16 @@ class FredThemeBuildProcessor extends modObjectProcessor
 
     /** @var Fred */
     protected $fred;
+    
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_themes_build')) {
+            return $this->modx->lexicon('access_denied');
+        }
 
+        return parent::initialize();
+    }
+    
     public function process()
     {
         $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');

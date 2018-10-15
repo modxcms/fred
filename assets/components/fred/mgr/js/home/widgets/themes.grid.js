@@ -65,12 +65,14 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
     getMenu: function () {
         var m = [];
 
-        m.push({
-            text: _('fred.themes.build'),
-            handler: this.buildTheme
-        });
-
-        m.push('-');
+        if (this.config.permission.fred_themes_build) {
+            m.push({
+                text: _('fred.themes.build'),
+                handler: this.buildTheme
+            });
+    
+            m.push('-');
+        }
         
         if (this.config.permission.fred_themes_save) {
             m.push({
