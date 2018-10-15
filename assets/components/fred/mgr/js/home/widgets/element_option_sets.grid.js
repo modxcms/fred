@@ -1,13 +1,17 @@
 fred.grid.ElementOptionSets = function (config) {
     config = config || {};
-
+    config.permission = config.permission || {};
+    
+    if (config.permission.fred_element_option_sets_save) {
+        config.save_action = 'mgr/element_option_sets/updatefromgrid';
+        config.autosave = true;    
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'mgr/element_option_sets/getlist'
         },
-        save_action: 'mgr/element_option_sets/updatefromgrid',
-        autosave: true,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'complete', 'data', 'theme', 'theme_name'],
         paging: true,
@@ -25,13 +29,13 @@ fred.grid.ElementOptionSets = function (config) {
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.element_option_sets.description'),
                 dataIndex: 'description',
                 width: 100,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.element_option_sets.theme'),
@@ -47,11 +51,55 @@ fred.grid.ElementOptionSets = function (config) {
                 renderer: this.rendYesNo
             }
         ],
-        tbar: [
-            {
+        tbar: this.getTbar(config)
+    });
+    fred.grid.ElementOptionSets.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.grid.ElementOptionSets, fred.grid.GearGrid, {
+
+    getMenu: function () {
+        var m = [];
+
+        if (this.config.permission.fred_element_option_sets_save) {
+            m.push({
+                text: _('fred.element_option_sets.quick_update'),
+                handler: this.quickUpdateElementOptionSet
+            });
+    
+            m.push({
+                text: _('fred.element_option_sets.update'),
+                handler: this.updateElementOptionSet
+            });
+    
+            m.push('-');
+    
+            m.push({
+                text: _('fred.element_option_sets.duplicate'),
+                handler: this.duplicateElementOptionSet
+            });
+            
+            m.push('-');
+        }
+        
+        m.push({
+            text: _('fred.element_option_sets.remove')
+            , handler: this.removeElementOptionSet
+        });
+
+        return m;
+    },
+    
+    getTbar: function(config) {
+        var output = [];
+
+        if (config.permission.fred_element_option_sets_save) {
+            output.push({
                 text: _('fred.element_option_sets.create'),
                 handler: this.createElementOptionSet
-            },
+            });
+        }
+        
+        output.push([
             '->',
             {
                 xtype: 'textfield',
@@ -107,40 +155,9 @@ fred.grid.ElementOptionSets = function (config) {
                     scope: this
                 }
             }
-        ]
-    });
-    fred.grid.ElementOptionSets.superclass.constructor.call(this, config);
-};
-Ext.extend(fred.grid.ElementOptionSets, fred.grid.GearGrid, {
-
-    getMenu: function () {
-        var m = [];
-
-        m.push({
-            text: _('fred.element_option_sets.quick_update'),
-            handler: this.quickUpdateElementOptionSet
-        });
-
-        m.push({
-            text: _('fred.element_option_sets.update'),
-            handler: this.updateElementOptionSet
-        });
-
-        m.push('-');
-
-        m.push({
-            text: _('fred.element_option_sets.duplicate'),
-            handler: this.duplicateElementOptionSet
-        });
+        ]);
         
-        m.push('-');
-
-        m.push({
-            text: _('fred.element_option_sets.remove')
-            , handler: this.removeElementOptionSet
-        });
-
-        return m;
+        return output;
     },
 
     removeElementOptionSet: function (btn, e) {
@@ -248,6 +265,12 @@ Ext.extend(fred.grid.ElementOptionSets, fred.grid.GearGrid, {
 
     updateElementOptionSet: function (btn, e) {
         fred.loadPage('element/option_set/update', {id: this.menu.record.id});
+    },
+
+    getEditor: function(config, editor) {
+        if (config.permission.fred_element_option_sets_save) return editor;
+
+        return false;
     }
 });
 Ext.reg('fred-grid-element-option-sets', fred.grid.ElementOptionSets);

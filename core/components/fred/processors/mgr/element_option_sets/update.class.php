@@ -12,6 +12,15 @@ class FredElementOptionSetsUpdateProcessor extends modObjectUpdateProcessor
     /** @var FredElement $object */
     public $object;
 
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_element_option_sets_save')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
+    
     public function beforeSet()
     {
         $name = $this->getProperty('name');

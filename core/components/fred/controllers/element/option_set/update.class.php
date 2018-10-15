@@ -49,4 +49,12 @@ class FredElementOptionSetUpdateManagerController extends FredBaseManagerControl
         return $this->fred->getOption('templatesPath') . 'element_option_set.tpl';
     }
 
+    public function checkPermissions()
+    {
+        if (!$this->modx->hasPermission('fred_element_option_sets_save')) {
+            return false;
+        }
+
+        return parent::checkPermissions();
+    }
 }

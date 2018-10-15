@@ -123,6 +123,7 @@ class FredHomeManagerController extends FredBaseManagerController
             'fred_element_save' => (int)$this->modx->hasPermission('fred_element_save'),
             'fred_element_category_save' => (int)$this->modx->hasPermission('fred_element_category_save'),
             'fred_element_category_delete' => (int)$this->modx->hasPermission('fred_element_category_delete'),
+            'fred_element_option_sets_save' => (int)$this->modx->hasPermission('fred_element_option_sets_save'),
         ];
     }
 }
