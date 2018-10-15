@@ -12,7 +12,7 @@ class FredElementsRemoveProcessor extends modObjectRemoveProcessor
 
     public function initialize()
     {
-        if (!$this->modx->hasPermission('fred_element_delete')) {
+        if (!$this->modx->hasPermission('fred_element_option_sets_delete')) {
             return $this->modx->lexicon('access_denied');
         }
         

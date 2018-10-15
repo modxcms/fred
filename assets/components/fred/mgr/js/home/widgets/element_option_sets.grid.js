@@ -6,6 +6,10 @@ fred.grid.ElementOptionSets = function (config) {
         config.save_action = 'mgr/element_option_sets/updatefromgrid';
         config.autosave = true;    
     }
+
+    if (!config.permission.fred_element_option_sets_save && !config.permission.fred_element_option_sets_delete) {
+        config.showGear = false;
+    }
     
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
@@ -77,14 +81,18 @@ Ext.extend(fred.grid.ElementOptionSets, fred.grid.GearGrid, {
                 text: _('fred.element_option_sets.duplicate'),
                 handler: this.duplicateElementOptionSet
             });
-            
+        }
+
+        if (this.config.permission.fred_element_option_sets_save && this.config.permission.fred_element_option_sets_delete) {
             m.push('-');
         }
         
-        m.push({
-            text: _('fred.element_option_sets.remove')
-            , handler: this.removeElementOptionSet
-        });
+        if (this.config.permission.fred_element_option_sets_delete) {
+            m.push({
+                text: _('fred.element_option_sets.remove'),
+                handler: this.removeElementOptionSet
+            });
+        }
 
         return m;
     },
