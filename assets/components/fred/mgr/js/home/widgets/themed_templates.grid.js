@@ -2,6 +2,10 @@ fred.grid.ThemedTemplates = function (config) {
     config = config || {};
     config.permission = config.permission || {};
     
+    if (!config.permission.fred_themed_templates_save && !config.permission.fred_themed_templates_delete) {
+        config.showGear = false;
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -45,14 +49,19 @@ Ext.extend(fred.grid.ThemedTemplates, fred.grid.GearGrid, {
                 text: _('fred.themed_templates.update'),
                 handler: this.updateTheme
             });
-    
-            m.push('-');
         }
         
-        m.push({
-            text: _('fred.themed_templates.remove'),
-            handler: this.unassignTheme
-        });
+        if (this.config.permission.fred_themed_templates_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            
+            m.push({
+                text: _('fred.themed_templates.remove'),
+                handler: this.unassignTheme
+            });
+        }
+        
         return m;
     },
     
