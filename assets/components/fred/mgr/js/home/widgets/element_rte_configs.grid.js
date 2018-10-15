@@ -1,13 +1,17 @@
 fred.grid.ElementRTEConfigs = function (config) {
     config = config || {};
+    config.permission = config.permission || {};
 
+    if (config.permission.fred_element_rte_config_save) {
+        config.save_action = 'mgr/element_rte_configs/updatefromgrid';
+        config.autosave = true;
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'mgr/element_rte_configs/getlist'
         },
-        save_action: 'mgr/element_rte_configs/updatefromgrid',
-        autosave: true,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'complete', 'data', 'theme', 'theme_name'],
         paging: true,
@@ -25,13 +29,13 @@ fred.grid.ElementRTEConfigs = function (config) {
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.element_rte_configs.description'),
                 dataIndex: 'description',
                 width: 120,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.element_rte_configs.theme'),
@@ -40,11 +44,55 @@ fred.grid.ElementRTEConfigs = function (config) {
                 width: 80
             }
         ],
-        tbar: [
-            {
+        tbar: this.getTbar(config)
+    });
+    fred.grid.ElementRTEConfigs.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
+
+    getMenu: function () {
+        var m = [];
+
+        if (this.config.permission.fred_element_rte_config_save) {
+            m.push({
+                text: _('fred.element_rte_configs.quick_update'),
+                handler: this.quickUpdateElementRTEConfig
+            });
+
+            m.push({
+                text: _('fred.element_rte_configs.update'),
+                handler: this.updateElementRTEConfig
+            });
+
+            m.push('-');
+
+            m.push({
+                text: _('fred.element_rte_configs.duplicate'),
+                handler: this.duplicateElementRTEConfig
+            });
+
+            m.push('-');
+        }
+        
+        m.push({
+            text: _('fred.element_rte_configs.remove')
+            , handler: this.removeElementRTEConfig
+        });
+
+        return m;
+    },
+    
+    getTbar: function(config) {
+        var output = [];
+
+        if (config.permission.fred_element_rte_config_save) {
+            output.push({
                 text: _('fred.element_rte_configs.create'),
                 handler: this.newElementRTEConfig
-            },
+            });
+        }
+        
+        output.push([
             '->',
             {
                 xtype: 'textfield',
@@ -76,7 +124,7 @@ fred.grid.ElementRTEConfigs = function (config) {
                 addAll: 1,
                 isUpdate: true,
                 filterName: 'theme',
-                syncFilter: function(combo, record) {
+                syncFilter: function (combo, record) {
                     combo.setValue(record.data[combo.valueField]);
 
                     var s = this.getStore();
@@ -89,40 +137,9 @@ fred.grid.ElementRTEConfigs = function (config) {
                     scope: this
                 }
             }
-        ]
-    });
-    fred.grid.ElementRTEConfigs.superclass.constructor.call(this, config);
-};
-Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
-
-    getMenu: function () {
-        var m = [];
-
-        m.push({
-            text: _('fred.element_rte_configs.quick_update'),
-            handler: this.quickUpdateElementRTEConfig
-        });
-
-        m.push({
-            text: _('fred.element_rte_configs.update'),
-            handler: this.updateElementRTEConfig
-        });
-
-        m.push('-');
-
-        m.push({
-            text: _('fred.element_rte_configs.duplicate'),
-            handler: this.duplicateElementRTEConfig
-        });
+        ]);
         
-        m.push('-');
-
-        m.push({
-            text: _('fred.element_rte_configs.remove')
-            , handler: this.removeElementRTEConfig
-        });
-
-        return m;
+        return output;
     },
 
     removeElementRTEConfig: function (btn, e) {
@@ -230,6 +247,12 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
 
     updateElementRTEConfig: function (btn, e) {
         fred.loadPage('element/rte_config/update', {id: this.menu.record.id});
+    },
+
+    getEditor: function(config, editor) {
+        if (config.permission.fred_element_rte_config_save) return editor;
+
+        return false;
     }
 });
 Ext.reg('fred-grid-element-rte-configs', fred.grid.ElementRTEConfigs);

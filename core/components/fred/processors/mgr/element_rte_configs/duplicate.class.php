@@ -9,6 +9,15 @@ class FredElementRTEConfigsDuplicateProcessor extends modObjectDuplicateProcesso
     public $classKey = 'FredElementRTEConfig';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.element_rte_configs';
+
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_element_rte_config_save')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
     
     public function process() {
         $this->newObject->fromArray($this->object->toArray());

@@ -49,4 +49,12 @@ class FredElementRTEConfigUpdateManagerController extends FredBaseManagerControl
         return $this->fred->getOption('templatesPath') . 'element_rte_config.tpl';
     }
 
+    public function checkPermissions()
+    {
+        if (!$this->modx->hasPermission('fred_element_rte_config_save')) {
+            return false;
+        }
+
+        return parent::checkPermissions();
+    }
 }
