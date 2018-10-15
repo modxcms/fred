@@ -9,6 +9,10 @@ fred.grid.BlueprintCategories = function (config) {
         config.enableDragDrop = true;
     }
     
+    if (!config.permission.fred_blueprint_categories_save && !config.permission.fred_blueprint_categories_delete) {
+        config.showGear = false;
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -88,14 +92,20 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
                 text: _('fred.blueprint_categories.update'),
                 handler: this.updateCategory
             });
-
-            m.push('-');
         }
         
-        m.push({
-            text: _('fred.blueprint_categories.remove'),
-            handler: this.removeCategory
-        });
+        if (this.config.permission.fred_blueprint_categories_save && this.config.permission.fred_blueprint_categories_delete) {
+            m.push('-');
+
+        }
+        
+        if (this.config.permission.fred_blueprint_categories_delete) {
+            m.push({
+                text: _('fred.blueprint_categories.remove'),
+                handler: this.removeCategory
+            });
+        }
+        
         return m;
     },
     
