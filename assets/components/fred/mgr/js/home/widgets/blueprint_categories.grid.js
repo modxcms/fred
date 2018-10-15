@@ -1,6 +1,14 @@
 fred.grid.BlueprintCategories = function (config) {
     config = config || {};
-
+    config.permission = config.permission || {};
+    
+    if (config.permission.fred_blueprint_categories_save) {
+        config.save_action = 'mgr/blueprint_categories/updatefromgrid';
+        config.autosave = true;
+        config.ddGroup = 'FredBlueprintCategoriesDDGroup';
+        config.enableDragDrop = true;
+    }
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -8,12 +16,8 @@ fred.grid.BlueprintCategories = function (config) {
             sort: 'rank',
             dir: 'asc'
         },
-        save_action: 'mgr/blueprint_categories/updatefromgrid',
-        autosave: true,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints', 'theme', 'theme_name'],
-        ddGroup: 'FredBlueprintCategoriesDDGroup',
-        enableDragDrop: true,
         paging: true,
         remoteSort: true,
         emptyText: _('fred.blueprint_categories.none'),
@@ -29,7 +33,7 @@ fred.grid.BlueprintCategories = function (config) {
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'textfield'}
+                editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.blueprint_categories.theme'),
@@ -42,10 +46,10 @@ fred.grid.BlueprintCategories = function (config) {
                 dataIndex: 'public',
                 sortable: true,
                 width: 80,
-                editor: {
+                editor: this.getEditor(config, {
                     xtype: 'modx-combo-boolean',
                     renderer: this.rendYesNo
-                },
+                }),
                 renderer: this.rendYesNo
             },
             {
@@ -65,14 +69,47 @@ fred.grid.BlueprintCategories = function (config) {
                 dataIndex: 'rank',
                 sortable: true,
                 width: 80,
-                editor: {xtype: 'numberfield'}
+                editor: this.getEditor(config, {xtype: 'numberfield'})
             }
         ],
-        tbar: [
-            {
+        tbar: this.getTbar(config)
+    });
+    fred.grid.BlueprintCategories.superclass.constructor.call(this, config);
+
+    this.on('render', this.registerGridDropTarget, this);
+    this.on('beforedestroy', this.destroyScrollManager, this);
+};
+Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
+    getMenu: function () {
+        var m = [];
+
+        if (this.config.permission.fred_blueprint_categories_save) {
+            m.push({
+                text: _('fred.blueprint_categories.update'),
+                handler: this.updateCategory
+            });
+
+            m.push('-');
+        }
+        
+        m.push({
+            text: _('fred.blueprint_categories.remove'),
+            handler: this.removeCategory
+        });
+        return m;
+    },
+    
+    getTbar: function(config) {
+        var output = [];
+
+        if (config.permission.fred_blueprint_categories_save) {
+            output.push({
                 text: _('fred.blueprint_categories.create'),
                 handler: this.createCategory
-            },
+            });
+        }
+        
+        output.push([
             '->',
             {
                 xtype: 'textfield',
@@ -128,29 +165,9 @@ fred.grid.BlueprintCategories = function (config) {
                     scope: this
                 }
             }
-        ]
-    });
-    fred.grid.BlueprintCategories.superclass.constructor.call(this, config);
-
-    this.on('render', this.registerGridDropTarget, this);
-    this.on('beforedestroy', this.destroyScrollManager, this);
-};
-Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
-    getMenu: function () {
-        var m = [];
-
-        m.push({
-            text: _('fred.blueprint_categories.update'),
-            handler: this.updateCategory
-        });
-
-        m.push('-');
-
-        m.push({
-            text: _('fred.blueprint_categories.remove'),
-            handler: this.removeCategory
-        });
-        return m;
+        ]);
+        
+        return output;
     },
 
     createCategory: function (btn, e) {
@@ -342,6 +359,12 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
 
     destroyScrollManager: function () {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
+    },
+
+    getEditor: function(config, editor) {
+        if (config.permission.fred_blueprint_categories_save) return editor;
+
+        return false;
     }
 });
 Ext.reg('fred-grid-blueprint-categories', fred.grid.BlueprintCategories);

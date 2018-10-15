@@ -12,6 +12,15 @@ class FredBlueprintCategoriesUpdateProcessor extends modObjectUpdateProcessor
     /** @var FredBlueprintCategory $object */
     public $object;
 
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_blueprint_categories_save')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
+    
     public function beforeSet()
     {
         $name = $this->getProperty('name');

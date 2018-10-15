@@ -10,6 +10,15 @@ class FredBlueprintCategoriesReorderProcessor extends modObjectProcessor
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.blueprint_categories';
 
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_blueprint_categories_save')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
+    
     public function process()
     {
         $categoryId = $this->getProperty('categoryId');
