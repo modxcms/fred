@@ -76,11 +76,11 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
             });
         }
 
-        if (this.config.permission.fred_element_rte_config_save && this.config.permission.fred_element_rte_config_delete) {
-            m.push('-');
-        }
-
         if (this.config.permission.fred_element_rte_config_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            
             m.push({
                 text: _('fred.element_rte_configs.remove')
                 , handler: this.removeElementRTEConfig

@@ -84,11 +84,11 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
             });
         }
         
-        if (this.config.permission.fred_element_category_save && this.config.permission.fred_element_category_delete) {
-            m.push('-');
-        }
-        
         if (this.config.permission.fred_element_category_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            
             m.push({
                 text: _('fred.element_categories.remove'),
                 handler: this.removeCategory

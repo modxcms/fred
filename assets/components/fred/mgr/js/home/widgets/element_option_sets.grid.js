@@ -83,11 +83,11 @@ Ext.extend(fred.grid.ElementOptionSets, fred.grid.GearGrid, {
             });
         }
 
-        if (this.config.permission.fred_element_option_sets_save && this.config.permission.fred_element_option_sets_delete) {
-            m.push('-');
-        }
-        
         if (this.config.permission.fred_element_option_sets_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            
             m.push({
                 text: _('fred.element_option_sets.remove'),
                 handler: this.removeElementOptionSet

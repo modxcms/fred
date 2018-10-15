@@ -94,12 +94,11 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
             });
         }
         
-        if (this.config.permission.fred_blueprint_categories_save && this.config.permission.fred_blueprint_categories_delete) {
-            m.push('-');
-
-        }
-        
         if (this.config.permission.fred_blueprint_categories_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            
             m.push({
                 text: _('fred.blueprint_categories.remove'),
                 handler: this.removeCategory

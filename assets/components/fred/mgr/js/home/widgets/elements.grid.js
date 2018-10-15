@@ -126,11 +126,11 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
             });
         }
         
-        if (this.config.permission.fred_element_save && this.config.permission.fred_element_delete) {
-            m.push('-');
-        }
-        
         if (this.config.permission.fred_element_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            
             m.push({
                 text: _('fred.elements.remove')
                 , handler: this.removeElement
