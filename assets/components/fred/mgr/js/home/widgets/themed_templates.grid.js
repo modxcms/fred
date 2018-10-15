@@ -1,13 +1,12 @@
 fred.grid.ThemedTemplates = function (config) {
     config = config || {};
-
+    config.permission = config.permission || {};
+    
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'mgr/themed_templates/getlist'
         },
-        save_action: 'mgr/themed_templates/updatefromgrid',
-        autosave: true,
         preventSaveRefresh: false,
         fields: ['id', 'theme', 'template', 'theme_name', 'template_templatename'],
         paging: true,
@@ -33,12 +32,7 @@ fred.grid.ThemedTemplates = function (config) {
                 width: 80
             }
         ],
-        tbar: [
-            {
-                text: _('fred.themed_templates.create'),
-                handler: this.assignTheme
-            }
-        ]
+        tbar: this.getTbar(config)
     });
     fred.grid.ThemedTemplates.superclass.constructor.call(this, config);
 };
@@ -46,18 +40,33 @@ Ext.extend(fred.grid.ThemedTemplates, fred.grid.GearGrid, {
     getMenu: function () {
         var m = [];
 
-        m.push({
-            text: _('fred.themed_templates.update'),
-            handler: this.updateTheme
-        });
-
-        m.push('-');
-
+        if (this.config.permission.fred_themed_templates_save) {
+            m.push({
+                text: _('fred.themed_templates.update'),
+                handler: this.updateTheme
+            });
+    
+            m.push('-');
+        }
+        
         m.push({
             text: _('fred.themed_templates.remove'),
             handler: this.unassignTheme
         });
         return m;
+    },
+    
+    getTbar: function(config) {
+        var output = [];
+        
+        if (config.permission.fred_themed_templates_save) {
+            output.push({
+                text: _('fred.themed_templates.create'),
+                handler: this.assignTheme
+            });
+        }
+        
+        return output;
     },
 
     assignTheme: function (btn, e) {

@@ -10,6 +10,15 @@ class FredThemedTemplatesCreateProcessor extends modProcessor
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.themed_templates';
 
+    public function initialize()
+    {
+        if (!$this->modx->hasPermission('fred_themed_templates_save')) {
+            return $this->modx->lexicon('access_denied');
+        }
+
+        return parent::initialize();
+    }
+    
     public function process()
     {
         $templates = $this->getProperty('templates');
