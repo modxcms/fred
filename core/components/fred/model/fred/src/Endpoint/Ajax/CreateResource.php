@@ -17,6 +17,10 @@ class CreateResource extends Endpoint
 {
     function process()
     {
+        if (!$this->modx->hasPermission('new_document')) {
+            return $this->failure('Permission denied.');
+        }
+        
         if (!isset($this->body['parent'])) {
             return $this->failure('No id was provided');
         }

@@ -3,7 +3,7 @@ import fetch from "isomorphic-fetch";
 import {errorHandler} from "../Utils";
 
 export const getPreview = () => {
-    return fetch(fredConfig.config.resource.previewUrl, {
+    return fetch(fredConfig.resource.previewUrl, {
         credentials: 'same-origin',
         headers: {
             'X-Fred-Token': fredConfig.jwt
@@ -32,7 +32,7 @@ export const saveContent = body => {
 };
 
 export const fetchContent = () => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${fredConfig.config.resource.id}`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${fredConfig.resource.id}`, {
         credentials: 'same-origin',
         headers: {
             'X-Fred-Token': fredConfig.jwt

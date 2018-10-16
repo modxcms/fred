@@ -28,7 +28,7 @@ export const renderElement = (element, settings, parseModx) => {
             'X-Fred-Token': fredConfig.jwt
         },
         body: JSON.stringify({
-            resource: fredConfig.config.resource.id,
+            resource: fredConfig.resource.id,
             parseModx,
             element,
             settings

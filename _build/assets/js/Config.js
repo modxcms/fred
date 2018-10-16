@@ -12,6 +12,7 @@ class Config {
         this._fred = null;
         this._jwt = null;
         this._permission = null;
+        this._resource = null;
     }
     
     set fred(fred) {
@@ -45,6 +46,13 @@ class Config {
             this._permission = permission;
             console.log(permission);
             Object.freeze(this._permission);
+        }
+    }
+    
+    set resource(resource) {
+        if (this._resource=== null) {
+            this._resource = resource;
+            Object.freeze(this._resource);
         }
     }
     
@@ -86,6 +94,10 @@ class Config {
     
     get permission() {
         return this._permission;
+    }
+    
+    get resource() {
+        return this._resource;
     }
 
     registerEditor(name, editor) {

@@ -202,6 +202,11 @@ switch ($modx->event->name) {
                     "id": ' . $modx->resource->id . ',
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 2] , 'abs')) . '",
                     "emptyUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 3] , 'abs')) . '",
+                    "save": ' . (int)$modx->resource->checkPolicy('save') . ',
+                    "delete": ' . (int)$modx->resource->checkPolicy('delete') . ',
+                    "undelete": ' . (int)$modx->resource->checkPolicy('undelete') . ',
+                    "publish": ' . (int)$modx->resource->checkPolicy('publish') . ',
+                    "unpublish": ' . (int)$modx->resource->checkPolicy('unpublish') . ',
                 },
                 permission: {
                     "fred_settings": ' . (int)$modx->hasPermission('fred_settings') . ',
@@ -218,13 +223,13 @@ switch ($modx->event->name) {
                     "fred_blueprints_save": ' . (int)$modx->hasPermission('fred_blueprints_save') . ',
                     "fred_blueprints_create_public": ' . (int)$modx->hasPermission('fred_blueprints_create_public') . ',
                 
-                    "save_document": ' . (int)($modx->hasPermission('save_document') && $modx->resource->checkPolicy('save')) . ',
-                    "delete_document" : ' . (int)($modx->hasPermission('delete_document') && $modx->resource->checkPolicy('delete')) . ',
-                    "undelete_document" : ' . (int)($modx->hasPermission('undelete_document') && $modx->resource->checkPolicy('undelete')) . ',
-                    "publish_document" : ' . (int)($modx->hasPermission('publish_document') && $modx->resource->checkPolicy('publish')) . ',
-                    "unpublish_document" : ' . (int)($modx->hasPermission('unpublish_document') && $modx->resource->checkPolicy('unpublish')) . ',
-                
+                    "save_document": ' . (int)$modx->hasPermission('save_document') . ',
+                    "delete_document" : ' . (int)$modx->hasPermission('delete_document') . ',
+                    "undelete_document" : ' . (int)$modx->hasPermission('undelete_document') . ',
+                    "publish_document" : ' . (int)$modx->hasPermission('publish_document') . ',
+                    "unpublish_document" : ' . (int)$modx->hasPermission('unpublish_document') . ',
                     "new_document" : ' . (int)$modx->hasPermission('new_document') . ',
+                    
                     "resource_duplicate" : ' . (int)($modx->hasPermission('resource_duplicate') &&  $modx->resource->checkPolicy('save')) . ',
                     "new_document_in_root" : ' . (int)$modx->hasPermission('new_document_in_root') . '
                 },

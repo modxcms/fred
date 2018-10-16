@@ -43,7 +43,10 @@ export default class Pages extends Sidebar {
         }];
         
         this.buildTree(this.content, this.pageList);
-        this.buildCreatePage(this.pageList);
+        
+        if (fredConfig.permission.new_document) {
+            this.buildCreatePage(this.pageList);
+        }
 
         content.appendChild(this.pageList);
 
@@ -289,7 +292,6 @@ export default class Pages extends Sidebar {
         const duplicate = button('fred.fe.pages.duplicate', 'fred.fe.pages.duplicate');
         const publish = button('fred.fe.pages.publish', 'fred.fe.pages.publish');
         const unpublish = button('fred.fe.pages.unpublish', 'fred.fe.pages.unpublish');
-        const createChildPage = button('fred.fe.pages.create_child_page', 'fred.fe.pages.create_child_page');
         const deletePage = button('fred.fe.pages.delete', 'fred.fe.pages.delete');
         const unDeletePage = button('fred.fe.pages.undelete', 'fred.fe.pages.undelete');
 
@@ -300,10 +302,15 @@ export default class Pages extends Sidebar {
         if (page.published === true) {
             menu.appendChild(unpublish);
         } else {
-            menu.appendChild(publish);
+            if (fredConfig.permission.new_document) {
+                menu.appendChild(publish);
+            }
         }
-        
-        menu.appendChild(createChildPage);
+
+        if (fredConfig.permission.new_document) {
+            const createChildPage = button('fred.fe.pages.create_child_page', 'fred.fe.pages.create_child_page');
+            menu.appendChild(createChildPage);
+        }
         
         if (page.deleted === true) {
             menu.appendChild(unDeletePage);

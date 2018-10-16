@@ -22,6 +22,9 @@ export default class Fred {
         fredConfig.permission = config.permission;
         delete config.permission;
         
+        fredConfig.resource = config.resource;
+        delete config.resource;
+        
         fredConfig.config = config || {};
         fredConfig.fred = this;
         this.loading = null;
@@ -126,7 +129,7 @@ export default class Fred {
     previewContent() {
         if (!this.previewDocument) {
             this.renderPreview();
-            this.iframe.src = fredConfig.config.resource.emptyUrl;
+            this.iframe.src = fredConfig.resource.emptyUrl;
 
             return getPreview().then(text => {
                 const parser = new DOMParser();
@@ -225,7 +228,7 @@ export default class Fred {
             }))
         }
 
-        body.id = fredConfig.config.resource.id;
+        body.id = fredConfig.resource.id;
         body.data = data;
         body.pageSettings = fredConfig.pageSettings;
         body.fingerprint = this.fingerprint;
@@ -450,7 +453,7 @@ export default class Fred {
     }
 
     openManager() {
-        const url = fredConfig.config.managerUrl + '?a=resource/update&id=' + fredConfig.config.resource.id;
+        const url = fredConfig.config.managerUrl + '?a=resource/update&id=' + fredConfig.resource.id;
         window.open(url, '_blank');
     }
 
