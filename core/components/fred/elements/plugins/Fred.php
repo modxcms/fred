@@ -229,8 +229,7 @@ switch ($modx->event->name) {
                     "publish_document" : ' . (int)$modx->hasPermission('publish_document') . ',
                     "unpublish_document" : ' . (int)$modx->hasPermission('unpublish_document') . ',
                     "new_document" : ' . (int)$modx->hasPermission('new_document') . ',
-                    
-                    "resource_duplicate" : ' . (int)($modx->hasPermission('resource_duplicate') &&  $modx->resource->checkPolicy('save')) . ',
+                    "resource_duplicate" : ' . (int)$modx->hasPermission('resource_duplicate') . ',
                     "new_document_in_root" : ' . (int)$modx->hasPermission('new_document_in_root') . '
                 },
                 lexicons: ' . json_encode($lexicons) . ',

@@ -60,11 +60,11 @@ export default class PageSettings extends Sidebar {
         
         const publishedToggle = ui.toggle({name: 'published', label: 'fred.fe.page_settings.published'}, this.pageSettings.published, (name, value) => {this.setSetting(name, value)});
 
-        if (!this.fredConfig.permission.publish_document && !this.pageSettings.published) {
+        if (!(this.fredConfig.permission.publish_document && this.fredConfig.resource.publish) && !this.pageSettings.published) {
             publishedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
 
-        if (!this.fredConfig.permission.unpublish_document && this.pageSettings.published) {
+        if (!(this.fredConfig.permission.unpublish_document && this.fredConfig.resource.unpublish) && this.pageSettings.published) {
             publishedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
         
@@ -72,11 +72,11 @@ export default class PageSettings extends Sidebar {
         fields.appendChild(ui.toggle({name: 'hidemenu', label: 'fred.fe.page_settings.hide_from_menu'}, this.pageSettings.hidemenu, (name, value) => {this.setSetting(name, value)}));
 
         emitter.on('fred-after-save', () => {
-            if (!this.fredConfig.permission.publish_document && !this.pageSettings.published) {
+            if (!(this.fredConfig.permission.publish_document && this.fredConfig.resource.publish) && !this.pageSettings.published) {
                 publishedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
 
-            if (!this.fredConfig.permission.unpublish_document && this.pageSettings.published) {
+            if (!(this.fredConfig.permission.unpublish_document && this.fredConfig.resource.unpublish) && this.pageSettings.published) {
                 publishedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
         });
@@ -114,11 +114,11 @@ export default class PageSettings extends Sidebar {
         
         const deletedToggle = ui.toggle({name: 'deleted', label: 'fred.fe.page_settings.deleted'}, this.pageSettings.deleted, (name, value) => {this.setSetting(name, value)});
         
-        if (!this.fredConfig.permission.delete_document && !this.pageSettings.deleted) {
+        if (!(this.fredConfig.permission.delete_document && this.fredConfig.resource.delete) && !this.pageSettings.deleted) {
             deletedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
 
-        if (!this.fredConfig.permission.undelete_document && this.pageSettings.deleted) {
+        if (!(this.fredConfig.permission.undelete_document && this.fredConfig.resource.undelete) && this.pageSettings.deleted) {
             deletedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
         
@@ -130,11 +130,11 @@ export default class PageSettings extends Sidebar {
         advancedList.appendChild(advancedContent);
 
         emitter.on('fred-after-save', () => {
-            if (!this.fredConfig.permission.delete_document && !this.pageSettings.deleted) {
+            if (!(this.fredConfig.permission.delete_document && this.fredConfig.resource.delete) && !this.pageSettings.deleted) {
                 deletedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
 
-            if (!this.fredConfig.permission.undelete_document && this.pageSettings.deleted) {
+            if (!(this.fredConfig.permission.undelete_document && this.fredConfig.resource.undelete) && this.pageSettings.deleted) {
                 deletedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
         });

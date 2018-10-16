@@ -44,7 +44,7 @@ export default class Pages extends Sidebar {
         
         this.buildTree(this.content, this.pageList);
         
-        if (fredConfig.permission.new_document) {
+        if (fredConfig.permission.new_document && fredConfig.permission.new_document_in_root) {
             this.buildCreatePage(this.pageList);
         }
 
@@ -289,20 +289,22 @@ export default class Pages extends Sidebar {
             window.location.href = page.url;
         });
 
-        const duplicate = button('fred.fe.pages.duplicate', 'fred.fe.pages.duplicate');
-        const publish = button('fred.fe.pages.publish', 'fred.fe.pages.publish');
-        const unpublish = button('fred.fe.pages.unpublish', 'fred.fe.pages.unpublish');
-        const deletePage = button('fred.fe.pages.delete', 'fred.fe.pages.delete');
-        const unDeletePage = button('fred.fe.pages.undelete', 'fred.fe.pages.undelete');
-
         menu.appendChild(header);
         menu.appendChild(edit);
-        menu.appendChild(duplicate);
+        
+        if (fredConfig.permission.resource_duplicate) {
+            const duplicate = button('fred.fe.pages.duplicate', 'fred.fe.pages.duplicate');
+            menu.appendChild(duplicate);
+        }
         
         if (page.published === true) {
-            menu.appendChild(unpublish);
+            if (fredConfig.permission.unpublish_document) {
+                const unpublish = button('fred.fe.pages.unpublish', 'fred.fe.pages.unpublish');
+                menu.appendChild(unpublish);
+            }
         } else {
-            if (fredConfig.permission.new_document) {
+            if (fredConfig.permission.publish_document) {
+                const publish = button('fred.fe.pages.publish', 'fred.fe.pages.publish');
                 menu.appendChild(publish);
             }
         }
@@ -313,9 +315,15 @@ export default class Pages extends Sidebar {
         }
         
         if (page.deleted === true) {
-            menu.appendChild(unDeletePage);
+            if (fredConfig.permission.undelete_document) {
+                const unDeletePage = button('fred.fe.pages.undelete', 'fred.fe.pages.undelete');
+                menu.appendChild(unDeletePage);
+            }
         } else {
-            menu.appendChild(deletePage);
+            if (fredConfig.permission.delete_document) {
+                const deletePage = button('fred.fe.pages.delete', 'fred.fe.pages.delete');
+                menu.appendChild(deletePage);
+            }
         }
 
         return menu;
