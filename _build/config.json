@@ -10,7 +10,7 @@
         "text": "fred.menu.fred",
         "description": "fred.menu.fred_desc",
         "action": "home",
-        "permissions": "fred_cmp"
+        "permissions": "fred"
       }
     ],
     "elements": {
@@ -85,7 +85,8 @@
     "resolver": {
       "before": [
         "resolve.customevents.php",
-        "resolve.mediasources.php"
+        "resolve.mediasources.php",
+        "resolve.acls.php"
       ],
       "after": [
         "resolve.synctables.php",
