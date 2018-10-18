@@ -35,12 +35,16 @@ export class ElementSettings {
 
         this.settings.forEach(setting => {
             if (setting.group && setting.settings) {
-                const group = dl();
-                this.renderSettingsGroup(setting, group);
-                fields.appendChild(group);
+                const groupEl = this.renderSettingsGroup(setting);
+                if (groupEl !== false) {
+                    fields.appendChild(groupEl);
+                }
             } else {
                 const defaultValue = (this.el.settings[setting.name] === undefined) ? setting.value : this.el.settings[setting.name];
-                fields.appendChild(this.renderSetting(setting, defaultValue));
+                const settingEl = this.renderSetting(setting, defaultValue);
+                if (settingEl !== false) {
+                    fields.appendChild(settingEl);
+                }
             }
         });
        
@@ -72,7 +76,11 @@ export class ElementSettings {
         utilitySidebar.wrapper.addEventListener('click', listener);
     }
 
-    renderSettingsGroup(group, content) {
+    renderSettingsGroup(group) {
+        if (this.checkUserGroup(group) === false) return false;
+        
+        const content = dl();
+        
         const settingGroup = dt(group.group, [], (e, el) => {
             const activeTabs = content.parentElement.querySelectorAll('dt.active');
 
@@ -92,7 +100,10 @@ export class ElementSettings {
         
         group.settings.forEach(setting => {
             const defaultValue = (this.el.settings[setting.name] === undefined) ? setting.value : this.el.settings[setting.name];
-            settingGroupContent.appendChild(this.renderSetting(setting, defaultValue));
+            const settingEl = this.renderSetting(setting, defaultValue);
+            if (settingEl !== false) {
+                settingGroupContent.appendChild(settingEl);
+            }
         });
 
         content.appendChild(settingGroup);
@@ -102,6 +113,8 @@ export class ElementSettings {
     }
 
     renderSetting(setting, defaultValue) {
+        if (this.checkUserGroup(setting) === false) return false;
+        
         switch (setting.type) {
             case 'select':
                 return ui.select(setting, defaultValue, this.setSetting.bind(this));
@@ -132,6 +145,61 @@ export class ElementSettings {
             default:
                 return ui.text(setting, defaultValue, this.setSetting.bind(this));        
         }
+    }
+    
+    checkUserGroup(setting) {
+        let match = true;
+        
+        if (setting.userGroup && Array.isArray(setting.userGroup)) {
+            const matchAll = setting.userGroupMatchAll || false;
+            match = false;
+            
+            for (const userGroup of setting.userGroup) {
+                if ((typeof userGroup === 'object') && userGroup.group) {
+                    if (fredConfig.membership[userGroup.group] !== undefined) {
+                        if (userGroup.role) {
+                            if (fredConfig.role[userGroup.role] === undefined) return false;
+
+                            if (fredConfig.membership[userGroup.group] <= fredConfig.role[userGroup.role]) {
+                                match = true;
+                                if (matchAll === false) break;
+                                continue;
+                            }
+                            
+                            match = false;
+                            if (matchAll === true) return false;
+                            continue;
+                        }
+
+                        match = true;
+                        if (matchAll === false) break;
+                        continue;
+                    }
+
+                    match = false;
+                    if (matchAll === true) return false;
+                    
+                    continue;
+                }
+                
+                if (typeof userGroup === 'string') {
+                    if (fredConfig.membership[userGroup] !== undefined) {
+                        match = true;
+                        if (matchAll === false) break;
+                        continue;
+                    }
+
+                    match = false;
+                    if (matchAll === true) return false;
+                    
+                    continue;
+                }
+             
+                return false;
+            }
+        }
+        
+        return match;
     }
     
     setSetting(name, value) {

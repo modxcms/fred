@@ -25,12 +25,18 @@ export default class Fred {
         fredConfig.resource = config.resource;
         delete config.resource;
         
+        fredConfig.membership = config.membership;
+        delete config.membership;
+        
+        fredConfig.role = config.role;
+        delete config.role;
+        
         fredConfig.config = config || {};
         fredConfig.fred = this;
         this.loading = null;
         this.wrapper = null;
         this.fingerprint = '';
-        this.cfg = fredConfig;
+        
         this.libs = libs;
         this.Finder = Finder;
         this.previewDocument = null;
@@ -458,7 +464,6 @@ export default class Fred {
     }
 
     logoutUser() {
-        console.log('Goodbye!');
         const url = fredConfig.config.managerUrl + '?a=security/logout';
         document.location.href = url;
     }
