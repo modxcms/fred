@@ -115,6 +115,31 @@ class FredACLsManagerController extends FredBaseManagerController
             $adminPolicy->set('data', $data);
             $adminPolicy->save();
         }
+
+        /** @var modUserGroup $adminUserGroup */
+        $adminUserGroup = $modx->getObject('modUserGroup', ['id' => 1]);
+        if ($adminUserGroup) {
+            /** @var modContext[] $contexts */
+            $contexts = $modx->getIterator('modContext');
+            foreach ($contexts as $context) {
+                $contextAccess = $modx->getObject('modAccessContext', [
+                    'target' => $context->get('key'),
+                    'policy' => $adminPolicy->get('id'),
+                    'principal_class' => 'modUserGroup',
+                ]);
+
+                if (!$contextAccess) {
+                    $contextAccess = $modx->newObject('modAccessContext');
+                }
+
+                $contextAccess->set('target', $context->get('key'));
+                $contextAccess->set('principal_class', 'modUserGroup');
+                $contextAccess->set('principal', 1);
+                $contextAccess->set('policy', $adminPolicy->get('id'));
+                $contextAccess->set('authority', 0);
+                $contextAccess->save();
+            }
+        }
     }
 
     public function getPageTitle()
