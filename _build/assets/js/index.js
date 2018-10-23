@@ -25,12 +25,6 @@ export default class Fred {
         fredConfig.resource = config.resource;
         delete config.resource;
         
-        fredConfig.membership = config.membership;
-        delete config.membership;
-        
-        fredConfig.role = config.role;
-        delete config.role;
-        
         fredConfig.config = config || {};
         fredConfig.fred = this;
         this.loading = null;

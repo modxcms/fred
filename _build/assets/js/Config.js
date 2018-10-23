@@ -13,8 +13,6 @@ class Config {
         this._jwt = null;
         this._permission = null;
         this._resource = null;
-        this._membership = null;
-        this._role = null;
     }
     
     set fred(fred) {
@@ -54,20 +52,6 @@ class Config {
         if (this._resource=== null) {
             this._resource = resource;
             Object.freeze(this._resource);
-        }
-    }
-    
-    set membership(membership) {
-        if (this._membership=== null) {
-            this._membership = membership;
-            Object.freeze(this._membership);
-        }
-    }
-    
-    set role(role) {
-        if (this._role=== null) {
-            this._role = role;
-            Object.freeze(this._role);
         }
     }
     
@@ -115,14 +99,6 @@ class Config {
         return this._resource;
     }
     
-    get membership() {
-        return this._membership;
-    }
-    
-    get role() {
-        return this._role;
-    }
-
     registerEditor(name, editor) {
         if (!this._editors[name]) {
             this._editors[name] = editor;

@@ -77,8 +77,6 @@ export class ElementSettings {
     }
 
     renderSettingsGroup(group) {
-        if (this.checkUserGroup(group) === false) return false;
-        
         const content = dl();
         
         const settingGroup = dt(group.group, [], (e, el) => {
@@ -113,8 +111,6 @@ export class ElementSettings {
     }
 
     renderSetting(setting, defaultValue) {
-        if (this.checkUserGroup(setting) === false) return false;
-        
         switch (setting.type) {
             case 'select':
                 return ui.select(setting, defaultValue, this.setSetting.bind(this));
@@ -145,61 +141,6 @@ export class ElementSettings {
             default:
                 return ui.text(setting, defaultValue, this.setSetting.bind(this));        
         }
-    }
-    
-    checkUserGroup(setting) {
-        let match = true;
-        
-        if (setting.userGroup && Array.isArray(setting.userGroup)) {
-            const matchAll = setting.userGroupMatchAll || false;
-            match = false;
-            
-            for (const userGroup of setting.userGroup) {
-                if ((typeof userGroup === 'object') && userGroup.group) {
-                    if (fredConfig.membership[userGroup.group] !== undefined) {
-                        if (userGroup.role) {
-                            if (fredConfig.role[userGroup.role] === undefined) return false;
-
-                            if (fredConfig.membership[userGroup.group] <= fredConfig.role[userGroup.role]) {
-                                match = true;
-                                if (matchAll === false) break;
-                                continue;
-                            }
-                            
-                            match = false;
-                            if (matchAll === true) return false;
-                            continue;
-                        }
-
-                        match = true;
-                        if (matchAll === false) break;
-                        continue;
-                    }
-
-                    match = false;
-                    if (matchAll === true) return false;
-                    
-                    continue;
-                }
-                
-                if (typeof userGroup === 'string') {
-                    if (fredConfig.membership[userGroup] !== undefined) {
-                        match = true;
-                        if (matchAll === false) break;
-                        continue;
-                    }
-
-                    match = false;
-                    if (matchAll === true) return false;
-                    
-                    continue;
-                }
-             
-                return false;
-            }
-        }
-        
-        return match;
     }
     
     setSetting(name, value) {

@@ -64,7 +64,120 @@ class FredElement extends xPDOSimpleObject {
         
         $options = array_merge($options, $override);
         
+        if (isset($options['settings'])) {
+            /** @var modX $modx */
+            $modx = $this->xpdo;
+            
+            if (!$modx->user->get('sudo')) {
+                $memberships = [];
+                $groups = $modx->user->getUserGroups();
+                $roles = [];
+
+                if (!empty($groups)) {
+                    /** @var modUserGroupMember[] $memberGroups */
+                    $memberGroups = $modx->getIterator('modUserGroupMember', ['user_group:IN' => $groups, 'member' => $modx->user->id]);
+                    foreach ($memberGroups as $memberGroup) {
+                        $group = $memberGroup->getOne('UserGroup');
+                        if (!$group) continue;
+
+                        if (!isset($roles[$memberGroup->get('role')])) {
+                            $role = $memberGroup->getOne('UserGroupRole');
+                            if (!$role) continue;
+
+                            $roles[$memberGroup->get('role')] = $role->get('authority');
+                        }
+
+                        $memberships[$group->get('name')] = $roles[$memberGroup->get('role')];
+                    }
+                }
+
+                $rolesMap = [];
+                /** @var modUserGroupRole[] $userGroupRoles */
+                $userGroupRoles = $modx->getIterator('modUserGroupRole');
+                foreach ($userGroupRoles as $userGroupRole) {
+                    $rolesMap[$userGroupRole->get('name')] = $userGroupRole->get('authority');
+                }
+
+                $options['settings'] = $this->filterSettings($options['settings'], $memberships, $rolesMap);
+            }
+        }
+        
         return $options;
+    }
+    
+    private function filterSettings($settings, $memberships, $rolesMap)
+    {
+        $filtered = [];
+        
+        foreach ($settings as $setting) {
+            $matchAll = (isset($setting['userGroupMatchAll'])) ? $setting['userGroupMatchAll'] : false;
+            
+            if (isset($setting['userGroup']) && is_array($setting['userGroup'])) {
+                $match = false;
+                
+                foreach ($setting['userGroup'] as $userGroup) {
+                    if (is_array($userGroup)) {
+                        if (!isset($memberships[$userGroup['group']])) {
+                            $match = false;
+
+                            if ($matchAll === true) {
+                                continue 2;
+                            } else {
+                                continue;
+                            }
+                        }
+                        
+                        if (isset($userGroup['role'])) {
+                            if (!isset($rolesMap[$userGroup['role']])) continue 2;
+                            
+                            if ($memberships[$userGroup['group']] <= $rolesMap[$userGroup['role']]) {
+                                $match = true;
+
+                                if ($matchAll === false) {
+                                    break;
+                                }
+                            } else {
+                                $match = false;
+
+                                if ($matchAll === true) {
+                                    continue 2;
+                                }
+                            }
+                        } else {
+                            $match = true;
+                            
+                            if ($matchAll === false) {
+                                break;
+                            }
+                        }
+                    } else {
+                        if (isset($memberships[$userGroup])) {
+                            $match = true;
+                            
+                            if ($matchAll === false) {
+                                break;
+                            }
+                        } else {
+                            $match = false;
+
+                            if ($matchAll === true) {
+                                continue 2;
+                            }
+                        }
+                    }
+                }
+                
+                if ($match === false) continue;
+            }
+            
+            if (isset($setting['group']) && !empty($setting['settings'])) {
+                $setting['settings'] = $this->filterSettings($setting['settings'], $memberships, $rolesMap);
+            }
+            
+            $filtered[] = $setting;
+        }
+        
+        return $filtered;
     }
 
     public function getImage()

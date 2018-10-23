@@ -182,38 +182,6 @@ switch ($modx->event->name) {
             
             $jwt = \Firebase\JWT\JWT::encode($payload, $fred->getSecret());
 
-            $memberships = [];
-            $groups = $modx->user->getUserGroups();
-            $roles = [];
-            
-            if (!empty($groups)) {
-                /** @var modUserGroupMember[] $memberGroups */
-                $memberGroups = $modx->getIterator('modUserGroupMember', ['user_group:IN' => $groups, 'member' => $modx->user->id]);
-                foreach ($memberGroups as $memberGroup) {
-                    $group = $memberGroup->getOne('UserGroup');
-                    if (!$group) continue;
-                    
-                    if (!isset($roles[$memberGroup->get('role')])) {
-                        $role = $memberGroup->getOne('UserGroupRole');
-                        if (!$role) continue;
-
-                        $roles[$memberGroup->get('role')] = $role->get('authority');
-                    }
-                    
-                    $memberships[$group->get('name')] = $roles[$memberGroup->get('role')]; 
-                }
-            }
-            
-            $rolesMap = [];
-            /** @var modUserGroupRole[] $userGroupRoles */
-            $userGroupRoles = $modx->getIterator('modUserGroupRole');
-            foreach ($userGroupRoles as $userGroupRole) {
-                $rolesMap[$userGroupRole->get('name')] = $userGroupRole->get('authority');
-            }
-
-            $memberships = (object)$memberships;
-            $rolesMap = (object)$rolesMap;
-
             $fredContent = '
         <script type="text/javascript" src="' . $fred->getOption('webAssetsUrl') . 'fred.min.js"></script>
         <link rel="stylesheet" href="' . $fred->getOption('webAssetsUrl') . 'fred.css" type="text/css" />
@@ -230,8 +198,6 @@ switch ($modx->event->name) {
                 rte: "' . $fred->getOption('rte') . '",
                 rteConfig: {' . $rteConfigString . '},
                 jwt: "' . $jwt . '",
-                membership: ' . json_encode($memberships) . ',
-                role: ' . json_encode($rolesMap) . ',
                 resource: {
                     "id": ' . $modx->resource->id . ',
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', ['fred' => 2] , 'abs')) . '",
