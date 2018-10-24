@@ -112,6 +112,44 @@ if ($object->xpdo) {
                     $contextAccess->save();
                 }
             }
+
+            /** @var modAccessPolicy $editorPolicy */
+            $editorPolicy = $modx->getObject('modAccessPolicy', ['name' => 'Fred Editor']);
+            if (!$editorPolicy) {
+                $editorPolicy = $modx->newObject('modAccessPolicy');
+                $editorPolicy->set('name', 'Fred Editor');
+                $editorPolicy->set('description', 'Editor policy for Fred.');
+                $editorPolicy->set('template', $template->get('id'));
+                $editorPolicy->set('lexicon', $template->get('lexicon'));
+    
+                $data = [
+                    'delete_document' => true,
+                    'fred' => true,
+                    'fred_blueprint_categories' => true,
+                    'fred_blueprint_categories_create_public' => true,
+                    'fred_blueprint_categories_save' => true,
+                    'fred_blueprints' => true,
+                    'fred_blueprints_create_public' => true,
+                    'fred_blueprints_save' => true,
+                    'fred_element_categories' => true,
+                    'fred_element_category_save' => true,
+                    'fred_element_move' => true,
+                    'fred_element_save' => true,
+                    'fred_elements' => true,
+                    'fred_settings' => true,
+                    'fred_settings_advanced' => true,
+                    'fred_settings_tags' => true,
+                    'fred_settings_tvs' => true,
+                    'fred_themed_templates' => true,
+                    'new_document' => true,
+                    'resource_duplicate' => true,
+                    'save_document' => true,
+                    'view_unpublished' => true,
+                ];
+
+                $editorPolicy->set('data', $data);
+                $editorPolicy->save();
+            }
             
             break;
     }
