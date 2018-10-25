@@ -41,7 +41,7 @@ Drag and drop Elements into drop zones in the front-end
 #### fred_element_rebuild
 View the Rebuild tab in the Manager
 
-### Element Categories
+### Element Category Permissions
 #### fred_element_categories
 View Fred Element Categories in the Manager
 
@@ -51,7 +51,7 @@ Create/edit/duplicate Element in the Manager or front-end Context
 #### fred_element_category_delete
 Delete any Element Categories in the Manager
 
-### RTE Configs
+## RTE Config Permissions
 #### fred_element_rtes
 View RTE configs in the Manager
 
@@ -61,7 +61,7 @@ Create/edit/duplicate RTE configs in the Manager
 #### fred_element_rte_config_delete
 Delete RTE configs in the Manager
 
-### Option Sets
+## Option Sets Permissions
 #### fred_element_option_sets
 View Option Sets in the Manager
 
@@ -84,7 +84,7 @@ Delete Blueprints in the Manager
 #### fred_blueprints_create_public
 Create public Blueprints in the front-end
 
-### Blueprint Categories Permissions
+### Blueprint Category Permissions
 #### fred_blueprint_categories
 View Blueprint Categories in the Manager
 
@@ -97,7 +97,7 @@ Delete Blueprint Categories in the Manager
 #### fred_blueprint_categories_create_public
 Create Public Blueprint Categories in the Manager or front-end Context
 
-## Themes
+## Theme Permissions
 #### fred_themes
 View the Themes tab in the Manager
 
@@ -110,7 +110,7 @@ Delete Themes in the Manager
 #### fred_themes_build
 Build Themes in the Manager
 
-### Themed Templates
+### Themed Template Permissions
 #### fred_themed_templates
 View Theme/Template assignments in the Manager
 
@@ -120,7 +120,7 @@ Assign/Update Fred Themes to MODX Templates in the Manager
 #### fred_themed_templates_delete
 Unassign Theme from MODX Templates in the Manager
 
-## MODX
+## MODX Permissions
 #### new_document
 Create new Resources from the front-end
 
