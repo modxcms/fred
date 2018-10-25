@@ -28,6 +28,10 @@ pages:
       - Themes: cmp/themes.md
       - Themed Templates: cmp/themed_templates.md     
       - Media Sources: cmp/media_sources.md
+    - ACLs:
+      - How To: acls/howto.md
+      - Permissions: acls/permissions.md
+      - Policies: acls/policies.md
 theme:
   name: 'material'
   language: en

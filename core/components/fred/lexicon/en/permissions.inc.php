@@ -15,10 +15,10 @@
  * @subpackage lexicon
  */
 
-$_lang['fred.permissions.fred'] = 'View Fred in the front-end';
+$_lang['fred.permissions.fred'] = 'View Fred';
 $_lang['fred.permissions.fred_elements'] = 'View Elements';
 $_lang['fred.permissions.fred_element_save'] = 'Create/edit/duplicate Elements';
-$_lang['fred.permissions.fred_element_delete'] = 'Delete  Elements';
+$_lang['fred.permissions.fred_element_delete'] = 'Delete Elements';
 $_lang['fred.permissions.fred_element_screenshot'] = 'Take screenshot and replace sidebar preview for Elements';
 $_lang['fred.permissions.fred_element_move'] = 'Drag and drop Elements in drop zones';
 $_lang['fred.permissions.fred_element_category_delete'] = 'Delete any Element Categories';
@@ -52,11 +52,11 @@ $_lang['fred.permissions.fred_blueprint_categories_save'] = 'Create/edit/duplica
 $_lang['fred.permissions.fred_blueprint_categories_delete'] = 'Delete Blueprint Categories';
 $_lang['fred.permissions.fred_blueprint_categories_create_public'] = 'Create Public Blueprint Categories';
 $_lang['fred.permissions.new_document_in_root'] = 'Create Resources in the top-level of web root';
-$_lang['fred.permissions.view_unpublished'] = 'View unpublished Resources from the front-end';
-$_lang['fred.permissions.resource_duplicate'] = 'Duplicate Resources from the front-end';
-$_lang['fred.permissions.unpublish_document'] = 'Unpublish Resources from the front-end';
-$_lang['fred.permissions.publish_document'] = 'Publish/Unpublish Resources';
-$_lang['fred.permissions.save_document'] = 'Save Resources from the front-end';
-$_lang['fred.permissions.new_document'] = 'Create new Resources from the front-end';
-$_lang['fred.permissions.delete_document'] = 'Delete or Remove Resources from the front-end';
-$_lang['fred.permissions.undelete_document'] = 'Undelete Resources from the front-end';
+$_lang['fred.permissions.view_unpublished'] = 'View unpublished Resources';
+$_lang['fred.permissions.resource_duplicate'] = 'Duplicate Resources';
+$_lang['fred.permissions.unpublish_document'] = 'Unpublish Resources';
+$_lang['fred.permissions.publish_document'] = 'Publish Resources';
+$_lang['fred.permissions.save_document'] = 'Save Resources';
+$_lang['fred.permissions.new_document'] = 'Create new Resources';
+$_lang['fred.permissions.delete_document'] = 'Delete Resources';
+$_lang['fred.permissions.undelete_document'] = 'Undelete Resources';
