@@ -1,11 +1,11 @@
 # Permissions
-Here's a complete list of permissions available for Fred.Most of these permissions has it's usage in mgr and frontend contexts, however there are few that will apply only for mgr or frontend context. 
+The following sections list the permissions available for Fred. The subhead is the permission key used in code, followed by a brief description of where and what those permissions control Most of these permissions can be used both with the `mgr` context and front-end contexts like `web`. However there are few that only apply to `mgr` or front-end contexts. 
 
-For example, if you apply `fred` permission to mgr context, you'll be able to see Fred's CMP, if you apply it to frontend context, you'll be able to use Fred from frontend (if enabled for the template). If you apply `fred_settings` permission to `mgr` context, nothing will happen as this permission is used only on frontend, but if you apply it to any frontend context, you'll be able to see the Settings tab.   
+For example, if you apply the `fred` permission to the `mgr` Context, users will see the Fred Extra in the Manager. If you apply it to a front-end context, the Fred controls will apear when browsing the site from the front-end (if assigned to a page’s Template). Applying the `fred_settings` permission to `mgr` context will do nothing as this permission is only used in front-end to be able to see the Settings tab in the sidebar menu.   
 
-## General
+## General Permissions
 #### fred
-View Fred
+View Fred in the Manager or front-end Contexts
 
 #### fred_settings
 View the Settings menu in the front-end sidebar
@@ -22,34 +22,34 @@ View the Tags section under the Settings menu
 #### fred_media_sources
 View Media Sources in the Manager
 
-## Elements
+## Element Permissions
 #### fred_elements
-View Elements
+View Elements in the Manager or front-end Contexts
 
 #### fred_element_save
-Create/edit/duplicate Elements
+Create/edit/duplicate Elements in the Manager
 
 #### fred_element_delete
-Delete Elements
+Delete Elements in the Manager
 
 #### fred_element_screenshot
-Take screenshot and replace sidebar preview for Elements
+Take a screenshot to replace the current sidebar preview for Elements
 
 #### fred_element_move
-Drag and drop Elements in drop zones
+Drag and drop Elements into drop zones in the front-end
 
 #### fred_element_rebuild
 View the Rebuild tab in the Manager
 
 ### Element Categories
 #### fred_element_categories
-View Fred Element Categories
+View Fred Element Categories in the Manager
 
 #### fred_element_category_save
-Create/edit/duplicate Element Categories
+Create/edit/duplicate Element in the Manager or front-end Context 
 
 #### fred_element_category_delete
-Delete any Element Categories
+Delete any Element Categories in the Manager
 
 ### RTE Configs
 #### fred_element_rtes
@@ -71,31 +71,31 @@ Create/edit/duplicate Option Sets in the Manager
 #### fred_element_option_sets_delete
 Delete Option Sets in the Manager
 
-## Blueprints
+## Blueprints Permissions
 #### fred_blueprints
-View Blueprints
+View Blueprints in the Manager or front-end Context
 
 #### fred_blueprints_save
-Create/edit/duplicate Blueprints
+Create/edit/duplicate Blueprints in the front-end
 
 #### fred_blueprints_delete
-Delete Blueprints
+Delete Blueprints in the Manager
 
 #### fred_blueprints_create_public
-Create public Blueprints
+Create public Blueprints in the front-end
 
-### Blueprint Categories
+### Blueprint Categories Permissions
 #### fred_blueprint_categories
-View Blueprint Categories
+View Blueprint Categories in the Manager
 
 #### fred_blueprint_categories_save
-Create/edit/duplicate Blueprint Categories
+Create/edit/duplicate Blueprint Categories in the Manager or front-end Context
 
 #### fred_blueprint_categories_delete
-Delete Blueprint Categories
+Delete Blueprint Categories in the Manager
 
 #### fred_blueprint_categories_create_public
-Create Public Blueprint Categories
+Create Public Blueprint Categories in the Manager or front-end Context
 
 ## Themes
 #### fred_themes
@@ -122,28 +122,28 @@ Unassign Theme from MODX Templates in the Manager
 
 ## MODX
 #### new_document
-Create new Resources
+Create new Resources from the front-end
 
 #### new_document_in_root
 Create Resources in the top-level of web root
 
 #### save_document
-Save Resources
+Save Resources from the front-end
 
 #### view_unpublished
-View unpublished Resources
+View unpublished Resources from the front-end
 
 #### resource_duplicate
-Duplicate Resources
+Duplicate Resources from the front-end
 
 #### publish_document
-Publish Resources
+Publish Resources from the front-end
 
 #### unpublish_document
-Unpublish Resources
+Unpublish Resources from the front-end
 
 #### delete_document
-Delete Resources
+Delete Resources from the front-end
 
 #### undelete_document
-Undelete Resources
+Undelete Resources from the front-end
