@@ -237,126 +237,6 @@ export default class Blueprints extends Sidebar {
 
         const pageForm = form(['fred--pages_create']);
 
-        const fields = fieldSet();
-        const title = legend('fred.fe.blueprints.create_blueprint');
-
-        const onChange = (name, value) => {
-            this.state.blueprint[name] = value;
-        };
-
-        const onChangeChoices = (name, value) => {
-            this.state.blueprint[name] = value.value;
-        };
-
-        fields.appendChild(title);
-
-
-        const name = text({
-            name: 'name',
-            label: 'fred.fe.blueprints.blueprint_name'
-        }, this.state.blueprint.name, onChange);
-
-        fields.appendChild(name);
-
-        fields.appendChild(area({
-            name: 'description',
-            label: 'fred.fe.blueprints.blueprint_description'
-        }, this.state.blueprint.description, onChange));
-
-        const onImageChange = (name, value) => {
-            if (value === '') {
-                imageEl.setPreview(this.state.blueprint.generatedImage);
-            }
-
-            this.state.blueprint[name] = value;
-        };
-
-        const imageEl = image({
-            name: 'image',
-            label: 'fred.fe.blueprints.blueprint_image'
-        }, this.state.blueprint.image, onImageChange);
-
-        fields.appendChild(imageEl);
-        
-        const category = choices({
-            name: 'category',
-            label: fredConfig.lng('fred.fe.blueprints.blueprint_category'),
-            choices: {
-                choices : this.categories,
-                shouldSort: false
-            }
-        }, this.state.blueprint.category, onChangeChoices);
-
-        fields.appendChild(category);
-
-        fields.appendChild(text({
-            name: 'rank',
-            label: 'fred.fe.blueprints.blueprint_rank'
-        }, this.state.blueprint.rank, onChange));
-
-        const publicToggle = toggle({
-            name: 'public',
-            label: 'fred.fe.blueprints.blueprint_public'
-        }, this.state.blueprint.public, onChange);
-        
-        if (!fredConfig.permission.fred_blueprints_create_public) {
-            publicToggle.inputEl.setAttribute('disabled', 'disabled');
-        }
-        
-        fields.appendChild(publicToggle);
-
-        if (this.state.blueprint.image === '') {
-            const loader = span(['fred--loading']);
-            imageEl.appendChild(loader);
-            
-            fredConfig.fred.previewContent().then(iframe => {
-                iframe.parentNode.style.display = 'block';
-                iframe.parentNode.style.opacity = '0';
-                iframe.parentNode.style.zIndex = '-99999999';
-                
-                html2canvas(iframe.contentWindow.document.body, {
-                    logging: false
-                }).then(canvas => {
-                    this.state.blueprint.generatedImage = canvas.toDataURL();
-                    loader.remove();
-                    imageEl.setPreview(this.state.blueprint.generatedImage);
-                    iframe.parentNode.style.display = 'none';
-                    iframe.parentNode.style.opacity = null;
-                    iframe.parentNode.style.zIndex = null;
-                });
-            });
-        }
-        
-        const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
-            emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
-
-            createBlueprint(this.state.blueprint.name, this.state.blueprint.description, this.state.blueprint.category, this.state.blueprint.rank, this.state.blueprint.public, fredConfig.fred.getContent(), this.state.blueprint.generatedImage, this.state.blueprint.image, true)
-                    .then(json => {
-                        cache.killNamespace('blueprints');
-                        this.click().then(newContent => {
-                            content.replaceWith(newContent);
-                            drake.reloadContainers();
-                            emitter.emit('fred-loading-hide');
-                        });
-                    }).catch(err => {
-                    if (err.response && err.response._fields) {
-                        if (err.response._fields.name) {
-                            name.onError(err.response._fields.name);
-                        }
-
-                        if (err.response._fields.category) {
-                            category.onError(err.response._fields.category);
-                        }
-
-                        emitter.emit('fred-loading-hide');
-                    }
-                });
-        });
-
-        fields.appendChild(createButton);
-
-        pageForm.appendChild(fields);
-
         const createPageButton = dt('fred.fe.blueprints.create_blueprint', ['fred--accordion-plus'], (e, el) => {
             const activeTabs = content.querySelectorAll('dt.active');
 
@@ -367,6 +247,128 @@ export default class Blueprints extends Sidebar {
             }
 
             if (!isActive) {
+                pageForm.innerHTML = '';
+                
+                const fields = fieldSet();
+                const title = legend('fred.fe.blueprints.create_blueprint');
+
+                const onChange = (name, value) => {
+                    this.state.blueprint[name] = value;
+                };
+
+                const onChangeChoices = (name, value) => {
+                    this.state.blueprint[name] = value.value;
+                };
+
+                fields.appendChild(title);
+
+
+                const name = text({
+                    name: 'name',
+                    label: 'fred.fe.blueprints.blueprint_name'
+                }, this.state.blueprint.name, onChange);
+
+                fields.appendChild(name);
+
+                fields.appendChild(area({
+                    name: 'description',
+                    label: 'fred.fe.blueprints.blueprint_description'
+                }, this.state.blueprint.description, onChange));
+
+                const onImageChange = (name, value) => {
+                    if (value === '') {
+                        imageEl.setPreview(this.state.blueprint.generatedImage);
+                    }
+
+                    this.state.blueprint[name] = value;
+                };
+
+                const imageEl = image({
+                    name: 'image',
+                    label: 'fred.fe.blueprints.blueprint_image'
+                }, this.state.blueprint.image, onImageChange);
+
+                fields.appendChild(imageEl);
+
+                const category = choices({
+                    name: 'category',
+                    label: fredConfig.lng('fred.fe.blueprints.blueprint_category'),
+                    choices: {
+                        choices : this.categories,
+                        shouldSort: false
+                    }
+                }, this.state.blueprint.category, onChangeChoices);
+
+                fields.appendChild(category);
+
+                fields.appendChild(text({
+                    name: 'rank',
+                    label: 'fred.fe.blueprints.blueprint_rank'
+                }, this.state.blueprint.rank, onChange));
+
+                const publicToggle = toggle({
+                    name: 'public',
+                    label: 'fred.fe.blueprints.blueprint_public'
+                }, this.state.blueprint.public, onChange);
+
+                if (!fredConfig.permission.fred_blueprints_create_public) {
+                    publicToggle.inputEl.setAttribute('disabled', 'disabled');
+                }
+
+                fields.appendChild(publicToggle);
+
+                if (this.state.blueprint.image === '') {
+                    const loader = span(['fred--loading']);
+                    imageEl.appendChild(loader);
+
+                    fredConfig.fred.previewContent().then(iframe => {
+                        iframe.parentNode.style.display = 'block';
+                        iframe.parentNode.style.opacity = '0';
+                        iframe.parentNode.style.zIndex = '-99999999';
+
+                        html2canvas(iframe.contentWindow.document.body, {
+                            logging: false
+                        }).then(canvas => {
+                            this.state.blueprint.generatedImage = canvas.toDataURL();
+                            loader.remove();
+                            imageEl.setPreview(this.state.blueprint.generatedImage);
+                            iframe.parentNode.style.display = 'none';
+                            iframe.parentNode.style.opacity = null;
+                            iframe.parentNode.style.zIndex = null;
+                        });
+                    });
+                }
+
+                const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
+                    emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
+
+                    createBlueprint(this.state.blueprint.name, this.state.blueprint.description, this.state.blueprint.category, this.state.blueprint.rank, this.state.blueprint.public, fredConfig.fred.getContent(), this.state.blueprint.generatedImage, this.state.blueprint.image, true)
+                        .then(json => {
+                            cache.killNamespace('blueprints');
+                            this.click().then(newContent => {
+                                content.replaceWith(newContent);
+                                drake.reloadContainers();
+                                emitter.emit('fred-loading-hide');
+                            });
+                        }).catch(err => {
+                        if (err.response && err.response._fields) {
+                            if (err.response._fields.name) {
+                                name.onError(err.response._fields.name);
+                            }
+
+                            if (err.response._fields.category) {
+                                category.onError(err.response._fields.category);
+                            }
+
+                            emitter.emit('fred-loading-hide');
+                        }
+                    });
+                });
+
+                fields.appendChild(createButton);
+
+                pageForm.appendChild(fields);
+                
                 el.classList.add('active');
                 e.stopPropagation();
                 emitter.emit('fred-sidebar-dt-active', createPageButton, formWrapper);
