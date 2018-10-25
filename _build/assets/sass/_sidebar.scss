@@ -289,7 +289,7 @@
         line-height: normal;
         position: absolute;
         top: 8px;
-        left: 8px;
+        left: -300px;
         background: rgba(black, .6);
         opacity: 0;
         transition: $timing;
@@ -306,7 +306,8 @@
         transform: scale(1.05);
         background-color: $black;
         figcaption {
-          opacity: 1
+          opacity: 1;
+          left: 8px;
         }
       }
       > div {
