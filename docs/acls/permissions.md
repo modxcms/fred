@@ -5,145 +5,145 @@ For example, if you apply the `fred` permission to the `mgr` Context, users will
 
 ## General Permissions
 #### fred
-View Fred in the Manager or front-end Contexts
+View Fred (mgr) (web)
 
 #### fred_settings
-View the Settings menu in the front-end sidebar
+View the Settings menu in the sidebar (web)
 
 #### fred_settings_advanced
-View the Advanced Settings under the Settings menu
+View the Advanced Settings under the Settings menu (web)
 
 #### fred_settings_tvs
-View the TVs section under the Settings menu
+View the TVs section under the Settings menu (web)
 
 #### fred_settings_tags
-View the Tags section under the Settings menu
+View the Tags section under the Settings menu (web)
 
 #### fred_media_sources
-View Media Sources in the Manager
+View Media Sources (mgr)
 
 ## Element Permissions
 #### fred_elements
-View Elements in the Manager or front-end Contexts
+View Elements (mgr) (web)
 
 #### fred_element_save
-Create/edit/duplicate Elements in the Manager
+Create/edit/duplicate Elements (mgr)
 
 #### fred_element_delete
-Delete Elements in the Manager
+Delete Elements (mgr)
 
 #### fred_element_screenshot
-Take a screenshot to replace the current sidebar preview for Elements
+Take a screenshot to replace the current sidebar preview for Elements (web)
 
 #### fred_element_move
-Drag and drop Elements into drop zones in the front-end
+Drag and drop Elements into drop zones (web)
 
 #### fred_element_rebuild
-View the Rebuild tab in the Manager
+View the Rebuild tab (mgr)
 
 ### Element Category Permissions
 #### fred_element_categories
-View Fred Element Categories in the Manager
+View Fred Element Categories (mgr)
 
 #### fred_element_category_save
-Create/edit/duplicate Element in the Manager or front-end Context 
+Create/edit/duplicate Element (mgr) 
 
 #### fred_element_category_delete
-Delete any Element Categories in the Manager
+Delete Element Categories (mgr)
 
 ## RTE Config Permissions
 #### fred_element_rtes
-View RTE configs in the Manager
+View RTE configs (mgr)
 
 #### fred_element_rte_config_save
-Create/edit/duplicate RTE configs in the Manager
+Create/edit/duplicate RTE configs (mgr)
 
 #### fred_element_rte_config_delete
-Delete RTE configs in the Manager
+Delete RTE configs (mgr)
 
 ## Option Sets Permissions
 #### fred_element_option_sets
-View Option Sets in the Manager
+View Option Sets (mgr)
 
 #### fred_element_option_sets_save
-Create/edit/duplicate Option Sets in the Manager
+Create/edit/duplicate Option Sets (mgr)
 
 #### fred_element_option_sets_delete
-Delete Option Sets in the Manager
+Delete Option Sets (mgr)
 
 ## Blueprints Permissions
 #### fred_blueprints
-View Blueprints in the Manager or front-end Context
+View Blueprints (mgr) (web)
 
 #### fred_blueprints_save
-Create/edit/duplicate Blueprints in the front-end
+Create/edit/duplicate Blueprints (mgr) (web)
 
 #### fred_blueprints_delete
-Delete Blueprints in the Manager
+Delete Blueprints (mgr)
 
 #### fred_blueprints_create_public
-Create public Blueprints in the front-end
+Create public Blueprints (mgr) (web)
 
 ### Blueprint Category Permissions
 #### fred_blueprint_categories
-View Blueprint Categories in the Manager
+View Blueprint Categories (mgr)
 
 #### fred_blueprint_categories_save
-Create/edit/duplicate Blueprint Categories in the Manager or front-end Context
+Create/edit/duplicate Blueprint Categories (mgr) (web)
 
 #### fred_blueprint_categories_delete
-Delete Blueprint Categories in the Manager
+Delete Blueprint Categories (mgr)
 
 #### fred_blueprint_categories_create_public
-Create Public Blueprint Categories in the Manager or front-end Context
+Create Public Blueprint Categories (mgr) (web)
 
 ## Theme Permissions
 #### fred_themes
-View the Themes tab in the Manager
+View the Themes tab (mgr)
 
 #### fred_themes_save
-Create/edit/duplicate Themes in the Manager
+Create/edit/duplicate Themes (mgr)
 
 #### fred_themes_delete
-Delete Themes in the Manager
+Delete Themes (mgr)
 
 #### fred_themes_build
-Build Themes in the Manager
+Build Themes (mgr)
 
 ### Themed Template Permissions
 #### fred_themed_templates
-View Theme/Template assignments in the Manager
+View Theme/Template assignments (mgr)
 
 #### fred_themed_templates_save
-Assign/Update Fred Themes to MODX Templates in the Manager
+Assign/Update Fred Themes to MODX Templates (mgr)
 
 #### fred_themed_templates_delete
-Unassign Theme from MODX Templates in the Manager
+Unassign Theme from MODX Templates (mgr)
 
 ## MODX Permissions
 #### new_document
-Create new Resources from the front-end
+Create new Resources (mgr) (web)
 
 #### new_document_in_root
-Create Resources in the top-level of web root
+Create Resources in the top-level of web root (mgr) (web)
 
 #### save_document
-Save Resources from the front-end
+Save Resources (mgr) (web)
 
 #### view_unpublished
-View unpublished Resources from the front-end
+View unpublished Resources (web)
 
 #### resource_duplicate
-Duplicate Resources from the front-end
+Duplicate Resources (mgr) (web)
 
 #### publish_document
-Publish Resources from the front-end
+Publish Resources (mgr) (web)
 
 #### unpublish_document
-Unpublish Resources from the front-end
+Unpublish Resources (mgr) (web)
 
 #### delete_document
-Delete Resources from the front-end
+Delete Resources (mgr) (web)
 
 #### undelete_document
-Undelete Resources from the front-end
+Undelete Resources (mgr) (web)

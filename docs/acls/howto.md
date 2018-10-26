@@ -7,10 +7,10 @@ It also creates a more-limited `Fred Editor` policy intended for users that do n
 ## Limiting Fred to Specific Contexts
 By default, the `Fred Admin` policy applies to all existing Contexts. If you do not need to manage all Contexts with Fred remove this Policy from the `Administrators` User Group; if you create a new Context that needs to be managed by Fred add this policy to the `Administrators` Group after creating the Context. 
 
-To enable Fred for members who are not `Administrators` Group members, add a Fred Policy Templates to their User Group and to the specific Contexts you wish to be managed by Fred. 
+To enable Fred for members who are not `Administrators` Group members, add a Fred Policy to their User Group and to the specific Contexts you wish to be managed by Fred. 
 
 ## Manager and Front-end Access
-Web developers and theme creators use the Fred Extra in the Manager configure Fred and create Themes. Once a site is set up, however, daily content creation and edits using Fred may not require Manager access. 
+Web developers and theme creators use the Fred Extra in the Manager to configure Fred and create Themes. Once a site is set up, however, daily content creation and edits using Fred may not require Manager access. 
 
 If you wish for users to only work with Fred from the front-end, you need to take two steps:
 

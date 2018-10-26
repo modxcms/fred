@@ -5,7 +5,7 @@ This Admin policy has all [permissions](/acls/permissions) enabled. Users are no
 
 
 ## Fred Editor
-A `Fred Editor` user is able to view Fred and all page settings in the front-end, create and use Elements and Blueprints and create new pages. **This Policy can only be used if a front-end Login is available for editors**. 
+A `Fred Editor` user is able to view Fred and all page settings in the front-end, create and use Elements and Blueprints and create new pages. 
 
 The complete list of permissions for this Policy:
 
