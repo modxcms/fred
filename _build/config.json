@@ -24,7 +24,10 @@
             "OnDocFormSave",
             "OnBeforeDocFormSave",
             "OnTemplateRemove",
-            "OnLoadWebDocument"
+            "OnLoadWebDocument",
+            "OnTVInputRenderList",
+            "OnTVInputPropertiesList",
+            "OnManagerPageBeforeRender"
           ]
         }
       ]

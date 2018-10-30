@@ -16,6 +16,7 @@
  */
 
 $_lang['fred'] = 'Fred';
+$_lang['freddropzone'] = 'Fred\'s DropZone';
 
 $_lang['fred.global.any'] = 'Any';
 $_lang['fred.global.change_order'] = 'Change order: [[+name]]';
@@ -209,6 +210,8 @@ $_lang['fred.media_sources.fred_read_only'] = 'Read Only for Fred';
 $_lang['fred.media_sources.search'] = 'Search';
 $_lang['fred.media_sources.none'] = 'No Media Sources were found.';
 $_lang['fred.media_sources.go_to'] = 'Manage Media Sources';
+
+$_lang['fred.tvs.dropzone.hide_input'] = 'Hide Field from Manager';
 
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
