@@ -25,7 +25,11 @@ final class Utils
             $array = array_keys(array_flip($array));
         }
 
-        return array_filter($array, $filterCallback);
+        if (!empty($filterCallback)) {
+            return array_filter($array, $filterCallback);
+        }
+
+        return $array;
     }
 
     /**
