@@ -820,9 +820,13 @@ export class ContentElement {
         return this.templateRender(parseModx).then(html => {
             element.innerHTML = html;
             
-            const noRenderElements = element.querySelectorAll('[data-fred-render="false"]');
-            for (let noRenderElement of noRenderElements) {
-                noRenderElement.remove();
+            const renderElements = element.querySelectorAll('[data-fred-render]');
+            for (let el of renderElements) {
+                if (el.getAttribute('data-fred-render') === "false") {
+                    el.remove();
+                } else {
+                    el.removeAttribute('data-fred-render');
+                }
             }
 
             const fredElements = element.querySelectorAll('[data-fred-name]');

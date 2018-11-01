@@ -172,8 +172,20 @@ final class RenderResource {
 
     private function renderElement($html, $item)
     {
-        $html = HtmlPageCrawler::create($html);
+        $html = HtmlPageCrawler::create('<div>' . $html . '</div>');
 
+        $renderElements = $html->filter('[data-fred-render]');
+        $renderElements->each(function(HtmlPageCrawler $node, $i) use ($item, $html) {
+            $render = $node->attr('data-fred-render');
+            if ($render === 'false') {
+                $node->remove();
+            } else {
+                $node->removeAttribute('data-fred-render');
+            }
+        });
+
+        $html = HtmlPageCrawler::create($html->first()->html());
+        
         $elements = $html->filter('[data-fred-name]');
         $elements->each(function(HtmlPageCrawler $node, $i) use ($item, $html) {
             $valueName = $node->attr('data-fred-name');
