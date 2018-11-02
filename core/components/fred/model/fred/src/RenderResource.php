@@ -56,6 +56,34 @@ final class RenderResource {
         
         $this->resource->set('content', $html);
 
+        $c = $this->modx->newQuery('modTemplateVar');
+        $c->leftJoin('modTemplateVarTemplate', 'TemplateVarTemplates');
+
+        $c->where([
+            'type' => 'freddropzone',
+            'TemplateVarTemplates.templateid' => $this->resource->get('template')
+        ]);
+
+        /** @var \modTemplateVar[] $tvs */
+        $tvs = $this->modx->getIterator('modTemplateVar', $c);
+        foreach ($tvs as $tv) {
+            $tvName = $tv->get('name');
+
+            if (isset($this->data[$tvName])) {
+                $tvContent = '';
+
+                foreach ($this->data[$tvName] as $item) {
+                    try {
+                        $tvContent .= $this->renderElement($this->twig->render($item['widget'], $item['settings']), $item);
+                    } catch (\Exception $e) {}
+                }
+                
+                $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
+
+                $this->resource->setTVValue($tvName, $tvContent);
+            }
+        }
+
         $this->data['fingerprint'] = Utils::resourceFingerprint($this->resource);
         $this->resource->setProperty('data', $this->data, 'fred');
         
@@ -144,8 +172,20 @@ final class RenderResource {
 
     private function renderElement($html, $item)
     {
-        $html = HtmlPageCrawler::create($html);
+        $html = HtmlPageCrawler::create('<div>' . $html . '</div>');
 
+        $renderElements = $html->filter('[data-fred-render]');
+        $renderElements->each(function(HtmlPageCrawler $node, $i) use ($item, $html) {
+            $render = $node->attr('data-fred-render');
+            if ($render === 'false') {
+                $node->remove();
+            } else {
+                $node->removeAttribute('data-fred-render');
+            }
+        });
+
+        $html = HtmlPageCrawler::create($html->first()->html());
+        
         $elements = $html->filter('[data-fred-name]');
         $elements->each(function(HtmlPageCrawler $node, $i) use ($item, $html) {
             $valueName = $node->attr('data-fred-name');

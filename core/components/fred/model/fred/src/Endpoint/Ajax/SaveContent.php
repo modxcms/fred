@@ -56,13 +56,34 @@ class SaveContent extends Endpoint
 
         $this->loadTagger();
         
+        $parser = $this->modx->getParser();
+        
         if (isset($this->body['content'])) {
             $content = $this->body['content'];
-            $parser = $this->modx->getParser();
-            
             $content = Utils::htmlDecodeTags($content, $parser);
             
             $object->setContent($content);
+        }
+
+        $c = $this->modx->newQuery('modTemplateVar');
+        $c->leftJoin('modTemplateVarTemplate', 'TemplateVarTemplates');
+
+        $c->where([
+            'type' => 'freddropzone',
+            'TemplateVarTemplates.templateid' => $object->get('template')
+        ]);
+
+        /** @var \modTemplateVar[] $tvs */
+        $tvs = $this->modx->getIterator('modTemplateVar', $c);
+        foreach ($tvs as $tv) {
+            $tvName = $tv->get('name');
+            
+            if (isset($this->body[$tvName])) {
+                $tvContent = $this->body[$tvName];
+                $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
+
+                $object->setTVValue($tvName, $tvContent);
+            }
         }
 
         if (isset($this->body['pageSettings']['introtext'])) {

@@ -157,8 +157,12 @@ export default class Fred {
             this.iframe.contentWindow.document.open();
             this.iframe.contentWindow.document.write(this.previewDocument.documentElement.innerHTML);
             this.iframe.contentWindow.document.close();
-            
-            return this.iframe;
+
+            return new Promise(resolve => {
+                this.iframe.onload = resolve;
+            }).then(() => {
+                return this.iframe;
+            });
         });
     }
     

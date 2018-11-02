@@ -1,5 +1,16 @@
 Changelog for Fred.
 
+1.0.0 beta9
+==============
+- Fred now supports Permissions and Policies, ticking off the last big 1.0 feature checklist item. Time to thoroughly work over every bit of Fred ahead of its initial public release! 
+- The width of the toolbar on small Elements hid important icons. Now it doesn't. 
+- While mildly entertaining at first, the flashing cycles when hovering the parent Element of nested ones quickly becomes annoying. Fixed.
+- You get to see the magical preview soon after clicking the button when generating full-page Blueprints. So much for delayed gratification. 
+- Validate the name, version, and release when building a Theme, because themes are cool and it's the right thing to do.
+- Check `list` policy on media sources so people can't rearrange the root-level file system for you.
+- Sign every XHR call so that less than scrupulous people don't edit—or remove—your site for you.
+- Display an error message that explains why trying to download a theme without a transport package doesn't work so well.
+
 1.0.0 beta8
 ==============
 - Now with 100% more German. Danke für die Übersetzung.

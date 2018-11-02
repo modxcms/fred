@@ -21,8 +21,8 @@ class ElFinder extends Endpoint
             return;
         }
 
-        if ($this->modx->user->sudo !== 1) {
-            http_response_code(403);
+        if (!$this->modx->hasPermission('fred')) {
+            http_response_code(406);
             return;
         }
 

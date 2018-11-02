@@ -282,6 +282,15 @@ switch ($modx->event->name) {
         } 
         
         break;
+    case 'OnTVInputRenderList':
+        $modx->event->output($corePath . 'elements/tvs/input/');
+        break;
+    case 'OnTVInputPropertiesList':
+        $modx->event->output($corePath . 'elements/tvs/input/options/');
+        break;
+    case 'OnManagerPageBeforeRender':
+        $modx->controller->addLexiconTopic('fred:default');
+        break;
 }
 
 return;

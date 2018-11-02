@@ -1,12 +1,14 @@
 # Policies
 
 ## Fred Admin
-Admin policy has all [permissions](/acls/permissions) enabled, meaning that the user isn't limited in any way when using Fred. 
+This Admin policy has all [permissions](/acls/permissions) enabled. Users are not limited in any way when using Fred. 
 
 
 ## Fred Editor
-Fred Editor is able to view fred and all settings, create and use elements and blueprints and create new documents.
-Here's a list of permissions that Editor policy has:
+A `Fred Editor` user is able to view Fred and all page settings in the front-end, create and use Elements and Blueprints and create new pages. 
+
+The complete list of permissions for this Policy:
+
 - fred
 - fred_settings
 - fred_settings_advanced

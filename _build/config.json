@@ -3,7 +3,7 @@
   "lowCaseName": "fred",
   "description": "Frontend Editor",
   "author": "John Peca",
-  "version": "1.0.0-beta8",
+  "version": "1.0.0-beta9",
   "package": {
     "menus": [
       {
@@ -24,7 +24,10 @@
             "OnDocFormSave",
             "OnBeforeDocFormSave",
             "OnTemplateRemove",
-            "OnLoadWebDocument"
+            "OnLoadWebDocument",
+            "OnTVInputRenderList",
+            "OnTVInputPropertiesList",
+            "OnManagerPageBeforeRender"
           ]
         }
       ]
