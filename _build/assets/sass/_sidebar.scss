@@ -323,7 +323,8 @@
         font-weight: lighter;
         transition: $timing;
         cursor: pointer;
-        height: 56px;
+        min-height: 56px;
+        max-width: 260px;
         &.active {
           color: $modxgreen;
           background-color: darken($black, 15%);
@@ -448,7 +449,7 @@
     }
   }
   &_menu {
-    button {
+    button, a {
       color: $white;
       position: relative;
       padding: 16px 32px;
