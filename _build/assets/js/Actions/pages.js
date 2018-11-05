@@ -97,3 +97,31 @@ export const unpublishResource = resource => {
         })
     }).then(errorHandler)
 };
+
+export const deleteResource = resource => {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=delete-resource`, {
+        method: "post",
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
+        },
+        body: JSON.stringify({
+            resource
+        })
+    }).then(errorHandler)
+};
+
+export const undeleteResource = resource => {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=undelete-resource`, {
+        method: "post",
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
+        },
+        body: JSON.stringify({
+            resource
+        })
+    }).then(errorHandler)
+};
