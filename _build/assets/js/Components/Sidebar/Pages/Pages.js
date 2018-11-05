@@ -3,7 +3,7 @@ import emitter from "../../../EE";
 import { div, dl, dd, dt, button, h3, form, fieldSet, legend, a } from '../../../UI/Elements';
 import { text, choices } from '../../../UI/Inputs';
 import fredConfig from '../../../Config';
-import { getResourceTree, getTemplates, createResource } from '../../../Actions/pages';
+import { getResourceTree, getTemplates, createResource, publishResource, unpublishResource } from '../../../Actions/pages';
 import { getBlueprints } from '../../../Actions/blueprints';
 import cache from "../../../Cache";
 
@@ -294,15 +294,35 @@ export default class Pages extends Sidebar {
             const duplicate = button('fred.fe.pages.duplicate', 'fred.fe.pages.duplicate');
             menu.appendChild(duplicate);
         }
+
+        const publish = button('fred.fe.pages.publish', 'fred.fe.pages.publish', [], () => {
+            emitter.emit('fred-loading', fredConfig.lng('fred.fe.pages.publishing_page'));
+            
+            publishResource(page.id).then(() => {
+                publish.replaceWith(unpublish);
+                emitter.emit('fred-loading-hide');
+            }).catch(err => {
+                emitter.emit('fred-loading-hide');
+            });
+        });
+        
+        const unpublish = button('fred.fe.pages.unpublish', 'fred.fe.pages.unpublish', [], () => {
+            emitter.emit('fred-loading', fredConfig.lng('fred.fe.pages.unpublishing_page'));
+            
+            unpublishResource(page.id).then(() => {
+                unpublish.replaceWith(publish);
+                emitter.emit('fred-loading-hide');
+            }).catch(err => {
+                emitter.emit('fred-loading-hide');
+            });
+        });
         
         if (page.published === true) {
             if (fredConfig.permission.unpublish_document) {
-                const unpublish = button('fred.fe.pages.unpublish', 'fred.fe.pages.unpublish');
                 menu.appendChild(unpublish);
             }
         } else {
             if (fredConfig.permission.publish_document) {
-                const publish = button('fred.fe.pages.publish', 'fred.fe.pages.publish');
                 menu.appendChild(publish);
             }
         }

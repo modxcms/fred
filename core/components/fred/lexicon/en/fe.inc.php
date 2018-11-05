@@ -66,6 +66,8 @@ $_lang['fred.fe.pages.create_child_page'] = 'Create Child Page';
 $_lang['fred.fe.pages.delete'] = 'Delete';
 $_lang['fred.fe.pages.undelete'] = 'Undelete';
 $_lang['fred.fe.pages.blueprint'] = 'Blueprint';
+$_lang['fred.fe.pages.publishing_page'] = 'Publishing Page';
+$_lang['fred.fe.pages.unpublishing_page'] = 'Unpublishing Page';
 
 $_lang['fred.fe.more.openmanager'] = 'View in Manager';
 $_lang['fred.fe.more.logout'] = 'Logout';
