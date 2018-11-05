@@ -333,10 +333,6 @@ export default class Fred {
             this.iframe.parentNode.style.display = 'none';
         });
 
-        emitter.on('fred-open-manager', () => {
-            this.openManager();
-        });
-
         emitter.on('fred-logout-user', () => {
             this.logoutUser();
         });
@@ -454,11 +450,6 @@ export default class Fred {
         }
 
         return data;
-    }
-
-    openManager() {
-        const url = fredConfig.config.managerUrl + '?a=resource/update&id=' + fredConfig.resource.id;
-        window.open(url, '_blank');
     }
 
     logoutUser() {

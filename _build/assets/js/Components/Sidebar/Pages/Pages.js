@@ -1,6 +1,6 @@
 import Sidebar from '../../Sidebar';
 import emitter from "../../../EE";
-import { div, dl, dd, dt, button, h3, form, fieldSet, legend } from '../../../UI/Elements';
+import { div, dl, dd, dt, button, h3, form, fieldSet, legend, a } from '../../../UI/Elements';
 import { text, choices } from '../../../UI/Inputs';
 import fredConfig from '../../../Config';
 import { getResourceTree, getTemplates, createResource } from '../../../Actions/pages';
@@ -285,9 +285,7 @@ export default class Pages extends Sidebar {
 
         const header = h3(page.pagetitle);
 
-        const edit = button('fred.fe.pages.edit', 'fred.fe.pages.edit', [], () => {
-            window.location.href = page.url;
-        });
+        const edit = a('fred.fe.pages.edit', 'fred.fe.pages.edit', page.url);
 
         menu.appendChild(header);
         menu.appendChild(edit);
