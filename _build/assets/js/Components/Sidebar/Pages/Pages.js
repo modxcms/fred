@@ -14,6 +14,7 @@ export default class Pages extends Sidebar {
 
     init() {
         this.content = null;
+        this.openCreatePage = this.openCreatePage.bind(this);
 
         this.state = {
             pagetitle: '',
@@ -54,21 +55,13 @@ export default class Pages extends Sidebar {
     }
 
     buildCreatePage(content) {
-        const formWrapper = dd();
+        this.formWrapper = dd();
 
         const pageForm = form(['fred--pages_create']);
 
         const fields = fieldSet();
         const title = legend('fred.fe.pages.create_page');
 
-        let blueprintChoices = null;
-        const blueprintInput = choices({
-            name: 'blueprint',
-            label: fredConfig.lng('fred.fe.pages.blueprint'),
-        }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
-            blueprintChoices = choicesInstance;
-        });
-        
         const onChange = (name, value) => {
             this.state[name] = value;
         };
@@ -77,8 +70,8 @@ export default class Pages extends Sidebar {
             if ((name === 'template') && value.customProperties && value.customProperties.theme) {
                 this.state.theme = value.customProperties.theme;
 
-                blueprintChoices.clearStore();
-                blueprintChoices.ajax(callback => {
+                this.blueprintInput.choices.clearStore();
+                this.blueprintInput.choices.ajax(callback => {
                     getBlueprints(true, this.state.theme)
                         .then(categories => {
                             const groups = [];
@@ -111,6 +104,11 @@ export default class Pages extends Sidebar {
             this.state[name] = value.value;
         };
 
+        this.blueprintInput = choices({
+            name: 'blueprint',
+            label: fredConfig.lng('fred.fe.pages.blueprint'),
+        }, this.state.parent, onChangeChoices);
+
         fields.appendChild(title);
 
         const pagetitle = text({
@@ -120,16 +118,18 @@ export default class Pages extends Sidebar {
 
         fields.appendChild(pagetitle);
         
-        fields.appendChild(choices({
+        this.parentInput = choices({
             name: 'parent',
             label: fredConfig.lng('fred.fe.pages.parent'),
             choices: {
                 choices : this.parents,
                 shouldSort: false
             }
-        }, this.state.parent, onChangeChoices));
+        }, this.state.parent, onChangeChoices);
         
-        fields.appendChild(choices({
+        fields.appendChild(this.parentInput);
+        
+        this.templateInput = choices({
             name: 'template',
             label: fredConfig.lng('fred.fe.pages.template'),
         }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
@@ -146,9 +146,11 @@ export default class Pages extends Sidebar {
                         emitter.emit('fred-loading', error.message);
                     });
             });
-        }));
+        });
+        
+        fields.appendChild(this.templateInput);
 
-        fields.appendChild(blueprintInput);
+        fields.appendChild(this.blueprintInput);
 
         const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn-panel', 'fred--btn-apply'], () => {
             if(!fredConfig.permission.new_document){
@@ -180,26 +182,28 @@ export default class Pages extends Sidebar {
 
         pageForm.appendChild(fields);
 
-        const createPageButton = dt('fred.fe.pages.create_page', ['fred--accordion-plus'], (e, el) => {
-            const activeTabs = this.pageList.querySelectorAll('dt.active');
+        this.createPageButton = dt('fred.fe.pages.create_page', ['fred--accordion-plus'], this.openCreatePage);
 
-            const isActive = el.classList.contains('active');
+        this.formWrapper.appendChild(pageForm);
 
-            for (let tab of activeTabs) {
-                tab.classList.remove('active');
-            }
+        content.appendChild(this.createPageButton);
+        content.appendChild(this.formWrapper);
+    }
+    
+    openCreatePage(e) {
+        const activeTabs = this.pageList.querySelectorAll('dt.active');
 
-            if (!isActive) {
-                el.classList.add('active');
-                e.stopPropagation();
-                emitter.emit('fred-sidebar-dt-active', createPageButton, formWrapper);
-            }
-        });
+        const isActive = this.createPageButton.classList.contains('active');
 
-        formWrapper.appendChild(pageForm);
+        for (let tab of activeTabs) {
+            tab.classList.remove('active');
+        }
 
-        content.appendChild(createPageButton);
-        content.appendChild(formWrapper);
+        if (!isActive) {
+            this.createPageButton.classList.add('active');
+            e.stopPropagation();
+            emitter.emit('fred-sidebar-dt-active', this.createPageButton, this.formWrapper);
+        }
     }
 
     buildTree(pages, wrapper) {
@@ -328,7 +332,49 @@ export default class Pages extends Sidebar {
         }
 
         if (fredConfig.permission.new_document) {
-            const createChildPage = button('fred.fe.pages.create_child_page', 'fred.fe.pages.create_child_page');
+            const createChildPage = button('fred.fe.pages.create_child_page', 'fred.fe.pages.create_child_page', [], e => {
+               this.state.parent = page.id;
+               this.parentInput.choices.setValueByChoice('' + page.id);
+                this.templateInput.choices.setValueByChoice('' + page.template);
+
+                const template = this.templateInput.choices.getValue();
+                
+                if (template.customProperties && template.customProperties.theme) {
+                    this.state.theme = template.customProperties.theme;
+
+                    this.blueprintInput.choices.clearStore();
+                    this.blueprintInput.choices.ajax(callback => {
+                        getBlueprints(true, this.state.theme)
+                            .then(categories => {
+                                const groups = [];
+
+                                categories.forEach(category => {
+                                    const options = [];
+
+                                    category.blueprints.forEach(blueprint => {
+                                        options.push({
+                                            label: blueprint.name,
+                                            value: '' + blueprint.id
+                                        });
+                                    });
+
+                                    groups.push({
+                                        label: category.category,
+                                        disabled: false,
+                                        choices: options
+                                    });
+                                });
+
+                                callback(groups, 'value', 'label');
+                            })
+                            .catch(error => {
+                                emitter.emit('fred-loading', error.message);
+                            });
+                    });
+                }
+                
+               this.openCreatePage(e); 
+            });
             menu.appendChild(createChildPage);
         }
 

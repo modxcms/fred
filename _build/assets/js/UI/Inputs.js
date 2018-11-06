@@ -632,6 +632,8 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
     const choicesInstance = new Choices(selectEl, config);
     fixChoices(choicesInstance);
     
+    wrapper.choices = choicesInstance;
+    
     if (typeof onChange === 'function') {
         choicesInstance.passedElement.addEventListener('choice', event => {
             if (errorEl !== null) {

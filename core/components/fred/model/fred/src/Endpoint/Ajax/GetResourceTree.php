@@ -57,6 +57,7 @@ class GetResourceTree extends Endpoint
             'pagetitle' => $resource->pagetitle,
             'children' => [],
             'isFred' => $isFred,
+            'template' => $resource->template,
             'published' => (boolean)$resource->published,
             'deleted' => (boolean)$resource->deleted,
             'url' => $this->modx->makeUrl($resource->id, $resource->context_key, '', 'full'),
