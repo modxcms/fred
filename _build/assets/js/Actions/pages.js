@@ -125,3 +125,20 @@ export const undeleteResource = resource => {
         })
     }).then(errorHandler)
 };
+
+export const duplicateResource = (pagetitle, duplicate_children, publishing_options, resource) => {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=duplicate-resource`, {
+        method: "post",
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Fred-Token': fredConfig.jwt
+        },
+        body: JSON.stringify({
+            pagetitle,
+            duplicate_children,
+            publishing_options,
+            resource
+        })
+    }).then(errorHandler)
+};

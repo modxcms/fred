@@ -1,11 +1,13 @@
 import Sidebar from '../../Sidebar';
 import emitter from "../../../EE";
 import { div, dl, dd, dt, button, h3, form, fieldSet, legend, a } from '../../../UI/Elements';
-import { text, choices } from '../../../UI/Inputs';
+import { text, choices, toggle, select } from '../../../UI/Inputs';
 import fredConfig from '../../../Config';
-import { getResourceTree, getTemplates, createResource, publishResource, unpublishResource, deleteResource, undeleteResource } from '../../../Actions/pages';
+import { getResourceTree, getTemplates, createResource, publishResource, unpublishResource, deleteResource, undeleteResource, duplicateResource } from '../../../Actions/pages';
 import { getBlueprints } from '../../../Actions/blueprints';
 import cache from "../../../Cache";
+import Modal from "../../../Modal";
+import {replaceImage} from "../../../Actions/elements";
 
 export default class Pages extends Sidebar {
     static title = 'fred.fe.pages';
@@ -295,7 +297,51 @@ export default class Pages extends Sidebar {
         menu.appendChild(edit);
         
         if (fredConfig.permission.resource_duplicate) {
-            const duplicate = button('fred.fe.pages.duplicate', 'fred.fe.pages.duplicate');
+            const duplicate = button('fred.fe.pages.duplicate', 'fred.fe.pages.duplicate', [], () => {
+                const duplicateState = {
+                    title: 'Duplicate of ' + page.pagetitle,
+                    duplicate_children: false,
+                    publishing_options: 'preserve'
+                };
+
+                const setState = (name, value) => {
+                    duplicateState[name] = value;
+                };
+
+                const content = [
+                    text({
+                        label: 'fred.fe.pages.page_title',
+                        name: 'pagetitle'
+                    }, duplicateState.title, setState)
+                ];
+                
+                if (page.children.length > 0) {
+                    duplicateState.duplicate_children = true;
+                    
+                    content.push(toggle({
+                        label: 'Duplicate Children',
+                        name: 'duplicate_children'
+                    }, duplicateState.duplicate_children, setState));
+                }
+                
+                content.push(select({
+                    label: 'Publishing Options',
+                    name: 'publishing_options',
+                    options: {
+                        unpublish: 'Make All Unpublished',
+                        publish: 'Make All Published',
+                        preserve: 'Preserve Published Status',
+                    }
+                }, duplicateState.publishing_options, setState));
+                
+                const modal = new Modal('Duplicate Page', div([], content), () => {
+                    duplicateResource(duplicateState.title, duplicateState.duplicate_children, duplicateState.publishing_options, page.id).then((data) => {
+                        console.log(data);
+                    }).catch(err => {});
+                }, {showCancelButton: true});
+
+                modal.render();
+            });
             menu.appendChild(duplicate);
         }
 
