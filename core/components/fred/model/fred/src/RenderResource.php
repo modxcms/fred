@@ -184,6 +184,33 @@ final class RenderResource {
             }
         });
 
+        $images = $html->filter('img');
+        $images->each(function(HtmlPageCrawler $node, $i) {
+            $node->setAttribute('data-fred-fake-src', $node->getAttribute('src'));
+            $node->removeAttribute('src');
+        });
+
+        $links = $html->filter('[data-fred-link-type]');
+        $links->each(function(HtmlPageCrawler $node, $i) use ($item) {
+            $linkType = $node->attr('data-fred-link-type');
+            $node->removeAttr('data-fred-link-type');
+
+            if ($linkType === 'page') {
+                $resourceId = intval($node->attr('data-fred-link-page'));
+                $anchor = $node->attr('data-fred-link-anchor') ? ('#' . $node->attr('data-fred-link-anchor')) : '';
+
+                if ($resourceId > 0) {
+                    $node->attr('data-fred-fake-href', "[[~{$resourceId}]]{$anchor}");
+                    $node->removeAttr('href');
+                } else {
+                    $node->attr('href', $anchor);
+                }
+
+                $node->removeAttr('data-fred-link-page');
+                $node->removeAttr('data-fred-link-anchor');
+            }
+        });
+        
         $html = HtmlPageCrawler::create($html->first()->html());
         
         $elements = $html->filter('[data-fred-name]');
@@ -233,27 +260,6 @@ final class RenderResource {
             $node->removeAttr('contenteditable');
             $node->removeAttr('data-fred-media-source');
             $node->removeAttr('data-fred-image-media-source');
-        });
-
-        $links = $html->filter('[data-fred-link-type]');
-        $links->each(function(HtmlPageCrawler $node, $i) use ($item) {
-            $linkType = $node->attr('data-fred-link-type');
-            $node->removeAttr('data-fred-link-type');
-
-            if ($linkType === 'page') {
-                $resourceId = intval($node->attr('data-fred-link-page'));
-                $anchor = $node->attr('data-fred-link-anchor') ? ('#' . $node->attr('data-fred-link-anchor')) : '';
-
-                if ($resourceId > 0) {
-                    $node->attr('data-fred-fake-href', "[[~{$resourceId}]]{$anchor}");
-                    $node->removeAttr('href');
-                } else {
-                    $node->attr('href', $anchor);
-                }
-
-                $node->removeAttr('data-fred-link-page');
-                $node->removeAttr('data-fred-link-anchor');
-            }
         });
         
         $blockClasses = $html->filter('[data-fred-block-class]');
@@ -318,6 +324,7 @@ final class RenderResource {
         $html = $html->saveHTML();
 
         $html = str_replace(' data-fred-fake-href=', ' href=', $html);
+        $html = str_replace(' data-fred-fake-src=', ' src=', $html);
 
         return $html;
     }
