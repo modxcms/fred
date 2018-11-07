@@ -16,7 +16,7 @@
  */
 
 $_lang['fred'] = 'Fred';
-$_lang['freddropzone'] = 'Fred\'s DropZone';
+$_lang['freddropzone'] = 'Fred Dropzone';
 
 $_lang['fred.global.any'] = 'Any';
 $_lang['fred.global.change_order'] = 'Change order: [[+name]]';
