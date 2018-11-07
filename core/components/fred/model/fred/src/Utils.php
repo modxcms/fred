@@ -29,7 +29,7 @@ final class Utils
             return array_filter($array, $filterCallback);
         }
 
-        return $array;
+        return array_filter($array);
     }
 
     /**
