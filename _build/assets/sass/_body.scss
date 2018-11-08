@@ -240,6 +240,10 @@
     transition: $timing;
 }
 
+*[data-fred-min-height] {  
+  min-height: attr(data-fred-min-height);
+}
+
 //FireFox hack
 @-moz-document url-prefix() {
   .fred--block {
