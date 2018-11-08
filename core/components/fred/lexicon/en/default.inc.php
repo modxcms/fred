@@ -215,8 +215,10 @@ $_lang['fred.tvs.dropzone.hide_input'] = 'Hide Field from Manager';
 
 $_lang['setting_fred.launcher_position'] = 'Position of Launcher';
 $_lang['setting_fred.launcher_position_desc'] = 'Available values: bottom_left, bottom_right, top_left, top_right';
-$_lang['setting_fred.element_group_sort'] = 'Element\'s Group Sort';
-$_lang['setting_fred.element_group_sort_desc'] = 'Sort elements by name or rank';
+$_lang['setting_fred.element_group_sort'] = 'Element Groups Sort';
+$_lang['setting_fred.element_group_sort_desc'] = 'Sort element groups by name or rank';
+$_lang['setting_fred.element_sort'] = 'Element Sort';
+$_lang['setting_fred.element_sort_desc'] = 'Sort elements by name or rank';
 $_lang['setting_fred.icon_editor'] = 'Icon Editor';
 $_lang['setting_fred.icon_editor_desc'] = 'Editor to use for Icons';
 $_lang['setting_fred.image_editor'] = 'Image Editor';
@@ -229,6 +231,8 @@ $_lang['setting_fred.blueprint_category_sort'] = 'Blueprint\'s Category Sort';
 $_lang['setting_fred.blueprint_category_sort_desc'] = 'Sort Blueprint Categories by name or rank';
 $_lang['setting_fred.blueprint_sort'] = 'Blueprint Sort';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Sort Blueprints by name or rank';
+$_lang['setting_fred.secret'] = 'Secret';
+$_lang['setting_fred.secret_desc'] = 'Secret used in signing XHR requests';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Name is required';
 $_lang['fred.err.blueprints_ns_name'] = 'Name is required';

@@ -54,6 +54,10 @@
         "value": "name"
       },
       {
+        "key": "element_sort",
+        "value": "name"
+      },
+      {
         "key": "blueprint_category_sort",
         "value": "name"
       },

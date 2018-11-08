@@ -35,15 +35,22 @@ class GetElements extends Endpoint
         
         /** @var \FredElementCategory[] $categories */
         $categories = $this->modx->getIterator('FredElementCategory', $c);
+
+        $elementSort = $this->fred->getOption('element_sort');
+        if ($elementSort !== 'rank') $elementSort = 'name';
         
         foreach ($categories as $category) {
             $categoryElements = [
                 'category' => $category->name,
                 'elements' => []
             ];
+
+            $elementCriteria = $this->modx->newQuery('FredElement');
+            $elementCriteria->where(['category' => $category->id]);
+            $elementCriteria->sortby($elementSort);
             
             /** @var \FredElement[] $fredElements */
-            $fredElements = $this->modx->getIterator('FredElement', ['category' => $category->id]);
+            $fredElements = $this->modx->getIterator('FredElement', $elementCriteria);
             foreach ($fredElements as $element) {
                 $categoryElements['elements'][] = [
                     "id" => $element->uuid,
