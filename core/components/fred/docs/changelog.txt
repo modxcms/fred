@@ -1,5 +1,13 @@
 Changelog for Fred.
 
+1.0.0 beta10
+============
+- Supports multiple dropzones thanks to a new custom "Fred Dropzone" Template Variable. 
+- A new element_sort system setting determines, shockingly, how Elements are sorted: either by their name or by a rank specified in the Manager component (previously was by ID). Defaults to name.
+- Fred didn't allow using Snippets in image tag src attributes. Now it does making @reikotec at least 42% more happy. You're welcome! 
+- Fixed an annoying oversight that broke how Fred-managed content rendered after saving a page in the Manager (which was not very well at all).
+- Now you can clone, delete, publish/unpublish and create child pages from the Fred sidebar menu Site option. Click a page name to see the available options. 
+
 1.0.0 beta9
 ==============
 - Fred now supports Permissions and Policies, ticking off the last big 1.0 feature checklist item. Time to thoroughly work over every bit of Fred ahead of its initial public release! 
