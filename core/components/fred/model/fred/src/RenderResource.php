@@ -47,7 +47,7 @@ final class RenderResource {
 
         foreach ($contentData as $item) {
             try {
-                $html .= $this->renderElement($this->twig->render($item['widget'], $item['settings']), $item);
+                $html .= $this->renderElement($this->twig->render($item['widget'], $item['settings']), $item, true);
             } catch (\Exception $e) {}
         }
 
@@ -74,7 +74,7 @@ final class RenderResource {
 
                 foreach ($this->data[$tvName] as $item) {
                     try {
-                        $tvContent .= $this->renderElement($this->twig->render($item['widget'], $item['settings']), $item);
+                        $tvContent .= $this->renderElement($this->twig->render($item['widget'], $item['settings']), $item, true);
                     } catch (\Exception $e) {}
                 }
                 
@@ -170,7 +170,7 @@ final class RenderResource {
         }
     }
 
-    private function renderElement($html, $item)
+    private function renderElement($html, $item, $replaceFakes = false)
     {
         $html = HtmlPageCrawler::create('<div>' . $html . '</div>');
 
@@ -323,8 +323,10 @@ final class RenderResource {
 
         $html = $html->saveHTML();
 
-        $html = str_replace(' data-fred-fake-href=', ' href=', $html);
-        $html = str_replace(' data-fred-fake-src=', ' src=', $html);
+        if ($replaceFakes) {
+            $html = str_replace(' data-fred-fake-href=', ' href=', $html);
+            $html = str_replace(' data-fred-fake-src=', ' src=', $html);
+        }
 
         return $html;
     }
