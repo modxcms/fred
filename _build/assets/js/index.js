@@ -152,6 +152,16 @@ export default class Fred {
                 }
             }));
         }
+
+        let base = this.previewDocument.querySelector('base');
+        if (base) {
+            base.setAttribute('target', '_blank');
+        } else {
+            base = document.createElement('base');
+            base.setAttribute('target', '_blank');
+            const head = this.previewDocument.querySelector('head');
+            head.appendChild(base);
+        }
         
         return Promise.all(promises).then(() => {
             this.iframe.contentWindow.document.open();
