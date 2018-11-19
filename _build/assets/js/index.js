@@ -283,7 +283,7 @@ export default class Fred {
             fredConfig.tagger = json.data.tagger || [];
             fredConfig.tvs = json.data.tvs || [];
 
-            loadElements(json.data).then(() => {
+            return loadElements(json.data).then(() => {
                 drake.reloadContainers();
     
                 emitter.emit('fred-loading-hide');
