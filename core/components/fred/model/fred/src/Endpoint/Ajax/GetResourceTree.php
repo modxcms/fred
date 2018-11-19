@@ -73,8 +73,11 @@ class GetResourceTree extends Endpoint
         }
 
         if (isset($this->map[$resource->parent])) {
-            $this->map[$resource->id] = $pageFormatted;
-            $this->map[$resource->parent]['children'][] =& $this->map[$resource->id];
+            if (!isset($this->map[$resource->id])) {
+                $this->map[$resource->id] = $pageFormatted;
+                $this->map[$resource->parent]['children'][] =& $this->map[$resource->id];
+            }
+            
             return;
         }
 
