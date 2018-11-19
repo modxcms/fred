@@ -77,11 +77,11 @@ class CreateResource extends Endpoint
         }
         
         $object = $response->getObject();
+
+        /** @var \modResource $resource */
+        $resource = $this->modx->getObject('modResource', $object['id']);
         
         if (!empty($blueprint)) {
-            /** @var \modResource $resource */
-            $resource = $this->modx->getObject('modResource', $object['id']);
-            
             $blueprintObject = $this->modx->getObject('FredBlueprint', $blueprint);
             if ($blueprintObject) {
                 $data = $blueprintObject->get('data');
@@ -96,9 +96,31 @@ class CreateResource extends Endpoint
         
         $data = [
             'message' => 'Resource created',
-            'url' => $this->modx->makeUrl($object['id'], $context, '', 'full')
+            'url' => $this->getPreviewUrl($resource)
         ];
 
         return $this->success($data);
+    }
+
+    /**
+     * @param \modResource $resource
+     * @return string
+     */
+    public function getPreviewUrl($resource) {
+        $previewUrl = '';
+
+        if (!$resource->get('deleted')) {
+            $this->modx->setOption('cache_alias_map', false);
+            $sessionEnabled = '';
+
+            $ctxSetting = $this->modx->getObject('modContextSetting', array('context_key' => $resource->get('context_key'), 'key' => 'session_enabled'));
+
+            if ($ctxSetting) {
+                $sessionEnabled = $ctxSetting->get('value') == 0 ? array('preview' => 'true') : '';
+            }
+
+            $previewUrl = $this->modx->makeUrl($resource->get('id'), $resource->get('context_key'), $sessionEnabled, 'full', array('xhtml_urls' => false));
+        }
+        return $previewUrl;
     }
 }
