@@ -1,20 +1,23 @@
 # Fred
-Meet Fred, the friendly editor. Fred helps designers, developers and content creators to collaborate on MODX projects through a powerful and flexible drag-and-drop visual website builder. Designers create the specifications of how a site should look and work. Developers create a reusalble design libraries for sites. And site owners can then use that work to create compelling content quickly using intuitive, visual drag and drop tools straight from the front end of a website.
+Fred is a flexible and powerful drag-and-drop **fr**ont-end **ed**itor for MODX CMS. It enables non-technical users to create beautiful content without having to know markup or dealing with overwhelming back-end interfaces. It fully supports MODX Snippets and intuitive controls like sliders and color pickers for configuring content on the page. 
 
-Sinces there are _zero_ restrictions on markup, techniques or templates, designers can realize their creative vision with pixel-perfect precision. Complete control over what can and cannot be edited means developers can create a library of design elements based on designers’ work without worrying that end-users will break things. And end-users are empowered to quickly create amazing web content without the need to get designers and developers involved (or fear of retribution if they break things).
+What differentiates Fred from other visual content builders is MODX’s core tenet of Creative Freedom: it doesn’t force you to use one HTML/CSS framework, empowering you to create anything you can imagine. Expand upon or customize a provided starter theme, or create a complete solution from scratch that’s 100% unique to you. 
+
+Since there are _no_ restrictions on markup, templates, or techniques, designers, theme creators, and front-end developers can realize their creative vision with pixel-perfect precision—and can confidently turn over content creation duties to regular end-users without fear of things breaking. Fred leads to amazing websites without requiring designer and developer involvement day-to-day.
 
 ## How Fred Works
-To create content with Fred, users drag design elements (“Elements”) from a sidebar, drop them where desired on a page, and edit the settings and content inline without ever having to visit a back-end admin tool. Fred has a variety of features that in combination make it a powerful visual content builder:
+To build sites with Fred, users drag content “Elements” or “Blueprints” from a sidebar, drop them where desired on a page, and edit the settings and placeholder content without ever having to use a back-end admin tool. Fred’s features combine to make it a powerful visual content builder:
 
-- transform static Design Pattern Libraries into dynamic building blocks that accelerate the time needed to create content that adheres to brand standards
-- developers can use standard HTML markup with `data-fred-` attributes in Elements to create virtually any type of standard design library pattern 
-- optional Twig templating logic
-- unlimited categories for Elements
-- a variety of controls including toggles, text inputs, date pickers, select inputs, radio inputs (TODO), sliders, Resource pickers and color pickers for end-users to configure Elements as they create new content
-- support for Snippets in Elements with real-time Ajax-based rendering when settings are updated
-- visual Font Awesome 5 icon picker (other icon choosers can be created) 
-- simple content formatting with a currated default TinyMCE rich text editor (others RTEs can be used)
-- drag-and-drop to rearrange existing Elements on a page to new locations any time
-- nested Elements to enable [Atomic Web Design](http://bradfrost.com/blog/post/atomic-web-design/) workflows
-- ships with a complete set of production-ready Bootstrap 4 Elements (TODO)
-- end-user content is completely processed and cached for blazing fast page load times
+- Transform static Design Libraries into a live content creating tool that strictly adheres to brand standards and that is easily understood and used by non-technical team members across your entire organization
+- Use optional conditional/looping Twig template logic to create robust Elements limited only by your imagination
+- Create and organize collections of Elements as building blocks for pages
+- Blueprints provide “replace the placeholders” full- or partial-page templates
+- Multiple dropzones for complete control of every page layout
+- Configure content using a variety of controls including toggles, text inputs, date pickers, select inputs, sliders, Resource pickers, and color pickers
+- Supports MODX code Snippets with live Ajax rendering of changes
+- Visual Font Awesome 5 icon picker—developers can create other icon pickers, too 
+- Simple content formatting with a curated default TinyMCE rich text editor
+- Rearrange andn re-order page content via drag-and-drop
+- Quickly duplicate existing elements to build up galleries and sliders
+- Fred content renders down to cachable output for blazing-fast page speed
+- Complete set of production-ready Bootstrap 4 Elements for theme authors to use as a starting point
