@@ -217,4 +217,9 @@ class FredElement extends xPDOSimpleObject {
             
         return parent::save($cacheFlag);
     }
+
+    public function getContent()
+    {
+        return $this->content;
+    }
 }

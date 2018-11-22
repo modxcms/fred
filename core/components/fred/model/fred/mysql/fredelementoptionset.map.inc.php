@@ -61,6 +61,10 @@ $xpdo_meta_map['FredElementOptionSet']= array (
       'default' => '',
     ),
   ),
+  'fieldAliases' => 
+  array (
+    'content' => 'data',
+  ),
   'indexes' => 
   array (
     'theme' => 
