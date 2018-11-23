@@ -65,4 +65,9 @@ class FredBlueprint extends xPDOSimpleObject {
 
         return $image;
     }
+
+    public function getContent()
+    {
+        return $this->data;
+    }
 }

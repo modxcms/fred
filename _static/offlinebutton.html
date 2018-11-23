@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>HTML5 Element Test Page</title>
+    <base href="../">
+    <link data-target="alter" rel="stylesheet" href="">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+</head>
+
+<body>
+<main>
+
+    <nav>
+        <a href="#!" id="none">No CSS</a> |
+        <a href="#!" id="primitive">Primitive</a> |
+        <a href="#!" id="bootstrap">Bootstrap</a> |
+        <a href="#!" id="foundation">Foundation</a> |
+        <a href="#!" id="skeleton">Skeleton</a> |
+        <a href="#!" id="material">Material</a>
+    </nav>
+
+    <div class="small-container">
+        <h1>HTML5 Element Test Page</h1>
+        <p>Common HTML5 elements for CSS testing purposes.</p>
+        <div data-fred-dropzone="content">
+                <div data-fred-dropzone="inner">
+                            <div data-fred-name="content" contenteditable="true">
+                                <p>This nested editable content</p>
+                            </div>
+                </div>
+                    <h3 data-fred-name="pagetitle"contenteditable="true">Editable Area</h3>
+                    <div data-fred-name="content" contenteditable="true">
+                        <p>This text is editable</p>
+                    </div>
+        </div>
+
+        <footer>
+            <p>Made to test <a href="https://taniarascia.github.io/primitive/" target="_blank">Primitive</a> by <a href="https://www.taniarascia.com">Tania Rascia</a>.</p>
+        </footer>
+
+    </div>
+</main>
+<button 
+    class="fred--launcher_btn fred--launcher_btn_fred" 
+    role="button"
+    style="background-color: #4D4D4D;
+    background-image: url(&quot;data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='-14.584 -8.583 48 48'%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='2164.318' y1='-2519.043' x2='2047.448' y2='-2442.941' gradientTransform='matrix(.1471 0 0 -.1471 -290.574 -365.794)'%3E%3Cstop offset='0' stop-color='%2380c3e6'/%3E%3Cstop offset='1' stop-color='%233380c2'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23a)' d='M22.035 11.468l9.602-15.406H8.488L5.236 1.17z'/%3E%3Cpath opacity='.15' d='M5.236 1.17l1.702-2.633 15.097 12.931z'/%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='2184.769' y1='-2694.977' x2='2097.394' y2='-2637.275' gradientTransform='matrix(.1471 0 0 -.1471 -290.574 -365.794)'%3E%3Cstop offset='0' stop-color='%23f38649'/%3E%3Cstop offset='.185' stop-color='%23f28147'/%3E%3Cstop offset='.409' stop-color='%23ef7242'/%3E%3Cstop offset='.654' stop-color='%23ea5a3a'/%3E%3Cstop offset='.911' stop-color='%23e4382e'/%3E%3Cstop offset='1' stop-color='%23e12a29'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23b)' d='M27.068 39.416V16.268l-4.957-3.176L11.583 29.74z'/%3E%3Cpath opacity='.15' d='M11.583 29.74l2.632 1.625 7.896-18.273z'/%3E%3ClinearGradient id='c' gradientUnits='userSpaceOnUse' x1='1896.918' y1='-2571.592' x2='2064.08' y2='-2467.137' gradientTransform='matrix(.1471 0 0 -.1471 -290.574 -365.794)'%3E%3Cstop offset='0' stop-color='%2342ab4a'/%3E%3Cstop offset='1' stop-color='%23add155'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23c)' d='M-10.25-8.583v23.148l5.419 3.175 26.866-6.272z'/%3E%3ClinearGradient id='d' gradientUnits='userSpaceOnUse' x1='1933.576' y1='-2758.292' x2='2069.413' y2='-2540.907' gradientTransform='matrix(.1471 0 0 -.1471 -290.574 -365.794)'%3E%3Cstop offset='0' stop-color='%2342ab4a'/%3E%3Cstop offset='1' stop-color='%23add155'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23d)' d='M-4.985 19.52l-9.599 15.093H8.565l13.546-21.521z'/%3E%3C/svg%3E&quot;);
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    outline: 0;
+    border: none;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: center;
+    box-shadow: rgba(18,55,100,0.34) 0 4px 8px;
+    margin: 0;
+    padding: 0;
+    text-indent: -9999px;
+    cursor: pointer;
+    position: fixed;
+    z-index: 10010;
+    margin: 32px;
+    bottom: 0;
+    left: 0;
+    opacity: 0.8;
+    transition: .3s;
+    box-sizing: border-box;
+    "
+    onmouseover="this.style.transform='scale(1.05)';"
+    onmouseout="this.style.transform='initial'";
+    >
+    Fred
+</button>
+<!-- BEGIN FRED -->
+
+
+<!-- END FRED -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $('#none').click(function(e) {
+            e.preventDefault();
+            $('link[data-target="alter"]').attr('href', '');
+        });
+        $('#primitive').click(function(e) {
+            e.preventDefault();
+            $('link[data-target="alter"]').attr('href', 'https://taniarascia.github.io/primitive/css/main.min.css');
+        });
+        $('#bootstrap').click(function(e) {
+            e.preventDefault();
+            $('link[data-target="alter"]').attr('href', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap.min.css');
+        });
+        $('#foundation').click(function(e) {
+            e.preventDefault();
+            $('link[data-target="alter"]').attr('href', 'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation.min.css');
+        });
+        $('#skeleton').click(function(e) {
+            e.preventDefault();
+            $('link[data-target="alter"]').attr('href', 'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css');
+        });
+        $('#material').click(function(e) {
+            e.preventDefault();
+            $('link[data-target="alter"]').attr('href', 'https://code.getmdl.io/1.2.1/material.indigo-pink.min.css');
+        });
+    });
+</script>
+</body>
+
+</html>

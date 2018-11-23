@@ -137,8 +137,6 @@ const loadChildren = (zones, parent, elements, fireEvents = false) => {
 
                 const contentElement = new ContentElement(chunk, zoneName, parent, element.values, (element.settings || {}));
                 promises.push(contentElement.render().then(() => {
-                    parent.addElementToDropZone(zoneName, contentElement);
-
                     return loadChildren(element.children, contentElement, elements, fireEvents).then(() => {
                         if (fireEvents === true) {
                             const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
@@ -151,11 +149,17 @@ const loadChildren = (zones, parent, elements, fireEvents = false) => {
                                 }
                             }
                         }
+                        
+                        return {zoneName, contentElement, parent};
                     });
                 }));
             });
 
-            dzPromises.push(Promise.all(promises));
+            dzPromises.push(Promise.all(promises).then(items => {
+                items.forEach(item => {
+                    item.parent.addElementToDropZone(item.zoneName, item.contentElement);
+                })
+            }));
         }
     }
 
@@ -184,8 +188,9 @@ export const loadElements = data => {
     
                         const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}));
                         promises.push(contentElement.render().then(wrapper => {
-                            loadChildren(element.children, contentElement, data.elements);
-                            return wrapper;
+                            return loadChildren(element.children, contentElement, data.elements).then(() => {
+                                return wrapper;
+                            });
                         }));
                     }
                 });

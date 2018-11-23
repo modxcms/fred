@@ -17,6 +17,7 @@ class GetResourceTree extends Endpoint
     protected $templates = [];
     protected $map = [];
     protected $resources = [];
+    protected $sessionEnabled = [];
 
     /**
      * @return string
@@ -60,7 +61,7 @@ class GetResourceTree extends Endpoint
             'template' => $resource->template,
             'published' => (boolean)$resource->published,
             'deleted' => (boolean)$resource->deleted,
-            'url' => $this->modx->makeUrl($resource->id, $resource->context_key, '', 'full'),
+            'url' => $this->getPreviewUrl($resource),
             'hidemenu' => (boolean)$resource->hidemenu,
             'menuindex' => $resource->menuindex
         ];
@@ -73,8 +74,11 @@ class GetResourceTree extends Endpoint
         }
 
         if (isset($this->map[$resource->parent])) {
-            $this->map[$resource->id] = $pageFormatted;
-            $this->map[$resource->parent]['children'][] =& $this->map[$resource->id];
+            if (!isset($this->map[$resource->id])) {
+                $this->map[$resource->id] = $pageFormatted;
+                $this->map[$resource->parent]['children'][] =& $this->map[$resource->id];
+            }
+            
             return;
         }
 
@@ -96,6 +100,34 @@ class GetResourceTree extends Endpoint
         $templateIds = $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
         $templateIds = array_map('intval', $templateIds);
         $this->templates = array_filter($templateIds);
+    }
+
+    /**
+     * @param \modResource $resource
+     * @return string
+     */
+    public function getPreviewUrl($resource) {
+        $previewUrl = ''; 
+            
+        if (!$resource->get('deleted')) {
+            $this->modx->setOption('cache_alias_map', false);
+            $sessionEnabled = '';
+            
+            if (isset($this->sessionEnabled[$resource->get('context_key')])) {
+                $sessionEnabled = $this->sessionEnabled[$resource->get('context_key')];    
+            } else {
+                $ctxSetting = $this->modx->getObject('modContextSetting', array('context_key' => $resource->get('context_key'), 'key' => 'session_enabled'));
+
+                if ($ctxSetting) {
+                    $sessionEnabled = $ctxSetting->get('value') == 0 ? array('preview' => 'true') : '';
+                }
+
+                $this->sessionEnabled[$resource->get('context_key')] = $sessionEnabled;
+            }
+
+            $previewUrl = $this->modx->makeUrl($resource->get('id'), $resource->get('context_key'), $sessionEnabled, 'full', array('xhtml_urls' => false));
+        }
+        return $previewUrl;
     }
 
     protected function sortResources($resources)

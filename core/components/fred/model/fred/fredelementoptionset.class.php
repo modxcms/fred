@@ -96,4 +96,9 @@ class FredElementOptionSet extends xPDOSimpleObject {
         
         return $removed;
     }
+
+    public function getContent()
+    {
+        return $this->data;
+    }
 }

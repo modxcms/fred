@@ -696,6 +696,27 @@ export class ContentElement {
         
         return rteConfig;
     }
+
+    getSelectionHtml() {
+        let html = "";
+        
+        if (typeof window.getSelection !== "undefined") {
+            const sel = window.getSelection();
+            if (sel.rangeCount) {
+                const container = document.createElement("div");
+                for (let i = 0, len = sel.rangeCount; i < len; ++i) {
+                    container.appendChild(sel.getRangeAt(i).cloneContents());
+                }
+                html = container.innerHTML;
+            }
+        } else if (typeof document.selection !== "undefined") {
+            if (document.selection.type === "Text") {
+                html = document.selection.createRange().htmlText;
+            }
+        }
+        
+        return html;
+    }
     
     initElements(wrapper, content) {
         const fredElements = content.querySelectorAll('[data-fred-name]');
@@ -737,6 +758,19 @@ export class ContentElement {
             if ((!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
                 el.addEventListener('input', () => {
                     this.setContentValue(el, el.innerHTML, content);
+                });
+
+                el.addEventListener('copy', e => {
+                    e.clipboardData.setData('text/plain', window.getSelection().toString());
+                    e.clipboardData.setData('text/html', this.getSelectionHtml());
+                    e.preventDefault();
+                });
+
+                el.addEventListener('cut', e => {
+                    e.clipboardData.setData('text/plain', window.getSelection().toString());
+                    e.clipboardData.setData('text/html', this.getSelectionHtml());
+                    window.getSelection().deleteFromDocument();
+                    e.preventDefault();
                 });
             }
 

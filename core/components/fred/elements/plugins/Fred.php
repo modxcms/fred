@@ -97,20 +97,34 @@ switch ($modx->event->name) {
     case 'OnWebPagePrerender':
         $theme = $fred->getTheme($modx->resource->template);
         if (!empty($theme)) {
-            if (isset($_GET['fred'])) {
-                if (intval($_GET['fred']) === 0) return;
+            $fredMode = 0;
+            
+            if (isset($_SESSION['fred'])) {
+                $fredMode = intval($_SESSION['fred']);
             }
+            
+            if (isset($_GET['fred'])) {
+                $fredMode = intval($_GET['fred']);
+            }
+            
+            if ($fredMode === 4) {
+                $fredMode = 0;
+                $_SESSION['fred'] = 0;
+            }
+            
+            if ($fredMode === 1) {
+                $_SESSION['fred'] = 1;
+            }
+            
+            if ($fredMode === 0) return;
             
             if (!$modx->user) return;
             if (!($modx->user->hasSessionContext('mgr') || $modx->user->hasSessionContext($modx->resource->context_key))) return;
             if (!$modx->hasPermission('fred')) return;
 
-
-            if (isset($_GET['fred'])) {
-                if (intval($_GET['fred']) === 3) {
-                    $modx->resource->_output = '';
-                    return;
-                }
+            if ($fredMode === 3) {
+                $modx->resource->_output = '';
+                return;
             }
         
             $html = Wa72\HtmlPageDom\HtmlPageCrawler::create($modx->resource->_output);
@@ -122,8 +136,8 @@ switch ($modx->event->name) {
             
             $modx->resource->_output = $html->saveHTML();
             
-            if (isset($_GET['fred'])) {
-                if (intval($_GET['fred']) === 2) return;
+            if ($fredMode === 2) {
+                return;
             }
             
             $scripts = $html->filter('script');

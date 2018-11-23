@@ -107,6 +107,10 @@ $xpdo_meta_map['FredBlueprint']= array (
       'default' => '',
     ),
   ),
+  'fieldAliases' => 
+  array (
+    'content' => 'data',
+  ),
   'indexes' => 
   array (
     'uuid' => 

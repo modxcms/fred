@@ -166,6 +166,29 @@ fred.window.ThemeBuild = function (config) {
         var dependencies = this.find('name', 'dependencies')[0];
         dependencies.setValue(Ext.getCmp('fred-window-theme-build-dependencies').encode());
     }, this);
+    
+    this.on('failure', function(a) {
+        try {
+            var response = JSON.parse(a.a.response.responseText);
+            var msg = [];
+            
+            if (response.data && Array.isArray(response.data)) {
+                response.data.forEach(function(item) {
+                    msg.push(item.msg);
+                });
+            }
+            
+            if (msg.length > 0) {
+                msg = msg.join('<br>');
+            } else {
+                msg = _('error');
+            }
+            
+            Ext.Msg.alert(_('error'), msg);
+        } catch (err) {
+            Ext.Msg.alert(_('error'), _('error'));
+        }
+    });
 };
 Ext.extend(fred.window.ThemeBuild, MODx.Window, {
     getFields: function (config) {

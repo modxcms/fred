@@ -152,6 +152,16 @@ export default class Fred {
                 }
             }));
         }
+
+        let base = this.previewDocument.querySelector('base');
+        if (base) {
+            base.setAttribute('target', '_blank');
+        } else {
+            base = document.createElement('base');
+            base.setAttribute('target', '_blank');
+            const head = this.previewDocument.querySelector('head');
+            head.appendChild(base);
+        }
         
         return Promise.all(promises).then(() => {
             this.iframe.contentWindow.document.open();
@@ -273,7 +283,7 @@ export default class Fred {
             fredConfig.tagger = json.data.tagger || [];
             fredConfig.tvs = json.data.tvs || [];
 
-            loadElements(json.data).then(() => {
+            return loadElements(json.data).then(() => {
                 drake.reloadContainers();
     
                 emitter.emit('fred-loading-hide');
