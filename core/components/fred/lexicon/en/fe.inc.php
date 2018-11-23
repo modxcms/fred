@@ -33,6 +33,8 @@ $_lang['fred.fe.clear'] = 'Clear';
 $_lang['fred.fe.browse'] = 'Browse';
 $_lang['fred.fe.browse_files'] = 'Browse Files';
 $_lang['fred.fe.browse_images'] = 'Browse Images';
+$_lang['fred.fe.turn_off_fred'] = 'Disable Fred';
+$_lang['fred.fe.turn_on_fred'] = 'Enable Fred';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Page Title';
 $_lang['fred.fe.page_settings.long_title'] = 'Long Title';
