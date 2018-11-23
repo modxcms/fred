@@ -14,7 +14,7 @@ Most templates will have a *content* Dropzone. Fred also supports multiple Dropz
 </head>
 <body >
     <div data-fred-dropzone="content" data-fred-min-height="500px">
-        [[*content:default=`<h1>Drop Elements here to start…</h1>`]]
+        [[*content]]
     </div>
 </body>
 </html>
@@ -46,10 +46,10 @@ Sometimes you may want to have a more complex layout with multiple Dropzones, li
 <body >
     <section id="wrapper">
         <div id="main" data-fred-dropzone="content" data-fred-min-height="500px">
-            [[*content:default=`<h1>Drop Elements here to start…</h1>`]]
+            [[*content]]
         </div>
         <aside id="sidebar" data-fred-dropzone="sidebar" data-fred-min-height="250px">
-            [[*sidebar:default=`<h2>Drop Elements here for the Sidebar…</h2>`]]
+            [[*sidebar]]
         </aside>
     </section>
 </body>
