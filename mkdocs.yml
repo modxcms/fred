@@ -15,6 +15,7 @@ nav:
     - Fred for Developers:
       - About Developing for Fred: develop/index.md
       - Convert Exisitng Sites to Fred: develop/convert-to-fred.md
+      - MODX Templates for Fred: develop/templates/index.md
       - Option Sets: develop/option_sets/index.md
       - RTE Configs: develop/rte_configs/index.md
       - Media Sources: develop/media_sources/index.md
