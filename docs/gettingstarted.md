@@ -26,7 +26,7 @@ After your Fred Extras finish downloading, install them from the Packages grid.
 
 Fred needs a “dropzone” to know where content can go, indicated by adding a `data-fred-dropzone` attribute to an HTML entity, often a `div` tag. For example, where the `[[*content]]` tag would normally be in a Template, add the following:
 
-    <div data-fred-dropzone="content"  data-fred-name="content" data-fred-target="content">
+    <div data-fred-dropzone="content">
         [[*content]]
     </div>
 

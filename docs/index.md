@@ -17,7 +17,7 @@ To build sites with Fred, users drag content “Elements” or “Blueprints” 
 - Supports MODX code Snippets with live Ajax rendering of changes
 - Visual Font Awesome 5 icon picker—developers can create other icon pickers, too 
 - Simple content formatting with a curated default TinyMCE rich text editor
-- Rearrange andn re-order page content via drag-and-drop
+- Rearrange and re-order page content via drag-and-drop
 - Quickly duplicate existing elements to build up galleries and sliders
 - Fred content renders down to cachable output for blazing-fast page speed
 - Complete set of production-ready Bootstrap 4 Elements for theme authors to use as a starting point

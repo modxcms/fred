@@ -1,4 +1,4 @@
-Fred is only loads on Pages which use MODX Templates that are assigned to a Fred Theme (`Extras` > `Fred` > `Themed Templates`). Any Resources using a template listed in that table will block access to the content area in the Manager and load Fred on the front-end when logged in for editing.
+Fred only loads on Pages which use MODX Templates that are assigned to a Fred Theme (`Extras` > `Fred` > `Themed Templates`). Any Resources using a template listed in that table will block access to the content area in the Manager and load Fred on the front-end when logged in for editing.
 
 ### Dropzones
 
