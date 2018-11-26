@@ -3,7 +3,7 @@ Fred is a flexible and powerful drag-and-drop **fr**ont-end **ed**itor for MODX 
 
 What differentiates Fred from other visual content builders is MODX’s core tenet of Creative Freedom: it doesn’t force you to use one HTML/CSS framework, empowering you to create anything you can imagine. Expand upon or customize a provided starter theme, or create a complete solution from scratch that’s 100% unique to you. 
 
-Since there are _no_ restrictions on markup, templates, or techniques, designers, theme creators, and front-end developers can realize their creative vision with pixel-perfect precision—and can confidently turn over content creation duties to regular end-users without fear of things breaking. Fred leads to amazing websites without requiring designer and developer involvement day-to-day.
+Since there are _no_ restrictions on markup, templates, or techniques, designers, theme creators, and front-end developers can realize their creative vision with pixel-perfect precision and confidently turn over content creation duties to regular end-users without fear of things breaking. Fred leads to amazing websites without requiring designer and developer involvement day-to-day.
 
 ## How Fred Works
 To build sites with Fred, users drag content “Elements” or “Blueprints” from a sidebar, drop them where desired on a page, and edit the settings and placeholder content without ever having to use a back-end admin tool. Fred’s features combine to make it a powerful visual content builder:
