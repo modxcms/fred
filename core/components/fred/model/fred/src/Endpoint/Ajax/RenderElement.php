@@ -45,6 +45,12 @@ class RenderElement extends Endpoint
         }
 
         if ($parseModx === true) {
+            $queryParams = $this->getClaim('queryParams');
+            if ($queryParams !== false) {
+                $queryParams = (array)$queryParams;
+                $_GET = $queryParams;
+            }
+            
             $this->modx->getParser();
             $maxIterations = empty($maxIterations) || (integer) $maxIterations < 1 ? 10 : (integer) $maxIterations;
             $currentResource = $this->modx->resource;
@@ -55,11 +61,11 @@ class RenderElement extends Endpoint
             
             $this->modx->resource = $resource;
             $this->modx->resourceIdentifier = $resource->get('id');
-            $this->modx->elementCache = array();
+            $this->modx->elementCache = [];
             
-            $this->modx->parser->processElementTags('', $html, false, false, '[[', ']]', array(), $maxIterations);
-            $this->modx->parser->processElementTags('', $html, true, false, '[[', ']]', array(), $maxIterations);
-            $this->modx->parser->processElementTags('', $html, true, true, '[[', ']]', array(), $maxIterations);
+            $this->modx->parser->processElementTags('', $html, false, false, '[[', ']]', [], $maxIterations);
+            $this->modx->parser->processElementTags('', $html, true, false, '[[', ']]', [], $maxIterations);
+            $this->modx->parser->processElementTags('', $html, true, true, '[[', ']]', [], $maxIterations);
     
             $this->modx->elementCache = $currentElementCache;
             $this->modx->resourceIdentifier = $currentResourceIdentifier;
