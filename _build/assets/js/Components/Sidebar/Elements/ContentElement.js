@@ -723,6 +723,10 @@ export class ContentElement {
         for (let el of fredElements) {
             el.fredEl = this;
             
+            if (el.hasAttribute('contenteditable') === false) {
+                el.setAttribute('contenteditable', 'true');
+            }
+            
             const observer = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
                     if (mutation.type === 'attributes') {
