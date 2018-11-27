@@ -114,7 +114,7 @@
     position: relative;
     background-color: #FFF;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 51px) !important;
     display: block;
     margin: 51px auto 0;
   }
