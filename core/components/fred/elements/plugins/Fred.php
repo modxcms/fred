@@ -97,6 +97,11 @@ switch ($modx->event->name) {
     case 'OnWebPagePrerender':
         $theme = $fred->getTheme($modx->resource->template);
         if (!empty($theme)) {
+            
+            if (!$modx->user) return;
+            if (!($modx->user->hasSessionContext('mgr') || $modx->user->hasSessionContext($modx->resource->context_key))) return;
+            if (!$modx->hasPermission('fred')) return;
+
             $modx->lexicon->load('fred:fe');
             
             $fredMode = 0;
@@ -127,10 +132,6 @@ switch ($modx->event->name) {
                 $modx->resource->_output = preg_replace('/(<\/body>(?:<\/body>)?)/i', "{$button}\r\n$1", $modx->resource->_output);
                 return;
             }
-            
-            if (!$modx->user) return;
-            if (!($modx->user->hasSessionContext('mgr') || $modx->user->hasSessionContext($modx->resource->context_key))) return;
-            if (!$modx->hasPermission('fred')) return;
 
             if ($fredMode === 3) {
                 $modx->resource->_output = '';
