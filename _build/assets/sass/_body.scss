@@ -235,6 +235,10 @@
 
 }
 
+.fred--fixed{
+  position:fixed !important;
+}
+
 *[data-fred-dropzone] {
     min-height: 5px;
     transition: $timing;
