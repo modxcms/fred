@@ -104,7 +104,7 @@ switch ($modx->event->name) {
 
             $modx->lexicon->load('fred:fe');
             
-            $fredMode = 0;
+            $fredMode = 1;
             
             if (isset($_SESSION['fred'])) {
                 $fredMode = intval($_SESSION['fred']);
