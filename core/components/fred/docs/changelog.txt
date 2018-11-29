@@ -1,5 +1,10 @@
 Changelog for Fred.
 
+1.0.0 beta12
+============
+- Fix showing enable Fred button for users without permissions
+- Fix double sidebar in preview mode
+
 1.0.0 beta11
 ============
 - Removed some of the mystery from building Themes by displaying an alert when the change log, readme or license files were missing. Silence is good for movie watchers—not so much for letting folks know why they can't export the Theme they've worked hard on creating. Sorry about that! 
