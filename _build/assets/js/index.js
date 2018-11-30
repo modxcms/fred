@@ -331,6 +331,7 @@ export default class Fred {
 
         emitter.on('fred-preview-on', () => {
             this.previewContent().then(iframe => {
+                document.body.classList.add('fred--fixed');
                 iframe.parentNode.style.opacity = null;
                 iframe.parentNode.style.zIndex = null;
                 iframe.parentNode.style.display = 'block';
@@ -338,6 +339,7 @@ export default class Fred {
         });
         
         emitter.on('fred-preview-off', () => {
+            document.body.classList.remove('fred--fixed');
             this.iframe.parentNode.style.opacity = null;
             this.iframe.parentNode.style.zIndex = null;
             this.iframe.parentNode.style.display = 'none';

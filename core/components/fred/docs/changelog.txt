@@ -1,5 +1,24 @@
 Changelog for Fred.
 
+1.0.0 beta12
+============
+- Fix showing enable Fred button for users without permissions
+- Fix double sidebar in preview mode
+
+1.0.0 beta11
+============
+- Removed some of the mystery from building Themes by displaying an alert when the change log, readme or license files were missing. Silence is good for movie watchers—not so much for letting folks know why they can't export the Theme they've worked hard on creating. Sorry about that! 
+- Fred now opens all links in the Preview mode in a new tab because loading them in the iframe created an undesired Fredception. 
+- Fixed initializing javascript when remote Elements are dropped into dropzones. This bodes well for things like galleries and sliders initiated by a document.ready function.
+- Fixed loading the Resource Tree with nested Fred Resources.
+- Fixed generating preview URLs for unpublished Resources.
+- Prevent copying outer HTML from contenteditable Elements, which could lead to serious messes. We don't like messes.
+- Ensure Elements are loaded in the correct order when Fred initializes, because randomly reordering peoples' nested content is apparently not a desired feature. 
+- Add a new mode to disable/enable Fred, making those final QA chores a lot easier and less click-error prone.
+- Automatically set contenteditable to true for all Elements with a data-fred-name attribute. If you don't want them editable, you must declare it false. But since this is meant as a front-end editor, this could save a few keystrokes and make learning how to create Elements slightly easier to learn by approximately 4.2%.
+- Pass GET params from the page to the render Element endpoint so to make Fred behave properly with things like Tagger.
+- Fix the preview window from cutting off because, as it turns out, 51px really does make a difference.
+
 1.0.0 beta10
 ============
 - Supports multiple dropzones thanks to a new custom "Fred Dropzone" Template Variable. 

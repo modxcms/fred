@@ -155,4 +155,11 @@ abstract class Endpoint
         
         return $this->jwtPayload[$name] === $value;
     }
+    
+    protected function getClaim($name)
+    {
+        if (!isset($this->jwtPayload[$name])) return false;
+        
+        return $this->jwtPayload[$name];
+    }
 }
