@@ -1,14 +1,32 @@
-# Fred
-Fred is a flexible and powerful drag-and-drop **fr**ont-end **ed**itor for MODX CMS. It enables non-technical users to create beautiful content without having to know markup or dealing with overwhelming back-end interfaces. It fully supports MODX Snippets and intuitive controls like sliders and color pickers for configuring content on the page. 
+# What is Fred?
 
-What differentiates Fred from other visual content builders is MODX’s core tenet of Creative Freedom: it doesn’t force you to use one HTML/CSS framework, empowering you to create anything you can imagine. Expand upon or customize a provided starter theme, or create a complete solution from scratch that’s 100% unique to you. 
+Fred is a visual drag-and-drop **fr**ont-end **ed**itor for [MODX CMS](https://modx.com). It empowers ordinary people to create exceptional content without knowing how to code or learning complex interfaces. 
 
-Since there are _no_ restrictions on markup, templates, or techniques, designers, theme creators, and front-end developers can realize their creative vision with pixel-perfect precision and confidently turn over content creation duties to regular end-users without fear of things breaking. Fred leads to amazing websites without requiring designer and developer involvement day-to-day.
+You can create content with Fred by merely dragging Elements from a sidebar and dropping them where wish for them to appear. Select the copy you wish to change or click an image you want to update, edit directly in your browser, and click a green checkmark to save the changes. 
 
-## How Fred Works
-To build sites with Fred, users drag content “Elements” or “Blueprints” from a sidebar, drop them where desired on a page, and edit the settings and placeholder content without ever having to use a back-end admin tool. Fred’s features combine to make it a powerful visual content builder:
+## What does Fred do for developers and site builders?
 
-- Transform static Design Libraries into a live content creating tool that strictly adheres to brand standards and that is easily understood and used by non-technical team members across your entire organization
+Fred helps theme builders break into the MODX ecosystem. It is easy to port existing themes to Fred and export them ready for the [MODX Extras](https://modx.com/extras/). 
+
+Fred offers existing MODX developers an option to create more flexible and intuitive experiences for their site owners. Fred can power designs that would otherwise require dozens of TVs, a complex Manager UI, or tricky Manager customization. 
+
+Fred brings content creators familiar visual controls like sliders, toggles and color pickers. Further, these controls can pass parameters to MODX Snippets and its API for a bulletproof and powerful content creation solution. 
+
+In short, Fred makes constructing complex pages simple for even the most non-technical users.
+
+## How is Fred different from other visual content builders?
+
+Fred adheres to MODX’s core tenet of Creative Freedom. It doesn’t force you into someone else’s preferred front-end framework or way of building things. If you can imagine or prototype it, Fred can power it—without compromise. 
+
+Developers and designers can realize pixel-perfect precision and confidently turning over content creation duties without fear of things breaking. 
+ 
+So whether a site is made by customizing a free starter theme, or handcrafted 100% from scratch, Fred can help everyone built faster, more consistently and better. 
+
+## What Else Can Fred Do?
+
+The following is a sample of Fred’s capabilities that make it a compelling visual content building platform:
+
+- Transform static Design Libraries into a live content creating tool that strictly adheres to brand standards, and that is easily understood and used by non-technical team members across your entire organization
 - Use optional conditional/looping Twig template logic to create robust Elements limited only by your imagination
 - Create and organize collections of Elements as building blocks for pages
 - Blueprints provide “replace the placeholders” full- or partial-page templates
@@ -18,6 +36,6 @@ To build sites with Fred, users drag content “Elements” or “Blueprints” 
 - Visual Font Awesome 5 icon picker—developers can create other icon pickers, too 
 - Simple content formatting with a curated default TinyMCE rich text editor
 - Rearrange and re-order page content via drag-and-drop
-- Quickly duplicate existing elements to build up galleries and sliders
+- Quickly duplicate existing Elements to build up galleries and sliders
 - Fred content renders down to cachable output for blazing-fast page speed
-- Complete set of production-ready Bootstrap 4 Elements for theme authors to use as a starting point
+- Complete set of production-ready Bootstrap 4 Elements to slash the time needed for theme builders to get started

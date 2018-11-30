@@ -1,1 +1,0 @@
-Options are defined through an attached [Option Set](/option_sets), or option override when creating/updating Element. Same [options](/option_sets/#available-options) as in Option Set can be used as an override.

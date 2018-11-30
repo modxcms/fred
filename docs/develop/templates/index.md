@@ -22,9 +22,9 @@ Most templates will have a *content* Dropzone. Fred also supports multiple Dropz
 </html>
 ```
 
-The default minimum height for a dropzone is only 5 pixels, which may be a bit small to target. If you wish to have a larger “empty” default state, add a `data-fred-min-height="250px"` setting with your desired minimum height. A larger minimum height on a dropzone can make it easier to target for dropping Elements when empty. The size of your min-height might also need to change if you have competing or overlapping elements, such as a fixed top navigation bar.
+The default minimum height for a dropzone is only 5 pixels, which may be a bit small to target. If you wish to have a larger “empty” default state, add a `data-fred-min-height="250px"` setting with your desired minimum height. A larger minimum height on a dropzone can make it easier to target for dropping Elements when empty. The size of your min-height might also need to change if you have competing or overlapping Elements, such as a fixed top navigation bar.
 
-The dropzone’s `data-fred-dropzone="content"` attribute is required and tells it where to save the rendered Fred content. It also needs to contain a reference to the `[[*content]]` tag inside of it. When Fred loads, it clears out the content rendered in the dropzone, and loads it with element data. However, when Fred is not loaded, it just renders whatever tags you have in that area.
+The dropzone’s `data-fred-dropzone="content"` attribute is required and tells it where to save the rendered Fred content. It also needs to contain a reference to the `[[*content]]` tag inside of it. When Fred loads, it clears out the content rendered in the dropzone, and loads it with Element data. However, when Fred is not loaded, it just renders whatever tags you have in that area.
 
 ### Multiple Dropzones
 
@@ -37,7 +37,7 @@ Sometimes you may want to have a more complex layout with multiple Dropzones, li
 
 ![Fred Dropzone TV Screenshot]()
 
-#### Fred Template Example with `sidebar` Dropzone
+#### Example Template with `sidebar` Dropzone
 
 ```
 <html>

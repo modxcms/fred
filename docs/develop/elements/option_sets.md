@@ -1,6 +1,6 @@
 # Option Sets
 
-Option Sets allow you to create common configurations and frequently used sub-configs (e.g., set of settings, use of media sources, remote render) for use across multiple Elements.
+Option Sets allow you to create common configurations and frequently used sub-configs (e.g., a set of settings, use of media sources, remote render, or color swatch group) to use across multiple Elements.
 
 ## Complete
 

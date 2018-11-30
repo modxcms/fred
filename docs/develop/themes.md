@@ -1,18 +1,12 @@
-# Getting Started
+# Theme Creation Tutorial
 
-Setting up Fred involves a few requirements before you can use it to create content. The easiest way to start is to install a Theme exported from Fred which should include everything you need to succeed.
+Once you have created a design you are happy with, it is straightforward to build a Theme to share. To start creating a theme, follow the steps below:
 
-1. Install a [Fred Theme from the MODX Extras repository](https://modx.com/extras/browse/?search=fred) into your MODX website
-2. Add a new page to your site using one of the Templates from the Fred theme and save the Page
-3. Click the `Preview` button to visit this page from the front-end and start building with Fred
-
-If you’re interested in creating Themes, it is also straightforward as outlined and detailed below:
-
-1. Install [Fred from MODX.com](https://modx.com/extras/package/fred), and probably the [icon picker](https://modx.com/extras/package/fredfontawesome5iconeditor) and [TinyMCE RTE](https://modx.com/extras/package/fredtinymcerte), too
+1. Install [Fred from MODX.com](https://modx.com/extras/package/fred), the [icon picker](https://modx.com/extras/package/fredfontawesome5iconeditor) and [TinyMCE RTE](https://modx.com/extras/package/fredtinymcerte)
 2. Set up a MODX Template with a content Dropzone
-3. Assign this Template to a Fred theme
+3. Assign this Template to a Fred Theme
 4. Create Categories for your Fred Elements
-5. Create your first Fred Element
+5. Create Fred Elements
 
 ## Step 1: Install Fred
 
@@ -54,17 +48,17 @@ Fred organizes Elements using categories. Open the Elements Manager Page from th
     
 Fred requires at least one Category before creating actual content Element.
 
-## Step 5: Create your first elements
+## Step 5: Create your first Elements
 
-Fred Elements can be as simple as raw text or more complex like a  responsive product catalog detail page.  Let’s start by creating a simple heading element, often the first thing on a page. 
+Fred Elements can be as simple as raw text or more complex like a  responsive product catalog detail page.  Let’s start by creating a simple heading Element, often the first thing on a page. 
 
-Switch to the `Elements` tab in Element's CMP (`Extras` > `Fred` > `Elements`) and click the `Create Element` button. Fill the name (`H1 Heading`), category (`Text`), image (`https://placehold.it/300x150&text=Heading`).
+Switch to the `Elements` tab in Element’s CMP (`Extras` > `Fred` > `Elements`) and click the `Create Element` button. Fill the name (`H1 Heading`), category (`Text`), image (`https://placehold.it/300x150&text=Heading`).
 
 ![Element Creation 3PC Screenshot]()
 
 Add the following markup:
 
-    <h1 contenteditable="true" data-fred-name="heading">Hello, world.</h1>
+    <h1 data-fred-name="heading">Hello, world.</h1>
 
 Save this Element, go back to the front-end of your Resource, and refresh the page.
 
@@ -74,11 +68,11 @@ Click on the orange Elements stacked boxes icon or the MODX icon in the launcher
 
 Congratulations, you just added your first Element to a page using Fred!
 
-Select the placeholder “Hello, world.” text and start typing to edit its content. When hovering over an Element, you’ll see an additional toolbar that lets you duplicate, delete, or move the element on your page.  When you’re happy with the new page title, click the green checkbox button to save.
+Select the placeholder “Hello, world.” text and start typing to edit its content. When hovering over an Element, you’ll see an additional toolbar that lets you duplicate, delete, or move the Element on your page.  When you’re happy with the new page title, click the green checkbox button to save.
 
-Let’s create another element for a single paragraph: 
+Let’s create another Element for a single paragraph: 
 
-1. Create an Element under same category with the name `Basic Paragraph`, `https://placehold.it/300x150&text=Paragraph` for the image, and `<p contenteditable="true" data-fred-name="paragraph">Your content goes here.</p>` for the markup
+1. Create an Element under same category with the name `Basic Paragraph`, `https://placehold.it/300x150&text=Paragraph` for the image, and `<p data-fred-name="paragraph">Your content goes here.</p>` for the markup
 2. Save this in the Manager
 3. From the front-end, reload the page
 4. Drag this new Element beneath the previously created title, and drop it in place 
@@ -86,6 +80,13 @@ Let’s create another element for a single paragraph:
 
 ![Front-end editing .gif animation]()
 
-## Learn more
+## Exporting a Theme
 
-Now that you have the basics of Fred working continue reading the documentation to learn more about how Fred works. 
+The Fred Manager Extra (aka, 3rd-party Component or 3PC) allows you share your themes with colleagues or to submit it to the [MODX Extras](https://modx.com/extras/) repository:
+
+1. Click on the `Themes` tab.
+2. Find the Theme you’d like to share/publish.
+3. Right-click on its name and choose the `Build theme` option.
+4. Fill in the details and choose one of the two export options at the bottom. 
+ 
+A MODX Installer-ready theme will be saved to your `core/packages/` directory as `{{theme-name}}.transport.zip` file that you can distribute. You can also choose to build and download, which will also save a copy to your downloads directory on your local computer.

@@ -1,6 +1,6 @@
 # About Fred Themes
 
-While most users will typically only have a single theme, you can have many installed in a site. Themes include all the things needed to create a site _except_ example resources/content (caveat, see Blueprints below). 
+While most users will typically only have a single theme, you can have many installed in a site. Themes include all the things needed to create a site _except_ example pages (caveat: see Blueprints below). 
 
 Being able to have multiple Themes allows Theme Builders to create and release a variety themes that share common options (Option sets) across Elements.
 
@@ -45,11 +45,13 @@ Theme-specific assets like CSS/SASS/SCSS, images, JS and other similar files are
 
 These files show when you are installing the Extra from the MODX Package Manager.
 
-## Build
+## Build a Theme to Share
 
-The Fred 3PC allows you share your themes with colleagues or to submit it to the [MODX Extras](https://modx.com/extras/) repository:
+The Fred Manager Extra (aka, 3rd-party Component or 3PC) allows you share your themes with colleagues or to submit it to the [MODX Extras](https://modx.com/extras/) repository:
 
-1. Click on the "Themes" tab.
-2. Find the Theme you'd like to share/publish.
-3. Right-click on its name and choose the Build theme option.
-4. Fill in the details and choose one of the two export options at the bottom. A built theme will be saved to your `core/packages/` directory as `{{theme-name}}.transport.zip` file that you can distribute.
+1. Click on the `Themes` tab.
+2. Find the Theme you’d like to share/publish.
+3. Right-click on its name and choose the `Build theme` option.
+4. Fill in the details and choose one of the two export options at the bottom. 
+ 
+A MODX Installer-ready theme will be saved to your `core/packages/` directory as `{{theme-name}}.transport.zip` file that you can distribute. You can also choose to build and download, which will also save a copy to your downloads directory on your local computer.

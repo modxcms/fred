@@ -1,4 +1,4 @@
-# Rich Text Editor (RTE) Configurations
+# Rich Text Editor (RTE) Configs
 
 Under the RTE Configs tab you can manage all configuration sets for any installed RTEs.
  
@@ -10,8 +10,8 @@ Make sure RTE configs are valid JSON; you can use [JSON Lint](https://jsonlint.c
 
 ## Default Configs
 
-If you create a config with a same name as your RTE, for example `TinyMCE`, this config will be used as a default one (instead of the one TinyMCE is shipped with).
+If you create a config with a same name as your RTE, for example `TinyMCE`, this config will be used as a default one, overriding its defaults. To learn more about creating RTE configurations, and to see sample configurations for the TinyMCE for Fred Extra, see the [RTE examples](/develop/rte_configs/index.md) documentation.
 
 ### Overriding Default Configs
 
-Each option set can specify which RTE to use for the entire Element. In addition, a [data-fred-rte-config](/elements/attributes/#data-fred-rte-config) attribute on an HTML element with a `content-editable="true"` attribue set will override both the Default and Option set specified settings.
+Fred option sets can specify the RTE configuration to use for each Element. In addition, a [data-fred-rte-config](/elements/attributes/#data-fred-rte-config) attribute on an HTML Element with a `data-fred-name` attribue (as long as contenteditable is not set to false) will override both the Default and option set specific settings.

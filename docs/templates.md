@@ -1,10 +1,10 @@
 # MODX Templates & Fred
 
-Fred only loads on Pages which use MODX Templates that are assigned to a Fred Theme (`Extras` > `Fred` > `Themed Templates`). Any Resources using a template listed in that table will block access to the content area in the Manager and load Fred on the front-end when logged in for editing.
+Fred only loads on Pages which use MODX Templates that are assigned to a Fred Theme. These are identified in the Manager by visiting the `Extras` > `Fred` > `Themed Templates` menu and tabs. Any pages that use a Template listed in this table will block access to the content area in the Manager and will load Fred on the front-end when logged in for editing.
 
 ## Dropzones
 
-Most templates will have a *content* Dropzone. Fred also supports multiple Dropzones for things like sidebars, headers, footers, or any other purpose you need. Dropzones are where you drag and drop Elements and Blueprints from the Fred sidebar menu in the front-end to build pages.
+Most templates will have a *content* Dropzone. Fred also supports multiple Dropzones for things like sidebars, headers, footers, or any other purpose you may need. Dropzones are where you drag-and-drop Elements and Blueprints from the Fred sidebar.
 
 ## Creating Fred Templates
 

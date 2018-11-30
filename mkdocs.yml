@@ -2,26 +2,29 @@ site_name: Fred
 repo_name: modxcms/fred
 repo_url: https://github.com/modxcms/fred
 copyright: 'Copyright &copy; 2018 <a href="https://modx.com" title="MODX">MODX</a>, LLC'
+
 nav:
-    - Meet Fred: index.md
-    - Getting Started: gettingstarted.md
+    - What is Fred?: index.md
+    - Getting Started: getting_started.md
     - MODX Templates & Fred: templates.md
-    - Elements:
-      - Elements: elements/index.md
-      - Markup: elements/markup.md
-      - Options: elements/options.md
-      - Attributes: elements/attributes.md
-    - Blueprints: blueprints/index.md
+    - Elements: elements.md
+    - Blueprints: blueprints.md
     - Fred for Developers:
       - About Developing for Fred: develop/index.md
       - Convert Exisitng Sites to Fred: develop/convert-to-fred.md
       - MODX Templates for Fred: develop/templates/index.md
-      - Option Sets: develop/option_sets/index.md
+      - Elements:
+        - Elements: develop/elements/index.md
+        - HTML Markup & Twig: develop/elements/markup.md
+        - HTML Attributes: develop/elements/attributes.md
+        - Options: develop/elements/options.md
+        - Option Sets: develop/elements/option_sets.md
+      - Blueprints: develop/blueprints/index.md
       - RTE Configs: develop/rte_configs/index.md
       - Media Sources: develop/media_sources/index.md
       - System Settings: develop/system_settings/index.md
-      - Events: develop/events/index.md
-      - Fred in the Manager:
+      - Theme Creation Tutorial: develop/themes.md
+      - Manager 3PC:
         - Elements: develop/cmp/elements.md
         - Element Categories: develop/cmp/element_categories.md
         - Option Sets: develop/cmp/option_sets.md
@@ -29,13 +32,15 @@ nav:
         - Rebuild: develop/cmp/rebuild.md
         - Blueprints: develop/cmp/blueprints.md
         - Blueprint Categories: develop/cmp/blueprint_categories.md
-        - Themes: develop/cmp/themes.md
+        - Building Themes: develop/cmp/themes.md
         - Themed Templates: develop/cmp/themed_templates.md
         - Media Sources: develop/cmp/media_sources.md
       - ACLs:
         - How To: develop/acls/howto.md
         - Permissions: develop/acls/permissions.md
-        - Policies: develop/acls/policies.md
+        - Default Policies: develop/acls/policies.md
+      - Events for Plugin Developers: develop/events/index.md
+
 theme:
   name: 'material'
   language: en
