@@ -28,7 +28,7 @@ Note the value of the `data-fred-dropzone="content"` attribute indicates where t
 
 ## Step 3: Assign a Template to a Fred Theme
 
-1. In the MODX Manager, go to the `Extras` > `Fred` menu and switch to `Themed Templates` tab
+1. In the MODX Manager, go to the `Extras` menu > `Fred` > `Themes` tab and switch to `Themed Templates` sidebar
 2. Click the `Assign Theme to a Template` button
 3. Select all Templates you wish to use with this Fred Theme
 4. Select the `Default` Theme

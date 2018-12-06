@@ -1,6 +1,6 @@
 # Blueprints Categories
 
-Categories are an organizational strucure for Fred to group items with similar usage. Examples could be:
+Categories help keep similar items organized. Examples could be:
 
 - Intro Blocks
 - Galleries
@@ -9,5 +9,9 @@ Categories are an organizational strucure for Fred to group items with similar u
 - Form Pages
 - Etc.
 
-**Please note that if you remove a category, all Blueprints attached to it will be removed also, potentially breaking your site.**
+## Managing Blueprint Categories
+
+Blueprints can be managed from the Manager’s `Extras` top menu > `Fred` > `Blueprints` tab > `Blueprint Categories` sidebar section. Double-click a value you wish to edit, or click the gear icon to update the Blueprint Category in a modal.
+
+To remove a Blueprint Category, click the gear icon, or right-click on the row, and choose the Remove Category icon. **WARNING: if you remove a category, all Blueprints attached to it will be removed also, potentially breaking sites.**
 

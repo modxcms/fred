@@ -11,6 +11,7 @@ nav:
     - Blueprints: blueprints.md
     - Fred for Developers:
       - About Developing for Fred: develop/index.md
+      - Theme Creation Tutorial: develop/themes.md
       - Convert Exisitng Sites to Fred: develop/convert-to-fred.md
       - MODX Templates for Fred: develop/templates/index.md
       - Elements:
@@ -19,11 +20,9 @@ nav:
         - HTML Attributes: develop/elements/attributes.md
         - Options: develop/elements/options.md
         - Option Sets: develop/elements/option_sets.md
-      - Blueprints: develop/blueprints/index.md
       - RTE Configs: develop/rte_configs/index.md
       - Media Sources: develop/media_sources/index.md
       - System Settings: develop/system_settings/index.md
-      - Theme Creation Tutorial: develop/themes.md
       - Manager 3PC:
         - Elements: develop/cmp/elements.md
         - Element Categories: develop/cmp/element_categories.md

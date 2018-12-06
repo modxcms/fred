@@ -1,19 +1,29 @@
 # Blueprints
 
-Fred Blueprints can be thought of as a “replace the placeholders” way to create content. They are a collection of one or more—even complete page designs—Elements with sample content already composed. 
+Blueprints are pre-designed content sections or even full pages of content. These can be used as starting points for structured content like landing pages, product pages, etc. Blueprints function as a “replace the placeholders” way to create content. They are a collection of one or more Elements with sample content and images in place. 
 
-They can be as simple as a single headline or paragraph, or more complex like a hero intro with configurable background images, text padding, opacity settings and more.
+You can also use Blueprints as demo pages which theme users can use to start a site with complete layouts made up of any combination of content and Elements. 
 
-## Organized by Categories
+Blueprints are organized into user-determined categories such as Headers, Landing Pages, Galleries, etc.
 
-Elements can be organized to aid content creators in finding different types of content. For example, a Theme might contain the following Element Categories:
+## Using Blueprints
 
-- Text
-- Intros
-- Quotes
-- Code Blocks
-- Galleries
+Like Elements, find a Blueprint you wish to use and drag-and-drop it into a Dropzone on a Fred-enabled page.
 
-## Creating Fred Elements
+## Creating Blueprints
 
-To learn more about creating Template for Fred, see the [developer documentation](develop/blueprints/index.md).
+Users with permissions to do so can save Blueprints and share them with others or keep them private so only their users can see them. 
+
+### Blueprint Screenshots
+
+When creating a Blueprint, it will generate a screenshot image for you. However, you may wish to manually create your own screenshot as the libary used to build screen captures does not understand all CSS properties. 
+
+### Full-page Blueprints
+
+Complete Blueprints are a copy of an entire page of content. You create these from the front-end when Fred is enabled. 
+
+To create a complete Blueprint, click the Blueprints icon in the Fred sidebar, then choose an existing category from the top or create a new category for your Blueprints. Give your Blueprint a name and save
+
+### Partial Blueprints
+
+Partial Blueprints are made from the overlapping, rounded-corner squares icon that appears when hovering/focusing an Element in the front-end. Click this Blueprint icon, choose a category, give it a name, and save. 

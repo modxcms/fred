@@ -2,7 +2,7 @@
 
 Fred is a visual drag-and-drop **fr**ont-end **ed**itor for [MODX CMS](https://modx.com). It empowers ordinary people to create exceptional content without knowing how to code or learning complex interfaces. 
 
-You can create content with Fred by merely dragging Elements from a sidebar and dropping them where wish for them to appear. Select the copy you wish to change or click an image you want to update, edit directly in your browser, and click a green checkmark to save the changes. 
+You can create content with Fred by merely dragging Elements from a sidebar and dropping them where you wish for them to appear. Select the copy you wish to change or click an image you want to update, edit directly in your browser, and click a green checkmark to save the changes. 
 
 ## What does Fred do for developers and site builders?
 
@@ -18,9 +18,9 @@ In short, Fred makes constructing complex pages simple for even the most non-tec
 
 Fred adheres to MODX’s core tenet of Creative Freedom. It doesn’t force you into someone else’s preferred front-end framework or way of building things. If you can imagine or prototype it, Fred can power it—without compromise. 
 
-Developers and designers can realize pixel-perfect precision and confidently turning over content creation duties without fear of things breaking. 
+Developers and designers can realize pixel-perfect websites and confidently turn over content creation duties without fear of things breaking. 
  
-So whether a site is made by customizing a free starter theme, or handcrafted 100% from scratch, Fred can help everyone built faster, more consistently and better. 
+So whether a site is made by customizing a free starter theme, or handcrafted 100% from scratch, Fred can help everyone build websites faster, more consistently and with better results. 
 
 ## What Else Can Fred Do?
 
