@@ -14,4 +14,4 @@ Elements can be organized to aid content creators in finding different types of 
 
 ## Creating Fred Elements
 
-To learn more about creating Template for Fred, see the [developer documentation](develop/elements/index.md).
+To learn more about creating Template for Fred, see the [themers documentation](themer/elements/index.md).

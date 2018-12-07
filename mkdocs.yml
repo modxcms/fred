@@ -9,36 +9,37 @@ nav:
     - MODX Templates & Fred: templates.md
     - Elements: elements.md
     - Blueprints: blueprints.md
-    - Fred for Developers:
-      - About Developing for Fred: develop/index.md
-      - Theme Creation Tutorial: develop/themes.md
-      - Convert Exisitng Sites to Fred: develop/convert-to-fred.md
-      - MODX Templates for Fred: develop/templates/index.md
+    - Fred for Themers:
+      - Creating a Theme for Fred: themer/index.md
+      - Theme Creation Tutorial: themer/themes.md
+      - Convert Exisitng Sites to Fred: themer/convert-to-fred.md
+      - MODX Templates for Fred: themer/templates/index.md
       - Elements:
-        - Elements: develop/elements/index.md
-        - HTML Markup & Twig: develop/elements/markup.md
-        - HTML Attributes: develop/elements/attributes.md
-        - JS Events: develop/elements/js_events.md
-        - Options: develop/elements/options.md
-        - Option Sets: develop/elements/option_sets.md
-      - RTE Configs: develop/rte_configs/index.md
-      - Media Sources: develop/media_sources/index.md
-      - System Settings: develop/system_settings/index.md
+        - Elements: themer/elements/index.md
+        - HTML Markup & Twig: themer/elements/markup.md
+        - HTML Attributes: themer/elements/attributes.md
+        - JS Events: themer/elements/js_events.md
+        - Options: themer/elements/options.md
+        - Option Sets: themer/elements/option_sets.md
+      - RTE Configs: themer/rte_configs/index.md
+      - Media Sources: themer/media_sources/index.md
+      - System Settings: themer/system_settings/index.md
       - Manager 3PC:
-        - Elements: develop/cmp/elements.md
-        - Element Categories: develop/cmp/element_categories.md
-        - Option Sets: develop/cmp/option_sets.md
-        - RTE Configs: develop/cmp/rte_configs.md
-        - Rebuild: develop/cmp/rebuild.md
-        - Blueprints: develop/cmp/blueprints.md
-        - Blueprint Categories: develop/cmp/blueprint_categories.md
-        - Building Themes: develop/cmp/themes.md
-        - Themed Templates: develop/cmp/themed_templates.md
-        - Media Sources: develop/cmp/media_sources.md
+        - Elements: themer/cmp/elements.md
+        - Element Categories: themer/cmp/element_categories.md
+        - Option Sets: themer/cmp/option_sets.md
+        - RTE Configs: themer/cmp/rte_configs.md
+        - Rebuild: themer/cmp/rebuild.md
+        - Blueprints: themer/cmp/blueprints.md
+        - Blueprint Categories: themer/cmp/blueprint_categories.md
+        - Building Themes: themer/cmp/themes.md
+        - Themed Templates: themer/cmp/themed_templates.md
+        - Media Sources: themer/cmp/media_sources.md
+    - Fred for Site Admins:
       - ACLs:
-        - How To: develop/acls/howto.md
-        - Permissions: develop/acls/permissions.md
-        - Default Policies: develop/acls/policies.md      
+        - How To: site_admin/acls/howto.md
+        - Permissions: site_admin/acls/permissions.md
+        - Default Policies: site_admin/acls/policies.md      
 
 theme:
   name: 'material'

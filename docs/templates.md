@@ -8,4 +8,4 @@ Most templates will have a *content* Dropzone. Fred also supports multiple Dropz
 
 ## Creating Fred Templates
 
-To learn more about creating Template for Fred, see the [developer documentation](develop/templates/index.md).
+To learn more about creating Template for Fred, see the [themers documentation](themer/templates/index.md).

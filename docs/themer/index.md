@@ -1,10 +1,10 @@
-# Developing for Fred
+# Creating a Theme for Fred
 
-Fred developers should have a basic understand of MODX, be proficient with HTML/CSS markup for creating Elements, and be able to create valid JSON for Option Sets. 
+Fred themers should have a basic understand of MODX, be proficient with HTML/CSS markup for creating Elements, and be able to create valid JSON for Option Sets. 
 
-Intermediate Fred developers will use [Twig](https://twig.symfony.com/doc/2.x/) to create conditional logic in Elements. This can be used to show or hide things based on the settings  of the controls in Option Sets.
+Intermediate Fred themers will use [Twig](https://twig.symfony.com/doc/2.x/) to create conditional logic in Elements. This can be used to show or hide things based on the settings  of the controls in Option Sets.
 
-Advanced Fred developers will need to know Javascript and PHP to create [Fred Plugins](/develop/plugins.md).
+Advanced Fred themers will need to know Javascript to advanced elements with [JS Events](/themer/elements/js_events).
 
 ## Suggested Workflow
 
