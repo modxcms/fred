@@ -18,6 +18,7 @@ nav:
         - Elements: develop/elements/index.md
         - HTML Markup & Twig: develop/elements/markup.md
         - HTML Attributes: develop/elements/attributes.md
+        - JS Events: develop/elements/js_events.md
         - Options: develop/elements/options.md
         - Option Sets: develop/elements/option_sets.md
       - RTE Configs: develop/rte_configs/index.md
@@ -37,8 +38,7 @@ nav:
       - ACLs:
         - How To: develop/acls/howto.md
         - Permissions: develop/acls/permissions.md
-        - Default Policies: develop/acls/policies.md
-      - Events for Plugin Developers: develop/events/index.md
+        - Default Policies: develop/acls/policies.md      
 
 theme:
   name: 'material'
