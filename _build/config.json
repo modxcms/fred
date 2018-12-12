@@ -66,10 +66,6 @@
         "value": "name"
       },
       {
-        "key": "default_element",
-        "value": ""
-      },
-      {
         "key": "secret",
         "type": "text-password",
         "value": ""

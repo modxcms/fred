@@ -175,6 +175,7 @@
         <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="config" dbtype="mediumtext" phptype="json" null="false" default="" />
+        <field key="default_element" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
 
         <index alias="uuid" name="uuid" primary="false" unique="true" type="BTREE">
             <column key="uuid" length="" collation="A" null="false" />

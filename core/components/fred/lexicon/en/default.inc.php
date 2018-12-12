@@ -194,6 +194,7 @@ $_lang['fred.themes.duplicate_theme_objects'] = 'Duplicate theme Objects (Elemen
 $_lang['fred.themes.build_and_download'] = 'Build & Download Theme';
 $_lang['fred.themes.theme_duplicate_name'] = '[[+theme]] Copy';
 $_lang['fred.themes.duplicate_templates'] = 'Duplicate Templates';
+$_lang['fred.themes.default_element'] = 'Default Element';
 
 $_lang['fred.themed_templates.theme'] = 'Theme';
 $_lang['fred.themed_templates.template'] = 'Template';

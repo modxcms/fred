@@ -6,6 +6,7 @@
  * @property string $description
  * @property array $config
  * @property string $theme_folder
+ * @property string $default_element
  * 
  * @property FredElementCategory[] $ElementCategories
  * @property FredBlueprintCategory[] $BlueprintCategories

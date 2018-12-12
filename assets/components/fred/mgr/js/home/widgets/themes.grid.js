@@ -17,7 +17,7 @@ fred.grid.Themes = function (config) {
             action: 'mgr/themes/getlist'
         },
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder'],
+        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -45,6 +45,13 @@ fred.grid.Themes = function (config) {
             {
                 header: _('fred.themes.theme_folder'),
                 dataIndex: 'theme_folder',
+                sortable: true,
+                width: 80,
+                editor: this.getEditor(config, {xtype: 'textfield'})
+            },
+            {
+                header: _('fred.themes.default_element'),
+                dataIndex: 'default_element',
                 sortable: true,
                 width: 80,
                 editor: this.getEditor(config, {xtype: 'textfield'})

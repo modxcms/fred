@@ -15,12 +15,18 @@ use Wa72\HtmlPageDom\HtmlPageCrawler;
 final class RenderResource {
     /** @var \modResource */
     private $resource;
+    
+    /** @var \FredTheme */
+    private $theme;
 
     /** @var \Twig_Environment */
     private $twig;
     
     /** @var \modX */
     private $modx;
+    
+    /** @var \Fred */
+    private $fred;
     
     /** @var array */
     private $data = [];
@@ -29,6 +35,18 @@ final class RenderResource {
     {
         $this->resource = $resource;
         $this->modx = $modx;
+
+        $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+        $this->fred = $modx->getService(
+            'fred',
+            'Fred',
+            $corePath . 'model/fred/',
+            array(
+                'core_path' => $corePath
+            )
+        );
+        
+        $this->theme = $this->fred->getTheme($this->resource->template);
         
         $this->data = $this->resource->getProperty('data', 'fred');
         if(empty($this->data) && !empty($this->resource->content)){
@@ -140,7 +158,9 @@ final class RenderResource {
     }
 
     private function setDefaults(){
-        $defElement = explode('|',$this->modx->getOption('fred.default_element'));
+        if (!$this->theme) return;
+        
+        $defElement = explode('|', $this->theme->get('default_element'));
         if(!empty($defElement[0]) && is_numeric($defElement[0]) && !empty($defElement[1])){
             /** @var \FredElement $defaultElement */
             $defaultElement = $this->modx->getObject('FredElement', ['id' => $defElement[0]]);
