@@ -1,9 +1,5 @@
 Fred system settings control how your site reacts. Since Fred is loaded on the frontend, you can change how these works per-context, user, or group.
 
-### Default Element (fred.default_element)
-
-The default Element settings allows you to chose a default Fred Element and target area for placing the content on existing documents. The setting is formatted as `ID|target` where ID is the identification number of the Chunk and the target is the HTML Element within that Chunk identified with a `data-fred-name` attribute.
-
 #### Example Chunk: Content Area (13)
 
 ```html

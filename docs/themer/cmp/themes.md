@@ -17,6 +17,10 @@ Themes are made of of multple things:
 
 When you create a Theme, Fred will automatically create a directory named for the theme in `assets/themes/{{theme-name}}`. Use this to store all your theme-specific assets like images, css, fonts and javascript. 
 
+### Default Element
+
+The default element setting allows you to chose a default Fred Element and target area for placing the content on existing documents. The setting is formatted as `ID|target` where ID is the identification number of the Chunk and the target is the HTML Element within that Chunk identified with a `data-fred-name` attribute. This is useful for converting a standard resource to Fred, as it will place the existing content in the default element.
+
 ### Elements
 
 A Theme Builder will automatically include all Element Categories attached to the Theme with all their [Elements](/elements). All [Option Sets](/option_sets) and [RTE Configs](/rte_configs) attached to the Theme will be also included.
