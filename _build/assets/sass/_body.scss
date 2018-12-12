@@ -102,7 +102,21 @@
       box-shadow: rgba($black, .34) 0 4px 8px;
     }
   }
-
+  &-invalid{
+    &:before{
+      content: inline-svg('exclamation-triangle',$lightcoral);
+      position: absolute; 
+      top: 0; 
+      right: 0;
+      height: 28px;
+      width: 28px;
+      z-index: 10011;
+    }
+    &.fred--block-active{
+      outline: 3px solid lighten($lightcoral, 15%);
+      box-shadow: 0 0 100vh 100vw rgba(#100,.2), 0 0 50px rgba(#100, .5);
+    }
+  }
   .fred--toolbar {
     box-sizing: border-box;
     background: $modxblue;

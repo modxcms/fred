@@ -213,6 +213,26 @@
     }
   }
 }
+.fred--alert-invalid{
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba($lightcoral,0.55);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  position: fixed;
+  z-index: 10111;
+  bottom: 18px;
+  max-width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  &:before{
+    content: inline-svg('exclamation-triangle',$white);
+    height: 14px;
+    width: 14px;
+    display: inline-block;
+  }
+}
 @media screen and (max-height: 770px) {
   .fred--content-preview{
     &_controls{
