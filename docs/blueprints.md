@@ -14,6 +14,10 @@ Like Elements, find a Blueprint you wish to use and drag-and-drop it into a Drop
 
 Users with permissions to do so can save Blueprints and share them with others or keep them private so only their users can see them. 
 
+Use cases for private Blueprints include testing by theme creators (since they won’t be included in exported Themes), saving specific combinations and settings for Elements that _only_ you will use, and end users currating frequently used Blueprints acros categories into a single location. 
+
+A more advanced use case is overriding default settings of commonly used Elements to match frequently changedd settings like changing margins, padding or text-alignment. 
+
 ### Blueprint Screenshots
 
 When creating a Blueprint, it will generate a screenshot image for you. However, you may wish to manually create your own screenshot as the libary used to build screen captures does not understand all CSS properties. 
