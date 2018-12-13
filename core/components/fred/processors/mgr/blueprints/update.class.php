@@ -29,6 +29,10 @@ class FredBlueprintsUpdateProcessor extends modObjectUpdateProcessor
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.blueprints_ns_name'));
+        } else {
+            if ($this->modx->getCount($this->classKey, ['name' => $name, 'category' => $category, 'id:!=' => $this->object->id]) > 0) {
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.blueprints_ae_name'));
+            }
         }
 
         if (empty($category)) {

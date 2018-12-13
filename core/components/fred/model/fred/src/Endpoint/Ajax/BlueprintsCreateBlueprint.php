@@ -20,6 +20,10 @@ class BlueprintsCreateBlueprint extends Endpoint
         if (empty($category)) {
             return $this->failure('No category was provided', ['category' => 'No category was provided']);
         }
+
+        if ($this->modx->getCount('FredBlueprint', ['name' => $this->body['name'], 'category' => $category]) > 0) {
+            return $this->failure('Blueprint with this name already exists.', ['name' => 'Blueprint with this name already exists.']);
+        }
         
         /** @var \FredBlueprintCategory $categoryObject */
         $categoryObject = $this->modx->getObject('FredBlueprintCategory', ['id' => $category]);

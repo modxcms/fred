@@ -29,6 +29,10 @@ class FredElementsUpdateProcessor extends modObjectUpdateProcessor
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.elements_ns_name'));
+        } else {
+            if ($this->modx->getCount($this->classKey, ['name' => $name, 'category' => $category, 'id:!=' => $this->object->id]) > 0) {
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.elements_ae_name'));
+            }
         }
         
         if (empty($category)) {

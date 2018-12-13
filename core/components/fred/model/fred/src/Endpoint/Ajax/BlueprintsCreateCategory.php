@@ -21,6 +21,10 @@ class BlueprintsCreateCategory extends Endpoint
             return $this->failure('No theme was provided', ['theme' => 'No theme was provided']);
         }
 
+        if ($this->modx->getCount('FredBlueprintCategory', ['name' => $this->body['name'], 'theme' => $theme]) > 0) {
+            return $this->failure('Blueprint Category with this name already exists.', ['name' => 'Blueprint Category with this name already exists.']);
+        }
+
         $rank = isset($this->body['rank']) ? intval($this->body['rank']) : 0;
         $public = isset($this->body['public']) ? intval($this->body['public']) : 0;
 

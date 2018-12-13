@@ -28,6 +28,10 @@ class FredBlueprintCategoriesCreateProcessor extends modObjectCreateProcessor
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.blueprint_categories_ns_name'));
+        } else {
+            if ($this->doesAlreadyExist(['name' => $name, 'theme' => $theme])) {
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.blueprint_categories_ae_name'));
+            }
         }
 
         if (empty($theme)) {

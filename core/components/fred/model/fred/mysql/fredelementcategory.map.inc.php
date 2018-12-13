@@ -103,6 +103,28 @@ $xpdo_meta_map['FredElementCategory']= array (
         ),
       ),
     ),
+    'name_theme' => 
+    array (
+      'alias' => 'name_theme',
+      'primary' => false,
+      'unique' => true,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'name' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+        'theme' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
   ),
   'composites' => 
   array (

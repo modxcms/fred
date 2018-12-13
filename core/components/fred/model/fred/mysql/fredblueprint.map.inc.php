@@ -193,6 +193,28 @@ $xpdo_meta_map['FredBlueprint']= array (
         ),
       ),
     ),
+    'name_category' => 
+    array (
+      'alias' => 'name_category',
+      'primary' => false,
+      'unique' => true,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'name' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+        'category' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
   ),
   'aggregates' => 
   array (

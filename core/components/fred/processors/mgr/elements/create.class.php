@@ -29,6 +29,10 @@ class FredElementsCreateProcessor extends modObjectCreateProcessor
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.elements_ns_name'));
+        } else {
+            if ($this->doesAlreadyExist(['name' => $name, 'category' => $category])) {
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.elements_ae_name'));
+            }
         }
         
         if (empty($category)) {

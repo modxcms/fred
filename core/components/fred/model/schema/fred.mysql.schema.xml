@@ -28,6 +28,11 @@
         <index alias="createdBy" name="createdBy" primary="false" unique="false" type="BTREE">
             <column key="createdBy" length="" collation="A" null="false" />
         </index>
+
+        <index alias="name_theme" name="name_theme" primary="false" unique="true" type="BTREE">
+            <column key="name" length="" collation="A" null="false" />
+            <column key="theme" length="" collation="A" null="false" />
+        </index>
         
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="foreign" />
         <composite alias="Blueprints" class="FredBlueprint" local="id" foreign="category" cardinality="many" owner="local" />
@@ -68,6 +73,11 @@
         <index alias="createdBy" name="createdBy" primary="false" unique="false" type="BTREE">
             <column key="createdBy" length="" collation="A" null="false" />
         </index>
+
+        <index alias="name_category" name="name_category" primary="false" unique="true" type="BTREE">
+            <column key="name" length="" collation="A" null="false" />
+            <column key="category" length="" collation="A" null="false" />
+        </index>
         
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Category" class="FredBlueprintCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
@@ -88,6 +98,11 @@
         </index>
         
         <index alias="theme" name="theme" primary="false" unique="false" type="BTREE">
+            <column key="theme" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="name_theme" name="name_theme" primary="false" unique="true" type="BTREE">
+            <column key="name" length="" collation="A" null="false" />
             <column key="theme" length="" collation="A" null="false" />
         </index>
         
@@ -164,6 +179,11 @@
         <index alias="rank" name="rank" primary="false" unique="false" type="BTREE">
             <column key="rank" length="" collation="A" null="false" />
         </index>
+
+        <index alias="name_category" name="name_category" primary="false" unique="true" type="BTREE">
+            <column key="name" length="" collation="A" null="false" />
+            <column key="category" length="" collation="A" null="false" />
+        </index>
         
         <aggregate alias="Category" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="OptionSet" class="FredElementOptionSet" local="option_set" foreign="id" cardinality="one" owner="foreign" />
@@ -179,6 +199,10 @@
 
         <index alias="uuid" name="uuid" primary="false" unique="true" type="BTREE">
             <column key="uuid" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="name" name="name" primary="false" unique="true" type="BTREE">
+            <column key="name" length="" collation="A" null="false" />
         </index>
 
         <composite alias="ElementCategories" class="FredElementCategory" local="id" foreign="theme" cardinality="many" owner="local" />
