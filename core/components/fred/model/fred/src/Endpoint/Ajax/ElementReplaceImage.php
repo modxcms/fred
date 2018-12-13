@@ -7,14 +7,18 @@ class ElementReplaceImage extends Endpoint
 {
     function process()
     {
+        if (!$this->modx->hasPermission('fred_element_screenshot')) {
+            return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
+        }
+        
         $elementId = isset($this->body['element']) ? $this->body['element'] : '';
         
         if (empty($elementId)) {
-            return $this->failure('No element was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.elements_ns_element'));
         }
         
         if (empty($this->body['image'])) {
-            return $this->failure('No image was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.elements_ns_image'));
         }
         
         /** @var \FredElement $element */
@@ -24,12 +28,12 @@ class ElementReplaceImage extends Endpoint
             /** @var \FredBlueprintCategory $categoryObject */
             $categoryObject = $element->Category;
             if (!$categoryObject) {
-                return $this->failure('No category was provided');
+                return $this->failure($this->modx->lexicon('fred.fe.err.elements_ns_category'));
             }
 
             $theme = $categoryObject->Theme;
             if (!$theme) {
-                return $this->failure('Category doesn\'t have theme.');
+                return $this->failure($this->modx->lexicon('fred.fe.err.category_no_theme'));
             }
             
             $path = $theme->getThemeFolderPath() . 'generated/';
@@ -56,6 +60,6 @@ class ElementReplaceImage extends Endpoint
             return $this->success();
         }
 
-        return $this->failure('Saving Element failed.');
+        return $this->failure($this->modx->lexicon('fred.fe.err.elements_save'));
     }
 }

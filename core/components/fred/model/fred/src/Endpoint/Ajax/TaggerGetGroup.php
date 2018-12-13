@@ -20,7 +20,7 @@ class TaggerGetGroup extends Endpoint
         $includeTags = isset($_GET['includeTags']) ? intval($_GET['includeTags']) : -1;
 
         if (empty($group)) {
-            return $this->failure('No group was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.tagger_ns_group'));
         }
 
         $this->loadTagger();
@@ -31,7 +31,7 @@ class TaggerGetGroup extends Endpoint
         $group = $this->modx->getObject('TaggerGroup', ['id' => $group]);
 
         if (!$group) {
-            return $this->failure('Group not found');
+            return $this->failure($this->modx->lexicon('fred.fe.err.tagger_ns_group'));
         }
 
         $groupArray = $group->toArray();

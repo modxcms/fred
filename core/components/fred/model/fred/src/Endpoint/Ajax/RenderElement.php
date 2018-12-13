@@ -22,11 +22,11 @@ class RenderElement extends Endpoint
         $settings = empty($this->body['settings']) ? [] : $this->body['settings'];
         
         if (empty($resourceId)) {
-            return $this->failure('No resource was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
         }
 
         if (empty($elementUUID)) {
-            return $this->failure('No element was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_element'));
         }
         
         /** @var \FredElement $element */

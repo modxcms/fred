@@ -70,6 +70,8 @@ abstract class Endpoint
             $this->body = json_decode(file_get_contents('php://input'), true);
         }
 
+        $this->modx->lexicon->load('fred:fe');
+        
         return $this->process();
     }
 

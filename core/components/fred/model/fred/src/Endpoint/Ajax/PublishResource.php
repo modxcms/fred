@@ -15,24 +15,24 @@ class PublishResource extends Endpoint
     function process()
     {
         if (!isset($this->body['resource'])) {
-            return $this->failure('No id was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
         }
         
         $resourceId = intval($this->body['resource']);
 
         if (empty($resourceId)) {
-            return $this->failure('No id was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
         }
 
         /** @var \modResource $resource */
         $resource = $this->modx->getObject('modResource', ['id' => $resourceId]);
         
         if (!$resource) {
-            return $this->failure('Resource not found');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_nf_id', ['id' => $resourceId]));
         }
         
         if (!$this->modx->hasPermission('publish_document') || !$resource->checkPolicy(['publish' => true, 'save' => true])) {
-            return $this->failure('Permission denied');
+            return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
 
         $resource->set('published', true);
@@ -52,7 +52,7 @@ class PublishResource extends Endpoint
         ]);
         
         $data = [
-            'message' => 'Resource published'
+            'message' => $this->modx->lexicon('fred.fe.pages.published')
         ];
 
         return $this->success($data);

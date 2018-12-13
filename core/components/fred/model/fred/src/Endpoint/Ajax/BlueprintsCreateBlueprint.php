@@ -8,32 +8,32 @@ class BlueprintsCreateBlueprint extends Endpoint
     function process()
     {
         if (!$this->modx->hasPermission('fred_blueprints_save')) {
-            return $this->failure('Permission denied.');
+            return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
         
         $category = isset($this->body['category']) ? intval($this->body['category']) : 0;
         
         if (empty($this->body['name'])) {
-            return $this->failure('No name was provided', ['name' => 'No name was provided']);
+            return $this->failure($this->modx->lexicon('fred.fe.err.blueprints_ns_name'), ['name' => $this->modx->lexicon('fred.fe.err.blueprints_ns_name')]);
         }
         
         if (empty($category)) {
-            return $this->failure('No category was provided', ['category' => 'No category was provided']);
+            return $this->failure($this->modx->lexicon('fred.fe.err.blueprints_ns_category'), ['category' => $this->modx->lexicon('fred.fe.err.blueprints_ns_category')]);
         }
 
         if ($this->modx->getCount('FredBlueprint', ['name' => $this->body['name'], 'category' => $category]) > 0) {
-            return $this->failure('Blueprint with this name already exists.', ['name' => 'Blueprint with this name already exists.']);
+            return $this->failure($this->modx->lexicon('fred.fe.err.blueprints_ae_name'), ['name' => $this->modx->lexicon('fred.fe.err.blueprints_ae_name')]);
         }
         
         /** @var \FredBlueprintCategory $categoryObject */
         $categoryObject = $this->modx->getObject('FredBlueprintCategory', ['id' => $category]);
         if (!$categoryObject) {
-            return $this->failure('No category was provided', ['category' => 'No category was provided']);
+            return $this->failure($this->modx->lexicon('fred.fe.err.blueprints_ns_category'), ['category' => $this->modx->lexicon('fred.fe.err.blueprints_ns_category')]);
         }
 
         $theme = $categoryObject->Theme;
         if (!$theme) {
-            return $this->failure('Category doesn\'t have theme.', ['category' => 'Category doesn\'t have theme.']);
+            return $this->failure($this->modx->lexicon('fred.fe.err.category_no_theme'), ['category' => $this->modx->lexicon('fred.fe.err.category_no_theme')]);
         }
 
         $rank = isset($this->body['rank']) ? intval($this->body['rank']) : 0;
@@ -104,6 +104,6 @@ class BlueprintsCreateBlueprint extends Endpoint
             return $this->success();
         }
 
-        return $this->failure('Saving Blueprint failed.');
+        return $this->failure($this->modx->lexicon('fred.fe.err.blueprints_save'));
     }
 }

@@ -23,18 +23,18 @@ class DeleteResource extends Endpoint
         $resourceId = intval($this->body['resource']);
 
         if (empty($resourceId)) {
-            return $this->failure('No id was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
         }
 
         /** @var \modResource $resource */
         $resource = $this->modx->getObject('modResource', ['id' => $resourceId]);
         
         if (!$resource) {
-            return $this->failure('Resource not found');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_nf'));
         }
         
         if (!$this->modx->hasPermission('delete_document') || !$resource->checkPolicy(['delete' => true, 'save' => true])) {
-            return $this->failure('Permission denied');
+            return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
 
         $this->deletedTime = time();
@@ -54,7 +54,7 @@ class DeleteResource extends Endpoint
         ]);
         
         $data = [
-            'message' => 'Resource deleted'
+            'message' => $this->modx->lexicon('fred.fe.pages.deleted')
         ];
 
         return $this->success($data);

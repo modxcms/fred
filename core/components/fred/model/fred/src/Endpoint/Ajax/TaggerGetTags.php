@@ -20,7 +20,7 @@ class TaggerGetTags extends Endpoint
         $query = isset($_GET['query']) ? $_GET['query'] : '';
 
         if (empty($group)) {
-            return $this->failure('No group was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.tagger_ns_group'));
         }
 
         $this->loadTagger();

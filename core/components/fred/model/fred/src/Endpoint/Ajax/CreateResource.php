@@ -17,22 +17,22 @@ class CreateResource extends Endpoint
 {
     function process()
     {
-        return $this->failure('Permission denied.');
         if (!$this->modx->hasPermission('new_document')) {
+            return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
         
         if (!isset($this->body['parent'])) {
-            return $this->failure('No id was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_parent'));
         }
         
         $parentId = intval($this->body['parent']);
 
         if (!isset($this->body['template'])) {
-            return $this->failure('No template was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_template'));
         }
         
         if (empty($this->body['pagetitle'])) {
-            return $this->failure('No pagetitle was provided', ['pagetitle' => 'No pagetitle was provided']);
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_pagetitle'), ['pagetitle' => $this->modx->lexicon('fred.fe.err.resource_ns_pagetitle')]);
         }
         
         if (empty($this->body['contextKey'])) {
@@ -73,7 +73,7 @@ class CreateResource extends Endpoint
         $response = $this->modx->runProcessor('resource/create', $props);
         
         if ($response->isError()) {
-            return $this->failure('Error creating new resource');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_save_new'));
         }
         
         $object = $response->getObject();
@@ -95,7 +95,7 @@ class CreateResource extends Endpoint
         }
         
         $data = [
-            'message' => 'Resource created',
+            'message' => $this->modx->lexicon('fred.fe.pages.created'),
             'url' => $this->getPreviewUrl($resource)
         ];
 

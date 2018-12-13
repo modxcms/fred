@@ -20,27 +20,27 @@ class SaveContent extends Endpoint
     function process()
     {
         if (!isset($this->body['id'])) {
-            return $this->failure('No id was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
         }
         
         $id = (int)$this->body['id'];
 
         if (!$this->verifyClaim('resource', $id)) {
-            return $this->failure('Invalid id was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_invalid_id'));
         }
 
         if (!isset($this->body['data'])) {
-            return $this->failure('No data was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_data'));
         }
 
         /** @var \modResource $object */
         $object = $this->modx->getObject('modResource', $id);
         if (!$object instanceof \modResource) {
-            return $this->failure('Could not load resource with id ' . $id);
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_nf_id', ['id' => $id]));
         }
 
         if (!$this->modx->hasPermission('save_document') || !$object->checkPolicy('save')) {
-            return $this->failure('Permission denied (save)');
+            return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
         
         $data = $object->getProperty('data', 'fred');
@@ -50,7 +50,7 @@ class SaveContent extends Endpoint
             }
             
             if ($data['fingerprint'] !== $this->body['fingerprint']) {
-                return $this->failure('Your page is outdated, please reload the page.');
+                return $this->failure($this->modx->lexicon('fred.fe.err.resource_stale'));
             }
         }
 
@@ -202,7 +202,7 @@ class SaveContent extends Endpoint
         $saved = $object->save();
 
         if (!$saved) {
-            return $this->failure('Error saving resource with id ' . $object->get('id'));
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
         }
         
         if (isset($this->body['pageSettings']['tvs']) && is_array($this->body['pageSettings']['tvs'])) {
@@ -214,7 +214,7 @@ class SaveContent extends Endpoint
         $this->modx->getCacheManager()->refresh();
 
         $response = [
-            'message' => 'Save successful',
+            'message' => $this->modx->lexicon('fred.fe.pages.updated'),
             'fingerprint' => $this->body['data']['fingerprint']
             
         ];

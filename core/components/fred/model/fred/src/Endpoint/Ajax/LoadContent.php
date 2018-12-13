@@ -24,17 +24,17 @@ class LoadContent extends Endpoint
         $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
         if (empty($id)) {
-            return $this->failure('No id was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
         }
 
         if (!$this->verifyClaim('resource', $id)) {
-            return $this->failure('Invalid id was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_invalid_id'));
         }
 
         /** @var \modResource $object */
         $object = $this->modx->getObject('modResource', $id);
         if (!$object instanceof \modResource) {
-            return $this->failure('Could not load resource with id ' . $id);
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_nf_id', ['id' => $id]));
         }
 
         $this->theme = $this->fred->getTheme($object->template);

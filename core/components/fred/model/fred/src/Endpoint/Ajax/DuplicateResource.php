@@ -20,22 +20,22 @@ class DuplicateResource extends Endpoint
         $publishingOptions = $this->modx->getOption('publishing_options', $this->body, 'preserve');
         
         if (empty($resourceId)) {
-            return $this->failure('No id was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
         }
 
         if (empty($pageTitle)) {
-            return $this->failure('No pagetitle was provided');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_pagetitle'));
         }
 
         /** @var \modResource $resource */
         $resource = $this->modx->getObject('modResource', ['id' => $resourceId]);
         
         if (!$resource) {
-            return $this->failure('Resource not found');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_nf'));
         }
         
         if (!$this->modx->hasPermission('resource_duplicate') || !$resource->checkPolicy('copy')) {
-            return $this->failure('Permission denied');
+            return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
 
         $newResource = $resource->duplicate(array(
@@ -46,7 +46,7 @@ class DuplicateResource extends Endpoint
         ));
 
         if (!($newResource instanceof \modResource)) {
-            return $this->failure('Duplication failed');
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_duplicate_failed'));
         }
 
         $this->modx->cacheManager->refresh([
@@ -57,7 +57,7 @@ class DuplicateResource extends Endpoint
         ]);
         
         $data = [
-            'message' => 'Resource duplicated',
+            'message' => $this->modx->lexicon('fred.fe.pages.duplicated'),
             'id' => $newResource->id,
             'url' => $this->modx->makeUrl($newResource->id, $newResource->context_key, '', 'full')
         ];

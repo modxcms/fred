@@ -8,21 +8,21 @@ class BlueprintsCreateCategory extends Endpoint
     function process()
     {
         if (!$this->modx->hasPermission('fred_blueprint_categories_save')) {
-            return $this->failure('Permission denied.');
+            return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
         
         if (empty($this->body['name'])) {
-            return $this->failure('No name was provided', ['name' => 'No name was provided']);
+            return $this->failure($this->modx->lexicon('fred.fe.err.blueprint_categories_ns_name'), ['name' => $this->modx->lexicon('fred.fe.err.blueprint_categories_ns_name')]);
         }
 
         $theme = isset($this->body['theme']) ? intval($this->body['theme']) : 0;
         
         if (empty($theme)) {
-            return $this->failure('No theme was provided', ['theme' => 'No theme was provided']);
+            return $this->failure($this->modx->lexicon('fred.fe.err.blueprint_categories_ns_theme'), ['theme' => $this->modx->lexicon('fred.fe.err.blueprint_categories_ns_theme')]);
         }
 
         if ($this->modx->getCount('FredBlueprintCategory', ['name' => $this->body['name'], 'theme' => $theme]) > 0) {
-            return $this->failure('Blueprint Category with this name already exists.', ['name' => 'Blueprint Category with this name already exists.']);
+            return $this->failure($this->modx->lexicon('fred.fe.err.blueprint_categories_ae_name'), ['name' => $this->modx->lexicon('fred.fe.err.blueprint_categories_ae_name')]);
         }
 
         $rank = isset($this->body['rank']) ? intval($this->body['rank']) : 0;
