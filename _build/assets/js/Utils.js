@@ -132,6 +132,7 @@ const loadChildren = (zones, parent, elements, fireEvents = false) => {
                 chunk.setAttribute('hidden', 'hidden');
                 chunk.dataset.fredElementId = element.widget;
                 chunk.dataset.fredElementTitle = elements[element.widget].title;
+                chunk.dataset.invalidTheme = elements[element.widget].invalidTheme;
                 chunk.elementMarkup = elements[element.widget].html;
                 chunk.elementOptions = elements[element.widget].options || {};
 
@@ -183,6 +184,7 @@ export const loadElements = data => {
                         chunk.setAttribute('hidden', 'hidden');
                         chunk.dataset.fredElementId = element.widget;
                         chunk.dataset.fredElementTitle = data.elements[element.widget].title;
+                        chunk.dataset.invalidTheme = data.elements[element.widget].invalidTheme;
                         chunk.elementMarkup = data.elements[element.widget].html;
                         chunk.elementOptions = data.elements[element.widget].options || {};
     

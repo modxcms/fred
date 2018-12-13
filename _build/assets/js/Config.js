@@ -13,6 +13,7 @@ class Config {
         this._jwt = null;
         this._permission = null;
         this._resource = null;
+        this._invalidElements = false;
     }
     
     set fred(fred) {
@@ -58,6 +59,10 @@ class Config {
     set lang(lang) {
         this._lang = lang;
     }
+    
+    set invalidElements(invalidElements) {
+        this._invalidElements = invalidElements;
+    }
 
     get config() {
         return this._config;
@@ -97,6 +102,10 @@ class Config {
     
     get resource() {
         return this._resource;
+    }
+    
+    get invalidElements() {
+        return this._invalidElements;
     }
     
     registerEditor(name, editor) {

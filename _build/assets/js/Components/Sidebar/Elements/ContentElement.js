@@ -21,7 +21,8 @@ export class ContentElement {
         this.id = this.el.dataset.fredElementId;
         this.title = this.el.dataset.fredElementTitle;
         this.wrapper = null;
-
+        this.invalidTheme = this.el.dataset.invalidTheme === 'true';
+        
         this.setUpEditors();
 
         this.render = this.render.bind(this);
@@ -375,55 +376,18 @@ export class ContentElement {
     }
     
     render() {
-        const wrapper = div(['fred--block']);
+        const wrapperClasses = ['fred--block'];
+        
+        if (this.invalidTheme) {
+            wrapperClasses.push('fred--block-invalid');
+        }
+        
+        const wrapper = div(wrapperClasses);
         wrapper.fredEl = this;
 
         this.setWrapperActiveState(wrapper);
 
-        const toolbar = div((fredConfig.permission.fred_element_move ? ['fred--toolbar', 'handle'] : ['fred--toolbar']));
-
-        if (fredConfig.permission.fred_element_move) {
-            const moveHandle = div(['fred--toolbar-grip', 'handle']);
-            toolbar.appendChild(moveHandle);
-        }
-        
-        if (fredConfig.permission.fred_element_screenshot) {
-            const elementScreenshot = button('', 'fred.fe.content.element_screenshot', ['fred--element_screenshot'], this.takeScreenshot.bind(this));
-            toolbar.appendChild(elementScreenshot);
-        }
-        
-        if (fredConfig.permission.fred_blueprints_save) {
-            const partialBlueprint = button('', 'fred.fe.content.partial_blueprint', ['fred--blueprint'], () => {partialBlueprints.open(this)});
-            toolbar.appendChild(partialBlueprint);
-        }
-
-        if (this.options.settings && (this.options.settings.length > 0)) {
-            const settings = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {elementSettings.open(this)});
-            toolbar.appendChild(settings);
-        }
-
-        const duplicate = button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.duplicate.bind(this));
-        toolbar.appendChild(duplicate);
-
-        if (fredConfig.permission.fred_element_delete) {
-            const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
-            toolbar.appendChild(trashHandle);
-        }
-        
-        if (fredConfig.permission.fred_element_move) {
-            const positionGroup = div(['fred--position-group']);
-            
-            const moveUp = button('', 'fred.fe.content.move_up', ['fred--position-up'], this.moveUp);
-            const moveDown = button('', 'fred.fe.content.move_down', ['fred--position-down'], this.moveDown);
-    
-            positionGroup.appendChild(moveUp);
-            positionGroup.appendChild(moveDown);
-            
-            
-            toolbar.appendChild(positionGroup);
-        }
-
-        wrapper.appendChild(toolbar);
+        wrapper.appendChild(this.buildToolbar());
 
         const content = div(['fred--block_content']);
         content.dataset.fredElementId = this.el.dataset.fredElementId;
@@ -458,6 +422,55 @@ export class ContentElement {
         });
     }
 
+    buildToolbar() {
+        const toolbar = div(((!this.invalidTheme && fredConfig.permission.fred_element_move) ? ['fred--toolbar', 'handle'] : ['fred--toolbar']));
+
+        if (!this.invalidTheme && fredConfig.permission.fred_element_move) {
+            const moveHandle = div(['fred--toolbar-grip', 'handle']);
+            toolbar.appendChild(moveHandle);
+        }
+
+        if (!this.invalidTheme && fredConfig.permission.fred_element_screenshot) {
+            const elementScreenshot = button('', 'fred.fe.content.element_screenshot', ['fred--element_screenshot'], this.takeScreenshot.bind(this));
+            toolbar.appendChild(elementScreenshot);
+        }
+
+        if (!this.invalidTheme && fredConfig.permission.fred_blueprints_save) {
+            const partialBlueprint = button('', 'fred.fe.content.partial_blueprint', ['fred--blueprint'], () => {partialBlueprints.open(this)});
+            toolbar.appendChild(partialBlueprint);
+        }
+
+        if (this.options.settings && (this.options.settings.length > 0)) {
+            const settings = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {elementSettings.open(this)});
+            toolbar.appendChild(settings);
+        }
+
+        if (!this.invalidTheme) {
+            const duplicate = button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.duplicate.bind(this));
+            toolbar.appendChild(duplicate);
+        }
+
+        if (fredConfig.permission.fred_element_delete) {
+            const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
+            toolbar.appendChild(trashHandle);
+        }
+
+        if (!this.invalidTheme && fredConfig.permission.fred_element_move) {
+            const positionGroup = div(['fred--position-group']);
+
+            const moveUp = button('', 'fred.fe.content.move_up', ['fred--position-up'], this.moveUp);
+            const moveDown = button('', 'fred.fe.content.move_down', ['fred--position-down'], this.moveDown);
+
+            positionGroup.appendChild(moveUp);
+            positionGroup.appendChild(moveDown);
+
+
+            toolbar.appendChild(positionGroup);
+        }
+        
+        return toolbar;
+    }
+    
     takeScreenshot() {
         if (!fredConfig.permission.fred_element_screenshot) return;
         
@@ -986,6 +999,10 @@ export class ContentElement {
         }
 
         this.wrapper.remove();
+
+        if (fredConfig.invalidElements) {
+            emitter.emit('fred-clear-invalid-elements-warning');
+        }
     }
 
     duplicateDropZones(dzs) {

@@ -286,6 +286,13 @@ export default class Fred {
             return loadElements(json.data).then(() => {
                 drake.reloadContainers();
     
+                if (document.querySelectorAll('.fred--block-invalid').length > 0) {
+                    fredConfig.invalidElements = true;
+                    
+                    this.invalidElementsWarning = div(['fred--alert-invalid'], 'fred.fe.invalid_elements_warning');
+                    this.wrapper.appendChild(this.invalidElementsWarning);
+                }
+                
                 emitter.emit('fred-loading-hide');
             });
         });
@@ -347,6 +354,15 @@ export default class Fred {
 
         emitter.on('fred-logout-user', () => {
             this.logoutUser();
+        });
+
+        emitter.on('fred-clear-invalid-elements-warning', () => {
+            if (document.querySelectorAll('.fred--block-invalid').length === 0) {
+                fredConfig.invalidElements = false;
+                if (this.invalidElementsWarning) {
+                    this.invalidElementsWarning.remove();
+                }
+            }
         });
     }
 

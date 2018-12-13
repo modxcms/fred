@@ -13,6 +13,11 @@ namespace Fred\Endpoint\Ajax;
 class LoadContent extends Endpoint
 {
     protected $allowedMethod = ['GET', 'OPTIONS'];
+    
+    /** @var \FredTheme */
+    private $theme;
+
+    private $categoryThemeMap = [];
 
     function process()
     {
@@ -31,6 +36,8 @@ class LoadContent extends Endpoint
         if (!$object instanceof \modResource) {
             return $this->failure('Could not load resource with id ' . $id);
         }
+
+        $this->theme = $this->fred->getTheme($object->template);
         
         $this->loadTagger();
 
@@ -94,9 +101,33 @@ class LoadContent extends Endpoint
             return [];
         }
 
+        $invalidTheme = false;
+        if ($this->theme) {
+            $categoryId = $element->get('category');
+            $elementTheme = null;
+            
+            if (!isset($this->categoryThemeMap[$categoryId])) {
+                $category = $element->Category;
+                if ($category) {
+                    $this->categoryThemeMap[$categoryId] = $category->get('theme');
+                    $elementTheme = $this->categoryThemeMap[$categoryId];
+                }
+            } else {
+                $elementTheme = $this->categoryThemeMap[$categoryId];
+            }
+            
+            if ($elementTheme) {
+                if ($elementTheme !== $this->theme->id) {
+                    $invalidTheme = true;
+                }
+            }
+            
+        }
+
         return [
             "title" => $element->name,
             "html" => $element->content,
+            "invalidTheme" => $invalidTheme,
             "options" => $element->processOptions()
         ];
     }
