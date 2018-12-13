@@ -16,4 +16,6 @@ We strongly suggest installing the [Ace Extra](https://modx.com/extras/package/a
 
 As mentioned above, Fred will offer attribute-completion and code hints when working in the Manager:
 
-*todo* @theboxer (including screenshots and how to trigger it, dagnabbit!)  
+Download and install [Fred Ace Integration](https://modx.com/extras/package/fredaceintegration) from extras. When creating/editing an element, start typing `data-` or `fred` and hit `ctrl+space` to show list of all fred attributes.
+
+![Ace Integration](/images/ace_integration_dialog.png)
