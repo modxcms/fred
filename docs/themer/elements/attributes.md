@@ -25,11 +25,11 @@ The value of this attribute has to be unique across in a single Element, but you
 ```
 
 ## data-fred-attrs
-Defines other HTML attributes (comma separated) to save with the content of the HTML Element. 
+Defines other HTML attributes (comma separated) to save with the content of the HTML element where supported by the editor. E.g. Add alt and title attributes to the ImageEditor.  
 
 ### Example
 ```html
-<img src="http://via.placeholder.com/450x150" alt="Default Alt" data-fred-name="header-image" data-fred-attrs="alt">
+<img src="http://via.placeholder.com/450x150" alt="Default Alt" data-fred-name="header-image" data-fred-attrs="alt,title">
 ```
 
 ## data-fred-render

@@ -12,6 +12,7 @@ _packages/*.*
 # IDE files #
 #############
 .idea
+.vscode
 .settings
 nbproject
 .project
