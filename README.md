@@ -12,10 +12,9 @@ In short, Fred makes constructing beautiful and complex pages simple for even th
 
 ## What does Fred do for developers and site builders?
 
-Fred offers theme builders a great entrance into the MODX ecosystem. It is easy to port existing themes to Fred and export them ready for the [MODX Extras](https://modx.com/extras/). 
+Fred offers theme builders a great entrance into the MODX ecosystem. It is easy to port existing themes to Fred and export them for submission to the [MODX Extras](https://modx.com/extras/). 
 
 For existing MODX developers, Fred brings an option to create more flexible and intuitive editing experiences for site owners. Fred can power designs that would otherwise require dozens of TVs, a complex Manager UI, or tricky Manager customization. 
-
 
 ## How is Fred different from other visual content builders?
 
@@ -32,7 +31,7 @@ The following is a sample of Fred’s capabilities that make it a compelling vis
 - Transform static Design Libraries into a live content creating tool that strictly adheres to brand standards, and that is easily understood and used by non-technical team members across your entire organization
 - Use optional conditional/looping Twig template logic to create robust Elements limited only by your imagination
 - Create and organize collections of Elements as building blocks for pages
-- Blueprints provide “replace the placeholders” full- or partial-page templates
+- Blueprints provide boilerplate full- or partial-page templates
 - Multiple dropzones for complete control of every page layout
 - Configure content using a variety of controls including toggles, text inputs, date pickers, select inputs, sliders, Resource pickers, and color pickers
 - Supports MODX code Snippets with live Ajax rendering of changes

@@ -1,5 +1,13 @@
 Changelog for Fred.
 
+1.0.0 rc1
+============
+- Each theme now gets its own defaut_element, which is handy when migrating content from non-Fred sites into Fred.
+- Pages were sometimes hiding from the front end, which made it difficult to work on sites. Now it's a lot easier, and we have outlawed games of hide and seek going forward.
+- When switching Themes, pages can have Elements from other themes, which can lead to Bad Things™. Now we warn when this has happened so you can prevent future frustration.
+- Elements, Blueprints, Element categories, Blueprint categories and Themes now have to have unique names. This is so multiple Themes don't co-mingle their assets with a potentially messy outcome.
+- Found a few places where XHR errors had been left as static strings. Now they can be translated for better feedback if things go awry.
+
 1.0.0 beta12
 ============
 - Fix showing enable Fred button for users without permissions
