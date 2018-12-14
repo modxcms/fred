@@ -18,33 +18,27 @@ Gitify brings a two-way sync of data typically stored in the MODX database, maki
 
 ### Step 1: Create a Blank Site and Install Composer and Gitify
 
-Once the instance is created, `ssh` into it and execute the following commands. This will install Composer and get Gitify cloned to your site:
+Once the instance is created, `ssh` into it and execute the following commands. This will install Composer and get Gitify cloned to your site. 
 
 ```
-cd www
-curl http://modx.co/scripts/install.sh | sh
-cd ~ 
-mkdir gitify
-git clone https://github.com/modmore/Gitify.git ./gitify/
+cd www; curl http://modx.co/scripts/install.sh | sh
+mkdir gitify; cd gitify
+git clone https://github.com/modmore/Gitify.git ./
 ```
 
-Now exit the SSH session, and log back in so you can use Composer.
-
-TODO: `source …` command so you don't have to logout/login each time
+Now exit the SSH session, and log back in so you can use Composer. Alternately, you can use a command like `source /paas/cXXXX/.profile`, replacing the `cXXXX` with your actual Cloud directory.
 
 ### Step 2: Set up Gitify
 
 From an SSH connection in the Cloud home directory:
 
 ```
-cd www/gitify
+cd ~/www/gitify
 composer install
-chmod +x Gitify
-cd ~/.bin
-ln -s ../gitify/Gitify gitify
+chmod +x Gitify; cd ~/.bin; ln -s ../gitify/Gitify gitify
 ```
 
-Again, log out of the SSH session so you use Gitify.
+After the `composer install` command you can confirm things worked if you see a green line of text that says “Generating autoload files”. Again, log out of the SSH session so you use Gitify, or use the `source…` command above.
 
 ### Step 3: Clone the repo of a shared Theme to your Github account
 
@@ -55,21 +49,25 @@ Fork a Theme to your own Github account for sharing. For the purposes of this tu
 Because you cannot `git clone` into a directory with anything in it, we’ll use a temporary location and move the shared theme. To get the URL to clone, from Github click the down-arrow on the green `Clone or download` button and choose the SSH URL, like `git@github.com:modxcms/fred-theme-starter.git`
 
 ```
-cd www
+cd ~/www/
 git clone git@github.com:modxcms/fred-theme-starter.git tmp
 ```
 
-This will download the theme repository into a `~/tmp/` directory in the Cloud. Next, move the cocntents of `tmp/` to the correct location under `www/` so it can be loaded into your local MODX installation:
+This will download the theme repository into a `~/www/tmp/` directory in the Cloud. Next, move the contents of `tmp/` to the correct location under `www/` so it can be loaded into your local MODX installation:
 
 ```
-mv -rf tmp/* www/*
+rsync -av ./tmp/ ./
 ```
 
-Make sure the `.git/` directory and files are move under `www/`.
+Make sure the `.git/` directory and files are move under `www/`. Once you confirm things are in the right place, go ahead and remove `tmp/`:
+
+```
+rm -rf ./tmp/
+```
 
 ### Step 5: Load the Theme using Gitify
 
-Now it's time to load the theme into the Manager:
+Now it’s time to load the theme into the Manager:
 
 ```
 cd ~/www/
