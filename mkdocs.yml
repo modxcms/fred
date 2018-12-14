@@ -12,6 +12,7 @@ nav:
     - Fred for Themers:
       - Creating a Theme for Fred: themer/index.md
       - Theme Creation Tutorial: themer/themes.md
+      - Using Gitify to Collaborate: themer/gitify.md
       - Convert Exisitng Sites to Fred: themer/convert-to-fred.md
       - MODX Templates for Fred: themer/templates/index.md
       - Elements:
@@ -39,7 +40,7 @@ nav:
       - ACLs:
         - How To: site_admin/acls/howto.md
         - Permissions: site_admin/acls/permissions.md
-        - Default Policies: site_admin/acls/policies.md      
+        - Default Policies: site_admin/acls/policies.md
 
 theme:
   name: 'material'
