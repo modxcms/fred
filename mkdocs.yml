@@ -9,6 +9,11 @@ nav:
     - MODX Templates & Fred: templates.md
     - Elements: elements.md
     - Blueprints: blueprints.md
+    - Fred for Site Admins:
+      - Protecting access with ACLs:
+        - How To: site_admin/acls/howto.md
+        - Permissions: site_admin/acls/permissions.md
+        - Default Policies: site_admin/acls/policies.md
     - Fred for Themers:
       - Creating a Theme for Fred: themer/index.md
       - Theme Creation Tutorial: themer/themes.md
@@ -36,11 +41,11 @@ nav:
         - Building Themes: themer/cmp/themes.md
         - Themed Templates: themer/cmp/themed_templates.md
         - Media Sources: themer/cmp/media_sources.md
-    - Fred for Site Admins:
-      - ACLs:
-        - How To: site_admin/acls/howto.md
-        - Permissions: site_admin/acls/permissions.md
-        - Default Policies: site_admin/acls/policies.md
+    - Collaborating on Themes:
+        - Intro to Collaborating: collab/index.md
+        - Setting up Gitify: collab/gitify.md
+        - Using Gitify: collab/gitify_in_action.md
+        - Getting your Theme in Git: collab/extract.md
 
 theme:
   name: 'material'
