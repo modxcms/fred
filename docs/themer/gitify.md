@@ -88,9 +88,30 @@ A common purpose of collaborating on a Theme will be to build a series of Elemen
 Once you’ve installed and worked on a Theme with a team, you’ll find yourself needing to do some common things:
 
 ### Get the latest contributions from your collaborators
+When all your changes are pushed to the repository:
+```
+cd ~/www/
+git pull
+gitify package:install --all
+gitify build
+```
 
-TODO: @theboxer
-
-### PUsh your changes back to your collaborators
-
-TODO: @theboxer
+If you have changes in your instance:
+```
+cd ~/www/
+gitify extract
+git add --all # or git add on files you want to commit
+git commit
+git pull
+# resolve conflicts if any
+gitify package:install --all
+gitify build
+```
+### Push your changes back to your collaborators
+```
+cd ~/www/
+gitify extract
+git add --all # or git add on files you want to commit
+git commit
+git push origin master # replace master with branch name you want to push into
+```
