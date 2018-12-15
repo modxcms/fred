@@ -81,5 +81,5 @@ When done you can log in to your Manager and see the Extras, including Fred, whi
 
 ## Next steps
 
-Once you have Gitify set up and have cloned your theme to your MODX instance, you can work with a remote repository in [git to collaborate](collab/git_in_action.md).
+Once you have cloned your theme to your MODX instance, you can work with a remote repository in [git to collaborate](collab/gitify_in_action).
 

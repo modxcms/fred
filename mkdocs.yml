@@ -17,7 +17,6 @@ nav:
     - Fred for Themers:
       - Creating a Theme for Fred: themer/index.md
       - Theme Creation Tutorial: themer/themes.md
-      - Using Gitify to Collaborate: themer/gitify.md
       - Convert Exisitng Sites to Fred: themer/convert-to-fred.md
       - MODX Templates for Fred: themer/templates/index.md
       - Elements:
@@ -45,7 +44,7 @@ nav:
         - Intro to Collaborating: collab/index.md
         - Setting up Gitify: collab/gitify.md
         - Using Gitify: collab/gitify_in_action.md
-        - Getting your Theme in Git: collab/extract.md
+        - Getting your Theme in Git: collab/initial_extract.md
 
 theme:
   name: 'material'

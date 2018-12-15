@@ -1,6 +1,6 @@
 # Using Gitify to Collaborate on Themes
 
-You mist have [Gitify set up](collab/gifiy.md) with your theme in order to follow these instructions.
+You mist have [Gitify set up](collab/gitify) with your theme in order to follow these instructions.
 
 ## Working with Gitify
 
