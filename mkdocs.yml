@@ -1,7 +1,7 @@
 site_name: Fred
 repo_name: modxcms/fred
 repo_url: https://github.com/modxcms/fred
-copyright: 'Copyright &copy; 2018 <a href="https://modx.com" title="MODX">MODX</a>, LLC'
+copyright: 'Copyright &copy; 2018 <a href="https://modx.com" title="MODX">MODX</a>'
 
 nav:
     - What is Fred?: index.md
@@ -43,8 +43,9 @@ nav:
     - Collaborating on Themes:
         - Intro to Collaborating: collab/index.md
         - Setting up Gitify: collab/gitify.md
-        - Using Gitify: collab/gitify_in_action.md
         - Getting your Theme in Git: collab/initial_extract.md
+        - Basic Gitify Usage: collab/gitify_in_action.md
+        - Advaced Gitify with PRs: collab/pr_workflow.md
 
 theme:
   name: 'material'
