@@ -52,6 +52,7 @@ Here are a few pointers:
 - If you really get stuck, it is Vi after all, [StackExchange to the rescue]()!
 
 ### Push your changes back to your Github repository
+If you are **not** going to submit PR:
 
 ```
 cd ~/www/
@@ -61,8 +62,16 @@ git commit -m "Your commit message here" # please write your own message!
 git push origin master # replace master with branch name you want to push into
 ```
 
+If you are going to submit PR:
+```
+cd ~/www/
+git checkout -b branch-name # use whatever branch name that make sense
+gitify extract
+git add --all # or git add only the files you wish to commit
+git commit -m "Your commit message here" # please write your own message!
+git push origin branch-name # replace master with branch name you created
+```
+
 ## Submit a Pull Request (PR) to the main Project
 
-TODO: @theboxer 
-
-Need to describe how to do this from Github, and possibly from the CLI.
+Open your repository in GitHub, click `New Pull Request` button, select branch you pushed into from your repository and appropriate branch (most likely master) in the target repository.
