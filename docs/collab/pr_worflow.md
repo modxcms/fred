@@ -1,5 +1,64 @@
 # Using Gitify to Collaborate on Themes
 
+### Fork a repository
+Find a repository you want to contribute, for example [Fred Theme Starter](https://github.com/modxcms/fred-theme-starter) and hit the `fork` button.
+
+Note the original URL in HTTPS version (in this case it is `https://github.com/modxcms/fred-theme-starter.git`) and fork's URL in git version for example `git@github.com:your_username/your-fork-name.git`.
+
+### Clone the Shared Theme to your MODX Instance
+
+Because you cannot `git clone` into a directory with anything in it, we’ll use a temporary location and move the files to the web root. To get the URL to clone, click the down-arrow on the green `Clone or download` button on a Theme Github project and copy the SSH URL which looks like `git@github.com:modxcms/fred-theme-starter.git`
+
+```
+cd ~/www
+git clone git@github.com:your_username/your-fork-name.git tmp
+```
+
+This will download the theme repository into a `~/www/tmp/` directory in the Cloud. Next, move the contents of `tmp/` to the correct location under `www/`:
+
+```
+rsync -av ./tmp ./
+```
+
+Make sure the `.git/` directory and files are move under `www/`. Once you confirm things are in the right place, go ahead and remove `tmp/`:
+
+```
+rm -rf ./tmp
+```
+
+### Add upstream (the original repository)
+```
+git remote add upstream https://github.com/modxcms/fred-theme-starter.git
+```
+
+### Sync original master branch with your master branch
+You should **NEVER** commit directly to master branch. This step is important to do before you start any work.
+```
+git pull upstream master
+git push origin master
+gitify package:install --all
+gitify build
+```
+
+### Pushing your changes
+```
+cd ~/www
+git checkout -b my-feature # checkout to new branch, use whatever name make sense
+gitify extract # extract all your changes
+git add --all # or git add on changed files
+git commit -m "My Changes" # Use reasonable commit message
+git push origin my-feature # push to my-feature branch
+git checkout master
+gitify package:install --all
+gitify build
+```
+
+### PR
+Open your fork in github. There should be a notification about creating a PR from newly created branch. Click that and submit the PR to the appropriate branch (most likely to master, or follow guide of the original repository).
+
+---
+Leaving all other text here in case you want to reuse any of it :) 
+
 TODO: @theboxer review all the things!
 
 You mist have [Gitify set up](collab/gitify) with your theme in order to follow these instructions.
