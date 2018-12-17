@@ -2,76 +2,60 @@
 
 You mist have [Gitify set up](collab/gitify) with your theme in order to follow these instructions.
 
-## Working with Gitify
+## Working with Gitify and Git
 
 A common purpose of collaborating on a Theme will be to build a series of Elements, Bluepints, Options, and RTE Configs.
 
-Once you’ve installed and worked on a Theme with a team, you’ll find yourself needing to do some common things:
+For the purpose of this tutorial, we’ll assume all users can commit directly to the master repository. If you need to set up a respository for collaboration, see [Setting up a Theme to work with Gitify](collab/initial_extract). 
 
-### Get the latest contributions from your collaborators
+### 1. Push your Changes or Pull the Lastest
 
-TODO: @theboxer … this section needs more explanation/clarification for git CLI newbies.
-
-For the purposes of this tutorial, our theme will only have one branch in Git (master). As such, you’ll need to set the remote branch for future git commands:
-
-```
-git branch --set-upstream-to=origin/master
-```
-
-When all your changes are pushed to the local repository you’re working on: 
-
-```
-cd ~/www
-git pull
-gitify package:install --all
-gitify build
-```
-
-If you have changes in your instance, perform the following. You’ll see messages about Extracting various Fred-related things:
+It’s critical to make sure that you don’t lose work when collaborating with a team. To prevent accidental overwrites, always perform the following before pulling from or pushing to the orign repository.
 
 ```
 cd ~/www
 gitify extract
-git add --all # or git add on files you want to commit
-git commit -m "Your commit message here" # please write your own message!
-git pull
-# resolve conflicts if any
+git status
+```
+
+The `gitify extract` command will sycn your current Fred Theme to the filesystem. The `git status` command will tell you if you have changes that need to be committed. 
+
+### 2. Commit changes to your local repo
+
+This step and step 4 below can be skipped if ther are no changes to commit. 
+
+If you do have changes, first commit them to your local repository before continuing:
+
+```
+git add --all  # or git add on files you want to commit
+git commit -m "Your commit message here"  # please write your own message
+```
+
+### 3. Pull the latest contributions from your collaborators
+
+Now it is time to sync all the latest updates from the upstream origin repository. From webroot, enter the following command: 
+
+```
+git pull origin master
+```
+
+This may result in conflicts that will be noted. If there are conflicts, they must be resolved before you can continue. A conflict happens when two people change the same line of code. For information on resolving conflicts, please see [Github’s guide to resolving conflicts](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/). 
+
+Once you resolve conflicts, or after you have pulled from the origin, build the changes and make sure everything is functioning as expected in MODX:
+
+```
 gitify package:install --all
 gitify build
 ```
 
-#### Working with `git` from the command line
+### 4. Push your changes to the origin repository to share with collaborators
 
-If you're not familiar with Vi or Vim, chance are you’ll be lost when creating the commit message. You can make commits without specifying the message, which puts you into a Vi editor. The benefit of this is that you get to review what all will be pushed. 
+If you are only pulling remote changes, skip this step as in step 2 above.
 
-Here are a few pointers:  
-
-- Write the commit title on the first line. A more detailed description can go on subesequent lines.
-- Things with a `#` in front will be ignored. 
-- When you’re done, press the `esc` key then type `:wq` to exit.
-- If you really get stuck, it is Vi after all, [StackExchange to the rescue]()!
-
-### Push your changes back to your Github repository
-If you are **not** going to submit PR:
+Now you can safely push your changes. You’ll see messages about Extracting various Fred-related things. If you delay pushing your changes, you may see an error message about (new) conflicts due to other collaborators pushing changes before you:
 
 ```
-cd ~/www/
-gitify extract
-git add --all # or git add only the files you wish to commit
-git commit -m "Your commit message here" # please write your own message!
-git push origin master # replace master with branch name you want to push into
+git push origin master
 ```
 
-If you are going to submit PR:
-```
-cd ~/www/
-git checkout -b branch-name # use whatever branch name that make sense
-gitify extract
-git add --all # or git add only the files you wish to commit
-git commit -m "Your commit message here" # please write your own message!
-git push origin branch-name # replace master with branch name you created
-```
-
-## Submit a Pull Request (PR) to the main Project
-
-Open your repository in GitHub, click `New Pull Request` button, select branch you pushed into from your repository and appropriate branch (most likely master) in the target repository.
+You have now successfully worked with a team to build a theme. If you need to collaborate using PRs, like for the Fred Starter Theme available as a demo from MODX, please see the [Pull Request Git Workflow](collab/pr_workflow) guide.

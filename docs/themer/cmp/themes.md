@@ -17,6 +17,8 @@ Themes are made of of multple things:
 
 When you create a Theme, Fred will automatically create a directory named for the theme in `assets/themes/{{theme-name}}`. Use this to store all your theme-specific assets like images, css, fonts and javascript. 
 
+**IMPORTANT NOTE:** As of 1.0, Fred currently does not support exporting Media Sources. If you have used them in your Theme, please include instructions on setting them up in your README file. 
+
 ### Default Element
 
 The default element setting allows you to chose a default Fred Element and target area for placing the content on existing documents. The setting is formatted as `ID|target` where ID is the identification number of the Fred Element and the target is the HTML object within containing a `data-fred-name` attribute. This is useful for converting a standard resource to Fred, as it will place the existing content in the default element.

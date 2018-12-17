@@ -38,9 +38,11 @@ chmod +x Gitify; cd ~/.bin; ln -s ../gitify/Gitify gitify
 
 After the `composer install` command you can confirm things worked if you see a green line of text that says “Generating autoload files”. Again, log out of the SSH session so you use Gitify, or use the `source…` command above.
 
-### Step 3: Fork a shared Theme to your Github account
+### Step 3: Get the Clone URL
 
-Fork a Theme to your own Github account for sharing. For the purposes of this tutorial, we’ll use the Starter Theme for Fred—a Bootstrap 4 based theme with many common patterns already created as elements. To get the URL to clone, from Github click the down-arrow on the green `Clone or download` button and choose the SSH URL, like `git@github.com:modxcms/fred-theme-starter.git`
+For the purposes of this tutorial, we’ll use a hypothetical (but non-existant) Example Theme. To get the URL to clone, on github.com find the repository you wish to work on, and click the down-arrow on the green `Clone or download` button and choose the SSH URL, like `git@github.com:modxcms/example.git`
+
+To start a new Theme project, see the [Setting up a Theme to work with Gitify](collab/initial_extract) guide.
 
 ### Step 4: Clone the Shared Theme to your MODX Instance
 
