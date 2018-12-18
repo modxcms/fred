@@ -2,7 +2,7 @@
 
 Some projects will require you to submit a Pull Request (PR) to their repository. You do this by forking the repo, making changes in a feature branch in your fork, then submitting the PR to the original project.
 
-For the purpose of this tutorial, we’ll for the [Fred Starter Theme](https://github.com/modxcms/fred-theme-starter) which is intended to be a Bootstrap 4 quickstart for theme builders. Start by signing into Github.
+For the purpose of this tutorial, we’ll fork the [Fred Starter Theme](https://github.com/modxcms/fred-theme-starter) which is intended to be a Bootstrap 4 quickstart for theme builders. Start by signing into Github.
 
 ## Fork and clone to a MODX instance
 
@@ -51,8 +51,8 @@ Before pushing any work to a feature branch, you should sync your local reposito
 ```
 git checkout master
 git fetch upstream
-git merge --ff-only upstream/master
-git push origin master
+git merge --ff-only upstream/master  # only merges if local is clean
+git push origin master               # push to your fork
 gitify package:install --all
 gitify build
 ```
