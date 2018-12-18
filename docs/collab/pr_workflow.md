@@ -46,12 +46,12 @@ Syncing is important, but how you sync depends on the state of your work: if you
 
 For the purposes of working with PRs, you should _never_ commit directly to your master branch; for more information see the [Feature Branches and Pull Requests: Walkthrough](https://gist.github.com/vlandham/3b2b79c40bc7353ae95a)  and [Understanding the GitHub flow](https://guides.github.com/introduction/flow/) guides. 
 
-Before pushing any work to a feature branch, you should sync your local repository with the upstream. For more information on syncing forks see the [Syncnig a fork](https://help.github.com/articles/syncing-a-fork/) guide:
+Before pushing any work to a feature branch, you should sync your local repository with the upstream. For more information on syncing forks see the [Syncing a fork](https://help.github.com/articles/syncing-a-fork/) guide:
 
 ```
 git checkout master
 git fetch upstream
-git merge upstream/master
+git merge --ff-only upstream/master
 git push origin master
 gitify package:install --all
 gitify build
