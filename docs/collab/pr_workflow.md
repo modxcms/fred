@@ -77,7 +77,7 @@ Next, we sync upstream master branch with your fork.
 ```
 git checkout master
 git fetch upstream
-git merge upstream/master
+git merge --ff-only upstream/master
 git push origin master
 ```
 
