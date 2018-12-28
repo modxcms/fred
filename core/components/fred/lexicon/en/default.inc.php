@@ -184,7 +184,7 @@ $_lang['fred.themes.included_theme_folder'] = 'Assets directory for this Theme';
 $_lang['fred.themes.theme_build_desc'] = 'Build a complete package for the MODX Installer to share or submit to the Extras repository.';
 $_lang['fred.themes.theme_build_readme_desc'] = 'A good readme file should include important details about how your theme is intended to be used, where to submit bug reports and how to get support.';
 $_lang['fred.themes.theme_build_changelog_desc'] = 'List any new features and bugfixes since your initial release.';
-$_lang['fred.themes.theme_build_license_desc'] = 'For open source, a variety of options are available at <a href=” https://choosealicense.com/“>Choose a License</a> or <a href=“https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/“>Creative Commons</a>. Note: commercial licenses for premium themes are OK, too!';
+$_lang['fred.themes.theme_build_license_desc'] = 'For open source, a variety of options are available at <a href="https://choosealicense.com/">Choose a License</a> or <a href="https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/">Creative Commons</a>. Note: commercial licenses for premium themes are OK, too!';
 $_lang['fred.themes.theme_build_dependencies_desc'] = 'Include any Extras required for this Theme to function fully.';
 $_lang['fred.themes.build_default_title'] = 'Can\'t build Default Theme';
 $_lang['fred.themes.build_default_desc'] = 'To protect against unintended changes to your site from upgrades, please create a clone of the Default theme before building.';
