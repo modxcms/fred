@@ -1,10 +1,10 @@
-# Overriding Option Settings
+# Overriding Option Sets
 
-Use cases for overriding an option set are when you need to change just a few things about an Option Set for a single Element without maintaining an entierly separate Option Set.
+Use cases for overriding an option set are when you need to change things like switching `remote` from `true` to `false`. You can also use them more extensively like overriding all the Settings for a single Element without maintaining an entierly separate Option Set.
 
 Overrides are located on the `Overrides` tab when editing a specific Element in the Fred Manager page.
 
-**Note:** You must include _all_ settings you want to show as controls in the Override panel. The best way to start your override is by copying the entire settings JSON node by clicking the `Preview Option Set` button and selecting the node, and pasting it into the overrides text area.   
+**Note:** You must include _all_ settings you want to show as controls in the Override panel. The best way to start your override is by copying the entire settings JSON node by clicking the `Preview Option Set` button and selecting the JSON object(s) and pasting into the overrides text area.   
 
 ## Example 
 
