@@ -1,14 +1,9 @@
-# Option Sets
+#Options
+Option Sets can have global settings for things like Media Sources and controlling whether or not dynamic asynchronous XHR calls should occur. The visual Settings that display in the browser, can also have sub-sets that serve to keep things organized.
 
-Option Sets allow you to create common configurations and frequently used sub-configs (e.g., a set of settings, use of media sources, remote render, or color swatch group) to use across multiple Elements.
+## Global Settings
 
-## Complete
-
-Each Option Set has a `complete` flag. If this flag is set to `Yes` the Option Set can be attached to an [Element](/elements).
-
-Option Sets with `No` in this flag are meant to be used for including to other Option Sets. You can define repeatable list of settings or specific options that are going to repeat across multiple Option Sets.
-
-## Available Options
+The followng control individual settings and grouping for an Element in a Fred-powered page.
 
 ### remote
 If set to `true` XHR request will be fired to render the Element through both Twig and MODX parsers. This means you can have dynamic content that references other pages within a Fred page using MODX Snippets.
@@ -19,20 +14,17 @@ Name of the Media Source to use for Finder. Multiple Names can be passed separat
 ### imageMediaSource
 Name of the Media Source to use for Image fields. Multiple Names can be passed separated by comma `,`. This option overrides `mediaSource`.
 
-### settings
-An array of setting objects and group objects for the Fred Element. Settings can also contain a special import object, to import another option set.
+## Settings
 
-#### Available group properties
-- group - Name of a group of related sub-settings that open when clicked in a secondary panel. The value of the group property will be used as the label for the group
-- settings - An array of setting objects
+Settings are made of a JSON array of objects and [group objects](#setting-groups) which provide configuratin controls for Elements. Settings can [import](themer/options/import) sub-sets of settings using a `fred-import` object.
 
-#### Available setting properties
+### Available setting properties
 - name - Name of the setting, can be used as a Twig variable
 - label - Setting's Label, displayed in the Element Settings panel
 - type - Type of the setting
 - value - Default value
 
-#### Available types
+### Available types
 - text 
     - `input type="text"`
     - any text value
@@ -59,6 +51,7 @@ An array of setting objects and group objects for the Fred Element. Settings can
     - Type specific properties:
         - showAlpha - boolean to show alpha slider; Default: `true`
         - options - An array of colors; Example: `["lightcoral", "red", "black"]`
+
 - slider
     - Slider input for numbers
     - Type specific properties:
@@ -66,6 +59,7 @@ An array of setting objects and group objects for the Fred Element. Settings can
         - max - **REQURED**; Maximum value of the slider
         - tooltipDecimals: Number of decimals to show in slider's tooltip; Default: 0
         - step: Number to increment slider's value; Default: 1
+  
 - page
     - MODX Page select
     - Value is returned as an object in format: `{"id": 1, "url": "fred.html"}`
@@ -88,7 +82,30 @@ An array of setting objects and group objects for the Fred Element. Settings can
         - group - ID of the Tagger group to use
         - limit - Limit of tags that can be selected
 
-#### Example
+### Setting Groups
+
+Groups are used to organize related Option Sets, or to remove infrequently used settings from the main view.
+
+- group - Name of a group of related sub-settings that open when clicked in a secondary panel. The value of the group property will be used as the label for the group
+- settings - An array of setting objects
+
+```json
+{
+    "group": "Group Name",
+    "settings": [
+        {
+            …
+        },
+        {
+            …
+        }
+    ]
+}
+```
+
+
+
+## Example
 ```json
 {
     "settings": [
@@ -142,108 +159,5 @@ An array of setting objects and group objects for the Fred Element. Settings can
             ]
         }
     ]
-}
-```
-
-## Import
-Importing another Option Set is done with a special object with `fred-import` key. 
-
-- Only not complete Option Sets can be imported
-- Import only works for settings
-
-
-### Full import
-
-#### Complete Option Set
-```json
-{
-    "settings": { 
-      "fred-import": "all_settings"
-    }
-    
-}
-```
-
-#### All Settings Option Set
-```json
-[
-    {
-        "name": "cta_class",
-        "label": "CTA Class",
-        "type": "select",
-        "options": {
-            "danger": "Red CTA",
-            "info": "Blue CTA",
-            "default": "Default CTA"
-        },
-        "value": "default"
-    },
-    {
-        "name": "show_cta",
-        "label": "Show CTA",
-        "type": "toggle",
-        "value": false
-    }
-    
-]
-```
-
-### Partial import
-
-#### Complete Option Set
-```json
-{
-    "settings": [
-        {
-            "name": "panel_class",
-            "label": "Panel Class",
-            "type": "text",
-            "value": ""
-        },
-        { 
-            "fred-import": "cta"
-        },
-        { 
-             "fred-import": "text_color"
-        }
-    ]
-    
-}
-```
-
-#### CTA Option Set
-```json
-{
-    "group": "CTA",
-    "settings": [
-        {
-            "name": "cta_class",
-            "label": "CTA Class",
-            "type": "select",
-            "options": {
-                "danger": "Red CTA",
-                "info": "Blue CTA",
-                "default": "Default CTA"
-            },
-            "value": "default"
-        },
-        {
-            "name": "show_cta",
-            "label": "Show CTA",
-            "type": "toggle",
-            "value": false
-        }
-    ]
-}
-```
-
-#### Text Color Option Set
-```json
-{
-    "name": "color",
-    "label": "Text Color",
-    "type": "colorswatch",
-    "value": "black",
-    "options": [{"value":"primary", "color":"blue","label":"Primary"}, "lightcoral", "black", "rgba(0,255,0,.5)"]
 }
 ```

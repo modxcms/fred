@@ -16,7 +16,7 @@ Users with permissions to do so can save Blueprints and share them with others o
 
 Use cases for private Blueprints include testing by theme creators (since they won’t be included in exported Themes), saving specific combinations and settings for Elements that _only_ you will use, and end users currating frequently used Blueprints acros categories into a single location. 
 
-A more advanced use case is overriding default settings of commonly used Elements to match frequently changedd settings like changing margins, padding or text-alignment. 
+A more advanced use case is overriding default settings of commonly used Elements to match frequently changed settings like changing margins, padding or text-alignment. 
 
 ### Blueprint Screenshots
 
