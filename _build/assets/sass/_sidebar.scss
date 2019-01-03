@@ -526,10 +526,21 @@
 { @supports (-webkit-appearance:none) {
 
   .fred--sidebar {
-    overflow-y: visible;
+    overflow-y: auto;
   }
   .fred--accordion dd{
-    overflow: visible;
+    overflow: auto;
+  }
+  .fred .fred--accordion dd dl dt{
+    &.active + dd{
+      position: relative;
+      left: 0;
+    }
+    & + dd{
+      height: auto !important;
+      width: 260px !important;
+      transition: 0s;
+    }
   }
 }}
 @keyframes fred--fadein {

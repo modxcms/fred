@@ -108,6 +108,21 @@
 { @supports (-webkit-appearance:none) {
 
   .fred--panel {
-    overflow-y: visible;
+    overflow-y: auto;
+  }
+  .fred .fred--panel dl:last-of-type dt:last-of-type.active{
+    margin-bottom: 0;
+  }
+  .fred .fred--panel dd dl dt{
+    &.active + dd{
+      position: relative;
+      left: 0;
+      margin-bottom: 18px;
+    }
+    & + dd{
+      height: auto !important;
+      width: 260px !important;
+      transition: 0s;
+    }
   }
 }}
