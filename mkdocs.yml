@@ -15,9 +15,9 @@ nav:
         - Permissions: site_admin/acls/permissions.md
         - Default Policies: site_admin/acls/policies.md
     - Fred for Themers:
-      - Creating a Theme for Fred: themer/index.md
+      - Intro to Fred Themes: themer/index.md
       - Theme Creation Tutorial: themer/themes.md
-      - Convert Exisitng Sites to Fred: themer/convert-to-fred.md
+      - Convert Existing Sites to Fred: themer/convert-to-fred.md
       - MODX Templates for Fred: themer/templates/index.md
       - Elements:
         - Elements: themer/elements/index.md
