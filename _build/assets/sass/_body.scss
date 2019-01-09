@@ -259,7 +259,7 @@
 }
 
 *[data-fred-min-height] {  
-  min-height: attr(data-fred-min-height);
+  min-height: attr(data-fred-min-height length);
 }
 
 //FireFox hack
