@@ -273,7 +273,7 @@
       background-color: transparent;
       border-bottom: 1px solid $black;
       margin-bottom: 8px;
-      transition: $timing;
+      position: relative;
       @include draggable();
       &:last-of-type {
         border-bottom: 0;
@@ -288,7 +288,7 @@
         font-size: 15px;
         line-height: normal;
         position: absolute;
-        top: 8px;
+        top: 0;
         left: -300px;
         background: rgba(black, .6);
         opacity: 0;
@@ -301,17 +301,19 @@
           color: white;
         }
       }
-
-      &:hover {
-        transform: scale(1.05);
-        background-color: $black;
-        figcaption {
-          opacity: 1;
-          left: 8px;
-        }
-      }
       > div {
         padding: 8px;
+        transition: $timing;
+      }
+      &:hover {
+        > div {
+          transform: scale(1.05);
+          background-color: $black;
+        }
+        figcaption {
+          opacity: 1;
+          left: 0;
+        }
       }
     }
     dl {
