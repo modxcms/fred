@@ -4,7 +4,7 @@ Fred themers should have a basic understand of MODX, be proficient with HTML/CSS
 
 Intermediate Fred themers will use [Twig](https://twig.symfony.com/doc/2.x/) to create conditional logic in Elements. This can be used to show or hide things based on the settings  of the controls in Option Sets.
 
-Advanced Fred themers will need to know Javascript to advanced elements with [JS Events](/themer/elements/js_events).
+Advanced Fred themers will need to know Javascript to advanced elements with [JS Events](elements/js_events.md).
 
 ## Suggested Workflow
 

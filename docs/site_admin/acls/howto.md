@@ -24,4 +24,4 @@ The built-in Fred Policies may not be sufficient for all sites. Fortunately, cre
 2. Click the Access Policies tab. 
 3. Click the `Create Access Policy` button, fill the policy name and select `Fred` as the Policy Template. This Policy Template contains all the possible permissions you need to customize how you configure it for your users. 
 4. When you save the policy, it appears in the table. Right-click it and select `Update Policy` from the contextual menu. 
-5. Enable or disable the [permissions](/acls/permissions) by unchecking the ones you wish to restrict from your users.
+5. Enable or disable the [permissions](permissions.md) by unchecking the ones you wish to restrict from your users.

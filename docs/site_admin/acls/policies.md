@@ -1,7 +1,7 @@
 # Default Policies
 
 ## Fred Admin
-This Admin policy has all [permissions](/acls/permissions) enabled. Users are not limited in any way when using Fred. 
+This Admin policy has all [permissions](permissions.md) enabled. Users are not limited in any way when using Fred. 
 
 
 ## Fred Editor

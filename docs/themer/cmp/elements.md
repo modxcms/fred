@@ -10,7 +10,7 @@ The following are the properties for each Element:
 - **Image** - Required. If you do not specify an image, a default gray box with the Element name will be created for you. Images are used as the sources for dragging and dropping Elements into your Layouts. 
 - **Category** - Required. Which category to place this Element under.
 - **Rank** - Optional. The order you wish this Element to show in its category.
-- **Markup** - Optional. HTML + Twig markup for the Element, including [Fred-specific attributes](/elements/attributes) which allow you to control things like save targets, visibility when creating or viewing content, etc.
+- **Markup** - Optional. HTML + Twig markup for the Element, including [Fred-specific attributes](../elements/attributes.md) which allow you to control things like save targets, visibility when creating or viewing content, etc.
 - **Option Set** - Optional. Complete Option Set can be selected here
 - **Options Override** - Optional. Override selected Option Set, or define one time options for this Element
 

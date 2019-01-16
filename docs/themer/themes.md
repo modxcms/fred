@@ -24,7 +24,7 @@ Fred needs a “dropzone” to know where content can go, indicated by adding a 
         [[*content]]
     </div>
 
-Note the value of the `data-fred-dropzone="content"` attribute indicates where to render your content once you save a page in Fred, in this case, the `[[*content]]`. Fred also supports multiple Dropzones; see the [templates documentation](/templates) for more information.
+Note the value of the `data-fred-dropzone="content"` attribute indicates where to render your content once you save a page in Fred, in this case, the `[[*content]]`. Fred also supports multiple Dropzones; see the [templates documentation](templates/index.md) for more information.
 
 ## Step 3: Assign a Template to a Fred Theme
 

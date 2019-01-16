@@ -27,11 +27,11 @@ If you aren't finding the identification number of the Fred Element, right-click
 
 ### Elements
 
-A Theme Builder will automatically include all Element Categories attached to the Theme with all their [Elements](/elements). All [Option Sets](/option_sets) and [RTE Configs](/rte_configs) attached to the Theme will be also included.
+A Theme Builder will automatically include all Element Categories attached to the Theme with all their [Elements](elements.md). All [Option Sets](option_sets.md) and [RTE Configs](rte_configs.md) attached to the Theme will be also included.
 
 ### Blueprints
 
-A Theme Builder will automatically include **public** Blueprint Categories attached to the THeme with all their **public** [Blueprints](/blueprints). 
+A Theme Builder will automatically include **public** Blueprint Categories attached to the THeme with all their **public** [Blueprints](blueprints.md). 
 
 ### Templates and TVs
 
