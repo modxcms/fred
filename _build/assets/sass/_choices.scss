@@ -184,7 +184,7 @@ $choices-button-offset: 8px !default;
 
 .#{$choices-selector}__list--dropdown {
   display: none;
-  z-index: 1;
+  z-index: 99;
   position: absolute;
   width: 100%;
   background-color: $choices-bg-color-dropdown;
