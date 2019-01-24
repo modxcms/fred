@@ -73,7 +73,11 @@ Settings are made of a JSON array of objects and [group objects](#setting-groups
     - Image select
     - Type specific properties:
         - showPreview - If set to `false` preview won't appear under the text input
-        - mediaSource - Name of the Media Source to use; Overrides `imageMediaSource` global setting.  
+        - mediaSource - Name of the Media Source to use; Overrides `imageMediaSource` global setting.
+- file
+    - File select
+    - Type specific properties:
+        - mediaSource - Name of the Media Source to use; Overrides `mediaSource` global setting.  
 - tagger
     - Select for Tagger tags
     - Type specific properties:
