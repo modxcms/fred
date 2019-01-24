@@ -60,7 +60,7 @@ final class RenderResource {
     }
     
     public function render() {
-        $contentData = $this->data['content'];
+        $contentData = !empty($this->data['content']) ? $this->data['content'] : [];
         $html = '';
 
         foreach ($contentData as $item) {

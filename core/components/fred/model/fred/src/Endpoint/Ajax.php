@@ -21,12 +21,6 @@ class Ajax extends Endpoint
             return;
         }
 
-        
-        if (!$this->modx->hasPermission('fred')) {
-            http_response_code(403);
-            return;
-        }
-        
         if (empty($_SERVER['HTTP_X_FRED_TOKEN'])) {
             http_response_code(403);
             return;
@@ -35,6 +29,13 @@ class Ajax extends Endpoint
         try {
             $payload = JWT::decode($_SERVER['HTTP_X_FRED_TOKEN'], $this->fred->getSecret(), ['HS256']);
             $payload = (array)$payload;
+
+            $this->modx->switchContext($payload['context']);
+            
+            if (!$this->modx->hasPermission('fred')) {
+                http_response_code(403);
+                return;
+            }
             
             if ($payload['iss'] !== $this->modx->user->id) {
                 http_response_code(403);
@@ -44,7 +45,6 @@ class Ajax extends Endpoint
             http_response_code(403);
             return;
         }
-        
         
         $action = $this->modx->getOption('action', $_REQUEST, '');
         if (empty($action)) return;

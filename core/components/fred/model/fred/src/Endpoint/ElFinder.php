@@ -21,11 +21,6 @@ class ElFinder extends Endpoint
             return;
         }
 
-        if (!$this->modx->hasPermission('fred')) {
-            http_response_code(406);
-            return;
-        }
-
         if (empty($_SERVER['HTTP_X_FRED_TOKEN'])) {
             http_response_code(403);
             return;
@@ -35,6 +30,13 @@ class ElFinder extends Endpoint
             $payload = JWT::decode($_SERVER['HTTP_X_FRED_TOKEN'], $this->fred->getSecret(), ['HS256']);
             $payload = (array)$payload;
 
+            $this->modx->switchContext($payload['context']);
+            
+            if (!$this->modx->hasPermission('fred')) {
+                http_response_code(403);
+                return;
+            }
+            
             if ($payload['iss'] !== $this->modx->user->id) {
                 http_response_code(403);
                 return;

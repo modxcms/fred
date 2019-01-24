@@ -94,7 +94,7 @@ class GetResources extends Endpoint
         $c->where($where);
 
         $data = [];
-        $resourcesIterator = $this->modx->getCollection('modResource', $c);
+        $resourcesIterator = $this->modx->getIterator('modResource', $c);
         
         foreach ($resourcesIterator as $resource) {
             $data[] = [
