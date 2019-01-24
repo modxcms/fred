@@ -112,6 +112,25 @@ fred.grid.Blueprints = function (config) {
 
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
+
+    fred.globalEvents.on('delete-blueprint-category', function(category) {
+        var categoryFilter = Ext.getCmp('fred-blueprint-filter-category');
+
+        if (categoryFilter.getValue() === category.id) {
+            var record = categoryFilter.findRecord('id',0);
+            categoryFilter.setValue(0);
+            categoryFilter.fireEvent('select', categoryFilter, record);
+        } else {
+            this.getBottomToolbar().changePage(1);
+        }
+    }, this);
+
+    fred.globalEvents.on('delete-theme', function(theme) {
+        var categoryFilter = Ext.getCmp('fred-blueprint-filter-category');
+        var recordCategory = categoryFilter.findRecord('id',0);
+        categoryFilter.setValue(0);
+        categoryFilter.fireEvent('select', categoryFilter, recordCategory);
+    }, this);
 };
 Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
 

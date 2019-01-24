@@ -254,6 +254,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
                 success: {
                     fn: function (r) {
                         this.refresh();
+                        fred.globalEvents.fireEvent('delete-blueprint-category', this.menu.record)
                     },
                     scope: this
                 }

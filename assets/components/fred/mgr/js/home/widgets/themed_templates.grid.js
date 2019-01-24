@@ -39,6 +39,10 @@ fred.grid.ThemedTemplates = function (config) {
         tbar: this.getTbar(config)
     });
     fred.grid.ThemedTemplates.superclass.constructor.call(this, config);
+
+    fred.globalEvents.on('delete-theme', function(theme) {
+        this.getBottomToolbar().changePage(1);
+    }, this);
 };
 Ext.extend(fred.grid.ThemedTemplates, fred.grid.GearGrid, {
     getMenu: function () {

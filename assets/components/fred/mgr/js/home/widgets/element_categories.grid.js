@@ -262,6 +262,7 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
                 success: {
                     fn: function (r) {
                         this.refresh();
+                        fred.globalEvents.fireEvent('delete-element-category', this.menu.record)
                     },
                     scope: this
                 }
