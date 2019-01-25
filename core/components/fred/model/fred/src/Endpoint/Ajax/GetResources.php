@@ -24,7 +24,8 @@ class GetResources extends Endpoint
      */
     function process()
     {
-        $context = 'web';
+        $context = $this->getClaim('context');
+        $context = !empty($context) ? $context : 'web';
         
         $query = $_GET['query'];
         $current = isset($_GET['current']) ? intval($_GET['current']) : 0;
