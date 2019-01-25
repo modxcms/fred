@@ -154,6 +154,8 @@ export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
         }
     });
 
+    labelEl.picker = picker;
+    
     const clear = a('', 'fred.fe.clear', '', 'fred--close-small', () => {
         picker.clear();
     });
