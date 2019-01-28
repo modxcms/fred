@@ -101,6 +101,33 @@ fred.grid.Elements = function (config) {
 
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
+    
+    fred.globalEvents.on('delete-element-category', function(category) {
+        var categoryFilter = Ext.getCmp('fred-element-filter-category');
+        
+        if (categoryFilter.getValue() === category.id) {
+            var record = categoryFilter.findRecord('id',0);
+            categoryFilter.setValue(0);
+            categoryFilter.fireEvent('select', categoryFilter, record);
+        } else {
+            this.getBottomToolbar().changePage(1);
+        }
+    }, this);
+
+    fred.globalEvents.on('delete-theme', function(theme) {
+        var themeFilter = Ext.getCmp('fred-element-filter-theme');
+        
+        if (themeFilter.getValue() !== theme.id) return;
+        
+        var record = themeFilter.findRecord('id',0);
+        themeFilter.setValue(0);
+        themeFilter.fireEvent('select', themeFilter, record);
+
+        var categoryFilter = Ext.getCmp('fred-element-filter-category');
+        var recordCategory = categoryFilter.findRecord('id',0);
+        categoryFilter.setValue(0);
+        categoryFilter.fireEvent('select', categoryFilter, recordCategory);
+    }, this);
 };
 Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
 
@@ -199,7 +226,7 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
 
                     if (record.data[combo.valueField] !== 0) {
                         s.baseParams.category = 0;
-                        categoryFilter.setValue();
+                        categoryFilter.setValue(0);
                     }
 
                     categoryFilter.baseParams.theme = record.data[combo.valueField];

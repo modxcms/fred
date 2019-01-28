@@ -257,6 +257,8 @@ export default class Fred {
                 if (json.fingerprint) {
                     this.fingerprint = json.fingerprint;
                 }
+                
+                fredConfig.pageSettings.publishedon = json.publishedon;
 
                 emitter.emit('fred-loading-hide');
                 emitter.emit('fred-after-save');

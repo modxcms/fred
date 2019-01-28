@@ -17,6 +17,12 @@ final class Utils
         $array = explode($delimiter, $array);
         $array = array_map('trim', $array);
 
+        if (!empty($filterCallback)) {
+            $array = array_filter($array, $filterCallback);
+        } else {
+            $array = array_filter($array);
+        }
+        
         if (!empty($mapMethod)) {
             $array = array_map($mapMethod, $array);    
         }

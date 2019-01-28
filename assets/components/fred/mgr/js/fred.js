@@ -93,7 +93,9 @@ Ext.extend(Fred, Ext.Component, {
             var win = window.open('https://modxcms.github.io/fred/' + realPath, '_blank');
             win.focus();
         }
-    }
+    },
+    
+    globalEvents: new Ext.util.Observable()
 });
 Ext.reg('fred', Fred);
 fred = new Fred();

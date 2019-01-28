@@ -272,6 +272,7 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
                 success: {
                     fn: function () {
                         this.refresh();
+                        fred.globalEvents.fireEvent('delete-theme', this.menu.record)
                     },
                     scope: this
                 }

@@ -240,6 +240,8 @@ fred.window.ElementDuplicate = function (config) {
     fred.window.ElementDuplicate.superclass.constructor.call(this, config);
 };
 Ext.extend(fred.window.ElementDuplicate, MODx.Window, {
+    firstCategorySelect: true,
+    
     getFields: function (config) {
         return [
             {
@@ -263,6 +265,11 @@ Ext.extend(fred.window.ElementDuplicate, MODx.Window, {
                 anchor: '100%',
                 listeners: {
                     select: function(combo, record) {
+                        if (this.firstCategorySelect === true) {
+                            this.firstCategorySelect = false;
+                            return;
+                        }
+                        
                         var category = this.find('name', 'category');
                         if (!category[0]) return;
 

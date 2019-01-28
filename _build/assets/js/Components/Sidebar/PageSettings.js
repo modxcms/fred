@@ -107,7 +107,9 @@ export default class PageSettings extends Sidebar {
         const advancedContent = dd();
         const fields = fieldSet(['fred--page_settings_form_advanced']);
 
-        fields.appendChild(ui.dateTime({name: 'publishedon', label: 'fred.fe.page_settings.published_on'}, this.pageSettings.publishedon, (name, value) => {this.setSetting(name, value)}));
+        const publishedOn = ui.dateTime({name: 'publishedon', label: 'fred.fe.page_settings.published_on'}, this.pageSettings.publishedon, (name, value) => {this.setSetting(name, value)});
+        
+        fields.appendChild(publishedOn);
         fields.appendChild(ui.dateTime({name: 'publishon', label: 'fred.fe.page_settings.publish_on'}, this.pageSettings.publishon, (name, value) => {this.setSetting(name, value)}));
         fields.appendChild(ui.dateTime({name: 'unpublishon', label: 'fred.fe.page_settings.unpublish_on'}, this.pageSettings.unpublishon, (name, value) => {this.setSetting(name, value)}));
         fields.appendChild(ui.text({name: 'menuindex', label: 'fred.fe.page_settings.menu_index'}, this.pageSettings.menuindex, (name, value) => {this.setSetting(name, value)}));
@@ -136,6 +138,12 @@ export default class PageSettings extends Sidebar {
 
             if (!(this.fredConfig.permission.undelete_document && this.fredConfig.resource.undelete) && this.pageSettings.deleted) {
                 deletedToggle.inputEl.setAttribute('disabled', 'disabled');
+            }
+            
+            if (this.pageSettings.publishedon) {
+                publishedOn.picker.setDate(this.pageSettings.publishedon * 1000);
+            } else {
+                publishedOn.picker.clear();
             }
         });
         

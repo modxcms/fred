@@ -1,12 +1,16 @@
 <?php
-class fredRefreshProcessor extends modProcessor {
-    public function checkPermissions() {
+
+class fredRefreshProcessor extends modProcessor
+{
+    public function checkPermissions()
+    {
         return $this->modx->hasPermission('empty_cache');
     }
 
-    public function process() {
+    public function process()
+    {
         $fred = $this->initFred();
-        
+
         $c = $this->modx->newQuery('FredThemedTemplate');
         $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate', '', ['template']));
 
@@ -20,14 +24,10 @@ class fredRefreshProcessor extends modProcessor {
         if (empty($templates)) {
             return $this->failure($this->modx->lexicon('fred.refresh_fail_template'));
         }
-        
+
         $c = $this->modx->newQuery('modResource');
         $c->where(array('template:IN' => $templates));
-        $results = $this->modx->getCollection('modResource', $c);
-        
-        if(empty($results)){
-            return $this->failure($this->modx->lexicon('fred.refresh_fail_resource'));
-        }
+        $results = $this->modx->getIterator('modResource', $c);
 
         foreach ($results as $resource) {
 
@@ -63,11 +63,13 @@ class fredRefreshProcessor extends modProcessor {
 
         }
 
-        $this->modx->log(modX::LOG_LEVEL_INFO,  $this->modx->lexicon('fred.refresh_complete'));
+        $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_complete'));
+        
         return $this->success('');
     }
 
-    public function initFred(){
+    public function initFred()
+    {
         $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
         /** @var Fred $fred */
         return $this->modx->getService(
@@ -80,4 +82,5 @@ class fredRefreshProcessor extends modProcessor {
         );
     }
 }
+
 return 'fredRefreshProcessor';

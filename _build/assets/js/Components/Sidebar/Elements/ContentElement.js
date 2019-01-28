@@ -46,10 +46,10 @@ export class ContentElement {
             this.options.settings.forEach(setting => {
                 if (setting.group && setting.settings) {
                     setting.settings.forEach(subSetting => {
-                        this.settings[subSetting.name] = subSetting.value || '';    
+                        this.settings[subSetting.name] = (subSetting.value !== undefined) ? subSetting.value : '';    
                     });
                 } else {
-                    this.settings[setting.name] = setting.value || '';
+                    this.settings[setting.name] = (setting.value !== undefined) ? setting.value : '';
                 }
             });
         }

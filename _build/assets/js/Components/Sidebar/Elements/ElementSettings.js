@@ -127,17 +127,25 @@ export class ElementSettings {
             case 'tagger':
                 return ui.tagger(setting, defaultValue, this.setSetting.bind(this));
             case 'image':
+                let imageMediaSource = '';
+
+                if (this.options.mediaSource && this.options.mediaSource !== '') {
+                    imageMediaSource = this.options.mediaSource;
+                }
+
+                if (this.options.imageMediaSource && this.options.imageMediaSource !== '') {
+                    imageMediaSource = this.options.imageMediaSource;
+                }
+                
+                return ui.image({imageMediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
+            case 'file':
                 let mediaSource = '';
 
                 if (this.options.mediaSource && this.options.mediaSource !== '') {
                     mediaSource = this.options.mediaSource;
                 }
 
-                if (this.options.imageMediaSource && this.options.imageMediaSource !== '') {
-                    mediaSource = this.options.imageMediaSource;
-                }
-                
-                return ui.image({mediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
+                return ui.file({mediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
             default:
                 return ui.text(setting, defaultValue, this.setSetting.bind(this));        
         }

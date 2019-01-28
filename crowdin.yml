@@ -1,0 +1,4 @@
+files:
+  - source: /core/components/fred/lexicon/en/*.inc.php
+    translation: >-
+      /core/components/fred/lexicon/%two_letters_code%/%file_name%.%file_extension%

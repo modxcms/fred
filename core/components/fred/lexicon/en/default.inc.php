@@ -9,7 +9,7 @@
  */
 
 /**
- * Default English Lexicon Entries for Fred
+ * Default Lexicon Entries for Fred
  *
  * @package fred
  * @subpackage lexicon
@@ -53,7 +53,6 @@ $_lang['fred.blueprints.rank'] = 'Rank';
 $_lang['fred.blueprints.category'] = 'Category';
 $_lang['fred.blueprints.image'] = 'Image';
 $_lang['fred.blueprints.created_by'] = 'Created By';
-$_lang['fred.blueprints.category'] = 'Category';
 $_lang['fred.blueprints.search_name'] = 'Search by Name';
 $_lang['fred.blueprints.remove'] = 'Remove Blueprint';
 $_lang['fred.blueprints.remove_confirm'] = 'Are you sure you want to delete [[+name]] Blueprint? This cannot be undone.';
@@ -72,9 +71,9 @@ $_lang['fred.blueprint_categories.search_name'] = 'Search by Name';
 $_lang['fred.blueprint_categories.create'] = 'Create Category';
 $_lang['fred.blueprint_categories.update'] = 'Update Category';
 $_lang['fred.blueprint_categories.remove'] = 'Remove Category';
-$_lang['fred.blueprint_categories.remove_confirm'] = 'Are you sure you want to remove “[[+name]]” Blueprint Category and its [[+blueprints]] associated Blueprints? This cannot be undone.' ;
-$_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Are you sure you want to remove the “[[+name]]” Blueprint Category and its single associated Blueprint? This cannot be undone.' ;
-$_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Are you sure you want to remove the empty “[[+name]]” Blueprint Category? This cannot be undone.' ;
+$_lang['fred.blueprint_categories.remove_confirm'] = 'Are you sure you want to remove “[[+name]]” Blueprint Category and its [[+blueprints]] associated Blueprints? This cannot be undone.';
+$_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Are you sure you want to remove the “[[+name]]” Blueprint Category and its single associated Blueprint? This cannot be undone.';
+$_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Are you sure you want to remove the empty “[[+name]]” Blueprint Category? This cannot be undone.';
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Blueprints';
 $_lang['fred.blueprint_categories.theme'] = 'Theme';
 
@@ -111,9 +110,9 @@ $_lang['fred.element_categories.search_name'] = 'Search by Name';
 $_lang['fred.element_categories.create'] = 'Create Category';
 $_lang['fred.element_categories.update'] = 'Update Category';
 $_lang['fred.element_categories.remove'] = 'Remove Category';
-$_lang['fred.element_categories.remove_confirm'] = 'Are you sure you want to delete the “[[+name]]” Element Category and its [[+elements]] associated Elements? This cannot be undone.' ;
-$_lang['fred.element_categories.remove_confirm_singular'] = 'Are you sure you want to delete the “[[+name]]” Element Category and its single associated Element? This cannot be undone.' ;
-$_lang['fred.element_categories.remove_confirm_empty'] = 'Are you sure you want to delete the empty “[[+name]]” Element Category? This cannot be undone.' ;
+$_lang['fred.element_categories.remove_confirm'] = 'Are you sure you want to delete the “[[+name]]” Element Category and its [[+elements]] associated Elements? This cannot be undone.';
+$_lang['fred.element_categories.remove_confirm_singular'] = 'Are you sure you want to delete the “[[+name]]” Element Category and its single associated Element? This cannot be undone.';
+$_lang['fred.element_categories.remove_confirm_empty'] = 'Are you sure you want to delete the empty “[[+name]]” Element Category? This cannot be undone.';
 $_lang['fred.element_categories.duplicate'] = 'Duplicate Category';
 $_lang['fred.element_categories.new_name'] = 'New Name';
 $_lang['fred.element_categories.theme'] = 'Theme';
@@ -166,7 +165,6 @@ $_lang['fred.themes.release'] = 'Release';
 $_lang['fred.themes.general'] = 'General';
 $_lang['fred.themes.categories'] = 'Included Element categories for required Snippets, Chunks and Plugins';
 $_lang['fred.themes.add_dependency'] = 'Add Extra';
-$_lang['fred.themes.version'] = 'Version';
 $_lang['fred.themes.package_name'] = 'Package Name';
 $_lang['fred.themes.remove_dependency'] = 'Remove Dependency';
 $_lang['fred.themes.changelog'] = 'Changelog';

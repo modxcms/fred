@@ -177,14 +177,24 @@ class SaveContent extends Endpoint
             }
 
             if ($incomingValue !== $currentValue) {
+                if ($incomingValue) {
+                    if (!empty($this->body['pageSettings']['publishedon'])) {
+                        $publishedOn = (int)$this->body['pageSettings']['publishedon'];
+                    } else {
+                        $publishedOn = time();
+                    }
+                } else {
+                    $publishedOn = false;
+                }
+                
                 $object->set('published', (boolean)$this->body['pageSettings']['published']);
-                $object->set('publishedon', $incomingValue ? time() : false);
+                $object->set('publishedon', $publishedOn);
                 $object->set('publishedby', $incomingValue ? $this->modx->user->get('id') : 0);
+            } else {
+                if (isset($this->body['pageSettings']['publishedon'])) {
+                    $object->set('publishedon', (int)$this->body['pageSettings']['publishedon']);
+                }
             }
-        }
-
-        if (isset($this->body['pageSettings']['publishedon'])) {
-            $object->set('publishedon', (int)$this->body['pageSettings']['publishedon']);
         }
 
         $object->setProperty('data', $this->body['data'], 'fred');
@@ -215,9 +225,10 @@ class SaveContent extends Endpoint
 
         $response = [
             'message' => $this->modx->lexicon('fred.fe.pages.updated'),
-            'fingerprint' => $this->body['data']['fingerprint']
-            
+            'fingerprint' => $this->body['data']['fingerprint'],
+            'publishedon' => $object->publishedon
         ];
+        
         if ($uriChanged) {
             $response['url'] = $this->modx->makeUrl($object->get('id'), $object->get('context_key'), '', 'full');
         }

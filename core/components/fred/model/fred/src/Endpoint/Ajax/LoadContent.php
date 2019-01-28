@@ -63,7 +63,7 @@ class LoadContent extends Endpoint
             'publishon' => $object->pub_date,
             'unpublishon' => $object->unpub_date,
             'tagger' => $this->getTaggerTags($object),
-            'tvs' => $TVs['values']
+            'tvs' => (object)$TVs['values']
         ];
         
         return $this->data([
