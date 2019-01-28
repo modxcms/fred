@@ -9,7 +9,7 @@
  */
 
 /**
- * Default German Lexicon Entries for Fred
+ * Default English Lexicon Entries for Fred
  *
  * @package fred
  * @subpackage lexicon
@@ -53,7 +53,6 @@ $_lang['fred.blueprints.rank'] = 'Rang';
 $_lang['fred.blueprints.category'] = 'Kategorie';
 $_lang['fred.blueprints.image'] = 'Bild';
 $_lang['fred.blueprints.created_by'] = 'Erstellt von';
-$_lang['fred.blueprints.category'] = 'Kategorie';
 $_lang['fred.blueprints.search_name'] = 'Anhand des Namens suchen';
 $_lang['fred.blueprints.remove'] = 'Blaupause entfernen';
 $_lang['fred.blueprints.remove_confirm'] = 'Sind Sie sicher, dass Sie die Blaupause [[+name]] löschen möchten?';
