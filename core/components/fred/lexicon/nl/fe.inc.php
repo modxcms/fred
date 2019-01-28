@@ -26,7 +26,7 @@ $_lang['fred.fe.preparing_content'] = 'Content voorbereiden';
 $_lang['fred.fe.open_sidebar'] = 'Open Sidebar';
 $_lang['fred.fe.toggle_preview'] = 'Preview tonen/verbergen';
 $_lang['fred.fe.close_sidebar'] = 'Sidebar verbergen';
-$_lang['fred.fe.element_settings'] = 'Element Instellingen';
+$_lang['fred.fe.element_settings'] = 'Element instellingen';
 $_lang['fred.fe.apply'] = 'Toepassen';
 $_lang['fred.fe.cancel'] = 'Annuleren';
 $_lang['fred.fe.clear'] = 'Wissen';
@@ -35,7 +35,7 @@ $_lang['fred.fe.browse_files'] = 'Blader door bestanden';
 $_lang['fred.fe.browse_images'] = 'Blader door afbeeldingen';
 $_lang['fred.fe.turn_off_fred'] = 'Fred uitschakelen';
 $_lang['fred.fe.turn_on_fred'] = 'Fred inschakelen';
-$_lang['fred.fe.invalid_elements_warning'] = 'Een of meer element in de content horen niet bij dit thema.';
+$_lang['fred.fe.invalid_elements_warning'] = 'Een of meer elementen in de content horen niet bij dit thema.';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Titel';
 $_lang['fred.fe.page_settings.long_title'] = 'Lange titel';
@@ -126,8 +126,8 @@ $_lang['fred.fe.preview.auto'] = 'Auto';
 
 $_lang['fred.fe.tagger.tagger'] = 'Tags';
 $_lang['fred.fe.tagger.add'] = 'Nieuwe tag';
-$_lang['fred.fe.tagger.toggle_list'] = 'Toggle List';
-$_lang['fred.fe.tagger.toggle_input'] = 'Toggle Input';
+$_lang['fred.fe.tagger.toggle_list'] = 'Switch lijst';
+$_lang['fred.fe.tagger.toggle_input'] = 'Switch input';
 
 $_lang['fred.fe.permission.save'] = 'Onvoldoende permissies om deze pagina op te slaan!';
 $_lang['fred.fe.permission.new_document'] = 'Onvoldoende permissies om een pagina aan te maken!';
