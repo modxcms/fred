@@ -9,23 +9,23 @@
  */
 
 /**
- * Default English Lexicon Entries for Fred
+ * Default Lexicon Entries for Fred
  *
  * @package fred
  * @subpackage lexicon
  */
 
 $_lang['fred'] = 'Fred';
+$_lang['freddropzone'] = 'Fred Dropzone';
 
 $_lang['fred.global.any'] = 'Любой';
 $_lang['fred.global.change_order'] = 'Изменить заказ: [[+name]]';
+$_lang['fred.global.help'] = 'Help';
 
 $_lang['fred.open_in_fred'] = 'Открыть в Fred';
 
-$_lang['fred.menu.refresh'] = 'Перестроить ресурсы Fred';
-$_lang['fred.menu.refresh_desc'] = 'Перестроить ресурсы используя Fred шаблоны';
 $_lang['fred.menu.fred'] = 'Fred';
-$_lang['fred.menu.fred_desc'] = '';
+$_lang['fred.menu.fred_desc'] = 'Elements, Blueprints, Themes and more!';
 
 $_lang['fred.refresh_fail_resource'] = 'Нет ресурсов Fred для обновления';
 $_lang['fred.refresh_fail_template'] = 'Нет шаблонов Fred для обновления';
@@ -41,6 +41,8 @@ $_lang['fred.home.blueprints'] = 'Макеты';
 $_lang['fred.home.blueprint_categories'] = 'Категории макетов';
 $_lang['fred.home.themes'] = 'Темы';
 $_lang['fred.home.themed_templates'] = 'Темы шаблонов';
+$_lang['fred.home.rebuild'] = 'Rebuild';
+$_lang['fred.home.media_sources'] = 'Media Sources';
 
 $_lang['fred.blueprints.none'] = 'Никаких макетов не найдено.';
 $_lang['fred.blueprints.name'] = 'Имя';
@@ -51,7 +53,6 @@ $_lang['fred.blueprints.rank'] = 'Ранк';
 $_lang['fred.blueprints.category'] = 'Категория';
 $_lang['fred.blueprints.image'] = 'Изображение';
 $_lang['fred.blueprints.created_by'] = 'Создано';
-$_lang['fred.blueprints.category'] = 'Категория';
 $_lang['fred.blueprints.search_name'] = 'Поиск по имени';
 $_lang['fred.blueprints.remove'] = 'Удалить макет';
 $_lang['fred.blueprints.remove_confirm'] = 'Вы уверены, что хотите удалить [[+name]] макет?';
@@ -70,9 +71,9 @@ $_lang['fred.blueprint_categories.search_name'] = 'Поиск по имени';
 $_lang['fred.blueprint_categories.create'] = 'Создание категории';
 $_lang['fred.blueprint_categories.update'] = 'Обновление категории';
 $_lang['fred.blueprint_categories.remove'] = 'Удаление категории';
-$_lang['fred.blueprint_categories.remove_confirm'] = 'Вы уверены, что хотите удалить "[[+name]]" категорию макетов и все [[+blueprints]] прикрепленные макеты?' ;
-$_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Вы уверены, что хотите удалить "[[+name]]" категорию макетов и [[+blueprints]] прикрепленные макеты?' ;
-$_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Вы уверены, что хотите удалить "[[+name]]" категорию макетов?' ;
+$_lang['fred.blueprint_categories.remove_confirm'] = 'Вы уверены, что хотите удалить "[[+name]]" категорию макетов и все [[+blueprints]] прикрепленные макеты?';
+$_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Вы уверены, что хотите удалить "[[+name]]" категорию макетов и [[+blueprints]] прикрепленные макеты?';
+$_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Вы уверены, что хотите удалить "[[+name]]" категорию макетов?';
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Макеты';
 $_lang['fred.blueprint_categories.theme'] = 'Тема';
 
@@ -97,6 +98,9 @@ $_lang['fred.elements.new_name'] = 'Новое имя';
 $_lang['fred.elements.has_override'] = 'Имеет переопределение';
 $_lang['fred.elements.theme'] = 'Тема';
 
+$_lang['fred.rebuild.rebuild'] = 'Rebuild';
+$_lang['fred.rebuild.rebuild_desc'] = 'Click the Rebuild button below to publish the changes in updated Elements to all existing Fred-powerd site pages.';
+
 $_lang['fred.element_cateogries.all'] = 'Все категории';
 $_lang['fred.element_categories.none'] = 'Категории не найдены.';
 $_lang['fred.element_categories.name'] = 'Имя';
@@ -106,9 +110,9 @@ $_lang['fred.element_categories.search_name'] = 'Поиск по имени';
 $_lang['fred.element_categories.create'] = 'Создать категорию';
 $_lang['fred.element_categories.update'] = 'Обновить категорию';
 $_lang['fred.element_categories.remove'] = 'Удалить категорию';
-$_lang['fred.element_categories.remove_confirm'] = 'Вы уверены, что хотите удалить категорию элементов" [[+name]] " и все присоединенные элементы [[+elements]]?' ;
-$_lang['fred.element_categories.remove_confirm_singular'] = 'Вы уверены, что хотите удалить категорию элементов" [[+name]] " и присоединенный элемент [[+elements]]?' ;
-$_lang['fred.element_categories.remove_confirm_empty'] = 'Вы уверены, что хотите удалить категорию элементов " [[+name]]"?' ;
+$_lang['fred.element_categories.remove_confirm'] = 'Вы уверены, что хотите удалить категорию элементов" [[+name]] " и все присоединенные элементы [[+elements]]?';
+$_lang['fred.element_categories.remove_confirm_singular'] = 'Вы уверены, что хотите удалить категорию элементов" [[+name]] " и присоединенный элемент [[+elements]]?';
+$_lang['fred.element_categories.remove_confirm_empty'] = 'Вы уверены, что хотите удалить категорию элементов " [[+name]]"?';
 $_lang['fred.element_categories.duplicate'] = 'Дублировать категорию';
 $_lang['fred.element_categories.new_name'] = 'Новое имя';
 $_lang['fred.element_categories.theme'] = 'Тема';
@@ -161,7 +165,7 @@ $_lang['fred.themes.release'] = 'Релиз';
 $_lang['fred.themes.general'] = 'Главное';
 $_lang['fred.themes.categories'] = 'Категории';
 $_lang['fred.themes.add_dependency'] = 'Добавить зависимость';
-$_lang['fred.themes.version'] = 'Версия';
+$_lang['fred.themes.version'] = 'Version';
 $_lang['fred.themes.package_name'] = 'Имя пакета';
 $_lang['fred.themes.remove_dependency'] = 'Удалить зависимость';
 $_lang['fred.themes.changelog'] = 'Список изменений';
@@ -169,13 +173,27 @@ $_lang['fred.themes.license'] = 'Лицензия';
 $_lang['fred.themes.readme'] = 'Прочти меня';
 $_lang['fred.themes.dependencies'] = 'Зависимости';
 $_lang['fred.themes.docs'] = 'Документы';
-$_lang['fred.themes.folders'] = 'Папки';
-$_lang['fred.themes.source_folder'] = 'Исходная папка';
-$_lang['fred.themes.target_folder'] = 'Конечная папка';
-$_lang['fred.themes.add_folder'] = 'Добавить папку';
-$_lang['fred.themes.remove_folder'] = 'Удалить папку';
 $_lang['fred.themes.latest_build'] = 'Последняя сборка';
 $_lang['fred.themes.download'] = 'Скачать тему';
+$_lang['fred.themes.theme_folder'] = 'Theme Directory';
+$_lang['fred.themes.theme_dir_msg_title'] = 'Theme Directory Created';
+$_lang['fred.themes.theme_dir_msg'] = 'The directory for this theme is <strong>themes/[[+theme_folder]]/</strong> inside your assets directory (usually <strong>assets/themes/[[+theme_folder]]/</strong>).<br>The contents of this directory will be included if you build this theme for distribution, so please place all theme-related assets here.';
+$_lang['fred.themes.overview'] = 'Overview';
+$_lang['fred.themes.included_theme_folder'] = 'Assets directory for this Theme';
+$_lang['fred.themes.theme_build_desc'] = 'Build a complete package for the MODX Installer to share or submit to the Extras repository.';
+$_lang['fred.themes.theme_build_readme_desc'] = 'A good readme file should include important details about how your theme is intended to be used, where to submit bug reports and how to get support.';
+$_lang['fred.themes.theme_build_changelog_desc'] = 'List any new features and bugfixes since your initial release.';
+$_lang['fred.themes.theme_build_license_desc'] = 'For open source, a variety of options are available at <a href="https://choosealicense.com/">Choose a License</a> or <a href="https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/">Creative Commons</a>. Note: commercial licenses for premium themes are OK, too!';
+$_lang['fred.themes.theme_build_dependencies_desc'] = 'Include any Extras required for this Theme to function fully.';
+$_lang['fred.themes.build_default_title'] = 'Can\'t build Default Theme';
+$_lang['fred.themes.build_default_desc'] = 'To protect against unintended changes to your site from upgrades, please create a clone of the Default theme before building.';
+$_lang['fred.themes.delete_theme_folder'] = 'Delete Theme Directory';
+$_lang['fred.themes.duplicate_theme_folder'] = 'Duplicate theme directory';
+$_lang['fred.themes.duplicate_theme_objects'] = 'Duplicate theme Objects (Elements, Blueprints, etc.)';
+$_lang['fred.themes.build_and_download'] = 'Build & Download Theme';
+$_lang['fred.themes.theme_duplicate_name'] = '[[+theme]] Copy';
+$_lang['fred.themes.duplicate_templates'] = 'Duplicate Templates';
+$_lang['fred.themes.default_element'] = 'Default Element';
 
 $_lang['fred.themed_templates.theme'] = 'Тема';
 $_lang['fred.themed_templates.template'] = 'Шаблон';
@@ -184,10 +202,23 @@ $_lang['fred.themed_templates.update'] = 'Обновить назначенну�
 $_lang['fred.themed_templates.remove'] = 'Отменить назначение темы';
 $_lang['fred.themed_templates.remove_confirm'] = 'Вы уверены, что хотите отменить назначение темы: [[+theme]] из шаблона: [[+template]]?';
 
+$_lang['fred.media_sources.name'] = 'Name';
+$_lang['fred.media_sources.description'] = 'Description';
+$_lang['fred.media_sources.update'] = 'Update Media Source';
+$_lang['fred.media_sources.fred'] = 'Enabled for Fred';
+$_lang['fred.media_sources.fred_read_only'] = 'Read Only for Fred';
+$_lang['fred.media_sources.search'] = 'Search';
+$_lang['fred.media_sources.none'] = 'No Media Sources were found.';
+$_lang['fred.media_sources.go_to'] = 'Manage Media Sources';
+
+$_lang['fred.tvs.dropzone.hide_input'] = 'Hide Field from Manager';
+
 $_lang['setting_fred.launcher_position'] = 'Положение лаунчера';
 $_lang['setting_fred.launcher_position_desc'] = ' Возможные значения: bottom_left, bottom_right, top_left, top_right';
 $_lang['setting_fred.element_group_sort'] = 'Сортировка группы элементов';
 $_lang['setting_fred.element_group_sort_desc'] = 'Сортировка элементов по имени или рангу';
+$_lang['setting_fred.element_sort'] = 'Element Sort';
+$_lang['setting_fred.element_sort_desc'] = 'Sort elements by name or rank';
 $_lang['setting_fred.icon_editor'] = 'Редактор иконок';
 $_lang['setting_fred.icon_editor_desc'] = 'Редактор для иконок';
 $_lang['setting_fred.image_editor'] = 'Редактор изображений';
@@ -200,6 +231,8 @@ $_lang['setting_fred.blueprint_category_sort'] = 'Сортировка кате�
 $_lang['setting_fred.blueprint_category_sort_desc'] = 'Сортировка категорий макетов по имени или рангу';
 $_lang['setting_fred.blueprint_sort'] = 'Сортировка макетов';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Сортировка макетов по имени или рангу';
+$_lang['setting_fred.secret'] = 'Secret';
+$_lang['setting_fred.secret_desc'] = 'Secret used in signing XHR requests';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Имя обязательно';
 $_lang['fred.err.blueprints_ns_name'] = 'Имя обязательно';
@@ -226,11 +259,20 @@ $_lang['fred.err.themed_templates_ns_theme'] = 'Тема обязательна'
 $_lang['fred.err.themed_templates_ae_template'] = 'Тема уже назначена для этого шаблона';
 $_lang['fred.err.fred_dependency_title'] = 'Требуемая Зависимость';
 $_lang['fred.err.fred_dependency_body'] = 'Зависимость Fred требуется и не может быть удален.';
-$_lang['fred.err.folder_placeholder_fail'] = 'Только {{assets_path}}, {{core_path}} и {{web_root}} плейсхолдеры оступны для  are available for a folder source or target.';
 $_lang['fred.err.build_ns_name'] = 'Имя обязательно.';
 $_lang['fred.err.build_ns_theme'] = 'Тема обязательна.';
 $_lang['fred.err.build_failed'] = 'Сборка не удалось.';
 $_lang['fred.err.theme_no_build'] = 'Нет сборки для темы.';
-$_lang['fred.err.source_folder_not_dir'] = 'Источник [[+source]]не является допустимым каталогом.';
-$_lang['fred.err.source_folder_not_readable'] = 'Источник [[+source]] не читается.';
-$_lang['fred.err.theme_name_invalid_char'] = 'Dash "-" не допускается в имени пакета .';
+$_lang['fred.err.theme_name_invalid_format'] = 'Only lower case letters and underscore "_" are allowed.';
+$_lang['fred.err.theme_docs_changelog_ns'] = 'Changelog is required';
+$_lang['fred.err.theme_docs_readme_ns'] = 'Read Me is required';
+$_lang['fred.err.theme_docs_license_ns'] = 'License is required';
+$_lang['fred.err.theme_no_built_file'] = 'Transport package not found.';
+$_lang['fred.err.theme_read_file'] = 'Transport package is unreadable.';
+$_lang['fred.err.themes_version_number_format'] = 'Please specify version number in format X.Y.Z';
+$_lang['fred.err.themes_release_format'] = 'Invalid release. Only pl, alpha or beta with an optional index is allowed. Examples: pl; alpha3, beta5';
+$_lang['fred.err.blueprint_categories_ae_name'] = 'Blueprint Category with this name already exists.';
+$_lang['fred.err.blueprints_ae_name'] = 'Blueprint with this name already exists.';
+$_lang['fred.err.element_categories_ae_name'] = 'Element Category with this name already exists.';
+$_lang['fred.err.elements_ae_name'] = 'Element with this name already exists.';
+$_lang['fred.err.theme_ae_name'] = 'Theme with this name already exists.';
