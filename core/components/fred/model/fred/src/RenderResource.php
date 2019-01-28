@@ -210,8 +210,8 @@ final class RenderResource {
             $node->removeAttribute('src');
         });
 
-        $links = $html->filter('[data-fred-link-type]');
-        $links->each(function(HtmlPageCrawler $node, $i) use ($item) {
+        $fredLinks = $html->filter('[data-fred-link-type]');
+        $fredLinks->each(function(HtmlPageCrawler $node, $i) use ($item) {
             $linkType = $node->attr('data-fred-link-type');
             $node->removeAttr('data-fred-link-type');
 
@@ -229,6 +229,12 @@ final class RenderResource {
                 $node->removeAttr('data-fred-link-page');
                 $node->removeAttr('data-fred-link-anchor');
             }
+        });
+
+        $links = $html->filter('a');
+        $links->each(function(HtmlPageCrawler $node, $i) {
+            $node->setAttribute('data-fred-fake-href', $node->getAttribute('href'));
+            $node->removeAttribute('href');
         });
         
         $html = HtmlPageCrawler::create($html->first()->html());
