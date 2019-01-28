@@ -9,7 +9,7 @@
  */
 
 /**
- * Permission English Lexicon Entries for Fred
+ * Permission Lexicon Entries for Fred
  *
  * @package fred
  * @subpackage lexicon
