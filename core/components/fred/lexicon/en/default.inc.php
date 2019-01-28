@@ -165,7 +165,6 @@ $_lang['fred.themes.release'] = 'Release';
 $_lang['fred.themes.general'] = 'General';
 $_lang['fred.themes.categories'] = 'Included Element categories for required Snippets, Chunks and Plugins';
 $_lang['fred.themes.add_dependency'] = 'Add Extra';
-$_lang['fred.themes.version'] = 'Version';
 $_lang['fred.themes.package_name'] = 'Package Name';
 $_lang['fred.themes.remove_dependency'] = 'Remove Dependency';
 $_lang['fred.themes.changelog'] = 'Changelog';
