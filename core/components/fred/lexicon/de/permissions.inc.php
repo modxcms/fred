@@ -7,13 +7,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
- 
+
 /**
- * Permission German Lexicon Entries for Fred
+ * Permission Lexicon Entries for Fred
  *
  * @package fred
  * @subpackage lexicon
  */
+
 $_lang['fred.permissions.fred'] = 'Fred ansehen (mgr) (web)';
 $_lang['fred.permissions.fred_elements'] = 'Elemente ansehen (mgr) (web)';
 $_lang['fred.permissions.fred_element_save'] = 'Elemente anlegen/bearbeiten/duplizieren (mgr)';
