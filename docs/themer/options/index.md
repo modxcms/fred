@@ -17,7 +17,7 @@ Option Sets with `No` in this flag are meant to be [imported](import.md) into ot
 
 One option set can be used with multiple Elements. If you have frequently used sub-sections of option sets you’d like to share across many option sets, you can use partial option sets. These can then be imported into many other option sets, and are useful for things like color pallets, etc.
 
-A variety of [option controls/settings](options.md) give you flexibility in how your end users create and update content. These controls can further be grouped into sub-groups that can be opened/closed for better organization of large option sets.
+A variety of [option controls/settings](settings.md) give you flexibility in how your end users create and update content. These controls can further be grouped into sub-groups that can be opened/closed for better organization of large option sets.
 
 ## Importing
 
