@@ -9,7 +9,7 @@
  */
 
 /**
- * Default German Lexicon Entries for Fred
+ * Default English Lexicon Entries for Fred
  *
  * @package fred
  * @subpackage lexicon
