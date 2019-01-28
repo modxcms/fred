@@ -9,7 +9,7 @@
  */
 
 /**
- * Default Dutch Lexicon Entries for Fred
+ * Frontend Dutch Lexicon Entries for Fred
  *
  * @package fred
  * @subpackage lexicon
