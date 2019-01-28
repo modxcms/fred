@@ -20,7 +20,7 @@ $_lang['freddropzone'] = 'Fred Dropzone';
 
 $_lang['fred.global.any'] = 'Любой';
 $_lang['fred.global.change_order'] = 'Изменить заказ: [[+name]]';
-$_lang['fred.global.help'] = 'Help';
+$_lang['fred.global.help'] = 'Помощь';
 
 $_lang['fred.open_in_fred'] = 'Открыть в Fred';
 
@@ -41,8 +41,8 @@ $_lang['fred.home.blueprints'] = 'Макеты';
 $_lang['fred.home.blueprint_categories'] = 'Категории макетов';
 $_lang['fred.home.themes'] = 'Темы';
 $_lang['fred.home.themed_templates'] = 'Темы шаблонов';
-$_lang['fred.home.rebuild'] = 'Rebuild';
-$_lang['fred.home.media_sources'] = 'Media Sources';
+$_lang['fred.home.rebuild'] = 'Перестроить';
+$_lang['fred.home.media_sources'] = 'Источники файлов';
 
 $_lang['fred.blueprints.none'] = 'Никаких макетов не найдено.';
 $_lang['fred.blueprints.name'] = 'Имя';
@@ -98,7 +98,7 @@ $_lang['fred.elements.new_name'] = 'Новое имя';
 $_lang['fred.elements.has_override'] = 'Имеет переопределение';
 $_lang['fred.elements.theme'] = 'Тема';
 
-$_lang['fred.rebuild.rebuild'] = 'Rebuild';
+$_lang['fred.rebuild.rebuild'] = 'Перестроить';
 $_lang['fred.rebuild.rebuild_desc'] = 'Click the Rebuild button below to publish the changes in updated Elements to all existing Fred-powerd site pages.';
 
 $_lang['fred.element_cateogries.all'] = 'Все категории';
@@ -201,9 +201,9 @@ $_lang['fred.themed_templates.update'] = 'Обновить назначенну�
 $_lang['fred.themed_templates.remove'] = 'Отменить назначение темы';
 $_lang['fred.themed_templates.remove_confirm'] = 'Вы уверены, что хотите отменить назначение темы: [[+theme]] из шаблона: [[+template]]?';
 
-$_lang['fred.media_sources.name'] = 'Name';
-$_lang['fred.media_sources.description'] = 'Description';
-$_lang['fred.media_sources.update'] = 'Update Media Source';
+$_lang['fred.media_sources.name'] = 'Имя';
+$_lang['fred.media_sources.description'] = 'Описание';
+$_lang['fred.media_sources.update'] = 'Обновить источник файлов';
 $_lang['fred.media_sources.fred'] = 'Enabled for Fred';
 $_lang['fred.media_sources.fred_read_only'] = 'Read Only for Fred';
 $_lang['fred.media_sources.search'] = 'Search';
