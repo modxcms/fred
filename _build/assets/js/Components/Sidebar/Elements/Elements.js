@@ -32,28 +32,34 @@ export default class Elements extends Sidebar {
                             emitter.emit('fred-sidebar-dt-active', categoryTab, categoryContent);
                         }
                     });
-
-                    hoverintent(categoryTab,
-                        function(e){
-                            let el = e.target;
-                            const activeTabs = el.parentElement.querySelectorAll('dt.active');
-
-                            const isActive = el.classList.contains('active');
-
-                            for (let tab of activeTabs) {
-                                if(tab === el) continue;
-                                tab.classList.remove('active');
+                    
+                    const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+                    
+                    if(!isSafari){
+                        hoverintent(categoryTab,
+                            function(e){
+                                let el = e.target;
+                                const activeTabs = el.parentElement.querySelectorAll('dt.active');
+    
+                                const isActive = el.classList.contains('active');
+    
+                                for (let tab of activeTabs) {
+                                    if(tab === el) continue;
+                                    tab.classList.remove('active');
+                                }
+    
+                                if (!isActive) {
+                                    el.classList.add('active');
+                                    emitter.emit('fred-sidebar-dt-active', categoryTab, categoryContent);
+                                }
+                            },
+                            function(e){
+    
                             }
+                        );
+                    }
+                    //@TODO May need fallback for click on safari
 
-                            if (!isActive) {
-                                el.classList.add('active');
-                                emitter.emit('fred-sidebar-dt-active', categoryTab, categoryContent);
-                            }
-                        },
-                        function(e){
-
-                        }
-                    );
                     const categoryContent = dd();
                     const categoryEl = div(['fred--thumbs', 'source', 'elements-source']);
                     

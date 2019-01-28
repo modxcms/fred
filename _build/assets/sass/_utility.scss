@@ -22,6 +22,8 @@
     transform: translate(-50%,-50%);
     max-width: 90%;
     width: 480px;
+    max-height: 95vh;
+    overflow: auto;
   }
   &.fred--modal_loading{
     background: rgba($black,0.8);
