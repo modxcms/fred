@@ -528,12 +528,12 @@
 { @supports (-webkit-appearance:none) {
 
   .fred--sidebar {
-    overflow-y: auto;
+    overflow-y: visible;
   }
   .fred--accordion dd{
     overflow: auto;
   }
-  .fred .fred--accordion dd dl dt{
+  .fred--accordion dd dl dt{
     &.active + dd{
       position: relative;
       left: 0;

@@ -111,12 +111,12 @@
 { @supports (-webkit-appearance:none) {
 
   .fred--panel {
-    overflow-y: auto;
+    overflow-y: visible;
   }
-  .fred .fred--panel dl:last-of-type dt:last-of-type.active{
+  .fred--panel dl:last-of-type dt:last-of-type.active{
     margin-bottom: 0;
   }
-  .fred .fred--panel dd dl dt{
+  .fred--panel dd dl dt{
     &.active + dd{
       position: relative;
       left: 0;
