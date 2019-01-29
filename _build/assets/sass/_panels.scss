@@ -102,6 +102,9 @@
       margin-bottom: 16px;
     }
   }
+  textarea{
+    height: initial;
+  }
 }
 //Safari Fixes
 @media not all and (min-resolution:.001dpcm)
