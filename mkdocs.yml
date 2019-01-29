@@ -26,7 +26,7 @@ nav:
         - JS Events: themer/elements/js_events.md
       - Options:
         - Overview: themer/options/index.md
-        - Settings: themer/options/options.md
+        - Settings: themer/options/settings.md
         - Importing into Option Sets: themer/options/import.md
         - Overriding Option Settingss: themer/options/override.md
       - RTE Configs: themer/rte_configs/index.md

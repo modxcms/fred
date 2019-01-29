@@ -51,7 +51,7 @@ $_lang['fred.fe.page_settings.publish_on'] = 'Veröffentlichen am';
 $_lang['fred.fe.page_settings.unpublish_on'] = 'Zurückziehen am';
 $_lang['fred.fe.page_settings.menu_index'] = 'Menüindex';
 $_lang['fred.fe.page_settings.deleted'] = 'Gelöscht';
-$_lang['fred.fe.page_settings.tvs'] = 'TVs';
+$_lang['fred.fe.page_settings.tvs'] = 'Template-Variablen';
 
 $_lang['fred.fe.pages.no_parent'] = 'Keine übergeordnete Seite';
 $_lang['fred.fe.pages.create_page'] = 'Seite anlegen';
@@ -122,7 +122,7 @@ $_lang['fred.fe.preview.tablet_portrait'] = 'Tablet vertikal';
 $_lang['fred.fe.preview.tablet_landscape'] = 'Tablet horizontal';
 $_lang['fred.fe.preview.phone_portrait'] = 'Phone vertikal';
 $_lang['fred.fe.preview.phone_landscape'] = 'Phone horizontal';
-$_lang['fred.fe.preview.auto'] = 'Auto';
+$_lang['fred.fe.preview.auto'] = 'Automatisch';
 
 $_lang['fred.fe.tagger.tagger'] = 'Schlagworte';
 $_lang['fred.fe.tagger.add'] = 'Schlagwort hinzufügen';

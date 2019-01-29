@@ -83,16 +83,16 @@ The following Settings types are used to configure Elements in Fred.
     - `parents` - If set, only resource from these parents (including parents itself) will show; Value can be string with a comma as a separator or an array
     - `depth` - Depth to look for children for specified `parents`; Default: 1
 
+#### file
+- File picker
+- Type-specific property:
+    - `mediaSource` - Optional name of the Media Source to use that overrides the top-level <a href="#mediasource">`mediaSource` global setting</a> 
+
 #### image
 - Image select
 - Type-specific properties:
     - `showPreview` - If set to `false` preview won't appear under the text input
-    - `mediaSource` - Name of the Media Source to use that overrides the global `imageMediaSource` setting.  
-
-#### file
-- File picker
-- Type-specific property:
-    - `mediaSource` - Name of the Media Source to use that overrides the global `mediaSource` setting.  
+    - `mediaSource` - Optional name of the Media Source to use that overrides the top-level <a href="#imagemediasource">`imageMediaSource` global setting</a> 
 
 #### tagger
 - Allows users to choose from preset Tagger tags
@@ -132,6 +132,22 @@ Groups are used to organize related Option Sets, or to remove infrequently used 
             "label": "Panel Classes",
             "type": "text",
             "value": "col-6 col-sm-12"
+        },
+        {
+            "name": "logo",
+            "lable": "Logo",
+            "type": "image",
+            "mediaSource": "site-assets",
+            "value": "assets/images/logo.svg"
+
+        },
+        {
+            "name": "nda-file",
+            "lable": "Upload NDA",
+            "type": "file",
+            "mediaSource": "site-assets-files",
+            "value": "assets/files/contract.pdf"
+
         },
         {
             "name": "slogan",
