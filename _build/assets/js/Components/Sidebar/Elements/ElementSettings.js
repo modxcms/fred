@@ -146,6 +146,8 @@ export class ElementSettings {
                 }
 
                 return ui.file({mediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
+            case 'textarea':
+                return ui.area(setting, defaultValue, this.setSetting.bind(this));
             default:
                 return ui.text(setting, defaultValue, this.setSetting.bind(this));        
         }

@@ -115,6 +115,12 @@ export const area = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
 
     const textAreaEl = textArea(defaultValue);
+    
+    if (setting.rows && (parseInt(setting.rows) > 0)) {
+        textAreaEl.setAttribute('rows', parseInt(setting.rows));
+    } else {
+        textAreaEl.setAttribute('rows', 4);
+    }
 
     if (typeof onChange === 'function') {
         textAreaEl.addEventListener('keyup', e => {
