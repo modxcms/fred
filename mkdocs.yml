@@ -4,51 +4,52 @@ repo_url: https://github.com/modxcms/fred
 copyright: 'Copyright &copy; 2018 <a href="https://modx.com" title="MODX">MODX</a>'
 
 nav:
-    - What is Fred?: index.md
-    - Getting Started: getting_started.md
-    - MODX Templates & Fred: templates.md
-    - Elements: elements.md
-    - Blueprints: blueprints.md
-    - Fred for Site Admins:
-      - Protecting access with ACLs:
-        - How To: site_admin/acls/howto.md
-        - Permissions: site_admin/acls/permissions.md
-        - Default Policies: site_admin/acls/policies.md
-    - Fred for Themers:
-      - Intro to Fred Themes: themer/index.md
-      - Theme Creation Tutorial: themer/themes.md
-      - Convert Existing Sites to Fred: themer/convert-to-fred.md
-      - MODX Templates for Fred: themer/templates/index.md
-      - Elements:
-        - Elements: themer/elements/index.md
-        - HTML Markup & Twig: themer/elements/markup.md
-        - HTML Attributes: themer/elements/attributes.md
-        - JS Events: themer/elements/js_events.md
-      - Options:
-        - Overview: themer/options/index.md
-        - Settings: themer/options/settings.md
-        - Importing into Option Sets: themer/options/import.md
-        - Overriding Option Settingss: themer/options/override.md
-      - RTE Configs: themer/rte_configs/index.md
-      - Media Sources: themer/media_sources/index.md
-      - System Settings: themer/system_settings/index.md
-      - Manager 3PC:
-        - Elements: themer/cmp/elements.md
-        - Element Categories: themer/cmp/element_categories.md
-        - Option Sets: themer/cmp/option_sets.md
-        - RTE Configs: themer/cmp/rte_configs.md
-        - Rebuild: themer/cmp/rebuild.md
-        - Blueprints: themer/cmp/blueprints.md
-        - Blueprint Categories: themer/cmp/blueprint_categories.md
-        - Building Themes: themer/cmp/themes.md
-        - Themed Templates: themer/cmp/themed_templates.md
-        - Media Sources: themer/cmp/media_sources.md
+  - What is Fred?: index.md
+  - Getting Started: getting_started.md
+  - MODX Templates & Fred: templates.md
+  - Elements: elements.md
+  - Blueprints: blueprints.md
+  - Fred for Site Admins:
+    - Protecting access with ACLs:
+      - How To: site_admin/acls/howto.md
+      - Permissions: site_admin/acls/permissions.md
+      - Default Policies: site_admin/acls/policies.md
+  - Fred for Themers:
+    - Intro to Fred Themes: themer/index.md
+    - Theme Creation Tutorial: themer/themes.md
+    - Convert Existing Sites to Fred: themer/convert-to-fred.md
+    - MODX Templates for Fred: themer/templates/index.md
+    - Elements:
+      - Elements: themer/elements/index.md
+      - HTML Markup & Twig: themer/elements/markup.md
+      - HTML Attributes: themer/elements/attributes.md
+      - JS Events: themer/elements/js_events.md
+    - Options:
+      - Overview: themer/options/index.md
+      - Settings: themer/options/settings.md
+      - Importing into Option Sets: themer/options/import.md
+      - Overriding Option Settingss: themer/options/override.md
+    - RTE Configs: themer/rte_configs/index.md
+    - Media Sources: themer/media_sources/index.md
+    - System Settings: themer/system_settings/index.md
+    - Manager 3PC:
+      - Elements: themer/cmp/elements.md
+      - Element Categories: themer/cmp/element_categories.md
+      - Option Sets: themer/cmp/option_sets.md
+      - RTE Configs: themer/cmp/rte_configs.md
+      - Rebuild: themer/cmp/rebuild.md
+      - Blueprints: themer/cmp/blueprints.md
+      - Blueprint Categories: themer/cmp/blueprint_categories.md
+      - Building Themes: themer/cmp/themes.md
+      - Themed Templates: themer/cmp/themed_templates.md
+      - Media Sources: themer/cmp/media_sources.md
     - Collaborating on Themes:
         - Intro to Collaborating: collab/index.md
         - Setting up Gitify: collab/gitify.md
         - Getting your Theme in Git: collab/initial_extract.md
         - Basic Gitify Usage: collab/gitify_in_action.md
         - Advaced Gitify with PRs: collab/pr_workflow.md
+  - Credits: credits.md
 
 theme:
   name: 'material'
