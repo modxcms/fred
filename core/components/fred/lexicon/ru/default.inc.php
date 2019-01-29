@@ -15,16 +15,16 @@
  * @subpackage lexicon
  */
 
-$_lang['fred'] = 'Fred';
+$_lang['fred'] = 'Фред';
 $_lang['freddropzone'] = 'Fred Dropzone';
 
 $_lang['fred.global.any'] = 'Любой';
 $_lang['fred.global.change_order'] = 'Изменить заказ: [[+name]]';
-$_lang['fred.global.help'] = 'Help';
+$_lang['fred.global.help'] = 'Помощь';
 
 $_lang['fred.open_in_fred'] = 'Открыть в Fred';
 
-$_lang['fred.menu.fred'] = 'Fred';
+$_lang['fred.menu.fred'] = 'Фред';
 $_lang['fred.menu.fred_desc'] = 'Elements, Blueprints, Themes and more!';
 
 $_lang['fred.refresh_fail_resource'] = 'Нет ресурсов Fred для обновления';
@@ -32,7 +32,7 @@ $_lang['fred.refresh_fail_template'] = 'Нет шаблонов Fred для об
 $_lang['fred.refresh_complete'] = 'Перестроение завершено';
 $_lang['fred.refresh_id'] = 'Обновление идентификатора ресурса [[+id]]';
 
-$_lang['fred.home.page_title'] = 'Fred';
+$_lang['fred.home.page_title'] = 'Фред';
 $_lang['fred.home.element_categories'] = 'Категории элементов';
 $_lang['fred.home.elements'] = 'Элементы';
 $_lang['fred.home.option_sets'] = 'Наборы параметров';
@@ -41,8 +41,8 @@ $_lang['fred.home.blueprints'] = 'Макеты';
 $_lang['fred.home.blueprint_categories'] = 'Категории макетов';
 $_lang['fred.home.themes'] = 'Темы';
 $_lang['fred.home.themed_templates'] = 'Темы шаблонов';
-$_lang['fred.home.rebuild'] = 'Rebuild';
-$_lang['fred.home.media_sources'] = 'Media Sources';
+$_lang['fred.home.rebuild'] = 'Перестроить';
+$_lang['fred.home.media_sources'] = 'Источники файлов';
 
 $_lang['fred.blueprints.none'] = 'Никаких макетов не найдено.';
 $_lang['fred.blueprints.name'] = 'Имя';
@@ -98,7 +98,7 @@ $_lang['fred.elements.new_name'] = 'Новое имя';
 $_lang['fred.elements.has_override'] = 'Имеет переопределение';
 $_lang['fred.elements.theme'] = 'Тема';
 
-$_lang['fred.rebuild.rebuild'] = 'Rebuild';
+$_lang['fred.rebuild.rebuild'] = 'Перестроить';
 $_lang['fred.rebuild.rebuild_desc'] = 'Click the Rebuild button below to publish the changes in updated Elements to all existing Fred-powerd site pages.';
 
 $_lang['fred.element_cateogries.all'] = 'Все категории';
@@ -177,7 +177,7 @@ $_lang['fred.themes.download'] = 'Скачать тему';
 $_lang['fred.themes.theme_folder'] = 'Theme Directory';
 $_lang['fred.themes.theme_dir_msg_title'] = 'Theme Directory Created';
 $_lang['fred.themes.theme_dir_msg'] = 'The directory for this theme is <strong>themes/[[+theme_folder]]/</strong> inside your assets directory (usually <strong>assets/themes/[[+theme_folder]]/</strong>).<br>The contents of this directory will be included if you build this theme for distribution, so please place all theme-related assets here.';
-$_lang['fred.themes.overview'] = 'Overview';
+$_lang['fred.themes.overview'] = 'Обзор';
 $_lang['fred.themes.included_theme_folder'] = 'Assets directory for this Theme';
 $_lang['fred.themes.theme_build_desc'] = 'Build a complete package for the MODX Installer to share or submit to the Extras repository.';
 $_lang['fred.themes.theme_build_readme_desc'] = 'A good readme file should include important details about how your theme is intended to be used, where to submit bug reports and how to get support.';
@@ -192,7 +192,7 @@ $_lang['fred.themes.duplicate_theme_objects'] = 'Duplicate theme Objects (Elemen
 $_lang['fred.themes.build_and_download'] = 'Build & Download Theme';
 $_lang['fred.themes.theme_duplicate_name'] = '[[+theme]] Copy';
 $_lang['fred.themes.duplicate_templates'] = 'Duplicate Templates';
-$_lang['fred.themes.default_element'] = 'Default Element';
+$_lang['fred.themes.default_element'] = 'Элемент по умолчанию';
 
 $_lang['fred.themed_templates.theme'] = 'Тема';
 $_lang['fred.themed_templates.template'] = 'Шаблон';
@@ -201,14 +201,14 @@ $_lang['fred.themed_templates.update'] = 'Обновить назначенну�
 $_lang['fred.themed_templates.remove'] = 'Отменить назначение темы';
 $_lang['fred.themed_templates.remove_confirm'] = 'Вы уверены, что хотите отменить назначение темы: [[+theme]] из шаблона: [[+template]]?';
 
-$_lang['fred.media_sources.name'] = 'Name';
-$_lang['fred.media_sources.description'] = 'Description';
-$_lang['fred.media_sources.update'] = 'Update Media Source';
-$_lang['fred.media_sources.fred'] = 'Enabled for Fred';
+$_lang['fred.media_sources.name'] = 'Имя';
+$_lang['fred.media_sources.description'] = 'Описание';
+$_lang['fred.media_sources.update'] = 'Обновить источник файлов';
+$_lang['fred.media_sources.fred'] = 'Включено для Фред';
 $_lang['fred.media_sources.fred_read_only'] = 'Read Only for Fred';
-$_lang['fred.media_sources.search'] = 'Search';
+$_lang['fred.media_sources.search'] = 'Поиск';
 $_lang['fred.media_sources.none'] = 'No Media Sources were found.';
-$_lang['fred.media_sources.go_to'] = 'Manage Media Sources';
+$_lang['fred.media_sources.go_to'] = 'Управление источниками файлов';
 
 $_lang['fred.tvs.dropzone.hide_input'] = 'Hide Field from Manager';
 
@@ -230,7 +230,7 @@ $_lang['setting_fred.blueprint_category_sort'] = 'Сортировка кате�
 $_lang['setting_fred.blueprint_category_sort_desc'] = 'Сортировка категорий макетов по имени или рангу';
 $_lang['setting_fred.blueprint_sort'] = 'Сортировка макетов';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Сортировка макетов по имени или рангу';
-$_lang['setting_fred.secret'] = 'Secret';
+$_lang['setting_fred.secret'] = 'Секретный ключ';
 $_lang['setting_fred.secret_desc'] = 'Secret used in signing XHR requests';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Имя обязательно';
@@ -266,7 +266,7 @@ $_lang['fred.err.theme_name_invalid_format'] = 'Only lower case letters and unde
 $_lang['fred.err.theme_docs_changelog_ns'] = 'Changelog is required';
 $_lang['fred.err.theme_docs_readme_ns'] = 'Read Me is required';
 $_lang['fred.err.theme_docs_license_ns'] = 'License is required';
-$_lang['fred.err.theme_no_built_file'] = 'Transport package not found.';
+$_lang['fred.err.theme_no_built_file'] = 'Транспортный пакет не найден.';
 $_lang['fred.err.theme_read_file'] = 'Transport package is unreadable.';
 $_lang['fred.err.themes_version_number_format'] = 'Please specify version number in format X.Y.Z';
 $_lang['fred.err.themes_release_format'] = 'Invalid release. Only pl, alpha or beta with an optional index is allowed. Examples: pl; alpha3, beta5';
