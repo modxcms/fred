@@ -23,7 +23,7 @@ $_lang['fred.fe.page_settings'] = 'Instellingen';
 $_lang['fred.fe.more'] = 'Meer';
 $_lang['fred.fe.saving_page'] = 'Pagina opslaan';
 $_lang['fred.fe.preparing_content'] = 'Content voorbereiden';
-$_lang['fred.fe.open_sidebar'] = 'Open Sidebar';
+$_lang['fred.fe.open_sidebar'] = 'Open Zijbalk';
 $_lang['fred.fe.toggle_preview'] = 'Preview tonen/verbergen';
 $_lang['fred.fe.close_sidebar'] = 'Sidebar verbergen';
 $_lang['fred.fe.element_settings'] = 'Element instellingen';
@@ -122,7 +122,7 @@ $_lang['fred.fe.preview.tablet_portrait'] = 'Tablet staand';
 $_lang['fred.fe.preview.tablet_landscape'] = 'Tablet liggend';
 $_lang['fred.fe.preview.phone_portrait'] = 'Telefoon staand';
 $_lang['fred.fe.preview.phone_landscape'] = 'Telefoon liggend';
-$_lang['fred.fe.preview.auto'] = 'Auto';
+$_lang['fred.fe.preview.auto'] = 'Automatisch';
 
 $_lang['fred.fe.tagger.tagger'] = 'Tags';
 $_lang['fred.fe.tagger.add'] = 'Nieuwe tag';
