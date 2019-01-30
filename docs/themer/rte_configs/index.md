@@ -15,7 +15,8 @@ The default RTE configuration for the TinyMCE Editor for Fred is as follows:
     "imagetools_toolbar": "alignleft aligncenter alignright | rotateleft rotateright | flipv fliph | editimage imageoptions",
     "auto_focus": false,
     "branding": false,
-    "relative_urls": false
+    "relative_urls": false,
+    "image_dimensions": false
 }
 ```
 
