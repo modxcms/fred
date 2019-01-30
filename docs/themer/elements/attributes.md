@@ -2,12 +2,12 @@
 
 The following are the currently available attributes for Fred Elements.
 
-## contenteditable
-When set to `true` the content of the HTML Element will be editable for end users, including any Elements nested within (for nested Dropzones). This attribute has to be used with `data-fred-name` to save the value.
+## data-fred-editable
+When set to `true` the content of the HTML Element will be editable for end users, including any Elements nested within (for nested Dropzones). This attribute has to be used with `data-fred-name` to save the value. This attribute is set to `true` by default.
 
 ### Example
 ```html
-<p data-fred-name="description">Default value</p>
+<p data-fred-name="description" data-fred-editable="true">Default value</p>
 ```
 
 ## data-fred-name

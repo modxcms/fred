@@ -619,7 +619,7 @@ export class ContentElement {
 
                 this.setValueForBindElements(content, el.dataset.fredName, this.content[el.dataset.fredName]._raw._value);
 
-                if (addListeners) {
+                if (addListeners && (el.getAttribute('data-fred-editable') === 'true')) {
                     el.addEventListener('click', e => {
                         e.preventDefault();
                         if (this.iconEditor !== null) {
@@ -642,7 +642,7 @@ export class ContentElement {
 
                 this.setValueForBindElements(content, el.dataset.fredName, this.content[el.dataset.fredName]._raw._value);
 
-                if (addListeners) {
+                if (addListeners && (el.getAttribute('data-fred-editable') === 'true')) {
                     el.addEventListener('click', e => {
                         e.preventDefault();
                         if (this.imageEditor !== null) {
@@ -736,8 +736,12 @@ export class ContentElement {
         for (let el of fredElements) {
             el.fredEl = this;
             
-            if (el.hasAttribute('contenteditable') === false) {
-                el.setAttribute('contenteditable', 'true');
+            if (el.hasAttribute('data-fred-editable') === false) {
+                el.setAttribute('data-fred-editable', 'true');
+            }
+            
+            if (['i', 'img'].indexOf(el.nodeName.toLowerCase()) === -1) {
+                el.setAttribute('contenteditable', el.getAttribute('data-fred-editable'));
             }
             
             const observer = new MutationObserver(mutations => {
@@ -885,6 +889,7 @@ export class ContentElement {
                 this.setContentElValue(el, element, true, false);
 
                 el.removeAttribute('contenteditable');
+                el.removeAttribute('data-fred-editable');
                 el.removeAttribute('data-fred-name');
                 el.removeAttribute('data-fred-rte');
                 el.removeAttribute('data-fred-rte-config');

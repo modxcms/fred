@@ -284,6 +284,7 @@ final class RenderResource {
             $node->removeAttr('data-fred-rte-config');
             $node->removeAttr('data-fred-attrs');
             $node->removeAttr('contenteditable');
+            $node->removeAttr('data-fred-editable');
             $node->removeAttr('data-fred-media-source');
             $node->removeAttr('data-fred-image-media-source');
         });
