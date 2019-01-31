@@ -1,6 +1,6 @@
 import utilitySidebar from './../../UtilitySidebar';
 import {choices, image, text, toggle} from "../../../UI/Inputs";
-import {button, div, fieldSet, form, legend, span} from "../../../UI/Elements";
+import {button, div, fieldSet, form, img, legend, span} from "../../../UI/Elements";
 import cache from "../../../Cache";
 import emitter from "../../../EE";
 import fredConfig from "../../../Config";
@@ -118,9 +118,32 @@ export class PartialBlueprints {
                     return false;
                 }
             }).then(canvas => {
-                this.state.generatedImage = canvas.toDataURL();
-                loader.remove();
-                imageEl.setPreview(this.state.generatedImage);
+                const maxWidth = 540;
+
+                if (canvas.width > maxWidth) {
+                    const ratio = maxWidth / canvas.width;
+                    const image = new Image();
+
+                    image.onload = () => {
+                        const resizedCanvas = document.createElement("canvas");
+                        const ctx = resizedCanvas.getContext("2d");
+
+                        resizedCanvas.width = canvas.width * ratio;
+                        resizedCanvas.height = canvas.height * ratio;
+
+                        ctx.drawImage(image, 0, 0, resizedCanvas.width, resizedCanvas.height);
+
+                        this.state.generatedImage = resizedCanvas.toDataURL();
+                        loader.remove();
+                        imageEl.setPreview(this.state.generatedImage);
+                    };
+
+                    image.src = canvas.toDataURL();
+                } else {
+                    this.state.generatedImage = canvas.toDataURL();
+                    loader.remove();
+                    imageEl.setPreview(this.state.generatedImage);
+                }
             });
         }
 

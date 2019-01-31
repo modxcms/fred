@@ -327,14 +327,42 @@ export default class Blueprints extends Sidebar {
                         iframe.parentNode.style.zIndex = '-99999999';
 
                         html2canvas(iframe.contentWindow.document.body, {
-                            logging: false
+                            logging: true
                         }).then(canvas => {
-                            this.state.blueprint.generatedImage = canvas.toDataURL();
-                            loader.remove();
-                            imageEl.setPreview(this.state.blueprint.generatedImage);
-                            iframe.parentNode.style.display = 'none';
-                            iframe.parentNode.style.opacity = null;
-                            iframe.parentNode.style.zIndex = null;
+                            const maxWidth = 540;
+                            
+                            if (canvas.width > maxWidth) {
+                                const ratio = maxWidth / canvas.width;
+                                const image = new Image();
+
+                                image.onload = () => {
+                                    const resizedCanvas = document.createElement("canvas");
+                                    const ctx = resizedCanvas.getContext("2d");
+
+                                    resizedCanvas.width = canvas.width * ratio;
+                                    resizedCanvas.height = canvas.height * ratio;
+
+                                    ctx.drawImage(image, 0, 0, resizedCanvas.width, resizedCanvas.height);
+
+                                    this.state.blueprint.generatedImage = resizedCanvas.toDataURL();
+                                    loader.remove();
+                                    imageEl.setPreview(this.state.blueprint.generatedImage);
+
+                                    iframe.parentNode.style.display = 'none';
+                                    iframe.parentNode.style.opacity = null;
+                                    iframe.parentNode.style.zIndex = null;
+                                };
+
+                                image.src = canvas.toDataURL();
+                            } else {
+                                this.state.blueprint.generatedImage = canvas.toDataURL();
+                                loader.remove();
+                                imageEl.setPreview(this.state.blueprint.generatedImage);
+
+                                iframe.parentNode.style.display = 'none';
+                                iframe.parentNode.style.opacity = null;
+                                iframe.parentNode.style.zIndex = null;
+                            }
                         });
                     });
                 }

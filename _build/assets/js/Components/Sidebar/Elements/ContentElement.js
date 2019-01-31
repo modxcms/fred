@@ -499,10 +499,34 @@ export class ContentElement {
                 return false;
             }
         }).then(canvas => {
-            dataImage = canvas.toDataURL();
-            
-            modal.setContent(img(dataImage));
-            modal.enableSave();
+            const maxWidth = 540;
+
+            if (canvas.width > maxWidth) {
+                const ratio = maxWidth / canvas.width;
+                const image = new Image();
+
+                image.onload = () => {
+                    const resizedCanvas = document.createElement("canvas");
+                    const ctx = resizedCanvas.getContext("2d");
+
+                    resizedCanvas.width = canvas.width * ratio;
+                    resizedCanvas.height = canvas.height * ratio;
+
+                    ctx.drawImage(image, 0, 0, resizedCanvas.width, resizedCanvas.height);
+
+                    dataImage = resizedCanvas.toDataURL();
+
+                    modal.setContent(img(dataImage));
+                    modal.enableSave();
+                };
+
+                image.src = canvas.toDataURL();
+            } else {
+                dataImage = canvas.toDataURL();
+
+                modal.setContent(img(dataImage));
+                modal.enableSave();
+            }
         });
     }
     
