@@ -15,11 +15,11 @@
  * @subpackage lexicon
  */
 
-$_lang['fred.permissions.fred'] = 'View Fred (mgr) (web)';
-$_lang['fred.permissions.fred_elements'] = 'View Elements (mgr) (web)';
-$_lang['fred.permissions.fred_element_save'] = 'Create/edit/duplicate Elements (mgr)';
-$_lang['fred.permissions.fred_element_delete'] = 'Delete Elements (mgr)';
-$_lang['fred.permissions.fred_element_screenshot'] = 'Take a screenshot to replace the current sidebar preview for Elements (web)';
+$_lang['fred.permissions.fred'] = 'Посмотреть Fred (mgr) (web)';
+$_lang['fred.permissions.fred_elements'] = 'Посмотреть Элементы (mgr) (web)';
+$_lang['fred.permissions.fred_element_save'] = 'Создание/редактирование/дублирование Элементов (mgr)';
+$_lang['fred.permissions.fred_element_delete'] = 'Удалить Элементы (mgr)';
+$_lang['fred.permissions.fred_element_screenshot'] = 'Сделайте снимок экрана, чтобы заменить текущий предварительный просмотр боковой панели для элементов (web)';
 $_lang['fred.permissions.fred_element_move'] = 'Drag and drop Elements into drop zones (web)';
 $_lang['fred.permissions.fred_element_category_delete'] = 'Delete Element Categories (mgr)';
 $_lang['fred.permissions.fred_element_category_save'] = 'Create/edit/duplicate Element Categories (mgr)';
