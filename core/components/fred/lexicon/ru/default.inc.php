@@ -16,7 +16,7 @@
  */
 
 $_lang['fred'] = 'Фред';
-$_lang['freddropzone'] = 'Fred Dropzone';
+$_lang['freddropzone'] = 'Fred область загрузки';
 
 $_lang['fred.global.any'] = 'Любой';
 $_lang['fred.global.change_order'] = 'Изменить заказ: [[+name]]';
