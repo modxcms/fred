@@ -25,7 +25,7 @@ $_lang['fred.global.help'] = 'Помощь';
 $_lang['fred.open_in_fred'] = 'Открыть в Fred';
 
 $_lang['fred.menu.fred'] = 'Фред';
-$_lang['fred.menu.fred_desc'] = 'Elements, Blueprints, Themes and more!';
+$_lang['fred.menu.fred_desc'] = 'Элементы, Проекты, Темы и другое!';
 
 $_lang['fred.refresh_fail_resource'] = 'Нет ресурсов Fred для обновления';
 $_lang['fred.refresh_fail_template'] = 'Нет шаблонов Fred для обновления';
@@ -99,7 +99,7 @@ $_lang['fred.elements.has_override'] = 'Имеет переопределени�
 $_lang['fred.elements.theme'] = 'Тема';
 
 $_lang['fred.rebuild.rebuild'] = 'Перестроить';
-$_lang['fred.rebuild.rebuild_desc'] = 'Click the Rebuild button below to publish the changes in updated Elements to all existing Fred-powerd site pages.';
+$_lang['fred.rebuild.rebuild_desc'] = 'Нажмите кнопку Перестроить ниже, чтобы опубликовать изменения в обновленных элементах на всех существующих страницах сайта с поддержкой Fred.';
 
 $_lang['fred.element_cateogries.all'] = 'Все категории';
 $_lang['fred.element_categories.none'] = 'Категории не найдены.';
@@ -174,18 +174,18 @@ $_lang['fred.themes.dependencies'] = 'Зависимости';
 $_lang['fred.themes.docs'] = 'Документы';
 $_lang['fred.themes.latest_build'] = 'Последняя сборка';
 $_lang['fred.themes.download'] = 'Скачать тему';
-$_lang['fred.themes.theme_folder'] = 'Theme Directory';
-$_lang['fred.themes.theme_dir_msg_title'] = 'Theme Directory Created';
-$_lang['fred.themes.theme_dir_msg'] = 'The directory for this theme is <strong>themes/[[+theme_folder]]/</strong> inside your assets directory (usually <strong>assets/themes/[[+theme_folder]]/</strong>).<br>The contents of this directory will be included if you build this theme for distribution, so please place all theme-related assets here.';
+$_lang['fred.themes.theme_folder'] = 'Папка шаблона';
+$_lang['fred.themes.theme_dir_msg_title'] = 'Каталог тем создан';
+$_lang['fred.themes.theme_dir_msg'] = 'Каталог для этой темы - <strong>themes/[[+theme_folder]]/</strong> внутри каталога ресурсов (обычно <strong>assets/themes/[[+theme_folder]]/</strong>).<br> Содержимое этого каталога будет включено, если вы создадите эту тему для распространения, поэтому, пожалуйста, разместите все ресурсы, связанные с темой, здесь.';
 $_lang['fred.themes.overview'] = 'Обзор';
 $_lang['fred.themes.included_theme_folder'] = 'Assets directory for this Theme';
-$_lang['fred.themes.theme_build_desc'] = 'Build a complete package for the MODX Installer to share or submit to the Extras repository.';
-$_lang['fred.themes.theme_build_readme_desc'] = 'A good readme file should include important details about how your theme is intended to be used, where to submit bug reports and how to get support.';
-$_lang['fred.themes.theme_build_changelog_desc'] = 'List any new features and bugfixes since your initial release.';
-$_lang['fred.themes.theme_build_license_desc'] = 'For open source, a variety of options are available at <a href="https://choosealicense.com/">Choose a License</a> or <a href="https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/">Creative Commons</a>. Note: commercial licenses for premium themes are OK, too!';
-$_lang['fred.themes.theme_build_dependencies_desc'] = 'Include any Extras required for this Theme to function fully.';
-$_lang['fred.themes.build_default_title'] = 'Can\'t build Default Theme';
-$_lang['fred.themes.build_default_desc'] = 'To protect against unintended changes to your site from upgrades, please create a clone of the Default theme before building.';
+$_lang['fred.themes.theme_build_desc'] = 'Создайте полный пакет для установщика MODX, чтобы поделиться им или отправить в репозиторий Extras.';
+$_lang['fred.themes.theme_build_readme_desc'] = 'Хороший файл readme должен содержать важные сведения о том, как ваша тема предназначена для использования, где отправлять отчеты об ошибках и как получить поддержку.';
+$_lang['fred.themes.theme_build_changelog_desc'] = 'Список всех новых функций и исправлений с момента первого выпуска.';
+$_lang['fred.themes.theme_build_license_desc'] = 'Для открытого исходного кода доступны различные варианты по адресу <a href="https://choosealicense.com/">Выберите лицензию</a> или <a href="https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/">Creative Commons</a>. Примечание: коммерческие лицензии для премиальных тем тоже подходит!';
+$_lang['fred.themes.theme_build_dependencies_desc'] = 'Включите все дополнения, необходимые для полноценной работы этой темы.';
+$_lang['fred.themes.build_default_title'] = 'Не удается создать тему по умолчанию';
+$_lang['fred.themes.build_default_desc'] = 'Для защиты от непреднамеренных изменений на вашем сайте от обновлений, пожалуйста, создайте клон темы Default перед сборкой.';
 $_lang['fred.themes.delete_theme_folder'] = 'Delete Theme Directory';
 $_lang['fred.themes.duplicate_theme_folder'] = 'Duplicate theme directory';
 $_lang['fred.themes.duplicate_theme_objects'] = 'Duplicate theme Objects (Elements, Blueprints, etc.)';
