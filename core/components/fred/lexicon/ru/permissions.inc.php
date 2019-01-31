@@ -15,25 +15,25 @@
  * @subpackage lexicon
  */
 
-$_lang['fred.permissions.fred'] = 'View Fred (mgr) (web)';
-$_lang['fred.permissions.fred_elements'] = 'View Elements (mgr) (web)';
-$_lang['fred.permissions.fred_element_save'] = 'Create/edit/duplicate Elements (mgr)';
-$_lang['fred.permissions.fred_element_delete'] = 'Delete Elements (mgr)';
-$_lang['fred.permissions.fred_element_screenshot'] = 'Take a screenshot to replace the current sidebar preview for Elements (web)';
+$_lang['fred.permissions.fred'] = 'Посмотреть Fred (mgr) (web)';
+$_lang['fred.permissions.fred_elements'] = 'Посмотреть Элементы (mgr) (web)';
+$_lang['fred.permissions.fred_element_save'] = 'Создание/редактирование/дублирование Элементов (mgr)';
+$_lang['fred.permissions.fred_element_delete'] = 'Удалить Элементы (mgr)';
+$_lang['fred.permissions.fred_element_screenshot'] = 'Сделайте снимок экрана, чтобы заменить текущий предварительный просмотр боковой панели для элементов (web)';
 $_lang['fred.permissions.fred_element_move'] = 'Drag and drop Elements into drop zones (web)';
 $_lang['fred.permissions.fred_element_category_delete'] = 'Delete Element Categories (mgr)';
-$_lang['fred.permissions.fred_element_category_save'] = 'Create/edit/duplicate Element Categories (mgr)';
+$_lang['fred.permissions.fred_element_category_save'] = 'Создание/редактирование/дублирование Категории Элементов (mgr)';
 $_lang['fred.permissions.fred_element_categories'] = 'View Fred Element Categories (mgr)';
 $_lang['fred.permissions.fred_element_option_sets_save'] = 'Create/edit/duplicate Option Sets (mgr)';
 $_lang['fred.permissions.fred_element_option_sets_delete'] = 'Delete Option Sets (mgr)';
-$_lang['fred.permissions.fred_element_option_sets'] = 'View Option Sets (mgr)';
-$_lang['fred.permissions.fred_element_rte_config_save'] = 'Create/edit/duplicate RTE configs (mgr)';
+$_lang['fred.permissions.fred_element_option_sets'] = 'Просмотр наборов опций (mgr)';
+$_lang['fred.permissions.fred_element_rte_config_save'] = 'Создание/редактирование/дублирование конфигураций RTE (mgr)';
 $_lang['fred.permissions.fred_element_rte_config_delete'] = 'Delete RTE configs (mgr)';
 $_lang['fred.permissions.fred_element_rtes'] = 'View RTE configs (mgr)';
 $_lang['fred.permissions.fred_element_rebuild'] = 'View the Rebuild tab (mgr)';
 $_lang['fred.permissions.fred_themes'] = 'View the Themes tab (mgr)';
 $_lang['fred.permissions.fred_themes_save'] = 'Create/edit/duplicate Themes (mgr)';
-$_lang['fred.permissions.fred_themes_delete'] = 'Delete Themes (mgr)';
+$_lang['fred.permissions.fred_themes_delete'] = 'Удалить темы (mgr)';
 $_lang['fred.permissions.fred_themes_build'] = 'Build Themes (mgr)';
 $_lang['fred.permissions.fred_themed_templates_save'] = 'Assign/Update Fred Themes to MODX Templates (mgr)';
 $_lang['fred.permissions.fred_themed_templates_delete'] = 'Unassign Theme from MODX Templates (mgr)';
@@ -42,7 +42,7 @@ $_lang['fred.permissions.fred_settings'] = 'View the Settings menu in the sideba
 $_lang['fred.permissions.fred_settings_tvs'] = 'View the TVs section under the Settings menu (web)';
 $_lang['fred.permissions.fred_settings_tags'] = 'View the Tags section under the Settings menu (web)';
 $_lang['fred.permissions.fred_settings_advanced'] = 'View the Advanced Settings under the Settings menu (web)';
-$_lang['fred.permissions.fred_media_sources'] = 'View Media Sources (mgr)';
+$_lang['fred.permissions.fred_media_sources'] = 'Просмотр медиа-источников (mgr)';
 $_lang['fred.permissions.fred_blueprints'] = 'View Blueprints (mgr) (web)';
 $_lang['fred.permissions.fred_blueprints_save'] = 'Create/edit/duplicate Blueprints (mgr) (web)';
 $_lang['fred.permissions.fred_blueprints_delete'] = 'Delete Blueprints (mgr)';
