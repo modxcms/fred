@@ -228,6 +228,7 @@ switch ($modx->event->name) {
                 jwt: "' . $jwt . '",
                 resource: {
                     "id": ' . $modx->resource->id . ',
+                    "parent": ' . $modx->resource->parent . ',
                     "previewUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', array_merge($get, ['fred' => 2]) , 'abs')) . '",
                     "emptyUrl": "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', array_merge($get, ['fred' => 3]) , 'abs')) . '",
                     "save": ' . (int)$modx->resource->checkPolicy('save') . ',
