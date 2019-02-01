@@ -39,7 +39,9 @@ class GetResourceTree extends Endpoint
             'context_key' => $context,
             'template:IN' => $this->templates
         ]);
+        /** @var \modResource $resource */
         foreach ($resources as $resource) {
+            if (!$resource->checkPolicy('list')) continue;
             $this->handleResource($resource, true);
         }
 
