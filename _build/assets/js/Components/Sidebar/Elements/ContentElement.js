@@ -527,6 +527,9 @@ export class ContentElement {
                 modal.setContent(img(dataImage));
                 modal.enableSave();
             }
+        })
+        .catch(err => {
+            modal.setContent(img('https://via.placeholder.com/300x150/000000/FF0000?text=Generation%20Failed'));
         });
     }
     

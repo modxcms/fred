@@ -144,6 +144,10 @@ export class PartialBlueprints {
                     loader.remove();
                     imageEl.setPreview(this.state.generatedImage);
                 }
+            })
+            .catch(err => {
+                loader.remove();
+                imageEl.setPreview('https://via.placeholder.com/300x150/000000/FF0000?text=Generation%20Failed');
             });
         }
 

@@ -327,7 +327,7 @@ export default class Blueprints extends Sidebar {
                         iframe.parentNode.style.zIndex = '-99999999';
 
                         html2canvas(iframe.contentWindow.document.body, {
-                            logging: true
+                            logging: false
                         }).then(canvas => {
                             const maxWidth = 540;
                             
@@ -363,6 +363,14 @@ export default class Blueprints extends Sidebar {
                                 iframe.parentNode.style.opacity = null;
                                 iframe.parentNode.style.zIndex = null;
                             }
+                        })
+                        .catch(err => {
+                            iframe.parentNode.style.display = 'none';
+                            iframe.parentNode.style.opacity = null;
+                            iframe.parentNode.style.zIndex = null;
+                            loader.remove();
+
+                            imageEl.setPreview('https://via.placeholder.com/300x150/000000/FF0000?text=Generation%20Failed');
                         });
                     });
                 }
