@@ -131,7 +131,7 @@ export default class Pages extends Sidebar {
                 shouldSort: false
             }
         }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
-            let id = fredConfig._resource.parent ? fredConfig._resource.parent : fredConfig._resource.id;
+            const id = fredConfig._resource.parent ? fredConfig._resource.parent : (fredConfig.permission.new_document_in_root ? 0 : fredConfig._resource.id);
             choicesInstance.setValueByChoice('' + id);
             this.state.parent = id;
         });
