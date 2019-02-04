@@ -39,7 +39,7 @@ export default class Pages extends Sidebar {
         const content = div(['fred--pages']);
         this.pageList = dl(['fred--pages_list']);
 
-        this.parents = [{}];
+        this.parents = [];
         if (fredConfig.permission.new_document_in_root) {
             this.parents.push({
                 id: 0,
