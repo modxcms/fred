@@ -95,9 +95,12 @@ class GetResources extends Endpoint
         $c->where($where);
 
         $data = [];
+        
+        /** @var \modResource[] $resourcesIterator */
         $resourcesIterator = $this->modx->getIterator('modResource', $c);
         
         foreach ($resourcesIterator as $resource) {
+            if (!$resource->checkPolicy('list')) continue;
             $data[] = [
                 'id' => $resource->id,
                 'value' => (string)$resource->id,

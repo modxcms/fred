@@ -35,11 +35,14 @@ class GetResourceTree extends Endpoint
             $context = trim($_REQUEST['context']);
         }
 
+        /** @var \modResource[] $resources */
         $resources = $this->modx->getIterator('modResource', [
             'context_key' => $context,
             'template:IN' => $this->templates
         ]);
+        
         foreach ($resources as $resource) {
+            if (!$resource->checkPolicy('list')) continue;
             $this->handleResource($resource, true);
         }
 
