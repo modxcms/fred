@@ -5,7 +5,7 @@ Option Sets can have global settings for things like Media Sources and controlli
 The followng control individual settings and grouping for an Element in a Fred-powered page.
 
 ### remote
-Set to `true` to cause XHR requests to render the Element through both the Twig and MODX parsers every 200ms. This means you can have dynamic content that references other pages within a Fred page using MODX Snippets. Default: `false`.
+Set to `true` to cause XHR requests to render the Element through both the Twig and MODX parsers. The element also re-renders through both the Twig and MODX parser when you change element settings. This means you can have dynamic content that references other pages within a Fred page using MODX Snippets. Default: `false`.
 
 ### mediaSource
 Name of the Media Source to use for Finder. Multiple Names can be passed separated by comma `,`.
