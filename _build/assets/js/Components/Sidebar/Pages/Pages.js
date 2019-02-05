@@ -39,15 +39,18 @@ export default class Pages extends Sidebar {
         const content = div(['fred--pages']);
         this.pageList = dl(['fred--pages_list']);
 
-        this.parents = [{
-            id: 0,
-            value: '0',
-            label: fredConfig.lng('fred.fe.pages.no_parent')
-        }];
+        this.parents = [];
+        if (fredConfig.permission.new_document_in_root) {
+            this.parents.push({
+                id: 0,
+                value: '0',
+                label: fredConfig.lng('fred.fe.pages.no_parent')
+            });
+        }
         
         this.buildTree(this.content, this.pageList);
         
-        if (fredConfig.permission.new_document && fredConfig.permission.new_document_in_root) {
+        if (fredConfig.permission.new_document) {
             this.buildCreatePage(this.pageList);
         }
 
@@ -127,7 +130,11 @@ export default class Pages extends Sidebar {
                 choices : this.parents,
                 shouldSort: false
             }
-        }, this.state.parent, onChangeChoices);
+        }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
+            const id = fredConfig._resource.parent ? fredConfig._resource.parent : (fredConfig.permission.new_document_in_root ? 0 : fredConfig._resource.id);
+            choicesInstance.setValueByChoice('' + id);
+            this.state.parent = id;
+        });
         
         fields.appendChild(this.parentInput);
         
@@ -185,7 +192,10 @@ export default class Pages extends Sidebar {
         pageForm.appendChild(fields);
 
         this.createPageButton = dt('fred.fe.pages.create_page', ['fred--accordion-plus'], this.openCreatePage);
-
+        if (!fredConfig.permission.new_document_in_root && !fredConfig._resource.parent) {
+            this.createPageButton.setAttribute('hidden', 'hidden');
+        }
+        
         this.formWrapper.appendChild(pageForm);
 
         content.appendChild(this.createPageButton);
