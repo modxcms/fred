@@ -192,7 +192,10 @@ export default class Pages extends Sidebar {
         pageForm.appendChild(fields);
 
         this.createPageButton = dt('fred.fe.pages.create_page', ['fred--accordion-plus'], this.openCreatePage);
-
+        if (!fredConfig.permission.new_document_in_root && !fredConfig._resource.parent) {
+            this.createPageButton.setAttribute('hidden', 'hidden');
+        }
+        
         this.formWrapper.appendChild(pageForm);
 
         content.appendChild(this.createPageButton);
