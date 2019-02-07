@@ -1,5 +1,21 @@
 Changelog for Fred.
 
+1.0.0 pl
+============
+- Gitify support added for using version control in your workflow
+- Scrolling issues have been fixed in Chrome and Safari
+- TVs no longer need to be Fred enabled in order to be saved to
+- New element setting added for file types and text areas
+- Fixed the search for the page type element setting
+- Fixed an issue for element settings with the default value of 0
+- Fixed a visibility issue with adding new pages
+- Fixed toggle boxes overlapping drop menus
+- Improved context support for frontend endpoints
+- Grids now refresh when a category is deleted in the CMP
+- Fixed publish on date when saving a resource from Fred
+- Parent select boxes now respect "list" policy
+- Added translations for Dutch, German and Russian languages
+
 1.0.0 rc1
 ============
 - Each theme now gets its own defaut_element, which is handy when migrating content from non-Fred sites into Fred.
