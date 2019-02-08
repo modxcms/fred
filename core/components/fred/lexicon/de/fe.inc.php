@@ -122,7 +122,7 @@ $_lang['fred.fe.preview.tablet_portrait'] = 'Tablet vertikal';
 $_lang['fred.fe.preview.tablet_landscape'] = 'Tablet horizontal';
 $_lang['fred.fe.preview.phone_portrait'] = 'Phone vertikal';
 $_lang['fred.fe.preview.phone_landscape'] = 'Phone horizontal';
-$_lang['fred.fe.preview.auto'] = 'Automatisch';
+$_lang['fred.fe.preview.auto'] = 'Auto';
 
 $_lang['fred.fe.tagger.tagger'] = 'Schlagworte';
 $_lang['fred.fe.tagger.add'] = 'Schlagwort hinzufügen';
