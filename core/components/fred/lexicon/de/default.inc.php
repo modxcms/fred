@@ -29,7 +29,7 @@ $_lang['fred.menu.fred_desc'] = 'Elemente, Blaupausen, Themes und mehr!';
 
 $_lang['fred.refresh_fail_resource'] = 'Keine Fred Resourcen zum Neuaufbauen gefunden';
 $_lang['fred.refresh_fail_template'] = 'Keine Fred Templates zum Neuaufbauen bestimmt';
-$_lang['fred.refresh_complete'] = 'Neuaufbau erledigt';
+$_lang['fred.refresh_complete'] = 'Aktualisierung erledigt';
 $_lang['fred.refresh_id'] = 'Resource mit der ID [[+id]] wird neu gebaut';
 
 $_lang['fred.home.page_title'] = 'Fred';
@@ -41,7 +41,7 @@ $_lang['fred.home.blueprints'] = 'Blaupausen';
 $_lang['fred.home.blueprint_categories'] = 'Blaupausen Kategorien';
 $_lang['fred.home.themes'] = 'Themes';
 $_lang['fred.home.themed_templates'] = 'Templates mit Themes';
-$_lang['fred.home.rebuild'] = 'Neu aufbauen';
+$_lang['fred.home.rebuild'] = 'Neu generieren';
 $_lang['fred.home.media_sources'] = 'Medienquellen';
 
 $_lang['fred.blueprints.none'] = 'Es wurden keine Blaupausen gefunden.';
@@ -98,8 +98,8 @@ $_lang['fred.elements.new_name'] = 'Neuer Name';
 $_lang['fred.elements.has_override'] = 'Überschreibt';
 $_lang['fred.elements.theme'] = 'Theme';
 
-$_lang['fred.rebuild.rebuild'] = 'Neu bauen';
-$_lang['fred.rebuild.rebuild_desc'] = 'Um Änderungen an den bearbeiteten Elementen auf bereits angelegten Seiten zu veröffentlichen, klicke auf den "Neuaufbau" Button.';
+$_lang['fred.rebuild.rebuild'] = 'Neu generieren';
+$_lang['fred.rebuild.rebuild_desc'] = 'Um Änderungen an bearbeiteten Elementen auf bereits angelegten Seiten auszurollen, klicke auf den "Neu generieren"-Button.';
 
 $_lang['fred.element_cateogries.all'] = 'Alle Kategorien';
 $_lang['fred.element_categories.none'] = 'Keine Kategorien gefunden.';
@@ -176,15 +176,15 @@ $_lang['fred.themes.latest_build'] = 'Zuletzt gepackt';
 $_lang['fred.themes.download'] = 'Theme herunterladen';
 $_lang['fred.themes.theme_folder'] = 'Theme Verzeichnis';
 $_lang['fred.themes.theme_dir_msg_title'] = 'Theme Verzeichnis angelegt';
-$_lang['fred.themes.theme_dir_msg'] = 'Der Ordner für dieses Theme ist <strong>themes/[[+theme_folder]]/</strong> im assets Verzeichnis (gewöhnlich <strong>assets/themes/[[+theme_folder]]/</strong>).<br>Der Inhalt des Ordners ist beim Erzeugen eines Builds von diesem Theme ebenfalls beinhaltet. Darum platziere alle Assets, die das Theme benötigt, in diesem Ordner.';
+$_lang['fred.themes.theme_dir_msg'] = 'Der Ordner für dieses Theme ist <strong>themes/[[+theme_folder]]/</strong> im assets Verzeichnis (gewöhnlich <strong>assets/themes/[[+theme_folder]]/</strong>).<br>Der Inhalt des Ordners wird beim Packen dieses Themes ebenfalls verwendet. Platziere deshalb alle assets, die das Theme benötigt, in diesem Ordner.';
 $_lang['fred.themes.overview'] = 'Übersicht';
 $_lang['fred.themes.included_theme_folder'] = 'Assets Verzeichnis für dieses Theme';
 $_lang['fred.themes.theme_build_desc'] = 'Packe ein komplettes Paket für den MODX Installer, um es zu veröffentlichen oder im Extras Repository einzustellen.';
 $_lang['fred.themes.theme_build_readme_desc'] = 'Eine gute ReadMe Datei sollte alle wichtigen Details enthalten, wie das Theme benutzt werden sollte, wo Bug Reports eingereicht werden können und wie man Support bekommt.';
 $_lang['fred.themes.theme_build_changelog_desc'] = 'Liste alle Neuerungen und Bugfixes seit der ersten Veröffentlichung auf.';
-$_lang['fred.themes.theme_build_license_desc'] = 'Für Open Source sind eine Vielzahl von Optionen auf <a href="https://choosealicense.com/">Choose a License</a> or <a href="https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/">Creative Commons</a> verfügbar. Beachte, dass kommerzielle Lizenzen für Premium-Themes ebenfalls in Ordnung sind!';
+$_lang['fred.themes.theme_build_license_desc'] = 'Für Open Source sind eine Vielzahl von Optionen auf <a href="https://choosealicense.com/">Choose a License</a> oder <a href="https://creativecommons.org/share-your-work/licensing-types-examples/licensing-examples/">Creative Commons</a> verfügbar. Beachte, dass kommerzielle Lizenzen für Premium-Themes ebenfalls in Ordnung sind!';
 $_lang['fred.themes.theme_build_dependencies_desc'] = 'Füge alle Extras hinzu, die benötigt werden, damit das Theme vollständig funktioniert.';
-$_lang['fred.themes.build_default_title'] = 'Standard Theme kann nicht erzeugt werden';
+$_lang['fred.themes.build_default_title'] = 'Standard Theme kann nicht gepackt werden';
 $_lang['fred.themes.build_default_desc'] = 'Um Ihre Seite bei Upgrades vor ungewollten Änderungen zu schützen, erstelle eine Kopie des Standard Themes bevor Sie einen Build erzeugen.';
 $_lang['fred.themes.delete_theme_folder'] = 'Theme Ordner löschen';
 $_lang['fred.themes.duplicate_theme_folder'] = 'Theme Ordner duplizieren';
