@@ -3,6 +3,7 @@ import emitter from '../../EE';
 import { dl, dt, dd, form, fieldSet } from '../../UI/Elements';
 import Tagger from '../../UI/Tagger';
 import ui from "../../UI/Inputs";
+import { valueParser } from "../../Utils";
 
 export default class PageSettings extends Sidebar {
     static title = 'fred.fe.page_settings';
@@ -245,11 +246,11 @@ export default class PageSettings extends Sidebar {
     setSettingWithEmitter(name, value, input) {
         this.setSetting(name, value);
 
-        emitter.emit('fred-page-setting-change', name, value, input);
+        emitter.emit('fred-page-setting-change', name, value, valueParser(value), input);
     }
 
     addSettingChangeListener(setting, label, input) {
-        emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
+        emitter.on('fred-page-setting-change', (settingName, settingValue, parsedValue, sourceEl) => {
             if ((input !== sourceEl) && (setting.name === settingName)) {
                 this.setSetting(settingName, settingValue);
                 input.value = settingValue;
@@ -260,11 +261,11 @@ export default class PageSettings extends Sidebar {
     setTVWithEmitter(name, value, input) {
         this.setSetting(name, value, 'tvs');
 
-        emitter.emit('fred-page-setting-change', 'tv_' + name, value, input);
+        emitter.emit('fred-page-setting-change', 'tv_' + name, value, valueParser(value), input);
     }
 
     addTVChangeListener(setting, label, input) {
-        emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
+        emitter.on('fred-page-setting-change', (settingName, settingValue, parsedValue, sourceEl) => {
 
             if ((input !== sourceEl) && (('tv_' + setting.name) === settingName)) {
                 this.setSetting(setting.name, settingValue, 'tvs');

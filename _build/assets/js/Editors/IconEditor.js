@@ -1,4 +1,5 @@
 import Editor from './Editor';
+import ContentElement from "../Components/Sidebar/Elements/ContentElement";
 
 export default class IconEditor extends Editor {
     static title = 'fred.fe.editor.edit_icon';
@@ -6,7 +7,7 @@ export default class IconEditor extends Editor {
     init() {
         this.state = {
             ...(this.state),
-            icon: (this.el.className || '')
+            icon: (ContentElement.getElValue(this.el) || '')
         };
     }
 
@@ -21,7 +22,7 @@ export default class IconEditor extends Editor {
 
     onSave() {
         Editor.prototype.onSave.call(this);
-        
-        this.el.className = this.state.icon;
+
+        this.el.fredEl.setElValue(this.el, this.state.icon);
     }
 }

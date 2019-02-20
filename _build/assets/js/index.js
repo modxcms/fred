@@ -145,7 +145,7 @@ export default class Fred {
         const promises = [];
 
         for (let i = 0; i < this.dropzones.length; i++) {
-            promises.push(this.getCleanDropZoneContent(this.dropzones[i], true, false).then(content => {
+            promises.push(this.getCleanDropZoneContent(this.dropzones[i], true, false, true).then(content => {
                 const dz = this.previewDocument.querySelector('[data-fred-dropzone="' + this.dropzones[i].dataset.fredDropzone + '"]');
                 if (dz) {
                     dz.innerHTML = content;
@@ -192,12 +192,12 @@ export default class Fred {
         return data;
     }
 
-    getCleanDropZoneContent(dropZone, parseModx = false, handleLinks = true) {
+    getCleanDropZoneContent(dropZone, parseModx = false, handleLinks = true, isPreview = false) {
         let cleanedContent = '';
 
         const promises = [];
         for (let child of dropZone.children) {
-            promises.push(child.fredEl.cleanRender(parseModx, handleLinks));
+            promises.push(child.fredEl.cleanRender(parseModx, handleLinks, isPreview));
         }
         
         return Promise.all(promises).then(values => {
@@ -327,12 +327,12 @@ export default class Fred {
             }
         });
 
-        emitter.on('fred-page-setting-change', (settingName, settingValue, sourceEl) => {
+        emitter.on('fred-page-setting-change', (settingName, settingValue, parsedValue, sourceEl) => {
             this.dropzones.forEach(dz => {
                 const targets = dz.querySelectorAll(`[data-fred-target="${settingName}"`);
                 for (let target of targets) {
                     if (target !== sourceEl) {
-                        target.fredEl.setElValue(target, settingValue);
+                        target.fredEl.setElValue(target, settingValue, '_value', '_raw', null, false, true);
                     }
                 }
             });

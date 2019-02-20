@@ -43,7 +43,7 @@ export default class Editor {
     onSave() {
         for (let attr in this.state._attributes) {
             if (this.state._attributes.hasOwnProperty(attr)) {
-                this.el.setAttribute(attr, this.state._attributes[attr]);
+                this.el.fredEl.setElValue(this.el, this.state._attributes[attr], attr);
             }
         }
     }

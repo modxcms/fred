@@ -65,15 +65,22 @@ final class RenderResource {
 
         foreach ($contentData as $item) {
             try {
-                $html .= $this->renderElement($this->twig->render($item['widget'], $item['settings']), $item, true);
+                $html .= $this->renderElement($this->twig->render($item['widget'], $this->mergeSetting($item['settings'])), $item, true);
             } catch (\Exception $e) {}
         }
 
         $parser = $this->modx->getParser();
         $html = Utils::htmlDecodeTags($html, $parser);
-        
-        $this->resource->set('content', $html);
 
+        $twig = new \Twig_Environment(new \Twig_Loader_Array(['content' => $html]));
+        $twig->setCache(false);
+
+        try {
+            $this->resource->set('content', $twig->render('content', $this->mergeSetting()));
+        } catch (\Exception $e) {
+            $this->resource->set('content', '');
+        }
+        
         $c = $this->modx->newQuery('modTemplateVar');
         $c->leftJoin('modTemplateVarTemplate', 'TemplateVarTemplates');
 
@@ -92,7 +99,7 @@ final class RenderResource {
 
                 foreach ($this->data[$tvName] as $item) {
                     try {
-                        $tvContent .= $this->renderElement($this->twig->render($item['widget'], $item['settings']), $item, true);
+                        $tvContent .= $this->renderElement($this->twig->render($item['widget'], $this->mergeSetting($item['settings'])), $item, true);
                     } catch (\Exception $e) {}
                 }
                 
@@ -149,7 +156,7 @@ final class RenderResource {
                     $node->attr('class', $value);
                     break;
                 case 'img':
-                    $node->attr('src', $value);
+                    $node->attr('data-fred-fake-src', $value);
                     break;
                 default:
                     $node->html($value);
@@ -221,10 +228,11 @@ final class RenderResource {
 
                 if ($resourceId > 0) {
                     $node->attr('data-fred-fake-href', "[[~{$resourceId}]]{$anchor}");
-                    $node->removeAttr('href');
                 } else {
-                    $node->attr('href', $anchor);
+                    $node->attr('data-fred-fake-href', $anchor);
                 }
+
+                $node->removeAttr('href');
 
                 $node->removeAttr('data-fred-link-page');
                 $node->removeAttr('data-fred-link-anchor');
@@ -260,7 +268,7 @@ final class RenderResource {
                         $node->attr('class', $value);
                         break;
                     case 'img':
-                        $node->attr('src', $value);
+                        $node->attr('data-fred-fake-src', $value);
                         break;
                     default:
                         $node->html($value);
@@ -283,6 +291,7 @@ final class RenderResource {
             $node->removeAttr('data-fred-rte');
             $node->removeAttr('data-fred-rte-config');
             $node->removeAttr('data-fred-attrs');
+            $node->removeAttr('data-fred-editable');
             $node->removeAttr('contenteditable');
             $node->removeAttr('data-fred-editable');
             $node->removeAttr('data-fred-media-source');
@@ -338,7 +347,7 @@ final class RenderResource {
 
                 foreach ($item['children'][$dzName] as $childItem) {
                     try {
-                        $html .= $self->renderElement($self->twig->render($childItem['widget'], $childItem['settings']), $childItem);;
+                        $html .= $self->renderElement($self->twig->render($childItem['widget'], $this->mergeSetting($childItem['settings'])), $childItem);;
                     } catch (\Exception $e) {}
                 }
 
@@ -356,5 +365,15 @@ final class RenderResource {
         }
 
         return $html;
+    }
+    
+    private function mergeSetting($settings = [])
+    {
+        $settings['theme_dir'] = '[[++fred.theme_dir]]';
+        $settings['template'] = [
+            'theme_dir' => '[[++fred.theme_dir]]'
+        ];
+
+        return $settings;
     }
 }

@@ -5,10 +5,11 @@ import noUiSlider from 'nouislider';
 import Finder from "./../Finder";
 import {div, label, input, select as selectElement, span, textArea, a, img} from './Elements';
 import emitter from "../EE";
-import { fixChoices } from "../Utils";
+import {fixChoices, valueParser} from "../Utils";
 import Tagger from "./Tagger";
 import { getResources } from '../Actions/pages';
 import { getGroups } from '../Actions/tagger';
+import fredConfig from './../Config';
 
 export const text = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
@@ -553,7 +554,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
 
     inputEl.addEventListener('keyup', e => {
         if((setting.showPreview === true) && inputEl.value) {
-            preview.src = inputEl.value;
+            preview.src = valueParser(inputEl.value);
             if (!previewAdded) {
                 labelEl.appendChild(preview);
                 previewAdded = true;
@@ -575,12 +576,18 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
         e.preventDefault();
 
         const finder = new Finder((file, fm) => {
+            let value = file.url;
+            
+            if (value.indexOf(fredConfig.config.themeDir) === 0) {
+                value = value.replace(fredConfig.config.themeDir, '{{theme_dir}}');
+            }
+            
             if (typeof onChange === 'function') {
-                onChange(setting.name, file.url, inputEl, setting);
+                onChange(setting.name, value, inputEl, setting);
             }
 
-            inputEl.value = file.url;
-            preview.src = file.url;
+            inputEl.value = value;
+            preview.src = valueParser(value);
 
             if ((setting.showPreview === true) && !previewAdded) {
                 labelEl.appendChild(preview);
@@ -600,7 +607,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
     labelEl.appendChild(inputWrapper);
 
     if(inputEl.value) {
-        preview.src = inputEl.value;
+        preview.src = valueParser(inputEl.value);
     }
     
     if ((setting.showPreview === true) && preview.src) {
@@ -610,7 +617,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
 
     labelEl.setPreview = src => {
         if (setting.showPreview !== true) return;
-        preview.src = src;
+        preview.src = valueParser(src);
         
         if (previewAdded === false) {
             labelEl.appendChild(preview);
@@ -650,11 +657,17 @@ export const file = (setting, defaultValue = '', onChange, onInit) => {
         e.preventDefault();
 
         const finder = new Finder((file, fm) => {
+            let value = file.url;
+
+            if (value.indexOf(fredConfig.config.themeDir) === 0) {
+                value = value.replace(fredConfig.config.themeDir, '{{theme_dir}}');
+            }
+            
             if (typeof onChange === 'function') {
-                onChange(setting.name, file.url, inputEl, setting);
+                onChange(setting.name, value, inputEl, setting);
             }
 
-            inputEl.value = file.url;
+            inputEl.value = value;
         }, 'fred.fe.browse_files', finderOptions);
 
         finder.render();

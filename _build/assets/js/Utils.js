@@ -342,3 +342,26 @@ export const buildBlueprint = (data, parent, target, sibling) => {
 
     return Promise.all(promises);
 };
+
+export const getTemplateSettings = (cleanRender = false) => {
+    return {
+        theme_dir: '{{theme_dir}}',
+        template: {
+            theme_dir: cleanRender ? '[[++fred.theme_dir]]' : fredConfig.config.themeDir
+        }
+    };    
+};
+
+export const valueParser = (value, clean = false) => {
+    if (typeof value !== 'string') return value;
+    
+    if (clean === true) {
+        value = value.replace('{{theme_dir}}', '[[++fred.theme_dir]]');
+        
+        return value;
+    }
+    
+    value = value.replace('{{theme_dir}}', fredConfig.config.themeDir);
+  
+    return value;
+};

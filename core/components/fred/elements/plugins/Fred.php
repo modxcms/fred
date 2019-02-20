@@ -216,6 +216,7 @@ switch ($modx->event->name) {
         <script>
             var fred = new Fred({
                 theme: ' . $theme->id . ',
+                themeDir: "' . $theme->getThemeFolderUri() . '",
                 assetsUrl: "' . $fred->getOption('webAssetsUrl') . '",
                 managerUrl: "' . MODX_MANAGER_URL . '",
                 fredOffUrl: "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', array_merge($get, ['fred' => 4]) , 'abs')) . '",

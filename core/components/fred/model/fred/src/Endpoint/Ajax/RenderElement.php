@@ -38,6 +38,11 @@ class RenderElement extends Endpoint
         ]));
         $twig->setCache(false);
         
+        $settings['theme_dir'] = '{{theme_dir}}';
+        $settings['template'] = [
+            'theme_dir' => '{{template.theme_dir}}'
+        ];
+        
         try {
             $html = $twig->render($templateName, $settings);
         } catch (\Exception $e) {

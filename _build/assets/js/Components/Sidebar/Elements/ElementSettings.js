@@ -1,4 +1,4 @@
-import { debounce } from '../../../Utils';
+import {debounce} from '../../../Utils';
 import ui from '../../../UI/Inputs';
 import { div, form, fieldSet, legend, button, dl, dt, dd } from '../../../UI/Elements';
 import fredConfig from '../../../Config';
@@ -154,7 +154,7 @@ export class ElementSettings {
     }
     
     setSetting(name, value) {
-        this.el.settings[name] = value;
+        this.el.setSetting(name, value);
         
         if (this.remote === false) {
             this.el.render();

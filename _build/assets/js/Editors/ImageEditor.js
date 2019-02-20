@@ -1,5 +1,6 @@
 import Editor from './Editor';
 import Finder from '../Finder';
+import ContentElement from "../Components/Sidebar/Elements/ContentElement";
 
 export default class ImageEditor extends Editor {
     static title = 'fred.fe.editor.edit_image';
@@ -7,7 +8,7 @@ export default class ImageEditor extends Editor {
     init() {
         this.state = {
             ...(this.state),
-            src: (this.el.src || '')
+            src: (ContentElement.getElValue(this.el) || '')
         }
     }
 
@@ -27,6 +28,7 @@ export default class ImageEditor extends Editor {
 
     onSave() {
         Editor.prototype.onSave.call(this);
-        this.el.src = this.state.src;
+
+        this.el.fredEl.setElValue(this.el, this.state.src);
     }
 }
