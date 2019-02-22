@@ -11,6 +11,7 @@
 namespace Fred\Endpoint;
 
 use Firebase\JWT\JWT;
+use Fred\Utils;
 
 class ElFinder extends Endpoint
 {
@@ -82,7 +83,7 @@ class ElFinder extends Endpoint
 
                 $readOnly = false;
                 if (isset($properties['fredReadOnly']) && ($properties['fredReadOnly']['value'] === true)) $readOnly = true;
-
+                
                 $roots[] = [
                     'id' => 'ms' . $mediaSource->id,
                     'driver' => 'LocalFileSystem',
@@ -93,21 +94,7 @@ class ElFinder extends Endpoint
                     'startPath' => $path,
                     'disabled' => $readOnly ? array('rename', 'rm', 'cut', 'copy') : [],
                     'uploadDeny' => ['text/x-php'],
-                    'attributes' => [
-                        [
-                            'pattern' => '/.php/',
-                            'read'    => false,
-                            'write'   => false,
-                            'locked'  => true,
-                            'hidden'  => true,
-                        ],
-                        [
-                            'pattern' => '/.*/',
-                            'read'    => true,
-                            'write'   => !$readOnly,
-                            'locked'  => false
-                        ]
-                    ]
+                    'attributes' => $this->getRootAttributes($properties)
                 ];
 
             }
@@ -116,5 +103,66 @@ class ElFinder extends Endpoint
         $options = ['roots' => $roots];
         $connector = new \elFinderConnector(new \elFinder($options));
         $connector->run();
+    }
+    
+    private function getRootAttributes($properties)
+    {
+        $readOnly = false;
+        if (isset($properties['fredReadOnly']) && ($properties['fredReadOnly']['value'] === true)) $readOnly = true;
+
+        $skipFiles = isset($properties['skipFiles']) ? $properties['skipFiles']['value'] : '';
+        $skipFiles = Utils::explodeAndClean($skipFiles);
+
+        $allowedFileTypes = isset($properties['allowedFileTypes']) ? $properties['allowedFileTypes']['value'] : '';
+        $allowedFileTypes = Utils::explodeAndClean($allowedFileTypes);
+
+        $attributes = [];
+
+        if (!empty($allowedFileTypes)) {
+            foreach ($allowedFileTypes as $fileType) {
+                $attributes[] = [
+                    'pattern' => '/.' . $fileType . '/',
+                    'read' => true,
+                    'write' => !$readOnly,
+                    'locked' => false,
+                    'hidden' => false,
+                ];
+            }
+
+            $attributes[] = [
+                'pattern' => '/\..*/',
+                'read' => false,
+                'write' => false,
+                'locked' => true,
+                'hidden' => true,
+            ];
+        } else {
+            $attributes[] = [
+                'pattern' => '/.php/',
+                'read' => false,
+                'write' => false,
+                'locked' => true,
+                'hidden' => true,
+            ];
+
+            foreach ($skipFiles as $file) {
+                $attributes[] = [
+                    'pattern' => '/' . $file . '/',
+                    'read' => false,
+                    'write' => false,
+                    'locked' => true,
+                    'hidden' => true,
+                ];
+            }
+
+            $attributes[] = [
+                'pattern' => '/.*/',
+                'read' => true,
+                'write' => !$readOnly,
+                'locked' => false
+            ];
+        }
+        
+        return $attributes;
     }
 }
