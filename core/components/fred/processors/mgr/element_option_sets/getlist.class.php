@@ -28,6 +28,11 @@ class FredElementOptionSetsGetListProcessor extends modObjectGetListProcessor
     
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
+        $id = (int)$this->getProperty('id', 0);
+        if (!empty($id)) {
+            $c->where(['id' => $id]);   
+        }
+        
         $complete = $this->getProperty('complete', '');
         if ($complete !== '') {
             $c->where(['complete' => $complete]);

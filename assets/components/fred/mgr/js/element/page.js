@@ -1,5 +1,6 @@
 fred.page.Element = function (config) {
     config = config || {};
+    config.permission = config.permission || {};
 
     config.isUpdate = (MODx.request.id) ? true : false;
 
@@ -33,6 +34,7 @@ fred.page.Element = function (config) {
             {
                 xtype: 'fred-panel-element',
                 isUpdate: config.isUpdate,
+                permission: config.permission
             }
         ]
     });

@@ -38,7 +38,10 @@ class FredElementUpdateManagerController extends FredBaseManagerController
         <script type="text/javascript">
             Ext.onReady(function() {
                 MODx.load({ 
-                    xtype: "fred-page-element"
+                    xtype: "fred-page-element",
+                    permission: {
+                        fred_element_option_sets_save: ' . (int)$this->modx->hasPermission("fred_element_option_sets_save") . '
+                    }
                 });
             });
         </script>

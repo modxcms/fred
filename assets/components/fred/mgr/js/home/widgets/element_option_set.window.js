@@ -1,5 +1,8 @@
 fred.window.ElementOptionSet = function (config) {
     config = config || {};
+    
+    config.showSaveCloseOnly = config.showSaveCloseOnly || false; 
+    
     Ext.applyIf(config, {
         title: _('fred.element_option_sets.quick_update'),
         closeAction: 'close',
@@ -11,31 +14,7 @@ fred.window.ElementOptionSet = function (config) {
         autoHeight: true,
         width: 800,
         buttonAlign: 'left',
-        buttons: [
-            {
-                xtype: 'fred-button-help',
-                path: 'cmp/option_sets/'
-            },
-            '->',
-            {
-                text: config.cancelBtnText || _('cancel'),
-                scope: this,
-                handler: function () {
-                    config.closeAction !== 'close' ? this.hide() : this.close();
-                }
-            },
-            {
-                text: config.saveBtnText || _('save'),
-                scope: this,
-                handler: function() { this.submit(false); }
-            },
-            {
-                text: config.saveBtnText || _('save_and_close'),
-                cls: 'primary-button',
-                scope: this,
-                handler: this.submit
-            }
-        ],
+        buttons: this.getButtons(config),
         keys: [
             {
                 key: Ext.EventObject.ENTER,
@@ -48,6 +27,42 @@ fred.window.ElementOptionSet = function (config) {
     fred.window.ElementOptionSet.superclass.constructor.call(this, config);
 };
 Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
+    getButtons: function(config) {
+        var buttons = [
+            {
+                xtype: 'fred-button-help',
+                path: 'cmp/option_sets/'
+            },
+            '->',
+            {
+                text: config.cancelBtnText || _('cancel'),
+                    scope: this,
+                handler: function () {
+                config.closeAction !== 'close' ? this.hide() : this.close();
+            }
+        }];
+        
+        
+        if (!config.showSaveCloseOnly) {
+            buttons.push({
+                text: config.saveBtnText || _('save'),
+                scope: this,
+                handler: function () {
+                    this.submit(false);
+                }
+            });
+        }
+
+        buttons.push({
+            text: config.saveCloseBtnText || _('save_and_close'),
+            cls: 'primary-button',
+            scope: this,
+            handler: this.submit
+        });
+        
+        return buttons;                     
+    },
+
     getFields: function (config) {
         return [
             {

@@ -14,6 +14,11 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
 
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
+        $id = (int)$this->getProperty('id', 0);
+        if (!empty($id)) {
+            $c->where(['id' => $id]);
+        }
+        
         $category = $this->getProperty('category', null);
         if (!empty($category)) {
             $c->where(['category' => $category]);

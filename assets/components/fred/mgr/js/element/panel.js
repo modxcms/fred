@@ -1,5 +1,6 @@
 fred.panel.Element = function (config) {
     config = config || {};
+    config.permission = config.permission || {};
 
     config.id = config.id || 'fred-panel-element';
 
@@ -48,6 +49,11 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                     r.object.options_override = JSON.stringify(r.object.options_override, null, 2);
                                 }
                             }
+                            if (this.config.permission.fred_element_option_sets_save) {
+                                if (r.object.options_override === '') {
+                                    Ext.getCmp('fred-element-panel-new_from_override').disable();
+                                }
+                            }
                             
                             if (r.object.option_set === 0) {
                                 Ext.getCmp('fred-element-panel-preview-option-set').disable();
@@ -85,6 +91,10 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
             });
         } else {
             Ext.getCmp('fred-element-panel-preview-option-set').disable();
+
+            if (this.config.permission.fred_element_option_sets_save) {
+                Ext.getCmp('fred-element-panel-new_from_override').disable();
+            }
             
             var theme = MODx.request.theme;
             if (theme) {
@@ -336,6 +346,46 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
     },
 
     getColumnsGrid: function (config) {
+        var optionSetButtons = [{
+            columnWidth: .2,
+            border: false,
+            defaults: {
+                msgTarget: 'under',
+                anchor: '100%'
+            },
+            items: [
+                {
+                    xtype: 'button',
+                    id: 'fred-element-panel-preview-option-set',
+                    text: _('fred.element_option_sets.preview'),
+                    fieldLabel: '&nbsp;',
+                    handler: this.previewOptionSet,
+                    scope: this
+                }
+            ]
+        }];
+        
+        if (config.permission.fred_element_option_sets_save) {
+            optionSetButtons.push({
+                columnWidth: .2,
+                border: false,
+                defaults: {
+                    msgTarget: 'under',
+                    anchor: '100%'
+                },
+                items: [
+                    {
+                        xtype: 'button',
+                        id: 'fred-element-panel-new_from_override',
+                        text: _('fred.element_option_sets.new_from_override'),
+                        fieldLabel: '&nbsp;',
+                        handler: this.newFromOverride,
+                        scope: this
+                    }
+                ]
+            });
+        }
+        
         var items = [
             {
                 xtype: 'modx-tabs',
@@ -408,7 +458,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 },
                                 items: [
                                     {
-                                        columnWidth: .8,
+                                        columnWidth: config.permission.fred_element_option_sets_save ? 0.6 : 0.8,
                                         border: false,
                                         defaults: {
                                             msgTarget: 'under',
@@ -417,6 +467,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                         items: [
                                             {
                                                 xtype: 'fred-combo-element-option-sets',
+                                                id: 'test-set',
                                                 name: 'option_set',
                                                 hiddenName: 'option_set',
                                                 baseParams: {
@@ -442,24 +493,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                             }
                                         ]
                                     },
-                                    {
-                                        columnWidth: .2,
-                                        border: false,
-                                        defaults: {
-                                            msgTarget: 'under',
-                                            anchor: '100%'
-                                        },
-                                        items: [
-                                            {
-                                                xtype: 'button',
-                                                id: 'fred-element-panel-preview-option-set',
-                                                text: _('fred.element_option_sets.preview'),
-                                                fieldLabel: '&nbsp;',
-                                                handler: this.previewOptionSet,
-                                                scope: this
-                                            }
-                                        ]
-                                    }
+                                    optionSetButtons
                                 ]
                             },
                             {
@@ -470,7 +504,19 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 id: 'fred-element-options-override',
                                 anchor: '100%',
                                 height: 400,
+                                enableKeyEvents: !!config.permission.fred_element_option_sets_save,
                                 grow: false,
+                                listeners: {
+                                    keyup: function() {
+                                        if (config.permission.fred_element_option_sets_save) {
+                                            if (this.getValue() === '') {
+                                                Ext.getCmp('fred-element-panel-new_from_override').disable();
+                                            } else {
+                                                Ext.getCmp('fred-element-panel-new_from_override').enable();
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         ]
                     }
@@ -526,9 +572,49 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 }
             }
         });
-        
+    },
 
+    newFromOverride: function(btn, e) {
+        if (!this.config.permission.fred_element_option_sets_save) return false;
         
+        var record = {
+            data: this.getField('options_override').getValue(),
+            theme: this.getField('theme').getValue(),
+            complete: 1
+        };
+        
+        var createOptionSet = MODx.load({
+            xtype: 'fred-window-element-option-set',
+            title: _('fred.element_option_sets.new_from_override'),
+            action: 'mgr/element_option_sets/create',
+            record: record,
+            showSaveCloseOnly: true,
+            saveCloseBtnText: _('save'),
+            listeners: {
+                success: {
+                    fn: function (r) {
+                        var optionSet = this.getField('option_set');
+                        
+                        Ext.getCmp('fred-element-panel-new_from_override').disable();
+                        this.getField('options_override').setValue('');
+
+                        optionSet.store.baseParams['id'] = r.a.result.object.id;
+
+                        optionSet.store.on('load', function() {
+                            optionSet.setValue(r.a.result.object.id);
+                            Ext.getCmp('fred-element-panel-preview-option-set').enable();
+                        }, this, {single: true});
+                        
+                        optionSet.store.load();
+                    },
+                    scope: this
+                }
+            }
+        });
+
+        createOptionSet.fp.getForm().reset();
+        createOptionSet.fp.getForm().setValues(record);
+        createOptionSet.show(e.target);
     }
 });
 Ext.reg('fred-panel-element', fred.panel.Element);

@@ -186,7 +186,9 @@ fred.combo.ElementOptionSets = function (config) {
     });
     fred.combo.ElementOptionSets.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.combo.ElementOptionSets, MODx.combo.ComboBox);
+Ext.extend(fred.combo.ElementOptionSets, MODx.combo.ComboBox, {
+    
+});
 Ext.reg('fred-combo-element-option-sets', fred.combo.ElementOptionSets);
 
 fred.combo.Themes = function (config) {
