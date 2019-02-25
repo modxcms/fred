@@ -6,6 +6,15 @@ Overrides are located on the `Overrides` tab when editing a specific Element in 
 
 **Note:** You must include _all_ settings you want to show as controls in the Override panel. The best way to start your override is by copying the entire settings JSON node by clicking the `Preview Option Set` button and selecting the JSON object(s) and pasting into the overrides text area.   
 
+## Override specific options
+These options are only available through override, not when creating Option Set.
+
+### merge
+When setting `merge` to `true`, the override will get recursively merged to current Option Set. Default value is `false`.
+
+### rteConfig
+You can override or define new [RTE Configs](../rte_configs/index.md) through this option.
+
 ## Example 
 
 Assume you have an Intro plan with a background image and a call to action link. You want a version for both single-page sites with anchor link external URLs on the page, but also one which allows links to other Fred pages on your site. You don't need the scroll-to-link (see below) and you want to change the link object to be a MODX page select list.

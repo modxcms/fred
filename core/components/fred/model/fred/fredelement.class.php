@@ -58,11 +58,29 @@ class FredElement extends xPDOSimpleObject {
         $tempOptionSet->set('data', $override);
         $override = $tempOptionSet->processData();
         
-        if (isset($override['rteConfig']) && is_array($override['rteConfig']) && isset($options['rteConfig']) && is_array($options['rteConfig'])) {
-            $override['rteConfig'] = array_merge($options['rteConfig'], $override['rteConfig']);
+        if (isset($override['merge']) && ($override['merge'] === true)) {
+            foreach ($override as $key => $value) {
+                if ($key === 'merge') continue;
+                
+                if ((!empty($options['settings'])) && ($key === 'settings')) {
+                    $options['settings'] = $this->mergeSettings($options['settings'], $value);
+                    continue;
+                }
+
+                if (isset($override['rteConfig']) && is_array($override['rteConfig']) && isset($options['rteConfig']) && is_array($options['rteConfig'])) {
+                    $options['rteConfig'] = array_merge($options['rteConfig'], $override['rteConfig']);
+                    continue;
+                }
+                
+                $options[$key] = $value;
+            }
+        } else {
+            if (isset($override['rteConfig']) && is_array($override['rteConfig']) && isset($options['rteConfig']) && is_array($options['rteConfig'])) {
+                $override['rteConfig'] = array_merge($options['rteConfig'], $override['rteConfig']);
+            }
+
+            $options = array_merge($options, $override);
         }
-        
-        $options = array_merge($options, $override);
         
         if (isset($options['settings'])) {
             /** @var modX $modx */
@@ -178,6 +196,46 @@ class FredElement extends xPDOSimpleObject {
         }
         
         return $filtered;
+    }
+    
+    private function mergeSettings($settings, $override)
+    {
+        foreach ($override as $setting) {
+            if (isset($setting['name'])) {
+                $found = false;
+                
+                foreach ($settings as &$currentSetting) {
+                    if (isset($currentSetting['name']) && ($currentSetting['name'] === $setting['name'])) {
+                        $nestedSettings = null;
+                        
+                        if (!empty($setting['settings'])) {
+                            if (!empty($currentSetting['settings'])) {
+                                $nestedSettings = $this->mergeSettings($currentSetting['settings'], $setting['settings']);
+                            } else {
+                                $nestedSettings = $setting['settings'];
+                            }
+                        }
+                        
+                        $currentSetting = array_merge($currentSetting, $setting);
+                        
+                        if ($nestedSettings !== null) {
+                            $currentSetting['settings'] = $nestedSettings;
+                        }
+                        
+                        $found = true;
+                        break;
+                    }
+                }
+                
+                if ($found === false) {
+                    $settings[] = $setting;
+                }
+            } else {
+                $settings[] = $setting;
+            }
+        }
+
+        return $settings;
     }
 
     public function getImage()
