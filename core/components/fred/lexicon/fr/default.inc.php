@@ -133,6 +133,7 @@ $_lang['fred.element_option_sets.duplicate'] = 'Duplicate Option Set';
 $_lang['fred.element_option_sets.new_name'] = 'New Name';
 $_lang['fred.element_option_sets.preview'] = 'Preview Option Set';
 $_lang['fred.element_option_sets.theme'] = 'Theme';
+$_lang['fred.element_option_sets.new_from_override'] = 'Create Option Set from the Override';
 
 $_lang['fred.element_rte_configs.none'] = 'No RTE Configs were found.';
 $_lang['fred.element_rte_configs.name'] = 'Name';

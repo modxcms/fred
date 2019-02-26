@@ -133,6 +133,7 @@ $_lang['fred.element_option_sets.duplicate'] = 'Options-Gruppe duplizieren';
 $_lang['fred.element_option_sets.new_name'] = 'Neuer Name';
 $_lang['fred.element_option_sets.preview'] = 'Options-Gruppe anzeigen';
 $_lang['fred.element_option_sets.theme'] = 'Theme';
+$_lang['fred.element_option_sets.new_from_override'] = 'Einstellungsgruppe aus Überschreibungen generieren';
 
 $_lang['fred.element_rte_configs.none'] = 'Keine RTE Konfigurationen gefunden.';
 $_lang['fred.element_rte_configs.name'] = 'Name';
