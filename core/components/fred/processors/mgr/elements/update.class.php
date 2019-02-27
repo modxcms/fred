@@ -62,7 +62,8 @@ class FredElementsUpdateProcessor extends modObjectUpdateProcessor
         }
 
         $optionsOverride = $this->getProperty('options_override');
-        if (empty($optionsOverride)) {
+        
+        if (($optionsOverride !== null) && empty($optionsOverride)) {
             $this->setProperty('options_override', '{}');
         }
 
