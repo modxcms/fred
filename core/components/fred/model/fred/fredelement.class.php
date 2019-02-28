@@ -53,8 +53,17 @@ class FredElement extends xPDOSimpleObject {
         $override = $this->get('options_override');
         if (empty($override)) $override = [];
         
+        $elementCategory = $this->Category;
+        if ($elementCategory) {
+            $theme = $elementCategory->theme;
+        } else {
+            $theme = null;
+        }
+        
         /** @var \FredElementOptionSet $tempOptionSet */
         $tempOptionSet = $this->xpdo->newObject('FredElementOptionSet');
+        $tempOptionSet->set('complete', true);
+        $tempOptionSet->set('theme', $theme);
         $tempOptionSet->set('data', $override);
         $override = $tempOptionSet->processData();
         
