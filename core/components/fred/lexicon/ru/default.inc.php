@@ -194,6 +194,15 @@ $_lang['fred.themes.build_and_download'] = 'Собрать и скачать Т�
 $_lang['fred.themes.theme_duplicate_name'] = '[[+theme]] Копировать';
 $_lang['fred.themes.duplicate_templates'] = 'Дублировать Шаблон';
 $_lang['fred.themes.default_element'] = 'Элемент по умолчанию';
+$_lang['fred.themes.media_sources'] = 'Media Sources';
+$_lang['fred.theme.media_source'] = 'Media Source';
+$_lang['fred.themes.theme_build_media_sources_desc'] = 'Select Media Sources to include with the theme.';
+$_lang['fred.themes.media_source_name'] = 'Name';
+$_lang['fred.themes.media_source_description'] = 'Description';
+$_lang['fred.themes.add_media_source'] = 'Add Media Source';
+$_lang['fred.themes.remove_media_source'] = 'Remove Media Source';
+$_lang['fred.themes.media_source_already_added'] = 'Media Source already added';
+$_lang['fred.themes.media_source_already_added_desc'] = 'This Media Source is already added to the build process.';
 
 $_lang['fred.themed_templates.theme'] = 'Тема';
 $_lang['fred.themed_templates.template'] = 'Шаблон';
