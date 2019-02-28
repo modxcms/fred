@@ -165,6 +165,9 @@ fred.window.ThemeBuild = function (config) {
     this.on('beforeSubmit', function () {
         var dependencies = this.find('name', 'dependencies')[0];
         dependencies.setValue(Ext.getCmp('fred-window-theme-build-dependencies').encode());
+        
+        var mediaSources = this.find('name', 'mediaSources')[0];
+        mediaSources.setValue(Ext.getCmp('fred-window-theme-build-media-sources').encode());
     }, this);
     
     this.on('failure', function(a) {
@@ -311,6 +314,23 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                     name: "fred",
                                     version: '*'
                                 }]
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.themes.media_sources'),
+                        items: [
+                            {
+                                html: '<p>' + _('fred.themes.theme_build_media_sources_desc') + '</p>'
+                            },
+                            {
+                                xtype: 'hidden',
+                                name: 'mediaSources'
+                            },
+                            {
+                                id: 'fred-window-theme-build-media-sources',
+                                xtype: 'fred-grid-theme-build-media-sources',
+                                initValue: (config.record && config.record.mediaSources) ? config.record.mediaSources : []
                             }
                         ]
                     },

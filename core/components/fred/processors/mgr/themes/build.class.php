@@ -103,6 +103,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
             'version' => $version,
             'release' => $release,
             'dependencies' => [],
+            'mediaSources' => [],
             'folders' => [],
         ];
         
@@ -361,6 +362,36 @@ class FredThemeBuildProcessor extends modObjectProcessor
         ]);
         $builder->putVehicle($vehicle);
 
+
+        $mediaSources = json_decode($this->getProperty('mediaSources'), true);
+        if (is_array($mediaSources)) {
+            $buildConfig['mediaSources'] = [];
+            foreach($mediaSources as $mediaSource) {
+                if (empty($mediaSource['id'])) continue;
+                
+                $mediaSourceId = (int)$mediaSource['id'];
+                if (empty($mediaSourceId)) continue;
+                
+                $mediaSourceObject = $this->modx->getObject('sources.modMediaSource', ['id' => $mediaSourceId]);
+                if (!$mediaSourceObject) continue;
+
+                $mediaSourceVehicle = $builder->createVehicle($mediaSourceObject, [
+                    xPDOTransport::PRESERVE_KEYS => false,
+                    xPDOTransport::UPDATE_OBJECT => true,
+                    xPDOTransport::UNIQUE_KEY => 'name',
+                    xPDOTransport::UNINSTALL_OBJECT => false,
+                ]);
+
+                $mediaSourceVehicle->validate('php', [
+                    'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
+                ]);
+                
+                $builder->putVehicle($mediaSourceVehicle);
+                
+                $buildConfig['mediaSources'][] = $mediaSourceId;
+            }
+        }
+        
         foreach ($categories as $category) {
             /** @var modCategory $categoryObject */
             $categoryObject = $this->modx->getObject('modCategory', ['category' => $category]);

@@ -34,6 +34,20 @@ class FredMediaSourcesGetListProcessor extends modObjectGetListProcessor
     }
 
     public function prepareQueryBeforeCount(xPDOQuery $c) {
+        $id = $this->getProperty('id');
+        if (!empty($id)) {
+            if (is_array($id)) {
+                $id = array_map('intval', $id);
+                $c->where([
+                    'id:IN' => $id
+                ]);
+            } else {
+                $c->where([
+                    'id' => (int)$id
+                ]);
+            }
+        }
+        
         $query = $this->getProperty('search');
 
         $c->where([
