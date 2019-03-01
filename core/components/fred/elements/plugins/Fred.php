@@ -151,6 +151,13 @@ switch ($modx->event->name) {
                 return;
             }
             
+            $htmlTag = $html->filter('html');
+            $fredActiveClass = $modx->getOption('fred.active_class');
+            
+            if (!empty($fredActiveClass)) {
+                $htmlTag->addClass($fredActiveClass);
+            }
+            
             $scripts = $html->filter('script');
             $scripts->each(function(Wa72\HtmlPageDom\HtmlPageCrawler $node, $i)  {
                 $newNode = Wa72\HtmlPageDom\HtmlPageCrawler::create('<script-fred></script-fred>');
