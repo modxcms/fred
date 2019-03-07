@@ -117,13 +117,18 @@ select.elfinder-tabstop.ui-state-hover {
 /**
  * Toast Notification
  */
+.elfinder .elfinder-toast {
+  max-width: 350px;
+}
 .elfinder .elfinder-toast > div {
   background-color: #323232 !important;
   color: #d6d6d6;
   -webkit-box-shadow: none;
   box-shadow: none;
   opacity: inherit;
-  padding: 10px 60px;
+  padding: 10px 10px 10px 60px;
+  text-align: left;
+  min-height: 35px;
 }
 .elfinder .elfinder-toast > div button.ui-button {
   color: #fff;
@@ -143,6 +148,7 @@ select.elfinder-tabstop.ui-state-hover {
 .elfinder-toast-msg {
   font-family: "Noto Sans", sans-serif;
   font-size: 17px;
+  line-height: 21px;
 }
 /**
  * For Ace Editor
@@ -763,7 +769,7 @@ div.elfinder-cwd-wrapper-list .ui-icon-grip-dotted-vertical {
   font-size: 45px;
   position: absolute;
   left: 5px;
-  top: 15px;
+  top: 5px;
 }
 .elfinder .elfinder-toast > .toast-info,
 .elfinder .elfinder-toast > .toast-error,

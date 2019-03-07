@@ -138,7 +138,7 @@ export class ElementSettings {
                 }
                 
                 return ui.image({imageMediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
-            case 'file':
+            case 'file': {
                 let mediaSource = '';
 
                 if (this.options.mediaSource && this.options.mediaSource !== '') {
@@ -146,6 +146,16 @@ export class ElementSettings {
                 }
 
                 return ui.file({mediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
+            }
+            case 'folder': {
+                let mediaSource = '';
+
+                if (this.options.mediaSource && this.options.mediaSource !== '') {
+                    mediaSource = this.options.mediaSource;
+                }
+
+                return ui.folder({mediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
+            }
             case 'textarea':
                 return ui.area(setting, defaultValue, this.setSetting.bind(this));
             default:

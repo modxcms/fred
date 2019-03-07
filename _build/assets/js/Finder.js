@@ -44,6 +44,12 @@ export class Finder {
         if (this.options.mediaSource) {
             finderOptions.push(`mediaSource=${this.options.mediaSource}`);
         }
+        if (this.options.type) {
+            finderOptions.push(`type=${this.options.type}`);
+            window.getLexicon = (key) => {
+                return fredConfig.lng(key)
+            }
+        }
 
         let finderOptionsString = '';
         if (finderOptions.length > 0) {
