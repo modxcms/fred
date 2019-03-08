@@ -33,3 +33,6 @@ npm-debug.log
 
 core/components/fred/model/vendor
 site
+
+# npm built asset files
+assets/components/fred/web/*.*
