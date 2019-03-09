@@ -197,6 +197,12 @@ class SaveContent extends Endpoint
             }
         }
 
+        if (!empty($this->body['plugins'])) {
+            $object->setProperty('plugins', $this->body['plugins'], 'fred');    
+        } else {
+            $object->setProperty('plugins', (object)[], 'fred');
+        }
+        
         $object->setProperty('data', $this->body['data'], 'fred');
 
         $object->set('editedon', time());

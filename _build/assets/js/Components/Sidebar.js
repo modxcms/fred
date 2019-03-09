@@ -1,7 +1,7 @@
 import emitter from '../EE';
 import fredConfig from './../Config';
 import { div, span, dt, h3 } from '../UI/Elements';
-
+    
 export default class Sidebar {
     static title = 'TITLE NOT SET';
     static icon = '';
@@ -68,7 +68,8 @@ export default class Sidebar {
     }
     
     loading(text = '') {
-        text = text || `Retrieving ${fredConfig.lng(this.constructor.title)}`;
+        const title = fredConfig.lngExists(this.constructor.title) ? fredConfig.lng(this.constructor.title) : this.constructor.title; 
+        text = text || `Retrieving ${title}`;
         
         const wrapper = div('fred--loading_wrapper', [
             span('fred--loading'),

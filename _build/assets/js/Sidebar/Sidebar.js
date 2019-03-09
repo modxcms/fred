@@ -37,6 +37,12 @@ export default class Sidebar {
             components.push(PageSettingsComponent);
         }
         
+        for (let cmpName in fredConfig.sidebarComponents) {
+            if (!fredConfig.sidebarComponents.hasOwnProperty(cmpName)) continue;
+            
+            components.push(fredConfig.sidebarComponents[cmpName]);
+        }
+        
         components.push(MoreComponent);
         
         this.wrapper = View.render(

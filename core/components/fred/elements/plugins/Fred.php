@@ -179,6 +179,7 @@ switch ($modx->event->name) {
             $beforeRenderResults = $modx->invokeEvent('FredBeforeRender');
             $includes = '';
             $beforeRender = '';
+            $modifyPermissions = '';
             $lexicons = [];
             foreach ($beforeRenderResults as $result) {
                 
@@ -188,6 +189,10 @@ switch ($modx->event->name) {
                 
                 if ($result['beforeRender']) {
                     $beforeRender .= $result['beforeRender'];
+                }
+                
+                if ($result['modifyPermissions']) {
+                    $modifyPermissions .= $result['modifyPermissions'];
                 }
                 
                 if ($result['lexicons'] && is_array($result['lexicons'])) {
@@ -272,6 +277,11 @@ switch ($modx->event->name) {
                 lexicons: ' . json_encode($lexicons) . ',
                 beforeRender: function() {
                     ' . $beforeRender . '
+                },
+                modifyPermissions: function(permissions) {
+                    ' . $modifyPermissions . '
+                    
+                    return permissions;
                 }
             });
         </script>';

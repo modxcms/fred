@@ -1,6 +1,10 @@
 import {div} from "./UI/Elements";
 import ContentElement from "./Components/Sidebar/Elements/ContentElement";
 import fredConfig from './Config';
+import ui from './UI';
+import emitter from './EE';
+import Modal from "./Modal";
+import fetch from "isomorphic-fetch";
 
 export const debounce = (delay, fn) => {
     let timerId;
@@ -364,4 +368,18 @@ export const valueParser = (value, clean = false) => {
     value = value.replace('{{theme_dir}}', fredConfig.config.themeDir);
   
     return value;
+};
+
+/**
+ * 
+ * @returns {{ui: {els, ins}, valueParser: valueParser, Modal: Modal, emitter, fetch}}
+ */
+export const pluginTools = () => {
+    return {
+        valueParser,
+        ui,
+        emitter,
+        Modal,
+        fetch
+    };
 };

@@ -5,6 +5,8 @@ class Config {
         this._config = {};
         this._editors = fredEditors;
         this._rtes = {};
+        this._sidebarComponents = {};
+        this._pluginsData = {};
         this._pageSettings = {};
         this._tagger = [];
         this._tvs = [];
@@ -63,6 +65,10 @@ class Config {
     set invalidElements(invalidElements) {
         this._invalidElements = invalidElements;
     }
+    
+    set pluginsData(pluginsData) {
+        this._pluginsData = pluginsData;
+    }
 
     get config() {
         return this._config;
@@ -74,6 +80,14 @@ class Config {
     
     get rtes() {
         return this._rtes;
+    }
+    
+    get sidebarComponents() {
+        return this._sidebarComponents;
+    }
+    
+    get pluginsData() {
+        return this._pluginsData;
     }
     
     get pageSettings() {
@@ -108,6 +122,19 @@ class Config {
         return this._invalidElements;
     }
     
+    getPluginsData(namespace, name) {
+        if (this._pluginsData[namespace] && (this._pluginsData[namespace][name] !== undefined)) {
+            return this._pluginsData[namespace][name];
+        }
+        
+        return null;
+    }
+
+    setPluginsData(namespace, name, value) {
+        if (!this._pluginsData[namespace]) this._pluginsData[namespace] = {};
+        this._pluginsData[namespace][name] = value;
+    }
+    
     registerEditor(name, editor) {
         if (!this._editors[name]) {
             this._editors[name] = editor;
@@ -124,6 +151,16 @@ class Config {
             return true;
         } else {
             console.log(`RTE "${name}" is already registered`);
+            return false;
+        }
+    }
+    
+    registerSidebarComponent(name, cmpClass) {
+        if (!this._sidebarComponents[name]) {
+            this._sidebarComponents[name] = cmpClass;
+            return true;
+        } else {
+            console.log(`Sidebar Component "${name}" is already registered`);
             return false;
         }
     }

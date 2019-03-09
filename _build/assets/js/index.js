@@ -1,5 +1,6 @@
 import emitter from './EE';
 import Sidebar from './Sidebar/Sidebar';
+import SidebarBase from './Components/Sidebar';
 import Launcher from './Launcher';
 import drake from './Drake';
 import libs from './libs';
@@ -9,7 +10,7 @@ import { div, section, a, iFrame } from './UI/Elements'
 import Finder from './Finder';
 import Mousetrap from 'mousetrap';
 import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-bind.min'
-import { loadElements } from "./Utils";
+import {loadElements, pluginTools} from "./Utils";
 import utilitySidebar from './Components/UtilitySidebar';
 import { getPreview, saveContent, fetchContent, fetchLexicons } from './Actions/fred';
 import ContentElement from "./Components/Sidebar/Elements/ContentElement";
@@ -18,6 +19,11 @@ export default class Fred {
     constructor(config = {}) {
         fredConfig.jwt = config.jwt;
         delete config.jwt;
+
+        if (typeof config.modifyPermissions === 'function') {
+            config.modifyPermissions = config.modifyPermissions.bind(this);
+            config.permission = config.modifyPermissions(config.permission);
+        }
         
         fredConfig.permission = config.permission;
         delete config.permission;
@@ -244,6 +250,7 @@ export default class Fred {
 
         body.id = fredConfig.resource.id;
         body.data = data;
+        body.plugins = fredConfig.pluginsData;
         body.pageSettings = fredConfig.pageSettings;
         body.fingerprint = this.fingerprint;
 
@@ -284,6 +291,7 @@ export default class Fred {
             fredConfig.pageSettings = json.data.pageSettings || {};
             fredConfig.tagger = json.data.tagger || [];
             fredConfig.tvs = json.data.tvs || [];
+            fredConfig.pluginsData = json.data.plugins || {};
 
             return loadElements(json.data).then(() => {
                 drake.reloadContainers();
@@ -401,9 +409,16 @@ export default class Fred {
             return false;
         }
 
-        const rteInit = initFn(this, fredConfig);
+        return fredConfig.registerRTE(name, initFn(this, fredConfig));
+    }
+    
+    registerSidebarComponent(name, initFn) {
+        if (typeof initFn !== 'function') {
+            console.log('initFn has to be a functions');
+            return false;
+        }
 
-        return fredConfig.registerRTE(name, rteInit);
+        return fredConfig.registerSidebarComponent(name, initFn(this, SidebarBase, pluginTools()));
     }
     
     loadLexicons() {
@@ -416,7 +431,7 @@ export default class Fred {
             return true;
         });
     }
-
+    
     init() {
         this.registerListeners();
         this.registerKeyboardShortcuts();
