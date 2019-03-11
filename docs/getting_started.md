@@ -7,3 +7,7 @@ The easiest way to start with Fred is installing a Theme created for Fred.
 3. Click the `Preview` button to visit this page from the front-end to start building with Fred.
 
 If you’re interested in creating Themes from scratch, please see the [Theme Creation Tutorial](themer/themes.md). 
+
+## Minimum PHP Version
+
+Fred requires PHP version 7.1.3 or later to run.
