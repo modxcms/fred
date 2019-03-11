@@ -14,7 +14,7 @@ Name of the Media Source to use for Finder. Multiple Names can be passed separat
 Name of the Media Source to use for Image fields. Multiple Names can be passed separated by comma `,`. This option overrides `mediaSource`.
 
 ## Settings
-Settings are made of a JSON array of objects and [group objects](#setting-groups) which provide configuratin controls for Elements. Settings can [import](themer/options/import) sub-sets of settings using a `fred-import` object.
+Settings are made of a JSON array of objects and [group objects](#setting-groups) which provide configuratin controls for Elements. Settings can [import](import.md) sub-sets of settings using a `fred-import` object.
 
 ### Settings properties
 The following properties apply to all settings, regarless of the types below:

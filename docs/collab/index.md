@@ -9,7 +9,7 @@ Collaborating on Themes can be a great way to build a robust solution you can sh
 
 ## The Simple Way
 
-The easiest way to collaborate on a Theme is to simply invite a group of people to a site and to have them work away. [Export your Theme](themer/cmp/themes) when your happy with the results, and you’re done!
+The easiest way to collaborate on a Theme is to simply invite a group of people to a site and to have them work away. [Export your Theme](../themer/cmp/themes) when your happy with the results, and you’re done!
 
 ## The “Right” Way
 

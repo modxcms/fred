@@ -1,12 +1,12 @@
 # Using Gitify to Collaborate on Themes
 
-You must have [Gitify set up](collab/gitify) with your theme in order to follow these instructions.
+You must have [Gitify set up](gitify.md) with your theme in order to follow these instructions.
 
 ## Working with Gitify and Git
 
 A common purpose of collaborating on a Theme will be to build a series of Elements, Bluepints, Options, and RTE Configs.
 
-For the purpose of this tutorial, we’ll assume all users can commit directly to the master repository. If you need to set up a respository for collaboration, see [Setting up a Theme to work with Gitify](collab/initial_extract). 
+For the purpose of this tutorial, we’ll assume all users can commit directly to the master repository. If you need to set up a respository for collaboration, see [Setting up a Theme to work with Gitify](initial_extract.md). 
 
 ### 1. Push your Changes or Pull the Lastest
 
@@ -58,4 +58,4 @@ Now you can safely push your changes. You’ll see messages about Extracting var
 git push origin master
 ```
 
-You have now successfully worked with a team to build a theme. If you need to collaborate using PRs, like for the Fred Starter Theme available as a demo from MODX, please see the [Pull Request Git Workflow](collab/pr_workflow) guide.
+You have now successfully worked with a team to build a theme. If you need to collaborate using PRs, like for the Fred Starter Theme available as a demo from MODX, please see the [Pull Request Git Workflow](pr_workflow.md) guide.

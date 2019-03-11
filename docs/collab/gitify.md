@@ -42,7 +42,7 @@ After the `composer install` command you can confirm things worked if you see a 
 
 For the purposes of this tutorial, we’ll use a hypothetical (but non-existant) Example Theme. To get the URL to clone, on github.com find the repository you wish to work on, and click the down-arrow on the green `Clone or download` button and choose the SSH URL, like `git@github.com:modxcms/example.git`
 
-To start a new Theme project, see the [Setting up a Theme to work with Gitify](collab/initial_extract) guide.
+To start a new Theme project, see the [Setting up a Theme to work with Gitify](initial_extract.md) guide.
 
 ### Step 4: Clone the Shared Theme to your MODX Instance
 
@@ -83,5 +83,5 @@ When done you can log in to your Manager and see the Extras, including Fred, whi
 
 ## Next steps
 
-Once you have cloned your theme to your MODX instance, you can work with a remote repository in [git to collaborate](collab/gitify_in_action).
+Once you have cloned your theme to your MODX instance, you can work with a remote repository in [git to collaborate](gitify_in_action.md).
 

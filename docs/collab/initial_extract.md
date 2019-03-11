@@ -103,4 +103,4 @@ git commit -m "Initalize My Awesome Theme"  # please write your own message
 git push origin master
 ```
 
-Now you are ready to start [working with others](collab/gitify_in_action).
+Now you are ready to start [working with others](gitify_in_action.md).
