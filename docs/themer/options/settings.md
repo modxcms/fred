@@ -87,6 +87,11 @@ The following Settings types are used to configure Elements in Fred.
 - File picker
 - Type-specific property:
     - `mediaSource` - Optional name of the Media Source to use that overrides the top-level <a href="#mediasource">`mediaSource` global setting</a> 
+    
+#### folder
+- Folder picker
+- Type-specific property:
+  - `mediaSource` - Optional name of the Media Source to use that overrides the top-level <a href="#mediasource">`mediaSource` global setting</a>
 
 #### image
 - Image select
