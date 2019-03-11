@@ -687,6 +687,63 @@ export const file = (setting, defaultValue = '', onChange, onInit) => {
     return labelEl;
 };
 
+export const folder = (setting, defaultValue = '', onChange, onInit) => {
+    const labelEl = label(setting.label || setting.name);
+
+    const inputWrapper = div(['fred--input-group', 'fred--browse']);
+
+    const inputEl = input(defaultValue);
+
+    const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
+
+    const finderOptions = {
+        type: 'folder'
+    };
+
+    if (setting.mediaSource && (setting.mediaSource !== '')) {
+        finderOptions.mediaSource = setting.mediaSource;
+    }
+
+    inputEl.addEventListener('keyup', e => {
+        if (typeof onChange === 'function') {
+            onChange(setting.name, inputEl.value, inputEl, setting);
+        }
+    });
+
+    const openFinder = e => {
+        e.preventDefault();
+
+        const finder = new Finder((folder, fm) => {
+            let value = folder.url;
+
+            if (value.indexOf(fredConfig.config.themeDir) === 0) {
+                value = value.replace(fredConfig.config.themeDir, '{{theme_dir}}');
+            }
+            
+            if (typeof onChange === 'function') {
+                onChange(setting.name, value, inputEl, setting);
+            }
+            
+            inputEl.value = value;
+        }, 'fred.fe.browse_folders', finderOptions);
+        
+        finder.render();
+    };
+
+    openFinderButton.addEventListener('click', openFinder);
+
+    inputWrapper.appendChild(inputEl);
+    inputWrapper.appendChild(openFinderButton);
+
+    labelEl.appendChild(inputWrapper);
+
+    if (typeof onInit === 'function') {
+        onInit(setting, labelEl, inputEl);
+    }
+
+    return labelEl;
+};
+
 export const choices = (setting, defaultValue = '', onChange, onInit) => {
     const wrapper = div();
     const labelEl = label(setting.label || setting.name);
@@ -776,6 +833,7 @@ export default {
     page,
     image,
     file,
+    folder,
     choices,
     tagger
 };

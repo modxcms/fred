@@ -3,6 +3,7 @@
 (function(){
     var queryString = location.search;
     var query = {};
+    var commandsOptions = {};
     var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
     for (var i = 0; i < pairs.length; i++) {
         var pair = pairs[i].split('=');
@@ -11,6 +12,8 @@
     
     var fredToken = query.fredToken || '';
     delete query.fredToken;
+    var type = query.type || '';
+    delete query.type;
     
     var serialize = function(obj, prefix) {
         var str = [],
@@ -27,10 +30,22 @@
         return str.join("&");
     };
 
+    if (type !== '') {
+        query.fred_type = type;
+    }
+    
     queryString = serialize(query);
     
     if (queryString.length > 0) {
         queryString = '?' + queryString;
+    }
+
+    if (type === 'folder') {
+        commandsOptions = {
+            getfile : {
+                folders : true
+            }
+        }
     }
     
     var jqver = '3.2.1',
@@ -55,10 +70,28 @@
         opts = {
             cssAutoLoad : ['../vendor/elfinder-themes/material/css/theme-gray.css'],
             getFileCallback : function(file, fm) {
-                if (parent.fredFinderOnChange && (typeof parent.fredFinderOnChange === 'function')) {
-                    parent.fredFinderOnChange(file, fm);
+                if (type === 'folder') {
+                    if (file.mime === 'directory') {
+                        if (parent.fredFinderOnChange && (typeof parent.fredFinderOnChange === 'function')) {
+                            parent.fredFinderOnChange(file, fm);
+                        }
+                    } else {
+                        fm.toast({
+                            msg: parent.getLexicon('fred.fe.err.browse_folders_invalid_selection'),
+                            hideDuration: 500,
+                            showDuration: 300,
+                            timeOut: 1000,
+                            mode: 'warning'
+                        });
+                    }
+                } else {
+                    if (parent.fredFinderOnChange && (typeof parent.fredFinderOnChange === 'function')) {
+                        parent.fredFinderOnChange(file, fm);
+                    }
                 }
+                
             },
+            commandsOptions: commandsOptions,
             resizable : false,
             width : '100%',
             height : '100%',

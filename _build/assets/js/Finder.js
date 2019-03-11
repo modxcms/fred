@@ -41,8 +41,16 @@ export class Finder {
         const finderOptions = [
             `fredToken=${fredConfig.jwt}`
         ];
+        
         if (this.options.mediaSource) {
             finderOptions.push(`mediaSource=${this.options.mediaSource}`);
+        }
+        
+        if (this.options.type) {
+            finderOptions.push(`type=${this.options.type}`);
+            window.getLexicon = (key) => {
+                return fredConfig.lng(key)
+            }
         }
 
         let finderOptionsString = '';
