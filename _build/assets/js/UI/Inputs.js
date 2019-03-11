@@ -696,13 +696,13 @@ export const folder = (setting, defaultValue = '', onChange, onInit) => {
 
     const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 
-    const finderOptions = {};
+    const finderOptions = {
+        type: 'folder'
+    };
 
     if (setting.mediaSource && (setting.mediaSource !== '')) {
         finderOptions.mediaSource = setting.mediaSource;
     }
-
-    finderOptions.type = 'folder';
 
     inputEl.addEventListener('keyup', e => {
         if (typeof onChange === 'function') {
@@ -714,10 +714,17 @@ export const folder = (setting, defaultValue = '', onChange, onInit) => {
         e.preventDefault();
 
         const finder = new Finder((folder, fm) => {
-            if (typeof onChange === 'function') {
-                onChange(setting.name, folder.url, inputEl, setting);
+            let value = folder.url;
+
+            if (value.indexOf(fredConfig.config.themeDir) === 0) {
+                value = value.replace(fredConfig.config.themeDir, '{{theme_dir}}');
             }
-            inputEl.value = folder.url;
+            
+            if (typeof onChange === 'function') {
+                onChange(setting.name, value, inputEl, setting);
+            }
+            
+            inputEl.value = value;
         }, 'fred.fe.browse_folders', finderOptions);
         
         finder.render();

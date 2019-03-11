@@ -12,7 +12,6 @@
     
     var fredToken = query.fredToken || '';
     delete query.fredToken;
-
     var type = query.type || '';
     delete query.type;
     
@@ -31,6 +30,10 @@
         return str.join("&");
     };
 
+    if (type !== '') {
+        query.fred_type = type;
+    }
+    
     queryString = serialize(query);
     
     if (queryString.length > 0) {

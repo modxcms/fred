@@ -118,6 +118,19 @@ class ElFinder extends Endpoint
 
         $attributes = [];
 
+        
+        $type = isset($_GET['fred_type']) ? $_GET['fred_type'] : '';
+        
+        if ($type === 'folder') {
+            $attributes[] = [
+                'pattern' => '/\..*/',
+                'read' => false,
+                'write' => false,
+                'locked' => true,
+                'hidden' => true,
+            ];
+        }
+        
         if (!empty($allowedFileTypes)) {
             foreach ($allowedFileTypes as $fileType) {
                 $attributes[] = [
