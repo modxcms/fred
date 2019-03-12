@@ -48,9 +48,6 @@ $modxbrightgreen: #95C953;
 
 @mixin btn {
   overflow: visible; // Internet Explorer 11-
-  transition-duration: $timing;
-  transition-timing-function: ease;
-  transition-property: background-color;
   text-decoration: none;
   cursor: pointer;
   border: none;
