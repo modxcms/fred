@@ -431,6 +431,13 @@ export class ContentElement {
             wrapper.appendChild(this.contentEl);
             
             if (this.wrapper !== null) {
+                if (this.parent) {
+                    const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
+                    if (index > -1) {
+                        this.parent.dzs[this.dzName].children[index] = wrapper; 
+                    }
+                }
+                
                 this.wrapper.replaceWith(wrapper);
             }
                 
