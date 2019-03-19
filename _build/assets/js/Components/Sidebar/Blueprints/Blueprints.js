@@ -1,4 +1,4 @@
-import Sidebar from '../../Sidebar';
+import SidebarPlugin from '../../SidebarPlugin';
 import emitter from '../../../EE';
 import {dd, dl, dt, form, fieldSet, legend, div, button, figCaption, figure, img, span} from '../../../UI/Elements';
 import {choices, text, toggle, image, area} from "../../../UI/Inputs";
@@ -9,7 +9,7 @@ import drake from "../../../Drake";
 import html2canvas from 'html2canvas';
 import { getBlueprints, createBlueprint, createBlueprintCategory } from '../../../Actions/blueprints';
 
-export default class Blueprints extends Sidebar {
+export default class Blueprints extends SidebarPlugin {
     static title = 'fred.fe.blueprints';
     static icon = 'fred--sidebar_blueprints';
     static expandable = true;

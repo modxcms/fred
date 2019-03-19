@@ -1,9 +1,9 @@
-import Sidebar from '../Sidebar';
+import SidebarPlugin from '../SidebarPlugin';
 import emitter from '../../EE';
 import { dl, dt, a } from '../../UI/Elements';
 import fredConfig from "../../Config";
 
-export default class PageSettings extends Sidebar {
+export default class PageSettings extends SidebarPlugin {
     static title = 'fred.fe.more';
     static icon = 'fred--sidebar_more';
     static expandable = true;

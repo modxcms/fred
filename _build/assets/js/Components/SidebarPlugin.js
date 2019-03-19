@@ -2,7 +2,7 @@ import emitter from '../EE';
 import fredConfig from './../Config';
 import { div, span, dt, h3 } from '../UI/Elements';
     
-export default class Sidebar {
+export default class SidebarPlugin {
     static title = 'TITLE NOT SET';
     static icon = '';
     static expandable = false;

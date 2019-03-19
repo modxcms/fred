@@ -1,6 +1,6 @@
 import emitter from './EE';
 import Sidebar from './Sidebar/Sidebar';
-import SidebarBase from './Components/Sidebar';
+import SidebarPlugin from './Components/SidebarPlugin';
 import Launcher from './Launcher';
 import drake from './Drake';
 import libs from './libs';
@@ -412,13 +412,13 @@ export default class Fred {
         return fredConfig.registerRTE(name, initFn(this, fredConfig));
     }
     
-    registerSidebarComponent(name, initFn) {
+    registerSidebarPlugin(name, initFn) {
         if (typeof initFn !== 'function') {
             console.log('initFn has to be a functions');
             return false;
         }
 
-        return fredConfig.registerSidebarComponent(name, initFn(this, SidebarBase, pluginTools()));
+        return fredConfig.registerSidebarPlugin(name, initFn(this, SidebarPlugin, pluginTools()));
     }
     
     loadLexicons() {

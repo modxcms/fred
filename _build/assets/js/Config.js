@@ -5,7 +5,7 @@ class Config {
         this._config = {};
         this._editors = fredEditors;
         this._rtes = {};
-        this._sidebarComponents = {};
+        this._sidebarPlugins = {};
         this._pluginsData = {};
         this._pageSettings = {};
         this._tagger = [];
@@ -82,8 +82,8 @@ class Config {
         return this._rtes;
     }
     
-    get sidebarComponents() {
-        return this._sidebarComponents;
+    get sidebarPlugins() {
+        return this._sidebarPlugins;
     }
     
     get pluginsData() {
@@ -154,13 +154,13 @@ class Config {
             return false;
         }
     }
-    
-    registerSidebarComponent(name, cmpClass) {
-        if (!this._sidebarComponents[name]) {
-            this._sidebarComponents[name] = cmpClass;
+
+    registerSidebarPlugin(name, pluginClass) {
+        if (!this._sidebarPlugins[name]) {
+            this._sidebarPlugins[name] = pluginClass;
             return true;
         } else {
-            console.log(`Sidebar Component "${name}" is already registered`);
+            console.log(`Sidebar Plugin "${name}" is already registered`);
             return false;
         }
     }

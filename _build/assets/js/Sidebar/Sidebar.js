@@ -37,10 +37,10 @@ export default class Sidebar {
             components.push(PageSettingsComponent);
         }
         
-        for (let cmpName in fredConfig.sidebarComponents) {
-            if (!fredConfig.sidebarComponents.hasOwnProperty(cmpName)) continue;
+        for (let pluginName in fredConfig.sidebarPlugins) {
+            if (!fredConfig.sidebarPlugins.hasOwnProperty(pluginName)) continue;
             
-            components.push(fredConfig.sidebarComponents[cmpName]);
+            components.push(fredConfig.sidebarPlugins[pluginName]);
         }
         
         components.push(MoreComponent);

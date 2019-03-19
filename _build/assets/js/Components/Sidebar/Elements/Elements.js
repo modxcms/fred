@@ -1,11 +1,11 @@
-import Sidebar from '../../Sidebar';
+import SidebarPlugin from '../../SidebarPlugin';
 import drake from '../../../Drake';
 import { div, dl, dt, dd, figure, img, figCaption } from './../../../UI/Elements'
 import emitter from "../../../EE";
 import hoverintent from 'hoverintent';
 import { getElements } from '../../../Actions/elements';
 
-export default class Elements extends Sidebar {
+export default class Elements extends SidebarPlugin {
     static title = 'fred.fe.elements';
     static icon = 'fred--sidebar_elements';
     static expandable = true;

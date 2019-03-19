@@ -1,4 +1,4 @@
-import Sidebar from '../Sidebar';
+import SidebarPlugin from '../SidebarPlugin';
 import emitter from '../../EE';
 import { dl, dt, dd, form, fieldSet } from '../../UI/Elements';
 import Tagger from '../../UI/Tagger';
@@ -6,7 +6,7 @@ import ui from "../../UI/Inputs";
 import { valueParser } from "../../Utils";
 import fredConfig from "../../Config";
 
-export default class PageSettings extends Sidebar {
+export default class PageSettings extends SidebarPlugin {
     static title = 'fred.fe.page_settings';
     static icon = 'fred--sidebar_page_settings';
     static expandable = true;

@@ -7,7 +7,7 @@ export default class ElementSettings extends ToolbarPlugin {
     
     render() {
         if (this.el.options.settings && (this.el.options.settings.length > 0)) {
-            return button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {elementSettings.open(this)});
+            return button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {elementSettings.open(this.el)});
         }
         
         return null;

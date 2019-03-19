@@ -1,4 +1,4 @@
-import Sidebar from '../../Sidebar';
+import SidebarPlugin from '../../SidebarPlugin';
 import emitter from "../../../EE";
 import { div, dl, dd, dt, button, h3, form, fieldSet, legend, a } from '../../../UI/Elements';
 import { text, choices, toggle, select } from '../../../UI/Inputs';
@@ -7,7 +7,7 @@ import { getResourceTree, getTemplates, createResource, publishResource, unpubli
 import { getBlueprints } from '../../../Actions/blueprints';
 import Modal from "../../../Modal";
 
-export default class Pages extends Sidebar {
+export default class Pages extends SidebarPlugin {
     static title = 'fred.fe.pages';
     static icon = 'fred--sidebar_pages';
     static expandable = true;
