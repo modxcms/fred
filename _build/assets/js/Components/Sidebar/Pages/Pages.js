@@ -5,9 +5,7 @@ import { text, choices, toggle, select } from '../../../UI/Inputs';
 import fredConfig from '../../../Config';
 import { getResourceTree, getTemplates, createResource, publishResource, unpublishResource, deleteResource, undeleteResource, duplicateResource } from '../../../Actions/pages';
 import { getBlueprints } from '../../../Actions/blueprints';
-import cache from "../../../Cache";
 import Modal from "../../../Modal";
-import {replaceImage} from "../../../Actions/elements";
 
 export default class Pages extends Sidebar {
     static title = 'fred.fe.pages';

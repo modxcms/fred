@@ -9,7 +9,6 @@ export default class Sidebar {
 
     constructor(sidebarWrapper) {
         this.sidebarWrapper = sidebarWrapper;
-        this.fredConfig = fredConfig;
         this.config = fredConfig.config;
         this.titleEl = null;
         this.contentEl = null;

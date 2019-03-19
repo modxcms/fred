@@ -4,6 +4,7 @@ import { dl, dt, dd, form, fieldSet } from '../../UI/Elements';
 import Tagger from '../../UI/Tagger';
 import ui from "../../UI/Inputs";
 import { valueParser } from "../../Utils";
+import fredConfig from "../../Config";
 
 export default class PageSettings extends Sidebar {
     static title = 'fred.fe.page_settings';
@@ -17,7 +18,7 @@ export default class PageSettings extends Sidebar {
         this.setTVWithEmitter = this.setTVWithEmitter.bind(this);
         this.addTVChangeListener = this.addTVChangeListener.bind(this);
 
-        this.pageSettings = this.fredConfig.pageSettings;
+        this.pageSettings = fredConfig.pageSettings;
         this.content = this.render();
     }
 
@@ -30,18 +31,18 @@ export default class PageSettings extends Sidebar {
 
         settingsForm.appendChild(this.getGeneralFields());
         
-        if (this.fredConfig.permission.fred_settings_advanced) {
+        if (fredConfig.permission.fred_settings_advanced) {
             settingsForm.appendChild(this.getAdvancedFields());
         }
 
-        if (this.fredConfig.permission.fred_settings_tags) {
-            if (this.fredConfig.tagger.length > 0) {
+        if (fredConfig.permission.fred_settings_tags) {
+            if (fredConfig.tagger.length > 0) {
                 settingsForm.appendChild(this.getTaggerFields());
             }
         }
 
-        if (this.fredConfig.permission.fred_settings_tvs) {
-            if (this.fredConfig.tvs.length > 0) {
+        if (fredConfig.permission.fred_settings_tvs) {
+            if (fredConfig.tvs.length > 0) {
                 settingsForm.appendChild(this.getTVFields());
             }
         }
@@ -61,11 +62,11 @@ export default class PageSettings extends Sidebar {
         
         const publishedToggle = ui.toggle({name: 'published', label: 'fred.fe.page_settings.published'}, this.pageSettings.published, (name, value) => {this.setSetting(name, value)});
 
-        if (!(this.fredConfig.permission.publish_document && this.fredConfig.resource.publish) && !this.pageSettings.published) {
+        if (!(fredConfig.permission.publish_document && fredConfig.resource.publish) && !this.pageSettings.published) {
             publishedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
 
-        if (!(this.fredConfig.permission.unpublish_document && this.fredConfig.resource.unpublish) && this.pageSettings.published) {
+        if (!(fredConfig.permission.unpublish_document && fredConfig.resource.unpublish) && this.pageSettings.published) {
             publishedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
         
@@ -73,11 +74,11 @@ export default class PageSettings extends Sidebar {
         fields.appendChild(ui.toggle({name: 'hidemenu', label: 'fred.fe.page_settings.hide_from_menu'}, this.pageSettings.hidemenu, (name, value) => {this.setSetting(name, value)}));
 
         emitter.on('fred-after-save', () => {
-            if (!(this.fredConfig.permission.publish_document && this.fredConfig.resource.publish) && !this.pageSettings.published) {
+            if (!(fredConfig.permission.publish_document && fredConfig.resource.publish) && !this.pageSettings.published) {
                 publishedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
 
-            if (!(this.fredConfig.permission.unpublish_document && this.fredConfig.resource.unpublish) && this.pageSettings.published) {
+            if (!(fredConfig.permission.unpublish_document && fredConfig.resource.unpublish) && this.pageSettings.published) {
                 publishedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
         });
@@ -117,11 +118,11 @@ export default class PageSettings extends Sidebar {
         
         const deletedToggle = ui.toggle({name: 'deleted', label: 'fred.fe.page_settings.deleted'}, this.pageSettings.deleted, (name, value) => {this.setSetting(name, value)});
         
-        if (!(this.fredConfig.permission.delete_document && this.fredConfig.resource.delete) && !this.pageSettings.deleted) {
+        if (!(fredConfig.permission.delete_document && fredConfig.resource.delete) && !this.pageSettings.deleted) {
             deletedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
 
-        if (!(this.fredConfig.permission.undelete_document && this.fredConfig.resource.undelete) && this.pageSettings.deleted) {
+        if (!(fredConfig.permission.undelete_document && fredConfig.resource.undelete) && this.pageSettings.deleted) {
             deletedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
         
@@ -133,11 +134,11 @@ export default class PageSettings extends Sidebar {
         advancedList.appendChild(advancedContent);
 
         emitter.on('fred-after-save', () => {
-            if (!(this.fredConfig.permission.delete_document && this.fredConfig.resource.delete) && !this.pageSettings.deleted) {
+            if (!(fredConfig.permission.delete_document && fredConfig.resource.delete) && !this.pageSettings.deleted) {
                 deletedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
 
-            if (!(this.fredConfig.permission.undelete_document && this.fredConfig.resource.undelete) && this.pageSettings.deleted) {
+            if (!(fredConfig.permission.undelete_document && fredConfig.resource.undelete) && this.pageSettings.deleted) {
                 deletedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
             
@@ -173,7 +174,7 @@ export default class PageSettings extends Sidebar {
         const taggerContent = dd();
         const fields = fieldSet(['fred--page_settings_form_advanced']);
 
-        this.fredConfig.tagger.forEach(group => {
+        fredConfig.tagger.forEach(group => {
             const taggerField = new Tagger(group);
             const rendered = taggerField.render();
             
@@ -212,7 +213,7 @@ export default class PageSettings extends Sidebar {
         const tvContent = dd();
         const fields = fieldSet(['fred--page_settings_form_advanced']);
 
-        this.fredConfig.tvs.forEach(tv => {
+        fredConfig.tvs.forEach(tv => {
             switch (tv.type) {
                 case 'image':
                     fields.appendChild(ui.image(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));

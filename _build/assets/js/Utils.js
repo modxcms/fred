@@ -380,6 +380,7 @@ export const pluginTools = () => {
         ui,
         emitter,
         Modal,
-        fetch
+        fetch,
+        fredConfig
     };
 };

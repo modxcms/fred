@@ -2,16 +2,13 @@ import drake from '../../../Drake';
 import emitter from '../../../EE';
 import { twig } from 'twig';
 import fredConfig from '../../../Config';
-import {div, button, img, span} from '../../../UI/Elements';
+import {div, img} from '../../../UI/Elements';
 import { applyScripts, valueParser, getTemplateSettings } from '../../../Utils';
 import Mousetrap from 'mousetrap';
 import hoverintent from 'hoverintent';
 import elementSettings from './ElementSettings';
-import partialBlueprints from "./PartialBlueprints";
-import { renderElement, replaceImage } from '../../../Actions/elements';
-import Modal from '../../../Modal';
-import html2canvas from "html2canvas";
-import cache from '../../../Cache';
+import { renderElement } from '../../../Actions/elements';
+import Toolbar from "./Toolbar";
 
 export class ContentElement {
     constructor(el, dzName, parent = null, content = {}, settings = {}) {
@@ -28,8 +25,6 @@ export class ContentElement {
         this.setUpEditors();
 
         this.render = this.render.bind(this);
-        this.moveUp = this.moveUp.bind(this);
-        this.moveDown = this.moveDown.bind(this);
 
         this.parent = parent;
         this.dzName = dzName;
@@ -226,173 +221,6 @@ export class ContentElement {
         return (this.toTop  < 38);
     }
     
-    moveDown() {
-        if (!fredConfig.permission.fred_element_move) return;
-        
-        const moveDownRoot = () => {
-            this.wrapper.parentElement.insertBefore(this.wrapper.nextElementSibling, this.wrapper);
-        };
-
-        const moveDownToDropzone = (target, dzName) => {
-            target.unshiftElementToDropZone(dzName, this);
-        };
-
-        const moveDownInDropzone = (fredEl, index) => {
-            fredEl.parent.dzs[fredEl.dzName].children[index + 1].insertAdjacentElement('afterend', fredEl.wrapper);
-            fredEl.parent.dzs[fredEl.dzName].children[index] = fredEl.parent.dzs[fredEl.dzName].children.splice((index + 1), 1, fredEl.parent.dzs[fredEl.dzName].children[index])[0];
-        };
-
-        const moveDownFromDropzone = () => {
-            if (!this.parent.parent) {
-                if (!this.parent.wrapper.nextElementSibling) {
-                    this.dzName = this.parent.wrapper.parentElement.dataset.fredDropzone;
-                    this.parent.wrapper.parentElement.appendChild(this.wrapper);
-                    this.parent = null;
-                } else {
-                    this.dzName = this.parent.wrapper.parentElement.dataset.fredDropzone;
-                    this.parent.wrapper.parentElement.insertBefore(this.wrapper, this.parent.wrapper.nextElementSibling);
-                    this.parent = null;
-                }
-            } else {
-                const parentPosition = this.parent.parent.dzs[this.parent.dzName].children.indexOf(this.parent.wrapper);
-                if (parentPosition !== -1) {
-                    if ((this.parent.parent.dzs[this.parent.dzName].children.length - 1) === parentPosition) {
-                        this.parent.parent.addElementToDropZone(this.parent.dzName, this);
-                    } else {
-                        this.parent.parent.insertBeforeElementToDropZone(this.parent.dzName, this.parent.parent.dzs[this.parent.dzName].children[parentPosition + 1].fredEl, this);
-                    }
-                }
-            }
-        };
-        
-        if (!this.parent) {
-            if (this.wrapper.nextElementSibling) {
-                const dzList = Object.keys(this.wrapper.nextElementSibling.fredEl.dzs);
-                if (dzList.length > 0) {
-                    moveDownToDropzone(this.wrapper.nextElementSibling.fredEl, dzList[0]);
-                } else {
-                    moveDownRoot();
-                }
-            }
-        } else {
-            let carry = false;
-
-            for (let dzName in this.parent.dzs) {
-                if (this.parent.dzs.hasOwnProperty(dzName)) {
-                    if (carry === true) {
-                        carry = false;
-                        moveDownToDropzone(this.parent, dzName);
-                        break;
-                    }
-
-                    if (dzName !== this.dzName) continue;
-
-                    const index = this.parent.dzs[dzName].children.indexOf(this.wrapper);
-                    if (index !== -1) {
-                        const nextChild = this.parent.dzs[dzName].children[index + 1];
-                        if (nextChild) {
-                            const dzList = Object.keys(nextChild.fredEl.dzs);
-                            if (dzList.length > 0) {
-                                this.parent.dzs[dzName].children.splice(index, 1);
-                                moveDownToDropzone(nextChild.fredEl, dzList[0]);
-                            } else {
-                                moveDownInDropzone(this, index);
-                            }
-                        } else {
-                            this.parent.dzs[dzName].children.pop();
-                            carry = true;
-                        }
-                    }
-                }
-            }
-
-            if (carry === true) {
-                moveDownFromDropzone();
-            }
-        }
-    }
-    
-    moveUp() {
-        if (!fredConfig.permission.fred_element_move) return;
-        
-        const moveUpRoot = () => {
-            this.wrapper.parentElement.insertBefore(this.wrapper, this.wrapper.previousElementSibling);
-        };
-
-        const moveUpToDropzone = (target, dzName) => {
-            target.addElementToDropZone(dzName, this);
-        };
-
-        const moveUpFromDropzone = () => {
-            if (!this.parent.parent) {
-                this.dzName = this.parent.wrapper.parentElement.dataset.fredDropzone;
-                this.parent.wrapper.parentElement.insertBefore(this.wrapper, this.parent.wrapper);
-                this.parent = null;
-            } else {
-                const parentPosition = this.parent.parent.dzs[this.parent.dzName].children.indexOf(this.parent.wrapper);
-                if (parentPosition !== -1) {
-                    if (0 === parentPosition) {
-                        this.parent.parent.unshiftElementToDropZone(this.parent.dzName, this);
-                    } else {
-                        this.parent.parent.insertBeforeElementToDropZone(this.parent.dzName, this.parent, this);
-                    }
-                }
-            }
-        };
-
-        const moveUpInDropzone = (fredEl, index) => {
-            fredEl.parent.dzs[fredEl.dzName].children[index - 1].insertAdjacentElement('beforebegin', fredEl.wrapper);
-            fredEl.parent.dzs[fredEl.dzName].children[index - 1] = fredEl.parent.dzs[fredEl.dzName].children.splice(index, 1, fredEl.parent.dzs[fredEl.dzName].children[index - 1])[0];
-        };
-
-        if (!this.parent) {
-            if (this.wrapper.previousElementSibling) {
-                const dzList = Object.keys(this.wrapper.previousElementSibling.fredEl.dzs);
-                if (dzList.length > 0) {
-                    moveUpToDropzone(this.wrapper.previousElementSibling.fredEl, dzList[dzList.length - 1]);
-                } else {
-                    moveUpRoot();
-                }
-            }
-        } else {
-            let carry = false;
-            const dropZones = Object.keys(this.parent.dzs);
-            for (let i = dropZones.length; i--; ) {
-                const dzName = dropZones[i];
-
-                if (carry === true) {
-                    carry = false;
-                    moveUpToDropzone(this.parent, dzName);
-                    break;
-                }
-
-                if (dzName !== this.dzName) continue;
-
-                const index = this.parent.dzs[dzName].children.indexOf(this.wrapper);
-                if (index !== -1) {
-                    const prevChild = this.parent.dzs[dzName].children[index - 1];
-                    if (prevChild) {
-                        const dzList = Object.keys(prevChild.fredEl.dzs);
-                        if (dzList.length > 0) {
-                            this.parent.dzs[dzName].children.splice(index, 1);
-                            moveUpToDropzone(prevChild.fredEl, dzList[dzList.length - 1]);
-                        } else {
-                            moveUpInDropzone(this, index);
-                        }
-                    } else {
-                        this.parent.dzs[dzName].children.shift();
-                        carry = true;
-                    }
-                }
-            }
-
-            if (carry === true) {
-                moveUpFromDropzone();
-            }
-        }
-        
-    }
-    
     render() {
         const wrapperClasses = ['fred--block'];
         
@@ -405,7 +233,8 @@ export class ContentElement {
 
         this.setWrapperActiveState(wrapper);
 
-        wrapper.appendChild(this.buildToolbar());
+        const toolbar = new Toolbar(this);
+        wrapper.appendChild(toolbar.render());
 
         this.contentEl = div(['fred--block_content']);
         this.contentEl.dataset.fredElementId = this.el.dataset.fredElementId;
@@ -444,117 +273,6 @@ export class ContentElement {
             this.wrapper = wrapper;
             
             return wrapper;
-        });
-    }
-
-    buildToolbar() {
-        const toolbar = div(((!this.invalidTheme && fredConfig.permission.fred_element_move) ? ['fred--toolbar', 'handle'] : ['fred--toolbar']));
-
-        if (!this.invalidTheme && fredConfig.permission.fred_element_move) {
-            const moveHandle = div(['fred--toolbar-grip', 'handle']);
-            toolbar.appendChild(moveHandle);
-        }
-
-        if (!this.invalidTheme && fredConfig.permission.fred_element_screenshot) {
-            const elementScreenshot = button('', 'fred.fe.content.element_screenshot', ['fred--element_screenshot'], this.takeScreenshot.bind(this));
-            toolbar.appendChild(elementScreenshot);
-        }
-
-        if (!this.invalidTheme && fredConfig.permission.fred_blueprints_save) {
-            const partialBlueprint = button('', 'fred.fe.content.partial_blueprint', ['fred--blueprint'], () => {partialBlueprints.open(this)});
-            toolbar.appendChild(partialBlueprint);
-        }
-
-        if (this.options.settings && (this.options.settings.length > 0)) {
-            const settings = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {elementSettings.open(this)});
-            toolbar.appendChild(settings);
-        }
-
-        if (!this.invalidTheme) {
-            const duplicate = button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.duplicate.bind(this));
-            toolbar.appendChild(duplicate);
-        }
-
-        if (fredConfig.permission.fred_element_delete) {
-            const trashHandle = button('', 'fred.fe.content.delete', ['fred--trash'], this.remove.bind(this));
-            toolbar.appendChild(trashHandle);
-        }
-
-        if (!this.invalidTheme && fredConfig.permission.fred_element_move) {
-            const positionGroup = div(['fred--position-group']);
-
-            const moveUp = button('', 'fred.fe.content.move_up', ['fred--position-up'], this.moveUp);
-            const moveDown = button('', 'fred.fe.content.move_down', ['fred--position-down'], this.moveDown);
-
-            positionGroup.appendChild(moveUp);
-            positionGroup.appendChild(moveDown);
-
-
-            toolbar.appendChild(positionGroup);
-        }
-        
-        return toolbar;
-    }
-    
-    takeScreenshot() {
-        if (!fredConfig.permission.fred_element_screenshot) return;
-        
-        let dataImage = '';
-        
-        const modal = new Modal('Element Screenshot', '', () => {
-            emitter.emit('fred-loading', fredConfig.lng('fred.fe.content.element_replacing_thumbnail'));
-            
-            replaceImage(this.id, dataImage).then(() => {
-                cache.kill('elements', {name: 'elements'});
-                emitter.emit('fred-loading-hide');
-            });
-        }, {showCancelButton: true, saveButtonText: 'fred.fe.content.replace_element_thumbnail'});
-
-        const loader = span(['fred--loading']);
-        modal.setContent(loader);
-        modal.render();
-        modal.disableSave();
-
-        html2canvas(this.wrapper, {
-            logging: false,
-            ignoreElements: el => {
-                if (el.classList.contains('fred')) return true;
-                if (el.classList.contains('fred--toolbar')) return true;
-
-                return false;
-            }
-        }).then(canvas => {
-            const maxWidth = 540;
-
-            if (canvas.width > maxWidth) {
-                const ratio = maxWidth / canvas.width;
-                const image = new Image();
-
-                image.onload = () => {
-                    const resizedCanvas = document.createElement("canvas");
-                    const ctx = resizedCanvas.getContext("2d");
-
-                    resizedCanvas.width = canvas.width * ratio;
-                    resizedCanvas.height = canvas.height * ratio;
-
-                    ctx.drawImage(image, 0, 0, resizedCanvas.width, resizedCanvas.height);
-
-                    dataImage = resizedCanvas.toDataURL();
-
-                    modal.setContent(img(dataImage));
-                    modal.enableSave();
-                };
-
-                image.src = canvas.toDataURL();
-            } else {
-                dataImage = canvas.toDataURL();
-
-                modal.setContent(img(dataImage));
-                modal.enableSave();
-            }
-        })
-        .catch(err => {
-            modal.setContent(img('https://via.placeholder.com/300x150/000000/FF0000?text=Generation%20Failed'));
         });
     }
     
