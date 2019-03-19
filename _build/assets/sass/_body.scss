@@ -132,9 +132,6 @@
     position: absolute;
     bottom: 100%;
     right: 0;
-    border: 3px solid $modxblue;
-    border-radius: $radius 0 0 0;
-    border-bottom: 0;
     z-index: 10009;
     min-width: 172px;
     min-height: 0;
@@ -147,7 +144,7 @@
       display: inline-block;
       overflow: hidden;
       padding: 10px 28px 10px 4px;
-      margin-top: -4px;
+      margin-top: 0;
       color: $white;
       float:left;
       opacity: .75;
@@ -155,7 +152,7 @@
       background-image: inline-svg('ellipsis-v', $white);
       background-repeat: no-repeat;
       background-size: 8px;
-      background-position: left;
+      background-position: 4px;
       box-sizing: border-box;
     }
     &:hover{
@@ -165,23 +162,34 @@
     }
 
     button {
-      @include btn();
-      padding: 0;
-      margin-right: 6px;
-      width: 28px;
-      height: 28px;
-      display: inline-block;
-      border-radius: 50%;
       border: none;
+      width: 32px;
+      height: 36px;
+      padding: 4px 0;
+      background-color: transparent;
+      display: inline-block;
       opacity: .8;
-      transition: .2s;
-      background-size: 20px;
-      box-shadow: 0 1px 0 2px $modxblue;
+      &:before{
+        content: "";
+        @include btn();
+        padding: 0;
+        margin-right: 6px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: none;
+        transition: .2s;
+        background-size: 20px;
+        box-shadow: 0 1px 0 2px $modxblue;
+        position: relative;
+      }
       &:hover {
         opacity: 1;
-        box-shadow: none;
+        &:before{
+          box-shadow: none;
+        }
       }
-      &:not(:hover){
+      &:not(:hover):before{
         background-color: rgba($modxblue, .85);
       }
     }
@@ -189,17 +197,17 @@
     .fred--position-group{
       display:inline-block;
       width: 38px;
-      height: 28px;
       margin-right: 4px;
       button{
         opacity: .6;
         display: inline-block;
         width: 16px;
-        height: 28px;
+        height: 36px;
         border-radius: 0;
         box-shadow: none;
         background-size: 14px;
         margin: 0;
+        &:before{visibility: hidden;}
         &:not(:hover) {
           background-color: transparent;
         }
