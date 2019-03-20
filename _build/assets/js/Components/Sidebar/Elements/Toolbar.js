@@ -6,6 +6,7 @@ import ElementSettings from "./Toolbar/ElementSettings";
 import Duplicate from "./Toolbar/Duplicate";
 import Delete from "./Toolbar/Delete";
 import Move from "./Toolbar/Move";
+import fredConfig from "../../../Config";
 
 export default class Toolbar {
     constructor(el) {
@@ -25,6 +26,12 @@ export default class Toolbar {
             Delete,
             Move
         ];
+
+        for (let pluginName in fredConfig.toolbarPlugins) {
+            if (!fredConfig.toolbarPlugins.hasOwnProperty(pluginName)) continue;
+
+            plugins.push(fredConfig.toolbarPlugins[pluginName]);
+        }
 
         plugins.forEach(plugin => {
             new plugin(this.el, toolbar);

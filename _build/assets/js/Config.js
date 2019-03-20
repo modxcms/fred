@@ -6,6 +6,7 @@ class Config {
         this._editors = fredEditors;
         this._rtes = {};
         this._sidebarPlugins = {};
+        this._toolbarPlugins = {};
         this._pluginsData = {};
         this._pageSettings = {};
         this._tagger = [];
@@ -86,6 +87,10 @@ class Config {
         return this._sidebarPlugins;
     }
     
+    get toolbarPlugins() {
+        return this._toolbarPlugins;
+    }
+    
     get pluginsData() {
         return this._pluginsData;
     }
@@ -161,6 +166,16 @@ class Config {
             return true;
         } else {
             console.log(`Sidebar Plugin "${name}" is already registered`);
+            return false;
+        }
+    }
+    
+    registerToolbarPlugin(name, pluginClass) {
+        if (!this._toolbarPlugins[name]) {
+            this._toolbarPlugins[name] = pluginClass;
+            return true;
+        } else {
+            console.log(`Toolbar Plugin "${name}" is already registered`);
             return false;
         }
     }

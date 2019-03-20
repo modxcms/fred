@@ -11,7 +11,7 @@ import { renderElement } from '../../../Actions/elements';
 import Toolbar from "./Toolbar";
 
 export class ContentElement {
-    constructor(el, dzName, parent = null, content = {}, settings = {}) {
+    constructor(el, dzName, parent = null, content = {}, settings = {}, pluginsData = {}) {
         this.config = fredConfig.config;
         this.el = el;
         this.template = twig({data: this.el.elementMarkup});
@@ -30,6 +30,7 @@ export class ContentElement {
         this.dzName = dzName;
         this.options = JSON.parse(JSON.stringify((this.el.elementOptions || {})));
         this.content = JSON.parse(JSON.stringify(content));
+        this.pluginsData = JSON.parse(JSON.stringify(pluginsData));
         
         if (Array.isArray(this.content)) this.content = {};
         
@@ -101,6 +102,7 @@ export class ContentElement {
         const content = {
             widget: this.id,
             values: this.content,
+            pluginsData: this.pluginsData,
             settings: this.settings,
             children: {}
         };
@@ -414,12 +416,12 @@ export class ContentElement {
         this.content[el.dataset.fredName][namespace][name] = value;
         value = valueParser(value, (!isPreview && (contentEl !== null)));
         
-        if (name === '_value') {
+        if ((namespace === '_raw') && (name === '_value')) {
             this.setValueForBindElements(el.dataset.fredName, value, contentEl);
-        }
-        
-        if (!silent && el.dataset.fredTarget) {
-            emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName][namespace][name], value, el);
+
+            if (!silent && el.dataset.fredTarget) {
+                emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName][namespace][name], value, el);
+            }
         }
         
         return value;
@@ -466,6 +468,28 @@ export class ContentElement {
                 default:
                     bindEl.innerHTML = value;
             }
+        }
+    }
+    
+    setPluginValue(namespace, name, value) {
+        if (!this.pluginsData[namespace] || Array.isArray(this.pluginsData[namespace])) this.pluginsData[namespace] = {};
+        
+        this.pluginsData[namespace][name] = value;
+    }
+    
+    getPluginValue(namespace, name) {
+        if (!this.pluginsData[namespace] || Array.isArray(this.pluginsData[namespace])) return undefined;
+        
+        return this.pluginsData[namespace][name];
+    }
+    
+    deletePluginValue(namespace, name = '') {
+        if (!name) {
+            delete this.pluginsData[namespace];
+        }
+        
+        if (this.pluginsData[namespace]) {
+            delete this.pluginsData[namespace][name];
         }
     }
     
@@ -750,7 +774,7 @@ export class ContentElement {
             if (dzs.hasOwnProperty(dzName)) {
                 dzs[dzName].children.forEach(child => {
                     if (this.dzs[dzName]) {
-                        const clonedChild = new ContentElement(child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings);
+                        const clonedChild = new ContentElement(child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings, child.fredEl.pluginsData);
                         clonedChild.render().then(() => {
                             this.addElementToDropZone(dzName, clonedChild);
     
@@ -763,7 +787,7 @@ export class ContentElement {
     }
 
     duplicate() {
-        const clone = new ContentElement(this.el, this.dzName, this.parent, this.content, this.settings);
+        const clone = new ContentElement(this.el, this.dzName, this.parent, this.content, this.settings, this.pluginsData);
         clone.render().then(() => {
             clone.duplicateDropZones(this.dzs);
     

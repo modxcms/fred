@@ -14,6 +14,7 @@ import {loadElements, pluginTools} from "./Utils";
 import utilitySidebar from './Components/UtilitySidebar';
 import { getPreview, saveContent, fetchContent, fetchLexicons } from './Actions/fred';
 import ContentElement from "./Components/Sidebar/Elements/ContentElement";
+import ToolbarPlugin from "./Components/Sidebar/Elements/Toolbar/ToolbarPlugin";
 
 export default class Fred {
     constructor(config = {}) {
@@ -419,6 +420,15 @@ export default class Fred {
         }
 
         return fredConfig.registerSidebarPlugin(name, initFn(this, SidebarPlugin, pluginTools()));
+    }
+    
+    registerToolbarPlugin(name, initFn) {
+        if (typeof initFn !== 'function') {
+            console.log('initFn has to be a functions');
+            return false;
+        }
+
+        return fredConfig.registerToolbarPlugin(name, initFn(this, ToolbarPlugin, pluginTools()));
     }
     
     loadLexicons() {
