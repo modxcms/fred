@@ -56,6 +56,28 @@ class RenderElement extends Endpoint
                 $_GET = $queryParams;
             }
             
+            $postParams = $this->getClaim('postParams');
+            if ($postParams !== false) {
+                $postParams = (array)$postParams;
+                $_POST = $postParams;
+            }
+            
+            $requestParams = $this->getClaim('requestParams');
+            if ($requestParams !== false) {
+                $requestParams = (array)$requestParams;
+                $_REQUEST = $requestParams;
+            }
+            
+            $cookie = $this->getClaim('cookie');
+            if ($cookie !== false) {
+                $cookie = (array)$cookie;
+                $_COOKIE = $cookie;
+            }
+
+            $this->modx->loadClass('modRequest', '', false, true);
+            $this->modx->request = new \modRequest($this->modx);
+            $this->modx->request->sanitizeRequest();
+            
             $this->modx->getParser();
             $maxIterations = empty($maxIterations) || (integer) $maxIterations < 1 ? 10 : (integer) $maxIterations;
             $currentResource = $this->modx->resource;

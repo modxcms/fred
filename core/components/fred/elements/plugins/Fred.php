@@ -216,7 +216,10 @@ switch ($modx->event->name) {
                 'iss' => $modx->user->id,
                 'resource' => $modx->resource->id,
                 'context' => $modx->resource->context_key,
-                'queryParams' => $_GET
+                'queryParams' => $_GET,
+                'postParams' => $_POST,
+                'cookie' => $_COOKIE,
+                'requestParams' => $_REQUEST
             ];
             
             $jwt = \Firebase\JWT\JWT::encode($payload, $fred->getSecret());
