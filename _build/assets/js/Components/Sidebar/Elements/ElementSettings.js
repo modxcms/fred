@@ -48,6 +48,10 @@ export class ElementSettings {
             }
         });
        
+        if (this.options.cacheOutput === true) {
+            fields.appendChild(div(['fred--panel_warning'], 'fred.fe.content.element_cache_warning'));
+        }
+        
         const buttonGroup = div(['fred--panel_button_wrapper']);
 
         const apply = button('fred.fe.apply', 'fred.fe.apply', ['fred--btn-panel', 'fred--btn-apply'], this.apply.bind(this));

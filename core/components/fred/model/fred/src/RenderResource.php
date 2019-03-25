@@ -31,6 +31,12 @@ final class RenderResource {
     /** @var array */
     private $data = [];
 
+    /** @var array */
+    private $elementOptions = [];
+
+    /** @var array */
+    private $elementCache = [];
+
     public function __construct(\modResource $resource, \modX $modx)
     {
         $this->resource = $resource;
@@ -64,9 +70,14 @@ final class RenderResource {
         $html = '';
 
         foreach ($contentData as $item) {
-            try {
-                $html .= $this->renderElement($this->twig->render($item['widget'], $this->mergeSetting($item['settings'])), $item, true);
-            } catch (\Exception $e) {}
+            if (isset($this->elementCache[$item['widget']])) {
+                $html .= $this->elementCache[$item['widget']];    
+            } else {
+                try {
+                    $html .= $this->renderElement($this->twig->render($item['widget'], $this->mergeSetting($item['settings'])), $item, true);
+                } catch (\Exception $e) {
+                }
+            }
         }
 
         $parser = $this->modx->getParser();
@@ -142,6 +153,15 @@ final class RenderResource {
         if (!$element) {
             $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$id} wasn't found.");
             return '';
+        }
+
+        $this->elementOptions[$id] = $element->processOptions();
+        
+        if (isset($this->elementOptions[$id]['cacheOutput']) && ($this->elementOptions[$id]['cacheOutput'] === true)) {
+            $cache = $element->getCache($this->resource->id);
+            if ($cache !== false) {
+                $this->elementCache[$id] = $cache;
+            }
         }
 
         return $element->content;

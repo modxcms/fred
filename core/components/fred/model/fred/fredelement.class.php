@@ -289,4 +289,36 @@ class FredElement extends xPDOSimpleObject {
     {
         return $this->content;
     }
+
+    public function getCache($resource)
+    {
+        /** @var FredCache $cache */
+        $cache = $this->xpdo->getObject('FredCache', [
+            'element' => $this->id,
+            'resource' => $resource
+        ]);
+        
+        if (!$cache) return false;
+        
+        return $cache->content;
+    }
+    
+    public function setCache($resource, $content)
+    {
+        /** @var FredCache $cache */
+        $cache = $this->xpdo->getObject('FredCache', [
+            'element' => $this->id,
+            'resource' => $resource
+        ]);
+        
+        if (!$cache) {
+            $cache = $this->xpdo->newObject('FredCache');
+            $cache->set('element', $this->id);
+            $cache->set('resource', $resource);
+        }
+        
+        $cache->set('content', $content);
+
+        return $cache->save();
+    }
 }

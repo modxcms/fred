@@ -259,6 +259,7 @@ switch ($modx->event->name) {
                     "fred_settings_tags": ' . (int)$modx->hasPermission('fred_settings_tags') . ',
                     "fred_settings_tvs": ' . (int)$modx->hasPermission('fred_settings_tvs') . ',
                     "fred_elements": ' . (int)$modx->hasPermission('fred_elements') . ',
+                    "fred_element_cache_refresh": ' . (int)$modx->hasPermission('fred_element_cache_refresh') . ',
                     "fred_blueprints": ' . (int)$modx->hasPermission('fred_blueprints') . ',
                     "fred_element_screenshot": ' . (int)$modx->hasPermission('fred_element_screenshot') . ',
                     "fred_element_move": ' . (int)$modx->hasPermission('fred_element_move') . ',

@@ -169,6 +169,17 @@ $xpdo_meta_map['FredElement']= array (
       ),
     ),
   ),
+  'composites' => 
+  array (
+    'Cache' => 
+    array (
+      'class' => 'FredCache',
+      'local' => 'id',
+      'foreign' => 'element',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
+  ),
   'aggregates' => 
   array (
     'Category' => 

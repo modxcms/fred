@@ -51,6 +51,9 @@ Create/edit/duplicate Element (mgr)
 #### fred_element_category_delete
 Delete Element Categories (mgr)
 
+#### fred_element_cache_refresh
+Show refresh cache button in Element's toolbar (web)
+
 ## RTE Config Permissions
 #### fred_element_rtes
 View RTE configs (mgr)

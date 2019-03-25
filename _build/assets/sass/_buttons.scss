@@ -248,6 +248,13 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
   background-color: $green;
 }
 
+.fred--refresh_cache_element-icon:before {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: inline-svg('sync-solid', $white);
+  background-color: $green;
+}
+
 .fred--blueprint:before {
   background-repeat: no-repeat;
   background-position: center center;

@@ -13,6 +13,10 @@ Name of the Media Source to use for Finder. Multiple Names can be passed separat
 ### imageMediaSource
 Name of the Media Source to use for Image fields. Multiple Names can be passed separated by comma `,`. This option overrides `mediaSource`.
 
+### cacheOutput
+Only applicable when `remote` is set to `true`.
+Will cache output of the element to static HTML.
+
 ## Settings
 Settings are made of a JSON array of objects and [group objects](#setting-groups) which provide configuratin controls for Elements. Settings can [import](import.md) sub-sets of settings using a `fred-import` object.
 

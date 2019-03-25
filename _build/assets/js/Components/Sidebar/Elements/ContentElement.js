@@ -223,7 +223,7 @@ export class ContentElement {
         return (this.toTop  < 38);
     }
     
-    render() {
+    render(refreshCache = false) {
         const wrapperClasses = ['fred--block'];
         
         if (this.invalidTheme) {
@@ -242,7 +242,7 @@ export class ContentElement {
         this.contentEl.dataset.fredElementId = this.el.dataset.fredElementId;
         this.contentEl.dataset.fredElementTitle = this.title;
 
-        return this.templateRender().then(html => {
+        return this.templateRender(true, false, refreshCache).then(html => {
             this.contentEl.innerHTML = html;
 
             applyScripts(this.contentEl);
@@ -603,9 +603,9 @@ export class ContentElement {
         return el.fredEl.content[el.dataset.fredName][namespace][name];
     }
 
-    templateRender(parseModx = true, cleanRender = false) {
+    templateRender(parseModx = true, cleanRender = false, refreshCache = false) {
         if (this.options.remote === true) {
-            return this.remoteTemplateRender(parseModx, cleanRender);
+            return this.remoteTemplateRender(parseModx, cleanRender, refreshCache);
         }
         
         return Promise.resolve(this.localTemplateRender(cleanRender));
@@ -615,8 +615,10 @@ export class ContentElement {
         return this.template.render({...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), ...(getTemplateSettings(cleanRender))});
     }
     
-    remoteTemplateRender(parseModx = true, cleanRender = false) {
-        return renderElement(this.id, (cleanRender ? this.parsedSettingsClean : this.parsedSettings), parseModx).then(json => {
+    remoteTemplateRender(parseModx = true, cleanRender = false, refreshCache = false) {
+        const cacheOutput = this.options.cacheOutput === true;
+        
+        return renderElement(this.id, (cleanRender ? this.parsedSettingsClean : this.parsedSettings), parseModx, cacheOutput, refreshCache).then(json => {
             const html = twig({data: json.data.html}).render(getTemplateSettings(cleanRender));
             this.setEl(html);
             

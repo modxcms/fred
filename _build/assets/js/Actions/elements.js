@@ -19,7 +19,7 @@ export const getElements = () => {
     });
 };
 
-export const renderElement = (element, settings, parseModx) => {
+export const renderElement = (element, settings, parseModx, cacheOutput, refreshCache) => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=render-element`, {
         method: "post",
         credentials: 'same-origin',
@@ -31,7 +31,9 @@ export const renderElement = (element, settings, parseModx) => {
             resource: fredConfig.resource.id,
             parseModx,
             element,
-            settings
+            settings,
+            cacheOutput,
+            refreshCache
         })
     }).then(errorHandler)
 };

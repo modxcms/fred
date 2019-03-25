@@ -19,6 +19,8 @@ class RenderElement extends Endpoint
         $resourceId = isset($this->body['resource']) ? intval($this->body['resource']) : 0;
         $elementUUID = isset($this->body['element']) ? $this->body['element'] : '';
         $parseModx = empty($this->body['parseModx']) ? false : true;
+        $cacheOutput = empty($this->body['cacheOutput']) ? false : true;
+        $refreshCache = empty($this->body['refreshCache']) ? false : true;
         $settings = empty($this->body['settings']) ? [] : $this->body['settings'];
         
         if (empty($resourceId)) {
@@ -31,6 +33,13 @@ class RenderElement extends Endpoint
         
         /** @var \FredElement $element */
         $element = $this->modx->getObject('FredElement', ['uuid' => $elementUUID]);
+
+        if (($cacheOutput === true) && ($refreshCache === false)) {
+            $cache = $element->getCache($resourceId);
+            
+            if ($cache !== false) return $this->data(["html" => $cache]);
+        }
+
         $templateName = $element->name . '_' . $element->id;
         
         $twig = new \Twig_Environment(new \Twig_Loader_Array([
@@ -61,7 +70,7 @@ class RenderElement extends Endpoint
                 $postParams = (array)$postParams;
                 $_POST = $postParams;
             }
-            
+             
             $requestParams = $this->getClaim('requestParams');
             if ($requestParams !== false) {
                 $requestParams = (array)$requestParams;
@@ -97,6 +106,10 @@ class RenderElement extends Endpoint
             $this->modx->elementCache = $currentElementCache;
             $this->modx->resourceIdentifier = $currentResourceIdentifier;
             $this->modx->resource = $currentResource;
+
+            if ($cacheOutput === true) {
+                $element->setCache($resourceId, $html);
+            }
         }
         
         return $this->data([

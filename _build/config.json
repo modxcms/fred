@@ -85,7 +85,8 @@
       "FredElementOptionSet",
       "FredElementRTEConfig",
       "FredTheme",
-      "FredThemedTemplate"
+      "FredThemedTemplate",
+      "FredCache"
     ]
   },
   "build": {

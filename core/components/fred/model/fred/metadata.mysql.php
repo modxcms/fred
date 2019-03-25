@@ -14,5 +14,6 @@ $xpdo_meta_map = array (
   'xPDOObject' => 
   array (
     0 => 'FredThemedTemplate',
+    1 => 'FredCache',
   ),
 );

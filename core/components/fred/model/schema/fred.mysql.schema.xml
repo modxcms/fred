@@ -187,6 +187,7 @@
         
         <aggregate alias="Category" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="OptionSet" class="FredElementOptionSet" local="option_set" foreign="id" cardinality="one" owner="foreign" />
+        <composite alias="Cache" class="FredCache" local="id" foreign="element" cardinality="many" owner="local" />
     </object>
 
     <object class="FredTheme" table="fred_themes" extends="xPDOSimpleObject">
@@ -216,7 +217,7 @@
         <field key="template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
         <field key="theme" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
 
-        <index alias="template" name="template" primary="true" unique="true" type="BTREE">
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
             <column key="template" length="" collation="A" null="false" />
         </index>
 
@@ -226,5 +227,27 @@
 
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Template" class="modTemplate" local="template" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+    
+    <object class="FredCache" table="fred_cache" extends="xPDOObject">
+        <field key="resource" dbtype="int" attributes="unsigned" precision="11" phptype="integer" null="false" index="pk" />
+        <field key="element" dbtype="int" attributes="unsigned" precision="11" phptype="integer" null="false" index="pk" />
+        <field key="content" dbtype="mediumtext" phptype="string" null="false" default="" />
+
+        <index alias="resource" name="resource" primary="false" unique="false" type="BTREE">
+            <column key="resource" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="element" name="element" primary="false" unique="false" type="BTREE">
+            <column key="element" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="resource" length="" collation="A" null="false" />
+            <column key="element" length="" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Resource" class="modResource" local="resource" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Element" class="FredElement" local="element" foreign="id" cardinality="one" owner="foreign" />
     </object>
 </model>

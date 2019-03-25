@@ -7,6 +7,7 @@ import Duplicate from "./Toolbar/Duplicate";
 import Delete from "./Toolbar/Delete";
 import Move from "./Toolbar/Move";
 import fredConfig from "../../../Config";
+import RefreshElementCache from "./Toolbar/RefreshElementCache";
 
 export default class Toolbar {
     constructor(el) {
@@ -19,6 +20,7 @@ export default class Toolbar {
 
         const plugins = [
             MoveHandle,
+            RefreshElementCache,
             ElementScreenshot,
             PartialBlueprint,
             ElementSettings,
