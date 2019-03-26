@@ -111,6 +111,8 @@ $_lang['fred.fe.content.partial_blueprint'] = 'Erzeuge einen Teil einer Blaupaus
 $_lang['fred.fe.content.element_screenshot'] = 'Element Screenshot';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Thumbnail des Elements ersetzen';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Thumbnail des Elements wird erzeugt';
+$_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
+$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you click the refresh toolbar button.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Die Änderungen wurden noch nicht gespeichert. Bist du sicher?';
 

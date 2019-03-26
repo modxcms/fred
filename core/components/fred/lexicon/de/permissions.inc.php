@@ -60,3 +60,4 @@ $_lang['fred.permissions.save_document'] = 'Ressourcen speichern (mgr) (web)';
 $_lang['fred.permissions.new_document'] = 'Neue Ressourcen anlegen (mgr) (web)';
 $_lang['fred.permissions.delete_document'] = 'Ressourcen löschen (mgr) (web)';
 $_lang['fred.permissions.undelete_document'] = 'Ressourcen wiederherstellen (mgr) (web)';
+$_lang['fred.permissions.fred_element_cache_refresh'] = 'Refresh cache of Fred Element (web)';

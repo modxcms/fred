@@ -111,6 +111,8 @@ $_lang['fred.fe.content.partial_blueprint'] = 'Create Partial Blueprint';
 $_lang['fred.fe.content.element_screenshot'] = 'Element Screenshot';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Replace Element Thumbnail';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Replacing Element\'s Thumbnail';
+$_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
+$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you click the refresh toolbar button.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'There are unsaved changes, are you sure?';
 

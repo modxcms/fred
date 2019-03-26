@@ -60,3 +60,4 @@ $_lang['fred.permissions.save_document'] = 'Pagina\'s opslaan (mgr) (web)';
 $_lang['fred.permissions.new_document'] = 'Creeër nieuwe pagina\'s (mgr) (web)';
 $_lang['fred.permissions.delete_document'] = 'Verwijder pagina\'s (mgr) (web)';
 $_lang['fred.permissions.undelete_document'] = 'Verwijderen pagina\'s ongedaan maken (mgr) (web)';
+$_lang['fred.permissions.fred_element_cache_refresh'] = 'Refresh cache of Fred Element (web)';
