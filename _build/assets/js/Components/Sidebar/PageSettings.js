@@ -175,7 +175,9 @@ export default class PageSettings extends SidebarPlugin {
         const fields = fieldSet(['fred--page_settings_form_advanced']);
 
         fredConfig.tagger.forEach(group => {
-            const taggerField = new Tagger(group);
+            const taggerField = new Tagger(group, null, () => {
+                emitter.emit('fred-content-changed');
+            });
             const rendered = taggerField.render();
             
             if (rendered) {
@@ -235,6 +237,8 @@ export default class PageSettings extends SidebarPlugin {
     }
 
     setSetting(name, value, namespace = null) {
+        emitter.emit('fred-content-changed');
+        
         if (namespace) {
             if (!this.pageSettings[namespace]) this.pageSettings[namespace] = {};
             
@@ -245,6 +249,8 @@ export default class PageSettings extends SidebarPlugin {
     }
 
     setSettingWithEmitter(name, value, input) {
+        emitter.emit('fred-content-changed');
+        
         this.setSetting(name, value);
 
         emitter.emit('fred-page-setting-change', name, value, valueParser(value), input);
@@ -260,6 +266,8 @@ export default class PageSettings extends SidebarPlugin {
     }
 
     setTVWithEmitter(name, value, input) {
+        emitter.emit('fred-content-changed');
+        
         this.setSetting(name, value, 'tvs');
 
         emitter.emit('fred-page-setting-change', 'tv_' + name, value, valueParser(value), input);

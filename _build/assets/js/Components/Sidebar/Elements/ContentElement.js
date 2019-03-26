@@ -410,6 +410,8 @@ export class ContentElement {
     }
     
     setValue(el, value, name = '_value', namespace = '_raw', contentEl = null, isPreview = false, silent = false) {
+        emitter.emit('fred-content-changed');
+        
         if (!this.content[el.dataset.fredName] || Array.isArray(this.content[el.dataset.fredName])) this.content[el.dataset.fredName] = {};
         if (!this.content[el.dataset.fredName][namespace] || Array.isArray(this.content[el.dataset.fredName][namespace])) this.content[el.dataset.fredName][namespace] = {};
         
@@ -452,6 +454,8 @@ export class ContentElement {
     }
 
     setValueForBindElements(name, value, contentEl = null) {
+        emitter.emit('fred-content-changed');
+        
         if (contentEl === null) {
             contentEl = this.contentEl;
         }
@@ -472,6 +476,8 @@ export class ContentElement {
     }
     
     setPluginValue(namespace, name, value) {
+        emitter.emit('fred-content-changed');
+        
         if (!this.pluginsData[namespace] || Array.isArray(this.pluginsData[namespace])) this.pluginsData[namespace] = {};
         
         this.pluginsData[namespace][name] = value;

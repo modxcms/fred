@@ -3,6 +3,7 @@ import ui from '../../../UI/Inputs';
 import { div, form, fieldSet, legend, button, dl, dt, dd } from '../../../UI/Elements';
 import fredConfig from '../../../Config';
 import utilitySidebar from './../../UtilitySidebar';
+import emitter from '../../../EE';
 
 export class ElementSettings {
     constructor() {
@@ -179,6 +180,7 @@ export class ElementSettings {
 
     apply() {
         this.el.render().then(() => {
+            emitter.emit('fred-content-changed');
             const event = new CustomEvent('FredElementSettingChange', { detail: {fredEl: this.el} });
             document.body.dispatchEvent(event);
             

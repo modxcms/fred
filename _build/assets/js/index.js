@@ -43,6 +43,16 @@ export default class Fred {
         this.previewDocument = null;
         this.replaceScript = this.replaceScript.bind(this);
         this.scriptsToReplace = [];
+        
+        this.unsavedChanges = true;
+
+        window.onbeforeunload = () => {
+            if (this.unsavedChanges === true) {
+                return fredConfig.lng('fred.fe.unsaved_data_warning');
+            } else {
+                return;
+            }
+        };
 
         const lexiconsLoaded = this.loadLexicons();
         
@@ -258,6 +268,8 @@ export default class Fred {
         Promise.all(promises).then(() => {
             saveContent(body)
             .then(json => {
+                this.unsavedChanges = false;
+                
                 if (json.url) {
                     location.href = json.url;
                 }
@@ -375,6 +387,10 @@ export default class Fred {
                 }
             }
         });
+        
+        emitter.on('fred-content-changed', () => {
+            this.unsavedChanges = true;
+        })
     }
 
     registerKeyboardShortcuts() {
