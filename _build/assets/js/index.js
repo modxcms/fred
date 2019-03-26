@@ -44,7 +44,7 @@ export default class Fred {
         this.replaceScript = this.replaceScript.bind(this);
         this.scriptsToReplace = [];
         
-        this.unsavedChanges = true;
+        this.unsavedChanges = false;
 
         window.onbeforeunload = () => {
             if (this.unsavedChanges === true) {
