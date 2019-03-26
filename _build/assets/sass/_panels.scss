@@ -20,6 +20,19 @@
     margin: 12px;
     text-align: right;
   }
+  &_warning{
+    background-color: darken($lightcoral, 10%);
+    padding: 8px 16px;
+    margin-left: calc(5% + 8px);
+    margin-right: calc(5% + 8px);
+    font-size: 14px;
+    line-height: 18px;
+    color: $white;
+    box-sizing: border-box;
+    border: 1px solid darken($black, 10%);
+    border-radius: $radius 0 0 $radius;
+    margin-bottom: 16px;
+  }
 
   legend {
     background: darken($black, 15%);
