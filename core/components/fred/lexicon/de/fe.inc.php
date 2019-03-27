@@ -37,6 +37,7 @@ $_lang['fred.fe.browse_images'] = 'Bilder durchsuchen';
 $_lang['fred.fe.turn_off_fred'] = 'Fred deaktiveren';
 $_lang['fred.fe.turn_on_fred'] = 'Fred aktivieren';
 $_lang['fred.fe.invalid_elements_warning'] = 'Ein oder mehrere Elemente im Inhaltsbereich gehören nicht zu diesem Theme.';
+$_lang['fred.fe.unsaved_data_warning'] = 'Changes that you made may not be saved.';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Seitentitel';
 $_lang['fred.fe.page_settings.long_title'] = 'Langer Titel';
@@ -111,8 +112,8 @@ $_lang['fred.fe.content.partial_blueprint'] = 'Erzeuge einen Teil einer Blaupaus
 $_lang['fred.fe.content.element_screenshot'] = 'Element Screenshot';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Thumbnail des Elements ersetzen';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Thumbnail des Elements wird erzeugt';
-$_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
-$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you click the refresh toolbar button.';
+$_lang['fred.fe.content.refresh_cache_element'] = 'Cache erneuern';
+$_lang['fred.fe.content.element_cache_warning'] = 'Das Element ist gecached. Änderungen werden erst sichtbar, wenn du den Cache erneuern Button betätigst.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Die Änderungen wurden noch nicht gespeichert. Bist du sicher?';
 

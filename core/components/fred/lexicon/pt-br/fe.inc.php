@@ -37,6 +37,7 @@ $_lang['fred.fe.browse_images'] = 'Browse Images';
 $_lang['fred.fe.turn_off_fred'] = 'Disable Fred';
 $_lang['fred.fe.turn_on_fred'] = 'Enable Fred';
 $_lang['fred.fe.invalid_elements_warning'] = 'One or more Elements in the content do not belong to this Theme.';
+$_lang['fred.fe.unsaved_data_warning'] = 'Changes that you made may not be saved.';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Page Title';
 $_lang['fred.fe.page_settings.long_title'] = 'Long Title';
