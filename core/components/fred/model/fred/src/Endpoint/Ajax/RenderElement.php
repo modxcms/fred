@@ -34,6 +34,10 @@ class RenderElement extends Endpoint
         /** @var \FredElement $element */
         $element = $this->modx->getObject('FredElement', ['uuid' => $elementUUID]);
 
+        if (!$this->modx->hasPermission('fred_element_cache_refresh')) {
+            $refreshCache = false;
+        }
+        
         if (($cacheOutput === true) && ($refreshCache === false)) {
             $cache = $element->getCache($resourceId);
             

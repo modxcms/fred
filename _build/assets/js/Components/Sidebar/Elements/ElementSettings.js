@@ -22,6 +22,7 @@ export class ElementSettings {
         this.options = el.options;
         this.originalValues = JSON.parse(JSON.stringify(this.el.settings));
         this.remote = this.options.remote || false;
+        this.cacheOutput = ((this.remote === true) && (this.options.cacheOutput === true));
         this.debouncedRender = debounce(200, this.el.render);
 
         utilitySidebar.open(this.render());
@@ -171,15 +172,17 @@ export class ElementSettings {
     setSetting(name, value) {
         this.el.setSetting(name, value);
         
-        if (this.remote === false) {
-            this.el.render();
-        } else {
-            this.debouncedRender();
+        if (this.cacheOutput === false) {
+            if (this.remote === false) {
+                this.el.render();
+            } else {
+                this.debouncedRender();
+            }
         }
     }
 
     apply() {
-        this.el.render().then(() => {
+        this.el.render(true).then(() => {
             emitter.emit('fred-content-changed');
             const event = new CustomEvent('FredElementSettingChange', { detail: {fredEl: this.el} });
             document.body.dispatchEvent(event);
@@ -234,7 +237,11 @@ export class ElementSettings {
     
     realCancel() {
         this.el.settings = this.originalValues;
-        this.el.render();
+       
+        if (this.cacheOutput === false) {
+            this.el.render();
+        }
+        
         utilitySidebar.close();
     }
 }
