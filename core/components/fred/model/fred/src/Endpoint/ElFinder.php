@@ -118,10 +118,9 @@ class ElFinder extends Endpoint
 
         $attributes = [];
 
+        $showOnlyFolders = isset($_GET['fred_show_only_folders']) ? ($_GET['fred_show_only_folders'] === "true") : false;
         
-        $type = isset($_GET['fred_type']) ? $_GET['fred_type'] : '';
-        
-        if ($type === 'folder') {
+        if ($showOnlyFolders) {
             $attributes[] = [
                 'pattern' => '/\..*/',
                 'read' => false,

@@ -52,6 +52,10 @@ export class Finder {
                 return fredConfig.lng(key)
             }
         }
+        
+        if (this.options.showOnlyFolders !== undefined) {
+            finderOptions.push(`showOnlyFolders=${this.options.showOnlyFolders}`);
+        }
 
         let finderOptionsString = '';
         if (finderOptions.length > 0) {

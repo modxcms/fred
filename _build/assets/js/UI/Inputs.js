@@ -697,7 +697,8 @@ export const folder = (setting, defaultValue = '', onChange, onInit) => {
     const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 
     const finderOptions = {
-        type: 'folder'
+        type: 'folder',
+        showOnlyFolders: setting.showOnlyFolders || false
     };
 
     if (setting.mediaSource && (setting.mediaSource !== '')) {

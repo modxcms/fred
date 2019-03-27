@@ -96,6 +96,7 @@ The following Settings types are used to configure Elements in Fred.
 - Folder picker
 - Type-specific property:
   - `mediaSource` - Optional name of the Media Source to use that overrides the top-level <a href="#mediasource">`mediaSource` global setting</a>
+  - `showOnlyFolders` - If set to `true` only folder will be visible in the elFinder; Default: false
 
 #### image
 - Image select

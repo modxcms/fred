@@ -14,6 +14,10 @@
     delete query.fredToken;
     var type = query.type || '';
     delete query.type;
+    var showOnlyFolders = query.showOnlyFolders === "true";
+    delete query.showOnlyFolders;
+    
+    console.log(showOnlyFolders);
     
     var serialize = function(obj, prefix) {
         var str = [],
@@ -33,6 +37,8 @@
     if (type !== '') {
         query.fred_type = type;
     }
+    
+    query.fred_show_only_folders = showOnlyFolders;
     
     queryString = serialize(query);
     
