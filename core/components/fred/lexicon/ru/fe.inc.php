@@ -113,7 +113,7 @@ $_lang['fred.fe.content.element_screenshot'] = 'Скриншот Элемент�
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Заменить миниатюру элемента';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Заменить миниатюры элементов';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
-$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you click the refresh toolbar button.';
+$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Возможно, внесенные изменения не сохранятся.';
 

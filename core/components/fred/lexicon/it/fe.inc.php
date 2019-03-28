@@ -113,7 +113,7 @@ $_lang['fred.fe.content.element_screenshot'] = 'Screenshot Elemento';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Sostituisci Anteprima Elemento';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Sostituizione Anteprima Elemento';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
-$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you click the refresh toolbar button.';
+$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Ci sono modifiche non salvate, sei sicuro?';
 

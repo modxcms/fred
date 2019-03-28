@@ -113,7 +113,7 @@ $_lang['fred.fe.content.element_screenshot'] = 'Element schermafbeelding';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Vervang element thumbnail';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Vervangen element thumbnail';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
-$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you click the refresh toolbar button.';
+$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Je hebt je wijzigingen nog niet opgeslagen, weet je het zeker?';
 
