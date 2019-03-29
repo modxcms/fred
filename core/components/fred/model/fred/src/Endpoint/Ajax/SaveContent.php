@@ -214,6 +214,27 @@ class SaveContent extends Endpoint
 
         $this->body['data']['fingerprint'] = Utils::resourceFingerprint($object);
         $object->setProperty('data', $this->body['data'], 'fred');
+
+        $beforeSave = $this->modx->invokeEvent('FredOnBeforeFredResourceSave', [
+            'id' => $object->get('id'),
+            'resource' => &$object
+        ]);
+
+        if (is_array($beforeSave)) {
+            $preventSave = false;
+         
+            foreach ($beforeSave as $msg) {
+                if (!empty($msg)) {
+                    $preventSave .= $msg . " ";
+                }
+            }
+        } else {
+            $preventSave = $beforeSave;
+        }
+        
+        if ($preventSave !== false) {
+            return $this->failure($preventSave);
+        }
         
         $saved = $object->save();
 
@@ -227,6 +248,11 @@ class SaveContent extends Endpoint
             }
         }
 
+        $this->modx->invokeEvent('FredOnFredResourceSave', [
+            'id' => $object->get('id'),
+            'resource' => &$object
+        ]);
+        
         $this->modx->getCacheManager()->refresh();
 
         $response = [

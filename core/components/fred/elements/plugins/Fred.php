@@ -310,6 +310,28 @@ switch ($modx->event->name) {
                 return;
             }
         }
+
+        $beforeSave = $modx->invokeEvent('FredOnBeforeFredResourceSave', [
+            'id' => $resource->get('id'),
+            'resource' => &$resource
+        ]);
+
+        if (is_array($beforeSave)) {
+            $preventSave = false;
+
+            foreach ($beforeSave as $msg) {
+                if (!empty($msg)) {
+                    $preventSave .= $msg . " ";
+                }
+            }
+        } else {
+            $preventSave = $beforeSave;
+        }
+
+        if ($preventSave !== false) {
+            $modx->event->_output = $preventSave; 
+            return;
+        }
         
         break;
     case 'OnDocFormSave':
@@ -319,6 +341,11 @@ switch ($modx->event->name) {
         
         $renderResource = new \Fred\RenderResource($resource, $modx);
         $renderResource->render();
+
+        $this->modx->invokeEvent('FredOnFredResourceSave', array(
+            'id' => $resource->get('id'),
+            'resource' => &$resource
+        ));
         
         break;
     case 'OnTemplateRemove':

@@ -5,7 +5,9 @@ if ($object->xpdo) {
     
     $events = [
         'FredBeforeRender',
-        'FredElementFormRender'
+        'FredElementFormRender',
+        'FredOnBeforeFredResourceSave',
+        'FredOnFredResourceSave',
     ];
     
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
