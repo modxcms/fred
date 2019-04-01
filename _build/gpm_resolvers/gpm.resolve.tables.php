@@ -32,6 +32,7 @@ if ($object->xpdo) {
             $manager->createObjectContainer('FredElementRTEConfig');
             $manager->createObjectContainer('FredTheme');
             $manager->createObjectContainer('FredThemedTemplate');
+            $manager->createObjectContainer('FredCache');
 
             break;
     }
