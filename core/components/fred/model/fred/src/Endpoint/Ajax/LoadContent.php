@@ -69,7 +69,7 @@ class LoadContent extends Endpoint
             'tvs' => (object)$TVs['values']
         ];
         
-        return $this->data([
+        $data = (object)[
             "pageSettings" => $pageSettings,
             "data" => $data,
             "plugins" => (object)$plugins,
@@ -77,7 +77,15 @@ class LoadContent extends Endpoint
             "tagger" => $this->getTagger($object),
             "tvs" => $TVs['def'],
             "fingerprint" => $fingerprint
+        ];
+
+        $this->modx->invokeEvent('FredOnFredResourceLoad', [
+            'id' => $id,
+            'resource' => &$object,
+            'data' => &$data
         ]);
+        
+        return $this->data((array)$data);
     }
 
     protected function gatherElements(&$elements, $dropZones)
