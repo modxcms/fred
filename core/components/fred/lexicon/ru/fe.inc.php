@@ -32,7 +32,7 @@ $_lang['fred.fe.cancel'] = 'Отмена';
 $_lang['fred.fe.clear'] = 'Очистить';
 $_lang['fred.fe.browse'] = 'Обзор';
 $_lang['fred.fe.browse_files'] = 'Обзор файлов';
-$_lang['fred.fe.browse_folders'] = 'Browse Folders';
+$_lang['fred.fe.browse_folders'] = 'Обзор папок';
 $_lang['fred.fe.browse_images'] = 'Обзор изображений';
 $_lang['fred.fe.turn_off_fred'] = 'Отключить Fred';
 $_lang['fred.fe.turn_on_fred'] = 'Включить Fred';
@@ -112,7 +112,7 @@ $_lang['fred.fe.content.partial_blueprint'] = 'Создание схемы ма�
 $_lang['fred.fe.content.element_screenshot'] = 'Скриншот Элемента';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Заменить миниатюру элемента';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Заменить миниатюры элементов';
-$_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
+$_lang['fred.fe.content.refresh_cache_element'] = 'Обновить кэш';
 $_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Возможно, внесенные изменения не сохранятся.';
