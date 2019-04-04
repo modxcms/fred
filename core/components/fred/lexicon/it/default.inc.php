@@ -244,6 +244,8 @@ $_lang['setting_fred.blueprint_sort'] = 'Ordinamento Modelli';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Ordina Modelli per nome o posizione';
 $_lang['setting_fred.secret'] = 'Password';
 $_lang['setting_fred.secret_desc'] = 'Password usata per firmare richieste XHR';
+$_lang['setting_fred.default_enabled'] = 'Fred Enabled';
+$_lang['setting_fred.default_enabled_desc'] = 'Enable or Disable Fred by default';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Il nome è obbligatorio';
 $_lang['fred.err.blueprints_ns_name'] = 'Il nome è obbligatorio';
