@@ -27,7 +27,9 @@
             "OnLoadWebDocument",
             "OnTVInputRenderList",
             "OnTVInputPropertiesList",
-            "OnManagerPageBeforeRender"
+            "OnManagerPageBeforeRender",
+            "OnManagerLogin",
+            "OnWebLogin"
           ]
         }
       ]
@@ -73,6 +75,11 @@
       {
         "key": "active_class",
         "value": "fred--active"
+      },
+      {
+        "key": "default_enabled",
+        "type" : "combo-boolean",
+        "value": "1"
       }
     ]
   },

@@ -369,6 +369,21 @@ switch ($modx->event->name) {
     case 'OnManagerPageBeforeRender':
         $modx->controller->addLexiconTopic('fred:default');
         break;
+    case 'OnManagerLogin':
+    case 'OnWebLogin':
+        if (!$modx->user) return;
+        if (!($modx->user->hasSessionContext('mgr') || $modx->user->hasSessionContext($modx->resource->context_key))) return;
+        if (!$modx->hasPermission('fred')) return;
+            
+        $fredMode = $modx->getOption('fred.default_enabled', $scriptProperties, 1);
+        
+        if (isset($_SESSION['fred'])) {
+            $fredMode = intval($_SESSION['fred']);
+        }
+        
+        $_SESSION['fred'] = $fredMode;
+        
+        break;
 }
 
 return;
