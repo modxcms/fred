@@ -350,7 +350,7 @@ export default class Fred {
 
         emitter.on('fred-page-setting-change', (settingName, settingValue, parsedValue, sourceEl) => {
             this.dropzones.forEach(dz => {
-                const targets = dz.querySelectorAll(`[data-fred-target="${settingName}"`);
+                const targets = dz.querySelectorAll(`[data-fred-target="${settingName}"]`);
                 for (let target of targets) {
                     if (target !== sourceEl) {
                         target.fredEl.setElValue(target, settingValue, '_value', '_raw', null, false, true);
