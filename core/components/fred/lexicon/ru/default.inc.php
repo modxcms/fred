@@ -244,6 +244,8 @@ $_lang['setting_fred.blueprint_sort'] = 'Сортировка макетов';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Сортировка макетов по имени или рангу';
 $_lang['setting_fred.secret'] = 'Секретный ключ';
 $_lang['setting_fred.secret_desc'] = 'Секрет, используемый при подписании запросов XHR';
+$_lang['setting_fred.default_enabled'] = 'Fred Enabled';
+$_lang['setting_fred.default_enabled_desc'] = 'Enable or Disable Fred by default';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Имя обязательно';
 $_lang['fred.err.blueprints_ns_name'] = 'Имя обязательно';

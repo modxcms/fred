@@ -244,6 +244,8 @@ $_lang['setting_fred.blueprint_sort'] = 'Blauwdruk Sortering';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Sorteer blauwdrukken op naam of rang';
 $_lang['setting_fred.secret'] = 'Geheime sleutel';
 $_lang['setting_fred.secret_desc'] = 'Geheime sleutel voor XHR requests';
+$_lang['setting_fred.default_enabled'] = 'Fred Enabled';
+$_lang['setting_fred.default_enabled_desc'] = 'Enable or Disable Fred by default';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Naam is verplicht';
 $_lang['fred.err.blueprints_ns_name'] = 'Naam is verplicht';
