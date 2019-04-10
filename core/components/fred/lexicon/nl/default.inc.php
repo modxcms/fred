@@ -21,6 +21,7 @@ $_lang['freddropzone'] = 'Fred Dropzone';
 $_lang['fred.global.any'] = 'Alle';
 $_lang['fred.global.change_order'] = 'Volgorde wijzigen: [[+name]]';
 $_lang['fred.global.help'] = 'Help';
+$_lang['fred.global.none'] = 'None';
 
 $_lang['fred.open_in_fred'] = 'Openen in Fred';
 
@@ -210,6 +211,7 @@ $_lang['fred.themed_templates.create'] = 'Thema koppelen aan template';
 $_lang['fred.themed_templates.update'] = 'Gekoppelde thema bewerken';
 $_lang['fred.themed_templates.remove'] = 'Thema ontkoppelen';
 $_lang['fred.themed_templates.remove_confirm'] = 'Weet je zeker dat je thema "[[+theme]]" van template "[[+template]]" wilt ontkoppelen?';
+$_lang['fred.themed_templates.default_blueprint'] = 'Default Blueprint';
 
 $_lang['fred.media_sources.name'] = 'Naam';
 $_lang['fred.media_sources.description'] = 'Omschrijving';

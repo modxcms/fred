@@ -21,6 +21,7 @@ $_lang['freddropzone'] = 'Fred область загрузки';
 $_lang['fred.global.any'] = 'Любой';
 $_lang['fred.global.change_order'] = 'Изменить сортировку: [[+name]]';
 $_lang['fred.global.help'] = 'Помощь';
+$_lang['fred.global.none'] = 'None';
 
 $_lang['fred.open_in_fred'] = 'Открыть в Fred';
 
@@ -210,6 +211,7 @@ $_lang['fred.themed_templates.create'] = 'Назначение темы шабл
 $_lang['fred.themed_templates.update'] = 'Обновить назначенную Ттему';
 $_lang['fred.themed_templates.remove'] = 'Отменить назначение темы';
 $_lang['fred.themed_templates.remove_confirm'] = 'Вы уверены, что хотите отменить назначение темы: [[+theme]] из шаблона: [[+template]]?';
+$_lang['fred.themed_templates.default_blueprint'] = 'Default Blueprint';
 
 $_lang['fred.media_sources.name'] = 'Имя';
 $_lang['fred.media_sources.description'] = 'Описание';
