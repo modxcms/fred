@@ -39,7 +39,8 @@
     "atob": ">=2.1.0",
     "gulp-sass-inline-svg": "^1.0.3",
     "gulp-svgmin": "^1.2.4",
-    "randomatic": ">=3.0.0"
+    "randomatic": ">=3.0.0",
+    "extend": ">=3.0.2"
   },
   "library": {
     "name": "Fred",
