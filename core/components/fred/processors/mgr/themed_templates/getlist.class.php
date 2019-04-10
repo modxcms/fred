@@ -26,11 +26,13 @@ class FredThemedTemplatesGetListProcessor extends modObjectGetListProcessor
     {
         $c->leftJoin('FredTheme', 'Theme');
         $c->leftJoin('modTemplate', 'Template');
+        $c->leftJoin('FredBlueprint', 'Blueprint', 'FredThemedTemplate.default_blueprint = Blueprint.id');
 
         $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate'));
         $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['name']));
         $c->select($this->modx->getSelectColumns('modTemplate', 'Template', 'template_', ['templatename']));
-
+        $c->select($this->modx->getSelectColumns('FredBlueprint', 'Blueprint', 'default_blueprint_', ['name']));
+        
         return parent::prepareQueryAfterCount($c);
     }
 }

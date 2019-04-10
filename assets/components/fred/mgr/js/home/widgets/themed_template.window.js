@@ -58,7 +58,37 @@ Ext.extend(fred.window.ThemedTemplate, MODx.Window, {
                 name: 'theme',
                 anchor: '100%',
                 allowBlank: true,
-                isUpdate: config.isUpdate
+                isUpdate: config.isUpdate,
+                listeners: {
+                    select: function(combo, record) {
+                        var defaultBlueprint = this.find('name', 'default_blueprint');
+                        if (!defaultBlueprint[0]) return;
+
+                        defaultBlueprint = defaultBlueprint[0];
+                        defaultBlueprint.setValue();
+                        defaultBlueprint.enable();
+                        defaultBlueprint.baseParams.theme = record.id;
+
+                        defaultBlueprint.store.on('load', function() {
+                            defaultBlueprint.setValue(0);
+                        }, this, {single: true});
+                        
+                        defaultBlueprint.store.load();
+                    },
+                    scope: this
+                }
+            },
+            {
+                xtype: 'fred-combo-blueprint',
+                addNone: 1,
+                complete: 1,
+                theme: (config.record && config.record.theme) ? config.record.theme : '',
+                fieldLabel: _('fred.themed_templates.default_blueprint'),
+                name: 'default_blueprint',
+                hiddenName: 'default_blueprint',
+                anchor: '100%',
+                allowBlank: true,
+                value: 0
             }
         ]);
         

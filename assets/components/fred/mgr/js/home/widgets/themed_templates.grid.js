@@ -12,7 +12,7 @@ fred.grid.ThemedTemplates = function (config) {
             action: 'mgr/themed_templates/getlist'
         },
         preventSaveRefresh: false,
-        fields: ['id', 'theme', 'template', 'theme_name', 'template_templatename'],
+        fields: ['id', 'theme', 'template', 'theme_name', 'template_templatename', 'default_blueprint', 'default_blueprint_name'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -34,6 +34,17 @@ fred.grid.ThemedTemplates = function (config) {
                 dataIndex: 'theme_name',
                 sortable: true,
                 width: 80
+            },
+            {
+                header: _('fred.themed_templates.default_blueprint'),
+                dataIndex: 'default_blueprint_name',
+                sortable: true,
+                width: 80,
+                renderer: function(value) {
+                    if (!value) return _('fred.global.none');
+                    
+                    return value;
+                }
             }
         ],
         tbar: this.getTbar(config)

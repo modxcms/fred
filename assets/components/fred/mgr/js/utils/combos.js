@@ -371,3 +371,25 @@ fred.combo.InstalledPackages = function (config) {
 };
 Ext.extend(fred.combo.InstalledPackages, MODx.combo.ComboBox);
 Ext.reg('fred-combo-installed-packages', fred.combo.InstalledPackages);
+
+fred.combo.Blueprint = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        name: 'blueprint',
+        hiddenName: 'blueprint',
+        displayField: 'name',
+        valueField: 'id',
+        fields: ['name', 'id'],
+        pageSize: 20,
+        url: fred.config.connectorUrl,
+        baseParams: {
+            action: 'mgr/blueprints/getlist',
+            addNone: config.addNone || 0,
+            complete: (config.complete !== undefined) ? config.complete : '',
+            theme: (config.theme !== undefined) ? config.theme : ''
+        }
+    });
+    fred.combo.Blueprint.superclass.constructor.call(this, config);
+};
+Ext.extend(fred.combo.Blueprint, MODx.combo.ComboBox);
+Ext.reg('fred-combo-blueprint', fred.combo.Blueprint);

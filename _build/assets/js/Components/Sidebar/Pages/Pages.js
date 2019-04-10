@@ -83,10 +83,17 @@ export default class Pages extends SidebarPlugin {
                                 const options = [];
 
                                 category.blueprints.forEach(blueprint => {
-                                    options.push({
+                                    const blueprintOption = {
                                         label: blueprint.name,
                                         value: '' + blueprint.id
-                                    });
+                                    };
+                                    
+                                    if (value.customProperties.default_blueprint && (blueprint.id === value.customProperties.default_blueprint)) {
+                                        blueprintOption.selected = true;
+                                        this.state.blueprint = blueprint.id;
+                                    }
+                                    
+                                    options.push(blueprintOption);
                                 });
 
                                 groups.push({
@@ -406,10 +413,17 @@ export default class Pages extends SidebarPlugin {
                                     const options = [];
 
                                     category.blueprints.forEach(blueprint => {
-                                        options.push({
+                                        const blueprintOption = {
                                             label: blueprint.name,
                                             value: '' + blueprint.id
-                                        });
+                                        };
+                                        
+                                        if (template.customProperties.default_blueprint && (blueprint.id === template.customProperties.default_blueprint)) {
+                                            blueprintOption.selected = true;
+                                            this.state.blueprint = blueprint.id;
+                                        }
+                                        
+                                        options.push(blueprintOption);
                                     });
 
                                     groups.push({

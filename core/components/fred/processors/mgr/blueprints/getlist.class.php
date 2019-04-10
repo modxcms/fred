@@ -12,6 +12,20 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
     public $defaultSortDirection = 'ASC';
     public $objectType = 'fred.blueprints';
 
+    public function beforeIteration(array $list)
+    {
+        $addNone = (int)$this->getProperty('addNone', 0);
+
+        if ($addNone === 1) {
+            $list[] = [
+                'id' => 0,
+                'name' => $this->modx->lexicon('fred.global.none')
+            ];
+        }
+
+        return parent::beforeIteration($list);
+    }
+    
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
         $id = (int)$this->getProperty('id', 0);
@@ -46,7 +60,6 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
         
         return parent::prepareQueryBeforeCount($c);
     }
-
 
     public function prepareQueryAfterCount(xPDOQuery $c)
     {

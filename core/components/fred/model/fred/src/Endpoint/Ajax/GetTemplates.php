@@ -41,7 +41,8 @@ class GetTemplates extends Endpoint
                 'value' => (string)$theme->template_id,
                 'name' => $theme->template_templatename,
                 'customProperties' => [
-                    'theme' => intval($theme->theme)
+                    'theme' => intval($theme->theme),
+                    'default_blueprint' => intval($theme->default_blueprint),
                 ]
             ];    
         }
