@@ -244,8 +244,8 @@ $_lang['setting_fred.blueprint_sort'] = 'Blaupausen Sortierung';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Sortiere Blaupausen nach Name oder Rang';
 $_lang['setting_fred.secret'] = 'Geheime Phrase';
 $_lang['setting_fred.secret_desc'] = 'Geheime Phrase wird benutzt, um XHR Anfragen zu signieren';
-$_lang['setting_fred.default_enabled'] = 'Fred Enabled';
-$_lang['setting_fred.default_enabled_desc'] = 'Enable or Disable Fred by default';
+$_lang['setting_fred.default_enabled'] = 'Fred aktiviert';
+$_lang['setting_fred.default_enabled_desc'] = 'Aktiviere oder deaktiviere Fred als Standardverhalten';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Name ist erforderlich';
 $_lang['fred.err.blueprints_ns_name'] = 'Name ist erforderlich';
