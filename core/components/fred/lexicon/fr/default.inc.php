@@ -21,6 +21,7 @@ $_lang['freddropzone'] = 'Zone de dépose';
 $_lang['fred.global.any'] = 'Toutes';
 $_lang['fred.global.change_order'] = 'Changer l\\'ordre de : [[+name]]';
 $_lang['fred.global.help'] = 'Aide';
+$_lang['fred.global.none'] = 'None';
 
 $_lang['fred.open_in_fred'] = 'Ouvrir dans Fred';
 
@@ -210,6 +211,7 @@ $_lang['fred.themed_templates.create'] = 'Assign Theme to a Template';
 $_lang['fred.themed_templates.update'] = 'Update Assigned Theme';
 $_lang['fred.themed_templates.remove'] = 'Unassign Theme';
 $_lang['fred.themed_templates.remove_confirm'] = 'Are you sure you want to unassign the “ [[+theme]]” theme from the “[[+template]]” template?';
+$_lang['fred.themed_templates.default_blueprint'] = 'Default Blueprint';
 
 $_lang['fred.media_sources.name'] = 'Name';
 $_lang['fred.media_sources.description'] = 'Description';
