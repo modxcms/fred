@@ -38,10 +38,11 @@ In the Manager, Resources that use Templates assigned to a Fred Theme should hav
 
 ## Step 4: Create Categories for Elements
 
-Fred organizes Elements using categories. Open the Elements Manager Page from the `Extras` > `Fred` > `Elements` menu, and switch to the `Categories` tab to create Categories. For example, your categories could look like this:
+Fred organizes Elements using categories. Open the Elements Manager Page from the `Extras` > `Fred` > `Elements` menu, and switch to the `Categories` tab to create Categories. For example, your categories could look like this (create these for the purpose of this demo):
 
 - Page Content
 - Intros
+- Text
 - Images
 - Testimonials
 - …
@@ -52,19 +53,24 @@ Fred requires at least one Category before creating actual content Element.
 
 Fred Elements can be as simple as raw text or more complex like a  responsive product catalog detail page.  Let’s start by creating a simple heading Element, often the first thing on a page. 
 
-Switch to the `Elements` tab in Element’s CMP (`Extras` > `Fred` > `Elements`) and click the `Create Element` button. Fill the name (`H1 Heading`), category (`Text`), image (`https://placehold.it/300x150&text=Heading`).
-
-![Element Creation 3PC Screenshot]()
+Switch to the `Elements` tab in Element’s CMP (`Extras` > `Fred` > `Elements`) and click the `Create Element` button. Fill the name (`H1 Heading`), category (`Blocks`), image (`https://placehold.it/300x150&text=H1+Heading`).
 
 Add the following markup:
 
-    <h1 data-fred-name="heading">Hello, world.</h1>
+```html
+<h1 data-fred-name="heading">H1 Heading</h1>
+```
+
+![Element Creation 3PC Screenshot](/media/create-element.png)
 
 Save this Element, go back to the front-end of your Resource, and refresh the page.
 
 Click on the orange Elements stacked boxes icon or the MODX icon in the launcher at the bottom left of the page. In the sidebar Elements tab, you should now see the categories you created earlier in step 4. Hover the `Text` category to see your freshly created `H1 Heading` Element and drag it into the empty dropzone.
 
-![Front-end sidebar Screenshot]()
+<video width="640" height="480" controls>
+  <source src="/media/basic-use.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 Congratulations, you just added your first Element to a page using Fred!
 
@@ -72,13 +78,16 @@ Select the placeholder “Hello, world.” text and start typing to edit its con
 
 Let’s create another Element for a single paragraph: 
 
-1. Create an Element under same category with the name `Basic Paragraph`, `https://placehold.it/300x150&text=Paragraph` for the image, and `<p data-fred-name="paragraph">Your content goes here.</p>` for the markup
+1. Create an Element under same category with the name `Basic Paragraph`, `https://placehold.it/600x150&text=A+paragraph+of+text` for the image, and `<p data-fred-name="paragraph">Your content goes here…</p>` for the markup
 2. Save this in the Manager
 3. From the front-end, reload the page
 4. Drag this new Element beneath the previously created title, and drop it in place 
 5. Change the text and save
 
-![Front-end editing .gif animation]()
+<video width="640" height="480" controls>
+  <source src="/media/basic-use-2.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 ## Exporting a Theme
 
