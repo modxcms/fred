@@ -21,7 +21,7 @@ $_lang['freddropzone'] = 'Fred Dropzone';
 $_lang['fred.global.any'] = 'Irgendetwas';
 $_lang['fred.global.change_order'] = 'Reihenfolge ändern: [[+name]]';
 $_lang['fred.global.help'] = 'Hilfe';
-$_lang['fred.global.none'] = 'None';
+$_lang['fred.global.none'] = 'Keine';
 
 $_lang['fred.open_in_fred'] = 'Mit Fred öffnen';
 
@@ -211,7 +211,7 @@ $_lang['fred.themed_templates.create'] = 'Theme einem Template zuweisen';
 $_lang['fred.themed_templates.update'] = 'Zugewiesenes Theme bearbeiten';
 $_lang['fred.themed_templates.remove'] = 'Theme lösen';
 $_lang['fred.themed_templates.remove_confirm'] = 'Sind Sie sicher, dass Sie das Theme [[+theme]] vom Template [[+template]] entfernen wollen?';
-$_lang['fred.themed_templates.default_blueprint'] = 'Default Blueprint';
+$_lang['fred.themed_templates.default_blueprint'] = 'Standard Blaupause';
 
 $_lang['fred.media_sources.name'] = 'Name';
 $_lang['fred.media_sources.description'] = 'Beschreibung';
