@@ -17,8 +17,6 @@
     var showOnlyFolders = query.showOnlyFolders === "true";
     delete query.showOnlyFolders;
     
-    console.log(showOnlyFolders);
-    
     var serialize = function(obj, prefix) {
         var str = [],
             p;
