@@ -49,6 +49,10 @@ nav:
         - Getting your Theme in Git: collab/initial_extract.md
         - Basic Gitify Usage: collab/gitify_in_action.md
         - Advaced Gitify with PRs: collab/pr_workflow.md
+  - Developers:
+    - Intro: developer/index.md
+    - MODX Events: developer/modx_events.md
+    - Toolbar Plugin: developer/toolbar_plugins.md 
   - Credits: credits.md
 
 theme:
