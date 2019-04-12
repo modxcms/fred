@@ -478,6 +478,8 @@ export class ContentElement {
     setPluginValue(namespace, name, value) {
         emitter.emit('fred-content-changed');
         
+        if (Array.isArray(this.pluginsData)) this.pluginsData = {};
+        
         if (!this.pluginsData[namespace] || Array.isArray(this.pluginsData[namespace])) this.pluginsData[namespace] = {};
         
         this.pluginsData[namespace][name] = value;
