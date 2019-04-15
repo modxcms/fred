@@ -591,6 +591,42 @@ export class ContentElement {
 
                     document.execCommand("insertHTML", false, text);
                 });
+
+                el.addEventListener('keydown', e => {
+                    if(e.ctrlKey){
+                        console.log(e);
+                        if(e.which == 66){
+                            e.preventDefault();
+                            document.execCommand('bold', false, null);
+                        }
+                        if(e.which == 73){
+                            e.preventDefault();
+                            document.execCommand('italic', false, null);
+                        }
+                        if(e.which == 85){
+                            e.preventDefault();
+                            document.execCommand('underline', false, null);
+                        }
+                        if(e.which == 32){
+                            e.preventDefault();
+                            const text = window.getSelection().toString();
+                            window.getSelection().deleteFromDocument();
+                            document.execCommand("insertHTML", false, text);
+                        }
+                    }
+                });
+
+                el.addEventListener('keyup', e => {
+                    if(e.ctrlKey){
+                        e.preventDefault();
+                    }
+                });
+
+                el.addEventListener('keypress', e => {
+                    if(e.ctrlKey){
+                        e.preventDefault();
+                    }
+                });
             }
 
             if (!!el.dataset.fredRte && (el.dataset.fredRte !== 'false')) {
