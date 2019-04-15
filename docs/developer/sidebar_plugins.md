@@ -1,6 +1,6 @@
 # Sidebar Plugins
 
-Fred supports adding functionality to the sidebar by adding Sidebar plugins.
+Fred supports adding functionality to the Sidebar by adding Sidebar plugins.
 
 Plugins are distributed as MODX Transport Packages, which can be submitted to the [MODX Extras repository](https://modx.com/extras) or uploaded manually from the Installer inside the Manager. You can learn more about [how to build Transport Packages](https://docs.modx.com/revolution/2.x/case-studies-and-tutorials/developing-an-extra-in-modx-revolution) in the MODX Documentation, or use a tool like [Git Package Management](https://theboxer.github.io/Git-Package-Management/) to help create Transport Packages.
 
@@ -54,12 +54,36 @@ var TestSidebarPluginInit = function(fred, SidebarPlugin, pluginTools) {
 
 This will create an additional sidebar icon before the `More` item in the sidebar with the same icon as the More item, three dots.
 
-## Icons
-@TODO
+## Icons & Menus
+Sidebar icons are `dt` HTML elements with specific classes. For example, the Settings button from the Sidebar is marked up as follows:
 
+```html
+<dt class="fred--sidebar_page_settings" tabindex="0" role="tab">Settings</dt>
+```
+
+The CSS class `fred--sidebar_page_settings` determines the appearance of the button. To style a new toolbar icon, you need to target the psuedo element `::before` in your plugin’s CSS with inline SVG code for a background image:  
+
+```css
+.fred .fred--sidebar_page_settings:before {
+    background: url(data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 …35.888-80 80 35.888 80 80 80 80-35.888 80-80z' fill='%23fff'/%3E%3C/svg%3E) center center no-repeat;
+}
+```
 Any custom CSS file for your plugin including a custom icon like the above, and other styles needed for the plugin, can be included the same way as the JavaScript file in [Register your Plugin](#register-your-plugin) step, below.
 
 Fred’s default icons are the SVG versions of [Font Awesome 5 icons](https://fontawesome.com/icons?d=gallery). You can download the SVG of any icon from its detailed page.
+
+### Menus
+
+If your plugin needs a menu similar to the Elements or Settings, they are defined inside the `dd` HTML elements. For example, the Settings menu begins as follows:
+
+```html
+<dd>
+    <h3 class="">Settings</h3>
+    <form class="fred--page_settings_form">
+        <fieldset class=""> 
+            <label class="">Page Title<input class="" type="text"></label>
+            …
+```
 
 ### Sidebar Plugin Order
 
