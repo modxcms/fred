@@ -17,6 +17,12 @@ Name of the Media Source to use for Image fields. Multiple Names can be passed s
 Only applicable when `remote` is set to `true`.
 Will cache output of the element to static HTML.
 
+### toolbarPluginsInclude
+List of toolbar plugins to enable for elements.
+
+### toolbarPluginsExclude
+List of toolbar plugins to disable for elements.
+
 ## Settings
 Settings are made of a JSON array of objects and [group objects](#setting-groups) which provide configuratin controls for Elements. Settings can [import](import.md) sub-sets of settings using a `fred-import` object.
 
