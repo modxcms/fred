@@ -53,6 +53,7 @@ nav:
     - Intro: developer/index.md
     - MODX Events: developer/modx_events.md
     - Toolbar Plugins: developer/toolbar_plugins.md 
+    - Sidebar Plugins: developer/sidebar_plugins.md 
   - Credits: credits.md
 
 theme:
