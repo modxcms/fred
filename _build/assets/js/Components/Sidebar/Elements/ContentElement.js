@@ -593,8 +593,7 @@ export class ContentElement {
                 });
 
                 el.addEventListener('keydown', e => {
-                    if(e.ctrlKey){
-                        console.log(e);
+                    if(e.ctrlKey || e.metaKey){
                         if(e.which == 66){
                             e.preventDefault();
                             document.execCommand('bold', false, null);
