@@ -583,6 +583,14 @@ export class ContentElement {
                     window.getSelection().deleteFromDocument();
                     e.preventDefault();
                 });
+
+                el.addEventListener('paste', e => {
+                    e.preventDefault();
+
+                    const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+
+                    document.execCommand("insertHTML", false, text);
+                });
             }
 
             if (!!el.dataset.fredRte && (el.dataset.fredRte !== 'false')) {
