@@ -410,10 +410,12 @@ export class ContentElement {
     }
     
     setValue(el, value, name = '_value', namespace = '_raw', contentEl = null, isPreview = false, silent = false) {
-        emitter.emit('fred-content-changed');
-        
         if (!this.content[el.dataset.fredName] || Array.isArray(this.content[el.dataset.fredName])) this.content[el.dataset.fredName] = {};
         if (!this.content[el.dataset.fredName][namespace] || Array.isArray(this.content[el.dataset.fredName][namespace])) this.content[el.dataset.fredName][namespace] = {};
+        
+        if (this.content[el.dataset.fredName][namespace][name] !== value) {
+            emitter.emit('fred-content-changed', 'setValue');
+        }
         
         this.content[el.dataset.fredName][namespace][name] = value;
         value = valueParser(value, (!isPreview && (contentEl !== null)));
@@ -454,29 +456,45 @@ export class ContentElement {
     }
 
     setValueForBindElements(name, value, contentEl = null) {
-        emitter.emit('fred-content-changed');
-        
         if (contentEl === null) {
             contentEl = this.contentEl;
         }
+        
+        let changed = false;
         
         const bindElements = contentEl.querySelectorAll(`[data-fred-bind="${name}"]`);
         for (let bindEl of bindElements) {
             switch (bindEl.nodeName.toLowerCase()) {
                 case 'i':
+                    if (bindEl.className !== value) {
+                        changed = true;
+                    }
+                    
                     bindEl.className = value;
                     break;
                 case 'img':
+                    if (bindEl.getAttribute('src') !== value) {
+                        changed = true;
+                    }
+                    
                     bindEl.setAttribute('src', value);
                     break;
                 default:
+                    if (bindEl.innerHTML !== value) {
+                        changed = true;
+                    }
+                    
                     bindEl.innerHTML = value;
             }
+        }
+        
+        if (changed === true) {
+            emitter.emit('fred-content-changed', 'setValueForBindElements');
         }
     }
     
     setPluginValue(namespace, name, value) {
-        emitter.emit('fred-content-changed');
+        emitter.emit('fred-content-changed', 'setPluginValue');
         
         if (Array.isArray(this.pluginsData)) this.pluginsData = {};
         
