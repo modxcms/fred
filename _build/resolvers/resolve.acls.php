@@ -113,13 +113,16 @@ if ($object->xpdo) {
                 /** @var modContext[] $contexts */
                 $contexts = $modx->getIterator('modContext');
                 foreach ($contexts as $context) {
-                    $contextAccess = $modx->newObject('modAccessContext');
-                    $contextAccess->set('target', $context->get('key'));
-                    $contextAccess->set('principal_class', 'modUserGroup');
-                    $contextAccess->set('principal', 1);
-                    $contextAccess->set('policy', $adminPolicy->get('id'));
-                    $contextAccess->set('authority', 0);
-                    $contextAccess->save();
+                    $contextAccess = $modx->getObject('modAccessContext', ['target' => $context->get('key'), 'principal_class' => 'modUserGroup', 'principal' => 1, 'policy' => $adminPolicy->get('id')]);
+                    if (!$contextAccess) {
+                        $contextAccess = $modx->newObject('modAccessContext');
+                        $contextAccess->set('target', $context->get('key'));
+                        $contextAccess->set('principal_class', 'modUserGroup');
+                        $contextAccess->set('principal', 1);
+                        $contextAccess->set('policy', $adminPolicy->get('id'));
+                        $contextAccess->set('authority', 0);
+                        $contextAccess->save();
+                    }
                 }
             }
 
