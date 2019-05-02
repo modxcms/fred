@@ -12,24 +12,33 @@ import { getGroups } from '../Actions/tagger';
 import fredConfig from './../Config';
 
 export const text = (setting, defaultValue = '', onChange, onInit) => {
-    const labelEl = label(setting.label || setting.name);
+    let labelEl;
+    if (setting.labelAsPlaceholder === true) {
+        labelEl = label();
+    } else {
+        labelEl = label(setting.label || setting.name);
+    }
 
     const inputEl = input(defaultValue);
 
+    if (setting.labelAsPlaceholder === true) {
+        inputEl.setAttribute('placeholder', setting.label || setting.name);
+    }
+
     let errorEl = null;
-    
+
     inputEl.addEventListener('keyup', e => {
         if (errorEl !== null) {
             errorEl.remove();
             inputEl.removeAttribute('aria-invalid');
             errorEl = null;
         }
-        
+
         if (typeof onChange === 'function') {
             onChange(setting.name, inputEl.value, inputEl, setting);
         }
     });
-    
+
     labelEl.onError = msg => {
         inputEl.setAttribute('aria-invalid', 'true');
         if (errorEl === null) {
@@ -45,7 +54,7 @@ export const text = (setting, defaultValue = '', onChange, onInit) => {
     if (typeof onInit === 'function') {
         onInit(setting, labelEl, inputEl);
     }
-    
+
     return labelEl;
 };
 
@@ -69,7 +78,7 @@ export const select = (setting, defaultValue = '', onChange, onInit) => {
             }
         }
     }
-    
+
     if (typeof onChange === 'function') {
         selectEl.addEventListener('change', e => {
             if (setting.options[selectEl.value]) {
@@ -93,7 +102,7 @@ export const toggle = (setting, defaultValue = false, onChange, onInit) => {
     const inputEl = input(defaultValue, 'checkbox');
 
     labelEl.inputEl = inputEl;
-    
+
     if (typeof onChange === 'function') {
         inputEl.addEventListener('change', e => {
             onChange(setting.name, e.target.checked, inputEl, setting);
@@ -104,7 +113,7 @@ export const toggle = (setting, defaultValue = false, onChange, onInit) => {
 
     labelEl.appendChild(inputEl);
     labelEl.appendChild(spanEl);
-    
+
     if (typeof onInit === 'function') {
         onInit(setting, labelEl, inputEl, spanEl);
     }
@@ -116,7 +125,7 @@ export const area = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
 
     const textAreaEl = textArea(defaultValue);
-    
+
     if (setting.rows && (parseInt(setting.rows) > 0)) {
         textAreaEl.setAttribute('rows', parseInt(setting.rows));
     } else {
@@ -140,7 +149,7 @@ export const area = (setting, defaultValue = '', onChange, onInit) => {
 
 export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
     defaultValue = parseInt(defaultValue) || 0;
-    
+
     const labelEl = label(setting.label || setting.name);
     const group = div(['fred--input-group', 'fred--datetime']);
     const inputEl = input();
@@ -162,7 +171,7 @@ export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
     });
 
     labelEl.picker = picker;
-    
+
     const clear = a('', 'fred.fe.clear', '', 'fred--close-small', () => {
         picker.clear();
     });
@@ -184,7 +193,7 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
     const wrapper = div('fred--color_swatch');
     const preview = div('fred--color_swatch-preview');
     const colors = div(['fred--color_swatch-colors', 'fred--hidden']);
-    
+
     if (defaultValue) {
         preview.style.backgroundColor = defaultValue;
     }
@@ -201,7 +210,7 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
             colors.classList.add('fred--hidden');
         }
     });
-    
+
     let defaultValueTranslated = false;
 
     if (setting.options) {
@@ -209,23 +218,23 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
             if (typeof value === 'object') {
                 const option = div('fred--color_swatch-color');
                 option.style.background = value.color;
-                
+
                 if (value.width && parseFloat(value.width) > 1) {
                     option.style.width = (parseFloat(value.width) * 30) + 'px';
                 }
-                
+
                 if (value.label && value.label.trim() !== '') {
                     option.setAttribute('data-tooltip', value.label);
                 }
 
                 if (!defaultValueTranslated && defaultValue && (value.value === defaultValue)) {
                     defaultValueTranslated = true;
-                    
+
                     if (defaultValue) {
                         preview.style.background = value.color;
                     }
                 }
-                
+
                 option.addEventListener('click', e => {
                     e.preventDefault();
                     if (typeof onChange === 'function') {
@@ -239,16 +248,16 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
             } else {
                 const option = div('fred--color_swatch-color');
                 option.style.backgroundColor = value;
-    
+
                 option.addEventListener('click', e => {
                     e.preventDefault();
                     if (typeof onChange === 'function') {
                         onChange(setting.name, value, option, setting);
                     }
-    
+
                     preview.style.background = value;
                 });
-                
+
                 colors.appendChild(option);
             }
         });
@@ -256,13 +265,13 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
 
     wrapper.appendChild(preview);
     wrapper.appendChild(colors);
-    
+
     labelEl.appendChild(wrapper);
 
     if (typeof onInit === 'function') {
         onInit(setting, labelEl, wrapper, preview, colors);
     }
-    
+
     return labelEl;
 };
 
@@ -270,7 +279,7 @@ export const colorPicker = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
     const wrapper = div('fred--color_picker');
     const preview = div('fred--color_picker-preview');
-    
+
     let isOpen = false;
     let pickerInstance = null;
 
@@ -278,7 +287,7 @@ export const colorPicker = (setting, defaultValue = '', onChange, onInit) => {
         e.preventDefault();
         if (isOpen === false) {
             isOpen = true;
-            
+
             pickerInstance = ColorPicker.createPicker({
                 attachTo: picker,
                 color: defaultValue,
@@ -286,7 +295,7 @@ export const colorPicker = (setting, defaultValue = '', onChange, onInit) => {
                 paletteEditable: false,
                 palette: setting.options || null
             });
-            
+
             pickerInstance.onchange = (picker) => {
                 if (typeof onChange === 'function') {
                     onChange(setting.name, picker.color, picker, setting);
@@ -304,22 +313,22 @@ export const colorPicker = (setting, defaultValue = '', onChange, onInit) => {
             isOpen = false;
         }
     });
-    
+
     if (defaultValue) {
         preview.style.backgroundColor = defaultValue;
     }
 
     const picker = div();
-    
+
     wrapper.appendChild(preview);
     wrapper.appendChild(picker);
-    
+
     labelEl.appendChild(wrapper);
 
     if (typeof onInit === 'function') {
         onInit(setting, labelEl, wrapper, preview, picker);
     }
-    
+
     return labelEl;
 };
 
@@ -330,7 +339,7 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
         console.error('Slider Input error. Parameters min and max are required');
         return labelEl;
     }
-    
+
     const sliderEl = div();
 
     let init = false;
@@ -342,18 +351,18 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
             step = Math.pow(10, -1 * setting.tooltipDecimals);
         }
     }
-    
+
     const slider = noUiSlider.create(sliderEl, {
         start: defaultValue,
         connect: [true, false],
         tooltips: {
             to: value => {
                 const decimals = (setting.tooltipDecimals === undefined) ? 0 : setting.tooltipDecimals;
-    
+
                 if (decimals === 0) {
                     return parseInt(value.toFixed());
                 }
-                
+
                 return parseFloat(value.toFixed(decimals));
             }
         },
@@ -423,7 +432,7 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
 
     wrapper.appendChild(labelEl);
     wrapper.appendChild(selectEl);
-    
+
     let lookupTimeout = null;
     const lookupCache = {};
     let initData = [];
@@ -437,19 +446,19 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
     fixChoices(pageChoices);
 
     const queryOptions = {};
-    
+
     if (setting.parents) {
         queryOptions.parents = setting.parents;
     }
-    
+
     if (setting.resources) {
         queryOptions.resources = setting.resources;
     }
-    
+
     if (setting.depth) {
         queryOptions.depth = setting.depth;
     }
-    
+
     pageChoices.ajax(callback => {
         getResources(defaultValue.id, queryOptions)
             .then(json => {
@@ -538,16 +547,16 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
     setting.showPreview = (setting.showPreview === undefined) ? true : setting.showPreview;
 
     const inputWrapper = div(['fred--input-group', 'fred--browse']);
-    
+
     const inputEl = input(defaultValue);
 
     const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 
     const preview = img('');
     let previewAdded = false;
-    
+
     const finderOptions = {};
-    
+
     if (setting.mediaSource && (setting.mediaSource !== '')) {
         finderOptions.mediaSource = setting.mediaSource;
     }
@@ -564,24 +573,24 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
                 preview.src = '';
                 preview.remove();
                 previewAdded = false;
-            } 
+            }
         }
 
         if (typeof onChange === 'function') {
             onChange(setting.name, inputEl.value, inputEl, setting);
         }
     });
-    
+
     const openFinder = e => {
         e.preventDefault();
 
         const finder = new Finder((file, fm) => {
             let value = file.url;
-            
+
             if (value.indexOf(fredConfig.config.themeDir) === 0) {
                 value = value.replace(fredConfig.config.themeDir, '{{theme_dir}}');
             }
-            
+
             if (typeof onChange === 'function') {
                 onChange(setting.name, value, inputEl, setting);
             }
@@ -597,7 +606,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
 
         finder.render();
     };
-    
+
     openFinderButton.addEventListener('click', openFinder);
     preview.addEventListener('click', openFinder);
 
@@ -609,7 +618,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
     if(inputEl.value) {
         preview.src = valueParser(inputEl.value);
     }
-    
+
     if ((setting.showPreview === true) && preview.src) {
         labelEl.appendChild(preview);
         previewAdded = true;
@@ -618,7 +627,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
     labelEl.setPreview = src => {
         if (setting.showPreview !== true) return;
         preview.src = valueParser(src);
-        
+
         if (previewAdded === false) {
             labelEl.appendChild(preview);
             previewAdded = true;
@@ -636,13 +645,13 @@ export const file = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
 
     const inputWrapper = div(['fred--input-group', 'fred--browse']);
-    
+
     const inputEl = input(defaultValue);
 
     const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 
     const finderOptions = {};
-    
+
     if (setting.mediaSource && (setting.mediaSource !== '')) {
         finderOptions.mediaSource = setting.mediaSource;
     }
@@ -652,7 +661,7 @@ export const file = (setting, defaultValue = '', onChange, onInit) => {
             onChange(setting.name, inputEl.value, inputEl, setting);
         }
     });
-    
+
     const openFinder = e => {
         e.preventDefault();
 
@@ -662,7 +671,7 @@ export const file = (setting, defaultValue = '', onChange, onInit) => {
             if (value.indexOf(fredConfig.config.themeDir) === 0) {
                 value = value.replace(fredConfig.config.themeDir, '{{theme_dir}}');
             }
-            
+
             if (typeof onChange === 'function') {
                 onChange(setting.name, value, inputEl, setting);
             }
@@ -672,7 +681,7 @@ export const file = (setting, defaultValue = '', onChange, onInit) => {
 
         finder.render();
     };
-    
+
     openFinderButton.addEventListener('click', openFinder);
 
     inputWrapper.appendChild(inputEl);
@@ -720,14 +729,14 @@ export const folder = (setting, defaultValue = '', onChange, onInit) => {
             if (value.indexOf(fredConfig.config.themeDir) === 0) {
                 value = value.replace(fredConfig.config.themeDir, '{{theme_dir}}');
             }
-            
+
             if (typeof onChange === 'function') {
                 onChange(setting.name, value, inputEl, setting);
             }
-            
+
             inputEl.value = value;
         }, 'fred.fe.browse_folders', finderOptions);
-        
+
         finder.render();
     };
 
@@ -751,24 +760,24 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
     const selectEl = selectElement();
 
     let errorEl = null;
-    
+
     wrapper.appendChild(labelEl);
     wrapper.appendChild(selectEl);
     const config = setting.choices || {};
     config.searchResultLimit = 0;
-    
+
     const choicesInstance = new Choices(selectEl, config);
     fixChoices(choicesInstance);
-    
+
     wrapper.choices = choicesInstance;
-    
+
     if (typeof onChange === 'function') {
         choicesInstance.passedElement.addEventListener('choice', event => {
             if (errorEl !== null) {
                 errorEl.remove();
                 errorEl = null;
             }
-            
+
             onChange(setting.name, event.detail.choice, selectEl, setting, choicesInstance);
         });
     }
@@ -793,7 +802,7 @@ export const tagger = (setting, defaultValue = '', onChange, onInit) => {
     setting.limit = setting.limit || 0;
 
     const tempField = div();
-    
+
     getGroups(setting.group, setting.autoTag)
         .then(value => {
             const currentTags = defaultValue.split(',').filter(e => {return e;});
@@ -810,9 +819,9 @@ export const tagger = (setting, defaultValue = '', onChange, onInit) => {
             }, currentTags, newTags => {
                 onChange(setting.name, newTags.join(','), field, setting, taggerField);
             });
-    
+
             const field = taggerField.render();
-    
+
             tempField.replaceWith(field);
         })
         .catch(error => {

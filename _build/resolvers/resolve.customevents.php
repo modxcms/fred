@@ -8,7 +8,8 @@ if ($object->xpdo) {
         'FredElementFormRender',
         'FredOnBeforeFredResourceSave',
         'FredOnFredResourceSave',
-        'FredOnFredResourceLoad'
+        'FredOnFredResourceLoad',
+        'FredOnBeforeGetResourceTree'
     ];
     
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {

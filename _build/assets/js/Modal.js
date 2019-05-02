@@ -17,7 +17,9 @@ export class  Modal {
         
         this.showCancelButton = config.showCancelButton || false;
         this.cancelButtonText = config.cancelButtonText || 'fred.fe.cancel';
+        this.showSaveButton = (config.showSaveButton === undefined) ? true : config.showSaveButton;
         this.saveButtonText = config.saveButtonText || 'fred.fe.save';
+        this.width = config.width ? config.width : null;
         
         this.cancelButton = null;
         this.saveButton = null;
@@ -49,6 +51,10 @@ export class  Modal {
         
         const modal = div(['fred--modal']);
         modal.setAttribute('aria-hidden', 'true');
+        
+        if (this.width !== null) {
+            modal.style.width = this.width;
+        }
 
         const header = div(['fred--modal-header']);
 
@@ -73,11 +79,13 @@ export class  Modal {
             footer.appendChild(this.cancelButton);
         }
         
-        this.saveButton = button(this.saveButtonText, this.saveButtonText, ['fred--btn-small'], () => {
-            this.onSave();
-            this.close();
-        });
-        footer.appendChild(this.saveButton);
+        if (this.showSaveButton === true) {
+            this.saveButton = button(this.saveButtonText, this.saveButtonText, ['fred--btn-small'], () => {
+                this.onSave();
+                this.close();
+            });
+            footer.appendChild(this.saveButton);
+        }
         
         header.appendChild(close);
         header.appendChild(this.titleEl);

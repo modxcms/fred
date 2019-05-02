@@ -10,7 +10,6 @@
 
 namespace Fred\Endpoint;
 
-use Firebase\JWT\JWT;
 use Fred\Utils;
 
 class ElFinder extends Endpoint
@@ -22,14 +21,8 @@ class ElFinder extends Endpoint
             return;
         }
 
-        if (empty($_SERVER['HTTP_X_FRED_TOKEN'])) {
-            http_response_code(403);
-            return;
-        }
-
         try {
-            $payload = JWT::decode($_SERVER['HTTP_X_FRED_TOKEN'], $this->fred->getSecret(), ['HS256']);
-            $payload = (array)$payload;
+            $payload = $this->fred->getJWTPayload();
 
             $this->modx->switchContext($payload['context']);
             

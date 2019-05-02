@@ -1,18 +1,12 @@
-import fetch from "isomorphic-fetch";
 import cache from '../Cache';
+import fetch from '../Fetch';
 import { errorHandler } from "../Utils";
 import fredConfig from "../Config";
 
 export const getBlueprints = (complete = null, theme = fredConfig.config.theme) => {
     return cache.load('blueprints', {name: 'blueprints', complete, theme}, () => {
         const completeString = (complete !== null) ? `&complete=${+complete}` : '';
-        
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints&theme=${theme}${completeString}`, {
-            credentials: 'same-origin',
-            headers: {
-                'X-Fred-Token': fredConfig.jwt
-            }
-        })
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-blueprints&theme=${theme}${completeString}`)
             .then(response => {
                 return response.json();
             })
@@ -41,10 +35,8 @@ export const createBlueprint = (name, description, category, rank, isPublic, dat
 
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=blueprints-create-blueprint`, {
         method: "post",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
     }).then(errorHandler);
@@ -53,10 +45,8 @@ export const createBlueprint = (name, description, category, rank, isPublic, dat
 export const createBlueprintCategory = (name, rank, isPublic) => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=blueprints-create-category`, {
         method: "post",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             name,
@@ -69,12 +59,7 @@ export const createBlueprintCategory = (name, rank, isPublic) => {
 
 export const loadBlueprint = blueprint => {
     return cache.load('blueprints', {name: 'load-blueprint', blueprint}, () => {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-blueprint&blueprint=${blueprint}`, {
-            credentials: 'same-origin',
-            headers: {
-                'X-Fred-Token': fredConfig.jwt
-            }
-        })
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-blueprint&blueprint=${blueprint}`)
             .then(errorHandler)
             .catch(err => {
                 console.log(err);

@@ -2,7 +2,7 @@ import Choices from 'choices.js';
 import flatpickr from "flatpickr";
 import ColorPicker from './ColorPicker/ColorPicker';
 import noUiSlider from 'nouislider';
-import fetch from 'isomorphic-fetch';
+import fetch from './Fetch';
 
 const libs = {
     Choices,

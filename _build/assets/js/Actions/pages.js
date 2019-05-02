@@ -1,16 +1,11 @@
 import cache from "../Cache";
-import fetch from "isomorphic-fetch";
+import fetch from '../Fetch';
 import fredConfig from "../Config";
 import {errorHandler} from "../Utils";
 
 export const getResourceTree = contextKey => {
     return cache.load('resources', {name: 'resource-tree'}, () => {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree&context=${contextKey}`, {
-            credentials: 'same-origin',
-            headers: {
-                'X-Fred-Token': fredConfig.jwt
-            }
-        })
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree&context=${contextKey}`)
             .then(response => {
                 return response.json();
             }).then(response => {
@@ -21,12 +16,7 @@ export const getResourceTree = contextKey => {
 
 export const getTemplates = contextKey => {
     return cache.load('templates', {name: 'templates'}, () => {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-templates`, {
-            credentials: 'same-origin',
-            headers: {
-                'X-Fred-Token': fredConfig.jwt
-            }
-        })
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-templates`)
             .then(errorHandler);
     });
 };
@@ -34,10 +24,8 @@ export const getTemplates = contextKey => {
 export const createResource = (parent, template, pagetitle, blueprint) => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
         method: "post",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             parent,
@@ -62,21 +50,14 @@ export const getResources = (currentResource = null, query = {}) => {
         }
     }
     
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources${queryString}`, {
-        credentials: 'same-origin',
-        headers: {
-            'X-Fred-Token': fredConfig.jwt
-        }
-    }).then(errorHandler)
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources${queryString}`).then(errorHandler)
 };
 
 export const publishResource = resource => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=publish-resource`, {
         method: "post",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             resource
@@ -87,10 +68,8 @@ export const publishResource = resource => {
 export const unpublishResource = resource => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=unpublish-resource`, {
         method: "post",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             resource
@@ -101,10 +80,8 @@ export const unpublishResource = resource => {
 export const deleteResource = resource => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=delete-resource`, {
         method: "post",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             resource
@@ -115,10 +92,8 @@ export const deleteResource = resource => {
 export const undeleteResource = resource => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=undelete-resource`, {
         method: "post",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             resource
@@ -129,10 +104,8 @@ export const undeleteResource = resource => {
 export const duplicateResource = (pagetitle, duplicate_children, publishing_options, resource) => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=duplicate-resource`, {
         method: "post",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             pagetitle,
