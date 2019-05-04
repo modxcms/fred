@@ -21,7 +21,7 @@ $_lang['freddropzone'] = 'Fred область загрузки';
 $_lang['fred.global.any'] = 'Любой';
 $_lang['fred.global.change_order'] = 'Изменить сортировку: [[+name]]';
 $_lang['fred.global.help'] = 'Помощь';
-$_lang['fred.global.none'] = 'None';
+$_lang['fred.global.none'] = 'Нет';
 
 $_lang['fred.open_in_fred'] = 'Открыть в Fred';
 
