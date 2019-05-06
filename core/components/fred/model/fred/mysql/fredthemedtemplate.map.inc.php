@@ -15,7 +15,7 @@ $xpdo_meta_map['FredThemedTemplate']= array (
   array (
     'template' => NULL,
     'theme' => NULL,
-    'default_blueprint' => NULL,
+    'default_blueprint' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -43,6 +43,7 @@ $xpdo_meta_map['FredThemedTemplate']= array (
       'precision' => '10',
       'phptype' => 'integer',
       'null' => false,
+      'default' => 0,
     ),
   ),
   'indexes' => 

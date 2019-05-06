@@ -12,7 +12,7 @@
         <index alias="uuid" name="uuid" primary="false" unique="true" type="BTREE">
             <column key="uuid" length="" collation="A" null="false" />
         </index>
-        
+
         <index alias="theme" name="theme" primary="false" unique="false" type="BTREE">
             <column key="theme" length="" collation="A" null="false" />
         </index>
@@ -20,7 +20,7 @@
         <index alias="public" name="public" primary="false" unique="false" type="BTREE">
             <column key="public" length="" collation="A" null="false" />
         </index>
-        
+
         <index alias="rank" name="rank" primary="false" unique="false" type="BTREE">
             <column key="rank" length="" collation="A" null="false" />
         </index>
@@ -33,12 +33,12 @@
             <column key="name" length="" collation="A" null="false" />
             <column key="theme" length="" collation="A" null="false" />
         </index>
-        
+
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="foreign" />
         <composite alias="Blueprints" class="FredBlueprint" local="id" foreign="category" cardinality="many" owner="local" />
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
     </object>
-    
+
     <object class="FredBlueprint" table="fred_blueprints" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
         <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
@@ -57,7 +57,7 @@
         <index alias="uuid" name="uuid" primary="false" unique="true" type="BTREE">
             <column key="uuid" length="" collation="A" null="false" />
         </index>
-        
+
         <index alias="category" name="category" primary="false" unique="false" type="BTREE">
             <column key="category" length="" collation="A" null="false" />
         </index>
@@ -78,7 +78,7 @@
             <column key="name" length="" collation="A" null="false" />
             <column key="category" length="" collation="A" null="false" />
         </index>
-        
+
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Category" class="FredBlueprintCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
     </object>
@@ -96,7 +96,7 @@
         <index alias="rank" name="rank" primary="false" unique="false" type="BTREE">
             <column key="rank" length="" collation="A" null="false" />
         </index>
-        
+
         <index alias="theme" name="theme" primary="false" unique="false" type="BTREE">
             <column key="theme" length="" collation="A" null="false" />
         </index>
@@ -105,11 +105,11 @@
             <column key="name" length="" collation="A" null="false" />
             <column key="theme" length="" collation="A" null="false" />
         </index>
-        
+
         <composite alias="Elements" class="FredElement" local="id" foreign="category" cardinality="many" owner="local" />
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
     </object>
-    
+
     <object class="FredElementOptionSet" table="fred_element_option_sets" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="128" phptype="string" null="false" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
@@ -118,7 +118,7 @@
 
         <field key="data" dbtype="mediumtext" phptype="json" null="false" default="" />
         <alias key="content" field="data" />
-        
+
         <index alias="theme" name="theme" primary="false" unique="false" type="BTREE">
             <column key="theme" length="" collation="A" null="false" />
         </index>
@@ -131,10 +131,10 @@
             <column key="name" length="" collation="A" null="false" />
             <column key="theme" length="" collation="A" null="false" />
         </index>
-        
+
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
     </object>
-    
+
     <object class="FredElementRTEConfig" table="fred_element_rte_configs" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="128" phptype="string" null="false" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
@@ -151,10 +151,10 @@
             <column key="name" length="" collation="A" null="false" />
             <column key="theme" length="" collation="A" null="false" />
         </index>
-        
+
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
     </object>
-    
+
     <object class="FredElement" table="fred_elements" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
         <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
@@ -165,7 +165,7 @@
 
         <field key="option_set" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="options_override" dbtype="mediumtext" phptype="json" null="false" default="" />
-        
+
         <field key="content" dbtype="mediumtext" phptype="string" null="false" default="" />
 
         <index alias="uuid" name="uuid" primary="false" unique="true" type="BTREE">
@@ -175,7 +175,7 @@
         <index alias="category" name="category" primary="false" unique="false" type="BTREE">
             <column key="category" length="" collation="A" null="false" />
         </index>
-        
+
         <index alias="rank" name="rank" primary="false" unique="false" type="BTREE">
             <column key="rank" length="" collation="A" null="false" />
         </index>
@@ -184,7 +184,7 @@
             <column key="name" length="" collation="A" null="false" />
             <column key="category" length="" collation="A" null="false" />
         </index>
-        
+
         <aggregate alias="Category" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="OptionSet" class="FredElementOptionSet" local="option_set" foreign="id" cardinality="one" owner="foreign" />
         <composite alias="Cache" class="FredCache" local="id" foreign="element" cardinality="many" owner="local" />
@@ -212,11 +212,11 @@
         <composite alias="OptionSets" class="FredElementOptionSet" local="id" foreign="theme" cardinality="many" owner="local" />
         <composite alias="Templates" class="FredThemedTemplate" local="id" foreign="theme" cardinality="many" owner="local" />
     </object>
-    
+
     <object class="FredThemedTemplate" table="fred_themed_templates" extends="xPDOObject">
         <field key="template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
         <field key="theme" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
-        <field key="default_blueprint" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
+        <field key="default_blueprint" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
 
         <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
             <column key="template" length="" collation="A" null="false" />
@@ -229,7 +229,7 @@
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Template" class="modTemplate" local="template" foreign="id" cardinality="one" owner="foreign" />
     </object>
-    
+
     <object class="FredCache" table="fred_cache" extends="xPDOObject">
         <field key="resource" dbtype="int" attributes="unsigned" precision="11" phptype="integer" null="false" index="pk" />
         <field key="element" dbtype="int" attributes="unsigned" precision="11" phptype="integer" null="false" index="pk" />
