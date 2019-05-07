@@ -25,14 +25,14 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
 
         return parent::beforeIteration($list);
     }
-    
+
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
         $id = (int)$this->getProperty('id', 0);
         if (!empty($id)) {
             $c->where(['id' => $id]);
         }
-        
+
         $category = $this->getProperty('category', null);
         if (!empty($category)) {
             $c->where(['category' => $category]);
@@ -45,7 +45,10 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
 
         $public = $this->getProperty('public', '');
         if ($public !== '') {
-            $c->where(['public' => $public]);
+            $c->where([
+                'public' => $public,
+                'Category.public' => $public
+            ]);
         }
 
         $search = $this->getProperty('search', '');
@@ -57,7 +60,7 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
         if (!empty($theme)) {
             $c->where(['Theme.id' => $theme]);
         }
-        
+
         return parent::prepareQueryBeforeCount($c);
     }
 
@@ -68,7 +71,7 @@ class FredBlueprintsGetListProcessor extends modObjectGetListProcessor
         $c->leftJoin('FredTheme', 'Theme', 'Category.theme = Theme.id');
 
         $c->select($this->modx->getSelectColumns('FredBlueprint', 'FredBlueprint', '', ['data'], true));
-        $c->select($this->modx->getSelectColumns('FredBlueprintCategory', 'Category', 'category_', ['name']));
+        $c->select($this->modx->getSelectColumns('FredBlueprintCategory', 'Category', 'category_', ['name', 'public']));
         $c->select($this->modx->getSelectColumns('modUserProfile', 'UserProfile', 'user_profile_', ['fullname']));
         $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['id', 'name', 'theme_folder']));
 

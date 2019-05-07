@@ -187,7 +187,7 @@ fred.combo.ElementOptionSets = function (config) {
     fred.combo.ElementOptionSets.superclass.constructor.call(this, config);
 };
 Ext.extend(fred.combo.ElementOptionSets, MODx.combo.ComboBox, {
-    
+
 });
 Ext.reg('fred-combo-element-option-sets', fred.combo.ElementOptionSets);
 
@@ -386,6 +386,7 @@ fred.combo.Blueprint = function (config) {
             action: 'mgr/blueprints/getlist',
             addNone: config.addNone || 0,
             complete: (config.complete !== undefined) ? config.complete : '',
+            public: (config.public !== undefined) ? config.public : '',
             theme: (config.theme !== undefined) ? config.theme : ''
         }
     });

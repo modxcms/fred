@@ -41,7 +41,7 @@ Ext.extend(fred.window.ThemedTemplate, MODx.Window, {
                 name: 'template'
             });
         }
-        
+
         fields.push([
             {
                 xtype: config.isUpdate ? 'modx-combo-template' : 'fred-combo-template',
@@ -72,7 +72,7 @@ Ext.extend(fred.window.ThemedTemplate, MODx.Window, {
                         defaultBlueprint.store.on('load', function() {
                             defaultBlueprint.setValue(0);
                         }, this, {single: true});
-                        
+
                         defaultBlueprint.store.load();
                     },
                     scope: this
@@ -82,6 +82,7 @@ Ext.extend(fred.window.ThemedTemplate, MODx.Window, {
                 xtype: 'fred-combo-blueprint',
                 addNone: 1,
                 complete: 1,
+                public: 1,
                 theme: (config.record && config.record.theme) ? config.record.theme : '',
                 fieldLabel: _('fred.themed_templates.default_blueprint'),
                 name: 'default_blueprint',
@@ -91,7 +92,7 @@ Ext.extend(fred.window.ThemedTemplate, MODx.Window, {
                 value: 0
             }
         ]);
-        
+
         return fields;
     }
 });
