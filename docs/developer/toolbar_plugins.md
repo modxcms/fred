@@ -19,6 +19,8 @@ To initialise your plugin start by creating an `init` function that will be call
     - `fetch` – use to make XHR requests
     - `fredConfig` – an instance of `fredConfig`
     - `utilitySidebar` – creates a sidebar, like the one used for Element settings
+    - `actions` - predefined Fred XHR requests
+    - `Mousetrap` - library for keyboard shortcuts
 
 The `init` function must return a class that extends the ToolbarPlugin.
 

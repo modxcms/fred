@@ -7,10 +7,11 @@ import Modal from "./Modal";
 import fetch from "./Fetch";
 import utilitySidebar from "./Components/UtilitySidebar";
 import actions from './Actions';
+import Mousetrap from 'mousetrap';
 
 export const debounce = (delay, fn) => {
     let timerId;
-    
+
     return function (...args) {
         if (timerId) {
             clearTimeout(timerId);
@@ -32,7 +33,7 @@ export const errorHandler = response => {
         err.response = json;
 
         throw err;
-    })    
+    })
 };
 
 export const applyScripts = el => {
@@ -42,7 +43,7 @@ export const applyScripts = el => {
         const script = document.createElement('script');
         script.dataset.fredRender = 'false';
         script.innerHTML = scriptEl.innerHTML;
-        
+
         scriptEl.parentNode.replaceChild(script, scriptEl);
     }
 };
@@ -51,7 +52,7 @@ export const fixChoices = choices => {
     const sortByScore = (a, b) => {
         return a.score - b.score;
     };
-    
+
     choices.renderChoices = function(choices, fragment, withinGroup = false) {
         // Create a fragment to store our list items (so we don't have to update the DOM for each item)
         const choicesFragment = fragment || document.createDocumentFragment();
@@ -66,13 +67,13 @@ export const fixChoices = choices => {
                 choicesFragment.appendChild(dropdownItem);
             }
         };
-    
+
         let rendererableChoices = choices;
-    
+
         if (renderSelectedChoices === 'auto' && !this.isSelectOneElement) {
             rendererableChoices = choices.filter(choice => !choice.selected);
         }
-    
+
         // Split array into placeholders and "normal" choices
         const { placeholderChoices, normalChoices } = rendererableChoices.reduce((acc, choice) => {
             if (choice.placeholder) {
@@ -82,17 +83,17 @@ export const fixChoices = choices => {
             }
             return acc;
         }, { placeholderChoices: [], normalChoices: [] });
-    
+
         // If sorting is enabled or the user is searching, filter choices
         if (this.config.shouldSort || this.isSearching) {
             normalChoices.sort(filter);
         }
-    
+
         let choiceLimit = rendererableChoices.length;
-    
+
         // Prepend placeholeder
         const sortedChoices = [...placeholderChoices, ...normalChoices];
-    
+
         if (this.isSearching) {
             if (searchResultLimit > 0) {
                 choiceLimit = searchResultLimit;
@@ -100,17 +101,17 @@ export const fixChoices = choices => {
         } else if (renderChoiceLimit > 0 && !withinGroup) {
             choiceLimit = renderChoiceLimit;
         }
-    
+
         // Add each choice to dropdown within range
         for (let i = 0; i < choiceLimit; i++) {
             if (sortedChoices[i]) {
                 appendChoice(sortedChoices[i]);
             }
         }
-    
+
         return choicesFragment;
     };
-    
+
     choices.ajax = function(fn) {
         if (this.initialised === true) {
             if (this.isSelectElement) {
@@ -128,11 +129,11 @@ export const fixChoices = choices => {
 
 const loadChildren = (zones, parent, elements, fireEvents = false) => {
     const dzPromises = [];
-    
+
     for (let zoneName in zones) {
         if (zones.hasOwnProperty(zoneName)) {
             const promises = [];
-            
+
             zones[zoneName].forEach(element => {
                 const chunk = div(['chunk']);
                 chunk.setAttribute('hidden', 'hidden');
@@ -148,7 +149,7 @@ const loadChildren = (zones, parent, elements, fireEvents = false) => {
                         if (fireEvents === true) {
                             const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
                             document.body.dispatchEvent(event);
-    
+
                             const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
                             for (let jsEl of jsElements) {
                                 if (window[jsEl.dataset.fredOnDrop]) {
@@ -156,7 +157,7 @@ const loadChildren = (zones, parent, elements, fireEvents = false) => {
                                 }
                             }
                         }
-                        
+
                         return {zoneName, contentElement, parent};
                     });
                 }));
@@ -193,7 +194,7 @@ export const loadElements = data => {
                         chunk.dataset.invalidTheme = data.elements[element.widget].invalidTheme;
                         chunk.elementMarkup = data.elements[element.widget].html;
                         chunk.elementOptions = data.elements[element.widget].options || {};
-    
+
                         const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}), (element.pluginsData || {}));
                         promises.push(contentElement.render().then(wrapper => {
                             return loadChildren(element.children, contentElement, data.elements).then(() => {
@@ -211,14 +212,14 @@ export const loadElements = data => {
             }
         }
     }
-    
+
     return Promise.all(dzPromises);
 };
 
 export const buildBlueprint = (data, parent, target, sibling) => {
     const complete = data.complete || false;
     let emptyPage = true;
-    
+
     for (let dz of fredConfig.fred.dropzones) {
         if (dz.querySelector('.fred--block')) {
             emptyPage = false;
@@ -226,36 +227,36 @@ export const buildBlueprint = (data, parent, target, sibling) => {
         }
     }
 
-    let elements = []; 
-    
+    let elements = [];
+
     if (complete === false) {
         elements = data.data;
     } else {
         if (emptyPage === true) {
             const zones = data.data;
             const dzPromises = [];
-            
+
             for (let zoneName in zones) {
                 if (zones.hasOwnProperty(zoneName)) {
                     const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
                     if (zoneEl) {
                         const promises = [];
-    
+
                         zones[zoneName].forEach(element => {
                             const chunk = div(['chunk']);
                             chunk.setAttribute('hidden', 'hidden');
                             chunk.dataset.fredElementId = element.widget;
-    
+
                             chunk.dataset.fredElementTitle = data.elements[element.widget].title;
                             chunk.elementMarkup = data.elements[element.widget].html;
                             chunk.elementOptions = data.elements[element.widget].options;
-    
+
                             const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}), (element.pluginsData || {}));
                             promises.push(contentElement.render().then(wrapper => {
                                 loadChildren(element.children, contentElement, data.elements, true).then(() => {
                                     const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
                                     document.body.dispatchEvent(event);
-    
+
                                     const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
                                     for (let jsEl of jsElements) {
                                         if (window[jsEl.dataset.fredOnDrop]) {
@@ -263,12 +264,12 @@ export const buildBlueprint = (data, parent, target, sibling) => {
                                         }
                                     }
                                 });
-                                
+
                                 return wrapper;
                             }));
-    
+
                         });
-    
+
                         dzPromises.push(Promise.all(promises).then(wrappers => {
                             wrappers.forEach(wrapper => {
                                 zoneEl.appendChild(wrapper);
@@ -277,16 +278,16 @@ export const buildBlueprint = (data, parent, target, sibling) => {
                     }
                 }
             }
-    
+
             return Promise.all(dzPromises);
         }
-    
+
         let dzName = '';
-        
+
         if (parent === null) {
             if (data.data[target.dataset.fredDropzone]) {
                 dzName = target.dataset.fredDropzone;
-                
+
             } else if (data.data['content']) {
                 dzName = 'content';
             }
@@ -295,12 +296,12 @@ export const buildBlueprint = (data, parent, target, sibling) => {
                 dzName = 'content';
             }
         }
-    
+
         if (dzName === '') {
             console.error('Something wrong happened with blueprint.');
             return;
         }
-        
+
         elements = data.data[dzName];
     }
 
@@ -355,25 +356,25 @@ export const getTemplateSettings = (cleanRender = false) => {
         template: {
             theme_dir: cleanRender ? '[[++fred.theme_dir]]' : fredConfig.config.themeDir
         }
-    };    
+    };
 };
 
 export const valueParser = (value, clean = false) => {
     if (typeof value !== 'string') return value;
-    
+
     if (clean === true) {
         value = value.replace('{{theme_dir}}', '[[++fred.theme_dir]]');
-        
+
         return value;
     }
-    
+
     value = value.replace('{{theme_dir}}', fredConfig.config.themeDir);
-  
+
     return value;
 };
 
 /**
- * 
+ *
  * @returns {{ui: {els, ins}, valueParser: valueParser, Modal: Modal, emitter, fetch}}
  */
 export const pluginTools = () => {
@@ -385,6 +386,7 @@ export const pluginTools = () => {
         fetch,
         fredConfig,
         utilitySidebar,
-        actions
+        actions,
+        Mousetrap
     };
 };
