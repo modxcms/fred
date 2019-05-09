@@ -3,34 +3,36 @@ import { section, div, button, h4 } from './UI/Elements';
 import fredConfig from "./Config";
 
 export class  Modal {
-    
+
     constructor(title, content = '', onSave = () => {}, config = {}) {
         this.wrapper = null;
 
         if (fredConfig.lngExists(title)) {
             title = fredConfig.lng(title);
         }
-        
+
         this.title = title;
         this.content = content;
         this.onSave = onSave;
-        
+
         this.showCancelButton = config.showCancelButton || false;
         this.cancelButtonText = config.cancelButtonText || 'fred.fe.cancel';
+        this.showSaveButton = (config.showSaveButton === undefined) ? true : config.showSaveButton;
         this.saveButtonText = config.saveButtonText || 'fred.fe.save';
-        
+        this.width = config.width ? config.width : null;
+
         this.cancelButton = null;
         this.saveButton = null;
     }
-    
+
     setTitle(title) {
         this.title = title;
-        
+
         if (this.wrapper !== null) {
             this.titleEl.innerHTML = title;
         }
     }
-    
+
     setContent(content) {
         this.content = content;
 
@@ -43,12 +45,16 @@ export class  Modal {
             }
         }
     }
-    
+
     render() {
         this.wrapper = section(['fred--modal-bg']);
-        
+
         const modal = div(['fred--modal']);
         modal.setAttribute('aria-hidden', 'true');
+
+        if (this.width !== null) {
+            modal.style.width = this.width;
+        }
 
         const header = div(['fred--modal-header']);
 
@@ -57,7 +63,7 @@ export class  Modal {
         this.titleEl = h4(this.title);
 
         this.body = div(['fred--modal-body']);
-        
+
         if (typeof this.content === 'string') {
             this.body.innerHTML = this.content;
         } else {
@@ -72,40 +78,45 @@ export class  Modal {
             });
             footer.appendChild(this.cancelButton);
         }
-        
-        this.saveButton = button(this.saveButtonText, this.saveButtonText, ['fred--btn-small'], () => {
-            this.onSave();
-            this.close();
-        });
-        footer.appendChild(this.saveButton);
-        
+
+        if (this.showSaveButton === true) {
+            this.saveButton = button(this.saveButtonText, this.saveButtonText, ['fred--btn-small'], () => {
+                const saved = this.onSave();
+
+                if (saved !== false) {
+                    this.close();
+                }
+            });
+            footer.appendChild(this.saveButton);
+        }
+
         header.appendChild(close);
         header.appendChild(this.titleEl);
-        
+
         modal.appendChild(header);
         modal.appendChild(this.body);
-        
+
         modal.appendChild(footer);
 
         this.wrapper.appendChild(modal);
 
         emitter.emit('fred-wrapper-insert', this.wrapper);
-        
+
         return this.wrapper;
     }
-    
+
     disableSave() {
         if (this.saveButton) {
             this.saveButton.setAttribute('disabled', 'disabled');
         }
     }
-    
+
     enableSave() {
         if (this.saveButton) {
             this.saveButton.removeAttribute('disabled');
         }
     }
-    
+
     close() {
         this.wrapper.remove();
     }

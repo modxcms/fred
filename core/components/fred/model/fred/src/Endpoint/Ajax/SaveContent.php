@@ -215,10 +215,8 @@ class SaveContent extends Endpoint
         $this->body['data']['fingerprint'] = Utils::resourceFingerprint($object);
         $object->setProperty('data', $this->body['data'], 'fred');
 
-        $beforeSave = $this->modx->invokeEvent('FredOnBeforeFredResourceSave', [
-            'id' => $object->get('id'),
-            'resource' => &$object
-        ]);
+        
+        
 
         if (is_array($beforeSave)) {
             $preventSave = false;

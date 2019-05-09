@@ -4,8 +4,9 @@ import fredConfig from './Config';
 import ui from './UI';
 import emitter from './EE';
 import Modal from "./Modal";
-import fetch from "isomorphic-fetch";
+import fetch from "./Fetch";
 import utilitySidebar from "./Components/UtilitySidebar";
+import actions from './Actions';
 
 export const debounce = (delay, fn) => {
     let timerId;
@@ -383,6 +384,7 @@ export const pluginTools = () => {
         Modal,
         fetch,
         fredConfig,
-        utilitySidebar
+        utilitySidebar,
+        actions
     };
 };

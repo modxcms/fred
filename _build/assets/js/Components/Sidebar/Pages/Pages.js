@@ -45,9 +45,9 @@ export default class Pages extends SidebarPlugin {
                 label: fredConfig.lng('fred.fe.pages.no_parent')
             });
         }
-        
+
         this.buildTree(this.content, this.pageList);
-        
+
         if (fredConfig.permission.new_document) {
             this.buildCreatePage(this.pageList);
         }
@@ -87,12 +87,12 @@ export default class Pages extends SidebarPlugin {
                                         label: blueprint.name,
                                         value: '' + blueprint.id
                                     };
-                                    
+
                                     if (value.customProperties.default_blueprint && (blueprint.id === value.customProperties.default_blueprint)) {
                                         blueprintOption.selected = true;
                                         this.state.blueprint = blueprint.id;
                                     }
-                                    
+
                                     options.push(blueprintOption);
                                 });
 
@@ -110,14 +110,24 @@ export default class Pages extends SidebarPlugin {
                         });
                 });
             }
-            
+
             this.state[name] = value.value;
         };
 
         this.blueprintInput = choices({
             name: 'blueprint',
             label: fredConfig.lng('fred.fe.pages.blueprint'),
-        }, this.state.parent, onChangeChoices);
+            choices: {
+                removeItemButton: true
+            }
+        }, this.state.blueprint, onChangeChoices, (setting, labelEl, selectEl, choicesInstance) => {
+            choicesInstance.passedElement.addEventListener('removeItem', event => {
+                const value = choicesInstance.getValue(false);
+                if (value === undefined) {
+                    this.state.blueprint = '0';
+                }
+            });
+        });
 
         fields.appendChild(title);
 
@@ -127,7 +137,7 @@ export default class Pages extends SidebarPlugin {
         }, this.state.pagetitle, onChange);
 
         fields.appendChild(pagetitle);
-        
+
         this.parentInput = choices({
             name: 'parent',
             label: fredConfig.lng('fred.fe.pages.parent'),
@@ -140,9 +150,9 @@ export default class Pages extends SidebarPlugin {
             choicesInstance.setValueByChoice('' + id);
             this.state.parent = id;
         });
-        
+
         fields.appendChild(this.parentInput);
-        
+
         this.templateInput = choices({
             name: 'template',
             label: fredConfig.lng('fred.fe.pages.template'),
@@ -161,7 +171,7 @@ export default class Pages extends SidebarPlugin {
                     });
             });
         });
-        
+
         fields.appendChild(this.templateInput);
 
         fields.appendChild(this.blueprintInput);
@@ -200,13 +210,13 @@ export default class Pages extends SidebarPlugin {
         if (!fredConfig.permission.new_document_in_root && !fredConfig._resource.parent) {
             this.createPageButton.setAttribute('hidden', 'hidden');
         }
-        
+
         this.formWrapper.appendChild(pageForm);
 
         content.appendChild(this.createPageButton);
         content.appendChild(this.formWrapper);
     }
-    
+
     openCreatePage(e) {
         const activeTabs = this.pageList.querySelectorAll('dt.active');
 
@@ -310,7 +320,7 @@ export default class Pages extends SidebarPlugin {
 
         menu.appendChild(header);
         menu.appendChild(edit);
-        
+
         if (fredConfig.permission.resource_duplicate) {
             const duplicate = button('fred.fe.pages.duplicate', 'fred.fe.pages.duplicate', [], () => {
                 const duplicateState = {
@@ -329,16 +339,16 @@ export default class Pages extends SidebarPlugin {
                         name: 'pagetitle'
                     }, duplicateState.title, setState)
                 ];
-                
+
                 if (page.children.length > 0) {
                     duplicateState.duplicate_children = true;
-                    
+
                     content.push(toggle({
                         label: 'Duplicate Children',
                         name: 'duplicate_children'
                     }, duplicateState.duplicate_children, setState));
                 }
-                
+
                 content.push(select({
                     label: 'Publishing Options',
                     name: 'publishing_options',
@@ -348,7 +358,7 @@ export default class Pages extends SidebarPlugin {
                         preserve: 'Preserve Published Status',
                     }
                 }, duplicateState.publishing_options, setState));
-                
+
                 const modal = new Modal('Duplicate Page', div([], content), () => {
                     duplicateResource(duplicateState.title, duplicateState.duplicate_children, duplicateState.publishing_options, page.id).then((data) => {
                         console.log(data);
@@ -362,7 +372,7 @@ export default class Pages extends SidebarPlugin {
 
         const publish = button('fred.fe.pages.publish', 'fred.fe.pages.publish', [], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.pages.publishing_page'));
-            
+
             publishResource(page.id).then(() => {
                 publish.replaceWith(unpublish);
                 emitter.emit('fred-loading-hide');
@@ -370,10 +380,10 @@ export default class Pages extends SidebarPlugin {
                 emitter.emit('fred-loading-hide');
             });
         });
-        
+
         const unpublish = button('fred.fe.pages.unpublish', 'fred.fe.pages.unpublish', [], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.pages.unpublishing_page'));
-            
+
             unpublishResource(page.id).then(() => {
                 unpublish.replaceWith(publish);
                 emitter.emit('fred-loading-hide');
@@ -381,7 +391,7 @@ export default class Pages extends SidebarPlugin {
                 emitter.emit('fred-loading-hide');
             });
         });
-        
+
         if (page.published === true) {
             if (fredConfig.permission.unpublish_document) {
                 menu.appendChild(unpublish);
@@ -399,7 +409,7 @@ export default class Pages extends SidebarPlugin {
                 this.templateInput.choices.setValueByChoice('' + page.template);
 
                 const template = this.templateInput.choices.getValue();
-                
+
                 if (template.customProperties && template.customProperties.theme) {
                     this.state.theme = template.customProperties.theme;
 
@@ -417,12 +427,12 @@ export default class Pages extends SidebarPlugin {
                                             label: blueprint.name,
                                             value: '' + blueprint.id
                                         };
-                                        
+
                                         if (template.customProperties.default_blueprint && (blueprint.id === template.customProperties.default_blueprint)) {
                                             blueprintOption.selected = true;
                                             this.state.blueprint = blueprint.id;
                                         }
-                                        
+
                                         options.push(blueprintOption);
                                     });
 
@@ -440,8 +450,8 @@ export default class Pages extends SidebarPlugin {
                             });
                     });
                 }
-                
-               this.openCreatePage(e); 
+
+               this.openCreatePage(e);
             });
             menu.appendChild(createChildPage);
         }
@@ -456,7 +466,7 @@ export default class Pages extends SidebarPlugin {
                 emitter.emit('fred-loading-hide');
             });
         });
-        
+
         const unDeletePage = button('fred.fe.pages.undelete', 'fred.fe.pages.undelete', [], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.pages.undeleting_page'));
 
@@ -467,7 +477,7 @@ export default class Pages extends SidebarPlugin {
                 emitter.emit('fred-loading-hide');
             });
         });
-        
+
         if (page.deleted === true) {
             if (fredConfig.permission.undelete_document) {
                 menu.appendChild(unDeletePage);

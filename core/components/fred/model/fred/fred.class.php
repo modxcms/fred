@@ -124,4 +124,38 @@ class Fred
         
         return $secret;
     }
+
+    /**
+     * @return array
+     * @throws Exception
+     * @throws UnexpectedValueException     Provided JWT was invalid
+     * @throws \Firebase\JWT\SignatureInvalidException    Provided JWT was invalid because the signature verification failed
+     * @throws \Firebase\JWT\BeforeValidException         Provided JWT is trying to be used before it's eligible as defined by 'nbf'
+     * @throws \Firebase\JWT\SignatureInvalidException         Provided JWT is trying to be used before it's been created as defined by 'iat'
+     * @throws \Firebase\JWT\ExpiredException             Provided JWT has since expired, as defined by the 'exp' claim
+     */
+    public function getJWTPayload()
+    {
+        if (empty($_SERVER['HTTP_X_FRED_TOKEN'])) {
+            throw new \Exception('Fred Token is missing');
+        }
+
+        $payload = \Firebase\JWT\JWT::decode($_SERVER['HTTP_X_FRED_TOKEN'], $this->getSecret(), ['HS256']);
+        return (array)$payload;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFredTemplates()
+    {
+        $c = $this->modx->newQuery('FredThemedTemplate');
+        $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate', '', ['template']));
+        $c->prepare();
+        $c->stmt->execute();
+        $templateIds = $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
+        $templateIds = array_map('intval', $templateIds);
+        
+        return array_filter($templateIds);
+    }
 }

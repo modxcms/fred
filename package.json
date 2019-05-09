@@ -50,15 +50,16 @@
   "dependencies": {
     "choices.js": "^3.0.4",
     "dragula": "^3.7.2",
+    "fetch-defaults": "^1.0.0",
     "flatpickr": "^4.5.2",
     "hoverintent": "^2.1.0",
     "html2canvas": "^1.0.0-rc.0",
     "isomorphic-fetch": "^2.2.1",
     "jssha": "^2.3.1",
+    "lodash": ">=4.17.5",
     "mousetrap": "^1.6.2",
     "nouislider": "^11.1.0",
     "promise-cancel": "^2.0.1",
-    "twig": "^1.12.0",
-    "lodash": ">=4.17.5"
+    "twig": "^1.12.0"
   }
 }

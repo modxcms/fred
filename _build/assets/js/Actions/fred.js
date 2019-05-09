@@ -1,14 +1,9 @@
 import fredConfig from "../Config";
-import fetch from "isomorphic-fetch";
+import fetch from '../Fetch';
 import {errorHandler} from "../Utils";
 
 export const getPreview = () => {
-    return fetch(fredConfig.resource.previewUrl, {
-        credentials: 'same-origin',
-        headers: {
-            'X-Fred-Token': fredConfig.jwt
-        }
-    }).then(response => {
+    return fetch(fredConfig.resource.previewUrl).then(response => {
         return response.text();
     })
 };
@@ -22,22 +17,15 @@ export const saveContent = body => {
     
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
         method: "post",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
     }).then(errorHandler);
 };
 
 export const fetchContent = () => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${fredConfig.resource.id}`, {
-        credentials: 'same-origin',
-        headers: {
-            'X-Fred-Token': fredConfig.jwt
-        }
-    }).then(response => {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-content&id=${fredConfig.resource.id}`).then(response => {
         return response.json();
     })
 };
@@ -45,10 +33,8 @@ export const fetchContent = () => {
 export const fetchLexicons = topics => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=load-lexicons${topics}`, {
         method: "get",
-        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Fred-Token': fredConfig.jwt
+            'Content-Type': 'application/json'
         }
     }).then(response => {
         return response.json();

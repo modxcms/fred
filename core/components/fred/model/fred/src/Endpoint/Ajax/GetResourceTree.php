@@ -18,11 +18,13 @@ class GetResourceTree extends Endpoint
     protected $map = [];
     protected $resources = [];
     protected $sessionEnabled = [];
+    
+    protected $hideChildren = [];
 
     /**
      * @return string
      */
-    function process()
+    public function process()
     {
         $this->identifyTemplates();
 
@@ -35,14 +37,37 @@ class GetResourceTree extends Endpoint
             $context = trim($_REQUEST['context']);
         }
 
-        /** @var \modResource[] $resources */
-        $resources = $this->modx->getIterator('modResource', [
+        $params = new \stdClass();
+        $params->hideChildren =& $this->hideChildren;
+        
+        $this->modx->invokeEvent('FredOnBeforeGetResourceTree', [
+            'params' => &$params
+        ]);
+
+        $this->hideChildren = array_flip($this->hideChildren);
+        if (isset($this->hideChildren[0])) {
+            unset($this->hideChildren[0]);
+        }
+
+        $c = [
             'context_key' => $context,
             'template:IN' => $this->templates
-        ]);
+        ];
+        
+        if (!empty($this->hideChildren)) {
+            $c['parent:NOT IN'] = $this->hideChildren;
+        }
+        
+        /** @var \modResource[] $resources */
+        $resources = $this->modx->getIterator('modResource', $c);
         
         foreach ($resources as $resource) {
             if (!$resource->checkPolicy('list')) continue;
+            if (isset($this->hideChildren[$resource->parent])) {
+                $this->hideChildren[$resource->id] = true;
+                continue;
+            }
+            
             $this->handleResource($resource, true);
         }
 
@@ -79,6 +104,11 @@ class GetResourceTree extends Endpoint
         }
 
         if (isset($this->map[$resource->parent])) {
+            if (isset($this->hideChildren[$resource->parent])) {
+                $this->hideChildren[$resource->id] = true;
+                return;
+            }
+            
             if (!isset($this->map[$resource->id])) {
                 $this->map[$resource->id] = $pageFormatted;
                 $this->map[$resource->parent]['children'][] =& $this->map[$resource->id];
@@ -89,6 +119,10 @@ class GetResourceTree extends Endpoint
 
         $parent = $resource->Parent;
         $this->handleResource($parent, in_array($parent->template, $this->templates));
+        if (isset($this->hideChildren[$resource->parent])) {
+            $this->hideChildren[$resource->id] = true;
+            return;
+        }
 
         $this->map[$resource->id] = $pageFormatted;
         $this->map[$resource->parent]['children'][] =& $this->map[$resource->id];

@@ -122,6 +122,38 @@ export const button = (content = '', title = '', classes = [], onClick = null) =
     return el;
 };
 
+export const table = (content, classes = []) => {
+    const el = createElement('table', classes);
+
+    setContent(el, content);
+
+    return el;
+};
+
+export const tr = (content, classes = []) => {
+    const el = createElement('tr', classes);
+
+    setContent(el, content);
+
+    return el;
+};
+
+export const td = (content, classes = []) => {
+    const el = createElement('td', classes);
+
+    setContent(el, content);
+
+    return el;
+};
+
+export const th = (content, classes = []) => {
+    const el = createElement('th', classes);
+
+    setContent(el, content);
+
+    return el;
+};
+
 export const h1 = (content, classes = []) => {
     const el = createElement('h1', classes);
 
@@ -278,6 +310,10 @@ export default {
     dt,
     section,
     button,
+    table,
+    tr,
+    th,
+    td,
     h1,
     h2,
     h3,
