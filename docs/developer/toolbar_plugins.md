@@ -69,9 +69,48 @@ The buttons registered to the toolbars are always added after the built-in defau
 
 ## Limiting Plugins for Elements
 
-**TODO:** [This section is currently not implmented](https://github.com/modxcms/fred/issues/198). 
+By default, all Toolbar Plugins will register for every Element. To specify the order and/or omit some plugins, modify an Element’s [Option Set](/themer/options/settings.md) setting to either include or exclude specific Fred Plugins with a  `plugins-include` or `plugins-exclude` attribute. 
 
-By default, all Toolbar Plugins will register for every Element. To specify the order and/or omit some plugins, modify an Element’s [Option Set](/themer/options/settings.md) setting to either include or exclude specific Fred Plugins with a  `pluginsInclude` or `pluginsExclude` attribute. 
+**Note:** The plugins are unique names of the class created for the plugins. As a general rule, this should match the plugin name used for the MODX Package Provider. 
+
+If a `plugins-include` attribute is included, it will ignore any `plugins-exclude` lines. To include only specific Plugins for an Element, use a `plugins-include` Options setting:
+
+```json
+{
+  "toolbarPluginsInclude": ["gallery","mapmarker"],  
+  "settings": [
+    {
+        …
+    }
+  ]
+}
+```
+
+To exclude one or more specific Plugins on an Element, use a `plugins-exclude` option:
+
+```json
+{
+  "toolbarPluginsExclude": ["fredfontawesome5iconeditor"],  
+  "settings": [
+    {
+        …
+    }
+  ]
+}
+```
+
+To prevent all Plugins from registering on an Element completely, specify an empty array for a `plugins-include` option:
+
+```json
+{
+  "plugins-include": [],  
+  "settings": [
+    {
+        …
+    }
+  ]
+}
+```
 
 **Note:** The plugins are unique names of the class created for the plugins. As a general rule, this should match the plugin name used for the MODX Package Provider. 
 

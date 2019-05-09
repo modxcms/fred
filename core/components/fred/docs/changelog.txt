@@ -1,5 +1,33 @@
 Changelog for Fred.
 
+1.1.0 pl
+============
+## New
+- If you have updated or started working on a page, Fred warns you before leaving without saving so you don’t accidentally lose your work (not that we ever needed that ourselves…).
+- Toolbar and Sidebar Plugins allow for custom functionality when creating or editing content with Fred, with Moustrap to support keybindings. To demonstrate the awesomeness of this, Collections now supports creating or updating pages with Fred-enabled templates directly with Fred from the front-end.
+- Support for rendering Snippets to cache inside Fred Elements. This can be used, for example, to dynamically pull author information for a blog or other custom data source.
+- The MODX event `onDocFormSave` is now triggered when Fred saves, so that MODX plugins can tap into this. We’re looking at you, VersionX…
+- When creating a new page from Fred, you can specify a Blueprint to use. Further, each Fred-enabled Template can now have a default Blueprint associated with it so that making new content can be streamlined.
+- A new Folder picker option setting is handy for things like simple galleries built from images on the file system.
+- Themes now can include Media Sources to help keep things tidy.
+- Documentation and an installer check for specific PHP extensions was added so people don't get frustrated when Fred mysteriously decided not to work.
+
+## Updates
+- When pasting text from word processors and web browsers, a lot of messy markup sometimes tags along, making it hard to create clean content. Fred now forces text to be pasted as plain text to minimize tedious cleanup chores as much as possible.
+- A special `{{theme_dir}}` placeholder makes for more portable themes for Element Settings and Media fields.
+- The root `<html>` tag now gets a class when Fred is enabled to allow for custom styling when needed: `<html class="fred--active">`.
+- Option Set Overrides can now also be merged, so that you can override just a single thing in the assiged Option Set.
+- A policy for deleting inadvertently added Elements on the front-end for the Fred Editor role was added.
+
+## Bugfixes
+- Image pickers no longer return the full URL to images, making for much more portable websites.
+- Importing option set overrides functions again as intended.
+- Certain Elements refused to save from the front-end. The error in its ways has been rectified.
+- Firefox is special. So we made a special case for it to ensure that `contenteditable` would behave the same as every other modern browser. 
+- Missing screenshots and the Media Source section in the documentation have been fixed.
+- Fred and its browser built on ElFinder did not respect the `skipFiles` setting. Now they do.
+- During installation, there was not a check for certain PHP dependencies, which could lead to failure. Now it checks and warns when the dependencies aren’t met.
+
 1.0.0 pl
 ============
 - Gitify support added for using version control in your workflow

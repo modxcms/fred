@@ -10,7 +10,6 @@ Fred uses Open Source components. You can find the source code, along with licen
 - License (MIT): [https://github.com/jshjohnson/Choices/blob/master/LICENSE](https://github.com/jshjohnson/Choices/blob/master/LICENSE) 
 - Usage: vanilla JS select box/text input inspired by Select2 and Selectize
 
-
 ### Dragula
 - Homepage: [https://bevacqua.github.io/dragula/](https://bevacqua.github.io/dragula/) 
 - Copyright (c) 2015-2016 Nicolas Bevacqua [https://ponyfoo.com/](https://ponyfoo.com/) 
@@ -48,11 +47,18 @@ Fred uses Open Source components. You can find the source code, along with licen
 - License (MIT): [https://github.com/leongersen/noUiSlider/blob/master/LICENSE.md](https://github.com/leongersen/noUiSlider/blob/master/LICENSE.md)
 - Usage: vanilla JS range slider control
 
+### Tabulator
+- Homepage: [http://tabulator.info/](http://tabulator.info/) 
+- Copyright (c) 2015-2019 Oli Folkerd [https://github.com/olifolkerd](https://github.com/olifolkerd) 
+- License (MIT): [https://github.com/olifolkerd/tabulator/blob/master/LICENSE](https://github.com/olifolkerd/tabulator/blob/master/LICENSE) 
+- Usage: data grids/tables
+
 ### Twig
 - Homepage: [https://twig.symfony.com/](https://twig.symfony.com/)
 - Copyright (c) 2009-2019 by the Twig Team [http://fabien.potencier.org/](http://fabien.potencier.org/)
 - License (new BSD License): [https://twig.symfony.com/license](https://twig.symfony.com/license)
 - Usage: a JavaScript and PHP template engine
+
 
 ## Code & Logic
 

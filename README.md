@@ -16,6 +16,8 @@ Fred offers theme builders a great entrance into the MODX ecosystem. It is easy 
 
 For existing MODX developers, Fred brings an option to create more flexible and intuitive editing experiences for site owners. Fred can power designs that would otherwise require dozens of TVs, a complex Manager UI, or tricky Manager customization. 
 
+The changelog for the current version of Fred is located at https://github.com/modxcms/fred/blob/master/core/components/fred/docs/changelog.txt.
+
 ## How is Fred different from other visual content builders?
 
 Fred adheres to MODX’s core tenet of Creative Freedom. It doesn’t force you into someone else’s preferred front-end framework or way of building things. If you can imagine or prototype it, Fred can power it—without compromise. 
