@@ -19,9 +19,9 @@ export class ContentElement {
         this.title = this.el.dataset.fredElementTitle;
         this.wrapper = null;
         this.invalidTheme = this.el.dataset.invalidTheme === 'true';
-        
+
         this.contentEl = null;
-        
+
         this.setUpEditors();
 
         this.render = this.render.bind(this);
@@ -31,13 +31,13 @@ export class ContentElement {
         this.options = JSON.parse(JSON.stringify((this.el.elementOptions || {})));
         this.content = JSON.parse(JSON.stringify(content));
         this.pluginsData = JSON.parse(JSON.stringify(pluginsData));
-        
+
         if (Array.isArray(this.content)) this.content = {};
-        
+
         this.settings = {};
         this.parsedSettings = {};
         this.parsedSettingsClean = {};
-        
+
         if (!this.options.rteConfig) {
             this.options.rteConfig = {};
         }
@@ -46,7 +46,7 @@ export class ContentElement {
             this.options.settings.forEach(setting => {
                 if (setting.group && setting.settings) {
                     setting.settings.forEach(subSetting => {
-                        this.settings[subSetting.name] = (subSetting.value !== undefined) ? subSetting.value : '';    
+                        this.settings[subSetting.name] = (subSetting.value !== undefined) ? subSetting.value : '';
                     });
                 } else {
                     this.settings[setting.name] = (setting.value !== undefined) ? setting.value : '';
@@ -58,10 +58,10 @@ export class ContentElement {
             ...(this.settings),
             ...JSON.parse(JSON.stringify(settings))
         };
-        
+
         for (let setting in this.settings) {
             if (!this.settings.hasOwnProperty(setting)) continue;
-            
+
             this.parsedSettings[setting] = valueParser(this.settings[setting]);
             this.parsedSettingsClean[setting] = valueParser(this.settings[setting], true);
         }
@@ -70,14 +70,14 @@ export class ContentElement {
 
         this.inEditor = false;
     }
-    
+
     setSetting(name, value) {
         this.settings[name] = value;
         this.parsedSettings[name] = valueParser(value);
         this.parsedSettingsClean[name] = valueParser(value, true);
-        
+
     }
-    
+
     setUpEditors() {
         this.editors = fredConfig.editors;
 
@@ -87,14 +87,14 @@ export class ContentElement {
         this.imageEditor = this.config.imageEditor || 'ImageEditor';
         this.imageEditor = this.editors[this.imageEditor] || null;
     }
-    
+
     setEl(el) {
         if (el.elementMarkup === undefined) {
             this.el.elementMarkup = el;
         } else {
             this.el.elementMarkup = el.elementMarkup;
         }
-        
+
         this.template = twig({data: this.el.elementMarkup});
     }
 
@@ -222,14 +222,14 @@ export class ContentElement {
 
         return (this.toTop  < 38);
     }
-    
+
     render(refreshCache = false) {
         const wrapperClasses = ['fred--block'];
-        
+
         if (this.invalidTheme) {
             wrapperClasses.push('fred--block-invalid');
         }
-        
+
         const wrapper = div(wrapperClasses);
         wrapper.fredEl = this;
 
@@ -255,29 +255,29 @@ export class ContentElement {
                     wrapper.classList.add(...classes);
                 }
             }
-            
+
             this.initElements(wrapper);
             this.initDropZones(wrapper);
 
             wrapper.appendChild(this.contentEl);
-            
+
             if (this.wrapper !== null) {
                 if (this.parent) {
                     const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
                     if (index > -1) {
-                        this.parent.dzs[this.dzName].children[index] = wrapper; 
+                        this.parent.dzs[this.dzName].children[index] = wrapper;
                     }
                 }
-                
+
                 this.wrapper.replaceWith(wrapper);
             }
-                
+
             this.wrapper = wrapper;
-            
+
             return wrapper;
         });
     }
-    
+
     initDropZones(wrapper) {
         const dzs = this.contentEl.querySelectorAll('[data-fred-dropzone]');
 
@@ -323,19 +323,19 @@ export class ContentElement {
             el.rteInited = true;
         }
     }
-    
+
     onRTEContentChangeFactory (el) {
         return value => {
             this.setValue(el, value);
         }
     }
-    
+
     onRTEFocusFactory (wrapper, el) {
         return () => {
             this.inEditor = true;
         }
     }
-    
+
     onRTEBlurFactory (wrapper, el) {
         return () => {
             this.inEditor = false;
@@ -344,11 +344,11 @@ export class ContentElement {
             wrapper.classList.remove('fred--block-active_parent');
         }
     }
-    
+
     initValue(el, contentEl = null, isPreview = false) {
         if (!this.content[el.dataset.fredName] || Array.isArray(this.content[el.dataset.fredName])) this.content[el.dataset.fredName] = {};
         if (!this.content[el.dataset.fredName]['_raw'] || Array.isArray(this.content[el.dataset.fredName]['_raw'])) this.content[el.dataset.fredName]['_raw'] = {};
-        
+
         let value = this.content[el.dataset.fredName]._raw._value;
         if (value === undefined) {
             switch (el.nodeName) {
@@ -374,12 +374,12 @@ export class ContentElement {
                 }
 
                 attrValue = valueParser(attrValue, (!isPreview && (contentEl !== null)));
-                
+
                 el.setAttribute(attr, attrValue);
             });
         }
     }
-    
+
     initEvents(el) {
         switch (el.nodeName) {
             case 'IMG':
@@ -408,18 +408,18 @@ export class ContentElement {
                 break;
         }
     }
-    
+
     setValue(el, value, name = '_value', namespace = '_raw', contentEl = null, isPreview = false, silent = false) {
         if (!this.content[el.dataset.fredName] || Array.isArray(this.content[el.dataset.fredName])) this.content[el.dataset.fredName] = {};
         if (!this.content[el.dataset.fredName][namespace] || Array.isArray(this.content[el.dataset.fredName][namespace])) this.content[el.dataset.fredName][namespace] = {};
-        
+
         if (this.content[el.dataset.fredName][namespace][name] !== value) {
             emitter.emit('fred-content-changed', 'setValue');
         }
-        
+
         this.content[el.dataset.fredName][namespace][name] = value;
         value = valueParser(value, (!isPreview && (contentEl !== null)));
-        
+
         if ((namespace === '_raw') && (name === '_value')) {
             this.setValueForBindElements(el.dataset.fredName, value, contentEl);
 
@@ -427,13 +427,13 @@ export class ContentElement {
                 emitter.emit('fred-page-setting-change', el.dataset.fredTarget, this.content[el.dataset.fredName][namespace][name], value, el);
             }
         }
-        
+
         return value;
     }
-    
+
     setElValue(el, value, name = '_value', namespace = '_raw', contentEl = null, isPreview = false, silent = false) {
         value = this.setValue(el, value, name, namespace, contentEl, isPreview, silent);
-     
+
         if (name === '_value') {
             switch (el.nodeName) {
                 case 'IMG':
@@ -459,9 +459,9 @@ export class ContentElement {
         if (contentEl === null) {
             contentEl = this.contentEl;
         }
-        
+
         let changed = false;
-        
+
         const bindElements = contentEl.querySelectorAll(`[data-fred-bind="${name}"]`);
         for (let bindEl of bindElements) {
             switch (bindEl.nodeName.toLowerCase()) {
@@ -469,56 +469,56 @@ export class ContentElement {
                     if (bindEl.className !== value) {
                         changed = true;
                     }
-                    
+
                     bindEl.className = value;
                     break;
                 case 'img':
                     if (bindEl.getAttribute('src') !== value) {
                         changed = true;
                     }
-                    
+
                     bindEl.setAttribute('src', value);
                     break;
                 default:
                     if (bindEl.innerHTML !== value) {
                         changed = true;
                     }
-                    
+
                     bindEl.innerHTML = value;
             }
         }
-        
+
         if (changed === true) {
             emitter.emit('fred-content-changed', 'setValueForBindElements');
         }
     }
-    
+
     setPluginValue(namespace, name, value) {
         emitter.emit('fred-content-changed', 'setPluginValue');
-        
+
         if (Array.isArray(this.pluginsData)) this.pluginsData = {};
-        
+
         if (!this.pluginsData[namespace] || Array.isArray(this.pluginsData[namespace])) this.pluginsData[namespace] = {};
-        
+
         this.pluginsData[namespace][name] = value;
     }
-    
+
     getPluginValue(namespace, name) {
         if (!this.pluginsData[namespace] || Array.isArray(this.pluginsData[namespace])) return undefined;
-        
+
         return this.pluginsData[namespace][name];
     }
-    
+
     deletePluginValue(namespace, name = '') {
         if (!name) {
             delete this.pluginsData[namespace];
         }
-        
+
         if (this.pluginsData[namespace]) {
             delete this.pluginsData[namespace][name];
         }
     }
-    
+
     getRTEConfig(el) {
         let rteConfig = {};
 
@@ -545,13 +545,13 @@ export class ContentElement {
                 };
             }
         }
-        
+
         return rteConfig;
     }
 
     getSelectionHtml() {
         let html = "";
-        
+
         if (typeof window.getSelection !== "undefined") {
             const sel = window.getSelection();
             if (sel.rangeCount) {
@@ -566,23 +566,23 @@ export class ContentElement {
                 html = document.selection.createRange().htmlText;
             }
         }
-        
+
         return html;
     }
-    
+
     initElements(wrapper) {
         const fredElements = this.contentEl.querySelectorAll('[data-fred-name]');
         for (let el of fredElements) {
             el.fredEl = this;
-            
+
             if (el.hasAttribute('data-fred-editable') === false) {
                 el.setAttribute('data-fred-editable', 'true');
             }
-            
+
             if (['i', 'img'].indexOf(el.nodeName.toLowerCase()) === -1) {
                 el.setAttribute('contenteditable', el.getAttribute('data-fred-editable'));
             }
-            
+
 
             if ((!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
                 el.addEventListener('input', () => {
@@ -665,10 +665,10 @@ export class ContentElement {
             this.initEvents(el);
         }
     }
-    
+
     static getElValue(el, name = '_value', namespace = '_raw') {
         if (!el.dataset.fredName) return '';
-        
+
         return el.fredEl.content[el.dataset.fredName][namespace][name];
     }
 
@@ -676,21 +676,21 @@ export class ContentElement {
         if (this.options.remote === true) {
             return this.remoteTemplateRender(parseModx, cleanRender, refreshCache);
         }
-        
+
         return Promise.resolve(this.localTemplateRender(cleanRender));
     }
-    
+
     localTemplateRender(cleanRender = false) {
         return this.template.render({...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), ...(getTemplateSettings(cleanRender))});
     }
-    
+
     remoteTemplateRender(parseModx = true, cleanRender = false, refreshCache = false) {
         const cacheOutput = this.options.cacheOutput === true;
-        
+
         return renderElement(this.id, (cleanRender ? this.parsedSettingsClean : this.parsedSettings), parseModx, cacheOutput, refreshCache).then(json => {
             const html = twig({data: json.data.html}).render(getTemplateSettings(cleanRender));
             this.setEl(html);
-            
+
             return html;
         })
         .catch(err => {
@@ -698,13 +698,13 @@ export class ContentElement {
             return '';
         });
     }
-    
+
     cleanRender(parseModx = false, handleLinks = true, isPreview = false) {
         const element = div();
-        
+
         return this.templateRender(parseModx, true).then(html => {
             element.innerHTML = html;
-            
+
             const renderElements = element.querySelectorAll('[data-fred-render]');
             for (let el of renderElements) {
                 if (el.getAttribute('data-fred-render') === "false") {
@@ -728,7 +728,7 @@ export class ContentElement {
                 el.removeAttribute('data-fred-media-source');
                 el.removeAttribute('data-fred-image-media-source');
             }
-            
+
             if (handleLinks === true) {
                 const fredLinks = element.querySelectorAll('[data-fred-link-type]');
                 for (let fredLink of fredLinks) {
@@ -769,27 +769,27 @@ export class ContentElement {
                 if (classes.length > 0) {
                     fredClass.classList.add(...classes);
                 }
-                
+
                 fredClass.removeAttribute('data-fred-class');
             }
-            
+
             const bindElements = element.querySelectorAll('[data-fred-bind]');
             for (let bindEl of bindElements) {
                 bindEl.removeAttribute('data-fred-bind');
             }
-            
+
             const fredOnDrop = element.querySelectorAll('[data-fred-on-drop]');
             for (let onDrop of fredOnDrop) {
                 onDrop.removeAttribute('data-fred-on-drop');
             }
-            
+
             const fredOnSettingChange = element.querySelectorAll('[data-fred-on-setting-change]');
             for (let onSettingChange of fredOnSettingChange) {
                 onSettingChange.removeAttribute('data-fred-on-setting-change');
             }
 
             const dzPromises = [];
-            
+
             for (let dzName in this.dzs) {
                 if (this.dzs.hasOwnProperty(dzName)) {
                     const dzEl = element.querySelector('[data-fred-dropzone="' + dzName + '"]');
@@ -800,7 +800,7 @@ export class ContentElement {
 
                             let cleanedDropZoneContent = '';
                             const childPromises = [];
-                            
+
                             this.dzs[dzName].children.forEach(child => {
                                 childPromises.push(child.fredEl.cleanRender(parseModx, handleLinks));
                             });
@@ -824,8 +824,8 @@ export class ContentElement {
     }
 
     remove() {
-        if (!fredConfig.permission.fred_element_delete) return;
-        
+        if (!fredConfig.permission.fred_element_front_end_delete) return;
+
         if (this.parent) {
             const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
             if (index > -1) {
@@ -848,7 +848,7 @@ export class ContentElement {
                         const clonedChild = new ContentElement(child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings, child.fredEl.pluginsData);
                         clonedChild.render().then(() => {
                             this.addElementToDropZone(dzName, clonedChild);
-    
+
                             clonedChild.duplicateDropZones(child.fredEl.dzs);
                         });
                     }
@@ -861,20 +861,20 @@ export class ContentElement {
         const clone = new ContentElement(this.el, this.dzName, this.parent, this.content, this.settings, this.pluginsData);
         clone.render().then(() => {
             clone.duplicateDropZones(this.dzs);
-    
+
             if (this.wrapper.nextSibling === null) {
                 this.wrapper.parentNode.appendChild(clone.wrapper);
             } else {
                 this.wrapper.parentNode.insertBefore(clone.wrapper, this.wrapper.nextSibling);
             }
-    
+
             if (this.parent) {
                 const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
                 if (index > -1) {
                     this.parent.dzs[this.dzName].children.splice(index + 1, 0, clone.wrapper);
                 }
             }
-    
+
             drake.reloadContainers();
         });
     }
@@ -883,20 +883,20 @@ export class ContentElement {
         if (!this.dzs[zoneName]) return false;
         element.dzName = zoneName;
         element.parent = this;
-        
+
         this.dzs[zoneName].children.push(element.wrapper);
         this.dzs[zoneName].el.appendChild(element.wrapper);
 
         return true;
     }
-    
+
     unshiftElementToDropZone(zoneName, element) {
         if (!this.dzs[zoneName]) return false;
         element.dzName = zoneName;
         element.parent = this;
 
         this.dzs[zoneName].children.unshift(element.wrapper);
-        
+
         if (this.dzs[zoneName].el.firstElementChild) {
             this.dzs[zoneName].el.insertBefore(element.wrapper, this.dzs[zoneName].el.firstElementChild);
         } else {
@@ -905,7 +905,7 @@ export class ContentElement {
 
         return true;
     }
-    
+
     insertBeforeElementToDropZone(zoneName, before, element) {
         if (!this.dzs[zoneName]) return false;
         element.dzName = zoneName;

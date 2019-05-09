@@ -6,7 +6,7 @@ if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
-            
+
             $group = $modx->getObject('modAccessPolicyTemplateGroup', ['name' => 'Admin']);
             if (!$group) return;
 
@@ -20,7 +20,7 @@ if ($object->xpdo) {
                 $template->set('lexicon', 'fred:permissions');
                 $template->save();
             }
-            
+
             $permissions = [
                 'fred',
                 'fred_elements',
@@ -37,6 +37,7 @@ if ($object->xpdo) {
                 'fred_element_category_delete',
                 'fred_element_category_save',
                 'fred_element_delete',
+                'fred_element_front_end_delete',
                 'fred_element_categories',
                 'fred_element_cache_refresh',
                 'fred_themes_save',
@@ -76,17 +77,17 @@ if ($object->xpdo) {
                     'template' => $template->get('id'),
                     'name' => $permission
                 ]);
-                
+
                 if (!$obj) {
                     $obj = $modx->newObject('modAccessPermission');
                     $obj->set('template', $template->get('id'));
                     $obj->set('name', $permission);
                 }
-                
+
                 $obj->set('description', "fred.permissions.{$permission}");
                 $obj->save();
             }
-            
+
             /** @var modAccessPolicy $adminPolicy */
             $adminPolicy = $modx->getObject('modAccessPolicy', ['name' => 'Fred Admin']);
             if (!$adminPolicy) {
@@ -96,16 +97,16 @@ if ($object->xpdo) {
                 $adminPolicy->set('template', $template->get('id'));
                 $adminPolicy->set('lexicon', $template->get('lexicon'));
             }
-            
+
             $data = [];
-            
+
             foreach ($permissions as $permission) {
                 $data[$permission] = true;
             }
-            
+
             $adminPolicy->set('data', $data);
             $adminPolicy->save();
-            
+
 
             /** @var modUserGroup $adminUserGroup */
             $adminUserGroup = $modx->getObject('modUserGroup', ['id' => 1]);
@@ -135,7 +136,7 @@ if ($object->xpdo) {
                 $editorPolicy->set('template', $template->get('id'));
                 $editorPolicy->set('lexicon', $template->get('lexicon'));
             }
-            
+
             $data = [
                 'delete_document' => true,
                 'fred' => true,
@@ -149,6 +150,7 @@ if ($object->xpdo) {
                 'fred_element_category_save' => true,
                 'fred_element_move' => true,
                 'fred_element_save' => true,
+                'fred_element_front_end_delete' => true,
                 'fred_elements' => true,
                 'fred_settings' => true,
                 'fred_settings_advanced' => true,
@@ -164,8 +166,8 @@ if ($object->xpdo) {
 
             $editorPolicy->set('data', $data);
             $editorPolicy->save();
-            
-            
+
+
             break;
     }
 }

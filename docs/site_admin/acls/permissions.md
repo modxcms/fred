@@ -32,6 +32,9 @@ Create/edit/duplicate Elements (mgr)
 #### fred_element_delete
 Delete Elements (mgr)
 
+#### fred_element_front_end_delete
+Remove Elements from drop zone (web)
+
 #### fred_element_screenshot
 Take a screenshot to replace the current sidebar preview for Elements (web)
 
