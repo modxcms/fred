@@ -18,6 +18,7 @@
 $_lang['fred.permissions.fred'] = 'Vedere Fred (mgr) (web)';
 $_lang['fred.permissions.fred_elements'] = 'Vedere Elementi (mgr) (web)';
 $_lang['fred.permissions.fred_element_save'] = 'Crea/modifica/duplica Elementi (mgr)';
+$_lang['fred.permissions.fred_element_front_end_delete'] = 'Remove Elements from drop zone (web)';
 $_lang['fred.permissions.fred_element_delete'] = 'Cancellare Elementi (mgr)';
 $_lang['fred.permissions.fred_element_screenshot'] = 'Fai uno screenshot per sostituire l\'anteprima della barra laterale corrente per gli Elementi (web)';
 $_lang['fred.permissions.fred_element_move'] = 'Drag and drop Elementi nelle drop zones (web)';
