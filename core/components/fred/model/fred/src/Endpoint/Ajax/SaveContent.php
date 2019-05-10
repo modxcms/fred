@@ -16,13 +16,13 @@ class SaveContent extends Endpoint
 {
     protected $taggerLoaded = false;
     protected $tagger = null;
-    
+
     function process()
     {
         if (!isset($this->body['id'])) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
         }
-        
+
         $id = (int)$this->body['id'];
 
         if (!$this->verifyClaim('resource', $id)) {
@@ -42,26 +42,26 @@ class SaveContent extends Endpoint
         if (!$this->modx->hasPermission('save_document') || !$object->checkPolicy('save')) {
             return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
-        
+
         $data = $object->getProperty('data', 'fred');
         if (!empty($data['fingerprint'])) {
             if (empty($this->body['fingerprint'])) {
-                return $this->failure('No fingerprint was provided.');    
+                return $this->failure('No fingerprint was provided.');
             }
-            
+
             if ($data['fingerprint'] !== $this->body['fingerprint']) {
                 return $this->failure($this->modx->lexicon('fred.fe.err.resource_stale'));
             }
         }
 
         $this->loadTagger();
-        
+
         $parser = $this->modx->getParser();
-        
+
         if (isset($this->body['content'])) {
             $content = $this->body['content'];
             $content = Utils::htmlDecodeTags($content, $parser);
-            
+
             $object->setContent($content);
         }
 
@@ -77,7 +77,7 @@ class SaveContent extends Endpoint
         $tvs = $this->modx->getIterator('modTemplateVar', $c);
         foreach ($tvs as $tv) {
             $tvName = $tv->get('name');
-            
+
             if (isset($this->body[$tvName])) {
                 $tvContent = $this->body[$tvName];
                 $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
@@ -113,7 +113,7 @@ class SaveContent extends Endpoint
         if (isset($this->body['pageSettings']['hidemenu'])) {
             $object->set('hidemenu', (boolean)$this->body['pageSettings']['hidemenu']);
         }
-        
+
         if (isset($this->body['pageSettings']['deleted'])) {
             $currentValue = (boolean)$object->get('deleted');
             $incomingValue = (boolean)$this->body['pageSettings']['deleted'];
@@ -127,29 +127,29 @@ class SaveContent extends Endpoint
                     $incomingValue = $currentValue;
                 }
             }
-            
+
             if ($incomingValue !== $currentValue) {
                 $object->set('deleted', $incomingValue);
                 $object->set('deletedon', $incomingValue ? time() : false);
                 $object->set('deletedby', $incomingValue ? $this->modx->user->get('id') : 0);
             }
         }
-        
+
         if (isset($this->body['pageSettings']['publishon'])) {
             $currentValue = (int)$object->get('pub_date');
             $incomingValue = (int)$this->body['pageSettings']['publishon'];
-            
+
             if (!$this->modx->hasPermission('publish_document') || !$object->checkPolicy('publish')) {
                 $incomingValue = $currentValue;
             }
-            
+
             $object->set('pub_date', $incomingValue);
         }
-        
+
         if (isset($this->body['pageSettings']['unpublishon'])) {
             $currentValue = (int)$object->get('unpub_date');
             $incomingValue = (int)$this->body['pageSettings']['unpublishon'];
-            
+
             if (!$this->modx->hasPermission('unpublish_document') || !$object->checkPolicy('unpublish')) {
                 $incomingValue = $currentValue;
             }
@@ -165,7 +165,7 @@ class SaveContent extends Endpoint
         if (isset($this->body['pageSettings']['published'])) {
             $currentValue = (boolean)$object->get('published');
             $incomingValue = (boolean)$this->body['pageSettings']['published'];
-            
+
             if ($incomingValue) {
                 if (!$this->modx->hasPermission('publish_document') || !$object->checkPolicy('publish')) {
                     $incomingValue = $currentValue;
@@ -186,7 +186,7 @@ class SaveContent extends Endpoint
                 } else {
                     $publishedOn = false;
                 }
-                
+
                 $object->set('published', (boolean)$this->body['pageSettings']['published']);
                 $object->set('publishedon', $publishedOn);
                 $object->set('publishedby', $incomingValue ? $this->modx->user->get('id') : 0);
@@ -198,11 +198,11 @@ class SaveContent extends Endpoint
         }
 
         if (!empty($this->body['plugins'])) {
-            $object->setProperty('plugins', $this->body['plugins'], 'fred');    
+            $object->setProperty('plugins', $this->body['plugins'], 'fred');
         } else {
             $object->setProperty('plugins', (object)[], 'fred');
         }
-        
+
         $object->setProperty('data', $this->body['data'], 'fred');
 
         $object->set('editedon', time());
@@ -215,12 +215,14 @@ class SaveContent extends Endpoint
         $this->body['data']['fingerprint'] = Utils::resourceFingerprint($object);
         $object->setProperty('data', $this->body['data'], 'fred');
 
-        
-        
+        $beforeSave = $this->modx->invokeEvent('FredOnBeforeFredResourceSave', [
+            'id' => $object->get('id'),
+            'resource' => &$object
+        ]);
 
         if (is_array($beforeSave)) {
             $preventSave = false;
-         
+
             foreach ($beforeSave as $msg) {
                 if (!empty($msg)) {
                     $preventSave .= $msg . " ";
@@ -229,17 +231,17 @@ class SaveContent extends Endpoint
         } else {
             $preventSave = $beforeSave;
         }
-        
+
         if ($preventSave !== false) {
             return $this->failure($preventSave);
         }
-        
+
         $saved = $object->save();
 
         if (!$saved) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
         }
-        
+
         if (isset($this->body['pageSettings']['tvs']) && is_array($this->body['pageSettings']['tvs'])) {
             foreach ($this->body['pageSettings']['tvs'] as $tvName => $tvValue) {
                 $object->setTVValue($tvName, $tvValue);
@@ -250,7 +252,7 @@ class SaveContent extends Endpoint
             'id' => $object->get('id'),
             'resource' => &$object
         ]);
-        
+
         $this->modx->getCacheManager()->refresh();
 
         $response = [
@@ -258,7 +260,7 @@ class SaveContent extends Endpoint
             'fingerprint' => $this->body['data']['fingerprint'],
             'publishedon' => $object->publishedon
         ];
-        
+
         if ($uriChanged) {
             $response['url'] = $this->modx->makeUrl($object->get('id'), $object->get('context_key'), '', 'full');
         }
@@ -294,7 +296,7 @@ class SaveContent extends Endpoint
             $showForContexts = $group->show_for_contexts;
             $showForContexts = $this->tagger->explodeAndClean($showForContexts);
             $showForContexts = array_flip($showForContexts);
-            
+
             if (!isset($showForTemplates[$resource->template])) {
                 continue;
             }
@@ -302,15 +304,15 @@ class SaveContent extends Endpoint
             if (!empty($showForContexts) && !isset($showForContexts[$resource->context_key])) {
                 continue;
             }
-            
+
             $oldTagsQuery = $this->modx->newQuery('TaggerTagResource');
             $oldTagsQuery->leftJoin('TaggerTag', 'Tag');
             $oldTagsQuery->where(['resource' => $resource->id, 'Tag.group' => $group->id]);
             $oldTagsQuery->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', ['tag']));
-            
+
             $oldTagsQuery->prepare();
             $oldTagsQuery->stmt->execute();
-            
+
             $oldTags = $oldTagsQuery->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
             $oldTags = array_flip($oldTags);
 
@@ -318,14 +320,14 @@ class SaveContent extends Endpoint
                 $tags = $this->body['pageSettings']['tagger']['tagger-' . $group->id];
                 $tags = array_map('trim', $tags);
                 $tags = array_keys(array_flip($tags));
-                
+
                 if ($group->tag_limit > 0) {
                     $tags = array_slice($tags, 0, $group->tag_limit);
                 }
             } else {
                 continue;
             }
-            
+
             foreach ($tags as $tag) {
                 /** @var \TaggerTag $tagObject */
                 $tagObject = $this->modx->getObject('TaggerTag', array('tag' => $tag, 'group' => $group->id));
@@ -342,20 +344,20 @@ class SaveContent extends Endpoint
                     if (!$group->allow_new) {
                         continue;
                     }
-                    
+
                     $tagObject = $this->modx->newObject('TaggerTag');
                     $tagObject->set('tag', $tag);
                     $tagObject->addOne($group, 'Group');
                     $tagObject->save();
                 }
-                
+
                 /** @var \TaggerTagResource $relationObject */
                 $relationObject = $this->modx->newObject('TaggerTagResource');
                 $relationObject->set('tag', $tagObject->id);
                 $relationObject->set('resource', $resource->id);
                 $relationObject->save();
             }
-            
+
             if (count($oldTags) > 0) {
                 $oldTags = array_keys($oldTags);
                 $this->modx->removeCollection('TaggerTagResource', array(
@@ -363,7 +365,7 @@ class SaveContent extends Endpoint
                     'AND:resource:=' => $resource->id
                 ));
             }
-            
+
             if ($group->remove_unused) {
                 $c = $this->modx->newQuery('TaggerTagResource');
                 $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', array('tag')));
