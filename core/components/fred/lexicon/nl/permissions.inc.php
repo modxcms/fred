@@ -18,6 +18,7 @@
 $_lang['fred.permissions.fred'] = 'Bekijk Fred (mgr) (web)';
 $_lang['fred.permissions.fred_elements'] = 'Bekijk elementen (mgr) (web)';
 $_lang['fred.permissions.fred_element_save'] = 'Creeër/bewerk/verwijder elementen (mgr)';
+$_lang['fred.permissions.fred_element_front_end_delete'] = 'Remove Elements from drop zone (web)';
 $_lang['fred.permissions.fred_element_delete'] = 'Verwijder elementen (mgr)';
 $_lang['fred.permissions.fred_element_screenshot'] = 'Take a screenshot to replace the current sidebar preview for elementen (web)';
 $_lang['fred.permissions.fred_element_move'] = 'Drag & drop elementen in drop zones (web)';
