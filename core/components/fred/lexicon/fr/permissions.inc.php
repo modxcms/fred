@@ -18,6 +18,7 @@
 $_lang['fred.permissions.fred'] = 'View Fred (mgr) (web)';
 $_lang['fred.permissions.fred_elements'] = 'View Elements (mgr) (web)';
 $_lang['fred.permissions.fred_element_save'] = 'Create/edit/duplicate Elements (mgr)';
+$_lang['fred.permissions.fred_element_front_end_delete'] = 'Remove Elements from drop zone (web)';
 $_lang['fred.permissions.fred_element_delete'] = 'Delete Elements (mgr)';
 $_lang['fred.permissions.fred_element_screenshot'] = 'Take a screenshot to replace the current sidebar preview for Elements (web)';
 $_lang['fred.permissions.fred_element_move'] = 'Drag and drop Elements into drop zones (web)';
