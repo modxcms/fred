@@ -97,6 +97,14 @@
     ]
   },
   "build": {
+    "options": {
+      "abort_install_on_vehicle_fail": true
+    },
+    "validator": {
+      "validators": [
+        "requirements.validator.php"
+      ]
+    },
     "resolver": {
       "before": [
         "resolve.customevents.php",
