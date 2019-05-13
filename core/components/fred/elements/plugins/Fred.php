@@ -344,7 +344,7 @@ switch ($modx->event->name) {
         $renderResource = new \Fred\RenderResource($resource, $modx);
         $renderResource->render();
 
-        $this->modx->invokeEvent('FredOnFredResourceSave', array(
+        $modx->invokeEvent('FredOnFredResourceSave', array(
             'id' => $resource->get('id'),
             'resource' => &$resource
         ));
