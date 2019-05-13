@@ -18,6 +18,7 @@
 $_lang['fred.permissions.fred'] = 'Посмотреть Fred (mgr) (web)';
 $_lang['fred.permissions.fred_elements'] = 'Посмотреть Элементы (mgr) (web)';
 $_lang['fred.permissions.fred_element_save'] = 'Создание/редактирование/дублирование элементов (mgr)';
+$_lang['fred.permissions.fred_element_front_end_delete'] = 'Remove Elements from drop zone (web)';
 $_lang['fred.permissions.fred_element_delete'] = 'Удалить элементы (mgr)';
 $_lang['fred.permissions.fred_element_screenshot'] = 'Сделайте снимок экрана, чтобы заменить текущий предварительный просмотр боковой панели для элементов (web)';
 $_lang['fred.permissions.fred_element_move'] = 'Перетащите элементы в зоны перетаскивания (web)';
