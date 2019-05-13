@@ -15,12 +15,14 @@
  */
 class Fred
 {
+    const VERSION = '1.1.0-alpha5';
+
     public $modx = null;
     public $namespace = 'fred';
     public $cache = null;
-    public $options = array();
+    public $options = [];
 
-    public function __construct(modX &$modx, array $options = array())
+    public function __construct(modX &$modx, array $options = [])
     {
         $this->modx =& $modx;
 
@@ -29,7 +31,7 @@ class Fred
         $assetsUrl = $this->getOption('assets_url', $options, $this->modx->getOption('assets_url', null, MODX_ASSETS_URL) . 'components/fred/');
 
         /* loads some default paths for easier management */
-        $this->options = array_merge(array(
+        $this->options = array_merge([
             'namespace' => $this->namespace,
             'corePath' => $corePath,
             'modelPath' => $corePath . 'model/',
@@ -42,8 +44,9 @@ class Fred
             'jsUrl' => $assetsUrl . 'mgr/js/',
             'cssUrl' => $assetsUrl . 'mgr/css/',
             'webAssetsUrl' => $assetsUrl . 'web/',
-            'connectorUrl' => $assetsUrl . 'connector.php'
-        ), $options);
+            'connectorUrl' => $assetsUrl . 'connector.php',
+            'version' => self::VERSION
+        ], $options);
 
         $this->modx->addPackage('fred', $this->getOption('modelPath'));
         $this->modx->lexicon->load('fred:default');
@@ -59,7 +62,7 @@ class Fred
      * namespaced system setting; by default this value is null.
      * @return mixed The option value or the default value specified.
      */
-    public function getOption($key, $options = array(), $default = null)
+    public function getOption($key, $options = [], $default = null)
     {
         $option = $default;
         if (!empty($key) && is_string($key)) {
@@ -95,7 +98,7 @@ class Fred
     public function getSecret()
     {
         $secret = $this->modx->getOption('fred.secret');
-        
+
         if (empty($secret)) {
             /** @var modSystemSetting $secretObject */
             $secretObject = $this->modx->getObject('modSystemSetting', ['key' => 'fred.secret']);
@@ -110,7 +113,7 @@ class Fred
                 $this->modx->reloadConfig();
             } else {
                 $secret = $secretObject->get('value');
-                
+
                 if (empty($secret)) {
                     $secretObject->set('value', md5(uniqid(rand(), true)) . sha1(md5(uniqid(rand(), true))));
                     $secretObject->save();
@@ -121,7 +124,7 @@ class Fred
 
             $secret = $secretObject->get('value');
         }
-        
+
         return $secret;
     }
 
@@ -155,7 +158,7 @@ class Fred
         $c->stmt->execute();
         $templateIds = $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
         $templateIds = array_map('intval', $templateIds);
-        
+
         return array_filter($templateIds);
     }
 }

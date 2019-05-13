@@ -224,9 +224,11 @@ switch ($modx->event->name) {
 
             $jwt = \Firebase\JWT\JWT::encode($payload, $fred->getSecret());
 
+            $versionHash = substr(md5(Fred::VERSION), 0, 6);
+
             $fredContent = '
-        <script type="text/javascript" src="' . $fred->getOption('webAssetsUrl') . 'fred.min.js"></script>
-        <link rel="stylesheet" href="' . $fred->getOption('webAssetsUrl') . 'fred.css" type="text/css" />
+        <script type="text/javascript" src="' . $fred->getOption('webAssetsUrl') . 'fred.min.js?v=' . $versionHash . '"></script>
+        <link rel="stylesheet" href="' . $fred->getOption('webAssetsUrl') . 'fred.css?v=' . $versionHash . '" type="text/css" />
         ' . $includes . '
         <script>
             var fred = new Fred({
