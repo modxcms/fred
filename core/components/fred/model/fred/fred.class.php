@@ -15,7 +15,7 @@
  */
 class Fred
 {
-    const VERSION = '1.1.0-alpha5';
+    const VERSION = '1.1.0-beta';
 
     public $modx = null;
     public $namespace = 'fred';
