@@ -5,9 +5,7 @@ config.core.php
 
 # Packages #
 ############
-_packages/*.*
-!_packages/.gitignore
-!_packages/*.zip
+_packages
 
 # IDE files #
 #############
