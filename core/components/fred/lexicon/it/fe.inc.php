@@ -37,7 +37,7 @@ $_lang['fred.fe.browse_images'] = 'Esplora immagini';
 $_lang['fred.fe.turn_off_fred'] = 'Disabilita Fred';
 $_lang['fred.fe.turn_on_fred'] = 'Abilita Fred';
 $_lang['fred.fe.invalid_elements_warning'] = 'Uno o più Elementi nel contenuto non appartengono a questo Tema.';
-$_lang['fred.fe.unsaved_data_warning'] = 'Changes that you made may not be saved.';
+$_lang['fred.fe.unsaved_data_warning'] = 'Le modifiche effettuate potrebbero non essere state salvate.';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Titolo pagina';
 $_lang['fred.fe.page_settings.long_title'] = 'Titolo Esteso';
@@ -112,8 +112,8 @@ $_lang['fred.fe.content.partial_blueprint'] = 'Crea Modello Parziale';
 $_lang['fred.fe.content.element_screenshot'] = 'Screenshot Elemento';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Sostituisci Anteprima Elemento';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Sostituizione Anteprima Elemento';
-$_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
-$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
+$_lang['fred.fe.content.refresh_cache_element'] = 'Aggiorna la cache';
+$_lang['fred.fe.content.element_cache_warning'] = 'Elemento in cache. I cambiamenti non saranno visibili fino a quando non Applichi.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Ci sono modifiche non salvate, sei sicuro?';
 
