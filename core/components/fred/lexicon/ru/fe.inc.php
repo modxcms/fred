@@ -37,7 +37,7 @@ $_lang['fred.fe.browse_images'] = 'Обзор изображений';
 $_lang['fred.fe.turn_off_fred'] = 'Отключить Fred';
 $_lang['fred.fe.turn_on_fred'] = 'Включить Fred';
 $_lang['fred.fe.invalid_elements_warning'] = 'Один или несколько элементов в содержимом не принадлежат этой Теме.';
-$_lang['fred.fe.unsaved_data_warning'] = 'Changes that you made may not be saved.';
+$_lang['fred.fe.unsaved_data_warning'] = 'Внесенные вами изменения не могут быть сохранены.';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Заголовок страницы';
 $_lang['fred.fe.page_settings.long_title'] = 'Длинное название';
@@ -113,7 +113,7 @@ $_lang['fred.fe.content.element_screenshot'] = 'Скриншот Элемент�
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Заменить миниатюру элемента';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Заменить миниатюры элементов';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Обновить кэш';
-$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
+$_lang['fred.fe.content.element_cache_warning'] = 'Элемент кэшируется. Изменения не будут отображаться, пока вы не примените.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Возможно, внесенные изменения не сохранятся.';
 
@@ -166,4 +166,4 @@ $_lang['fred.fe.err.resource_ns_data'] = 'Дата обязательна.';
 $_lang['fred.fe.err.resource_stale'] = 'Ваша страница устарела, пожалуйста, перезагрузите страницу.';
 $_lang['fred.fe.err.resource_save'] = 'Ошибка сохранения ресурса';
 $_lang['fred.fe.err.tagger_ns_group'] = 'Требуется группа';
-$_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Files cannot be selected, please select a folder.';
+$_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Файлы не могут быть выбраны, пожалуйста, выберите папку.';

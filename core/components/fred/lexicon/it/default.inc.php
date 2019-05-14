@@ -21,7 +21,7 @@ $_lang['freddropzone'] = 'Dropzone Fred';
 $_lang['fred.global.any'] = 'Qualsiasi';
 $_lang['fred.global.change_order'] = 'Modifica ordinamento di: [[+name]]';
 $_lang['fred.global.help'] = 'Aiuto';
-$_lang['fred.global.none'] = 'None';
+$_lang['fred.global.none'] = 'Nessuno';
 
 $_lang['fred.open_in_fred'] = 'Apri in Fred';
 
@@ -211,7 +211,7 @@ $_lang['fred.themed_templates.create'] = 'Assegna Tema ad un Template';
 $_lang['fred.themed_templates.update'] = 'Aggiorna Tema Assegnato';
 $_lang['fred.themed_templates.remove'] = 'Disassocia Tema';
 $_lang['fred.themed_templates.remove_confirm'] = 'Confermi di voler rimuovere l\'associazione del tema “ [[+theme]]” dal Template “[[+template]]”?';
-$_lang['fred.themed_templates.default_blueprint'] = 'Default Blueprint';
+$_lang['fred.themed_templates.default_blueprint'] = 'Progetto predefinito';
 
 $_lang['fred.media_sources.name'] = 'Nome';
 $_lang['fred.media_sources.description'] = 'Descrizione';
@@ -246,8 +246,8 @@ $_lang['setting_fred.blueprint_sort'] = 'Ordinamento Modelli';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Ordina Modelli per nome o posizione';
 $_lang['setting_fred.secret'] = 'Password';
 $_lang['setting_fred.secret_desc'] = 'Password usata per firmare richieste XHR';
-$_lang['setting_fred.default_enabled'] = 'Fred Enabled';
-$_lang['setting_fred.default_enabled_desc'] = 'Enable or Disable Fred by default';
+$_lang['setting_fred.default_enabled'] = 'Abilitato a Fred';
+$_lang['setting_fred.default_enabled_desc'] = 'Abilita o Disabilita Fred di default';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Il nome è obbligatorio';
 $_lang['fred.err.blueprints_ns_name'] = 'Il nome è obbligatorio';

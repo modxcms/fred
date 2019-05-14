@@ -18,7 +18,7 @@
 $_lang['fred.permissions.fred'] = 'Посмотреть Fred (mgr) (web)';
 $_lang['fred.permissions.fred_elements'] = 'Посмотреть Элементы (mgr) (web)';
 $_lang['fred.permissions.fred_element_save'] = 'Создание/редактирование/дублирование элементов (mgr)';
-$_lang['fred.permissions.fred_element_front_end_delete'] = 'Remove Elements from drop zone (web)';
+$_lang['fred.permissions.fred_element_front_end_delete'] = 'Удалить элементы из рабочей зоны (web)';
 $_lang['fred.permissions.fred_element_delete'] = 'Удалить элементы (mgr)';
 $_lang['fred.permissions.fred_element_screenshot'] = 'Сделайте снимок экрана, чтобы заменить текущий предварительный просмотр боковой панели для элементов (web)';
 $_lang['fred.permissions.fred_element_move'] = 'Перетащите элементы в зоны перетаскивания (web)';
@@ -61,4 +61,4 @@ $_lang['fred.permissions.save_document'] = 'Сохранение ресурсо�
 $_lang['fred.permissions.new_document'] = 'Создание нового ресурса (mgr) (web)';
 $_lang['fred.permissions.delete_document'] = 'Удалить ресурсы (mgr) (web)';
 $_lang['fred.permissions.undelete_document'] = 'Восстановление ресурсов (mgr) (web)';
-$_lang['fred.permissions.fred_element_cache_refresh'] = 'Refresh cache of Fred Element (web)';
+$_lang['fred.permissions.fred_element_cache_refresh'] = 'Обновить кеш элемента Фред (web)';

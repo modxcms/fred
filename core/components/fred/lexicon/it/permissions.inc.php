@@ -18,7 +18,7 @@
 $_lang['fred.permissions.fred'] = 'Vedere Fred (mgr) (web)';
 $_lang['fred.permissions.fred_elements'] = 'Vedere Elementi (mgr) (web)';
 $_lang['fred.permissions.fred_element_save'] = 'Crea/modifica/duplica Elementi (mgr)';
-$_lang['fred.permissions.fred_element_front_end_delete'] = 'Remove Elements from drop zone (web)';
+$_lang['fred.permissions.fred_element_front_end_delete'] = 'Rimuove Elementi dalla drop-zone (web)';
 $_lang['fred.permissions.fred_element_delete'] = 'Cancellare Elementi (mgr)';
 $_lang['fred.permissions.fred_element_screenshot'] = 'Fai uno screenshot per sostituire l\'anteprima della barra laterale corrente per gli Elementi (web)';
 $_lang['fred.permissions.fred_element_move'] = 'Drag and drop Elementi nelle drop zones (web)';
@@ -61,4 +61,4 @@ $_lang['fred.permissions.save_document'] = 'Salvare Risorse (mgr) (web)';
 $_lang['fred.permissions.new_document'] = 'Creare nuove Risorse (mgr) (web)';
 $_lang['fred.permissions.delete_document'] = 'Cancellare Risorse (mgr) (web)';
 $_lang['fred.permissions.undelete_document'] = 'Ripristinare Risorse (mgr) (web)';
-$_lang['fred.permissions.fred_element_cache_refresh'] = 'Refresh cache of Fred Element (web)';
+$_lang['fred.permissions.fred_element_cache_refresh'] = 'Aggiorna la cache di un Elemento Fred (web)';
