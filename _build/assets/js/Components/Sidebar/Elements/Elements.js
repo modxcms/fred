@@ -62,11 +62,13 @@ export default class Elements extends SidebarPlugin {
 
                     const categoryContent = dd();
                     const categoryEl = div(['fred--thumbs', 'source', 'elements-source']);
+                    const categoryHeader = h3(category.category);
                     
                     category.elements.forEach(element => {
                         categoryEl.appendChild(Elements.elementWrapper(element.id, element.title, element.description, element.image, element.content, element.options || {}));
                     });
 
+                    categoryContent.appendChild(categoryHeader);
                     categoryContent.appendChild(categoryEl);
 
                     content.appendChild(categoryTab);
