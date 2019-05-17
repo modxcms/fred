@@ -1,6 +1,6 @@
 import SidebarPlugin from '../../SidebarPlugin';
 import drake from '../../../Drake';
-import { div, dl, dt, dd, figure, img, figCaption } from './../../../UI/Elements'
+import { div, dl, dt, dd, figure, h3, img, figCaption } from './../../../UI/Elements'
 import emitter from "../../../EE";
 import hoverintent from 'hoverintent';
 import { getElements } from '../../../Actions/elements';
