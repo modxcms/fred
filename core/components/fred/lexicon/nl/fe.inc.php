@@ -37,7 +37,7 @@ $_lang['fred.fe.browse_images'] = 'Blader door afbeeldingen';
 $_lang['fred.fe.turn_off_fred'] = 'Fred uitschakelen';
 $_lang['fred.fe.turn_on_fred'] = 'Fred inschakelen';
 $_lang['fred.fe.invalid_elements_warning'] = 'Een of meer elementen in de content horen niet bij dit thema.';
-$_lang['fred.fe.unsaved_data_warning'] = 'Changes that you made may not be saved.';
+$_lang['fred.fe.unsaved_data_warning'] = 'Changes to this page since your last save will be lost.';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Titel';
 $_lang['fred.fe.page_settings.long_title'] = 'Lange titel';
