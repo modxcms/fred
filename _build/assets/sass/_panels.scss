@@ -16,10 +16,10 @@
     left: -360px;
     opacity: 0;
   }
-  &_button_wrapper{
-    margin: 12px;
-    text-align: right;
-  }
+  //&_button_wrapper{
+  //  margin: 12px;
+  //  text-align: right;
+  //}
   &_warning{
     background-color: darken($lightcoral, 10%);
     padding: 8px 16px;
@@ -34,29 +34,29 @@
     margin-bottom: 16px;
   }
 
-  legend {
-    background: darken($black, 15%);
-    &:before{
-      content: "";
-      height: 29px;
-      width: 25px;
-      margin-right: 8px;
-      display: inline;
-      clear: none;
-      float: left;
-    }
-    &.fred--panel_element{
-      &:before {
-        background: inline-svg('settings', $white) center center no-repeat;
-      }
-    }
-    &.fred--panel_blueprint{
-      &:before {
-        background: inline-svg('object-group', $white) center center no-repeat;
-      }
-    }
-  }
-
+  //legend {
+  //  background: darken($black, 15%);
+  //  &:before{
+  //    content: "";
+  //    height: 29px;
+  //    width: 25px;
+  //    margin-right: 8px;
+  //    display: inline;
+  //    clear: none;
+  //    float: left;
+  //  }
+  //  &.fred--panel_element{
+  //    &:before {
+  //      background: inline-svg('settings', $white) center center no-repeat;
+  //    }
+  //  }
+  //  &.fred--panel_blueprint{
+  //    &:before {
+  //      background: inline-svg('object-group', $white) center center no-repeat;
+  //    }
+  //  }
+  //}
+  //
   dl {
     dt {
       position: relative;

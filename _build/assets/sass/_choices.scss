@@ -9,14 +9,14 @@ $choices-font-size-sm: 12px !default;
 $choices-guttering: 24px !default;
 $choices-border-radius: 2.5px !default;
 $choices-border-radius-item: 20px !default;
-$choices-bg-color: lighten($black, 5%) !default;
-$choices-bg-color-disabled: $black !default;
-$choices-bg-color-dropdown: lighten($black, 5%) !default;
-$choices-text-color: $white !default;
-$choices-keyline-color: darken($black, 5%) !default;
-$choices-primary-color: $modxgreen !default;
-$choices-disabled-color: $dark-gray !default;
-$choices-highlight-color: $choices-primary-color !default;
+$choices-bg-color: $offwhite; //lighten($black, 5%) !default;
+$choices-bg-color-disabled: $border; //$black !default;
+$choices-bg-color-dropdown: $offwhite; //lighten($black, 5%) !default;
+$choices-text-color: $black; //$white !default;
+$choices-keyline-color: $border-light; // darken($black, 5%) !default;
+$choices-primary-color: $offwhite !default;
+$choices-disabled-color: $border-light !default;
+$choices-highlight-color: $offwhite !default;
 $choices-button-icon-path: '../../icons' !default;
 $choices-button-dimension: 8px !default;
 $choices-button-offset: 8px !default;
@@ -39,7 +39,7 @@ $choices-button-offset: 8px !default;
 
 .#{$choices-selector}[data-type*="select-one"] {
   cursor: pointer;
-  .#{$choices-selector}__inner { /*padding-bottom: 7.5px;*/ }
+  /*.#{$choices-selector}__inner { padding-bottom: 7.5px; }*/
   .#{$choices-selector}__input {
     display: block;
     width: 100%;

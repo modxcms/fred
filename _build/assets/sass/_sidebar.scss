@@ -17,13 +17,13 @@
     margin-left: -5px;
   }
   &:hover {
-    color: $white;
+    color: $black;
     background-color: darken($black, 15%);
   }
 }
 
 .fred--hidden {
-  position: absolute;
+  position: absolute !important;
   left: -360px !important;
   opacity: 0 !important;
 }
@@ -34,7 +34,7 @@
   cursor: pointer;
 }
 
-.fred--sidebar_button-group{
+.fred--sidebar_button-group {
   position: absolute;
   bottom: 24px;
 }
@@ -74,7 +74,7 @@
 
 .fred--sidebar {
   font-family: "Open Sans", Arial, sans-serif;
-  background-color: $black;
+  background-color: $blue;
   height: 100vh;
   opacity: 1;
   //overflow-x: hidden;
@@ -82,6 +82,7 @@
   top: 0;
   left: 0;
   z-index: 10011;
+  //border-right: 1px solid $border-light;
   transition: $timing;
   overflow-y: auto;
   overflow-x: visible;
@@ -103,11 +104,16 @@
         height: 18px;
         width: 21px;
         margin-bottom: 4px;
+        // background-color: $white;
+        background-color: $white;
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+  
       }
       &:after{
         content: "";
         position: absolute;
-        background: $white;
+        background: $offwhite;
         bottom: 0;
         height: 1px;
         left: 12px;
@@ -126,54 +132,76 @@
           bottom: 16px;
           animation: fred--dt-after-slide-active $timing;
         }
+        &:before{
+          background-color: $border;
+        }
       }
       &.active, &:hover, &:focus {
-        background-color: $darkblue !important;
+        color: $border;
+        background-color: $active !important;
+        &:before {
+          background-color: $border;
+        }
       }
     }
   }
   &_pages {
     &:before {
-      background: inline-svg('sitemap', $white) center center no-repeat;
+      //background: inline-svg('sitemap', $white) center center no-repeat;
+      mask-image: inline-svg('sitemap');
+      -webkit-mask-image: inline-svg('sitemap');
     }
   }
   &_elements {
     &:before {
-      background: inline-svg('clone', $white) center center no-repeat;
+      //background: inline-svg('clone', $white) center center no-repeat;
+      mask-image: inline-svg('clone');
+      -webkit-mask-image: inline-svg('clone');
     }
   }
   &_blueprints {
     &:before {
-      background: inline-svg('object-group', $white) center center no-repeat;
+      //background: inline-svg('object-group', $white) center center no-repeat;
+      mask-image: inline-svg('object-group');
+      -webkit-mask-image: inline-svg('object-group');
     }
   }
   &_more {
     &:before {
-      background: inline-svg('ellipsis-h', $white) center center no-repeat;
+      //background: inline-svg('ellipsis-h', $white) center center no-repeat;
+      mask-image: inline-svg('ellipsis-h');
+      -webkit-mask-image: inline-svg('ellipsis-h');
     }
   }
   &_page_settings {
     &:before {
-      background: inline-svg('cog', $white) center center no-repeat;
+      //background: inline-svg('cog', $white) center center no-repeat;
+      mask-image: inline-svg('cog');
+      -webkit-mask-image: inline-svg('cog');
     }
     + dd dt {
       &:hover{
-        //background: darken($green, 10%) !important;
+        color: $white;
+        background-color: $dark-gray;
       }
     }
   }
 }
 
 .fred--accordion {
+  border-width: 0 1px 0 0;
   h3 {
-    font-size: 21px;
-    padding: 16px 22px 16px 32px;
-    color: $white;
-    font-weight: lighter;
-    border-bottom: 1px solid rgba($white, .2);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    margin: 0 28px 0 18px;
+    padding: 16px 2px 8px 2px;
+    color: $border;
+    border-bottom: 1px solid $border-light;
   }
   a{
-    color: $white;
+    color: $black;
   }
   > dt {
     display: flex;
@@ -182,11 +210,11 @@
     overflow: hidden;
     background-color: $blue;
     color: $white;
-    font-size: 12px !important;
-    padding: 20px 8px !important;
-    font-style: normal !important;
-    font-weight: normal !important;
-    margin-top: 0 !important;
+    font-size: 12px;
+    padding: 20px 8px;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
     cursor: pointer;
     width: 80px;
     text-align: center;
@@ -211,7 +239,7 @@
     }
 
     &.active, &:hover, &:focus {
-      background-color: $primary;
+      background-color: $white;
     }
 
     &.active {
@@ -238,9 +266,9 @@
         > i{
           opacity: .75
         }
-        + dd {
+        //+ dd {
           //opacity: .5;
-        }
+        //}
       }
     }
     &:not(.active){
@@ -256,8 +284,8 @@
 
   dd {
     //display: none;
-    color: $white;
-    font-size: 14px;
+    color: $black;
+    font-size: 15px;
     transition: $timing;
     opacity: 0;
     position: fixed;
@@ -267,12 +295,12 @@
     overflow: auto;
     //overflow-x: hidden;
     top: 0;
-    background-color: $darkblue;
+    background-color: $base;
 
     .fred--thumbs .fred--thumb {
       background-color: transparent;
-      border-bottom: 1px solid $black;
-      margin-bottom: 8px;
+      //border-bottom: 1px solid $black;
+      margin-bottom: $gutter/2;
       position: relative;
       @include draggable();
       &:last-of-type {
@@ -281,6 +309,9 @@
 
       img {
         max-width: 100%;
+        height:auto;
+        margin: 0;
+        line-height:1;
       }
 
       figcaption {
@@ -302,13 +333,22 @@
         }
       }
       > div {
-        padding: 8px;
+        margin: 0 30px 0 20px;
+        padding: 8px 8px 0;
         transition: $timing;
+        img { 
+          width:100%;
+          margin: 0;
+          border: 1px solid $border-light;
+        }
       }
       &:hover {
         > div {
           transform: scale(1.05);
-          background-color: $black;
+        //  background-color: $black;
+          img {
+            border: 1px solid $border;
+          }
         }
         figcaption {
           opacity: 1;
@@ -318,23 +358,26 @@
     }
     dl {
       z-index: 3;
+      margin-top: $baseGutter/2;
       dt {
         position: relative;
-        padding: 16px 22px 16px 36px;
-        font-size: 20px;
-        font-weight: lighter;
+        padding: $sidebar-actions-padding;
+        font-size: 15px;
+        //font-weight: lighter;
         transition: $timing;
         cursor: pointer;
-        min-height: 56px;
-        max-width: 260px;
+        //min-height: 56px;
+        //max-width: 260px;
+        color: $black;
         &.active {
-          color: $modxgreen;
-          background-color: darken($black, 15%);
+          color: $white;
+          background-color: $dark-gray;
           //pointer-events: none;
         }
         &:before{
           content: "";
-          width: 16px; height: 16px;
+          width: 16px; 
+          height: 16px;
           border-radius: 16px;
           display:inline-block;
           margin-right: 8px;
@@ -345,13 +388,25 @@
         }
         &.fred--accordion{
           &-cog{
-            &:before{
-              background: inline-svg('cog', $white) center center no-repeat;
+            background-color: $offwhite;
+            //&:before{
+            //  background: inline-svg('cog', $white) center center no-repeat;
+            //}
+            //&.active{
+            //  &before{
+            //    opacity: 1;
+            //  }
+            //}
+            &:after {
+              content: ">";
+              position: absolute;
+              right: 10px;
+              top: calc(50% - 12px);
+              color: $border-light;
             }
-            &.active{
-              &before{
-                opacity: 1;
-              }
+            &:hover {
+              color: $white;
+              background-color: $dark-gray;    
             }
           }
           &-plus{
@@ -380,54 +435,38 @@
             overflow: auto;
             overflow-x: hidden;
             top: 0;
-            background-color: lighten($black, 5%);
+            //background-color: lighten($black, 5%);
+            //background-color: $offwhite;
+            border:1px solid $border-light;
             transition: $timing;
             transition-delay: .001s;
             z-index: 99;
           }
         }
-        &:hover:not(:focus){
-          background-color: darken($black, 15%);
-        }
+        //&:hover:not(:focus){
+        //  background-color: darken($black, 15%);
+        //}
         > a{
-          padding: 16px 16px 16px 40px;
+          padding: $sidebar-actions-padding;
           position: absolute;
           top: 0;
           left: 0;
           display: block;
           width: 100%;
-          font-weight: 100;
-          font-size: inherit;
-        }
-      }
-      dd{
-        h3{
-          padding: 16px 22px 16px 22px;
+          font-size: 15px;
         }
       }
     }
   }
 }
 
-.fred--accordion_resource-list {
-  li {
-    display: block;
-    a {
-      color: $light-gray;
-      display: block;
-      &:hover {
-        color: $primary;
-      }
-    }
-  }
-}
-
+/* page tree menu */
 .fred--accordion dd .fred--pages {
- dl.fred--pages_list {
-    font-size: 20px;
+  dl.fred--pages_list {
     dt:not([class^="fred--accordion"]){
-      padding: 16px 22px 16px 36px;
-      font-size: .9em;
+      /* padding: 16px 30px 0 33px;
+      margin: -16px 0 14px; */
+      padding: 12px 30px 12px 33px;
       &:before{
         display:none;
       }
@@ -436,9 +475,8 @@
       font-size: inherit;
     }
     dl {
-      border-left: 2px solid rgba($white, .2);
-      margin-left: 2px;
-      font-size: .95em;
+      border-left: 1px solid rgba($black, .25);
+      margin-left: 20px;
       transition: $timing left;
       &:not(.fred--hidden){
         position: relative;
@@ -446,19 +484,10 @@
         width: 100%;
         height: auto;
       }
-      & > dt{
-        font-size: inherit;
-        padding-left: 40px !important;
-      }
     }
   }
   &_menu {
     button, a {
-      color: $white;
-      position: relative;
-      padding: 16px 32px;
-      font-size: 20px;
-      font-weight: lighter;
       transition: $timing;
       cursor: pointer;
       background: transparent;
@@ -466,44 +495,48 @@
       display: block;
       width: 100%;
       text-align: left;
+      padding: $sidebar-actions-padding;
       &:hover, &:focus {
-        background-color: darken($black, 15%);
+        background-color: $offwhite;
       }
+    }
+    a {
+      margin-top: 8px;
     }
   }
   &_deleted {
-    color: rgba($modxred, .5);
+    color: $modxred;
     text-decoration: line-through;
   }
   &_unpublished {
     font-style: italic;
   }
   &_hidden {
-    color: rgba($white, .5);
+    color: $border-light;
   }
-  &_noedit {
-
-  }
+  //&_noedit {
+  //
+  //}
 }
 
-.fred--sidebar_paneltwo {
-  font-family: "Open Sans", Arial, sans-serif;
-  background-color: lighten($black, 5%);
-  border-right: 2px solid #0c4eac;
-  width: 260px;
-  height: 100vh;
-  opacity: 1;
-  overflow-x: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99999;
-  transition: $timing;
-  &.fred--hidden {
-    left: -360px;
-    opacity: 0;
-  }
-}
+//.fred--sidebar_paneltwo {
+//  font-family: "Open Sans", Arial, sans-serif;
+//  background-color: lighten($black, 5%);
+//  border-right: 2px solid #0c4eac;
+//  width: 260px;
+//  height: 100vh;
+//  opacity: 1;
+//  overflow-x: hidden;
+//  position: fixed;
+//  top: 0;
+//  left: 0;
+//  z-index: 99999;
+//  transition: $timing;
+//  &.fred--hidden {
+//    left: -360px;
+//    opacity: 0;
+//  }
+//}
 
 .fred--loading_wrapper {
   color: $white;

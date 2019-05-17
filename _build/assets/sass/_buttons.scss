@@ -95,36 +95,41 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
   }
   &-panel {
     position: relative;
-    display: inline-block;
     color: white;
     text-align: center;
     background: transparent;
     border: 1px solid darken($black, 15%);
     border-radius: $radius;
     padding: 8px 16px;
-    margin: 16px 4px;
+    margin: $baseGutter/2 $baseGutter;
+    float: right;
     &:hover, &:focus {
       background-color: darken($black, 15%);
     }
   }
   &-apply{
     background: $green;
+    border: 0px solid transparent;
+    &:hover, &:focus {
+      background-color: darken($green, 25%);
+    }
   }
   &-list {
     display: inline-block;
     position: absolute;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    //background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjYwNjUgMzMxIDE5LjI0MyAxOS4yNDMiPiAgPGRlZnM+ICAgIDxzdHlsZT4gICAgICAuY2xzLTEgeyAgICAgICAgZmlsbDogI2ZmZjsgICAgICB9ICAgIDwvc3R5bGU+ICA8L2RlZnM+ICA8ZyBpZD0icGx1c18yXyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjA2NSAzMzEpIj4gICAgPGcgaWQ9Il94MzdfNDYtcGx1cy1jaXJjbGUtc2VsZWN0ZWRfeDQwXzJ4LnBuZ18yXyI+ICAgICAgPGcgaWQ9Ikdyb3VwXzE2IiBkYXRhLW5hbWU9Ikdyb3VwIDE2Ij4gICAgICAgIDxwYXRoIGlkPSJQYXRoXzE5IiBkYXRhLW5hbWU9IlBhdGggMTkiIGNsYXNzPSJjbHMtMSIgZD0iTTkuNjIxLDBhOS42MjEsOS42MjEsMCwxLDAsOS42MjEsOS42MjFBOS42Miw5LjYyLDAsMCwwLDkuNjIxLDBabTQuODExLDkuOTcxSDkuOTcxdjQuNDZhLjM1NS4zNTUsMCwwLDEtLjM1LjM0My4zNDMuMzQzLDAsMCwxLS4zNDMtLjM0M1Y5Ljk3MUg0LjgxMWEuMzU1LjM1NSwwLDAsMS0uMzQzLS4zNS4zNDMuMzQzLDAsMCwxLC4zNDMtLjM0M0g5LjI3OVY0LjgxMWEuMzQzLjM0MywwLDAsMSwuMzQzLS4zNDMuMzU1LjM1NSwwLDAsMSwuMzUuMzQzVjkuMjc5aDQuNDZhLjM0My4zNDMsMCwwLDEsLjM0My4zNDNBLjM1NS4zNTUsMCwwLDEsMTQuNDMyLDkuOTcxWiIvPiAgICAgIDwvZz4gICAgPC9nPiAgPC9nPjwvc3ZnPg==");
-    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMi4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAxMCA1IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxMCA1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojRkZGRkZGO30NCjwvc3R5bGU+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjEwLDUgNSwwIDAsNSAiLz4NCjwvc3ZnPg0K');
-    background-size: 15px;
+    background-color: $black;
+    mask-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMi4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAxMCA1IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxMCA1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojRkZGRkZGO30NCjwvc3R5bGU+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjEwLDUgNSwwIDAsNSAiLz4NCjwvc3ZnPg0K');
+    -webkit-mask: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMi4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAxMCA1IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxMCA1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojRkZGRkZGO30NCjwvc3R5bGU+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjEwLDUgNSwwIDAsNSAiLz4NCjwvc3ZnPg0K');
+    -webkit-mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 12px;
     transition: $timing;
     height: 30px;
     width: 30px;
     left: 6px;
     top: calc(50% - 15px);
     cursor: pointer !important;
+    color: $black;
     &_expand {
       transform: rotate(90deg);
     }
