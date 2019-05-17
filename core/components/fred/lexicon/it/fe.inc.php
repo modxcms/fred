@@ -37,7 +37,7 @@ $_lang['fred.fe.browse_images'] = 'Esplora immagini';
 $_lang['fred.fe.turn_off_fred'] = 'Disabilita Fred';
 $_lang['fred.fe.turn_on_fred'] = 'Abilita Fred';
 $_lang['fred.fe.invalid_elements_warning'] = 'Uno o più Elementi nel contenuto non appartengono a questo Tema.';
-$_lang['fred.fe.unsaved_data_warning'] = 'Le modifiche effettuate potrebbero non essere state salvate.';
+$_lang['fred.fe.unsaved_data_warning'] = 'Changes to this page since your last save will be lost.';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Titolo pagina';
 $_lang['fred.fe.page_settings.long_title'] = 'Titolo Esteso';
