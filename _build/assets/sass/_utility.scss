@@ -102,8 +102,8 @@
   top: 0;
   width: 100% !important;
   height: 100% !important;
-  background-color: darken($black, 5%);
-  color: white;
+  background-color: $black;
+  color: $white;
   text-align: center;
   z-index: 99999999999999;
 
@@ -116,18 +116,17 @@
     position: relative;
     background-color: #FFF;
     width: 100%;
-    height: calc(100% - 51px) !important;
+    height: calc(100% - 51px);
     display: block;
     margin: 51px auto 0;
   }
   &_controls{
-    background: $black;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
     height: 51px;
-    z-index: 100
+    background-attachment: $black;
+    z-index: 100;
+    display: flex;
+    text-align: center;
+    justify-content: center;
   }
   .fred--devices{
     -webkit-border-radius: 4px;
@@ -139,12 +138,11 @@
     -moz-transition: all 200ms ease;
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
-    position: absolute;
     z-index: 1;
-    top: 8px;
-    left: 50%;
-    margin-left: -104px;
-    border: 1px solid $darkblue;
+    //top: 8px;
+    //left: 50%;
+    //margin-left: -104px;
+    //border: 1px solid $darkblue;
     a {
       &:first-of-type {
         -webkit-border-radius: 4px 0 0 4px;

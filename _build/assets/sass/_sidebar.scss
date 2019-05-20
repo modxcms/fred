@@ -261,6 +261,7 @@
         opacity: 1;
         z-index: 2;
         left: 80px;
+        border-right: 1px solid $border-light;
       }
       &:hover {
         background-color: darken($black, 1%);
@@ -421,8 +422,7 @@
             overflow: auto;
             overflow-x: hidden;
             top: 0;
-            border: 1px solid $border-light;
-            border-width: 0 1px;
+            border-right: 1px solid $border-light;
             transition: $timing;
             transition-delay: .001s;
             z-index: 99;
