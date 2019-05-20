@@ -1,51 +1,49 @@
 
 // COLORS
-$lightcoral: #e46363;
 
-//$blue: #031723; // was #123764
-$blue: #2a4365; 
-//$darkblue: #f2f2f2; // was darken($blue, 5%)
-$darkblue: #f1f1f1;
-//$gray: #747f8a;
+$blue: #2a4365; //$was: #031723 and #123764
+$darkblue: darken($blue, 10%);
+
 $gray: #b1b1b1;
-//$light-gray: #a9abab;
 $light-gray: #e4e4e4;
 $dark-gray: darken($gray, 20%);
-$green: #549c89;
-$white: #ffffff;
-$base: $white; // the base background color, which was $darkblue
-$active: $white; // the color that active elemets should be (previously not specified)
-//$offwhite: #f2f2f2;
-$offwhite: #f1f1f1;
-//$black: #293134;
-//$black: #001926; // was $blue
-$black: #272727; // was $blue
 
+$green: #549c89;
+
+$white: #ffffff;
+$offwhite: #f1f1f1;
+$black: #272727; 
 
 $border-light: #c9cfd3;
 $border: #363839;
 
-// PLACEHOLDERS
 $primary: $blue;
 $secondary: $green;
 
-$baseGutter: 16px;
-$gutter: $baseGutter;
-$radius: 4px;
-$timing: .3s;
-
-$btn-padding: $baseGutter/2 $baseGutter;
-$btn-padding-small: 3px 11px;
-$sidebar-actions-padding: 12px 30px 12px 20px;
-
+$base: $white; // the base background color, which was $darkblue
+$active: $white; // the color that active elemets should be (previously not specified)
 
 //MODX Colors
 $modxred: #E12A29;
 $modxorange: #ed673e;
 $modxblue: #3380C2;
-//$modxblue: $darkblue;
 $modxgreen: #42AB4A;
 $modxbrightgreen: #95C953;
+
+$lightcoral: #e46363;
+
+// PLACEHOLDERS
+
+$baseGutter: 16px;
+$gutter: $baseGutter;
+$radius: 4px;
+$timing: .3s;
+$box-shad-subtle: 0px 3px 15px rgba(0,0,0,0.2);
+
+$btn-padding: $baseGutter/2 $baseGutter;
+$btn-padding-small: 3px 11px;
+$sidebar-actions-padding: 12px 30px 12px 20px;
+
 
 //Mixins
 @mixin draggable{

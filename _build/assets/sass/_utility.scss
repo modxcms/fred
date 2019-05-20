@@ -107,6 +107,15 @@
   text-align: center;
   z-index: 99999999999999;
 
+  &_controls{
+    height: 80px;
+    background-color: $black;
+    z-index: 100;
+    display: flex;
+    flex-flow: row wrap; 
+    justify-content: center; 
+    align-items: center;
+  }
   iframe {
     -webkit-transition: height 240ms ease, width 240ms ease, margin 240ms ease;
     -moz-transition: height 240ms ease, width 240ms ease, margin 240ms ease;
@@ -118,15 +127,7 @@
     width: 100%;
     height: calc(100% - 51px);
     display: block;
-    margin: 51px auto 0;
-  }
-  &_controls{
-    height: 51px;
-    background-attachment: $black;
-    z-index: 100;
-    display: flex;
-    text-align: center;
-    justify-content: center;
+    margin: 0 auto;
   }
   .fred--devices{
     -webkit-border-radius: 4px;
@@ -139,63 +140,39 @@
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
     z-index: 1;
-    //top: 8px;
-    //left: 50%;
-    //margin-left: -104px;
-    //border: 1px solid $darkblue;
     a {
-      &:first-of-type {
-        -webkit-border-radius: 4px 0 0 4px;
-        -moz-border-radius: 4px 0 0 4px;
-        -ms-border-radius: 4px 0 0 4px;
-        -o-border-radius: 4px 0 0 4px;
-        border-radius: 4px 0 0 4px;
-      }
-      &:last-of-type {
-        -webkit-border-radius: 0 4px 4px 0;
-        -moz-border-radius: 0 4px 4px 0;
-        -ms-border-radius: 0 4px 4px 0;
-        -o-border-radius: 0 4px 4px 0;
-        border-radius: 0 4px 4px 0;
-        border-right-width: 1px;
-      }
-      background: $darkblue;
       text-decoration: none;
-      border: 1px solid darken($darkblue, 15%);
-      border-right-width: 0;
-      float: left;
-      display: block;
-      width: 40px;
-      height: 30px;
+      display: inline-block;
       outline: none;
       cursor: pointer;
       transition: $timing;
-      &:hover {
-        background: darken($darkblue, 5%);
-      }
-      &.active, &:active {
-        background: $modxred;
-        outline: none;
-      }
-      &.active span, &:active span {
-        opacity: 1;
-      }
     }
     span {
       text-align: center;
       display: block;
       width: 40px;
-      height: 30px;
+      line-height: 70px;
       text-indent: -9999px;
       opacity: 0.75;
+      &.active, &:active {
+        background-color: $gray;
+        outline: none;
+      }
+    }
+
+    .fred--smartphone-portrait span, .fred--smartphone-landscape span {
+      mask: inline-svg('mobile-alt') no-repeat center center;
+      mask-size: 33%;
+      -webkit-mask: inline-svg('mobile-alt') no-repeat center center;
+      -webkit-mask-size: 33%;
+      background-color: $offwhite;
     }
     .fred--tablet-portrait span, .fred--tablet-landscape span {
-      background: transparent inline-svg('tabletalt',$white) 50% 50% no-repeat;
-      background-size: 50%;
-    }
-    .fred--smartphone-portrait span, .fred--smartphone-landscape span {
-      background: transparent inline-svg('mobile-alt',$white) 50% 50% no-repeat;
-      background-size: 33%;
+      mask: inline-svg('tabletalt') no-repeat center center;
+      mask-size: 65%;
+      -webkit-mask: inline-svg('tabletalt') no-repeat center center;
+      -webkit-mask-size: 65%;
+      background-color: $offwhite;
     }
     .fred--tablet-landscape span, .fred--smartphone-landscape span {
       -webkit-transform: rotate(90deg);
@@ -206,7 +183,6 @@
     }
     .fred--auto span {
       text-indent: 0;
-      line-height: 30px;
       text-transform: uppercase;
       font-size: 10px;
       color: $white;

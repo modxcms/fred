@@ -50,9 +50,9 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     width: 40px;
     height: 40px;
     padding: 5px;
-    background: $darkblue;
+    background: $offwhite;
     border-radius: 20px;
-    border: 1px solid #3d5f88;
+    border: 1px solid $border-light;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 24px;
@@ -60,7 +60,7 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     transition: $timing;
     &:hover, &:focus {
       transform: scale(1.05);
-      background-color: darken($darkblue, 10%);
+      background-color: darken($offwhite, 10%);
     }
     @include btn-disabled();
     &_save{
