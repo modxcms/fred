@@ -37,7 +37,7 @@ $_lang['fred.fe.browse_images'] = 'Обзор изображений';
 $_lang['fred.fe.turn_off_fred'] = 'Отключить Fred';
 $_lang['fred.fe.turn_on_fred'] = 'Включить Fred';
 $_lang['fred.fe.invalid_elements_warning'] = 'Один или несколько элементов в содержимом не принадлежат этой Теме.';
-$_lang['fred.fe.unsaved_data_warning'] = 'Внесенные вами изменения не могут быть сохранены.';
+$_lang['fred.fe.unsaved_data_warning'] = 'Changes to this page since your last save will be lost.';
 
 $_lang['fred.fe.page_settings.page_title'] = 'Заголовок страницы';
 $_lang['fred.fe.page_settings.long_title'] = 'Длинное название';
