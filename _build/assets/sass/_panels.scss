@@ -1,10 +1,10 @@
 .fred--panel{
-  //font-family: "Open Sans", Arial, sans-serif;
-  //background-color: $darkblue;
+  font-family: "Open Sans", Arial, sans-serif;
+  background-color: $white;
   width: 260px;
   height: 100vh;
-  //opacity: 1;
-  //overflow-x: hidden;
+  opacity: 1;
+  overflow-x: hidden;
   position: fixed;
   top: 0;
   left: 0;
@@ -12,6 +12,7 @@
   transition: $timing;
   overflow-y: auto;
   overflow-x: visible;
+  border-right: 1px solid $border-light;
   &.fred--hidden {
     left: -360px;
     opacity: 0;
@@ -57,67 +58,63 @@
   //  }
   //}
   //
-//  dl {
-//    dt {
-//      position: relative;
-//      padding: 16px 22px;
-//      font-size: 20px;
-//      font-weight: lighter;
-//      transition: $timing;
-//      cursor: pointer;
-//      color: $white;
-//      &:before{
-//        content: "";
-//        width: 16px; height: 16px;
-//        border-radius: 16px;
-//        display:inline-block;
-//        margin-right: 8px;
-//        background: inline-svg('cog', $white) center center no-repeat;
-//        background-color: transparent;
-//        transition: $timing;
-//        opacity:.8;
-//      }
-//      &.active {
-//        color: $modxgreen;
-//        background-color: darken($black, 15%);
-//        &:before{
-//          opacity:1;
-//        }
-//      }
-//      &.active {
-//        + dd {
-//          left: 260px;
-//        }
-//      }
-//      &:hover:not(:focus){
-//        background-color: darken($black, 15%);
-//      }
-//      + dd {
-//        padding: 24px 16px;
-//        opacity: 1;
-//        position: fixed;
-//        width: 280px;
-//        left: -300px;
-//        height: 100vh;
-//        overflow: auto;
-//        overflow-x: hidden;
-//        top: 0;
-//        background-color: lighten($black, 5%);
-//        //box-shadow: -250px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
-//        z-index: 99;
-//        transition: $timing;
-//        &:hover {
-//          display: block;
-//        }
-//      }
-//    }
-//    &:last-of-type dt:last-of-type{
-//      margin-bottom: 16px;
-//    }
-//  }
-//  textarea{
-//    height: initial;
-//  }
+  dl {
+    margin-top: $baseGutter/2;
+    dt {
+      background-color: $offwhite;
+      padding: $sidebar-actions-padding;
+      font-size: 15px;
+      transition: $timing;
+      cursor: pointer;
+      color: $black;
+      position: relative;
+      &:after {
+        content: ">";
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 12px);
+        color: $border-light;
+      }
+      &:hover, &.active {
+        color: $white;
+        background-color: $dark-gray;    
+      }
+      &.active {
+        + dd {
+          left: 260px;
+        }
+      }
+      &:hover:not(:focus){
+        background-color: darken($black, 15%);
+      }
+      + dd {
+        background: $white;
+        padding: 24px 16px;
+        opacity: 1;
+        position: fixed;
+        width: 280px;
+        left: -300px;
+        height: 100vh;
+        overflow: auto;
+        overflow-x: hidden;
+        top: 0;
+        border: 1px solid $border-light;
+        border-width: 0 1px;
+        transition: $timing;
+        transition-delay: .001s;
+        z-index: 99;
+        &:hover {
+          display: block;
+        }
+      }
+    }
+    //&:last-of-type dt:last-of-type{
+    //  margin-bottom: 16px;
+    //}
+  }
+  textarea{
+    height: initial;
+  }
 }
 //Safari Fixes
 @media not all and (min-resolution:.001dpcm)

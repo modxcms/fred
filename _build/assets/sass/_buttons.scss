@@ -95,19 +95,20 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
   }
   &-panel {
     position: relative;
-    color: white;
+    color: $border-light;
     text-align: center;
     background: transparent;
-    border: 1px solid darken($black, 15%);
+    border: 1px solid $border-light;
     border-radius: $radius;
     padding: 8px 16px;
     margin: $baseGutter/2 $baseGutter;
     float: right;
     &:hover, &:focus {
-      background-color: darken($black, 15%);
+      background-color: darken($border-light, 15%);
+      color: $black;
     }
   }
-  &-apply{
+  &-apply {
     background: $green;
     border: 0px solid transparent;
     &:hover, &:focus {

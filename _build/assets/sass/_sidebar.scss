@@ -188,6 +188,7 @@
   }
 }
 
+/* main sidebar icons panel */
 .fred--accordion {
   border-width: 0 1px 0 0;
   h3 {
@@ -220,15 +221,15 @@
     text-align: center;
     line-height: 16px;
     transition: $timing;
-    span {
-      i {
-        font-size: 13px;
-        margin: -2px 5px 0 0;
-        vertical-align: middle;
-        opacity: .7;
-        transition: $timing;
-      }
-    }
+    //span {
+    //  i {
+    //    font-size: 13px;
+    //    margin: -2px 5px 0 0;
+    //    vertical-align: middle;
+    //    opacity: .7;
+    //    transition: $timing;
+    //  }
+    //}
 
     .fred--accordion_toggle {
       font-size: 20px;
@@ -363,30 +364,15 @@
         position: relative;
         padding: $sidebar-actions-padding;
         font-size: 15px;
-        //font-weight: lighter;
         transition: $timing;
         cursor: pointer;
-        //min-height: 56px;
-        //max-width: 260px;
         color: $black;
         &.active {
           color: $white;
           background-color: $dark-gray;
           //pointer-events: none;
         }
-        &:before{
-          content: "";
-          width: 16px; 
-          height: 16px;
-          border-radius: 16px;
-          display:inline-block;
-          margin-right: 8px;
-          background-color: transparent;
-          transition: $timing;
-          opacity:.8;
-          margin-left: -22px;
-        }
-        &.fred--accordion{
+        &.fred--accordion {
           &-cog{
             background-color: $offwhite;
             //&:before{
@@ -435,8 +421,6 @@
             overflow: auto;
             overflow-x: hidden;
             top: 0;
-            //background-color: lighten($black, 5%);
-            //background-color: $offwhite;
             border: 1px solid $border-light;
             border-width: 0 1px;
             transition: $timing;
@@ -465,8 +449,6 @@
 .fred--accordion dd .fred--pages {
   dl.fred--pages_list {
     dt:not([class^="fred--accordion"]){
-      /* padding: 16px 30px 0 33px;
-      margin: -16px 0 14px; */
       padding: 12px 30px 12px 33px;
       &:before{
         display:none;
