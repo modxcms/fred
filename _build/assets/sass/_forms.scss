@@ -21,16 +21,17 @@ input{
   .fred--browse-small,
   .fred--close-small{
     position: relative;
-    height: 36px; width: 36px;
-    background-color: darken($black, 10%);
+    height: 24px; width: 24px;
+    border-radius: 48px;
+    background-color: $border;
     background-position: center;
-    background-size: 20px;
-    background-blend-mode: overlay;
-    margin: 0;
+    background-size: 10px;
+    margin: 4px 4px 4px 8px;
     cursor: pointer;
     transition: $timing;
     &:hover{
       background-color: $black;
+      color: $offwhite;
     }
   }
   .fred--browse-small{
@@ -157,9 +158,9 @@ input{
     background-color: $offwhite;
     color: $black;
     height: 36px;
-    width: calc(100% + 4px); // the px addition is the inverse double the negative margin
-    padding: 0 2px;
-    margin: auto -2px;
+    padding: 0 4px;
+    margin: auto -4px; // negative r/l padding to keep the text lined up
+    width: calc(100% + 8px); // the px addition is the inverse double the negative margin
     border-radius: 2px 2px 0 0;
     border-bottom: 1px solid $border-light;
 
@@ -172,6 +173,7 @@ input{
   }
   textarea {
     height: auto;
+    padding-top: 4px;
   }
 //  button {
 //  
@@ -301,7 +303,7 @@ input{
     padding: 2px;
     width: 48px;
     height: 21px;
-    background-color: $border-light;
+    background-color: $offwhite;
     border-radius: 16px;
     float: right;
     margin-top: 2px;
@@ -310,10 +312,8 @@ input{
       border-radius: 16px;
       display: block;
       position: absolute;
-      margin-top: -2px;
-      top: 1px;
-      left: 1px;
-      bottom: 1px;
+      left: 0;
+      bottom: -1px;
       content: "";
       width: 23px; height: 23px;
       //box-shadow: 0 1px 2px $black;

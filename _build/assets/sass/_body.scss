@@ -28,9 +28,9 @@
   z-index: 1;
   .fred--block{
     outline: 3px solid rgba($modxblue, 0);
-    &.fred--block-active, &:focus {
-      //transition: $timing cubic-bezier(.79, .14, .15, .86);
-    }
+    //&.fred--block-active, &:focus {
+    //  transition: $timing cubic-bezier(.79, .14, .15, .86);
+    //}
   }
   &:after{
     content: "";
@@ -52,8 +52,8 @@
     }
     > .fred--block_content {
       &:after {
-        min-height: 22px;
-        height: auto;
+        //min-height: 22px;
+        //height: auto;
         opacity: .85;
       }
     }
@@ -67,13 +67,12 @@
       bottom: auto;
       top: 100%;
       transition: 0s all !important;
-      border-radius: 0 0 0 $radius;
     }
-    > .fred--block_content {
-      &:after {
-        top: calc(100% + 44px);
-      }
-    }
+    //> .fred--block_content {
+    //  &:after {
+    //    top: calc(100% + 44px);
+    //  }
+    //}
   }
   &.fred--block-active_parent {
     outline: 3px solid lighten($gray, 15%);
@@ -141,7 +140,6 @@
     &-grip{
       width: 15px;
       height: 36px;
-      display: inline-block;
       overflow: hidden;
       padding: 10px 28px 10px 4px;
       margin-top: 0;
@@ -239,19 +237,19 @@
       font-size: 14px;
       line-height: 1;
       position: absolute;
-      border-radius: $radius;
-      top: calc(100% + 8px);
-      right: 8px;
-      background: $white;
-      color: #1d1d1d;
-      height: 0;
-      padding: 8px;
+      //top: calc(100% + 8px);
+      //right: 8px;
+      bottom: 20px;
+      left: 100px;
+      border-radius: 50px;
+      background: $offwhite;
+      color: $black;
+      padding: 8px 16px;
       opacity: 0;
       overflow: hidden;
       transition: .2s ease-in;
-      //text-transform: uppercase;
       font-family: Arial, sans-serif;
-
+      mix-blend-mode: hard-light;
     }
   }
 

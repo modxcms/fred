@@ -13,7 +13,7 @@ Fred requires PHP version 7.1.3 or later to run with support for the `php-bcmath
 ## Fred Editor Requirements
 The Fred editing tool requires a modern browser:
 
-- Chrome 29 or later
-- Firefox 28 or later
+- Chrome 41 or later
+- Firefox 32 or later
 - Safari 9.0 or later
-- Microsoft Edge
+- Edge 75 or later
