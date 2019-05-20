@@ -8,6 +8,11 @@ import fetch from "./Fetch";
 import utilitySidebar from "./Components/UtilitySidebar";
 import actions from './Actions';
 import Mousetrap from 'mousetrap';
+import Choices from 'choices.js';
+import flatpickr from "flatpickr";
+import ColorPicker from './ColorPicker/ColorPicker';
+import noUiSlider from 'nouislider';
+import hoverintent from 'hoverintent';
 
 export const debounce = (delay, fn) => {
     let timerId;
@@ -387,6 +392,11 @@ export const pluginTools = () => {
         fredConfig,
         utilitySidebar,
         actions,
-        Mousetrap
+        Mousetrap,
+        Choices,
+        flatpickr,
+        ColorPicker,
+        noUiSlider,
+        hoverintent
     };
 };

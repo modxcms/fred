@@ -3,7 +3,6 @@ import Sidebar from './Sidebar/Sidebar';
 import SidebarPlugin from './Components/SidebarPlugin';
 import Launcher from './Launcher';
 import drake from './Drake';
-import libs from './libs';
 import Editor from './Editors/Editor';
 import fredConfig from './Config';
 import { div, section, a, iFrame } from './UI/Elements'
@@ -25,25 +24,24 @@ export default class Fred {
             config.modifyPermissions = config.modifyPermissions.bind(this);
             config.permission = config.modifyPermissions(config.permission);
         }
-        
+
         fredConfig.permission = config.permission;
         delete config.permission;
-        
+
         fredConfig.resource = config.resource;
         delete config.resource;
-        
+
         fredConfig.config = config || {};
         fredConfig.fred = this;
         this.loading = null;
         this.wrapper = null;
         this.fingerprint = '';
-        
-        this.libs = libs;
+
         this.Finder = Finder;
         this.previewDocument = null;
         this.replaceScript = this.replaceScript.bind(this);
         this.scriptsToReplace = [];
-        
+
         this.unsavedChanges = false;
 
         window.onbeforeunload = () => {
@@ -55,7 +53,7 @@ export default class Fred {
         };
 
         const lexiconsLoaded = this.loadLexicons();
-        
+
         document.addEventListener("DOMContentLoaded", () => {
             const scripts = document.body.querySelectorAll('script-fred');
             for (let script of scripts) {
@@ -73,7 +71,7 @@ export default class Fred {
 
                 this.scriptsToReplace.push({old: script, 'new': newScript});
             }
-            
+
             lexiconsLoaded.then(() => {
                 this.init();
             });
@@ -82,7 +80,7 @@ export default class Fred {
 
     render() {
         this.wrapper = div(['fred']);
-        
+
         document.body.appendChild(this.wrapper);
     }
 
@@ -97,7 +95,7 @@ export default class Fred {
         this.controls = div(['fred--content-preview_controls']);
 
         this.devices = div(['fred--devices']);
-        
+
         this.tabletP = a(`<span>${fredConfig.lng('fred.fe.preview.tablet_portrait')}</span>`, fredConfig.lng('fred.fe.preview.tablet_portrait'), '', ['fred--tablet-portrait'], () => {
             this.iframe.style.width = '768px';
             this.iframe.style.height = '1024px';
@@ -134,7 +132,7 @@ export default class Fred {
         this.devices.appendChild(this.auto);
 
         this.controls.appendChild(this.devices);
-        
+
 
         previewWrapper.append(this.controls);
 
@@ -142,7 +140,7 @@ export default class Fred {
 
         this.wrapper.insertBefore(previewWrapper, this.wrapper.firstChild);
     }
-    
+
     previewContent() {
         if (!this.previewDocument) {
             this.renderPreview();
@@ -154,10 +152,10 @@ export default class Fred {
                 return this.getPreviewContent();
             });
         } else {
-            return this.getPreviewContent();   
+            return this.getPreviewContent();
         }
     }
-    
+
     getPreviewContent() {
         const promises = [];
 
@@ -179,7 +177,7 @@ export default class Fred {
             const head = this.previewDocument.querySelector('head');
             head.appendChild(base);
         }
-        
+
         return Promise.all(promises).then(() => {
             this.iframe.contentWindow.document.open();
             this.iframe.contentWindow.document.write(this.previewDocument.documentElement.innerHTML);
@@ -192,7 +190,7 @@ export default class Fred {
             });
         });
     }
-    
+
     renderComponents() {
         new Launcher((fredConfig.config.launcherPosition || 'bottom_left'));
         new Sidebar(this.wrapper);
@@ -216,12 +214,12 @@ export default class Fred {
         for (let child of dropZone.children) {
             promises.push(child.fredEl.cleanRender(parseModx, handleLinks, isPreview));
         }
-        
+
         return Promise.all(promises).then(values => {
             values.forEach(el => {
                 cleanedContent += el.innerHTML;
             });
-            
+
             return cleanedContent;
         });
     }
@@ -236,7 +234,7 @@ export default class Fred {
         const data = {};
 
         const promises = [];
-        
+
         for (let i = 0; i < this.dropzones.length; i++) {
             data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropZone(this.dropzones[i]);
 
@@ -246,16 +244,16 @@ export default class Fred {
                     fredConfig.pageSettings[target.dataset.fredTarget] = ContentElement.getElValue(target);
                     continue;
                 }
-                
+
                 if ((target.dataset.fredTarget.indexOf('tv_') === 0) && (target.dataset.fredTarget.substr(3) !== '')) {
                     fredConfig.pageSettings.tvs[target.dataset.fredTarget.substr(3)] = ContentElement.getElValue(target);
                     continue;
                 }
-                
+
                 body[target.dataset.fredTarget] = ContentElement.getElValue(target);
             }
             promises.push(this.getCleanDropZoneContent(this.dropzones[i]).then(content => {
-                body[this.dropzones[i].dataset.fredDropzone] = content;    
+                body[this.dropzones[i].dataset.fredDropzone] = content;
             }))
         }
 
@@ -269,15 +267,15 @@ export default class Fred {
             saveContent(body)
             .then(json => {
                 this.unsavedChanges = false;
-                
+
                 if (json.url) {
                     location.href = json.url;
                 }
-                
+
                 if (json.fingerprint) {
                     this.fingerprint = json.fingerprint;
                 }
-                
+
                 fredConfig.pageSettings.publishedon = json.publishedon;
 
                 emitter.emit('fred-loading-hide');
@@ -296,10 +294,10 @@ export default class Fred {
 
     loadContent() {
         emitter.emit('fred-loading', fredConfig.lng('fred.fe.preparing_content'));
-        
+
         return fetchContent().then(json => {
             if (json.data.pageSettings.tagger && Array.isArray(json.data.pageSettings.tagger)) json.data.pageSettings.tagger = {};
-            
+
             this.fingerprint = json.data.fingerprint || '';
             fredConfig.pageSettings = json.data.pageSettings || {};
             fredConfig.tagger = json.data.tagger || [];
@@ -308,14 +306,14 @@ export default class Fred {
 
             return loadElements(json.data).then(() => {
                 drake.reloadContainers();
-    
+
                 if (document.querySelectorAll('.fred--block-invalid').length > 0) {
                     fredConfig.invalidElements = true;
-                    
+
                     this.invalidElementsWarning = div(['fred--alert-invalid'], 'fred.fe.invalid_elements_warning');
                     this.wrapper.appendChild(this.invalidElementsWarning);
                 }
-                
+
                 emitter.emit('fred-loading-hide');
             });
         });
@@ -367,7 +365,7 @@ export default class Fred {
                 iframe.parentNode.style.display = 'block';
             });
         });
-        
+
         emitter.on('fred-preview-off', () => {
             document.body.classList.remove('fred--fixed');
             this.iframe.parentNode.style.opacity = null;
@@ -387,7 +385,7 @@ export default class Fred {
                 }
             }
         });
-        
+
         emitter.on('fred-content-changed', () => {
             this.unsavedChanges = true;
         })
@@ -400,23 +398,23 @@ export default class Fred {
             } else {
                 e.returnValue = false;
             }
-            
+
             emitter.emit('fred-save');
         });
-        
+
         Mousetrap.bind('up up down down left right left right b a enter', () => {
             (function(){function c(){var e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function h(){var e=document.getElementsByClassName(l);for(var t=0;t<e.length;t++){document.body.removeChild(e[t])}}function p(){var e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function v(i){var s=d(i);return s.height>e&&s.height<n&&s.width>t&&s.width<r}function m(e){var t=e;var n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return n}function g(){var e=document.documentElement;if(!!window.innerWidth){return window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return e.clientHeight}return 0}function y(){if(window.pageYOffset){return window.pageYOffset}return Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML=" <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";document.body.appendChild(e);e.play()}function x(e){e.className+=" "+s+" "+o}function T(e){e.className+=" "+s+" "+u[Math.floor(Math.random()*u.length)]}function N(){var e=document.getElementsByClassName(s);var t=new RegExp("\\b"+s+"\\b");for(var n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var e=30;var t=30;var n=350;var r=350;var i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var s="mw-harlem_shake_me";var o="im_first";var u=["im_drunk","im_baked","im_trippin","im_blown"];var a="mw-strobe_light";var f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var l="mw_added_css";var b=g();var w=y();var C=document.getElementsByTagName("*");var k=null;for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could not find a node of the right size. Please try a different page.");return}c();S();var O=[];for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){O.push(A)}}})();
         });
     }
-    
+
     registerEditor(name, initFn) {
         if (typeof initFn !== 'function') {
             console.log('initFn has to be a functions');
             return false;
         }
-        
+
         const editor = initFn(Editor, this);
-        
+
         return fredConfig.registerEditor(name, editor);
     }
 
@@ -428,7 +426,7 @@ export default class Fred {
 
         return fredConfig.registerRTE(name, initFn(this, fredConfig));
     }
-    
+
     registerSidebarPlugin(name, initFn) {
         if (typeof initFn !== 'function') {
             console.log('initFn has to be a functions');
@@ -437,7 +435,7 @@ export default class Fred {
 
         return fredConfig.registerSidebarPlugin(name, initFn(this, SidebarPlugin, pluginTools()));
     }
-    
+
     registerToolbarPlugin(name, initFn) {
         if (typeof initFn !== 'function') {
             console.log('initFn has to be a functions');
@@ -446,7 +444,7 @@ export default class Fred {
 
         return fredConfig.registerToolbarPlugin(name, initFn(this, ToolbarPlugin, pluginTools()));
     }
-    
+
     loadLexicons() {
         let topics = '';
         if (fredConfig.config.lexicons && Array.isArray(fredConfig.config.lexicons)) {
@@ -457,7 +455,7 @@ export default class Fred {
             return true;
         });
     }
-    
+
     init() {
         this.registerListeners();
         this.registerKeyboardShortcuts();
@@ -473,7 +471,7 @@ export default class Fred {
 
             registeredDropzones.push(this.dropzones[zoneIndex].dataset.fredDropzone);
         }
-        
+
         if (typeof fredConfig.config.beforeRender === 'function') {
             fredConfig.config.beforeRender = fredConfig.config.beforeRender.bind(this);
             fredConfig.config.beforeRender();
@@ -491,28 +489,28 @@ export default class Fred {
         });
 
     }
-    
+
     replaceScript(index) {
         const next = index + 1;
-        
+
         if (this.scriptsToReplace[index].new.src) {
             this.scriptsToReplace[index].new.addEventListener('load', () => {
                 if (this.scriptsToReplace[next]) {
                     this.replaceScript(next);
                 }
             });
-            
+
             this.scriptsToReplace[index].old.parentElement.replaceChild(this.scriptsToReplace[index].new, this.scriptsToReplace[index].old);
             return;
         }
 
         this.scriptsToReplace[index].old.parentElement.replaceChild(this.scriptsToReplace[index].new, this.scriptsToReplace[index].old);
-        
+
         if (this.scriptsToReplace[next]) {
             this.replaceScript(next);
         }
     }
-    
+
     getContent() {
         const data = {};
 
