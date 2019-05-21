@@ -1,6 +1,6 @@
 import ToolbarPlugin from "./ToolbarPlugin";
 import elementSettings from '../ElementSettings';
-import { button } from "../../../../UI/Elements";
+import { a } from "../../../../UI/Elements";
 import fredConfig from "../../../../Config";
 
 export default class ElementSettings extends ToolbarPlugin {
@@ -12,7 +12,7 @@ export default class ElementSettings extends ToolbarPlugin {
                 return null;
             }
             
-            return button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {elementSettings.open(this.el)});
+            return a('fred.fe.content.settings', 'fred.fe.content.settings', '', [], () => {elementSettings.open(this.el)});
         }
         
         return null;

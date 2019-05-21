@@ -1,8 +1,8 @@
 import ToolbarPlugin from "./ToolbarPlugin";
-import {button} from "../../../../UI/Elements";
+import {a} from "../../../../UI/Elements";
 
 export default class Duplicate extends ToolbarPlugin {
     render() {
-        return button('', 'fred.fe.content.duplicate', ['fred--duplicate-icon'], this.el.duplicate.bind(this.el));
+        return a('fred.fe.content.duplicate', 'fred.fe.content.duplicate', '', [], this.el.duplicate.bind(this.el));
     }
 }

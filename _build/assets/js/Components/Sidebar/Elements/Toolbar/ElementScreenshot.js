@@ -1,6 +1,6 @@
 import ToolbarPlugin from "./ToolbarPlugin";
 import fredConfig from "../../../../Config";
-import {button, img, span} from "../../../../UI/Elements";
+import {a, img, span} from "../../../../UI/Elements";
 import Modal from "../../../../Modal";
 import emitter from "../../../../EE";
 import {replaceImage} from "../../../../Actions/elements";
@@ -11,7 +11,7 @@ export default class ElementScreenshot extends ToolbarPlugin {
     static permission = 'fred_element_screenshot';
     
     render() {
-        return button('', 'fred.fe.content.element_screenshot', ['fred--element_screenshot'], this.takeScreenshot.bind(this));
+        return a('fred.fe.content.element_screenshot', 'fred.fe.content.element_screenshot', '', [], this.takeScreenshot.bind(this));
     }
 
     takeScreenshot() {
