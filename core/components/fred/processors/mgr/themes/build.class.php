@@ -12,7 +12,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
 
     /** @var Fred */
     protected $fred;
-    
+
     public function initialize()
     {
         if (!$this->modx->hasPermission('fred_themes_build')) {
@@ -21,7 +21,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
 
         return parent::initialize();
     }
-    
+
     public function process()
     {
         $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
@@ -48,7 +48,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
             $this->addFieldError('name', $this->modx->lexicon('fred.err.build_ns_name'));
             return $this->failure();
         }
-         
+
         if (!preg_match('/^[a-z_]+$/', $name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.theme_name_invalid_format'));
             return $this->failure();
@@ -58,38 +58,38 @@ class FredThemeBuildProcessor extends modObjectProcessor
             $this->addFieldError('version', $this->modx->lexicon('fred.err.themes_version_number_format'));
             return $this->failure();
         }
-        
+
         if (!preg_match('/^(pl|beta|alpha)[0-9]*$/', $release)) {
             $this->addFieldError('release', $this->modx->lexicon('fred.err.themes_release_format'));
             return $this->failure();
         }
-        
+
         if (empty($theme)) {
             return $this->failure($this->modx->lexicon('fred.err.build_ns_theme'));
         }
-        
+
         if (empty($changelog)) {
             $this->addFieldError('docs_changelog', $this->modx->lexicon('fred.err.theme_docs_changelog_ns'));
             return $this->failure();
         }
-        
+
         if (empty($readme)) {
             $this->addFieldError('docs_readme', $this->modx->lexicon('fred.err.theme_docs_readme_ns'));
             return $this->failure();
         }
-        
+
         if (empty($license)) {
             $this->addFieldError('docs_license', $this->modx->lexicon('fred.err.theme_docs_license_ns'));
             return $this->failure();
         }
-        
+
         $built = $this->build($name, $version, $release, $theme);
-        
+
         if ($built !== true) {
             if ($built === false) {
                 $built = $this->modx->lexicon('fred.err.build_failed');
             }
-            
+
             return $this->failure($built);
         }
 
@@ -106,7 +106,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
             'mediaSources' => [],
             'folders' => [],
         ];
-        
+
         $this->modx->loadClass('transport.modPackageBuilder', '', false, true);
         $builder = new modPackageBuilder($this->modx);
         $builder->createPackage($name, $version, $release);
@@ -131,7 +131,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
         $themeFolder = $themesFolder . $theme->get('theme_folder');
         $themeFolderPath = $assetsPath . '/' . $themeFolder . '/';
 
-        if (is_dir($themeFolderPath) && is_readable($themeFolderPath)) {
+        if (is_dir($themeFolderPath) && is_readable($themeFxPDOFileVehicleolderPath)) {
             $vehicle = $builder->createVehicle([
                 "source" => $themeFolderPath,
                 "target" => "return MODX_ASSETS_PATH . '{$themesFolder}';"
@@ -143,64 +143,64 @@ class FredThemeBuildProcessor extends modObjectProcessor
             ]);
             $builder->putVehicle($vehicle);
         }
-        
+
         /** @var FredElementCategory[] $elementCategories */
         $elementCategories = $theme->getMany('ElementCategories');
-        
+
         /** @var FredBlueprintCategory[] $blueprintCategories */
         $blueprintCategories = $theme->getMany('BlueprintCategories', ['public' => true]);
 
         $theme->getMany('RTEConfigs');
-        
+
         /** @var FredThemedTemplate[] $themedTemplates */
         $themedTemplates = $theme->getMany('Templates');
-        
+
         /** @var FredElementOptionSet[] $optionSets */
         $optionSets = $theme->getMany('OptionSets');
         $optionSetsMap = [];
-        
+
         if (!empty($optionSets)) {
             foreach ($optionSets as $optionSet) {
                 $optionSetsMap[$optionSet->get('id')] = $optionSet->get('name');
             }
         }
-        
+
         $elementOptionSetMap = [];
         $installedTemplates = [];
         $installedTVs = [];
         $rootCategories = [];
-        
+
         if (!empty($elementCategories)) {
             foreach ($elementCategories as $elementCategory) {
                 /** @var FredElement[] $elements */
                 $elements = $elementCategory->getMany('Elements');
-                
+
                 if (!empty($elements)) {
                     foreach ($elements as $element) {
                         $elementOptionSet = $element->get('option_set');
                         if (!empty($elementOptionSet)) {
                             if (isset($optionSetsMap[$elementOptionSet])) {
-                                $elementOptionSetMap[$element->get('uuid')] = $optionSetsMap[$elementOptionSet];           
+                                $elementOptionSetMap[$element->get('uuid')] = $optionSetsMap[$elementOptionSet];
                             }
                         }
                     }
                 }
             }
         }
-        
+
         if (!empty($blueprintCategories)) {
             foreach ($blueprintCategories as $blueprintCategory) {
                 $blueprintCategory->set('createdBy', 0);
-                
+
                 /** @var FredBlueprint[] $blueprints */
                 $blueprints = $blueprintCategory->getMany('Blueprints', ['public' => true]);
-                
+
                 foreach ($blueprints as $blueprint) {
                     $blueprint->set('createdBy', 0);
                 }
             }
         }
-        
+
         if (!empty($themedTemplates)) {
             foreach ($themedTemplates as $themedTemplate) {
                 /** @var modTemplate $template */
@@ -208,17 +208,17 @@ class FredThemeBuildProcessor extends modObjectProcessor
                 if ($template) {
                     $templateName = $template->get('templatename');
                     $installedTemplates[] = $templateName;
-                    
+
                     /** @var  modTemplateVarTemplate[] $templateVarTemplates */
                     $templateVarTemplates = $template->getMany('TemplateVarTemplates');
-                    
+
                     if (is_array($templateVarTemplates)) {
                         foreach ($templateVarTemplates as $templateVarTemplate) {
                             /** @var modTemplateVar $tv */
                             $tv = $templateVarTemplate->getOne('TemplateVar');
                             if ($tv) {
                                 $installedTVs[] = $tv->get('name');
-                                
+
                                 $category = $tv->getOne('Category');
                                 if ($category) {
                                     $rootCategory = $category->get('category');
@@ -234,7 +234,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
                         }
                     }
                 }
-                
+
             }
         }
 
@@ -255,7 +255,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
             'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
         ]);
         $builder->putVehicle($vehicle);
-        
+
         $vehicle = $builder->createVehicle($theme, [
             xPDOTransport::UNIQUE_KEY => 'uuid',
             xPDOTransport::UPDATE_OBJECT => true,
@@ -320,7 +320,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
                                         'TemplateVar' => [
                                             xPDOTransport::PRESERVE_KEYS => false,
                                             xPDOTransport::UPDATE_OBJECT => true,
-                                            xPDOTransport::UNIQUE_KEY => 'name',       
+                                            xPDOTransport::UNIQUE_KEY => 'name',
                                             xPDOTransport::RELATED_OBJECTS => true,
                                             xPDOTransport::RELATED_OBJECT_ATTRIBUTES => [
                                                 'Category' => [
@@ -351,6 +351,60 @@ class FredThemeBuildProcessor extends modObjectProcessor
         ]);
         $builder->putVehicle($vehicle);
 
+        /** @var modNamespace $namespace */
+        $namespace = $this->modx->getObject('modNamespace', ['name' => $theme->get('namespace')]);
+        if ($namespace) {
+            $vehicle = $builder->createVehicle($namespace, [
+                xPDOTransport::UNIQUE_KEY => 'name',
+                xPDOTransport::UPDATE_OBJECT => false,
+                xPDOTransport::PRESERVE_KEYS => true
+            ]);
+            $vehicle->validate('php', [
+                'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
+            ]);
+            $builder->putVehicle($vehicle);
+
+            /** @var modSystemSetting[] $settings */
+            $settings = $this->modx->getIterator('modSystemSetting', [
+                'namespace' => $namespace->name,
+                'key:LIKE' => "{$namespace->name}.%"
+            ]);
+
+            $settingAttributes = [
+                xPDOTransport::UNIQUE_KEY => 'key',
+                xPDOTransport::PRESERVE_KEYS => true,
+                xPDOTransport::UPDATE_OBJECT => false
+            ];
+
+            foreach ($settings as $setting) {
+                $vehicle = $builder->createVehicle($setting, $settingAttributes);
+                $vehicle->validate('php', [
+                    'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
+                ]);
+                $builder->putVehicle($vehicle);
+            }
+
+            /** @var modLexiconEntry[] $lexicons */
+            $lexicons = $this->modx->getIterator('modLexiconEntry', [
+                'namespace' => $namespace->name,
+                'name:LIKE' => "setting_{$namespace->name}.%"
+            ]);
+
+            $lexiconsAttributes = [
+                xPDOTransport::UNIQUE_KEY => 'name',
+                xPDOTransport::PRESERVE_KEYS => true,
+                xPDOTransport::UPDATE_OBJECT => false
+            ];
+
+            foreach ($lexicons as $lexicon) {
+                $vehicle = $builder->createVehicle($lexicon, $lexiconsAttributes);
+                $vehicle->validate('php', [
+                    'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
+                ]);
+                $builder->putVehicle($vehicle);
+            }
+        }
+
         $vehicle = $builder->createVehicle([
             "source" => $this->fred->getOption('buildHelpers') . 'link_element_option_set.resolver.php',
             "map" => $elementOptionSetMap
@@ -368,10 +422,10 @@ class FredThemeBuildProcessor extends modObjectProcessor
             $buildConfig['mediaSources'] = [];
             foreach($mediaSources as $mediaSource) {
                 if (empty($mediaSource['id'])) continue;
-                
+
                 $mediaSourceId = (int)$mediaSource['id'];
                 if (empty($mediaSourceId)) continue;
-                
+
                 $mediaSourceObject = $this->modx->getObject('sources.modMediaSource', ['id' => $mediaSourceId]);
                 if (!$mediaSourceObject) continue;
 
@@ -385,13 +439,13 @@ class FredThemeBuildProcessor extends modObjectProcessor
                 $mediaSourceVehicle->validate('php', [
                     'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
                 ]);
-                
+
                 $builder->putVehicle($mediaSourceVehicle);
-                
+
                 $buildConfig['mediaSources'][] = $mediaSourceId;
             }
         }
-        
+
         foreach ($categories as $category) {
             /** @var modCategory $categoryObject */
             $categoryObject = $this->modx->getObject('modCategory', ['category' => $category]);
@@ -438,14 +492,14 @@ class FredThemeBuildProcessor extends modObjectProcessor
                 $categoryVehicle->validate('php', [
                     'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
                 ]);
-                
+
                 $builder->putVehicle($categoryVehicle);
             }
         }
 
         $installedTemplates = array_keys(array_flip($installedTemplates));
         $installedTVs = array_keys(array_flip($installedTVs));
-        
+
         $vehicle = $builder->createVehicle([
             "source" => $this->fred->getOption('buildHelpers') . 'uninstall_templates_tvs.resolver.php',
             "installedTemplates" => $installedTemplates,
@@ -464,7 +518,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
             "vehicle_class" => "xPDOScriptVehicle"
         ]);
         $builder->putVehicle($vehicle);
-        
+
         $requires = [];
         $fredFound = false;
         $dependencies = json_decode($this->getProperty('dependencies'), true);
@@ -473,20 +527,20 @@ class FredThemeBuildProcessor extends modObjectProcessor
             foreach($dependencies as $dependency) {
                 $name = trim($dependency['name']);
                 if (empty($name)) continue;
-                
+
                 $depVersion = trim($dependency['version']);
                 if (empty($depVersion)) $depVersion = '*';
 
                 if (strtolower($name) === 'fred') $fredFound = true;
-                
+
                 $requires[$name] = $depVersion;
             }
         }
-        
+
         if ($fredFound === false) {
             $requires['fred'] = '*';
         }
-        
+
         $changelog = $this->getProperty('docs_changelog');
         $readme = $this->getProperty('docs_readme');
         $license = $this->getProperty('docs_license');
@@ -497,18 +551,18 @@ class FredThemeBuildProcessor extends modObjectProcessor
             'readme' => $readme,
             'license' => $license
         ];
-        
+
         $buildConfig['docs_changelog'] = $changelog;
         $buildConfig['docs_readme'] = $readme;
         $buildConfig['docs_license'] = $license;
-        
+
         $builder->setPackageAttributes($buildAttributes);
 
         if ($builder->pack()) {
             $theme->set('config', $buildConfig);
-            return $theme->save();    
+            return $theme->save();
         }
-        
+
         return false;
     }
 

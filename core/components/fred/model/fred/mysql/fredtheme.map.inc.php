@@ -14,6 +14,7 @@ $xpdo_meta_map['FredTheme']= array (
   'fields' => 
   array (
     'name' => NULL,
+    'namespace' => '',
     'theme_folder' => '',
     'uuid' => NULL,
     'description' => '',
@@ -28,6 +29,14 @@ $xpdo_meta_map['FredTheme']= array (
       'precision' => '255',
       'phptype' => 'string',
       'null' => false,
+    ),
+    'namespace' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
     'theme_folder' => 
     array (

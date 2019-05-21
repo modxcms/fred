@@ -192,6 +192,7 @@
 
     <object class="FredTheme" table="fred_themes" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="namespace" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="theme_folder" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />

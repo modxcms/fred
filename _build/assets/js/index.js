@@ -6,7 +6,6 @@ import drake from './Drake';
 import Editor from './Editors/Editor';
 import fredConfig from './Config';
 import { div, section, a, iFrame } from './UI/Elements'
-import Finder from './Finder';
 import Mousetrap from 'mousetrap';
 import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-bind.min'
 import {loadElements, pluginTools} from "./Utils";

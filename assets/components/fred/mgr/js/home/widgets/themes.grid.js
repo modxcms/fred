@@ -1,23 +1,23 @@
 fred.grid.Themes = function (config) {
     config = config || {};
     config.permission = config.permission || {};
-    
+
     if (config.permission.fred_themes_save) {
         config.save_action = 'mgr/themes/updatefromgrid';
         config.autosave = true;
     }
-    
+
     if (!config.permission.fred_themes_save && !config.permission.fred_themes_build && !config.permission.fred_themes_delete) {
         config.showGear = false;
     }
-    
+
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'mgr/themes/getlist'
         },
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element'],
+        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -50,6 +50,11 @@ fred.grid.Themes = function (config) {
                 editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
+                header: _('fred.themes.namespace'),
+                dataIndex: 'namespace',
+                width: 80
+            },
+            {
                 header: _('fred.themes.default_element'),
                 dataIndex: 'default_element',
                 sortable: true,
@@ -63,7 +68,7 @@ fred.grid.Themes = function (config) {
                 width: 80,
                 renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                     if (value === false) return '';
-                    
+
                     return '<a href="' + fred.getPageUrl('theme/download', {theme: record.id}) +'">' + value + '</a>';
                 }
             }
@@ -82,12 +87,12 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
                 handler: this.buildTheme
             });
         }
-        
+
         if (this.config.permission.fred_themes_save) {
             if (m.length > 0) {
                 m.push('-');
             }
-            
+
             m.push({
                 text: _('fred.themes.update'),
                 handler: this.updateTheme
@@ -100,21 +105,21 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
                 handler: this.duplicateTheme
             });
         }
-        
+
         if (this.config.permission.fred_themes_delete) {
             if (m.length > 0) {
                 m.push('-');
             }
-            
+
             m.push({
                 text: _('fred.themes.remove'),
                 handler: this.removeTheme
             });
         }
-        
+
         return m;
     },
-    
+
     getTbar: function(config) {
         var output = [];
 
@@ -124,7 +129,7 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
                 handler: this.createTheme
             });
         }
-        
+
         output.push([
             '->',
             {
@@ -151,7 +156,7 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
                 }
             }
         ]);
-        
+
         return output;
     },
 
@@ -199,22 +204,22 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
 
         return true;
     },
-    
+
     buildTheme: function (btn, e) {
         if ((this.menu.record.name.toLowerCase() === 'default') || (this.menu.record.theme_folder.toLowerCase() === 'default')) {
             MODx.msg.alert(_('fred.themes.build_default_title'), _('fred.themes.build_default_desc'));
-            return;    
+            return;
         }
-        
+
         if (!this.menu.record.config || (typeof this.menu.record.config !== 'object')) this.menu.record.config = {};
-        
+
         this.menu.record.config.id = this.menu.record.id;
         this.menu.record.config.theme_folder = this.menu.record.theme_folder;
         this.menu.record.config.name = this.menu.record.config.name || this.menu.record.name.toLowerCase().replace(/ /g, '');
         this.menu.record.config.release = this.menu.record.config.release || 'pl';
         this.menu.record.config.version = this.menu.record.config.version || '1.0.0';
         this.menu.record.config['categories[]'] = (this.menu.record.config.categories && Array.isArray(this.menu.record.config.categories)) ? this.menu.record.config.categories.join() : '';
-        
+
         var buildTheme = MODx.load({
             xtype: 'fred-window-theme-build',
             title: _('fred.themes.build'),
@@ -282,7 +287,7 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
         removeTheme.fp.getForm().reset();
         removeTheme.fp.getForm().setValues(this.menu.record);
         removeTheme.show(e.target);
-        
+
         return true;
     },
 

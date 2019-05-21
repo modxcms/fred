@@ -121,7 +121,7 @@ if ($object->xpdo) {
                 }
 
                 $defaultTheme = $defaultTheme->id;
-                
+
                 $optionsMap = [];
 
                 $rootCategory = (int)$modx->getOption('fred.elements_category_id');
@@ -131,7 +131,7 @@ if ($object->xpdo) {
                     $c->where([
                         'parent' => $rootCategory
                     ]);
-    
+
                     /** @var \modCategory[] $categories */
                     $categories = $modx->getIterator('modCategory', $c);
                     foreach ($categories as $category) {
@@ -140,26 +140,26 @@ if ($object->xpdo) {
                         $newCategory->set('rank', $category->rank);
                         $newCategory->set('theme', $defaultTheme);
                         $newCategory->save();
-    
+
                         /** @var \modChunk[] $chunks */
                         $chunks = $modx->getIterator('modChunk', ['category' => $category->id]);
                         foreach ($chunks as $chunk) {
                             $matches = [];
                             preg_match('/image:([^\n]+)\n?/', $chunk->description, $matches);
-    
+
                             $image = '';
                             $options = [];
                             $description = $chunk->description;
-    
+
                             if (count($matches) == 2) {
                                 $image = $matches[1];
                                 $description = str_replace($matches[0], '', $description);
                             }
-    
+
                             $matches = [];
                             preg_match('/options:([^\n]+)\n?/', $description, $matches);
-    
-    
+
+
                             $optionSet = 0;
                             if (count($matches) == 2) {
                                 if (!empty($optionsMap[$matches[1]])) {
@@ -174,15 +174,15 @@ if ($object->xpdo) {
                                         $optionSetObject->set('complete', true);
                                         $optionSetObject->set('theme', $defaultTheme);
                                         $optionSetObject->save();
-    
+
                                         $optionsMap[$matches[1]] = $optionSetObject->id;
                                         $optionSet = $optionSetObject->id;
                                     }
                                 }
-    
+
                                 $description = str_replace($matches[0], '', $description);
                             }
-    
+
                             $newElement = $modx->newObject('FredElement');
                             $newElement->set('id', $chunk->id);
                             $newElement->set('name', $chunk->name);
@@ -193,15 +193,15 @@ if ($object->xpdo) {
                             $newElement->set('option_set', $optionSet);
                             $newElement->save();
                         }
-    
+
                     }
                 }
-                
+
                 $globalRteConfig = $modx->getOption('fred.rte_config');
                 if (!empty($globalRteConfig)) {
                     $config = $modx->getChunk($globalRteConfig);
                     $config = json_decode($config, true);
-                    
+
                     if (!empty($config)) {
                         $fredRTEConfig = $modx->newObject('FredElementRTEConfig');
                         $fredRTEConfig->set('name', 'TinyMCE');
@@ -226,7 +226,7 @@ if ($object->xpdo) {
                             $themedTemplate->save();
                         }
                     }
-                    
+
                     /** @var modResource[] $fredResources */
                     $fredResources = $modx->getIterator('modResource', ['template:IN' => $fredTemplates]);
 
@@ -259,7 +259,7 @@ if ($object->xpdo) {
                 $modx->updateCollection('FredElementRTEConfig', ['theme' => $defaultTheme]);
                 $modx->updateCollection('FredElementOptionSet', ['theme' => $defaultTheme]);
             }
-            
+
             if ($oldPackage && $oldPackage->compareVersion('1.0.0-beta5', '>')) {
                 $generatedImagesUrl = $modx->getObject('modSystemSetting', ['key' => 'fred.generated_images_url']);
                 if ($generatedImagesUrl) {
@@ -270,7 +270,7 @@ if ($object->xpdo) {
                         $generatedImagesUrl->save();
                     }
                 }
-                
+
                 $generatedImagesPath = $modx->getObject('modSystemSetting', ['key' => 'fred.generated_images_path']);
                 if ($generatedImagesPath) {
                     $value = $generatedImagesPath->get('value');
@@ -281,12 +281,12 @@ if ($object->xpdo) {
                     }
                 }
             }
-            
+
             if ($oldPackage && $oldPackage->compareVersion('1.0.0-beta6', '>')) {
                 $assetsPath = rtrim($modx->getOption('assets_path'), '/');
                 $nfp = $modx->getOption('new_folder_permissions');
                 $amode = !empty($nfp) ? octdec($modx->getOption('new_folder_permissions')) : 0777;
-                
+
                 /** @var FredTheme[] $themes */
                 $themes = $modx->getIterator('FredTheme', ['theme_folder' => '']);
                 foreach ($themes as $theme) {
@@ -294,10 +294,10 @@ if ($object->xpdo) {
                     $theme->save();
 
                     $themeFolder = $theme->get('theme_folder');
-                    
+
                     if (!empty($themeFolder)) {
                         $path = $assetsPath . '/themes/' . $themeFolder . '/';
-                        
+
                         if (!is_dir($path)) {
                             mkdir($path, $amode, true);
                         }
@@ -311,7 +311,7 @@ if ($object->xpdo) {
                     'generated_images_path',
                     'generated_images_url'
                 ];
-                
+
                 foreach ($deprecatedSystemSettings as $key) {
                     /** @var modSystemSetting $systemSetting */
                     $systemSetting = $modx->getObject('modSystemSetting', ['key' => "fred.{$key}"]);
@@ -331,6 +331,14 @@ if ($object->xpdo) {
                     if ($menu) {
                         $menu->remove();
                     }
+                }
+            }
+
+            if ($oldPackage && $oldPackage->compareVersion('1.1.0-beta3', '>')) {
+                /** @var FredTheme[] $themes */
+                $themes = $modx->getIterator('FredTheme');
+                foreach ($themes as $theme) {
+                    $theme->save();
                 }
             }
 

@@ -12,10 +12,10 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
     public $classKey = 'FredTheme';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.theme';
-    
+
     /** @var FredTheme */
     public $object;
-    
+
     /** @var FredTheme */
     public $newObject;
 
@@ -27,7 +27,7 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
 
         return parent::initialize();
     }
-    
+
     public function process() {
         $this->newObject->fromArray($this->object->toArray());
         $name = $this->getProperty('name');
@@ -51,10 +51,10 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
         $this->createThemeFolder();
         $this->duplicateThemeFolder();
         $this->duplicateTemplates();
-        
+
         return $this->success('');
     }
-    
+
     protected function duplicateThemeObjects()
     {
         $duplicateThemeObjects = (int)$this->getProperty('duplicate_theme_objects', 0);
@@ -82,7 +82,7 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
             $newRteConfig->set('theme', $this->newObject->id);
             $newRteConfig->save();
         }
-        
+
         $elementCategories = $this->object->ElementCategories;
         foreach ($elementCategories as $elementCategory) {
             /** @var FredElementCategory $newElementCategory */
@@ -91,7 +91,7 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
             $newElementCategory->set('uuid', '');
             $newElementCategory->set('theme', $this->newObject->id);
             $newElementCategory->save();
-            
+
             $elements = $elementCategory->Elements;
             foreach ($elements as $element) {
                 /** @var FredElement $newElement */
@@ -102,7 +102,7 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
 
                 if (!empty($element->option_set)) {
                     if (isset($optionSetsMap[$element->option_set])) {
-                        $newElement->set('option_set', $optionSetsMap[$element->option_set]);        
+                        $newElement->set('option_set', $optionSetsMap[$element->option_set]);
                     }
                 }
 
@@ -128,7 +128,7 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
                 $newBlueprint->fromArray($blueprint->toArray());
                 $newBlueprint->set('uuid', '');
                 $newBlueprint->set('category', $newBlueprintCategory->id);
-                
+
                 $data = $blueprint->get('data');
                 $complete = $blueprint->get('complete');
 
@@ -139,10 +139,12 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
                 }
 
                 $newBlueprint->set('data', $data);
-                
+
                 $newBlueprint->save();
             }
         }
+
+        $this->duplicateSystemSettings();
     }
 
     protected function replaceIdWithUuidOnElements(&$data, $map)
@@ -152,13 +154,13 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
 
             foreach ($dropZone as &$element) {
                 $elementId = $element['widget'];
-                
+
                 if ($map[$elementId]) {
                     $element['widget'] = $map[$elementId];
                 } else {
                     $element['widget'] = '';
                 }
-                
+
                 $this->replaceIdWithUuidOnElements($element['children'], $map);
             }
         }
@@ -199,7 +201,7 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
         $duplicateThemeFolder = (int)$this->getProperty('duplicate_theme_folder', 0);
 
         if ($duplicateThemeFolder !== 1) return;
-        
+
         try {
             $fs = new Filesystem();
 
@@ -209,33 +211,33 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
             $fs->mirror($originalThemeFolderPath, $themeFolderPath);
         } catch (Exception $e) {}
     }
-    
+
     protected function duplicateTemplates()
     {
         $duplicateTemplates = (int)$this->getProperty('duplicate_templates', 0);
 
         if ($duplicateTemplates !== 1) return;
-        
+
         $assignedTemplates = $this->object->Templates;
         foreach ($assignedTemplates as $assignedTemplate) {
             $template = $assignedTemplate->Template;
             if ($template) {
                 $newName = "{$template->get('templatename')} ({$this->newObject->get('name')})";
                 $cnt = 0;
-                
+
                 $exists = $this->modx->getCount('modTemplate', ['templatename' => $newName]);
                 while($exists > 0) {
                     $cnt++;
                     $newName = "{$template->get('templatename')} ({$this->newObject->get('name')}) #{$cnt}";
                     $exists = $this->modx->getCount('modTemplate', ['templatename' => $newName]);
                 }
-                
+
                 /** @var modTemplate $newTemplate */
                 $newTemplate = $this->modx->newObject('modTemplate');
                 $newTemplate->fromArray($template->toArray());
                 $newTemplate->set('templatename', $newName);
                 $newTemplate->save();
-                
+
                 /** @var modTemplateVarTemplate[] $tvs */
                 $tvs = $template->getMany('TemplateVarTemplates');
                 foreach ($tvs as $tv) {
@@ -251,6 +253,51 @@ class FredThemeDuplicateProcessor extends modObjectDuplicateProcessor
                 $themedTemplate->set('theme', $this->newObject->id);
                 $themedTemplate->save();
             }
+        }
+    }
+
+    protected function duplicateSystemSettings()
+    {
+        $namespace = $this->object->get('namespace');
+        $newNamespace = $this->newObject->get('namespace');
+
+        if (empty($namespace) || empty($newNamespace)) return;
+
+        /** @var modSystemSetting[] $settings */
+        $settings = $this->modx->getIterator('modSystemSetting', [
+            'namespace' => $namespace,
+            'key:LIKE' => "{$namespace}.%"
+        ]);
+
+        $strlen = strlen($namespace);
+        foreach ($settings as $setting) {
+            $newKey = $newNamespace . substr($setting->key, $strlen);
+
+            $newSetting = $this->modx->newObject('modSystemSetting');
+            $newSetting->set('key', $newKey);
+            $newSetting->set('value', $setting->get('value'));
+            $newSetting->set('xtype', $setting->get('xtype'));
+            $newSetting->set('area', $setting->get('area'));
+            $newSetting->set('namespace', $newNamespace);
+            $newSetting->save();
+
+            /** @var modLexiconEntry[] $oldLexicons */
+            $oldLexicons = $this->modx->getIterator('modLexiconEntry', [
+                'namespace' => $namespace,
+                'name' => "setting_{$setting->key}"
+            ]);
+
+            foreach ($oldLexicons as $oldLexicon) {
+                $newLexicon = $this->modx->newObject('modLexiconEntry');
+                $newLexicon->set('name', 'setting_' . $newKey);
+                $newLexicon->set('value', $oldLexicon->get('value'));
+                $newLexicon->set('topic', $oldLexicon->get('topic'));
+                $newLexicon->set('language', $oldLexicon->get('language'));
+                $newLexicon->set('language', $oldLexicon->get('language'));
+                $newLexicon->set('namespace', $newNamespace);
+                $newLexicon->save();
+            }
+
         }
     }
 }

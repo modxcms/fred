@@ -6,14 +6,15 @@
  * @property string $description
  * @property array $config
  * @property string $theme_folder
+ * @property string $namespace
  * @property string $default_element
- * 
+ *
  * @property FredElementCategory[] $ElementCategories
  * @property FredBlueprintCategory[] $BlueprintCategories
  * @property FredElementRTEConfig[] $RTEConfigs
  * @property FredElementOptionSet[] $OptionSets
  * @property FredThemedTemplate[] $Templates
- * 
+ *
  * @package fred
  */
 class FredTheme extends xPDOSimpleObject {
@@ -27,6 +28,21 @@ class FredTheme extends xPDOSimpleObject {
             } catch (Exception $e) {}
         }
 
+        $namespace = $this->get('namespace');
+        if (empty($namespace)) {
+            $namespaceName = 'fred.theme.' . modResource::filterPathSegment($this->xpdo, $this->name);
+            $this->_fields['namespace'] = $namespaceName;
+            $this->setDirty('namespace');
+
+            /** @var modNamespace $namespace */
+            $namespace = $this->xpdo->getObject('modNamespace', ['name' => $namespaceName]);
+            if (!$namespace) {
+                $namespace = $this->xpdo->newObject('modNamespace');
+                $namespace->set('name', $namespaceName);
+                $namespace->save();
+            }
+        }
+
         return parent::save($cacheFlag);
     }
 
@@ -38,8 +54,27 @@ class FredTheme extends xPDOSimpleObject {
             $v = str_replace('.', '', $v);
             $v = str_replace('/', '', $v);
         }
-        
+
+        if ($k === 'namespace') return false;
+
         return parent::set($k, $v, $vType);
+    }
+
+    public function remove(array $ancestors = [])
+    {
+        $namespace = $this->get('namespace');
+        $response = parent::remove($ancestors);;
+
+        if ($response === true) {
+            if (!empty($namespace)) {
+                $modNamespace = $this->xpdo->getObject('modNamespace', ['name' => $namespace]);
+                if ($modNamespace) {
+                    $modNamespace->remove();
+                }
+            }
+        }
+
+        return $response;
     }
 
     public function getThemeFolderPath()
@@ -57,7 +92,7 @@ class FredTheme extends xPDOSimpleObject {
 
         return $path;
     }
-    
+
     public function getThemeFolderUri()
     {
         $themeFolder = $this->get('theme_folder');
