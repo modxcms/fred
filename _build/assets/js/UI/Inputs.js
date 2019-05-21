@@ -1,15 +1,15 @@
+import fredConfig from './../Config';
+import emitter from "../EE";
 import flatpickr from "flatpickr";
 import Choices from 'choices.js';
 import ColorPicker from './../ColorPicker/ColorPicker';
 import noUiSlider from 'nouislider';
 import Finder from "./../Finder";
 import {div, label, input, select as selectElement, span, textArea, a, img} from './Elements';
-import emitter from "../EE";
 import {fixChoices, valueParser} from "../Utils";
 import Tagger from "./Tagger";
 import { getResources } from '../Actions/pages';
 import { getGroups } from '../Actions/tagger';
-import fredConfig from './../Config';
 
 export const text = (setting, defaultValue = '', onChange, onInit) => {
     let labelEl;

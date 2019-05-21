@@ -37,7 +37,6 @@ export default class Fred {
         this.wrapper = null;
         this.fingerprint = '';
 
-        this.Finder = Finder;
         this.previewDocument = null;
         this.replaceScript = this.replaceScript.bind(this);
         this.scriptsToReplace = [];
@@ -413,9 +412,7 @@ export default class Fred {
             return false;
         }
 
-        const editor = initFn(Editor, this);
-
-        return fredConfig.registerEditor(name, editor);
+        return fredConfig.registerEditor(name, initFn(this, Editor, pluginTools()));
     }
 
     registerRTE(name, initFn) {
@@ -424,7 +421,7 @@ export default class Fred {
             return false;
         }
 
-        return fredConfig.registerRTE(name, initFn(this, fredConfig));
+        return fredConfig.registerRTE(name, initFn(this, pluginTools()));
     }
 
     registerSidebarPlugin(name, initFn) {

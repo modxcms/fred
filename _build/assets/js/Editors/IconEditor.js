@@ -1,9 +1,11 @@
 import Editor from './Editor';
 import ContentElement from "../Components/Sidebar/Elements/ContentElement";
+import { div } from '../UI/Elements';
+import { text } from '../UI/Inputs';
 
 export default class IconEditor extends Editor {
     static title = 'fred.fe.editor.edit_icon';
-    
+
     init() {
         this.state = {
             ...(this.state),
@@ -12,11 +14,11 @@ export default class IconEditor extends Editor {
     }
 
     render() {
-        const wrapper = this.ui.els.div();
+        const wrapper = div();
 
-        wrapper.appendChild(this.ui.ins.text({name: 'icon', label: 'fred.fe.editor.icon'}, this.state.icon, this.setStateValue));
+        wrapper.appendChild(text({name: 'icon', label: 'fred.fe.editor.icon'}, this.state.icon, this.setStateValue));
         wrapper.appendChild(this.buildAttributesFields());
-        
+
         return wrapper;
     }
 

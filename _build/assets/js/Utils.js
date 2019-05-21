@@ -13,6 +13,7 @@ import flatpickr from "flatpickr";
 import ColorPicker from './ColorPicker/ColorPicker';
 import noUiSlider from 'nouislider';
 import hoverintent from 'hoverintent';
+import Finder from './Finder';
 
 export const debounce = (delay, fn) => {
     let timerId;
@@ -388,6 +389,7 @@ export const pluginTools = () => {
         ui,
         emitter,
         Modal,
+        Finder,
         fetch,
         fredConfig,
         utilitySidebar,

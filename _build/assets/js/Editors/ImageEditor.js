@@ -1,6 +1,8 @@
 import Editor from './Editor';
 import Finder from '../Finder';
 import ContentElement from "../Components/Sidebar/Elements/ContentElement";
+import { div } from '../UI/Elements';
+import { image } from '../UI/Inputs';
 
 export default class ImageEditor extends Editor {
     static title = 'fred.fe.editor.edit_image';
@@ -13,9 +15,9 @@ export default class ImageEditor extends Editor {
     }
 
     render() {
-        const wrapper = this.ui.els.div();
+        const wrapper = div();
 
-        wrapper.appendChild(this.ui.ins.image({
+        wrapper.appendChild(image({
             name: 'src',
             label: 'fred.fe.editor.image_uri',
             ...(Finder.getFinderOptionsFromElement(this.el, true))
