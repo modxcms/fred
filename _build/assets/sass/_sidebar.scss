@@ -449,7 +449,8 @@
 .fred--accordion dd .fred--pages {
   dl.fred--pages_list {
     dt:not([class^="fred--accordion"]){
-      padding: 12px 30px 12px 33px;
+      padding: 12px 30px 0 33px;
+      margin-bottom: -6px;
       &:before{
         display:none;
       }
@@ -501,25 +502,6 @@
   //
   //}
 }
-
-//.fred--sidebar_paneltwo {
-//  font-family: $font-family;
-//  background-color: lighten($black, 5%);
-//  border-right: 2px solid #0c4eac;
-//  width: 260px;
-//  height: 100vh;
-//  opacity: 1;
-//  overflow-x: hidden;
-//  position: fixed;
-//  top: 0;
-//  left: 0;
-//  z-index: 99999;
-//  transition: $timing;
-//  &.fred--hidden {
-//    left: -360px;
-//    opacity: 0;
-//  }
-//}
 
 .fred--loading_wrapper {
   color: $white;
