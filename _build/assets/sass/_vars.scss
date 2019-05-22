@@ -44,7 +44,7 @@ $btn-padding: $baseGutter/2 $baseGutter;
 $btn-padding-small: 3px 11px;
 $sidebar-actions-padding: 12px 30px 12px 20px;
 
-
+$font-family: "Open Sans", Arial, sans-serif;
 //Mixins
 @mixin draggable{
   cursor: move; /* fallback: no `url()` support or images disabled */

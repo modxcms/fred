@@ -73,7 +73,7 @@
 }
 
 .fred--sidebar {
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: $font-family;
   background-color: $blue;
   height: 100vh;
   opacity: 1;
@@ -503,7 +503,7 @@
 }
 
 //.fred--sidebar_paneltwo {
-//  font-family: "Open Sans", Arial, sans-serif;
+//  font-family: $font-family;
 //  background-color: lighten($black, 5%);
 //  border-right: 2px solid #0c4eac;
 //  width: 260px;
