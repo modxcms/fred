@@ -204,6 +204,7 @@ $_lang['fred.themes.add_media_source'] = 'Добавить источник фа
 $_lang['fred.themes.remove_media_source'] = 'Удалить Медиа-источник';
 $_lang['fred.themes.media_source_already_added'] = 'Медиа-источник уже добавлен';
 $_lang['fred.themes.media_source_already_added_desc'] = 'Этот медиа источник уже добавлен в процесс сборки.';
+$_lang['fred.themes.namespace'] = 'Namespace';
 
 $_lang['fred.themed_templates.theme'] = 'Тема';
 $_lang['fred.themed_templates.template'] = 'Шаблон';
