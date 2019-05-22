@@ -165,28 +165,31 @@ fred.window.ThemeBuild = function (config) {
     this.on('beforeSubmit', function () {
         var dependencies = this.find('name', 'dependencies')[0];
         dependencies.setValue(Ext.getCmp('fred-window-theme-build-dependencies').encode());
-        
+
         var mediaSources = this.find('name', 'mediaSources')[0];
         mediaSources.setValue(Ext.getCmp('fred-window-theme-build-media-sources').encode());
+
+        var resolvers = this.find('name', 'resolvers')[0];
+        resolvers.setValue(Ext.getCmp('fred-window-theme-build-resolvers').encode());
     }, this);
-    
+
     this.on('failure', function(a) {
         try {
             var response = JSON.parse(a.a.response.responseText);
             var msg = [];
-            
+
             if (response.data && Array.isArray(response.data)) {
                 response.data.forEach(function(item) {
                     msg.push(item.msg);
                 });
             }
-            
+
             if (msg.length > 0) {
                 msg = msg.join('<br>');
             } else {
                 msg = _('error');
             }
-            
+
             Ext.Msg.alert(_('error'), msg);
         } catch (err) {
             Ext.Msg.alert(_('error'), _('error'));
@@ -331,6 +334,23 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                                 id: 'fred-window-theme-build-media-sources',
                                 xtype: 'fred-grid-theme-build-media-sources',
                                 initValue: (config.record && config.record.mediaSources) ? config.record.mediaSources : []
+                            }
+                        ]
+                    },
+                    {
+                        title: _('fred.themes.resolvers'),
+                        items: [
+                            {
+                                html: '<p>' + _('fred.themes.theme_build_resolvers_desc') + '</p>'
+                            },
+                            {
+                                xtype: 'hidden',
+                                name: 'resolvers'
+                            },
+                            {
+                                id: 'fred-window-theme-build-resolvers',
+                                xtype: 'fred-grid-theme-build-resolvers',
+                                initValue: (config.record && config.record.resolvers) ? config.record.resolvers : []
                             }
                         ]
                     },

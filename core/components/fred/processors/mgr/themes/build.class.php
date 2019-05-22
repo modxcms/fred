@@ -104,6 +104,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
             'release' => $release,
             'dependencies' => [],
             'mediaSources' => [],
+            'resolvers' => [],
             'folders' => [],
         ];
 
@@ -517,6 +518,19 @@ class FredThemeBuildProcessor extends modObjectProcessor
         ], [
             "vehicle_class" => "xPDOScriptVehicle"
         ]);
+
+        $resolvers = json_decode($this->getProperty('resolvers'), true);
+        if (is_array($resolvers)) {
+            $buildConfig['resolvers'] = [];
+            foreach ($resolvers as $resolver) {
+                $vehicle->resolve('php', [
+                    'source' => $resolver['file']
+                ]);
+
+                $buildConfig['resolvers'][] = ['file' => $resolver['file']];
+            }
+        }
+
         $builder->putVehicle($vehicle);
 
         $requires = [];

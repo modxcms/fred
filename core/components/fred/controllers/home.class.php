@@ -37,57 +37,59 @@ class FredHomeManagerController extends FredBaseManagerController
         if ($this->permissions['fred_media_sources']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/media_sources.grid.js');
         }
-        
+
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_template.window.js');
 
         if ($this->permissions['fred_themed_templates']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themed_templates.grid.js');
         }
-        
+
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/theme.window.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/dependencies.grid.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/theme_build_media_sources.grid.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/theme_build_media_sources.window.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/theme_build_resolvers.grid.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/theme_build_resolvers.window.js');
 
         if ($this->permissions['fred_themes']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/themes.grid.js');
         }
-        
+
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprint_category.window.js');
 
         if ($this->permissions['fred_blueprint_categories']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprint_categories.grid.js');
         }
-        
+
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprint.window.js');
 
         if ($this->permissions['fred_blueprints']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/blueprints.grid.js');
         }
-        
+
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_rte_config.window.js');
 
         if ($this->permissions['fred_element_rtes']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_rte_configs.grid.js');
         }
-        
+
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_option_set.window.js');
 
         if ($this->permissions['fred_element_option_sets']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_option_sets.grid.js');
         }
-        
+
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_category.window.js');
 
         if ($this->permissions['fred_element_categories']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element_categories.grid.js');
         }
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/element.window.js');
-        
+
         if ($this->permissions['fred_elements']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/elements.grid.js');
         }
-        
+
         $this->addJavascript($this->fred->getOption('jsUrl') . 'home/panel.js');
         $this->addLastJavascript($this->fred->getOption('jsUrl') . 'home/page.js');
 

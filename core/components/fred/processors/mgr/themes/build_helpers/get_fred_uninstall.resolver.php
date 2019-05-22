@@ -1,3 +1,4 @@
+
 <?php
 if ($options[xPDOTransport::PACKAGE_ACTION] === xPDOTransport::ACTION_UNINSTALL) {
     $modx =& $transport->xpdo;
