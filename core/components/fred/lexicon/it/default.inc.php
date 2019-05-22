@@ -204,6 +204,7 @@ $_lang['fred.themes.add_media_source'] = 'Aggiungi Sorgente Media';
 $_lang['fred.themes.remove_media_source'] = 'Eliminare Sorgente Media';
 $_lang['fred.themes.media_source_already_added'] = 'Sorgente Media già inserita';
 $_lang['fred.themes.media_source_already_added_desc'] = 'Questa Sorgente Media è stata già aggiunta nel processo di compilazione.';
+$_lang['fred.themes.namespace'] = 'Namespace';
 
 $_lang['fred.themed_templates.theme'] = 'Tema';
 $_lang['fred.themed_templates.template'] = 'Template';
