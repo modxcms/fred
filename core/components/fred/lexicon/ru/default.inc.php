@@ -205,6 +205,13 @@ $_lang['fred.themes.remove_media_source'] = 'Удалить Медиа-исто�
 $_lang['fred.themes.media_source_already_added'] = 'Медиа-источник уже добавлен';
 $_lang['fred.themes.media_source_already_added_desc'] = 'Этот медиа источник уже добавлен в процесс сборки.';
 $_lang['fred.themes.namespace'] = 'Namespace';
+$_lang['fred.themes.resolvers'] = 'Resolvers';
+$_lang['fred.themes.resolver'] = 'Resolver';
+$_lang['fred.themes.add_resolver'] = 'Add Resolver';
+$_lang['fred.themes.theme_build_resolvers_desc'] = 'List of custom PHP resolvers that will be added to the theme.';
+$_lang['fred.themes.remove_resolver'] = 'Remove Resolver';
+$_lang['fred.themes.resolver_already_added'] = 'Resolver already added';
+$_lang['fred.themes.resolver_already_added_desc'] = 'This Resolver is already added to the build process.';
 
 $_lang['fred.themed_templates.theme'] = 'Тема';
 $_lang['fred.themed_templates.template'] = 'Шаблон';
