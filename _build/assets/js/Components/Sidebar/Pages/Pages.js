@@ -234,12 +234,15 @@ export default class Pages extends SidebarPlugin {
     }
 
     buildTree(pages, wrapper) {
+        const treeState = this.getTreeState();
         pages.forEach(page => {
             this.parents.push({
                 id: page.id,
                 value: '' + page.id,
                 label: page.pagetitle
             });
+
+            const pageOpened = ~treeState.indexOf(page.id);
 
             const pageTitle = dt(page.pagetitle, [], (e, el) => {
                 if (e.target !== pageTitle) return;
@@ -282,13 +285,13 @@ export default class Pages extends SidebarPlugin {
             }
 
             if (page.children.length > 0) {
-                const children = dl(['fred--hidden']);
-                children.setAttribute('aria-disabled', 'true');
+                const children = dl();
 
                 this.buildTree(page.children, children);
 
                 const expander = button('', 'fred.fe.pages.expand_page', ['fred--btn-list', 'fred--btn-list_expand'], () => {
                     if (expander.classList.contains('fred--btn-list_close')) {
+                        this.closeTreeNode(page.id);
                         expander.classList.remove('fred--btn-list_close');
                         children.classList.add('fred--hidden');
                         children.setAttribute('aria-disabled', 'true');
@@ -298,17 +301,59 @@ export default class Pages extends SidebarPlugin {
                         return;
                     }
 
+                    this.openTreeNode(page.id);
                     expander.classList.add('fred--btn-list_close');
                     children.classList.remove('fred--hidden');
                     children.setAttribute('aria-disabled', 'false');
                     expander.setAttribute('title', fredConfig.lng('fred.fe.pages.collapse_page'));
                 });
 
+                if (!pageOpened) {
+                    children.classList.add('fred--hidden');
+                    children.setAttribute('aria-disabled', 'true');
+                } else {
+                    expander.classList.add('fred--btn-list_close');
+                    expander.setAttribute('title', fredConfig.lng('fred.fe.pages.collapse_page'));
+                }
+
                 pageTitle.insertBefore(expander, pageTitle.firstChild);
 
                 wrapper.append(children);
             }
         });
+    }
+
+    openTreeNode(id) {
+        let treeState = this.getTreeState();
+
+        if (treeState.indexOf(id) === -1) {
+            treeState.push(id);
+        }
+
+        localStorage.setItem('fredTreeState', JSON.stringify(treeState));
+    }
+
+    closeTreeNode(id) {
+        let treeState = this.getTreeState();
+
+        treeState = treeState.filter(function(ele){
+            return ele !== id;
+        });
+
+        localStorage.setItem('fredTreeState', JSON.stringify(treeState));
+    }
+
+    getTreeState() {
+        let treeState = [];
+
+        try {
+            treeState = JSON.parse(localStorage.getItem('fredTreeState'));
+            if (!treeState) treeState = [];
+        } catch (err) {
+            treeState = [];
+        }
+
+        return treeState;
     }
 
     createMenu(page) {
@@ -361,7 +406,9 @@ export default class Pages extends SidebarPlugin {
 
                 const modal = new Modal('Duplicate Page', div([], content), () => {
                     duplicateResource(duplicateState.title, duplicateState.duplicate_children, duplicateState.publishing_options, page.id).then((data) => {
-                        console.log(data);
+                        if (data.url) {
+                            location.href = data.url;
+                        }
                     }).catch(err => {});
                 }, {showCancelButton: true});
 
