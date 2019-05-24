@@ -330,7 +330,7 @@ export default class Pages extends SidebarPlugin {
             treeState.push(id);
         }
 
-        localStorage.setItem('fredTreeState', JSON.stringify(treeState));
+        sessionStorage.setItem('fredTreeState', JSON.stringify(treeState));
     }
 
     closeTreeNode(id) {
@@ -340,14 +340,14 @@ export default class Pages extends SidebarPlugin {
             return ele !== id;
         });
 
-        localStorage.setItem('fredTreeState', JSON.stringify(treeState));
+        sessionStorage.setItem('fredTreeState', JSON.stringify(treeState));
     }
 
     getTreeState() {
         let treeState = [];
 
         try {
-            treeState = JSON.parse(localStorage.getItem('fredTreeState'));
+            treeState = JSON.parse(sessionStorage.getItem('fredTreeState'));
             if (!treeState) treeState = [];
         } catch (err) {
             treeState = [];
