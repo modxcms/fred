@@ -204,7 +204,14 @@ $_lang['fred.themes.add_media_source'] = 'Medienquelle hinzufügen';
 $_lang['fred.themes.remove_media_source'] = 'Medienquelle entfernen';
 $_lang['fred.themes.media_source_already_added'] = 'Medienquelle bereits hinzugefügt';
 $_lang['fred.themes.media_source_already_added_desc'] = 'Diese Medienquelle wurde dem Pack-Prozess bereits hinzugefügt.';
-$_lang['fred.themes.namespace'] = 'Namespace';
+$_lang['fred.themes.namespace'] = 'Namensraum';
+$_lang['fred.themes.resolvers'] = 'Resolver';
+$_lang['fred.themes.resolver'] = 'Resolver';
+$_lang['fred.themes.add_resolver'] = 'Resolver hinzufügen';
+$_lang['fred.themes.theme_build_resolvers_desc'] = 'Liste von individuellen PHP Resolvern, die dem Theme hinzugefügt werden.';
+$_lang['fred.themes.remove_resolver'] = 'Resolver löschen';
+$_lang['fred.themes.resolver_already_added'] = 'Resolver bereits hinzugefügt';
+$_lang['fred.themes.resolver_already_added_desc'] = 'Dieser Resolver wurde dem Pack-Prozess bereits hinzugefügt.';
 
 $_lang['fred.themed_templates.theme'] = 'Theme';
 $_lang['fred.themed_templates.template'] = 'Template';
