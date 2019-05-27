@@ -28,10 +28,11 @@ The `init` function must return a class that extends the ToolbarPlugin.
 ```js
 var TestToolbarPluginInit = function(fred, ToolbarPlugin, pluginTools) {
     class TestToolbarPlugin extends ToolbarPlugin {
-        render() {
-            return pluginTools.ui.els.button('', 'Test Plugin', ['fred--element-settings'], () => {
-                console.log('Test Plugin icon pressed from the toolbar');
-            });
+        static title = 'Test Plugin';
+        static icon = 'fred--element-settings';
+        
+        onClick() {
+            console.log('Test Plugin icon pressed from the toolbar');
         };
     }
     

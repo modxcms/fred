@@ -4,8 +4,8 @@ import fredConfig from "../../../../Config";
 
 export default class Move extends ToolbarPlugin {
     static permission = 'fred_element_move';
-    
-    render() {
+
+    customRender() {
         const positionGroup = div(['fred--position-group']);
 
         const moveUp = button('', 'fred.fe.content.move_up', ['fred--position-up'], this.moveUp.bind(this));
@@ -13,7 +13,6 @@ export default class Move extends ToolbarPlugin {
 
         positionGroup.appendChild(moveUp);
         positionGroup.appendChild(moveDown);
-
 
         return positionGroup;
     }

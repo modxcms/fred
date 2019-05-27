@@ -1,6 +1,6 @@
 import ToolbarPlugin from "./ToolbarPlugin";
 import fredConfig from "../../../../Config";
-import {button, img, span} from "../../../../UI/Elements";
+import {img, span} from "../../../../UI/Elements";
 import Modal from "../../../../Modal";
 import emitter from "../../../../EE";
 import {replaceImage} from "../../../../Actions/elements";
@@ -9,12 +9,10 @@ import html2canvas from "html2canvas";
 
 export default class ElementScreenshot extends ToolbarPlugin {
     static permission = 'fred_element_screenshot';
-    
-    render() {
-        return button('', 'fred.fe.content.element_screenshot', ['fred--element_screenshot'], this.takeScreenshot.bind(this));
-    }
+    static title = 'fred.fe.content.element_screenshot';
+    static icon = 'fred--element_screenshot';
 
-    takeScreenshot() {
+    onClick() {
         if (!fredConfig.permission.fred_element_screenshot) return;
 
         let dataImage = '';

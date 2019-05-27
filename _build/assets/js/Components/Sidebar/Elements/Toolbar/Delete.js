@@ -1,11 +1,12 @@
 import ToolbarPlugin from "./ToolbarPlugin";
-import {button} from "../../../../UI/Elements";
 
 export default class Delete extends ToolbarPlugin {
     static permission = 'fred_element_front_end_delete';
     static checkInvalidTheme = false;
+    static title = 'fred.fe.content.delete';
+    static icon = 'fred--trash';
 
-    render() {
-        return button('', 'fred.fe.content.delete', ['fred--trash'], this.el.remove.bind(this.el));
+    onClick() {
+        this.el.remove.call(this.el);
     }
 }
