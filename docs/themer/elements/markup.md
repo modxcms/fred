@@ -4,8 +4,6 @@ Fred Elements are made of HTML with specific attributes. The markup can be enhan
 
 ## Markup Examples
 
-
-
 ```html
 <!-- Simple Element -->
 <div class="panel">
@@ -16,10 +14,9 @@ Fred Elements are made of HTML with specific attributes. The markup can be enhan
 <!-- Enhanced Element -->
 <div class="panel {{ panel_class }}">
     <p data-fred-name="panel_text">Default Value</p>
-    
+
     {% if cta_link %}
     <a class="btn {{ cta_class }}" href="{{ cta_link }}">{{ cta_text }}</a>
     {% endif %}
 </div>
 ```
-

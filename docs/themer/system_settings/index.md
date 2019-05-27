@@ -8,8 +8,8 @@ Fred system settings control how your site reacts. Since Fred is loaded on the f
     </div>
 </section>
 ```
-You would set the value to be `13|content`
 
+You would set the value to be `13|content`
 
 ### Element’s Group Sort (fred.element_group_sort)
 

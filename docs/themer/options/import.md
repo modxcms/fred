@@ -1,9 +1,10 @@
 # Importing Partial Option Sets
-Importing an Option Set is done with a specific with a `fred-import` key in the JSON import object. 
+
+Importing an Option Set is done with a specific with a `fred-import` key in the JSON import object.
 
 - Only partial Option Sets can be imported
 - Import only works for Settings
-- The entire import object will be replaced by the 
+- The entire import object will be replaced by the
 
 ## Full import
 
@@ -13,13 +14,14 @@ The use case for a full import, versus defining a complete Option Set, is if you
 
 ```json
 {
-    "settings": { 
+    "settings": {
       "fred-import": "cta_settings"
     }
 }
 ```
 
 ### `cta_settings` partial Option Set
+
 ```json
 [
     {
@@ -39,7 +41,6 @@ The use case for a full import, versus defining a complete Option Set, is if you
         "type": "toggle",
         "value": false
     }
-    
 ]
 ```
 
@@ -60,14 +61,13 @@ Note, the `cta_settings` import is defined above.
             "type": "text",
             "value": ""
         },
-        { 
+        {
             "fred-import": "cta_settings"
         },
-        { 
+        {
              "fred-import": "text_color"
         }
     ]
-    
 }
 ```
 

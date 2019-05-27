@@ -1,6 +1,6 @@
 # Blueprints
 
-Blueprints can only be [created from the front-end](../../blueprints.md). Theme developers can use Blueprints as sample pages which users in turn use to start building a site more quickly. Blueprints function as a “replace the placeholders” way to create content, comprised of one or more Elements with sample content and images in place. 
+Blueprints can only be [created from the front-end](../../blueprints.md). Theme developers can use Blueprints as sample pages which users in turn use to start building a site more quickly. Blueprints function as a “replace the placeholders” way to create content, comprised of one or more Elements with sample content and images in place.
 
 ## Managing Blueprints
 

@@ -1,6 +1,6 @@
 # Media Sources
 
-Like when used in the MODX Manager, Media Sources allow Theme Authors to help site owners keep uploads organized in specific locations for Fred-powered sites. Different Fred Elements that allow uploading images may need to store files in different locations, for example article content vs. catalog images vs. team bio photos. 
+Like when used in the MODX Manager, Media Sources allow Theme Authors to help site owners keep uploads organized in specific locations for Fred-powered sites. Different Fred Elements that allow uploading images may need to store files in different locations, for example article content vs. catalog images vs. team bio photos.
 
 ![Media Sources in Fred](img/media-sources.png)
 

@@ -1,23 +1,28 @@
 # About Fred Themes
 
-While most users will typically only have a single theme, you can have many installed in a site. Themes include all the things needed to create a site _except_ example pages (caveat: see Blueprints below). 
+While most users will typically only have a single theme, you can have many installed in a site. Themes include all the things needed to create a site _except_ example pages (caveat: see Blueprints below).
 
 Being able to have multiple Themes allows Theme Builders to create and release a variety themes that share common options (Option sets) across Elements.
 
 ## What makes up a Theme
+
 Themes are made of of multple things:
 
-- [Elements](#elements)
-- [Blueprints](#blueprints)
-- [MODX Templates and any TVs assigned to them](#templates-and-tvs)
-- [Categories](#categories)
-- [Extras](#extras)
-- [Assets](#assets)
-- [License, Changelog and Readme files](#license-changelog-and-readme-files)
+- [About Fred Themes](#about-fred-themes)
+  - [What makes up a Theme](#what-makes-up-a-theme)
+    - [Default Element](#default-element)
+    - [Elements](#elements)
+    - [Blueprints](#blueprints)
+    - [Templates and TVs](#templates-and-tvs)
+    - [Categories](#categories)
+    - [Extras](#extras)
+    - [Assets](#assets)
+    - [License, Changelog and Readme Files](#license-changelog-and-readme-files)
+  - [Build a Theme to Share](#build-a-theme-to-share)
 
-When you create a Theme, Fred will automatically create a directory named for the theme in `assets/themes/{{theme-name}}`. Use this to store all your theme-specific assets like images, css, fonts and javascript. 
+When you create a Theme, Fred will automatically create a directory named for the theme in `assets/themes/{{theme-name}}`. Use this to store all your theme-specific assets like images, css, fonts and javascript.
 
-**IMPORTANT NOTE:** As of 1.0, Fred currently does not support exporting Media Sources. If you have used them in your Theme, please include instructions on setting them up in your README file. 
+**IMPORTANT NOTE:** As of 1.0, Fred currently does not support exporting Media Sources. If you have used them in your Theme, please include instructions on setting them up in your README file.
 
 ### Default Element
 
@@ -31,7 +36,7 @@ A Theme Builder will automatically include all Element Categories attached to th
 
 ### Blueprints
 
-A Theme Builder will automatically include **public** Blueprint Categories attached to the THeme with all their **public** [Blueprints](blueprints.md). 
+A Theme Builder will automatically include **public** Blueprint Categories attached to the THeme with all their **public** [Blueprints](blueprints.md).
 
 ### Templates and TVs
 
@@ -60,6 +65,6 @@ The Fred Manager Extra (aka, 3rd-party Component or 3PC) allows you share your t
 1. Click on the `Themes` tab.
 2. Find the Theme you’d like to share/publish.
 3. Right-click on its name and choose the `Build theme` option.
-4. Fill in the details and choose one of the two export options at the bottom. 
- 
+4. Fill in the details and choose one of the two export options at the bottom.
+
 A MODX Installer-ready theme will be saved to your `core/packages/` directory as `{{theme-name}}.transport.zip` file that you can distribute. You can also choose to build and download, which will also save a copy to your downloads directory on your local computer.

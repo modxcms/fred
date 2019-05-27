@@ -13,5 +13,4 @@ The following are the avaialble Option Set properties:
 - **Complete** - Yes/No flag, if set to Yes, the Option Set will appear in select box when creating/updating Element. Setting it to No is usefull for partial Option Sets for import only purpose.
 - **Data** - JSON with [Element options](../options/index.md)
 
-
 ![Option Sets Edit Panel](img/option_sets_edit_panel.png)

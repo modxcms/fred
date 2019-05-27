@@ -13,6 +13,6 @@ The easiest way to collaborate on a Theme is to simply invite a group of people 
 
 ## The “Right” Way
 
-If you are working with a team of people to create a Theme, storing the components in a Git repository can be a great way to collaborate. The advantage of this is that the work is versioned, making overwriting someone’s work no big deal. 
+If you are working with a team of people to create a Theme, storing the components in a Git repository can be a great way to collaborate. The advantage of this is that the work is versioned, making overwriting someone’s work no big deal.
 
-The rest of this section is dedicated to explaining how to do this using Gitify. 
+The rest of this section is dedicated to explaining how to do this using Gitify.
