@@ -6,7 +6,7 @@ This event will trigger when any Element is dropped to a dropzone. You can acces
 
 ### Example
 
-``` javascript
+```javascript
 document.body.addEventListener("FredElementDrop", function(){
     $owl();
 });
@@ -18,7 +18,7 @@ This event will trigger when Element setting on any Element is changed. You can 
 
 ### Example
 
-``` javascript
+```javascript
 document.body.addEventListener("FredElementSettingChange", function(){
     $owl();
 });
@@ -34,7 +34,7 @@ The slider element will create new or fewer slides based on the number defined i
 
 #### Markup
 
-``` html
+```html
 <div class="col-md-8 owl-init slider-main owl-carousel">
     {% for i in 0..(slides - 1) %}
         <div class="item-slide">
@@ -53,7 +53,7 @@ The slider element will create new or fewer slides based on the number defined i
 
 #### Options
 
-``` json
+```json
 {
   "settings": [
     {
@@ -72,7 +72,7 @@ The slider element will create new or fewer slides based on the number defined i
 
 The template will initialize the slider on first load, and re-initialize when the element is dropped or altered.
 
-``` html
+```html
 <link rel="stylesheet" href="//unpkg.com/owl.carousel/dist/assets/owl.carousel.min.css" />
 <link rel="stylesheet" href="//unpkg.com/owl.carousel/dist/assets/owl.theme.default.min.css" />
 <script src="//unpkg.com/jquery/dist/jquery.js"></script>

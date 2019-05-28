@@ -24,7 +24,7 @@ Assume you have an Intro plan with a background image and a call to action link.
 
 ### Original Setting
 
-``` json
+```json
 {
   "settings": [
     {
@@ -54,7 +54,7 @@ Assume you have an Intro plan with a background image and a call to action link.
 
 ### Options Override
 
-``` json
+```json
 {
   "settings": [
     {

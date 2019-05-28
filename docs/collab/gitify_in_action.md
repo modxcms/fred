@@ -12,7 +12,7 @@ For the purpose of this tutorial, we’ll assume all users can commit directly t
 
 It’s critical to make sure that you don’t lose work when collaborating with a team. To prevent accidental overwrites, always perform the following before pulling from or pushing to the orign repository.
 
-``` php
+```plain
 cd ~/www
 gitify extract
 git status
@@ -26,7 +26,7 @@ This step and step 4 below can be skipped if ther are no changes to commit.
 
 If you do have changes, first commit them to your local repository before continuing:
 
-``` php
+```plain
 git add --all  # or git add on files you want to commit
 git commit -m "Your commit message here"  # please write your own message
 ```
@@ -35,7 +35,7 @@ git commit -m "Your commit message here"  # please write your own message
 
 Now it is time to sync all the latest updates from the upstream origin repository. From webroot, enter the following command:
 
-``` php
+```plain
 git pull origin master
 ```
 
@@ -43,7 +43,7 @@ This may result in conflicts that will be noted. If there are conflicts, they mu
 
 Once you resolve conflicts, or after you have pulled from the origin, build the changes and make sure everything is functioning as expected in MODX:
 
-``` php
+```plain
 gitify package:install --all
 gitify build
 ```
@@ -54,7 +54,7 @@ If you are only pulling remote changes, skip this step as in step 2 above.
 
 Now you can safely push your changes. You’ll see messages about Extracting various Fred-related things. If you delay pushing your changes, you may see an error message about (new) conflicts due to other collaborators pushing changes before you:
 
-``` php
+```plain
 git push origin master
 ```
 

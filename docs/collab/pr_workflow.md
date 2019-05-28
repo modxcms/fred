@@ -18,14 +18,14 @@ Click the down-arrow on the green `Clone or download` button on a source Github 
 
 Because `git clone` only works in empty directories, we’ll use a temporary `tmp/` directory and move the files to the web root when done. Open an SSH connection to your working Cloud instance and execute:
 
-``` php
+```plain
 cd ~/www
 git clone git@github.com:your_username/your-fork-name.git tmp
 ```
 
 This will download the theme repository into a `~/www/tmp/` directory in the Cloud. Next, move the contents of `tmp/` to the correct location under `www/`:
 
-``` php
+```plain
 rsync -av ./tmp ./
 ```
 
@@ -35,7 +35,7 @@ Make sure the `.git/` directory and files are moved under webroot `www/` directo
 
 This is the original project. Use its HTTPS clone URL from step 1 of this tutorial to set the remote upstream:
 
-``` php
+```plain
 git remote add upstream https://github.com/modxcms/fred-theme-starter.git
 ```
 
@@ -49,7 +49,7 @@ For the purposes of working with PRs, you should _never_ commit directly to your
 
 Before pushing any work to a feature branch, you should sync your local repository with the upstream. For more information on syncing forks see the [Syncing a fork](https://help.github.com/articles/syncing-a-fork/) guide:
 
-``` php
+```plain
 git checkout master
 git fetch upstream
 git merge --ff-only upstream/master  # only merges if local is clean
@@ -64,7 +64,7 @@ These commands are only needed when there is a differnce between the commit vers
 
 The following commands create your local feature branch, and commits them to the local git repo.
 
-``` php
+```plain
 cd ~/www
 git checkout -b my-feature   # checkout to a new branch named `my-feature`,
                              # or any other name you decide for your work
@@ -75,7 +75,7 @@ git commit -m "My Changes"   # Use a more reasonable commit message
 
 Next, we sync upstream master branch with your fork.
 
-``` php
+```plain
 git checkout master
 git fetch upstream
 git merge --ff-only upstream/master
@@ -84,7 +84,7 @@ git push origin master
 
 Now, we sync the feature branch with any changes from the master branch of the fork from the previous merge step.
 
-``` php
+```plain
 git checkout my-feature      # checkout your `my-feature` branch again
 git rebase master            # this pulls from your forked master```
 ```
@@ -93,14 +93,14 @@ This may result in conflicts that will be noted. If there are conflicts, they mu
 
 Finally, we build all the changes into your working MODX instance with Gitify.
 
-```  php
+```plain
 gitify package:install --all
 gitify build
 ```
 
 Double check to make sure the Theme and the changes still work as expected. Then commit them to your Github fork, where it can then be submitted as a PR to the original upstream project:
 
-``` php
+```plain
 git push origin my-feature   # push to your `my-feature` branch on Github to
                              # submit as a PR, per the next section below
 git checkout master          # return to the master branch to start your next

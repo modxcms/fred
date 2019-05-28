@@ -25,7 +25,7 @@ The `init` function must return a class that extends the SidebarPlugin.
 
 ### Example
 
-``` javascript
+```javascript
 var TestSidebarPluginInit = function(fred, SidebarPlugin, pluginTools) {
     class TestSidebarPlugin extends SidebarPlugin {
         static title = 'TestPlugin';
