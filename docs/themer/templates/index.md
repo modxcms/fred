@@ -8,7 +8,7 @@ Most templates will have a *content* Dropzone. Fred also supports multiple Dropz
 
 ### Simple Fred Template Example with One Dropzone
 
-```
+```html
 <html>
 <head>
     <title>[[*pagetitle]]</title>
@@ -39,7 +39,7 @@ Sometimes you may want to have a more complex layout with multiple Dropzones, li
 
 #### Example Template with `sidebar` Dropzone
 
-```
+```html
 <html>
 <head>
     <title>[[*pagetitle]]</title>

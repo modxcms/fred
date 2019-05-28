@@ -8,7 +8,7 @@ Note the URL for this project, by clicking the down-arrow on the green `Clone or
 
 SSH into your Cloud, and switch to the `www/` webroot directory. Then initialize git with the following command, using the SSH URL from above:
 
-```
+```plain
 git init
 git remote add origin git@github.com:your_name/example_theme.git
 ```
@@ -17,7 +17,7 @@ git remote add origin git@github.com:your_name/example_theme.git
 
 Create a `.gitingnore` file to exclude MODX and other files that are not needed with the following content. Make sure to change `!/assets/themes/{{your-theme-name}}` to its actual name like `!/assets/themes/lightcoral`:
 
-```
+```plain
 # MODX & Gitify #
 #################
 /_backup
@@ -95,7 +95,7 @@ This will instruct Gitify to include all Elements and categories, their Option S
 
 Now it’s time to push the code to the source repo. Once you’ve reached a point where you are ready to share and collaborate on a theme, execute the following:
 
-```
+```plain
 cd ~/www
 gitify extract
 git add --all  # or git add on files you want to commit

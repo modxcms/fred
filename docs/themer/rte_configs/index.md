@@ -30,4 +30,4 @@ For an ultra-minimal streamlined RTE, for example for only allowing italics and 
 }
 ```
 
-To learn more about plugins and options for TinyMCE, please see the [TinyMCE Examples & Demos](https://www.tiny.cloud/docs/demo/). 
+To learn more about plugins and options for TinyMCE, please see the [TinyMCE Examples & Demos](https://www.tiny.cloud/docs/demo/).

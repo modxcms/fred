@@ -7,35 +7,37 @@ Fred supports adding functionality to individual Elements by registering new but
 Plugins are distributed as MODX Transport Packages, which can be submitted to the [MODX Extras repository](https://modx.com/extras) or uploaded manually from the Installer inside the Manager. You can learn more about [how to build Transport Packages](https://docs.modx.com/revolution/2.x/case-studies-and-tutorials/developing-an-extra-in-modx-revolution) in the MODX Documentation, or use a tool like [Git Package Management](https://theboxer.github.io/Git-Package-Management/) to help create Transport Packages.
 
 ## Init function
-To initialise your plugin start by creating an `init` function that will be called by Fred. An `init` function takes three arguments: 
- 
+
+To initialise your plugin start by creating an `init` function that will be called by Fred. An `init` function takes three arguments:
+
 - `fred` – a reference to the main Fred class
 - `ToolbarPlugin` – the ToolbarPlugin class that your plugin has to extend
 - `pluginTools` – a set of tools you can use in your Plugin to create content and save data. [View the source code on Github](https://github.com/modxcms/fred/blob/master/_build/assets/js/Utils.js#L374-L387) for a list of available classes, instances and functions which can be used, including:
-    - `valueParser` – parses Template Variables (such as `{{theme_dir}}`) and replaces them with the correct value based on the given parameters
-    - `ui` – a set of UI elements and inputs to use, including
-    - `emitter` – emits or listen for events
-    - `Modal` – a class to create a modal window
-    - `fetch` – use to make XHR requests
-    - `fredConfig` – an instance of `fredConfig`
-    - `utilitySidebar` – creates a sidebar, like the one used for Element settings
-    - `actions` - predefined Fred XHR requests
-    - `Mousetrap` - library for keyboard shortcuts
+  - `valueParser` – parses Template Variables (such as `{{theme_dir}}`) and replaces them with the correct value based on the given parameters
+  - `ui` – a set of UI elements and inputs to use, including
+  - `emitter` – emits or listen for events
+  - `Modal` – a class to create a modal window
+  - `fetch` – use to make XHR requests
+  - `fredConfig` – an instance of `fredConfig`
+  - `utilitySidebar` – creates a sidebar, like the one used for Element settings
+  - `actions` - predefined Fred XHR requests
+  - `Mousetrap` - library for keyboard shortcuts
 
 The `init` function must return a class that extends the ToolbarPlugin.
 
 ### Example
-```js
+
+```javascript
 var TestToolbarPluginInit = function(fred, ToolbarPlugin, pluginTools) {
     class TestToolbarPlugin extends ToolbarPlugin {
         static title = 'Test Plugin';
         static icon = 'fred--element-settings';
-        
+
         onClick() {
             console.log('Test Plugin icon pressed from the toolbar');
         };
     }
-    
+
     return TestToolbarPlugin;
 };
 ```
@@ -43,6 +45,7 @@ var TestToolbarPluginInit = function(fred, ToolbarPlugin, pluginTools) {
 This will create an additional toolbar icon at the end of the toolbar with the same icon as the Settings icon, a gear.
 
 ## Icons
+
 Toolbar icons are button elements with specific classes. For example, the delete button from the toolbar is marked up as follows:
 
 ```html
@@ -62,6 +65,7 @@ The CSS class `fred--trash` determines the appearance of the button. To style a 
     background-color: #061323;
 }
 ```
+
 Any custom CSS file for your plugin including a custom icon like the above, and other styles needed for the plugin, can be included the same way as the JavaScript file in [Register your Plugin](#register-your-plugin) step, below.
 
 Fred’s default icons are the SVG versions of [Font Awesome 5 icons](https://fontawesome.com/icons?d=gallery). You can download the SVG of any icon from its detailed page.
@@ -72,9 +76,9 @@ The buttons registered to the toolbars are always added after the built-in defau
 
 ## Limiting Plugins for Elements
 
-By default, all Toolbar Plugins will register for every Element. To specify the order and/or omit some plugins, modify an Element’s [Option Set](/themer/options/settings.md) setting to either include or exclude specific Fred Plugins with a  `plugins-include` or `plugins-exclude` attribute. 
+By default, all Toolbar Plugins will register for every Element. To specify the order and/or omit some plugins, modify an Element’s [Option Set](/themer/options/settings.md) setting to either include or exclude specific Fred Plugins with a  `plugins-include` or `plugins-exclude` attribute.
 
-**Note:** The plugins are unique names of the class created for the plugins. As a general rule, this should match the plugin name used for the MODX Package Provider. 
+**Note:** The plugins are unique names of the class created for the plugins. As a general rule, this should match the plugin name used for the MODX Package Provider.
 
 If a `plugins-include` attribute is included, it will ignore any `plugins-exclude` lines. To include only specific Plugins for an Element, use a `plugins-include` Options setting:
 
@@ -115,7 +119,7 @@ To prevent all Plugins from registering on an Element completely, specify an emp
 }
 ```
 
-**Note:** The plugins are unique names of the class created for the plugins. As a general rule, this should match the plugin name used for the MODX Package Provider. 
+**Note:** The plugins are unique names of the class created for the plugins. As a general rule, this should match the plugin name used for the MODX Package Provider.
 
 If a `pluginsInclude` attribute is included, it will ignore any `pluginsExclude` lines. To include only specific Plugins for an Element, use a `pluginsInclude` Options setting:
 
@@ -157,10 +161,10 @@ To prevent all Plugins from registering on an Element completely, specify an emp
 ```
 
 ## Register your Plugin
+
 When you have the `init` function returning your plugin's class, you need to register it for Fred by creating a MODX Plugin on the `[FredBeforeRender](/developer/modx_events#fredbeforerender)` event.
 
 Include the JS file containing the init function using [includes](/developer/modx_events#includes) and registering the Plugin using [`beforeRender`](/developer/modx_events#beforerender).
-
 
 To register the toolbar Plugin, you call the `registerToolbarPlugin` function from Fred with two arguments:
 
@@ -168,6 +172,7 @@ To register the toolbar Plugin, you call the `registerToolbarPlugin` function fr
 - `init function` - the `TestToolbarPluginInit` function we created in [`Init function`](#init-function) step, above
 
 ### Example
+
 ```php
 $includes = '
     <script type="text/javascript" src="/path/to/plugin/file.js"></script>
@@ -179,18 +184,21 @@ $beforeRender = '
 ';
 
 $modx->event->_output = [
-    'includes' => $includes, 
+    'includes' => $includes,
     'beforeRender' => $beforeRender
 ];
 ```
 
 ## The Plugin class
+
 The sample Class in the [`Init function`](#init-function) step above can do much more than just logging to the console via `console.log`. In fact, much of Fred's functionality is already coded as Plugins. To review the current Toolbar Plugins for a sense of how to create your own, [review the source code on Github](https://github.com/modxcms/fred/tree/master/_build/assets/js/Components/Sidebar/Elements/Toolbar).
 
 ### Custom Data
+
 Your Plugin can save and load custom data when the page is saved. Be aware, though, that custom data is only saved when a user saves the entire page.
 
 #### Element Data
+
 Toolbar Plugins typically should affect the Elements on which they act. This data are attached to the Fred element where to toolbar action occurred. To save data, use `this.el.setPluginValue('Namespace', 'VariableName', 'Data')`. This function takes three arguments:
 
 - `namespace` - for most cases, use the Plugin's name or something unique to prevent data from being overwritten by another Plugin
@@ -203,6 +211,7 @@ To load data, use `this.el.getPluginValue('Namespace', 'VariableName')` which ta
 - `name` - the same name used when calling `setPluginValue`
 
 #### Global Data
+
 Data assoiated with a Plugin can optionally be saved globally, not attached to a specific Element. To save data this way, call `pluginTools.fredConfig.setPluginsData('Namespace', 'VariableName', 'Data')`. This function takes same arguments as `this.el.setPluginValue`.
 
 To load global data, call `pluginTools.fredConfig.getPluginsData('Namespace', 'VariableName')`. This function takes same arguments as `this.el.getPluginValue`.

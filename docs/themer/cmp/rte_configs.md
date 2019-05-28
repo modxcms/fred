@@ -1,7 +1,7 @@
 # Rich Text Editor (RTE) Configs
 
 Under the RTE Configs tab you can manage all configuration sets for any installed RTEs.
- 
+
 ![RTE Configs Grid](img/rte_configs_grid.png)
 
 RTE configs must have a unique name, which is used in [data-fred-rte-config](../elements/attributes.md#data-fred-rte-config) attribute to determin which RTE to use, if any.

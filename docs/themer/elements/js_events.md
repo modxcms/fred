@@ -1,20 +1,24 @@
 # JavaScript Events
 
 ## FredElementDrop
+
 This event will trigger when any Element is dropped to a dropzone. You can access fredEl from the `event.detail.fredEl` object.
 
 ### Example
-```
+
+```javascript
 document.body.addEventListener("FredElementDrop", function(){
     $owl();
 });
 ```
 
 ## FredElementSettingChange
+
 This event will trigger when Element setting on any Element is changed. You can access fredEl from the `event.detail.fredEl` object.
 
 ### Example
-```
+
+```javascript
 document.body.addEventListener("FredElementSettingChange", function(){
     $owl();
 });
@@ -22,14 +26,15 @@ document.body.addEventListener("FredElementSettingChange", function(){
 
 ## Full Featured Example
 
-Here's an example use case of re-applying a jQuery class for a slider when changes are made. 
+Here's an example use case of re-applying a jQuery class for a slider when changes are made.
 
 ### Slider Element
 
-The slider element will create new or fewer slides based on the number defined in the element's options. 
+The slider element will create new or fewer slides based on the number defined in the element's options.
 
 #### Markup
-```
+
+```html
 <div class="col-md-8 owl-init slider-main owl-carousel">
     {% for i in 0..(slides - 1) %}
         <div class="item-slide">
@@ -45,8 +50,10 @@ The slider element will create new or fewer slides based on the number defined i
     {% endfor %}
 </div>
 ```
+
 #### Options
-```
+
+```json
 {
   "settings": [
     {
@@ -62,9 +69,10 @@ The slider element will create new or fewer slides based on the number defined i
 ```
 
 ### Template Script
-The template will initialize the slider on first load, and re-initialize when the element is dropped or altered. 
 
-```
+The template will initialize the slider on first load, and re-initialize when the element is dropped or altered.
+
+```html
 <link rel="stylesheet" href="//unpkg.com/owl.carousel/dist/assets/owl.carousel.min.css" />
 <link rel="stylesheet" href="//unpkg.com/owl.carousel/dist/assets/owl.theme.default.min.css" />
 <script src="//unpkg.com/jquery/dist/jquery.js"></script>
