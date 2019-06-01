@@ -122,25 +122,25 @@
         border-radius: 8px;
         animation: fred--dt-after-slide $timing;
       }
-      &.active{
-        &:after{
-          left: -4px;
-          right: auto;
-          opacity: .3;
-          width: 8px; height: auto;
-          top: 16px;
-          bottom: 16px;
-          animation: fred--dt-after-slide-active $timing;
-        }
-        &:before{
-          background-color: $border;
-        }
-      }
+      //&.active{
+      //  &:after{
+      //    left: -4px;
+      //    right: auto;
+      //    opacity: .3;
+      //    width: 8px; height: auto;
+      //    top: 16px;
+      //    bottom: 16px;
+      //    animation: fred--dt-after-slide-active $timing;
+      //  }
+      //  &:before{
+      //    background-color: $border;
+      //  }
+      //}
       &.active, &:hover, &:focus {
-        color: $border;
+        color: $dark-gray;
         background-color: $active !important;
         &:before {
-          background-color: $border;
+          background-color: $dark-gray;
         }
       }
     }
@@ -198,8 +198,8 @@
     text-transform: uppercase;
     margin: 0 28px 0 18px;
     padding: 16px 2px 8px 2px;
-    color: $border;
-    border-bottom: 1px solid $border-light;
+    color: $dark-gray;
+    border-bottom: 1px solid $border;
   }
   a{
     color: $black;

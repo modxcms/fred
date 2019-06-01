@@ -260,11 +260,25 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
 
 .fred--element-settings {
   outline: none;
-
-  :before {
+  &:before {
     background-repeat: no-repeat;
     background-position: center center;
     background-image: inline-svg('cog', $black);
+    background-color: $dark-gray;
+  }
+}
+.fred--position{
+  &-up{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: inline-svg('arrow-up', $black);
+    background-color: $dark-gray;
+
+  }
+  &-down{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: inline-svg('arrow-down', $black);
     background-color: $dark-gray;
   }
 }
@@ -327,22 +341,6 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
   z-index: 1000;
   display: block;
   margin: 0 auto;
-}
-
-.fred--position{
-  &-up{
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-image: inline-svg('arrow-up', $black);
-    background-color: darken($modxblue, 10%);
-
-  }
-  &-down{
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-image: inline-svg('arrow-down', $black);
-    background-color: darken($modxblue, 10%);
-  }
 }
 
 @media screen and (max-height: 675px) {

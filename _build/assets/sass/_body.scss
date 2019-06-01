@@ -54,7 +54,7 @@
       &:after {
         //min-height: 22px;
         //height: auto;
-        opacity: .85;
+        opacity: 1;
       }
     }
     > .fred--hidden{
@@ -114,9 +114,11 @@
       box-shadow: 0 0 100vh 100vw rgba(#100,.2), 0 0 50px rgba(#100, .5);
     }
   }
+
   .fred--toolbar {
     box-sizing: border-box;
-    font: 14px/1;
+    font-size: 14px;
+    line-height: 1;
     text-align: center;
     background: transparent;
     margin: 0;
@@ -125,7 +127,7 @@
     height: 0;
     min-height: 0;
     overflow: visible;
-    transition: .2s ease-in;
+    transition: $timing;
     position: absolute;
     right: 20px;
     bottom: 20px;
@@ -158,12 +160,22 @@
         opacity: 1;
       }
     }
-
+    .fred--element-settings, .fred--position-up, .fred--position-down, .fred--toolbar-grip {
+      opacity: .6;
+      &:hover{
+        opacity: 1;
+      }
+    } 
+    .fred--element-settings {
+      margin-bottom: $baseGutter/2;
+      opacity: .6;
+      transition: $timing;
+    }
     button {
       border: none;
       width: 30px;
       height: 34px;
-      padding: 0 0 4px;
+      padding: 4px 0;
       background-color: transparent;
       display: inline-block;
 
@@ -180,7 +192,8 @@
         background-size: 20px;
         position: relative;
         background-color: $offwhite;
-        mix-blend-mode: hard-light;
+        box-shadow: 0 1px 3px rgba($black, 0.4);
+        //mix-blend-mode: hard-light;
       }
       &:hover {
         opacity: 1;
@@ -223,9 +236,10 @@
       border-radius: 16px;
       background-color: $offwhite;
       text-align: center;
+      box-shadow: 0 1px 3px rgba($black, 0.4);
+      opacity: .6;
       
       button{
-        opacity: .6;
         display: inline-block;
         width: 30px;
         height: 32px;
@@ -237,9 +251,7 @@
         &:not(:hover) {
           background-color: transparent;
         }
-        &:hover{
-          opacity: 1;
-        }
+        
         &:disabled{
           background-color: transparent;
           opacity: .25;
@@ -251,17 +263,16 @@
       }
       &:hover {
         opacity: 1;
+        transition: $timing;
       }
     }
-
   }
 
-  .fred--block_content {
+  .fred--block_content { // the pill with the name of the Element
     &:after{
       content: attr(data-fred-element-title);
       display: inline-block;
       box-sizing: border-box;
-      font: 14px/1; // style variant weight size/line-height family
       position: absolute;
       bottom: 20px;
       left: 100px;  // this needs to be adjusted based on the presence of the sidebar otherwise 20px
@@ -271,9 +282,12 @@
       padding: 8px 16px;
       opacity: 0;
       overflow: hidden;
-      transition: .2s ease-in;
-      font-family: Arial, sans-serif;
-      mix-blend-mode: hard-light;
+      transition: $timing;
+      font-family: $font-family;
+      font-size: 14px;
+      line-height: 1;
+      //mix-blend-mode: hard-light;
+      box-shadow: 0 1px 3px rgba($black, 0.4);
     }
   }
 
