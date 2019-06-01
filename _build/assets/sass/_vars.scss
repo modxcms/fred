@@ -3,19 +3,17 @@
 
 $blue: #2a4365; //$was: #031723 and #123764
 $darkblue: darken($blue, 10%);
-
-$gray: #b1b1b1;
-$light-gray: #e4e4e4;
-$dark-gray: darken($gray, 20%);
-
-$green: #1ac8a0;
+$green: #549c89;
 
 $white: #ffffff;
 $offwhite: #f1f1f1;
+$gray: #b1b1b1;
+$light-gray: #e4e4e4;
+$dark-gray: darken($gray, 5%);
 $black: #272727; 
 
-$border-light: #c9cfd3;
-$border: #363839;
+$border-light: $light-gray;
+$border: $gray;
 
 $primary: $blue;
 $secondary: $green;
