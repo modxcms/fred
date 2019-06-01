@@ -1,6 +1,6 @@
 import SidebarPlugin from '../SidebarPlugin';
 import emitter from '../../EE';
-import { dl, dt, dd, form, fieldSet } from '../../UI/Elements';
+import { dl, dt, dd, h3, form, fieldSet } from '../../UI/Elements';
 import Tagger from '../../UI/Tagger';
 import ui from "../../UI/Inputs";
 import { valueParser } from "../../Utils";
@@ -172,7 +172,8 @@ export default class PageSettings extends SidebarPlugin {
         });
 
         const taggerContent = dd();
-        const fields = fieldSet(['fred--page_settings_form_advanced']);
+        const fields = fieldSet(['fred--page_tagger']);
+        const taggerHeader = h3('fred.fe.tagger.tagger');
 
         fredConfig.tagger.forEach(group => {
             const taggerField = new Tagger(group, null, () => {
@@ -185,8 +186,8 @@ export default class PageSettings extends SidebarPlugin {
             }
         });
 
+        taggerContent.appendChild(taggerHeader);
         taggerContent.appendChild(fields);
-
         taggerList.appendChild(taggerTab);
         taggerList.appendChild(taggerContent);
 

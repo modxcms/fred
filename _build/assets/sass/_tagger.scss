@@ -1,66 +1,83 @@
 .fred--tagger_field{
-  padding: 0 5%;
+  position: relative;
 }
-.fred--tagger_group_title {
-  float: left;
-  margin-bottom: 10px;
-  color: $white;
-  font-size: 14px;
+.fred--tagger_group_title {  // mirrors _form.scss > legend
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin: 0 26px 0 16px;
+  padding: 16px 4px 8px 4px;
+  width: calc(100% - 42px); // less the margins
+  color: $border;
+  border-bottom: 1px solid $border-light;
 }
-
 .fred--tagger_tag {
-  border: solid 2px darken($darkblue, 5%);
-  background: darken($darkblue, 5%);
-  color: lighten($blue, 25%);
-  margin-right: 5px;
-  border-radius: $radius;
-  padding: 3px 10px;
+  background: $offwhite;
+  color: $black;
+  height: 32px;
+  line-height: 32px;
+  font-size: 14px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  padding: 0 12px;
   cursor: pointer;
   display: inline-block;
-  margin-bottom: 10px;
   transition: $timing;
   &.fred--tagger_tag_active {
-    color: $modxgreen;
-    border-color: $modxgreen;
+    background-color: $green;
+    color: $white;
   }
 }
 
-.fred--tagger_input_toggle {
-  background-color: $modxgreen;
-  width: 24px;
-  height: 24px;
-  border-radius: 24px;
-  font-size: 20px;
-  color: white;
+.fred--tagger_input_toggle {  // mirros the "-add" button from _buttons.scss
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 9px;
+  right: 27px;
+  border-radius: $radius;
+  color: $white;
   margin-left: 10px;
   transition: $timing;
-  background-image: inline-svg('plus', darken($darkblue, 5%));
-  background-size: 15px;
-  background-repeat: no-repeat;
-  background-position: center;
+  background-color: $green;
   text-indent: -9999px;
   &.fred--tagger_input_toggle_open {
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
     background-color: $modxred;
+    &::after {
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);  
+      transition: $timing;
+    }
+  }
+  &::after {
+    content: "";
+    display: block;
+    width:30px;
+    height: 30px;
+    margin-top: -25px;
+    background-image: inline-svg('plus', $white);
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: center;  
+    transition: $timing;
   }
 }
 .fred--tagger_input_wrapper {
   clear: both;
+  margin: 0;
+  padding: $sidebar-actions-padding;
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
-  position: relative;
   &.fred--hidden{
     display:none;
   }
   .fred--tagger_input {
-    background-color: lighten($black, 5%);
-    color: white;
-    border: 1px solid darken($black, 15%);
+    color: $black;
     height: 36px;
     width: calc(100% - 35px);
-    border-radius: $radius 0 0 $radius;
+    border-radius: 2.5px 0 0 0;
     padding: 0 16px;
   }
   .fred--tagger_add_tag{
@@ -89,12 +106,12 @@
   .fred--tagger_open_list{
     position: relative;
     height: 36px; width: 36px;
-    background-color: darken($black, 10%);
-    background-image: inline-svg('caret-down');
+    background-color: $primary;
+    background-image: inline-svg('caret-down',$white);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 20px;
-    background-blend-mode: overlay;
+    background-size: 16px;  
+    border-radius: 0 2.5px 0 0;
     margin: 0;
     cursor: pointer;
     text-indent: -9999px;
@@ -107,21 +124,22 @@
 
 .fred--tagger_tags_wrapper {
   clear: both;
+  padding: $sidebar-actions-padding;
+  position: relative;
 }
 
 .fred--autocomplete_suggestions {
   text-align: left;
   cursor: default;
-  border: 1px solid #ccc;
   border-top: 0;
-  background: #fff;
-  box-shadow: -1px 1px 3px rgba(0, 0, 0, .1);
+  background: $white;
+  border: 1px solid $border-light;
 
   /* core styles should not be changed */
   position: absolute;
   display: none;
   z-index: 9999;
-  top: 36px;
+  top: 100px;
   max-height: 254px;
   overflow: hidden;
   overflow-y: auto;

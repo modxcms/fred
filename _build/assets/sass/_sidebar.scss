@@ -161,9 +161,9 @@
   }
   &_blueprints {
     &:before {
-      //background: inline-svg('object-group', $white) center center no-repeat;
-      mask-image: inline-svg('object-group');
-      -webkit-mask-image: inline-svg('object-group');
+      //background: inline-svg('object-group-solid', $white) center center no-repeat;
+      mask-image: inline-svg('object-group-solid');
+      -webkit-mask-image: inline-svg('object-group-solid');
     }
   }
   &_more {
@@ -360,7 +360,6 @@
     }
     dl {
       z-index: 3;
-      margin-top: $baseGutter/2;
       dt {
         position: relative;
         padding: $sidebar-actions-padding;
@@ -376,6 +375,7 @@
         &.fred--accordion {
           &-cog{
             background-color: $offwhite;
+            margin-top: 10px;
             //&:before{
             //  background: inline-svg('cog', $white) center center no-repeat;
             //}
@@ -450,7 +450,8 @@
   dl.fred--pages_list {
     dt:not([class^="fred--accordion"]){
       padding: 12px 30px 0 33px;
-      margin-bottom: -6px;
+      margin-bottom: -3px;
+      outline:none;
       &:before{
         display:none;
       }
@@ -460,7 +461,7 @@
     }
     dl {
       border-left: 1px solid rgba($black, .25);
-      margin-left: 20px;
+      margin: 0 0 0 20px;
       transition: $timing left;
       &:not(.fred--hidden){
         position: relative;
@@ -497,6 +498,12 @@
   }
   &_hidden {
     color: $border-light;
+  }
+  &_create img {
+    border: 1px solid $border-light;
+    &:hover {
+      border-color: $border;
+    }
   }
   //&_noedit {
   //

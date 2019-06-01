@@ -44,7 +44,6 @@ $choices-button-offset: 8px !default;
     display: block;
     width: 100%;
     padding: 10px;
-    border-bottom: 1px solid $choices-keyline-color;
     background-color: $choices-bg-color;
     margin: 0;
   }
@@ -121,9 +120,7 @@ $choices-button-offset: 8px !default;
   vertical-align: top;
   width: 100%;
   background-color: $choices-bg-color;
-  padding: 0 8px;
-  border: 1px solid $choices-keyline-color;
-  border-radius: $choices-border-radius;
+  border-radius: $choices-border-radius $choices-border-radius 0 0;
   font-size: $choices-font-size-md;
   //min-height: 44px;
   overflow: hidden;

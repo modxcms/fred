@@ -16,25 +16,27 @@ input{
   display: flex;
   align-items: center;
   input{
-    width: calc(100% - 36px) !important;
+    width: calc(100% - 24px) !important; // - Xpx is icon width less input and icon-button negative margins
+    margin-top: 0px !important;
+    border-radius: 2.5px 0 0 0;
   }
   .fred--browse-small,
   .fred--close-small{
     position: relative;
-    height: 24px; width: 24px;
-    border-radius: 48px;
-    background-color: $border;
-    background-position: center;
-    background-size: 10px;
-    margin: 4px 4px 4px 8px;
+    height: 36px; width: 36px;
+    background-color: $primary;
+    background-position: center center;
+    background-size: 14px;
+    border-radius: 0 2.5px 0 0;
+    margin: 0 -4px 0 0; // negative right margin to match the inputs above
     cursor: pointer;
     transition: $timing;
     &:hover{
-      background-color: $black;
-      color: $offwhite;
+      background-color: darken($primary, 15%);
     }
   }
   .fred--browse-small{
+    background-size: 18px;
     margin-bottom: 16px;
   }
   .flatpickr-calendar{
@@ -129,7 +131,10 @@ input{
     margin-top: $baseGutter;
     &.fred--page_settings_form_advanced{
       margin: 0;
-      padding: 24px 16px;
+      //padding: 24px 16px;
+    }
+    &:first-of-type {
+      margin-top: 0;
     }
   }
   legend {
@@ -137,14 +142,13 @@ input{
     font-weight: bold;
     letter-spacing: .5px;
     text-transform: uppercase;
-    margin: 0 28px 0 18px;
-    padding: 16px 2px 8px 2px;
-    width: calc(100% - 46px); // less the margins
+    margin: 0 26px 0 16px;
+    padding: 16px 4px 8px 4px;
+    width: calc(100% - 42px); // less the margins
     color: $border;
     border-bottom: 1px solid $border-light;
   }
-  label {
-    //width: 90%;
+  label, .choices {
     margin: 0 30px 16px 20px;
     color: $black;
     display: block;
@@ -154,16 +158,11 @@ input{
   .fred--pages_create label {
     margin: 16px 30px 0 20px;
   }
-  input[type="text"], input[type="date"], textarea, select {
+  input[type="text"], input[type="date"], textarea, select, .choices {
     background-color: $offwhite;
     color: $black;
-    height: 36px;
-    padding: 0 4px;
-    margin: auto -4px; // negative r/l padding to keep the text lined up
-    width: calc(100% + 8px); // the px addition is the inverse double the negative margin
-    border-radius: 2px 2px 0 0;
+    border-radius: 2.5px 2.5px 0 0;
     border-bottom: 1px solid $border-light;
-
     &:focus { 
       background-color: $white;
       border-bottom-color: $border;
@@ -171,9 +170,22 @@ input{
       transition: $timing;
     }
   }
+  .choices {
+    margin: 0 30px 16px 20px;
+    height: 36px;
+  }
+  input[type="text"], input[type="date"], textarea, select, .choices__inner {
+    width: calc(100% + 8px); // the px addition is the inverse double the negative margin
+    padding: 0 4px;
+    margin: auto -4px;
+    height: 36px;
+  }
+  .choices__inner {
+    padding: 0;
+    border-bottom: 1px solid $border-light;
+  }
   textarea {
     height: auto;
-    padding-top: 6px; // match the input due to fixed height
   }
 //  button {
 //  
@@ -275,7 +287,7 @@ input{
     margin-right: 0;
   }
   .choices{
-    margin: 0 0 16px !important;
+    margin: 16px 30px 16px 20px;
     &__inner{
       box-sizing: border-box;
       height: 36px;
@@ -312,8 +324,10 @@ input{
       border-radius: 16px;
       display: block;
       position: absolute;
-      left: 0;
-      bottom: -1px;
+      margin-top: -2px;
+      top: 1px;
+      left: 1px;
+      bottom: 1px;
       content: "";
       width: 23px; height: 23px;
       //box-shadow: 0 1px 2px $black;
@@ -342,9 +356,6 @@ input{
 }
 label.fred--label-choices{
   margin-bottom: 0 !important;
-}
-.choices{
-  margin: 0 5% 16px;
 }
 select{
   appearance: none;
@@ -377,10 +388,8 @@ select{
   }
 }
 .error{
-  background: $modxred;
-  color: $white;
+  color: $modxred;
+  font-weight: bold;
   font-size: 12px;
-  text-align: center;
-  width: 90%;
-  margin: 0 5%;
+  margin: 0;
 }

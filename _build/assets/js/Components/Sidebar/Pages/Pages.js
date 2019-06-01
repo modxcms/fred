@@ -208,13 +208,9 @@ export default class Pages extends SidebarPlugin {
 
         this.createPageButton = dt('fred.fe.pages.create_page', ['fred--accordion-plus'], this.openCreatePage);
         this.createPageButton.setAttribute('hidden', 'hidden');
-        this.createPageButtonSm = button('+','fred.fe.pages.create_page',['fred--btn-small','fred--btn-apply'], this.openCreatePage);
+        this.createPageButtonSm = button('+','fred.fe.pages.create_page',['fred--btn-small','fred--btn-add'], this.openCreatePage);
         if (!fredConfig.permission.new_document_in_root && !fredConfig._resource.parent) {
             this.createPageButtonSm.setAttribute('hidden', 'hidden');
-        } else {
-            this.createPageButtonSm.style.position = 'absolute';
-            this.createPageButtonSm.style.top = '8px';
-            this.createPageButtonSm.style.right = '32px';
         }
 
         this.formWrapper.appendChild(pageForm);

@@ -146,98 +146,12 @@ export default class Blueprints extends SidebarPlugin {
 
         return content;
     }
-
-    buildCreateCategory(content) {
-        const formWrapper = dd();
-
-        const pageForm = form(['fred--pages_create']);
-
-        const fields = fieldSet();
-        const title = legend('fred.fe.blueprints.create_category');
-
-        const onChange = (name, value) => {
-            this.state.category[name] = value;
-        };
-
-        fields.appendChild(title);
-
-        const name = text({
-            name: 'name',
-            label: 'fred.fe.blueprints.category_name'
-        }, this.state.category.name, onChange);
-        
-        const rank = text({
-            name: 'rank',
-            label: 'fred.fe.blueprints.category_rank'
-        }, this.state.category.rank, onChange);
-        
-        const publicToggle = toggle({
-            name: 'public',
-            label: 'fred.fe.blueprints.category_public'
-        }, this.state.category.public, onChange);
-        
-        if (!fredConfig.permission.fred_blueprint_categories_create_public) {
-            publicToggle.inputEl.setAttribute('disabled', 'disabled');
-        }
-
-        fields.appendChild(name);
-        fields.appendChild(rank);
-        fields.appendChild(publicToggle);
-
-        const createButton = button('fred.fe.blueprints.create_category', 'fred.fe.blueprints.create_category', ['fred--btn-panel', 'fred--btn-apply'], () => {
-            emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint_category'));
-
-            createBlueprintCategory(this.state.category.name, this.state.category.rank, +this.state.category.public)
-                .then(json => {
-                    cache.killNamespace('blueprints');
-                    this.state.blueprint.category = null;
-                    this.click().then(newContent => {
-                        content.replaceWith(newContent);
-                        drake.reloadContainers();
-                        emitter.emit('fred-loading-hide');
-                    });
-                })
-                .catch(err => {
-                    if (err.response && err.response._fields && err.response._fields.name) {
-                        name.onError(err.response._fields.name);
-
-                        emitter.emit('fred-loading-hide');
-                    }
-            });
-        });
-
-        fields.appendChild(createButton);
-
-        pageForm.appendChild(fields);
-
-        const createPageButton = dt('fred.fe.blueprints.create_category', ['fred--accordion-plus'], (e, el) => {
-            const activeTabs = content.querySelectorAll('dt.active');
-
-            const isActive = el.classList.contains('active');
-
-            for (let tab of activeTabs) {
-                tab.classList.remove('active');
-            }
-
-            if (!isActive) {
-                el.classList.add('active');
-                e.stopPropagation();
-                emitter.emit('fred-sidebar-dt-active', createPageButton, formWrapper);
-            }
-        });
-
-        formWrapper.appendChild(pageForm);
-
-        content.appendChild(createPageButton);
-        content.appendChild(formWrapper);
-    }
-
     buildCreateBlueprint(content) {
         const formWrapper = dd();
 
         const pageForm = form(['fred--pages_create']);
 
-        const createPageButton = dt('fred.fe.blueprints.create_blueprint', ['fred--accordion-plus'], (e, el) => {
+        const createPageButton = dt('fred.fe.blueprints.create_blueprint', ['fred--accordion-cog'], (e, el) => {
             const activeTabs = content.querySelectorAll('dt.active');
 
             const isActive = el.classList.contains('active');
@@ -405,6 +319,92 @@ export default class Blueprints extends SidebarPlugin {
 
                 pageForm.appendChild(fields);
                 
+                el.classList.add('active');
+                e.stopPropagation();
+                emitter.emit('fred-sidebar-dt-active', createPageButton, formWrapper);
+            }
+        });
+
+        formWrapper.appendChild(pageForm);
+
+        content.appendChild(createPageButton);
+        content.appendChild(formWrapper);
+    }
+
+
+    buildCreateCategory(content) {
+        const formWrapper = dd();
+
+        const pageForm = form(['fred--pages_create']);
+
+        const fields = fieldSet();
+        const title = legend('fred.fe.blueprints.create_category');
+
+        const onChange = (name, value) => {
+            this.state.category[name] = value;
+        };
+
+        fields.appendChild(title);
+
+        const name = text({
+            name: 'name',
+            label: 'fred.fe.blueprints.category_name'
+        }, this.state.category.name, onChange);
+        
+        const rank = text({
+            name: 'rank',
+            label: 'fred.fe.blueprints.category_rank'
+        }, this.state.category.rank, onChange);
+        
+        const publicToggle = toggle({
+            name: 'public',
+            label: 'fred.fe.blueprints.category_public'
+        }, this.state.category.public, onChange);
+        
+        if (!fredConfig.permission.fred_blueprint_categories_create_public) {
+            publicToggle.inputEl.setAttribute('disabled', 'disabled');
+        }
+
+        fields.appendChild(name);
+        fields.appendChild(rank);
+        fields.appendChild(publicToggle);
+
+        const createButton = button('fred.fe.blueprints.create_category', 'fred.fe.blueprints.create_category', ['fred--btn-panel', 'fred--btn-apply'], () => {
+            emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint_category'));
+
+            createBlueprintCategory(this.state.category.name, this.state.category.rank, +this.state.category.public)
+                .then(json => {
+                    cache.killNamespace('blueprints');
+                    this.state.blueprint.category = null;
+                    this.click().then(newContent => {
+                        content.replaceWith(newContent);
+                        drake.reloadContainers();
+                        emitter.emit('fred-loading-hide');
+                    });
+                })
+                .catch(err => {
+                    if (err.response && err.response._fields && err.response._fields.name) {
+                        name.onError(err.response._fields.name);
+
+                        emitter.emit('fred-loading-hide');
+                    }
+            });
+        });
+
+        fields.appendChild(createButton);
+
+        pageForm.appendChild(fields);
+
+        const createPageButton = dt('fred.fe.blueprints.create_category', ['fred--accordion-cog','margin-top:12px'], (e, el) => {
+            const activeTabs = content.querySelectorAll('dt.active');
+
+            const isActive = el.classList.contains('active');
+
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
                 el.classList.add('active');
                 e.stopPropagation();
                 emitter.emit('fred-sidebar-dt-active', createPageButton, formWrapper);
