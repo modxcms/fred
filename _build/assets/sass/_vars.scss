@@ -1,36 +1,48 @@
 
 // COLORS
-$blue: #123764;
-$darkblue: darken($blue, 5%);
-$gray: #747f8a;
-$light-gray: #a9abab;
-$dark-gray: darken($gray, 20%);
-$green: #549c89;
-$white: #FEFEFE;
-$lightcoral: #e46363;
-//$black: #293134;
-$black: $blue;
 
-// PLACEHOLDERS
+$blue: #2a4365; //$was: #031723 and #123764
+$darkblue: darken($blue, 10%);
+$green: #549c89;
+
+$white: #ffffff;
+$offwhite: #f1f1f1;
+$light-gray: #e4e4e4;
+$gray: #b1b1b1;
+$dark-gray: darken($gray, 20%);
+$black: #272727; 
+
+$border-light: $light-gray;
+$border: $gray;
+
 $primary: $blue;
 $secondary: $green;
 
-$baseGutter: 16px;
-$radius: 4px;
-$timing: .3s;
-
-$btn-padding: $baseGutter/2 $baseGutter;
-$btn-padding-small: 3px 11px;
-
+$base: $white; // the base background color, which was $darkblue
+$active: $white; // the color that active elemets should be (previously not specified)
 
 //MODX Colors
 $modxred: #E12A29;
 $modxorange: #ed673e;
-//$modxblue: #3380C2;
-$modxblue: $darkblue;
+$modxblue: #3380C2;
 $modxgreen: #42AB4A;
 $modxbrightgreen: #95C953;
 
+$lightcoral: #e46363;
+
+// PLACEHOLDERS
+
+$baseGutter: 16px;
+$gutter: $baseGutter;
+$radius: 4px;
+$timing: .3s;
+$box-shad-subtle: 0px 3px 15px rgba(0,0,0,0.2);
+
+$btn-padding: $baseGutter/2 $baseGutter;
+$btn-padding-small: 3px 11px;
+$sidebar-actions-padding: 12px 30px 12px 20px;
+
+$font-family: "Open Sans", Arial, sans-serif;
 //Mixins
 @mixin draggable{
   cursor: move; /* fallback: no `url()` support or images disabled */
@@ -70,5 +82,28 @@ $modxbrightgreen: #95C953;
     &:hover{
       transform: initial;
     }
+  }
+}
+
+/*------------------------
+mixin that calculates if text needs to be light or dark
+depending on the background color passed.
+
+From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
+			
+Color brightness is determined by the following formula: 
+((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
+------------------------*/
+
+@mixin text-contrast($n) {
+  $color-brightness: round((red($n) * 299) + (green($n) * 587) + (blue($n) * 114) / 1000);
+  $light-color: round((red(#ffffff) * 299) + (green(#ffffff) * 587) + (blue(#ffffff) * 114) / 1000);
+  
+  @if abs($color-brightness) < ($light-color/2){
+    color: white;
+  }
+
+  @else {
+    color: black;
   }
 }

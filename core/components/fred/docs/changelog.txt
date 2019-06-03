@@ -1,10 +1,10 @@
-Changelog for Fred.
+Changelog for Fred
 
 1.1.0 pl
 ============
 ## New
 - If you have updated or started working on a page, Fred warns you before leaving without saving so you don’t accidentally lose your work (not that we ever needed that ourselves…).
-- Toolbar and Sidebar Plugins allow for custom functionality when creating or editing content with Fred, with Moustrap to support keybindings. To demonstrate the awesomeness of this, Collections now supports creating or updating pages with Fred-enabled templates directly with Fred from the front-end.
+- Toolbar and Sidebar Plugins allow for custom functionality when creating or editing content with Fred. To demonstrate the awesomeness of this, Collections now supports creating or updating pages with Fred-enabled templates directly with Fred from the front-end.
 - Support for rendering Snippets to cache inside Fred Elements. This can be used, for example, to dynamically pull author information for a blog or other custom data source.
 - The MODX event `onDocFormSave` is now triggered when Fred saves, so that MODX plugins can tap into this. We’re looking at you, VersionX…
 - When creating a new page from Fred, you can specify a Blueprint to use. Further, each Fred-enabled Template can now have a default Blueprint associated with it so that making new content can be streamlined.
@@ -13,6 +13,8 @@ Changelog for Fred.
 - Documentation and an installer check for specific PHP extensions was added so people don't get frustrated when Fred mysteriously decided not to work.
 
 ## Updates
+- Overall styling updates to make panels and menus more legible more inline with the upcoming MODX3 Manager.
+- Build process updated to use latest Node/Gulp. More files omited from the repo in favor of using Github releases for built assets.
 - When pasting text from word processors and web browsers, a lot of messy markup sometimes tags along, making it hard to create clean content. Fred now forces text to be pasted as plain text to minimize tedious cleanup chores as much as possible.
 - A special `{{theme_dir}}` placeholder makes for more portable themes for Element Settings and Media fields.
 - The root `<html>` tag now gets a class when Fred is enabled to allow for custom styling when needed: `<html class="fred--active">`.

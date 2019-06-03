@@ -28,9 +28,9 @@
   z-index: 1;
   .fred--block{
     outline: 3px solid rgba($modxblue, 0);
-    &.fred--block-active, &:focus {
-      //transition: $timing cubic-bezier(.79, .14, .15, .86);
-    }
+    //&.fred--block-active, &:focus {
+    //  transition: $timing cubic-bezier(.79, .14, .15, .86);
+    //}
   }
   &:after{
     content: "";
@@ -52,9 +52,9 @@
     }
     > .fred--block_content {
       &:after {
-        min-height: 22px;
-        height: auto;
-        opacity: .85;
+        //min-height: 22px;
+        //height: auto;
+        opacity: 1;
       }
     }
     > .fred--hidden{
@@ -62,24 +62,21 @@
     }
 
   }
-  &.fred--block-active_top{
-    > .fred--toolbar{
-      bottom: auto;
-      top: 100%;
-      transition: 0s all !important;
-      border-radius: 0 0 0 $radius;
-    }
-    > .fred--block_content {
-      &:after {
-        top: calc(100% + 44px);
-      }
-    }
-  }
+  //&.fred--block-active_top{
+    //> .fred--toolbar{
+    //  bottom: auto;
+    //  top: 100%;
+    //  transition: 0s all !important;
+    //}
+    //> .fred--block_content {
+    //  &:after {
+    //    top: calc(100% + 44px);
+    //  }
+    //}
+  //}
   &.fred--block-active_parent {
     outline: 3px solid lighten($gray, 15%);
     > .fred--toolbar{
-      background: lighten($gray, 45%);
-      border-color: lighten($gray, 15%);
       height: 20px;
       z-index: 2;
       .fred--toolbar-grip, button, .fred--position-group{
@@ -91,14 +88,14 @@
         opacity: 0;
       }
     }
-    &.fred--block-active_top{
+    &.fred--block-active_top {
       > .fred--toolbar{
         bottom: auto;
         top: 100%;
         transition: 0s all !important;
       }
     }
-    .fred--block-active{
+    .fred--block-active {
       box-shadow: rgba($black, .34) 0 4px 8px;
     }
   }
@@ -117,92 +114,135 @@
       box-shadow: 0 0 100vh 100vw rgba(#100,.2), 0 0 50px rgba(#100, .5);
     }
   }
+
   .fred--toolbar {
     box-sizing: border-box;
-    background: $modxblue;
-    margin:0;
-    text-align: right;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1;
-    height: 0;
-    padding: 2px;
+    text-align: center;
+    background: transparent;
+    margin: 0;
+    padding: 0;
     opacity: 0;
-    overflow:hidden;
-    transition: .2s ease-in;
-    position: absolute;
-    bottom: 100%;
-    right: 0;
-    z-index: 10009;
-    min-width: 172px;
+    height: 0;
     min-height: 0;
+    overflow: visible;
+    transition: $timing;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10009;
+
     &.handle{
       @include draggable();
     }
-    &-grip{
-      width: 15px;
-      height: 36px;
-      display: inline-block;
+
+    &-grip {
+      width: 30px;
+      height: 30px;
       overflow: hidden;
-      padding: 10px 28px 10px 4px;
-      margin-top: 0;
-      color: $white;
-      float:left;
-      opacity: .75;
       transition: $timing;
-      background-image: inline-svg('ellipsis-v', $white);
+      background-image: inline-svg('grip-horizontal', $black);
       background-repeat: no-repeat;
-      background-size: 8px;
-      background-position: 4px;
+      background-size: 20px;
+      background-position: 6px;
       box-sizing: border-box;
+      cursor: grab;
+      display: block;
+      margin: 0 auto;
+
+      &:active, &:focus, &.moving {
+        cursor: grabbing;
+      }
     }
     &:hover{
-      .fred--toolbar-grip{
+      .fred--toolbar-grip {
         opacity: 1;
       }
     }
-
+    .fred--element-settings, .fred--position-up, .fred--position-down, .fred--toolbar-grip {
+      opacity: .6;
+      &:hover{
+        opacity: 1;
+      }
+    } 
+    .fred--element-settings {
+      margin-bottom: $baseGutter/2;
+      opacity: .6;
+      transition: $timing;
+    }
     button {
       border: none;
-      width: 32px;
-      height: 36px;
+      width: 30px;
+      height: 34px;
       padding: 4px 0;
       background-color: transparent;
       display: inline-block;
-      opacity: .8;
+
       &:before{
         content: "";
         @include btn();
         padding: 0;
         margin-right: 6px;
-        width: 28px;
-        height: 28px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         border: none;
         transition: .2s;
         background-size: 20px;
-        box-shadow: 0 1px 0 2px $modxblue;
         position: relative;
+        background-color: $offwhite;
+        box-shadow: 0 1px 3px rgba($black, 0.4);
+        //mix-blend-mode: hard-light;
       }
       &:hover {
         opacity: 1;
-        &:before{
-          box-shadow: none;
-        }
-      }
-      &:not(:hover):before{
-        background-color: rgba($modxblue, .85);
       }
     }
-
-    .fred--position-group{
-      display:inline-block;
-      width: 38px;
-      margin-right: 4px;
+    .fred--toolbar-plugins {
+      font-family: $font-family;
+      position: absolute;
+      bottom: calc(100% + 12px);
+      right: -5px;
+      background-color: $offwhite;
+      //box-shadow: 0 0 0 1px rgba($black, .5);
+      width: 150px;
+      text-align: left;
+      padding: 4px;
+      a{
+        color: $black;
+        display: block;
+        padding: 4px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        &:hover {
+          background-color: $border-light;
+        }
+      }
+      &::after {
+        content: " ";
+        border-left: solid transparent 10px;
+        border-right: solid transparent 10px;
+        border-top: solid $offwhite 10px;
+        width: 0;
+        height: 0;
+        position: absolute;
+        right: 10px;
+        bottom: -10px;
+      }
+    }
+    .fred--position-group {
+      display: block; 
+      border-radius: 16px;
+      background-color: $offwhite;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba($black, 0.4);
+      opacity: .6;
+      
       button{
-        opacity: .6;
         display: inline-block;
-        width: 16px;
-        height: 36px;
+        width: 30px;
+        height: 32px;
         border-radius: 0;
         box-shadow: none;
         background-size: 14px;
@@ -211,9 +251,7 @@
         &:not(:hover) {
           background-color: transparent;
         }
-        &:hover{
-          opacity: 1;
-        }
+        
         &:disabled{
           background-color: transparent;
           opacity: .25;
@@ -225,33 +263,31 @@
       }
       &:hover {
         opacity: 1;
-        box-shadow: none;
+        transition: $timing;
       }
     }
-
   }
 
-  .fred--block_content {
+  .fred--block_content { // the pill with the name of the Element
     &:after{
       content: attr(data-fred-element-title);
       display: inline-block;
       box-sizing: border-box;
-      font-size: 14px;
-      line-height: 1;
       position: absolute;
-      border-radius: $radius;
-      top: calc(100% + 8px);
-      right: 8px;
-      background: $white;
-      color: #1d1d1d;
-      height: 0;
-      padding: 8px;
+      bottom: 20px;
+      left: 100px;  // this needs to be adjusted based on the presence of the sidebar otherwise 20px
+      border-radius: 50px;
+      background: $offwhite;
+      color: $black;
+      padding: 8px 16px;
       opacity: 0;
       overflow: hidden;
-      transition: .2s ease-in;
-      //text-transform: uppercase;
-      font-family: Arial, sans-serif;
-
+      transition: $timing;
+      font-family: $font-family;
+      font-size: 14px;
+      line-height: 1;
+      //mix-blend-mode: hard-light;
+      box-shadow: 0 1px 3px rgba($black, 0.4);
     }
   }
 

@@ -94,20 +94,6 @@ export default class Fred {
 
         this.devices = div(['fred--devices']);
 
-        this.tabletP = a(`<span>${fredConfig.lng('fred.fe.preview.tablet_portrait')}</span>`, fredConfig.lng('fred.fe.preview.tablet_portrait'), '', ['fred--tablet-portrait'], () => {
-            this.iframe.style.width = '768px';
-            this.iframe.style.height = '1024px';
-        });
-
-        this.devices.appendChild(this.tabletP);
-
-        this.tabletL = a(`<span>${fredConfig.lng('fred.fe.preview.tablet_landscape')}</span>`, fredConfig.lng('fred.fe.preview.tablet_landscape'), '', ['fred--tablet-landscape'], () => {
-            this.iframe.style.width = '1024px';
-            this.iframe.style.height = '768px';
-        });
-
-        this.devices.appendChild(this.tabletL);
-
         this.phoneP = a(`<span>${fredConfig.lng('fred.fe.preview.phone_portrait')}</span>`, fredConfig.lng('fred.fe.preview.phone_portrait'), '', ['fred--smartphone-portrait'], () => {
             this.iframe.style.width = '320px';
             this.iframe.style.height = '480px';
@@ -121,6 +107,20 @@ export default class Fred {
         });
 
         this.devices.appendChild(this.phoneL);
+
+        this.tabletP = a(`<span>${fredConfig.lng('fred.fe.preview.tablet_portrait')}</span>`, fredConfig.lng('fred.fe.preview.tablet_portrait'), '', ['fred--tablet-portrait'], () => {
+            this.iframe.style.width = '768px';
+            this.iframe.style.height = '1024px';
+        });
+
+        this.devices.appendChild(this.tabletP);
+
+        this.tabletL = a(`<span>${fredConfig.lng('fred.fe.preview.tablet_landscape')}</span>`, fredConfig.lng('fred.fe.preview.tablet_landscape'), '', ['fred--tablet-landscape'], () => {
+            this.iframe.style.width = '1024px';
+            this.iframe.style.height = '768px';
+        });
+
+        this.devices.appendChild(this.tabletL);
 
         this.auto = a(`<span>${fredConfig.lng('fred.fe.preview.auto')}</span>`, fredConfig.lng('fred.fe.preview.auto'), '', ['fred--auto'], () => {
             this.iframe.style.width = '100%';

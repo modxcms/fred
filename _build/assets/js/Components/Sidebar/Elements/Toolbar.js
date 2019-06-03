@@ -1,5 +1,5 @@
-import { div } from "../../../UI/Elements";
-import MoveHandle from "./Toolbar/MoveHandle";
+import { div, button } from "../../../UI/Elements";
+//import MoveHandle from "./Toolbar/MoveHandle";
 import ElementScreenshot from "./Toolbar/ElementScreenshot";
 import PartialBlueprint from "./Toolbar/PartialBlueprint";
 import ElementSettings from "./Toolbar/ElementSettings";
@@ -17,16 +17,25 @@ export default class Toolbar {
     
     render() {
         const toolbar = div(['fred--toolbar']);
+        const pluginWrapper = div(['fred--toolbar-plugins']);
+        const pluginWrapperHide = div();
+        const pluginToggle = button('', 'fred.fe.content.plugins', ['fred--element-settings'], () => {
+            if(toolbar.contains(pluginWrapper)){
+                toolbar.replaceChild(pluginWrapperHide, pluginWrapper);
+            }else{
+                toolbar.replaceChild(pluginWrapper, pluginWrapperHide);
+            }
+        });
 
         const plugins = [
-            MoveHandle,
+            //MoveHandle,
             RefreshElementCache,
             ElementScreenshot,
             PartialBlueprint,
             ElementSettings,
             Duplicate,
             Delete,
-            Move
+            //Move
         ];
 
         let include = this.el.options.toolbarPluginsInclude;
@@ -52,9 +61,13 @@ export default class Toolbar {
         }
 
         plugins.forEach(plugin => {
-            new plugin(this.el, toolbar);
+            new plugin(this.el, pluginWrapper);
         });
-       
+
+        toolbar.appendChild(pluginWrapperHide);
+        toolbar.appendChild(pluginToggle);
+        new Move(this.el, toolbar);
+
         return toolbar;
         
     }

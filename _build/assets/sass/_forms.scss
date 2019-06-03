@@ -1,39 +1,42 @@
 input{
   &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: rgba($white, .8);
+    color: rgba($black, .5);
   }
   &::-moz-placeholder { /* Firefox 19+ */
-    color: rgba($white, .8);
+    color: rgba($black, .5);
   }
   &:-ms-input-placeholder { /* IE 10+ */
-    color: rgba($white, .8);
+    color: rgba($black, .5);
   }
   &:-moz-placeholder { /* Firefox 18- */
-    color: rgba($white, .8);
+    color: rgba($black, .5);
   }
 }
 .fred--input-group{
   display: flex;
   align-items: center;
   input{
-    width: calc(100% - 36px) !important;
+    width: calc(100% - 24px) !important; // - Xpx is icon width less input and icon-button negative margins
+    margin-top: 0px !important;
+    border-radius: 2.5px 0 0 0;
   }
   .fred--browse-small,
   .fred--close-small{
     position: relative;
     height: 36px; width: 36px;
-    background-color: darken($black, 10%);
-    background-position: center;
-    background-size: 20px;
-    background-blend-mode: overlay;
-    margin: 0;
+    background-color: $primary;
+    background-position: center center;
+    background-size: 14px;
+    border-radius: 0 2.5px 0 0;
+    margin: 0 -4px 0 0; // negative right margin to match the inputs above
     cursor: pointer;
     transition: $timing;
     &:hover{
-      background-color: $black;
+      background-color: darken($primary, 15%);
     }
   }
   .fred--browse-small{
+    background-size: 18px;
     margin-bottom: 16px;
   }
   .flatpickr-calendar{
@@ -41,135 +44,163 @@ input{
   }
 }
 
-.fred--pages_search {
-  margin: 32px 8px 16px;
-  &_wrapper {
-    width: 90%;
-    margin: 0 5%;
-    position: relative;
-  }
-  label {
-    text-transform: uppercase;
-    width: 90%;
-    margin: 0 5%;
-    font-weight: bold;
-    color: lighten($black, 15%);
-  }
-  input[type="text"] {
-    background-color: lighten($black, 5%);
-    color: white;
-    border: 1px solid darken($black, 15%);
-    height: 36px;
-    width: calc(100% - 35px);
-    border-radius: $radius 0 0 $radius;
-    padding: 0 16px;
-  }
-  button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: white;
-    border: none;
-    height: 36px;
-    width: 35px;
-    background-color: darken($black, 10%);
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjYyNDMgMTY5Ljg0NiAxOS4xNzkgMTkuMTc5Ij4gIDxkZWZzPiAgICA8c3R5bGU+ICAgICAgLmNscy0xIHsgICAgICAgIGZpbGw6ICNmZmY7ICAgICAgfSAgICA8L3N0eWxlPiAgPC9kZWZzPiAgPGcgaWQ9InNlYXJjaF8yXyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjI0MyAxNjkuODQ2KSI+ICAgIDxnIGlkPSJfeDM3XzA4LXNlYXJjaF94NDBfMngucG5nXzJfIj4gICAgICA8ZyBpZD0iR3JvdXBfMTUiIGRhdGEtbmFtZT0iR3JvdXAgMTUiPiAgICAgICAgPHBhdGggaWQ9IlBhdGhfMTgiIGRhdGEtbmFtZT0iUGF0aCAxOCIgY2xhc3M9ImNscy0xIiBkPSJNMTkuMDc4LDE4LjZsLTUuNC01LjRhNy45LDcuOSwwLDEsMC0uNDc5LjQ3OWw1LjQsNS40YS4zMzkuMzM5LDAsMCwwLC40NzktLjQ3OVpNNy44NzgsMTUuMDdhNy4xOTIsNy4xOTIsMCwxLDEsNy4yLTcuMTkyQTcuMTkyLDcuMTkyLDAsMCwxLDcuODc4LDE1LjA3WiIvPiAgICAgIDwvZz4gICAgPC9nPiAgPC9nPjwvc3ZnPg==);
-    background-size: 70%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    transition: all $timing;
-    &:hover, &:focus {
-      background-color: $modxgreen;
-    }
-  }
-}
-.fred--pages_create{
+//.fred--pages_search {
+//  margin: 32px 8px 16px;
+//  &_wrapper {
+//    width: 90%;
+//    margin: 0 5%;
+//    position: relative;
+//  }
+//  label {
+//    text-transform: uppercase;
+//    width: 90%;
+//    margin: 0 5%;
+//    font-weight: bold;
+//    color: lighten($black, 15%);
+//  }
+//  input[type="text"] {
+//    background-color: lighten($black, 5%);
+//    color: white;
+//    border: 1px solid darken($black, 15%);
+//    height: 36px;
+//    width: calc(100% - 35px);
+//    border-radius: $radius 0 0 $radius;
+//    padding: 0 16px;
+//  }
+//  button {
+//    position: absolute;
+//    top: 0;
+//    right: 0;
+//    color:white;
+//    border: none;
+//    height: 36px;
+//    width: 35px;
+//    background-color: darken($black, 10%);
+//    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjYyNDMgMTY5Ljg0NiAxOS4xNzkgMTkuMTc5Ij4gIDxkZWZzPiAgICA8c3R5bGU+ICAgICAgLmNscy0xIHsgICAgICAgIGZpbGw6ICNmZmY7ICAgICAgfSAgICA8L3N0eWxlPiAgPC9kZWZzPiAgPGcgaWQ9InNlYXJjaF8yXyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjI0MyAxNjkuODQ2KSI+ICAgIDxnIGlkPSJfeDM3XzA4LXNlYXJjaF94NDBfMngucG5nXzJfIj4gICAgICA8ZyBpZD0iR3JvdXBfMTUiIGRhdGEtbmFtZT0iR3JvdXAgMTUiPiAgICAgICAgPHBhdGggaWQ9IlBhdGhfMTgiIGRhdGEtbmFtZT0iUGF0aCAxOCIgY2xhc3M9ImNscy0xIiBkPSJNMTkuMDc4LDE4LjZsLTUuNC01LjRhNy45LDcuOSwwLDEsMC0uNDc5LjQ3OWw1LjQsNS40YS4zMzkuMzM5LDAsMCwwLC40NzktLjQ3OVpNNy44NzgsMTUuMDdhNy4xOTIsNy4xOTIsMCwxLDEsNy4yLTcuMTkyQTcuMTkyLDcuMTkyLDAsMCwxLDcuODc4LDE1LjA3WiIvPiAgICAgIDwvZz4gICAgPC9nPiAgPC9nPjwvc3ZnPg==);
+//    background-size: 70%;
+//    background-repeat: no-repeat;
+//    background-position: center center;
+//    transition: all $timing;
+//    &:hover, &:focus {
+//      background-color: $modxgreen;
+//    }
+//  }
+//}
+//.fred--pages_create{
+//  fieldset{
+//    margin: 0;
+//    padding: 0 16px 24px;
+//  }
+//  legend{
+//    font-size: 21px;
+//    padding: 16px 5%;
+//    color: #fff;
+//    font-weight: lighter;
+//  }
+//  label {
+//    width: 90%;
+//    margin: 0 5%;
+//    font-weight: lighter;
+//    color: $white;
+//    display: block;
+//  }
+//  input[type="text"], input[type="date"], textarea, select {
+//    background-color: lighten($black, 5%);
+//    color: white;
+//    border: 1px solid darken($black, 10%);
+//    height: 36px;
+//    width: calc(100% + 16px);
+//    margin: 0 -8px 16px;
+//    border-radius: 2px;
+//    padding: 4px 8px;
+//    box-sizing: border-box;
+//  }
+//  label{
+//    input[type="text"], input[type="date"], textarea, select {
+//      width: 100%;
+//      margin: 0 0 16px;
+//    }
+//  }
+//  .choices:last-child{
+//    margin-bottom: 16px;
+//  }
+//}
+//.fred--page_settings_form { // this was too specific ... so making it a bit more for general use
+.fred--sidebar, .fred--panel {
   fieldset{
-    margin: 0;
-    padding: 0 16px 24px;
-  }
-  legend{
-    font-size: 21px;
-    padding: 16px 5%;
-    color: #fff;
-    font-weight: lighter;
-  }
-  label {
-    width: 90%;
-    margin: 0 5%;
-    font-weight: lighter;
-    color: $white;
-    display: block;
-  }
-  input[type="text"], input[type="date"], textarea, select {
-    background-color: lighten($black, 5%);
-    color: white;
-    border: 1px solid darken($black, 10%);
-    height: 36px;
-    width: 90%;
-    margin: 0 5% 16px;
-    border-radius: $radius 0 0 $radius;
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
-  label{
-    input[type="text"], input[type="date"], textarea, select {
-      width: 100%;
-      margin: 0 0 16px;
-    }
-  }
-  .choices:last-child{
-    margin-bottom: 16px;
-  }
-}
-.fred--page_settings_form {
-  dl{
-    position: relative !important;
-    height: auto !important;
-    left: 0 !important;
-  }
-  fieldset{
-    margin: 32px 8px 0;
+    margin-top: $baseGutter;
     &.fred--page_settings_form_advanced{
       margin: 0;
-      padding: 24px 16px;
+      //padding: 24px 16px;
+    }
+    &:first-of-type {
+      margin-top: 0;
     }
   }
-  label {
-    width: 90%;
-    margin: 0 5% 16px;
-    font-weight: lighter;
-    color: $white;
+  legend {
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    margin: 0 26px 0 16px;
+    padding: 16px 4px 8px 4px;
+    width: calc(100% - 42px); // less the margins
+    color: $border;
+    border-bottom: 1px solid $border-light;
+  }
+  label, .choices {
+    margin: 0 30px 16px 20px;
+    color: $black;
     display: block;
     box-sizing: border-box;
+    font-size: 12px;
   }
-  input[type="text"], input[type="date"], textarea, select {
-    background-color: lighten($black, 5%);
-    color: white;
-    border: 1px solid darken($black, 10%);
+  .fred--pages_create label {
+    margin: 16px 30px 0 20px;
+  }
+  input[type="text"], input[type="date"], textarea, select, .choices {
+    background-color: $offwhite;
+    color: $black;
+    border-radius: 2.5px 2.5px 0 0;
+    border-bottom: 1px solid $border-light;
+    &:focus { 
+      background-color: $white;
+      border-bottom-color: $border;
+      border-bottom-width: 2px;
+      transition: $timing;
+    }
+  }
+  .choices {
+    margin: 0 30px 16px 20px;
     height: 36px;
-    width: 100%;
-    border-radius: $radius 0 0 $radius;
-    padding: 0 16px;
+  }
+  input[type="text"], input[type="date"], textarea, select, .choices__inner {
+    width: calc(100% + 8px); // the px addition is the inverse double the negative margin
+    padding: 0 4px;
+    margin: auto -4px;
+    height: 36px;
+  }
+  .choices__inner {
+    padding: 0;
+    border-bottom: 1px solid $border-light;
   }
   textarea {
     height: auto;
-    padding: 8px 16px;
   }
-  button {
-
-  }
+//  button {
+//  
+//  }
   &_checkbox {
     margin-bottom: 4px !important;
     &:last-child {
       margin-bottom: 16px !important;
     }
   }
-  &_select {
-    select {
-
-    }
-  }
+//  &_select {
+//     select {
+//
+//    }
+//  }
   &_save {
     &:not(:hover){
       background-color: $modxred;
@@ -177,74 +208,76 @@ input{
   }
 }
 
-.fred--panel,.fred--modal-bg {
-  form, fieldset {
-    outline: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-  }
-  form {
-    width: 100%;
-  }
-  legend {
-    box-sizing: border-box;
-    position: relative;
-    width: 100%;
-    margin: 0 0 16px;
-    text-align: left;
-    overflow: hidden;
-    border-bottom: 1px solid #000;
-    color: #fff;
-    font-size: 24px !important;
-    font-style: normal !important;
-    font-weight: normal !important;
-    height: auto;
-    padding: 16px;
-    cursor: pointer;
-  }
-  label {
-    box-sizing: border-box;
-    padding: 0;
-    display: block;
-    width: calc(90% - 16px);
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: calc(5% + 8px);
-    margin-right: calc(5% + 8px);
-    font-size: 14px;
-    font-weight: lighter;
-    color: $white;
-    & > div{
-      margin-bottom: 16px;
-    }
-  }
-  input, select, textarea {
-    background-color: lighten($black, 5%);
-    color: white;
-    border: 1px solid darken($black, 10%);
-    height: 36px;
-    width: 100%;
-    border-radius: $radius 0 0 $radius;
-    padding: 0 16px;
-    margin-bottom: 16px;
-  }
-  .choices{
-    margin-bottom: 16px;
-    margin-left: calc(5% + 8px);
-    margin-right: calc(5% + 8px);
-    width: calc(90% - 16px);
-    color: $white;
-  }
-  dd{
-    label, .choices{
-      width: 90%;
-      margin-left: 5%;
-      margin-right: 5%;
-    }
-  }
-}
+//.fred--panel,.fred--modal-bg {
+  //form, fieldset {
+  //  outline: none;
+  //  border: none;
+  //  padding: 0;
+  //  margin: 0;
+  //  text-align: left;
+  //}
+  //form {
+  //  width: 100%;
+  //}
+  //legend {
+  //  box-sizing: border-box;
+  //  position: relative;
+  //  width: 100%;
+  //  margin: 0 0 16px;
+  //  text-align: left;
+  //  overflow: hidden;
+  //  border-bottom: 1px solid #000;
+  //  color: #fff;
+  //  font-size: 24px !important;
+  //  font-style: normal !important;
+  //  font-weight: normal !important;
+  //  height: auto;
+  //  padding: 16px;
+  //  cursor: pointer;
+  //}
+//
+  //
+  //label {
+  //  box-sizing: border-box;
+  //  padding: 0;
+  //  display: block;
+  //  width: calc(90% - 16px);
+  //  margin-top: 0;
+  //  margin-bottom: 0;
+  //  margin-left: calc(5% + 8px);
+  //  margin-right: calc(5% + 8px);
+  //  font-size: 14px;
+  //  font-weight: lighter;
+  //  color: $white;
+  //  & > div{
+  //    margin-bottom: 16px;
+  //  }
+  //}
+  //input, select, textarea {
+  //  background-color: lighten($black, 5%);
+  //  color: $white;
+  //  border: 1px solid darken($black, 10%);
+  //  height: 36px;
+  //  width: 100%;
+  //  border-radius: $radius 0 0 $radius;
+  //  padding: 0 16px;
+  //  margin-bottom: 16px;
+  //}
+  //.choices{
+  //  margin-bottom: 16px;
+  //  margin-left: calc(5% + 8px);
+  //  margin-right: calc(5% + 8px);
+  //  width: calc(90% - 16px);
+  //  color: $black;
+  //}
+  //dd{
+  //  label, .choices{
+  //    width: 90%;
+  //    margin-left: 5%;
+  //    margin-right: 5%;
+  //  }
+  //}
+//}
 .fred--modal{
   label{
     width: 100%;
@@ -254,14 +287,14 @@ input{
     margin-right: 0;
   }
   .choices{
-    margin: 0 0 16px !important;
+    margin: 16px 30px 16px 20px;
     &__inner{
       box-sizing: border-box;
       height: 36px;
     }
-    &__list{
-      color: white;
-    }
+    //&__list{
+    //  color: $white;
+    //}
   }
   .choices, input, select, textarea{
     margin-bottom: 16px;
@@ -282,7 +315,7 @@ input{
     padding: 2px;
     width: 48px;
     height: 21px;
-    background-color: darken($darkblue, 5%);
+    background-color: $offwhite;
     border-radius: 16px;
     float: right;
     margin-top: 2px;
@@ -296,9 +329,9 @@ input{
       left: 1px;
       bottom: 1px;
       content: "";
-      width: 22px; height: 22px;
-      box-shadow: 0 1px 2px $black;
-      background-color: lighten($black, 10%);
+      width: 23px; height: 23px;
+      //box-shadow: 0 1px 2px $black;
+      background-color: $border;
       transition: margin 0.4s;
     }
   }
@@ -324,20 +357,19 @@ input{
 label.fred--label-choices{
   margin-bottom: 0 !important;
 }
-.choices{
-  margin: 0 5% 16px;
-}
 select{
-  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMCA1Ij48ZGVmcz48c3R5bGU+LmJmNjg2ZjliLTQ3NjUtNGQxNy1hZTA0LTc1ZWFlM2VjMDQ4ZXtmaWxsOiNmZmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5Bc3NldCAxPC90aXRsZT48ZyBpZD0iMzZkY2ViNmYtYzdkYy00ZTFmLTk2MzAtNTg1ODg3OGQ2ZDE3IiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSI0ZTE5ZjQ5NC00NDI3LTRjZmQtYTc1My05MGQxODIwMzVjNDAiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+PHBvbHlnb24gY2xhc3M9ImJmNjg2ZjliLTQ3NjUtNGQxNy1hZTA0LTc1ZWFlM2VjMDQ4ZSIgcG9pbnRzPSIwIDAgNSA1IDEwIDAgMCAwIi8+PC9nPjwvZz48L3N2Zz4=);
+  appearance: none;
+  position: relative;
+  //background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMCA1Ij48ZGVmcz48c3R5bGU+LmJmNjg2ZjliLTQ3NjUtNGQxNy1hZTA0LTc1ZWFlM2VjMDQ4ZXtmaWxsOiNmZmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5Bc3NldCAxPC90aXRsZT48ZyBpZD0iMzZkY2ViNmYtYzdkYy00ZTFmLTk2MzAtNTg1ODg3OGQ2ZDE3IiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSI0ZTE5ZjQ5NC00NDI3LTRjZmQtYTc1My05MGQxODIwMzVjNDAiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+PHBvbHlnb24gY2xhc3M9ImJmNjg2ZjliLTQ3NjUtNGQxNy1hZTA0LTc1ZWFlM2VjMDQ4ZSIgcG9pbnRzPSIwIDAgNSA1IDEwIDAgMCAwIi8+PC9nPjwvZz48L3N2Zz4=);
+  background-image: inline-svg('triangle-down',$black);
   background-position: calc(100% - 11.5px) center;
   background-repeat: no-repeat;
   -webkit-background-size: 10px;
   background-size: 10px;
   &:focus, &:active{
-    color: white;
+    color: $white;
     //background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAgNSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+LnN0MHtmaWxsOiNGRkZGRkY7fTwvc3R5bGU+PHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxMCw1IDUsMCAwLDUgIi8+PC9zdmc+);
   }
   &::-ms-expand{
@@ -350,7 +382,7 @@ select{
   option{
     padding: 10px;
     font-size: 14px;
-    color: white;
+    color: $white;
     background: lighten($black, 5%);
     &:checked,&:focus,&:active{
       background: $black;
@@ -358,10 +390,8 @@ select{
   }
 }
 .error{
-  background: $modxred;
-  color: $white;
+  color: $modxred;
+  font-weight: bold;
   font-size: 12px;
-  text-align: center;
-  width: 90%;
-  margin: 0 5%;
+  margin: 0;
 }

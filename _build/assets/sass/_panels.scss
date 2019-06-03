@@ -1,10 +1,10 @@
 .fred--panel{
-  font-family: "Open Sans", Arial, sans-serif;
-  background-color: $darkblue;
+  font-family: $font-family;
+  background-color: $white;
   width: 260px;
   height: 100vh;
   opacity: 1;
-  //overflow-x: hidden;
+  overflow-x: hidden;
   position: fixed;
   top: 0;
   left: 0;
@@ -12,14 +12,15 @@
   transition: $timing;
   overflow-y: auto;
   overflow-x: visible;
+  border-right: 1px solid $border-light;
   &.fred--hidden {
     left: -360px;
     opacity: 0;
   }
-  &_button_wrapper{
-    margin: 12px;
-    text-align: right;
-  }
+  //&_button_wrapper{
+  //  margin: 12px;
+  //  text-align: right;
+  //}
   &_warning{
     background-color: darken($lightcoral, 10%);
     padding: 8px 16px;
@@ -34,55 +35,49 @@
     margin-bottom: 16px;
   }
 
-  legend {
-    background: darken($black, 15%);
-    &:before{
-      content: "";
-      height: 29px;
-      width: 25px;
-      margin-right: 8px;
-      display: inline;
-      clear: none;
-      float: left;
-    }
-    &.fred--panel_element{
-      &:before {
-        background: inline-svg('settings', $white) center center no-repeat;
-      }
-    }
-    &.fred--panel_blueprint{
-      &:before {
-        background: inline-svg('object-group', $white) center center no-repeat;
-      }
-    }
-  }
-
+  //legend {
+  //  background: darken($black, 15%);
+  //  &:before{
+  //    content: "";
+  //    height: 29px;
+  //    width: 25px;
+  //    margin-right: 8px;
+  //    display: inline;
+  //    clear: none;
+  //    float: left;
+  //  }
+  //  &.fred--panel_element{
+  //    &:before {
+  //      background: inline-svg('settings', $white) center center no-repeat;
+  //    }
+  //  }
+  //  &.fred--panel_blueprint{
+  //    &:before {
+  //      background: inline-svg('object-group', $white) center center no-repeat;
+  //    }
+  //  }
+  //}
+  //
   dl {
+    margin-top: $baseGutter/2;
     dt {
-      position: relative;
-      padding: 16px 22px;
-      font-size: 20px;
-      font-weight: lighter;
+      background-color: $offwhite;
+      padding: $sidebar-actions-padding;
+      font-size: 15px;
       transition: $timing;
       cursor: pointer;
-      color: $white;
-      &:before{
-        content: "";
-        width: 16px; height: 16px;
-        border-radius: 16px;
-        display:inline-block;
-        margin-right: 8px;
-        background: inline-svg('cog', $white) center center no-repeat;
-        background-color: transparent;
-        transition: $timing;
-        opacity:.8;
+      color: $black;
+      position: relative;
+      &:after {
+        content: ">";
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 12px);
+        color: $border-light;
       }
-      &.active {
-        color: $modxgreen;
-        background-color: darken($black, 15%);
-        &:before{
-          opacity:1;
-        }
+      &:hover, &.active {
+        color: $white;
+        background-color: $dark-gray;    
       }
       &.active {
         + dd {
@@ -93,6 +88,7 @@
         background-color: darken($black, 15%);
       }
       + dd {
+        background: $white;
         padding: 24px 16px;
         opacity: 1;
         position: fixed;
@@ -102,18 +98,19 @@
         overflow: auto;
         overflow-x: hidden;
         top: 0;
-        background-color: lighten($black, 5%);
-        //box-shadow: -250px 0 10px rgba(0,0,0,0.2), -10px 0 10px rgba(0,0,0,0.2);
-        z-index: 99;
+        border: 1px solid $border-light;
+        border-width: 0 1px;
         transition: $timing;
+        transition-delay: .001s;
+        z-index: 99;
         &:hover {
           display: block;
         }
       }
     }
-    &:last-of-type dt:last-of-type{
-      margin-bottom: 16px;
-    }
+    //&:last-of-type dt:last-of-type{
+    //  margin-bottom: 16px;
+    //}
   }
   textarea{
     height: initial;

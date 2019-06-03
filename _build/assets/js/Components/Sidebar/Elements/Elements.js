@@ -1,6 +1,6 @@
 import SidebarPlugin from '../../SidebarPlugin';
 import drake from '../../../Drake';
-import { div, dl, dt, dd, figure, img, figCaption } from './../../../UI/Elements'
+import { div, dl, dt, dd, figure, h3, img, figCaption } from './../../../UI/Elements'
 import emitter from "../../../EE";
 import hoverintent from 'hoverintent';
 import { getElements } from '../../../Actions/elements';
@@ -62,11 +62,13 @@ export default class Elements extends SidebarPlugin {
 
                     const categoryContent = dd();
                     const categoryEl = div(['fred--thumbs', 'source', 'elements-source']);
+                    const categoryHeader = h3('fred.fe.tagger.tagger');
                     
                     category.elements.forEach(element => {
                         categoryEl.appendChild(Elements.elementWrapper(element.id, element.title, element.description, element.image, element.content, element.options || {}));
                     });
 
+                    categoryContent.appendChild(categoryHeader);
                     categoryContent.appendChild(categoryEl);
 
                     content.appendChild(categoryTab);
