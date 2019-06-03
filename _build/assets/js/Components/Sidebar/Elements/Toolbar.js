@@ -1,5 +1,4 @@
 import { div, button } from "../../../UI/Elements";
-//import MoveHandle from "./Toolbar/MoveHandle";
 import ElementScreenshot from "./Toolbar/ElementScreenshot";
 import PartialBlueprint from "./Toolbar/PartialBlueprint";
 import ElementSettings from "./Toolbar/ElementSettings";
@@ -14,7 +13,7 @@ export default class Toolbar {
         this.el = el;
         this.invalidTheme = this.el.invalidTheme;
     }
-    
+
     render() {
         const toolbar = div(['fred--toolbar']);
         const pluginWrapper = div(['fred--toolbar-plugins']);
@@ -28,26 +27,24 @@ export default class Toolbar {
         });
 
         const plugins = [
-            //MoveHandle,
             RefreshElementCache,
             ElementScreenshot,
             PartialBlueprint,
             ElementSettings,
             Duplicate,
             Delete,
-            //Move
         ];
 
         let include = this.el.options.toolbarPluginsInclude;
         if (include && Array.isArray(include)) {
             include = include.map(item => item.toLowerCase());
         }
-        
+
         let exclude = this.el.options.toolbarPluginsExclude;
         if (exclude && Array.isArray(exclude)) {
             exclude = exclude.map(item => item.toLowerCase());
         }
-        
+
         for (let pluginName in fredConfig.toolbarPlugins) {
             if (!fredConfig.toolbarPlugins.hasOwnProperty(pluginName)) continue;
 
@@ -56,7 +53,7 @@ export default class Toolbar {
             } else if (exclude && Array.isArray(exclude)) {
                 if (~exclude.indexOf(pluginName.toLowerCase())) continue;
             }
-            
+
             plugins.push(fredConfig.toolbarPlugins[pluginName]);
         }
 
@@ -69,6 +66,6 @@ export default class Toolbar {
         new Move(this.el, toolbar);
 
         return toolbar;
-        
+
     }
 }

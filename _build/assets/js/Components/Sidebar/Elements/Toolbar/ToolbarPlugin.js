@@ -1,5 +1,5 @@
 import fredConfig from "../../../../Config";
-import {button} from "../../../../UI/Elements";
+import { a } from "../../../../UI/Elements";
 
 export default class ToolbarPlugin {
     static permission = null;
@@ -20,7 +20,7 @@ export default class ToolbarPlugin {
                 if (this.customRender && (typeof this.customRender === 'function')) {
                     return this.customRender();
                 } else {
-                    return button('', this.constructor.title, (this.constructor.icon ? [this.constructor.icon] : []), this.onClick.bind(this));
+                    return a(this.constructor.title, this.constructor.title, '',[], this.onClick.bind(this));
                 }
             };
 
