@@ -107,8 +107,8 @@ export default class PageSettings extends SidebarPlugin {
         });
 
         const advancedContent = dd();
+        const advancedHeader = h3('fred.fe.page_settings.advanced_settings');
         const fields = fieldSet(['fred--page_settings_form_advanced']);
-
         const publishedOn = ui.dateTime({name: 'publishedon', label: 'fred.fe.page_settings.published_on'}, this.pageSettings.publishedon, (name, value) => {this.setSetting(name, value)});
         
         fields.appendChild(publishedOn);
@@ -127,9 +127,8 @@ export default class PageSettings extends SidebarPlugin {
         }
         
         fields.appendChild(deletedToggle);
-
+        advancedContent.appendChild(advancedHeader);
         advancedContent.appendChild(fields);
-
         advancedList.appendChild(advancedTab);
         advancedList.appendChild(advancedContent);
 

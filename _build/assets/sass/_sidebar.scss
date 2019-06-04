@@ -196,7 +196,7 @@
     font-weight: bold;
     letter-spacing: .5px;
     text-transform: uppercase;
-    margin: 0 28px 0 18px;
+    margin: 0 28px $baseGutter/2 18px;
     padding: 16px 2px 8px 2px;
     color: $dark-gray;
     border-bottom: 1px solid $border;
@@ -391,7 +391,7 @@
               top: calc(50% - 12px);
               color: $border-light;
             }
-            &:hover, &.active {
+            &.active {
               color: $white;
               background-color: $dark-gray;    
             }
@@ -428,15 +428,16 @@
             z-index: 99;
           }
         }
-        //&:hover:not(:focus){
-        //  background-color: darken($black, 15%);
-        //}
+        &:hover:not(:focus) {
+          background-color: $more-hover;
+          color: $black;
+        }
         > a{
-          padding: $sidebar-actions-padding;
-          position: absolute;
-          top: 0;
-          left: 0;
-          display: block;
+          //padding: $sidebar-actions-padding;
+          //position: absolute;
+          //top: 0;
+          //left: 0;
+          display: inline-block;
           width: 100%;
           font-size: 15px;
         }

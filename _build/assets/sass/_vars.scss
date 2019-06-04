@@ -15,11 +15,12 @@ $black: #272727;
 $border-light: $light-gray;
 $border: $gray;
 
-$primary: $blue;
-$secondary: $green;
-
-$base: $white; // the base background color, which was $darkblue
-$active: $white; // the color that active elemets should be (previously not specified)
+$primary: $blue;    // primary color for sidebar and group-input backgrounds
+$secondary: $green; // for the save icon, [+] icons, etc
+$base: $white;      // the base background color, which was $darkblue
+$active: $white;    // the color that active elemets should be (previously not specified)
+$hover: $offwhite;  // hover color for list items, etc.
+$more-hover: $gray; // hover color for list items, etc.
 
 //MODX Colors
 $modxred: #E12A29;

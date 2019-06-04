@@ -17,7 +17,7 @@ export default class PageSettings extends SidebarPlugin {
     }
 
     render () {
-        const moreList = dl();
+        const moreList = dl('fred--text_menu');
 
         const mgrLink = a('fred.fe.more.openmanager', 'fred.fe.more.openmanager', fredConfig.config.managerUrl + '?a=resource/update&id=' + fredConfig.resource.id);
         mgrLink.target = '_blank';
@@ -28,7 +28,7 @@ export default class PageSettings extends SidebarPlugin {
         moreList.appendChild(dt(mgrLink));
         moreList.appendChild(dt(helpLink));
         moreList.appendChild(dt(a('fred.fe.turn_off_fred', 'fred.fe.turn_off_fred', fredConfig.config.fredOffUrl)));
-        moreList.appendChild(dt('fred.fe.more.logout', [], e => { emitter.emit('fred-logout-user') }));
+        moreList.appendChild(dt('fred.fe.more.logout', ['fred--dt_link'], e => { emitter.emit('fred-logout-user') }),);
 
         return moreList;
     }
