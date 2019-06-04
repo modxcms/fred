@@ -87,9 +87,9 @@ $_lang['fred.fe.more.openmanager'] = 'Bekijken in Manager';
 $_lang['fred.fe.more.logout'] = 'Uitloggen';
 
 $_lang['fred.fe.blueprints'] = 'Blauwdrukken';
-$_lang['fred.fe.blueprints.create_category'] = 'Nieuwe categorie';
+$_lang['fred.fe.blueprints.create_category'] = 'New Category';
 $_lang['fred.fe.blueprints.category_name'] = 'Naam';
-$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Aanmaken blauwdruk categorie';
+$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Adding Blueprint Category';
 $_lang['fred.fe.blueprints.create_blueprint'] = 'Nieuwe blauwdruk';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'Blauwdruk aanmaken';
 $_lang['fred.fe.blueprints.category_public'] = 'Publiek';

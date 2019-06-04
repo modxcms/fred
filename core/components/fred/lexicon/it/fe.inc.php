@@ -87,9 +87,9 @@ $_lang['fred.fe.more.openmanager'] = 'Visualizza nel Manager';
 $_lang['fred.fe.more.logout'] = 'Logout';
 
 $_lang['fred.fe.blueprints'] = 'Modelli';
-$_lang['fred.fe.blueprints.create_category'] = 'Crea categoria';
+$_lang['fred.fe.blueprints.create_category'] = 'New Category';
 $_lang['fred.fe.blueprints.category_name'] = 'Nome';
-$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Crea Categoria Modello';
+$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Adding Blueprint Category';
 $_lang['fred.fe.blueprints.create_blueprint'] = 'Crea Modello';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'Creazione Modello';
 $_lang['fred.fe.blueprints.category_public'] = 'Pubblico';
