@@ -87,9 +87,9 @@ $_lang['fred.fe.more.openmanager'] = 'Im Manager anzeigen';
 $_lang['fred.fe.more.logout'] = 'Logout';
 
 $_lang['fred.fe.blueprints'] = 'Blaupausen';
-$_lang['fred.fe.blueprints.create_category'] = 'New Category';
+$_lang['fred.fe.blueprints.create_category'] = 'Neue Kategorie';
 $_lang['fred.fe.blueprints.category_name'] = 'Name';
-$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Adding Blueprint Category';
+$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Füge Blaupausen-Kategorie hinzu';
 $_lang['fred.fe.blueprints.create_blueprint'] = 'Blaupause anlegen';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'Blaupause wird angelegt';
 $_lang['fred.fe.blueprints.category_public'] = 'Öffentlich';
