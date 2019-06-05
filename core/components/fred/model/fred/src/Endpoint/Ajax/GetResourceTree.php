@@ -18,7 +18,7 @@ class GetResourceTree extends Endpoint
     protected $map = [];
     protected $resources = [];
     protected $sessionEnabled = [];
-    
+
     protected $hideChildren = [];
 
     /**
@@ -39,7 +39,7 @@ class GetResourceTree extends Endpoint
 
         $params = new \stdClass();
         $params->hideChildren =& $this->hideChildren;
-        
+
         $this->modx->invokeEvent('FredOnBeforeGetResourceTree', [
             'params' => &$params
         ]);
@@ -53,21 +53,21 @@ class GetResourceTree extends Endpoint
             'context_key' => $context,
             'template:IN' => $this->templates
         ];
-        
+
         if (!empty($this->hideChildren)) {
-            $c['parent:NOT IN'] = $this->hideChildren;
+            $c['parent:NOT IN'] = array_keys($this->hideChildren);
         }
-        
+
         /** @var \modResource[] $resources */
         $resources = $this->modx->getIterator('modResource', $c);
-        
+
         foreach ($resources as $resource) {
             if (!$resource->checkPolicy('list')) continue;
             if (isset($this->hideChildren[$resource->parent])) {
                 $this->hideChildren[$resource->id] = true;
                 continue;
             }
-            
+
             $this->handleResource($resource, true);
         }
 
@@ -99,7 +99,7 @@ class GetResourceTree extends Endpoint
                 $this->map[$resource->id] = $pageFormatted;
                 $this->resources[] =& $this->map[$resource->id];
             }
-            
+
             return;
         }
 
@@ -108,12 +108,12 @@ class GetResourceTree extends Endpoint
                 $this->hideChildren[$resource->id] = true;
                 return;
             }
-            
+
             if (!isset($this->map[$resource->id])) {
                 $this->map[$resource->id] = $pageFormatted;
                 $this->map[$resource->parent]['children'][] =& $this->map[$resource->id];
             }
-            
+
             return;
         }
 
@@ -146,14 +146,14 @@ class GetResourceTree extends Endpoint
      * @return string
      */
     public function getPreviewUrl($resource) {
-        $previewUrl = ''; 
-            
+        $previewUrl = '';
+
         if (!$resource->get('deleted')) {
             $this->modx->setOption('cache_alias_map', false);
             $sessionEnabled = '';
-            
+
             if (isset($this->sessionEnabled[$resource->get('context_key')])) {
-                $sessionEnabled = $this->sessionEnabled[$resource->get('context_key')];    
+                $sessionEnabled = $this->sessionEnabled[$resource->get('context_key')];
             } else {
                 $ctxSetting = $this->modx->getObject('modContextSetting', array('context_key' => $resource->get('context_key'), 'key' => 'session_enabled'));
 
