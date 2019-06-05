@@ -265,7 +265,7 @@ switch ($modx->event->name) {
                     "fred_blueprints": ' . (int)$modx->hasPermission('fred_blueprints') . ',
                     "fred_element_screenshot": ' . (int)$modx->hasPermission('fred_element_screenshot') . ',
                     "fred_element_move": ' . (int)$modx->hasPermission('fred_element_move') . ',
-                    "fred_element_front_end_delete": ' . (int)$modx->hasPermission('fred_delete_front_end_elements') . ',
+                    "fred_element_front_end_delete": ' . (int)$modx->hasPermission('fred_element_front_end_delete') . ',
                     "fred_blueprint_categories_save": ' . (int)$modx->hasPermission('fred_blueprint_categories_save') . ',
                     "fred_blueprint_categories_create_public": ' . (int)$modx->hasPermission('fred_blueprint_categories_create_public') . ',
                     "fred_blueprints_save": ' . (int)$modx->hasPermission('fred_blueprints_save') . ',
