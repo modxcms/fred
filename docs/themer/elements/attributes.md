@@ -2,21 +2,22 @@
 
 The following are the currently available attributes for Fred Elements.
 
-## data-fred-editable
+## data-fred-dropzone
 
-When set to `true` the content of the HTML Element will be editable for end users, including any Elements nested within (for nested Dropzones). This attribute has to be used with `data-fred-name` to save the value. This attribute is set to `true` by default.
+This defines a Drop Zone where Fred Elements can be dragged from the sidebar and dropped into to create pages. This attribute cannot be empty and must be unique within an Element. While you can create an unlimited number of Dropzones, more than a few might become cumbersome and fragile. Good use cases for multiple Dropzones includes alternate layouts like full width, split pages, pages with sidebars, etc.
 
 ### Example
 
 ```html
-<p data-fred-name="description" data-fred-editable="true">Default value</p>
+<div data-fred-dropzone="left" class="left-content"></div>
+<div data-fred-dropzone="right" class="right-content"></div>
 ```
 
 ## data-fred-name
 
-A unique (to this Element) name of the editable HTML Element. Only Elements with this attribute will be saved. By default, Elements with a `data-fred-name` attribute will automatically behave as if `contentedtiable="true"` was explicitly declared.
+This is a unique name for each Element, the contents of which should be editable. Elements with this attribute will be saved and processed by Fred. By default, Elements with a `data-fred-name` attribute are automatically editable by end users, unless a `contentedtiable="false"` is explicitly declared (see next).
 
-The value of this attribute has to be unique across in a single Element, but you can have multiple instances of an Element on the page. In addition, different Elements can share names.
+The value of this attribute has to be unique in each Element, but you can have multiple instances of an Element on the page and different Elements can share common `data-fred-name` attributes without problem.
 
 ### Examples
 
@@ -28,9 +29,19 @@ The value of this attribute has to be unique across in a single Element, but you
 <img src="http://via.placeholder.com/450x150" data-fred-name="header-image">
 ```
 
+## data-fred-editable
+
+When set to `false` the content inside of the HTML Element will not be editable for end users, including any nested Dropzone content. This attribute only works when used with `data-fred-name`.
+
+### Example
+
+```html
+<p data-fred-name="description" data-fred-editable="false" data-fred-target="description">The value from the description field goes here</p>
+```
+
 ## data-fred-attrs
 
-Defines other HTML attributes (comma separated) to save with the content of the HTML element where supported by the editor. E.g. Add alt and title attributes to the ImageEditor.  
+Defines other HTML attributes (comma separated) to save with the content of the HTML element where supported by the editor, such as alt and title attributes with images.  
 
 ### Example
 
@@ -40,17 +51,17 @@ Defines other HTML attributes (comma separated) to save with the content of the 
 
 ## data-fred-render
 
-If set to `false` HTML Element won’t appear when Fred is not loaded. This allows developers to create user-friendly, self-documenting Elements that inform users what they need to do in order to create content.
+This allows developers to create user-friendly, self-documenting Elements that inform users what they need to do in order to create content. When set to `false` these Element only appear when Fred is active. 
 
 ### Example
 
 ```html
-<p data-fred-render="false">Add a *Link Location* setting for this Element to make the button appear. (This will be visible only when Fred is used to create content.)</p>
+<p data-fred-render="false" class="editor-instructions">Add a *Link Location* setting for this Element to make a call to action button appear. (This block is only visible when using Fred.)</p>
 ```
 
 ## data-fred-target
 
-Defines Resource field to store content. Content of the HTML Element will be stored in regular Content field and additionally in the specified target. This attribute can’t be used on a dropzone.
+This defines the Resource field or TV in which to store content. Content of the Element will be stored in regular Content field and additionally in the specified target. This attribute can’t be used on a dropzone.
 
 **Available targets:**
 
@@ -60,17 +71,23 @@ Defines Resource field to store content. Content of the HTML Element will be sto
 - introtext
 - menutitle
 - alias
-- template variables (text- or textarea-only)
+- Template Variables (TVs)
 
-### Example
+**Note:** using TV targets only stores in text or textarea inputs only, as the actual data is stored as a JSON object. As such, some TV input types defined in the MODX Manager such as select inputs, Google Map Markers, etc., will not work. All TV names _must_ be prefixed with `tv_` in order to save to a TV.
+
+### Examples
 
 ```html
 <h1 data-fred-name="title" data-fred-target="pagetitle">Default Page Title</h1>
 ```
 
+```html
+<h1 data-fred-name="my-tv" data-fred-target="tv_job-title">Targets the "job-title" TV field</h1>
+```
+
 ## data-fred-rte
 
-If set to `true` the Rich Text Editor will be loaded for the editable HTML Element.
+If set to `true` the Rich Text Editor will be loaded for editing the content inside this Element.
 
 ### Example
 
@@ -80,109 +97,113 @@ If set to `true` the Rich Text Editor will be loaded for the editable HTML Eleme
 
 ## data-fred-rte-config
 
-Specify RTE config that should be used for the Element.
+This is useful when you need a limited or expanded set of rich text editor controls than provided by the default configuration, allowing you to specify an overriding [alternate RTE config](../rte_configs/index.md) than the default RTE config.
 
 ### Example
 
 ```html
-<div data-fred-name="rte-content" data-fred-rte="true" data-fred-rte-config="simple">Default Content</div>
-```
-
-## data-fred-dropzone
-
-Defines a new Drop Zone for Fred Elements. This attribute cannot be empty and has to be unique across a single Element. You can create an unlimited number of Dropzones, though more than a few might get quite cumbersome. This is useful for creating alternate layouts like full width, split pages, sidebar pages, etc.
-
-### Example
-
-```html
-<div data-fred-dropzone="left" class="left-content"></div>
-<div data-fred-dropzone="right" class="right-content"></div>
-```
-
-## data-fred-link-type
-
-Sets a type for a link, used for processing before generating content. Available values: `page`
-Used together with other `data-fred-link-` attributes.
-
-### Example
-
-```html
-<a href="fred.html" data-fred-link-type="page" data-fred-link-page="2">Fred</a>
-```
-
-## data-fred-link-page
-
-Defines ID of MODX Resource. Value of this attribute will be used as a link’s href (in MODX format `[[~ID]]`) when content is generated.
-
-### Example
-
-```html
-<a href="fred.html" data-fred-link-type="page" data-fred-link-page="2">Fred</a>
+<div data-fred-name="rte-content" data-fred-rte="true" data-fred-rte-config="bold-and-italics-only">The RTE for this content will only show the bold and italics buttons</div>
 ```
 
 ## data-fred-media-source
 
-This option override globals from Element Settings.
-
-Defines Media Source to be used for the Element. Name of the media source is expected and can accommodate multiple Names separated by comma `,`.
+This option defines a specific Media Source for Elements, using the names of one or more Media Sources, separated by commas for all file types.
 
 ### Example
 
 ```html
-<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-media-source="Assets,Images">
+<a href="assets/pdfs/brochure.pdf" data-fred-name="brochure" data-fred-media-source="Assets">download our brochure</a>
 ```
 
 ## data-fred-image-media-source
 
-This option override globals from Element Settings and `data-fred-media-source` (but only for images).
-
-Defines Media Source to be used for the Element. Name of the media source is expected and can accommodate multiple Names separated by comma `,`.
+Identical to `data-fred-media-source` but only for images.
 
 ### Example
 
 ```html
-<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-image-media-source="Assets,Images">
+<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-image-media-source="Blogs,Images">
 ```
 
 ## data-fred-block-class
 
-When Fred is loaded, value of this attribute will be appended to class of `div.fred--block` (which is wrapping the whole Element). When Fred is not loaded, attribute will be added to class of itself.
+Allows you to specify an additional class which is added to the wrapping `div.fred--block` added around Elements when Fred is loaded. This can be useful when JavaScript libraries or CSS styling techniques require specific wrapper classes. When Fred is not loaded, the attribute will be added to the classes of the element itself.
 
 ### Example
 
+Element Markup:
 ```html
-<div class="image" data-fred-block-class="wrapper"></div>
+<div class="image" data-fred-block-class="special-wrapper"></div>
+```
+When Fred is loaded, the markup around it will look as follows:
+
+```html
+<div class="fred--block special-wrapper">
+    <div class="fred--toolbar">…</div>
+    <div class="fred--block_content" data-fred-element-id="5ce33419-44d6-4e30-90db-8c9a62d04763" data-fred-element-title="Image">
+        <div class="image"></div>
+    </div>
+</div>
+```
+When Fred is _not_ loaded, the processed markup for the element will look as follows:
+
+```html
+<div class="image special-wrapper"></div>
 ```
 
 ## data-fred-class
 
-When Fred is loaded, value of this attribute will be added to the own class.
+The value of this attribute will be added to class for this element _only_ when Fred is loaded. 
 
 ## Example
 
+Element Markup: 
 ```html
 <div class="row" data-fred-class="visible-grid"></div>
 ```
 
+When Fred is loaded, the class is added:
+
+```html
+<div class="row visible-grid"> … </div>
+```
+
+When Fred is _not_ loaded, the class is omitted:
+
+```html
+<div class="row"> … </div>
+```
+
 ## data-fred-bind
 
-Value of the Element will copy from other Element.
+This allows you to bind the value of another part of the page to another locaion within one Element.
 
 ### Example
 
+Element Markup:
+
 ```html
-<div data-fred-name="name">John Doe</div>
+<div data-fred-name="name" data-fred-render="false">John Doe</div>
 <div class="modal">
     <div class="modal-header" data-fred-bind="name"></div>
     <div class="modal-content">Hello there</div>
 </div>
 ```
 
+Rendered HTML:
+
+```html
+<div class="modal">
+    <div class="modal-header">John Doe</div>
+    <div class="modal-content">Hello there</div>
+</div>
+```
+
 ## data-fred-on-drop
 
-The name of the globally accessible function that should be called when this Element is dropped on any Dropzone. The function will receive fredEl as a first attribute.
+The name of a globally-accessible JavaScript function to be called when the Element is dropped into any Dropzone. The function will receive fredEl as its first attribute.
 
-You can use this to trigger a Javascript function, for example, calling a slider initialise script that you normally have `document.ready` function call. Without using this attribute, you would need to save and reload the page to initialise the newly dropped slider item.
+You can use this to trigger a JavaScript function, for example, calling a slider initialise script that you normally have `document.ready` function call. Without using this attribute, you would need to save and reload the page to initialise the newly dropped slider item.
 
 ### Example
 
@@ -192,10 +213,21 @@ You can use this to trigger a Javascript function, for example, calling a slider
 
 ## data-fred-on-setting-change
 
-Name of the globally accessible function that should be called when Element setting changes. The function will receive fredEl as first attribute.
+The name of a globally-accessible JavaScript function to be called when an Element setting changes. The function will receive fredEl as its first attribute.
 
 ### Example
 
 ```html
 <div class="clock" data-fred-on-setting-change="reInitClock"></div>
+```
+
+## data-fred-link-type
+## data-fred-link-page
+
+Used by the TinyMCE RTE with a `data-fred-link-page` attribute to create links in the MODX format of `[[~2]]`. These links are processed into the href target before generating content. 
+
+### Example
+
+```html
+<a href="fred.html" data-fred-link-type="page" data-fred-link-page="2">Fred</a>
 ```
