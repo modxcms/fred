@@ -677,11 +677,22 @@ export class ContentElement {
             return this.remoteTemplateRender(parseModx, cleanRender, refreshCache);
         }
 
-        return Promise.resolve(this.localTemplateRender(cleanRender));
+        return Promise.resolve(this.localTemplateRender(parseModx, cleanRender));
     }
 
-    localTemplateRender(cleanRender = false) {
-        return this.template.render({...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), ...(getTemplateSettings(cleanRender))});
+    localTemplateRender(parseModx = true, cleanRender = false) {
+        let settings;
+        if (cleanRender === true) {
+            if (parseModx === true) {
+                settings = this.parsedSettings;
+            } else {
+                settings = this.parsedSettingsClean;
+            }
+        } else {
+            settings = this.parsedSettings;
+        }
+
+        return this.template.render({...settings, ...(getTemplateSettings(cleanRender))});
     }
 
     remoteTemplateRender(parseModx = true, cleanRender = false, refreshCache = false) {
@@ -700,6 +711,7 @@ export class ContentElement {
     }
 
     cleanRender(parseModx = false, handleLinks = true, isPreview = false) {
+        // true, false, true
         const element = div();
 
         return this.templateRender(parseModx, true).then(html => {
