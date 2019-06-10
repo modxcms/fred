@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model package="fred" baseClass="xPDOObject" platform="mysql" defaultEngine="InnoDB" phpdoc-package="fred" version="0.1">
     <object class="FredBlueprintCategory" table="fred_blueprint_categories" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="name" dbtype="varchar" precision="127" phptype="string" null="false" />
         <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
         <field key="rank" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="theme" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
@@ -40,7 +40,7 @@
     </object>
 
     <object class="FredBlueprint" table="fred_blueprints" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="name" dbtype="varchar" precision="127" phptype="string" null="false" />
         <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="image" dbtype="text" phptype="string" null="false" default="" />
@@ -84,7 +84,7 @@
     </object>
 
     <object class="FredElementCategory" table="fred_element_categories" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="name" dbtype="varchar" precision="127" phptype="string" null="false" />
         <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
         <field key="rank" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="theme" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
@@ -111,7 +111,7 @@
     </object>
 
     <object class="FredElementOptionSet" table="fred_element_option_sets" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="128" phptype="string" null="false" />
+        <field key="name" dbtype="varchar" precision="127" phptype="string" null="false" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="complete" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
         <field key="theme" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
@@ -136,7 +136,7 @@
     </object>
 
     <object class="FredElementRTEConfig" table="fred_element_rte_configs" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="128" phptype="string" null="false" />
+        <field key="name" dbtype="varchar" precision="127" phptype="string" null="false" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="theme" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
 
@@ -156,7 +156,7 @@
     </object>
 
     <object class="FredElement" table="fred_elements" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="name" dbtype="varchar" precision="127" phptype="string" null="false" />
         <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="image" dbtype="text" phptype="string" null="false" default="" />
@@ -191,7 +191,7 @@
     </object>
 
     <object class="FredTheme" table="fred_themes" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+        <field key="name" dbtype="varchar" precision="127" phptype="string" null="false" />
         <field key="namespace" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="theme_folder" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="uuid" dbtype="varchar" precision="36" phptype="string" null="false" index="unique" />

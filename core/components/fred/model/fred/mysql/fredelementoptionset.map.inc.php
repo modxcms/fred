@@ -24,7 +24,7 @@ $xpdo_meta_map['FredElementOptionSet']= array (
     'name' => 
     array (
       'dbtype' => 'varchar',
-      'precision' => '128',
+      'precision' => '127',
       'phptype' => 'string',
       'null' => false,
     ),

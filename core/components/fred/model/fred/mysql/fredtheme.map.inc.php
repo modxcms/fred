@@ -26,7 +26,7 @@ $xpdo_meta_map['FredTheme']= array (
     'name' => 
     array (
       'dbtype' => 'varchar',
-      'precision' => '255',
+      'precision' => '127',
       'phptype' => 'string',
       'null' => false,
     ),
