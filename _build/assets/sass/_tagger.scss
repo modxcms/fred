@@ -28,6 +28,9 @@
   &.fred--tagger_tag_active {
     background-color: $green;
     color: $white;
+    &:hover {
+      background-color: $modxred;
+    }
   }
 }
 
@@ -47,7 +50,7 @@
     background-color: $modxred;
     &::after {
       -webkit-transform: rotate(45deg);
-      transform: rotate(45deg);  
+      transform: rotate(45deg);
       transition: $timing;
     }
   }
@@ -60,7 +63,7 @@
     background-image: inline-svg('plus', $white);
     background-size: 15px;
     background-repeat: no-repeat;
-    background-position: center;  
+    background-position: center;
     transition: $timing;
   }
 }
@@ -83,18 +86,17 @@
   .fred--tagger_add_tag{
     position: relative;
     height: 36px; width: 36px;
-    background-color: darken($black, 10%);
-    background-image: inline-svg('plus');
+    background-color: $green;
+    background-image: inline-svg('plus', $white);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 20px;
-    background-blend-mode: overlay;
+    background-size: 16px;
     margin: 0;
     cursor: pointer;
     text-indent: -9999px;
     transition: $timing;
     &:hover{
-      background-color: $black;
+      background-color: darken($green, 10%);
     }
   }
   .choices {
@@ -110,7 +112,7 @@
     background-image: inline-svg('caret-down',$white);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 16px;  
+    background-size: 16px;
     border-radius: 0 2.5px 0 0;
     margin: 0;
     cursor: pointer;
@@ -144,7 +146,7 @@
   overflow: hidden;
   overflow-y: auto;
   box-sizing: border-box;
-  
+
   .fred--autocomplete_suggestion {
     position: relative;
     padding: 0 .6em;
