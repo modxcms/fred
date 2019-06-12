@@ -190,8 +190,8 @@ export default class Fred {
     }
 
     renderComponents() {
-        new Launcher((fredConfig.config.launcherPosition || 'bottom_left'));
-        new Sidebar(this.wrapper);
+        fredConfig.launcher = new Launcher((fredConfig.config.launcherPosition || 'bottom_left'));
+        fredConfig.sidebar = new Sidebar(this.wrapper);
         utilitySidebar.render();
     }
 
