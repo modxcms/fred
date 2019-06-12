@@ -36,7 +36,8 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
 
   &-hollow {
     background-color: transparent;
-    border: 1px solid rgba($white, .4);
+    border: 1px solid rgba($black, .4);
+    color: $black;
     &:hover {
       border-color: transparent;
     }
@@ -108,7 +109,7 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     text-align: center;
     background: transparent;
     border-radius: $radius;
-    padding: 8px 16px;
+    padding: $baseGutter/2 $baseGutter;
     margin: $baseGutter/2 $baseGutter;
     float: right;
     //&:hover, &:focus {

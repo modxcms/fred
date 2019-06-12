@@ -24,6 +24,7 @@
     width: 480px;
     max-height: 95vh;
     overflow: auto;
+    border-radius: $radius;
 
     label {
       color: $black;
