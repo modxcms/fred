@@ -108,7 +108,7 @@
         background-color: $white;
         mask-repeat: no-repeat;
         -webkit-mask-repeat: no-repeat;
-  
+
       }
       &:after{
         content: "";
@@ -323,22 +323,22 @@
         position: absolute;
         top: 0;
         left: -300px;
-        background: rgba(black, .6);
+        background: rgba($black, .6);
         opacity: 0;
         transition: $timing;
+        color: $white;
         em {
           font-size: 13px;
         }
         strong {
           display: block;
-          color: white;
         }
       }
       > div {
         margin: 0 30px 0 20px;
         padding: 8px 8px 0;
         transition: $timing;
-        img { 
+        img {
           width:100%;
           margin: 0;
           border: 1px solid $border-light;
@@ -393,7 +393,7 @@
             }
             &.active {
               color: $white;
-              background-color: $dark-gray;    
+              background-color: $dark-gray;
             }
           }
           &-plus{

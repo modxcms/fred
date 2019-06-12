@@ -50,12 +50,10 @@
       height: auto;
       opacity: 1;
     }
-    > .fred--block_content {
-      &:after {
+    > .fred--block_title {
         //min-height: 22px;
         //height: auto;
         opacity: 1;
-      }
     }
     > .fred--hidden{
       display: none !important;
@@ -83,10 +81,8 @@
         opacity: 0;
       }
     }
-    > .fred--block_content {
-      &:after {
+    > .fred--block_title {
         opacity: 0;
-      }
     }
     &.fred--block-active_top {
       > .fred--toolbar{
@@ -102,8 +98,8 @@
   &-invalid{
     &:before{
       content: inline-svg('exclamation-triangle',$lightcoral);
-      position: absolute; 
-      top: 0; 
+      position: absolute;
+      top: 0;
       right: 0;
       height: 28px;
       width: 28px;
@@ -165,7 +161,7 @@
       &:hover{
         opacity: 1;
       }
-    } 
+    }
     .fred--element-settings {
       margin-bottom: $baseGutter/2;
       opacity: .6;
@@ -232,13 +228,13 @@
       }
     }
     .fred--position-group {
-      display: block; 
+      display: block;
       border-radius: 16px;
       background-color: $offwhite;
       text-align: center;
       box-shadow: 0 1px 3px rgba($black, 0.4);
       opacity: .6;
-      
+
       button{
         display: inline-block;
         width: 30px;
@@ -251,14 +247,14 @@
         &:not(:hover) {
           background-color: transparent;
         }
-        
+
         &:disabled{
           background-color: transparent;
           opacity: .25;
           &:hover{
             cursor: default;
             background-color: transparent;
-          }          
+          }
         }
       }
       &:hover {
@@ -268,27 +264,24 @@
     }
   }
 
-  .fred--block_content { // the pill with the name of the Element
-    &:after{
-      content: attr(data-fred-element-title);
-      display: inline-block;
-      box-sizing: border-box;
-      position: absolute;
-      bottom: 20px;
-      left: 100px;  // this needs to be adjusted based on the presence of the sidebar otherwise 20px
-      border-radius: 50px;
-      background: $offwhite;
-      color: $black;
-      padding: 8px 16px;
-      opacity: 0;
-      overflow: hidden;
-      transition: $timing;
-      font-family: $font-family;
-      font-size: 14px;
-      line-height: 1;
-      //mix-blend-mode: hard-light;
-      box-shadow: 0 1px 3px rgba($black, 0.4);
-    }
+  .fred--block_title { // the pill with the name of the Element
+    display: inline-block;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;  // this needs to be adjusted based on the presence of the sidebar otherwise 20px
+    border-radius: 50px;
+    background: $offwhite;
+    color: $black;
+    padding: 8px 16px;
+    opacity: 0;
+    overflow: hidden;
+    transition: $timing;
+    font-family: $font-family;
+    font-size: 14px;
+    line-height: 1;
+    //mix-blend-mode: hard-light;
+    box-shadow: 0 1px 3px rgba($black, 0.4);
   }
 
 }
@@ -302,7 +295,7 @@
     transition: $timing;
 }
 
-*[data-fred-min-height] {  
+*[data-fred-min-height] {
   min-height: attr(data-fred-min-height length);
 }
 
