@@ -58,10 +58,10 @@ class Drake {
 
         this.drake.on('drop', (el, target, source, sibling) => {
             //emitter.emit('fred-dragula-drop', el, target, source, sibling);
-            
+
             if (source.classList.contains('source') && el.parentNode) {
                 const parent = target.fredEl || null;
-                
+
                 if (source.classList.contains('elements-source')) {
                     const contentElement = new ContentElement(el.lastChild, target.dataset.fredDropzone, parent);
                     contentElement.render().then(() => {
@@ -93,7 +93,7 @@ class Drake {
                     emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.building_content_from_blueprint'));
 
                     el.remove();
-                    
+
                     loadBlueprint(el.lastChild.dataset.fredBlueprintId)
                         .then(json => {
                             buildBlueprint(json.data, parent, target, sibling).then(() => {
@@ -129,7 +129,11 @@ class Drake {
 
         this.drake.on('drag', (el, source) => {
             this.registerScroller();
-            
+
+            if (!source.classList.contains('elements-source')) {
+                el.dragZoom = 0.3;
+            }
+
             const dropZones = document.querySelectorAll('[data-fred-dropzone]');
             for (let zone of dropZones) {
                 zone.classList.add('fred--dropzone_highlight');
@@ -140,7 +144,7 @@ class Drake {
 
         this.drake.on('dragend', el => {
             this.removeScroller();
-            
+
             const dropZones = document.querySelectorAll('[data-fred-dropzone]');
             for (let zone of dropZones) {
                 zone.classList.remove('fred--dropzone_highlight');
@@ -150,7 +154,7 @@ class Drake {
         });
 
     };
-    
+
     cancelScroll(type) {
         if (this[type + 'Scroll']) {
             clearInterval(this[type + 'Scroll']);
@@ -159,16 +163,16 @@ class Drake {
             this.lastPosition = null;
         }
     }
-    
+
     scrollWindow(e, type, breakpoints) {
         let start = false;
         let speed = null;
-        
+
         breakpoints.forEach(breakpoint => {
             if (type === 'top') {
                 const currentBreakpoint = e.y > (window.innerHeight - breakpoint.offset);
                 start = start || currentBreakpoint;
-                
+
                 if (currentBreakpoint) {
                     speed = breakpoint.speed;
                 }
@@ -181,7 +185,7 @@ class Drake {
                 }
             }
         });
-        
+
         if (start) {
             if (this[type + 'Scroll'] && (speed !== this.scrollSpeed)) {
                 clearInterval(this[type + 'Scroll']);
@@ -207,12 +211,12 @@ class Drake {
             this.cancelScroll(type);
         }
     }
-    
+
     scrollHandler(e) {
         this.scrollWindow(e, 'top', [{offset: 60, speed: 2},{offset:30, speed: 8}]);
         this.scrollWindow(e, 'bottom', [{offset: 60, speed: 2},{offset:30, speed: 8}]);
     }
-    
+
     registerScroller() {
         this.topScroll = null;
         this.bottomScroll = null;
@@ -221,7 +225,7 @@ class Drake {
 
         document.addEventListener('mousemove', this.scrollHandler);
     }
-    
+
     removeScroller() {
         document.removeEventListener('mousemove', this.scrollHandler);
     }

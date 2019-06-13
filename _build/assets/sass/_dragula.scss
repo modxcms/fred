@@ -20,3 +20,9 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20);
 }
+
+.fred--block.gu-mirror {
+  div.fred--toolbar, div.fred--block_title {
+    display: none;
+  }
+}
