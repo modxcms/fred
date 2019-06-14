@@ -19,4 +19,4 @@ The Fred editing tool requires a modern browser:
 - Chrome 41 or later
 - Firefox 32 or later
 - Safari 9.0 or later
-- Microsoft Edge 75 or later
+- Edge 75 or later

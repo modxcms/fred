@@ -18,7 +18,7 @@ export default class Toolbar {
         const toolbar = div(['fred--toolbar']);
         const pluginWrapper = div(['fred--toolbar-plugins']);
         const pluginWrapperHide = div();
-        const pluginToggle = button('', 'fred.fe.content.plugins', ['fred--element-settings'], () => {
+        const pluginToggle = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {
             if(toolbar.contains(pluginWrapper)){
                 toolbar.replaceChild(pluginWrapperHide, pluginWrapper);
             }else{

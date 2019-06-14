@@ -1,6 +1,6 @@
 Changelog for Fred
 
-1.1.0 pl
+1.1.0
 ============
 ## New
 - If you have updated or started working on a page, Fred warns you before leaving without saving so you don’t accidentally lose your work (not that we ever needed that ourselves…).
@@ -12,9 +12,11 @@ Changelog for Fred
 - Themes now can include Media Sources to help keep things tidy.
 - Documentation and an installer check for specific PHP extensions was added so people don't get frustrated when Fred mysteriously decided not to work.
 
-## Updates
-- Overall styling updates to make panels and menus more legible more inline with the upcoming MODX3 Manager.
-- Build process updated to use latest Node/Gulp. More files omited from the repo in favor of using Github releases for built assets.
+## Updates & Improvements
+- Updated styles to to make the overall UI more consistent with the upcoming MODX3 Manager.
+- Dragging Elements now shrink to a smaller size to make them easier to work with.
+- Updated build process to use the latest versions of Node and Gulp.
+- Remove build files from the repo in favor of using Github releases.
 - When pasting text from word processors and web browsers, a lot of messy markup sometimes tags along, making it hard to create clean content. Fred now forces text to be pasted as plain text to minimize tedious cleanup chores as much as possible.
 - A special `{{theme_dir}}` placeholder makes for more portable themes for Element Settings and Media fields.
 - The root `<html>` tag now gets a class when Fred is enabled to allow for custom styling when needed: `<html class="fred--active">`.
@@ -22,15 +24,15 @@ Changelog for Fred
 - A policy for deleting inadvertently added Elements on the front-end for the Fred Editor role was added.
 
 ## Bugfixes
-- Image pickers no longer return the full URL to images, making for much more portable websites.
+- Image pickers no longer return the full URL to images, improving website portability.
 - Importing option set overrides functions again as intended.
 - Certain Elements refused to save from the front-end. The error in its ways has been rectified.
 - Firefox is special. So we made a special case for it to ensure that `contenteditable` would behave the same as every other modern browser. 
 - Missing screenshots and the Media Source section in the documentation have been fixed.
 - Fred and its browser built on ElFinder did not respect the `skipFiles` setting. Now they do.
-- During installation, there was not a check for certain PHP dependencies, which could lead to failure. Now it checks and warns when the dependencies aren’t met.
+- Checks for PHP dependencies didn’t happen during installation which could lead to failure. Now it checks and warns when the dependencies aren’t met.
 
-1.0.0 pl
+1.0.0
 ============
 - Gitify support added for using version control in your workflow
 - Scrolling issues have been fixed in Chrome and Safari
