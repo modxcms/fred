@@ -105,7 +105,7 @@ $_lang['fred.fe.blueprints.blueprint_image'] = 'Afbeelding';
 
 $_lang['fred.fe.content.duplicate'] = 'Dupliceren';
 $_lang['fred.fe.content.delete'] = 'Verwijderen';
-$_lang['fred.fe.content.settings'] = 'Open instellingen';
+$_lang['fred.fe.content.settings'] = 'Open Settings & Plugins';
 $_lang['fred.fe.content.move_up'] = 'Naar boven verplaatsen';
 $_lang['fred.fe.content.move_down'] = 'Naar onderen verplaatsen';
 $_lang['fred.fe.content.partial_blueprint'] = 'Nieuwe gedeeltelijke blauwdruk';
