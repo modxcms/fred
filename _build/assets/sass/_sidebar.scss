@@ -64,7 +64,7 @@
     background-color: $white;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 4px;
+    border-radius: $radius;
     transition: $timing;
     &:hover{
       transform: scale(1.05);

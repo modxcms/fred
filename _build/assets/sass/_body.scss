@@ -202,17 +202,15 @@
       right: -5px;
       background-color: $offwhite;
       //box-shadow: 0 0 0 1px rgba($black, .5);
-      width: 210px;
+      width: 150px;
       text-align: left;
       padding: 4px;
-      border-radius: $radius;
       a{
         color: $black;
         display: block;
-        padding: 6px 12px;
+        padding: 4px 12px;
         font-size: 14px;
         cursor: pointer;
-        border:none !important; // some styles can affect this
         &:hover {
           background-color: $border-light;
         }

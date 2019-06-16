@@ -123,11 +123,9 @@ export class ContentElement {
     }
 
     setWrapperActiveState(wrapper) {
-        const t = this;
         hoverintent( wrapper,
             //mouseover
-            function(e){
-
+            e => {
                 let firstSet = false;
 
                 if (e.path) {
@@ -135,7 +133,17 @@ export class ContentElement {
                         if (el.classList && el.classList.contains('fred--block')) {
                             el.classList.add('fred--block-active');
 
-                            if (t.atTop(el)) {
+                            if (fredConfig.sidebar.visible === true) {
+                                const sidebarWidth = fredConfig.sidebar.wrapper.clientWidth;
+                                const fromLeft = el.getBoundingClientRect().x;
+
+                                const desiredPosition = 20 + sidebarWidth - fromLeft;
+                                if (desiredPosition > 0) {
+                                    el.fredEl.contentEl.titleEl.style.left = desiredPosition;
+                                }
+                            }
+
+                            if (this.atTop(el)) {
                                 el.classList.add('fred--block-active_top');
                             }
 
@@ -143,9 +151,9 @@ export class ContentElement {
                                 el.classList.add('fred--block-active_parent');
                             }
 
-                            if ((firstSet === false) && t.options.settings) {
+                            if ((firstSet === false) && this.options.settings) {
                                 Mousetrap.bind('mod+alt+s', () => {
-                                    elementSettings.open(t)
+                                    elementSettings.open(this)
                                 });
                             }
 
@@ -158,7 +166,7 @@ export class ContentElement {
                         if (el.classList && el.classList.contains('fred--block')) {
                             el.classList.add('fred--block-active');
 
-                            if (t.atTop(el)) {
+                            if (this.atTop(el)) {
                                 el.classList.add('fred--block-active_top');
                             }
 
@@ -173,11 +181,15 @@ export class ContentElement {
                     }
                 }
             }, //mouseout
-            function(e){
-                if (t.inEditor === false) {
+            e => {
+                if (this.inEditor === false) {
                     wrapper.classList.remove('fred--block-active');
                     wrapper.classList.remove('fred--block-active_top');
                     wrapper.classList.remove('fred--block-active_parent');
+
+                    if (wrapper.fredEl) {
+                        wrapper.fredEl.contentEl.titleEl.style.left = null;
+                    }
 
                     let el = e.target.parentNode;
                     let found = false;
@@ -241,6 +253,11 @@ export class ContentElement {
         this.contentEl = div(['fred--block_content']);
         this.contentEl.dataset.fredElementId = this.el.dataset.fredElementId;
         this.contentEl.dataset.fredElementTitle = this.title;
+
+        const titleEl = div(['fred--block_title'], this.title);
+        wrapper.appendChild(titleEl);
+        this.contentEl.titleEl = titleEl;
+
 
         return this.templateRender(true, false, refreshCache).then(html => {
             this.contentEl.innerHTML = html;
@@ -677,11 +694,22 @@ export class ContentElement {
             return this.remoteTemplateRender(parseModx, cleanRender, refreshCache);
         }
 
-        return Promise.resolve(this.localTemplateRender(cleanRender));
+        return Promise.resolve(this.localTemplateRender(parseModx, cleanRender));
     }
 
-    localTemplateRender(cleanRender = false) {
-        return this.template.render({...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), ...(getTemplateSettings(cleanRender))});
+    localTemplateRender(parseModx = true, cleanRender = false) {
+        let settings;
+        if (cleanRender === true) {
+            if (parseModx === true) {
+                settings = this.parsedSettings;
+            } else {
+                settings = this.parsedSettingsClean;
+            }
+        } else {
+            settings = this.parsedSettings;
+        }
+
+        return this.template.render({...settings, ...(getTemplateSettings(cleanRender))});
     }
 
     remoteTemplateRender(parseModx = true, cleanRender = false, refreshCache = false) {

@@ -7,10 +7,10 @@ export default class Launcher {
         this.position = position;
         this.previewMode = false;
         this.hidden = false;
-        
+
         this.render();
     }
-    
+
     render() {
         const wrapper = div(['fred--launcher', `fred--launcher_${this.position}`]);
 
@@ -18,18 +18,18 @@ export default class Launcher {
             emitter.emit('fred-sidebar-toggle');
         });
 
-        
-        
+
+
         wrapper.appendChild(fred);
 
         const save = button('', 'fred.fe.save', ['fred--launcher_btn', 'fred--launcher_btn_save'], () => {
             emitter.emit('fred-save');
         });
-        
+
         if (fredConfig.permission.save_document) {
             wrapper.appendChild(save);
         }
-        
+
         const preview = button('', 'fred.fe.toggle_preview', ['fred--launcher_btn', 'fred--launcher_btn_preview'], () => {
             if (this.previewMode === false) {
                 emitter.emit('fred-preview-on');
@@ -37,7 +37,7 @@ export default class Launcher {
                 emitter.emit('fred-preview-off');
             }
         });
-        
+
         wrapper.appendChild(preview);
 
         if (fredConfig.permission.fred_elements) {
@@ -51,7 +51,7 @@ export default class Launcher {
 
             wrapper.appendChild(element);
         }
-        
+
         emitter.on('fred-sidebar-hide', silent => {
             if (silent !== true) {
                 this.hidden = false;
@@ -65,19 +65,19 @@ export default class Launcher {
                 wrapper.classList.add('fred--hidden');
             }
         });
-        
+
         emitter.on('fred-preview-on', () => {
             this.previewMode = true;
             wrapper.style.zIndex = '9999999999';
             fred.style.display = 'none';
             save.style.display = 'none';
             preview.classList.add('active');
-            
+
             if (this.hidden) {
                 wrapper.classList.remove('fred--hidden');
             }
         });
-        
+
         emitter.on('fred-preview-off', () => {
             this.previewMode = false;
             wrapper.style.zIndex = '';

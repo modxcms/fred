@@ -141,32 +141,34 @@ const loadChildren = (zones, parent, elements, fireEvents = false) => {
             const promises = [];
 
             zones[zoneName].forEach(element => {
-                const chunk = div(['chunk']);
-                chunk.setAttribute('hidden', 'hidden');
-                chunk.dataset.fredElementId = element.widget;
-                chunk.dataset.fredElementTitle = elements[element.widget].title;
-                chunk.dataset.invalidTheme = elements[element.widget].invalidTheme;
-                chunk.elementMarkup = elements[element.widget].html;
-                chunk.elementOptions = elements[element.widget].options || {};
+                if (elements[element.widget].html) {
+                    const chunk = div(['chunk']);
+                    chunk.setAttribute('hidden', 'hidden');
+                    chunk.dataset.fredElementId = element.widget;
+                    chunk.dataset.fredElementTitle = elements[element.widget].title;
+                    chunk.dataset.invalidTheme = elements[element.widget].invalidTheme;
+                    chunk.elementMarkup = elements[element.widget].html;
+                    chunk.elementOptions = elements[element.widget].options || {};
 
-                const contentElement = new ContentElement(chunk, zoneName, parent, element.values, (element.settings || {}), (element.pluginsData || {}));
-                promises.push(contentElement.render().then(() => {
-                    return loadChildren(element.children, contentElement, elements, fireEvents).then(() => {
-                        if (fireEvents === true) {
-                            const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
-                            document.body.dispatchEvent(event);
+                    const contentElement = new ContentElement(chunk, zoneName, parent, element.values, (element.settings || {}), (element.pluginsData || {}));
+                    promises.push(contentElement.render().then(() => {
+                        return loadChildren(element.children, contentElement, elements, fireEvents).then(() => {
+                            if (fireEvents === true) {
+                                const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
+                                document.body.dispatchEvent(event);
 
-                            const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
-                            for (let jsEl of jsElements) {
-                                if (window[jsEl.dataset.fredOnDrop]) {
-                                    window[jsEl.dataset.fredOnDrop](jsEl);
+                                const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
+                                for (let jsEl of jsElements) {
+                                    if (window[jsEl.dataset.fredOnDrop]) {
+                                        window[jsEl.dataset.fredOnDrop](jsEl);
+                                    }
                                 }
                             }
-                        }
 
-                        return {zoneName, contentElement, parent};
-                    });
-                }));
+                            return {zoneName, contentElement, parent};
+                        });
+                    }));
+                }
             });
 
             dzPromises.push(Promise.all(promises).then(items => {

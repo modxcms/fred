@@ -7,11 +7,11 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
   'version' => '0.1',
   'table' => 'fred_blueprint_categories',
   'extends' => 'xPDOSimpleObject',
-  'tableMeta' => 
+  'tableMeta' =>
   array (
     'engine' => 'InnoDB',
   ),
-  'fields' => 
+  'fields' =>
   array (
     'name' => NULL,
     'uuid' => NULL,
@@ -20,16 +20,16 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
     'public' => 0,
     'createdBy' => 0,
   ),
-  'fieldMeta' => 
+  'fieldMeta' =>
   array (
-    'name' => 
+    'name' =>
     array (
       'dbtype' => 'varchar',
-      'precision' => '255',
+      'precision' => '127',
       'phptype' => 'string',
       'null' => false,
     ),
-    'uuid' => 
+    'uuid' =>
     array (
       'dbtype' => 'varchar',
       'precision' => '36',
@@ -37,7 +37,7 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'null' => false,
       'index' => 'unique',
     ),
-    'rank' => 
+    'rank' =>
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -46,7 +46,7 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'null' => false,
       'default' => 0,
     ),
-    'theme' => 
+    'theme' =>
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -54,7 +54,7 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'phptype' => 'integer',
       'null' => false,
     ),
-    'public' => 
+    'public' =>
     array (
       'dbtype' => 'tinyint',
       'precision' => '1',
@@ -62,7 +62,7 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'null' => false,
       'default' => 0,
     ),
-    'createdBy' => 
+    'createdBy' =>
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -72,17 +72,17 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'default' => 0,
     ),
   ),
-  'indexes' => 
+  'indexes' =>
   array (
-    'uuid' => 
+    'uuid' =>
     array (
       'alias' => 'uuid',
       'primary' => false,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' => 
+      'columns' =>
       array (
-        'uuid' => 
+        'uuid' =>
         array (
           'length' => '',
           'collation' => 'A',
@@ -90,15 +90,15 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
         ),
       ),
     ),
-    'theme' => 
+    'theme' =>
     array (
       'alias' => 'theme',
       'primary' => false,
       'unique' => false,
       'type' => 'BTREE',
-      'columns' => 
+      'columns' =>
       array (
-        'theme' => 
+        'theme' =>
         array (
           'length' => '',
           'collation' => 'A',
@@ -106,15 +106,15 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
         ),
       ),
     ),
-    'public' => 
+    'public' =>
     array (
       'alias' => 'public',
       'primary' => false,
       'unique' => false,
       'type' => 'BTREE',
-      'columns' => 
+      'columns' =>
       array (
-        'public' => 
+        'public' =>
         array (
           'length' => '',
           'collation' => 'A',
@@ -122,15 +122,15 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
         ),
       ),
     ),
-    'rank' => 
+    'rank' =>
     array (
       'alias' => 'rank',
       'primary' => false,
       'unique' => false,
       'type' => 'BTREE',
-      'columns' => 
+      'columns' =>
       array (
-        'rank' => 
+        'rank' =>
         array (
           'length' => '',
           'collation' => 'A',
@@ -138,15 +138,15 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
         ),
       ),
     ),
-    'createdBy' => 
+    'createdBy' =>
     array (
       'alias' => 'createdBy',
       'primary' => false,
       'unique' => false,
       'type' => 'BTREE',
-      'columns' => 
+      'columns' =>
       array (
-        'createdBy' => 
+        'createdBy' =>
         array (
           'length' => '',
           'collation' => 'A',
@@ -154,21 +154,21 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
         ),
       ),
     ),
-    'name_theme' => 
+    'name_theme' =>
     array (
       'alias' => 'name_theme',
       'primary' => false,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' => 
+      'columns' =>
       array (
-        'name' => 
+        'name' =>
         array (
           'length' => '',
           'collation' => 'A',
           'null' => false,
         ),
-        'theme' => 
+        'theme' =>
         array (
           'length' => '',
           'collation' => 'A',
@@ -177,9 +177,9 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       ),
     ),
   ),
-  'composites' => 
+  'composites' =>
   array (
-    'Blueprints' => 
+    'Blueprints' =>
     array (
       'class' => 'FredBlueprint',
       'local' => 'id',
@@ -188,9 +188,9 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'owner' => 'local',
     ),
   ),
-  'aggregates' => 
+  'aggregates' =>
   array (
-    'User' => 
+    'User' =>
     array (
       'class' => 'modUser',
       'local' => 'user',
@@ -198,7 +198,7 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'cardinality' => 'one',
       'owner' => 'foreign',
     ),
-    'Theme' => 
+    'Theme' =>
     array (
       'class' => 'FredTheme',
       'local' => 'theme',

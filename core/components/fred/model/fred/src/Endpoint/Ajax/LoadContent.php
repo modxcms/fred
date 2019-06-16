@@ -13,7 +13,7 @@ namespace Fred\Endpoint\Ajax;
 class LoadContent extends Endpoint
 {
     protected $allowedMethod = ['GET', 'OPTIONS'];
-    
+
     /** @var \FredTheme */
     private $theme;
 
@@ -38,18 +38,18 @@ class LoadContent extends Endpoint
         }
 
         $this->theme = $this->fred->getTheme($object->template);
-        
+
         $this->loadTagger();
 
         $data = $object->getProperty('data', 'fred');
         $plugins = $object->getProperty('plugins', 'fred');
         if (empty($plugins)) $plugins = [];
-        
+
         $fingerprint = !empty($data['fingerprint']) ? $data['fingerprint'] : '';
         $elements = [];
 
         $this->gatherElements($elements, $data);
-        $TVs = $this->gatherTVs($object); 
+        $TVs = $this->gatherTVs($object);
 
         $pageSettings = [
             'pagetitle' => $object->pagetitle,
@@ -68,7 +68,7 @@ class LoadContent extends Endpoint
             'tagger' => $this->getTaggerTags($object),
             'tvs' => (object)$TVs['values']
         ];
-        
+
         $data = (object)[
             "pageSettings" => $pageSettings,
             "data" => $data,
@@ -84,7 +84,7 @@ class LoadContent extends Endpoint
             'resource' => &$object,
             'data' => &$data
         ]);
-        
+
         return $this->data((array)$data);
     }
 
@@ -117,7 +117,7 @@ class LoadContent extends Endpoint
         if ($this->theme) {
             $categoryId = $element->get('category');
             $elementTheme = null;
-            
+
             if (!isset($this->categoryThemeMap[$categoryId])) {
                 $category = $element->Category;
                 if ($category) {
@@ -127,13 +127,13 @@ class LoadContent extends Endpoint
             } else {
                 $elementTheme = $this->categoryThemeMap[$categoryId];
             }
-            
+
             if ($elementTheme) {
                 if ($elementTheme !== $this->theme->id) {
                     $invalidTheme = true;
                 }
             }
-            
+
         }
 
         return [
@@ -154,35 +154,36 @@ class LoadContent extends Endpoint
             'values' => [],
             'def' => []
         ];
-        
+
+        /** @var \modTemplateVar[] $tvs */
         $tvs = $resource->getTemplateVars();
-        
+
         foreach ($tvs as $tv) {
             $props = $tv->getProperties();
-            
+
             if (isset($props['fred']) && (intval($props['fred']) === 1)) {
                 $def = [
                     'name' => $tv->name,
                     'label' => $tv->caption,
                     'type' => 'text'
                 ];
-                
+
                 if (!empty($props['fred.type'])) {
-                    $def['type'] = $props['fred.type'];    
+                    $def['type'] = $props['fred.type'];
                 }
 
                 if (!empty($props['fred.mediaSource'])) {
                     $def['mediaSource'] = $props['fred.mediaSource'];
                 }
-                
+
                 $output['def'][] = $def;
-                $output['values'][$tv->name] = $tv->value;       
+                $output['values'][$tv->name] = $tv->value;
             }
         }
-        
-        return $output; 
+
+        return $output;
     }
-    
+
     /**
      * @param \modResource $resource
      * @return array
@@ -190,13 +191,13 @@ class LoadContent extends Endpoint
     protected function getTagger($resource)
     {
         if (!$this->taggerLoaded) return [];
-        
+
         $c = $this->modx->newQuery('TaggerGroup');
         $c->sortby('position');
         /** @var \TaggerGroup[] $groups */
         $groups = $this->modx->getIterator('TaggerGroup', $c);
         $groupsArray = [];
-        
+
         foreach ($groups as $group) {
             $showForTemplates = $group->show_for_templates;
             $showForTemplates = $this->tagger->explodeAndClean($showForTemplates, ',', true);
@@ -206,7 +207,7 @@ class LoadContent extends Endpoint
 
             if (!in_array($resource->template, $showForTemplates)) continue;
             if (!empty($showForContexts) && !in_array($resource->context_key, $showForContexts)) continue;
-            
+
             $groupsArray[] = array_merge($group->toArray(), [
                 'show_for_templates' => array_values($showForTemplates),
                 'show_for_contexts' => array_values($showForContexts),
@@ -220,20 +221,20 @@ class LoadContent extends Endpoint
     protected function getTaggerTags($resource)
     {
         if (!$this->taggerLoaded) return [];
-        
+
         $tagsArray = [];
-    
+
         $c = $this->modx->newQuery('TaggerTagResource');
         $c->leftJoin('TaggerTag', 'Tag');
         $c->where(['resource' => $resource->id]);
         $c->sortby('Tag.alias', 'ASC');
-    
+
         $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', ['resource']));
         $c->select($this->modx->getSelectColumns('TaggerTag', 'Tag', '', ['tag', 'group']));
-    
+
         $c->prepare();
         $c->stmt->execute();
-        
+
         while($relatedTag = $c->stmt->fetch(\PDO::FETCH_ASSOC)) {
             if (!isset($tagsArray['tagger-' . $relatedTag['group']])) {
                 $tagsArray['tagger-' . $relatedTag['group']] = [$relatedTag['tag']];
@@ -244,28 +245,28 @@ class LoadContent extends Endpoint
 
         return $tagsArray;
     }
-    
+
     protected function taggerGetTagsForGroup($group)
     {
         if (!$this->taggerLoaded) return [];
-        
+
         $c = $this->modx->newQuery('TaggerTag');
         $c->where(['group' => $group->id]);
-        
+
         $sortDir = (strtolower($group->sort_dir) === 'asc') ? 'ASC' : 'DESC';
-        
+
         if ($group->sort_field === 'alias') {
-            $c->sortby('TaggerTag.alias', $sortDir);    
+            $c->sortby('TaggerTag.alias', $sortDir);
         } else {
             $c->sortby('TaggerTag.rank', $sortDir);
         }
-        
+
         $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', ['tag']));
-    
+
         $c->prepare();
-        
+
         $c->stmt->execute();
-        
+
         return $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
     }
 }

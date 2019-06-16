@@ -156,7 +156,7 @@ export default class Pages extends SidebarPlugin {
         this.templateInput = choices({
             name: 'template',
             label: fredConfig.lng('fred.fe.pages.template'),
-        }, this.state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
+        }, this.state.template, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
             choicesInstance.ajax(callback => {
                 getTemplates()
                     .then(data => {
