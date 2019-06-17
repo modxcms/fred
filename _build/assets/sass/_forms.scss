@@ -315,7 +315,7 @@ input{
     padding: 2px;
     width: 48px;
     height: 21px;
-    background-color: $offwhite;
+    background-color: $light-gray;
     border-radius: 16px;
     float: right;
     margin-top: 2px;
@@ -330,7 +330,7 @@ input{
       bottom: 1px;
       content: "";
       width: 23px; height: 23px;
-      //box-shadow: 0 1px 2px $black;
+      //box-shadow: $ui-shad;
       background-color: $border;
       transition: margin 0.4s;
     }

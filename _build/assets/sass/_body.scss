@@ -188,7 +188,7 @@
         background-size: 20px;
         position: relative;
         background-color: $offwhite;
-        box-shadow: 0 1px 3px rgba($black, 0.4);
+        box-shadow: $ui-shad;
         //mix-blend-mode: hard-light;
       }
       &:hover {
@@ -202,15 +202,17 @@
       right: -5px;
       background-color: $offwhite;
       //box-shadow: 0 0 0 1px rgba($black, .5);
-      width: 150px;
+      width: 210px;
       text-align: left;
       padding: 4px;
+      border-radius: $radius;
       a{
         color: $black;
         display: block;
-        padding: 4px 12px;
+        padding: 6px 12px;
         font-size: 14px;
         cursor: pointer;
+        border: none !important;
         &:hover {
           background-color: $border-light;
         }
@@ -232,7 +234,7 @@
       border-radius: 16px;
       background-color: $offwhite;
       text-align: center;
-      box-shadow: 0 1px 3px rgba($black, 0.4);
+      box-shadow: $ui-shad;
       opacity: .6;
 
       button{
@@ -281,7 +283,8 @@
     font-size: 14px;
     line-height: 1;
     //mix-blend-mode: hard-light;
-    box-shadow: 0 1px 3px rgba($black, 0.4);
+    box-shadow: $ui-shad;
+    z-index: 2
   }
 
 }
