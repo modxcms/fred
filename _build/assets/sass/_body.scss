@@ -41,7 +41,7 @@
   &.fred--block-active, &:focus {
     outline: 3px solid $modxblue;
     outline-offset: -3px;
-    z-index: 2;
+    z-index: 99; // was 2 but that didn't work in some cases
     transition: none;
     box-shadow: 0 0 100vh 100vw rgba(#000,.2), 0 0 50px rgba(#000, .5);
     > .fred--toolbar {
