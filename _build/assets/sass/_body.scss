@@ -146,27 +146,21 @@
       cursor: grab;
       display: block;
       margin: 0 auto;
+      //opacity: .6;
 
-      &:active, &:focus, &.moving {
+      //&:hover {
+      //  opacity: 1;
+      //}
+
+      &:active, &:focus {
         cursor: grabbing;
       }
     }
-    &:hover{
-      .fred--toolbar-grip {
-        opacity: 1;
-      }
-    }
-    .fred--element-settings, .fred--position-up, .fred--position-down, .fred--toolbar-grip {
-      opacity: .6;
-      &:hover{
-        opacity: 1;
-      }
-    }
-    .fred--element-settings {
-      margin-bottom: $baseGutter/2;
-      opacity: .6;
-      transition: $timing;
-    }
+    //&:hover{
+    //  .fred--toolbar-grip {
+    //    opacity: 1;
+    //  }
+    //}
     button {
       border: none;
       width: 30px;
@@ -187,8 +181,8 @@
         transition: .2s;
         background-size: 20px;
         position: relative;
-        background-color: $offwhite;
-        box-shadow: $ui-shad;
+        //background-color: $offwhite;
+        //box-shadow: $ui-shad;
         //mix-blend-mode: hard-light;
       }
       &:hover {
@@ -229,13 +223,42 @@
         bottom: -10px;
       }
     }
+    // ++++++ TODO: rework opactity below, later ++++++ //
+    //fred--element-settings, .fred--position-up, .fred--position-down {
+    // &::before {
+    // opacity: .6;
+    // transition: $timing;
+    // 
+    // &:hover::before {
+    //   opacity: 1;
+    //   transition: $timing;
+    // }
+
+    .fred--element-settings {
+      display: block;
+      border-radius: 50%;
+      background-color: $offwhite;
+      text-align: center;
+      box-shadow: $ui-shad;
+      height: 30px;
+      margin-bottom: $baseGutter/2;
+
+      &:before {                            // override _buttons.scss … move here?
+        background-color: transparent;
+        background-position: center 1px;
+        &:hover {
+          opacity: 1;
+          transition: $timing;
+        }  
+      }
+    }
+
     .fred--position-group {
       display: block;
       border-radius: 16px;
       background-color: $offwhite;
       text-align: center;
       box-shadow: $ui-shad;
-      opacity: .6;
 
       button{
         display: inline-block;
