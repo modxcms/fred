@@ -284,7 +284,7 @@
     line-height: 1;
     //mix-blend-mode: hard-light;
     box-shadow: $ui-shad;
-    z-index: 2
+    z-index: 99999;
   }
 
 }

@@ -139,7 +139,7 @@ export class ContentElement {
 
                                 const desiredPosition = 20 + sidebarWidth - fromLeft;
                                 if (desiredPosition > 0) {
-                                    el.fredEl.contentEl.titleEl.style.left = desiredPosition;
+                                    el.fredEl.contentEl.titleEl.style.left = desiredPosition + 'px';
                                 }
                             }
 
