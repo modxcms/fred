@@ -32,5 +32,5 @@ package-lock.json
 
 core/components/fred/model/vendor
 site
-assets/components/fred/web/fred.css
-assets/components/fred/web/fred.min.js
+assets/components/fred/web/fred.css*
+assets/components/fred/web/fred.min.js*
