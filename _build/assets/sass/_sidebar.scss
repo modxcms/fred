@@ -367,6 +367,7 @@
         transition: $timing;
         cursor: pointer;
         color: $black;
+        z-index: 4;
         &.active {
           color: $white;
           background-color: $dark-gray;
