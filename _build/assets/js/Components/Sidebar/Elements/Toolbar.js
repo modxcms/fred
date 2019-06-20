@@ -16,13 +16,13 @@ export default class Toolbar {
 
     render() {
         const toolbar = div(['fred--toolbar']);
-        const pluginWrapper = div(['fred--toolbar-plugins']);
-        const pluginWrapperHide = div();
+        this.pluginWrapper = div(['fred--toolbar-plugins', 'fred--hidden']);
+
         const pluginToggle = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {
-            if(toolbar.contains(pluginWrapper)){
-                toolbar.replaceChild(pluginWrapperHide, pluginWrapper);
-            }else{
-                toolbar.replaceChild(pluginWrapper, pluginWrapperHide);
+            if (this.pluginWrapper.classList.contains('fred--hidden')) {
+                this.showPlugins();
+            } else {
+                this.hidePlugins();
             }
         });
 
@@ -58,14 +58,26 @@ export default class Toolbar {
         }
 
         plugins.forEach(plugin => {
-            new plugin(this.el, pluginWrapper);
+            new plugin(this.el, this.pluginWrapper);
         });
 
-        toolbar.appendChild(pluginWrapperHide);
+        toolbar.appendChild(this.pluginWrapper);
         toolbar.appendChild(pluginToggle);
         new Move(this.el, toolbar);
 
         return toolbar;
 
+    }
+
+    showPlugins() {
+        if (this.pluginWrapper) {
+            this.pluginWrapper.classList.remove('fred--hidden');
+        }
+    }
+
+    hidePlugins() {
+        if (this.pluginWrapper) {
+            this.pluginWrapper.classList.add('fred--hidden');
+        }
     }
 }

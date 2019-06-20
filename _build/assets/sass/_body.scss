@@ -21,6 +21,10 @@
 
 }
 
+.fred--hidden{
+  display: none !important;
+}
+
 .fred--block {
   position: relative;
   min-height: 30px;
@@ -228,7 +232,7 @@
     // &::before {
     // opacity: .6;
     // transition: $timing;
-    // 
+    //
     // &:hover::before {
     //   opacity: 1;
     //   transition: $timing;
@@ -249,7 +253,7 @@
         &:hover {
           opacity: 1;
           transition: $timing;
-        }  
+        }
       }
     }
 

@@ -149,6 +149,9 @@ export class ContentElement {
 
                             if (firstSet === true) {
                                 el.classList.add('fred--block-active_parent');
+                                if (el.fredEl.toolbar) {
+                                    el.fredEl.toolbar.hidePlugins();
+                                }
                             }
 
                             if ((firstSet === false) && this.options.settings) {
@@ -172,6 +175,9 @@ export class ContentElement {
 
                             if (firstSet === true) {
                                 el.classList.add('fred--block-active_parent');
+                                if (el.fredEl.toolbar) {
+                                    el.fredEl.toolbar.hidePlugins();
+                                }
                             }
 
                             firstSet = true;
@@ -189,6 +195,9 @@ export class ContentElement {
 
                     if (wrapper.fredEl) {
                         wrapper.fredEl.contentEl.titleEl.style.left = null;
+                        if (wrapper.fredEl.toolbar) {
+                            wrapper.fredEl.toolbar.hidePlugins();
+                        }
                     }
 
                     let el = e.target.parentNode;
@@ -247,8 +256,8 @@ export class ContentElement {
 
         this.setWrapperActiveState(wrapper);
 
-        const toolbar = new Toolbar(this);
-        wrapper.appendChild(toolbar.render());
+        this.toolbar = new Toolbar(this);
+        wrapper.appendChild(this.toolbar.render());
 
         this.contentEl = div(['fred--block_content']);
         this.contentEl.dataset.fredElementId = this.el.dataset.fredElementId;
