@@ -34,11 +34,11 @@ export class PartialBlueprints {
                     value: '' + category.id
                 });
             });
-            
+
             utilitySidebar.open(this.render());
         });
     }
-    
+
     render() {
         const pageForm = form(['fred--pages_create']);
 
@@ -98,22 +98,23 @@ export class PartialBlueprints {
             name: 'public',
             label: 'fred.fe.blueprints.blueprint_public'
         }, this.state.public, onChange);
-        
+
         if (!fredConfig.permission.fred_blueprints_create_public) {
             publicToggle.inputEl.setAttribute('disabled', 'disabled');
         }
-        
+
         fields.appendChild(publicToggle);
 
         if (this.state.image === '') {
             const loader = span(['fred--loading']);
             imageEl.appendChild(loader);
-            
+
             html2canvas(this.el.wrapper, {
                 logging: false,
                 ignoreElements: el => {
                     if (el.classList.contains('fred')) return true;
                     if (el.classList.contains('fred--toolbar')) return true;
+                    if (el.classList.contains('fred--block_title')) return true;
 
                     return false;
                 }
@@ -176,7 +177,7 @@ export class PartialBlueprints {
         const cancelButton = button('fred.fe.cancel', 'fred.fe.cancel', ['fred--btn-panel'], () => {
             utilitySidebar.close();
         });
-        
+
         const buttonGroup = div(['fred--panel_button_wrapper']);
         buttonGroup.appendChild(createButton);
         buttonGroup.appendChild(cancelButton);

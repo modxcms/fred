@@ -36,6 +36,7 @@ export default class ElementScreenshot extends ToolbarPlugin {
             ignoreElements: el => {
                 if (el.classList.contains('fred')) return true;
                 if (el.classList.contains('fred--toolbar')) return true;
+                if (el.classList.contains('fred--block_title')) return true;
 
                 return false;
             }
