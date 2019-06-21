@@ -7,7 +7,7 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     color: $white;
     background-color: darken($primary, 10%);
   }
-  
+
   @include btn-disabled();
 
   &-small {
@@ -156,7 +156,7 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     height: 30px;
     width: 30px;
     left: 6px;
-    top: calc(50% - 10px);
+    top: calc(50% - 15px);
     cursor: pointer !important;
     color: $black;
     &_expand {

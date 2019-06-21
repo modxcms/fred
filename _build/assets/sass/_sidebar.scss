@@ -451,8 +451,8 @@
 .fred--accordion dd .fred--pages {
   dl.fred--pages_list {
     dt:not([class^="fred--accordion"]){
-      padding: 12px 30px 0 33px;
-      margin-bottom: -3px;
+      padding: 5px 30px 5px 33px;
+      margin-bottom: 0;
       outline:none;
       &:before{
         display:none;
