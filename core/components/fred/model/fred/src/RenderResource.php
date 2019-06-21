@@ -15,19 +15,19 @@ use Wa72\HtmlPageDom\HtmlPageCrawler;
 final class RenderResource {
     /** @var \modResource */
     private $resource;
-    
+
     /** @var \FredTheme */
     private $theme;
 
     /** @var \Twig_Environment */
     private $twig;
-    
+
     /** @var \modX */
     private $modx;
-    
+
     /** @var \Fred */
     private $fred;
-    
+
     /** @var array */
     private $data = [];
 
@@ -51,9 +51,9 @@ final class RenderResource {
                 'core_path' => $corePath
             )
         );
-        
+
         $this->theme = $this->fred->getTheme($this->resource->template);
-        
+
         $this->data = $this->resource->getProperty('data', 'fred');
         if(empty($this->data) && !empty($this->resource->content)){
             $this->setDefaults();
@@ -64,17 +64,17 @@ final class RenderResource {
         $this->twig = new \Twig_Environment(new \Twig_Loader_Array($elements));
         $this->twig->setCache(false);
     }
-    
+
     public function render() {
         $contentData = !empty($this->data['content']) ? $this->data['content'] : [];
         $html = '';
 
         foreach ($contentData as $item) {
             if (isset($this->elementCache[$item['widget']])) {
-                $html .= $this->elementCache[$item['widget']];    
+                $html .= $this->elementCache[$item['widget']];
             } else {
                 try {
-                    $html .= $this->renderElement($this->twig->render($item['widget'], $this->mergeSetting($item['settings'])), $item, true);
+                    $html .= $this->renderElement($this->twig->render($item['widget'], $this->mergeSetting(!empty($item['elId']) ? $item['elId'] : '', $item['settings'])), $item, true);
                 } catch (\Exception $e) {
                 }
             }
@@ -87,11 +87,11 @@ final class RenderResource {
         $twig->setCache(false);
 
         try {
-            $this->resource->set('content', $twig->render('content', $this->mergeSetting()));
+            $this->resource->set('content', $twig->render('content', $this->mergeSetting('')));
         } catch (\Exception $e) {
             $this->resource->set('content', '');
         }
-        
+
         $c = $this->modx->newQuery('modTemplateVar');
         $c->leftJoin('modTemplateVarTemplate', 'TemplateVarTemplates');
 
@@ -110,10 +110,10 @@ final class RenderResource {
 
                 foreach ($this->data[$tvName] as $item) {
                     try {
-                        $tvContent .= $this->renderElement($this->twig->render($item['widget'], $this->mergeSetting($item['settings'])), $item, true);
+                        $tvContent .= $this->renderElement($this->twig->render($item['widget'], $this->mergeSetting(!empty($item['elId']) ? $item['elId'] : '', $item['settings'])), $item, true);
                     } catch (\Exception $e) {}
                 }
-                
+
                 $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
 
                 $this->resource->setTVValue($tvName, $tvContent);
@@ -122,12 +122,12 @@ final class RenderResource {
 
         $this->data['fingerprint'] = Utils::resourceFingerprint($this->resource);
         $this->resource->setProperty('data', $this->data, 'fred');
-        
+
         if ($this->resource->save()){
             $this->modx->getCacheManager()->refresh();
             return true;
         }
-        
+
         return false;
     }
 
@@ -156,7 +156,7 @@ final class RenderResource {
         }
 
         $this->elementOptions[$id] = $element->processOptions();
-        
+
         if (isset($this->elementOptions[$id]['cacheOutput']) && ($this->elementOptions[$id]['cacheOutput'] === true)) {
             $cache = $element->getCache($this->resource->id);
             if ($cache !== false) {
@@ -166,7 +166,7 @@ final class RenderResource {
 
         return $element->content;
     }
-    
+
     private function setValueForBindElements(HtmlPageCrawler &$html, $name, $value)
     {
         $bindElements = $html->filter('[data-fred-bind="' . $name . '"]');
@@ -186,7 +186,7 @@ final class RenderResource {
 
     private function setDefaults(){
         if (!$this->theme) return;
-        
+
         $defElement = explode('|', $this->theme->get('default_element'));
         if(!empty($defElement[0]) && is_numeric($defElement[0]) && !empty($defElement[1])){
             /** @var \FredElement $defaultElement */
@@ -195,7 +195,7 @@ final class RenderResource {
                 $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$defElement[0]} wasn't found.");
                 return '';
             }
-            
+
             $this->data = array(
                 'content' => array(
                     array(
@@ -264,9 +264,9 @@ final class RenderResource {
             $node->setAttribute('data-fred-fake-href', $node->getAttribute('href'));
             $node->removeAttribute('href');
         });
-        
+
         $html = HtmlPageCrawler::create($html->first()->html());
-        
+
         $elements = $html->filter('[data-fred-name]');
         $elements->each(function(HtmlPageCrawler $node, $i) use ($item, $html) {
             $valueName = $node->attr('data-fred-name');
@@ -294,7 +294,7 @@ final class RenderResource {
                         $node->html($value);
                 }
             }
-            
+
             $this->setValueForBindElements($html, $valueName, $value);
 
             $attrs = $node->attr('data-fred-attrs');
@@ -317,24 +317,24 @@ final class RenderResource {
             $node->removeAttr('data-fred-media-source');
             $node->removeAttr('data-fred-image-media-source');
         });
-        
+
         $blockClasses = $html->filter('[data-fred-block-class]');
         $blockClasses->each(function(HtmlPageCrawler $node, $i) use ($item) {
             $classes = $node->attr('data-fred-block-class');
             $classes = Utils::explodeAndClean($classes, ' ');
-            
+
             foreach ($classes as $class) {
                 $node->addClass($class);
             }
 
             $node->removeAttr('data-fred-block-class');
         });
-        
+
         $fredClasses = $html->filter('[data-fred-class]');
         $fredClasses->each(function(HtmlPageCrawler $node, $i) use ($item) {
             $classes = $node->attr('data-fred-class');
             $classes = Utils::explodeAndClean($classes, ' ');
-            
+
             foreach ($classes as $class) {
                 $node->addClass($class);
             }
@@ -346,12 +346,12 @@ final class RenderResource {
         $bindElements->each(function(HtmlPageCrawler $node, $i) use ($item) {
             $node->removeAttr('data-fred-bind');
         });
-        
+
         $onDrop = $html->filter('[data-fred-on-drop]');
         $onDrop->each(function(HtmlPageCrawler $node, $i) use ($item) {
             $node->removeAttr('data-fred-on-drop');
         });
-        
+
         $onSettingChange = $html->filter('[data-fred-on-setting-change]');
         $onSettingChange->each(function(HtmlPageCrawler $node, $i) use ($item) {
             $node->removeAttr('data-fred-on-setting-change');
@@ -367,7 +367,7 @@ final class RenderResource {
 
                 foreach ($item['children'][$dzName] as $childItem) {
                     try {
-                        $html .= $self->renderElement($self->twig->render($childItem['widget'], $this->mergeSetting($childItem['settings'])), $childItem);;
+                        $html .= $self->renderElement($self->twig->render($childItem['widget'], $this->mergeSetting(!empty($childItem['elId']) ? $childItem['elId'] : '', $childItem['settings'])), $childItem);;
                     } catch (\Exception $e) {}
                 }
 
@@ -386,13 +386,15 @@ final class RenderResource {
 
         return $html;
     }
-    
-    private function mergeSetting($settings = [])
+
+    private function mergeSetting($id, $settings = [])
     {
         $settings['theme_dir'] = '[[++fred.theme_dir]]';
         $settings['template'] = [
             'theme_dir' => '[[++fred.theme_dir]]'
         ];
+
+        $settings['id'] = $id;
 
         return $settings;
     }

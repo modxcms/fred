@@ -9,9 +9,10 @@ import hoverintent from 'hoverintent';
 import elementSettings from './ElementSettings';
 import { renderElement } from '../../../Actions/elements';
 import Toolbar from "./Toolbar";
+import jsSHA from "jssha";
 
 export class ContentElement {
-    constructor(el, dzName, parent = null, content = {}, settings = {}, pluginsData = {}) {
+    constructor(el, dzName, parent = null, content = {}, settings = {}, pluginsData = {}, elId = null) {
         this.config = fredConfig.config;
         this.el = el;
         this.template = twig({data: this.el.elementMarkup});
@@ -19,6 +20,12 @@ export class ContentElement {
         this.title = this.el.dataset.fredElementTitle;
         this.wrapper = null;
         this.invalidTheme = this.el.dataset.invalidTheme === 'true';
+
+        if (!elId) {
+            this.elId = this.generateElId();
+        } else {
+            this.elId = elId;
+        }
 
         this.contentEl = null;
 
@@ -71,6 +78,12 @@ export class ContentElement {
         this.inEditor = false;
     }
 
+    generateElId() {
+        const shaObj = new jsSHA("SHA-256", "TEXT");
+        shaObj.update(this.title);
+        return 'fred_' + shaObj.getHash('HEX').substr(-7) + '_' + Math.random().toString(36).substr(2, 11);
+    }
+
     setSetting(name, value) {
         this.settings[name] = value;
         this.parsedSettings[name] = valueParser(value);
@@ -100,6 +113,7 @@ export class ContentElement {
 
     getContent() {
         const content = {
+            elId: this.elId,
             widget: this.id,
             values: this.content,
             pluginsData: this.pluginsData,
@@ -718,13 +732,13 @@ export class ContentElement {
             settings = this.parsedSettings;
         }
 
-        return this.template.render({...settings, ...(getTemplateSettings(cleanRender))});
+        return this.template.render({...settings, ...(getTemplateSettings(cleanRender)), id: this.elId});
     }
 
     remoteTemplateRender(parseModx = true, cleanRender = false, refreshCache = false) {
         const cacheOutput = this.options.cacheOutput === true;
 
-        return renderElement(this.id, (cleanRender ? this.parsedSettingsClean : this.parsedSettings), parseModx, cacheOutput, refreshCache).then(json => {
+        return renderElement(this.id, {...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), id: this.elId}, parseModx, cacheOutput, refreshCache).then(json => {
             const html = twig({data: json.data.html}).render(getTemplateSettings(cleanRender));
             this.setEl(html);
 
