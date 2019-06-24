@@ -1,19 +1,15 @@
 site_name: Fred
 repo_name: modxcms/fred
 repo_url: https://github.com/modxcms/fred
-copyright: 'Copyright &copy; 2018 <a href="https://modx.com" title="MODX">MODX</a>'
+copyright: 'Copyright &copy; 2018-2019 <a href="https://modx.com" title="MODX">MODX</a>'
 
 nav:
   - What is Fred?: index.md
+  - Fred for Existing MODXers: fred_for_existing_modxers.md
   - Getting Started: getting_started.md
   - MODX Templates & Fred: templates.md
   - Elements: elements.md
   - Blueprints: blueprints.md
-  - Fred for Site Admins:
-    - Protecting access with ACLs:
-      - How To: site_admin/acls/howto.md
-      - Permissions: site_admin/acls/permissions.md
-      - Default Policies: site_admin/acls/policies.md
   - Fred for Themers:
     - Intro to Fred Themes: themer/index.md
     - Theme Creation Tutorial: themer/themes.md
@@ -49,7 +45,12 @@ nav:
         - Getting your Theme in Git: collab/initial_extract.md
         - Basic Gitify Usage: collab/gitify_in_action.md
         - Advaced Gitify with PRs: collab/pr_workflow.md
-  - Developers:
+  - Fred for Site Admins:
+    - Protecting access with ACLs:
+      - How To: site_admin/acls/howto.md
+      - Permissions: site_admin/acls/permissions.md
+      - Default Policies: site_admin/acls/policies.md
+  - Fred Plugin Development:
     - Intro: developer/index.md
     - MODX Events: developer/modx_events.md
     - Toolbar Plugins: developer/toolbar_plugins.md 

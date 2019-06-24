@@ -1,10 +1,10 @@
 # Elements
 
-Elements are the fundamental starting point for
+Elements are the basic building blocks for creating Fred pages.
 
-## Creating Element
+## Creating an Element
 
-The following are the properties for each Element:
+The following are the properties for an Element:
 
 - **Name** - Required. What you wish to call the Element.
 - **Description** - Optional. A brief description for the Element.
