@@ -161,7 +161,7 @@ export class ContentElement {
                                 el.classList.add('fred--block-active_top');
                             }
 
-                            if (this.atHeight(el)) {
+                            if (this.atHeight(el) || this.atWidth(el)) {
                                 el.classList.add('fred--block-active_short');
                             }
 
@@ -195,7 +195,7 @@ export class ContentElement {
                                 el.classList.add('fred--block-active_top');
                             }
 
-                            if (this.atHeight(el)) {
+                            if (this.atHeight(el) || this.atWidth(el)) {
                                 el.classList.add('fred--block-active_short');
                             }
 
@@ -272,18 +272,18 @@ export class ContentElement {
             this.toTop += (element.offsetTop - element.scrollTop + element.clientTop);
             element = element.offsetParent;
         }
-        console.log('toTop ' + this.toTop)
+        //console.log('toTop ' + this.toTop)
         return (this.toTop  < 38);
     }
 
     atHeight(element) {
-        console.log('Height ' + element.offsetHeight)
+        //console.log('Height ' + element.offsetHeight)
         return (element.offsetHeight  < 280);
     }
 
     atWidth(element) {
-        console.log('Width ' + element.offsetWidth)
-        return (element.offsetWidth  < 280);
+        //console.log('Width ' + element.offsetWidth)
+        return (element.offsetWidth  < 280 || element.offsetHeight  < 160);
     }
 
     render(refreshCache = false) {

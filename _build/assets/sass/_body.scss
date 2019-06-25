@@ -88,13 +88,13 @@
     > .fred--block_title {
         opacity: 0;
     }
-    &.fred--block-active_top {
+    /*&.fred--block-active_top {
       > .fred--toolbar{
         bottom: auto;
         top: 100%;
         transition: 0s all !important;
       }
-    }
+    }*/
     .fred--block-active {
       box-shadow: rgba($black, .34) 0 4px 8px;
     }
@@ -127,7 +127,7 @@
     height: 0;
     min-height: 0;
     overflow: visible;
-    transition: $timing;
+    //transition: $timing;
     position: absolute;
     right: 20px;
     bottom: 20px;
@@ -240,16 +240,17 @@
 
     .fred--element-settings {
       display: block;
-      border-radius: 50%;
-      background-color: $offwhite;
-      text-align: center;
-      box-shadow: $ui-shad;
       height: 30px;
       margin-bottom: $baseGutter/2;
 
       &:before {                            // override _buttons.scss … move here?
         background-color: transparent;
         background-position: center 1px;
+        border-radius: 50%;
+        background-color: $offwhite;
+        text-align: center;
+        box-shadow: $ui-shad;
+        background-position: center;
         &:hover {
           opacity: 1;
           transition: $timing;
@@ -289,6 +290,51 @@
       &:hover {
         opacity: 1;
         transition: $timing;
+      }
+    }
+  }
+  
+  &.fred--block-active{
+    & > .fred--toolbar{
+      transition: $timing;
+    }
+    &_short{
+      .fred--toolbar{
+        bottom: 5px;
+        right: 10px;
+        .fred--element-settings{
+          display: inline-block;
+          margin-bottom: 0;
+          margin-right: 8px;
+          height: 32px;
+          width: 32px;
+          &:before{
+            height: 32px;
+            width: 32px;
+          }
+        }
+        .fred--position-group{
+          display: inline-block;
+          height: 32px;
+          .fred--toolbar-grip{
+            display: inline-block;
+          }
+        }
+        .fred--toolbar-plugins:after{
+          right: 110px;
+        }
+      }
+      .fred--block_title{
+        left: 5px;
+        bottom: 8px;
+      }
+    }
+    &_narrow{
+      .fred--toolbar{
+        bottom: -45px;
+      }
+      .fred--block_title{
+        display: none;
       }
     }
   }
