@@ -334,7 +334,7 @@ if ($object->xpdo) {
                 }
             }
 
-            if ($oldPackage && $oldPackage->compareVersion('1.1.0-beta3', '>')) {
+            if ($oldPackage && $oldPackage->compareVersion('1.1.0-beta4', '>')) {
                 /** @var FredTheme[] $themes */
                 $themes = $modx->getIterator('FredTheme');
                 foreach ($themes as $theme) {
