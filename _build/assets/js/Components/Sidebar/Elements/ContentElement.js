@@ -306,6 +306,9 @@ export class ContentElement {
         this.contentEl.dataset.fredElementTitle = this.title;
 
         const titleEl = div(['fred--block_title'], this.title);
+        titleEl.addEventListener('click', e => {
+            titleEl.classList.add('fred--hidden');
+        });
         wrapper.appendChild(titleEl);
         this.contentEl.titleEl = titleEl;
 
