@@ -1,18 +1,18 @@
 fred.grid.Elements = function (config) {
     config = config || {};
     config.permission = config.permission || {};
-    
+
     if (config.permission.fred_element_save) {
         config.ddGroup = 'FredElementsDDGroup';
         config.enableDragDrop = true;
         config.save_action = 'mgr/elements/updatefromgrid';
         config.autosave = true;
     }
-    
+
     if (!config.permission.fred_element_save && !config.permission.fred_element_delete) {
         config.showGear = false;
     }
-    
+
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -40,7 +40,7 @@ fred.grid.Elements = function (config) {
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                     if (value) {
                         value = fred.prependBaseUrl(value, record.data.theme_theme_folder);
-                        
+
                         metaData.attr = 'ext:qtip=\'<img src=\"' + value + '\">\'';
                         return '<img src="' + value + '"  style="max-width:200px;max-height:150px;">';
                     }
@@ -101,10 +101,10 @@ fred.grid.Elements = function (config) {
 
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
-    
+
     fred.globalEvents.on('delete-element-category', function(category) {
         var categoryFilter = Ext.getCmp('fred-element-filter-category');
-        
+
         if (categoryFilter.getValue() === category.id) {
             var record = categoryFilter.findRecord('id',0);
             categoryFilter.setValue(0);
@@ -116,9 +116,9 @@ fred.grid.Elements = function (config) {
 
     fred.globalEvents.on('delete-theme', function(theme) {
         var themeFilter = Ext.getCmp('fred-element-filter-theme');
-        
+
         if (themeFilter.getValue() !== theme.id) return;
-        
+
         var record = themeFilter.findRecord('id',0);
         themeFilter.setValue(0);
         themeFilter.fireEvent('select', themeFilter, record);
@@ -152,12 +152,12 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
                 handler: this.duplicateElement
             });
         }
-        
+
         if (this.config.permission.fred_element_delete) {
             if (m.length > 0) {
                 m.push('-');
             }
-            
+
             m.push({
                 text: _('fred.elements.remove')
                 , handler: this.removeElement
@@ -166,17 +166,17 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
 
         return m;
     },
-    
+
     getTbar: function(config) {
         var output = [];
-        
+
         if (config.permission.fred_element_save) {
             output.push({
                 text: _('fred.elements.create'),
                 handler: this.newElement
             });
         }
-        
+
         output.push([[
             '->',
             {
@@ -244,7 +244,7 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
                 }
             }
         ]]);
-        
+
         return output;
     },
 
@@ -274,23 +274,23 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
     filterCombo: function (combo, record) {
         var s = this.getStore();
         s.baseParams[combo.filterName] = record.data[combo.valueField];
-        
+
         if (combo.filterName === 'theme') {
             var categoryFilter = Ext.getCmp('fred-element-filter-category');
-            
+
             if (record.data[combo.valueField] !== 0) {
                 s.baseParams.category = 0;
                 categoryFilter.setValue();
             }
-            
+
             categoryFilter.baseParams.theme = record.data[combo.valueField];
             categoryFilter.store.load();
-            
+
             var ids = ['fred-element-filter-theme', 'fred-rte-config-filter-theme', 'fred-option-set-filter-theme', 'fred-element-category-filter-theme', 'fred-blueprint-filter-theme', 'fred-blueprint-category-filter-theme'];
-            
+
             ids.forEach(function(id){
                 if (id === combo.id) return true;
-                
+
                 var remoteCombo = Ext.getCmp(id);
                 if (remoteCombo) {
                     remoteCombo.syncFilter(remoteCombo, record);
@@ -318,8 +318,8 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
                 options.category = s.baseParams.category;
             }
         }
-        
-        fred.loadPage('element/create', options);                 
+
+        fred.loadPage('element/create', options);
     },
 
     quickUpdateElement: function (btn, e) {
@@ -341,12 +341,14 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
         if (category[0]) {
             category = category[0];
             category.baseParams.theme = this.menu.record.theme_id;
+            category.lastQuery = null;
         }
-        
+
         var optionSet = updateElement.find('name', 'option_set');
         if (optionSet[0]) {
             optionSet = optionSet[0];
             optionSet.baseParams.theme = this.menu.record.theme_id;
+            optionSet.lastQuery = null;
         }
 
         updateElement.fp.getForm().reset();
@@ -475,10 +477,10 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
     destroyScrollManager: function () {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
     },
-    
+
     getEditor: function(config, editor) {
         if (config.permission.fred_element_save) return editor;
-        
+
         return false;
     }
 });

@@ -15,8 +15,9 @@ class FredElementOptionSetsGetListProcessor extends modObjectGetListProcessor
     public function beforeIteration(array $list)
     {
         $addAll = (int)$this->getProperty('addEmpty', 0);
+        $search = $this->getProperty('search', '');
 
-        if ($addAll === 1) {
+        if (empty($search) && ($addAll === 1)) {
             $list[] = [
                 'id' => 0,
                 'name' => $this->modx->lexicon('fred.element_option_sets.no_set')
@@ -25,19 +26,19 @@ class FredElementOptionSetsGetListProcessor extends modObjectGetListProcessor
 
         return parent::beforeIteration($list);
     }
-    
+
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
         $id = (int)$this->getProperty('id', 0);
         if (!empty($id)) {
-            $c->where(['id' => $id]);   
+            $c->where(['id' => $id]);
         }
-        
+
         $complete = $this->getProperty('complete', '');
         if ($complete !== '') {
             $c->where(['complete' => $complete]);
         }
-        
+
         $search = $this->getProperty('search', '');
         if (!empty($search)) {
             $c->where(['name:LIKE' => "%{$search}%"]);
@@ -47,7 +48,7 @@ class FredElementOptionSetsGetListProcessor extends modObjectGetListProcessor
         if (!empty($theme)) {
             $c->where(['theme' => $theme]);
         }
-        
+
         return parent::prepareQueryBeforeCount($c);
     }
 

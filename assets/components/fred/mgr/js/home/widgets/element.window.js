@@ -118,7 +118,17 @@ Ext.extend(fred.window.Element, MODx.Window, {
                                         category.setValue();
                                         category.enable();
                                         category.baseParams.theme = record.id;
-                                        category.store.load();
+                                        category.lastQuery = null;
+                                        category.loaded = false;
+                                        category.tries = 0;
+
+                                        category.store.on('load', function() {
+                                            this.loaded = true;
+                                        }, category, {single: true});
+
+                                        if (category.pageTb) {
+                                            category.pageTb.show();
+                                        }
 
                                         var optionSet = this.find('name', 'option_set');
                                         if (!optionSet[0]) return;
@@ -127,7 +137,17 @@ Ext.extend(fred.window.Element, MODx.Window, {
                                         optionSet.setValue(0);
                                         optionSet.enable();
                                         optionSet.baseParams.theme = record.id;
-                                        optionSet.store.load();
+                                        optionSet.lastQuery = null;
+                                        optionSet.loaded = false;
+                                        optionSet.tries = 0;
+
+                                        optionSet.store.on('load', function() {
+                                            this.loaded = true;
+                                        }, optionSet, {single: true});
+
+                                        if (optionSet.pageTb) {
+                                            optionSet.pageTb.show();
+                                        }
                                     },
                                     scope: this
                                 },
@@ -241,7 +261,7 @@ fred.window.ElementDuplicate = function (config) {
 };
 Ext.extend(fred.window.ElementDuplicate, MODx.Window, {
     firstCategorySelect: true,
-    
+
     getFields: function (config) {
         return [
             {
@@ -269,7 +289,7 @@ Ext.extend(fred.window.ElementDuplicate, MODx.Window, {
                             this.firstCategorySelect = false;
                             return;
                         }
-                        
+
                         var category = this.find('name', 'category');
                         if (!category[0]) return;
 

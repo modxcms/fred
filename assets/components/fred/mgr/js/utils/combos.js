@@ -152,6 +152,11 @@ fred.combo.ElementCategories = function (config) {
         name: 'category',
         hiddenName: 'category',
         displayField: 'name',
+        editable: true,
+        queryParam: 'search',
+        minChars: 0,
+        typeAhead: false,
+        forceSelection: true,
         valueField: 'id',
         fields: ['name', 'id'],
         pageSize: 20,
@@ -162,6 +167,14 @@ fred.combo.ElementCategories = function (config) {
         }
     });
     fred.combo.ElementCategories.superclass.constructor.call(this, config);
+
+    this.store.on('load', function() {
+        this.loaded = false;
+
+        this.store.on('load', function() {
+            this.loaded = true;
+        }, this, {single: true});
+    }, this, {single: true});
 };
 Ext.extend(fred.combo.ElementCategories, MODx.combo.ComboBox);
 Ext.reg('fred-combo-element-categories', fred.combo.ElementCategories);
@@ -172,6 +185,11 @@ fred.combo.ElementOptionSets = function (config) {
         name: 'option_set',
         hiddenName: 'option_set',
         displayField: 'name',
+        editable: true,
+        queryParam: 'search',
+        minChars: 0,
+        typeAhead: false,
+        forceSelection: true,
         valueField: 'id',
         fields: ['name', 'id', 'description'],
         tpl: new Ext.XTemplate('<tpl for="."><div class="x-combo-list-item"><span style="font-weight: bold">{name:htmlEncode}</span>',
@@ -185,6 +203,14 @@ fred.combo.ElementOptionSets = function (config) {
         }
     });
     fred.combo.ElementOptionSets.superclass.constructor.call(this, config);
+
+    this.store.on('load', function() {
+        this.loaded = false;
+
+        this.store.on('load', function() {
+            this.loaded = true;
+        }, this, {single: true});
+    }, this, {single: true});
 };
 Ext.extend(fred.combo.ElementOptionSets, MODx.combo.ComboBox, {
 
