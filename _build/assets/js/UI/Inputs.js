@@ -782,7 +782,7 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
         });
     }
 
-    labelEl.onError = msg => {
+    wrapper.onError = msg => {
         if (errorEl === null) {
             errorEl = div('error', msg);
             labelEl.appendChild(errorEl);
