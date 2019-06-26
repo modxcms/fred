@@ -78,6 +78,7 @@ First, set up the project inside your MODX webroot:
 1. `npm install` from web root
 2. change directories to `core/components/fred/model`
 3. `composer install`
+4. install fred with GPM
 
 ### Build
 Set up watchers to update the code for changes:
