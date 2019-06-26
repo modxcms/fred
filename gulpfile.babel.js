@@ -48,21 +48,21 @@ function setEnv(buildEnv) {
 
 gulp.task("css", function() {
   var sassStream = gulp
-    .src("./_build/assets/sass/fred.scss")
+    .src("./_build/assets/sass/fred.scss", { sourcemaps: true })
 //    .pipe(sourcemaps.init())
     .pipe(sass({ errLogToConsole: true, outputStyle: "compressed" }))
     .on("error", sass.logError)
-//    .pipe(sourcemaps.write())
+ //   .pipe(sourcemaps.write())
     .pipe(autoprefixer());
 
   var cssStream = gulp.src([
     "./node_modules/flatpickr/dist/flatpickr.min.css",
     "./node_modules/nouislider/distribute/nouislider.min.css"
-  ]);
+  ], { sourcemaps: true });
 
   return merge(sassStream, cssStream)
     .pipe(concat("fred.css"))
-    .pipe(gulp.dest("./assets/components/fred/web"));
+    .pipe(gulp.dest("./assets/components/fred/web", { sourcemaps: '.' }));
 });
 
 gulp.task("sass:svg", function() {
