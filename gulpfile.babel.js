@@ -17,6 +17,8 @@ import concat from "gulp-concat";
 import sass from "gulp-sass";
 import sassInlineSvg from "gulp-sass-inline-svg";
 import svgmin from "gulp-svgmin";
+//import sourcemaps from "gulp-sourcemaps";
+import autoprefixer from "gulp-autoprefixer";
 
 import log from "fancy-log";
 
@@ -47,8 +49,11 @@ function setEnv(buildEnv) {
 gulp.task("css", function() {
   var sassStream = gulp
     .src("./_build/assets/sass/fred.scss")
+//    .pipe(sourcemaps.init())
     .pipe(sass({ errLogToConsole: true, outputStyle: "compressed" }))
-    .on("error", sass.logError);
+    .on("error", sass.logError)
+//    .pipe(sourcemaps.write())
+    .pipe(autoprefixer());
 
   var cssStream = gulp.src([
     "./node_modules/flatpickr/dist/flatpickr.min.css",
