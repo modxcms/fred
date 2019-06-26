@@ -323,6 +323,17 @@
         .fred--toolbar-plugins:after{
           right: 110px;
         }
+        &.fred--toolbar-opendown{
+          .fred--toolbar-plugins {
+            top: calc(100% + 8px);
+            bottom: initial;
+            &:after{
+              bottom: initial;
+              top: -10px;
+              transform: rotate(180deg);
+            }
+          }
+        }
       }
       .fred--block_title{
         left: 5px;

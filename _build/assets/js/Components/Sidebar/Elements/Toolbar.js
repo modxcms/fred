@@ -65,6 +65,14 @@ export default class Toolbar {
         toolbar.appendChild(pluginToggle);
         new Move(this.el, toolbar);
 
+        window.addEventListener('scroll', e => {
+            if(toolbar.getBoundingClientRect().top < 250){
+                toolbar.classList.add('fred--toolbar-opendown');
+            }else{
+                toolbar.classList.remove('fred--toolbar-opendown');
+            }
+         });
+
         return toolbar;
 
     }
