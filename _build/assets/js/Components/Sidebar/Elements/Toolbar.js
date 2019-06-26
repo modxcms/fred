@@ -20,6 +20,11 @@ export default class Toolbar {
 
         const pluginToggle = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {
             if (this.pluginWrapper.classList.contains('fred--hidden')) {
+                if(toolbar.getBoundingClientRect().top < 250){
+                    toolbar.classList.add('fred--toolbar-opendown');
+                }else{
+                    toolbar.classList.remove('fred--toolbar-opendown');
+                }
                 this.showPlugins();
             } else {
                 this.hidePlugins();
