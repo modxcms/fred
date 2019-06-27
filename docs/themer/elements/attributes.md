@@ -19,6 +19,8 @@ This is a unique name for each Element, the contents of which should be editable
 
 The value of this attribute has to be unique in each Element, but you can have multiple instances of an Element on the page and different Elements can share common `data-fred-name` attributes without problem.
 
+**Note:** Because Fred wraps all Elements in a `<div>`, you cannot currently use Fred to build elements that would break HTML validation such as table rows, list items, definition lists, etc. This will be solved in a future release.
+
 ### Examples
 
 ```html
@@ -153,25 +155,25 @@ When Fred is _not_ loaded, the processed markup for the element will look as fol
 
 ## data-fred-class
 
-The value of this attribute will be added to class for this element _only_ when Fred is loaded. 
+The value of this attribute will be added to class for this element only when Fred is _not_ loaded. 
 
 ## Example
 
 Element Markup: 
 ```html
-<div class="row" data-fred-class="visible-grid"></div>
+<div class="row" data-fred-class="visible-grid foo"></div>
 ```
 
-When Fred is loaded, the class is added:
-
-```html
-<div class="row visible-grid"> … </div>
-```
-
-When Fred is _not_ loaded, the class is omitted:
+When Fred is loaded, the class is omitted:
 
 ```html
 <div class="row"> … </div>
+```
+
+When Fred is _not_ loaded, the class is added:
+
+```html
+<div class="row visible-grid foo"> … </div>
 ```
 
 ## data-fred-bind
