@@ -30,6 +30,7 @@
       height: auto;
       margin: 0;
       padding: 0;
+      min-width: 250px;
     }
     figcaption {
       display: none;
@@ -60,12 +61,13 @@
       font-size: 20px;
       text-align: center;
       text-shadow: 1px 1px 1px $white;
-      color: darken($light-gray, 25%);
+      color: $modxred;
       padding: 24px 0;
       width: 100%;
       display: block;
       //animation: fred--thumb_transit .3s ease-in-out;
       background: $light-gray;
+      box-shadow: inset 0 0 0px 4px $modxred;
     }
     div, figcaption {
       display: none;

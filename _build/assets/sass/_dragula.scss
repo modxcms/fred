@@ -16,13 +16,13 @@
   user-select: none !important;
 }
 .gu-transit {
-  opacity: 0.2;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-  filter: alpha(opacity=20);
+  opacity: 0.6;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter: alpha(opacity=60);
 }
-
 .fred--block.gu-mirror {
   cursor: grabbing;
+  box-shadow: none !important;
   div.fred--toolbar, div.fred--block_title {
     display: none;
   }
