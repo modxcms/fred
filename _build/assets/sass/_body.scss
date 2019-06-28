@@ -241,7 +241,7 @@
 
     .fred--element-settings {
       display: block;
-      height: 30px;
+      height: 32px;
       margin-bottom: $baseGutter/2;
 
       &:before {                            // override _buttons.scss … move here?
@@ -314,11 +314,15 @@
             width: 32px;
           }
         }
+        button {
+          padding: 2px 0;
+        }
         .fred--position-group{
           display: inline-block;
           height: 32px;
           .fred--toolbar-grip{
             display: inline-block;
+            background-position: 5px 3px;
           }
         }
         .fred--toolbar-plugins:after{
