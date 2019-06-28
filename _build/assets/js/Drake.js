@@ -130,7 +130,7 @@ class Drake {
         this.drake.on('drag', (el, source) => {
             this.registerScroller();
 
-            if (!source.classList.contains('elements-source')) {
+            if (!source.classList.contains('elements-source') && !source.classList.contains('blueprints-source')) {
                 el.dragZoom = 0.3;
             }
 
