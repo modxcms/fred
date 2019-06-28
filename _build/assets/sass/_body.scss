@@ -21,15 +21,16 @@
 
 }
 
-.fred--hidden{
-  display: none !important;
-}
-
 .fred--block {
   position: relative;
   min-height: 30px;
   outline: 15px solid rgba($modxblue, 0);
   z-index: 1;
+
+  .fred--hidden{
+    display: none !important;
+  }
+
   .fred--block{
     outline: 3px solid rgba($modxblue, 0);
     //&.fred--block-active, &:focus {
@@ -293,7 +294,7 @@
       }
     }
   }
-  
+
   &.fred--block-active{
     & > .fred--toolbar{
       transition: $timing;
