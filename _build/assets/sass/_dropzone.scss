@@ -48,25 +48,29 @@
   }
   &.gu-transit {
     width: 100%;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     box-sizing: border-box;
-    /*animation: fred--thumb_transit .3s ease-in-out;
-    img{
+    animation: fred--thumb_transit .1s ease-in-out;
+    /*.img{
       width: 100%;
     }*/
     &:before {
-      content: ' DROP HERE ';
+      content: ' ';
+      background-color: $light-gray;
+      background-image: inline-svg('plus-circle', $modxred);
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: 46px;
       font-weight: bold;
       font-size: 20px;
       text-align: center;
       text-shadow: 1px 1px 1px $white;
       color: $modxred;
-      padding: 24px 0;
+      padding: 36px 0;
       width: 100%;
       display: block;
-      //animation: fred--thumb_transit .3s ease-in-out;
-      background: $light-gray;
+      animation: fred--thumb_transit .1s ease-in-out;
       box-shadow: inset 0 0 0px 4px $modxred;
     }
     div, figcaption {

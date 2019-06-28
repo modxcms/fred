@@ -125,7 +125,6 @@
     margin: 0;
     padding: 0;
     opacity: 0;
-    height: 0;
     min-height: 0;
     overflow: visible;
     //transition: $timing;
@@ -297,7 +296,7 @@
 
   &.fred--block-active{
     & > .fred--toolbar{
-      transition: $timing;
+      transition: $timing opacity;
     }
     &_short{
       .fred--toolbar{
