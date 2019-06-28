@@ -12,10 +12,10 @@ input{
     color: rgba($black, .5);
   }
 }
-.fred--input-group{
+.fred--input-group {
   display: flex;
   align-items: center;
-  input{
+  input:not(.numInput) { // numInput is from flatPickr
     width: calc(100% - 24px) !important; // - Xpx is icon width less input and icon-button negative margins
     margin-top: 0px !important;
     border-radius: 2.5px 0 0 0;

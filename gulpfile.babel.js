@@ -13,7 +13,7 @@ import pkg from "./package.json";
 import webpackConfig from "./webpack.config.js";
 import merge from "merge-stream";
 import concat from "gulp-concat";
-
+import through2 from "through2"
 import sass from "gulp-sass";
 import sassInlineSvg from "gulp-sass-inline-svg";
 import svgmin from "gulp-svgmin";
@@ -62,6 +62,12 @@ gulp.task("css", function() {
 
   return merge(sassStream, cssStream)
     .pipe(concat("fred.css"))
+    .pipe(through2.obj( function( file, enc, cb ) {
+      let date = new Date();
+      file.stat.atime = date;
+      file.stat.mtime = date;
+      cb( null, file );
+    }) )
     .pipe(gulp.dest("./assets/components/fred/web", { sourcemaps: '.' }));
 });
 

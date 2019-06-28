@@ -226,6 +226,7 @@
 .numInputWrapper {
   position: relative;
   height: auto;
+  line-height: initial;
 }
 .numInputWrapper input,
 .numInputWrapper span {
@@ -308,6 +309,8 @@
   text-align: center;
   -webkit-transform: translate3d(0px, 0px, 0px);
   transform: translate3d(0px, 0px, 0px);
+
+  &:hover { background: none }
 }
 .flatpickr-current-month span.cur-month {
   font-family: inherit;
@@ -348,6 +351,7 @@
   border: 0;
   border-radius: 0;
   vertical-align: initial;
+  width: unset !important; // 
 }
 .flatpickr-current-month input.cur-year:focus {
   outline: 0;
