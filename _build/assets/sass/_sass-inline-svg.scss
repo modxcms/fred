@@ -86,7 +86,7 @@ $SVG-URL: true !default;
 			@warn "Color value is not valid, defaulting to #000. You can use 'null' to use the svg's original color";
 		}
 
-		$uri-string: call($functionname, $fillcolor, $strokecolor);
+		$uri-string: call(get-function($functionname), $fillcolor, $strokecolor);
 		@if $url {
 			@return url($uri-string);
 		} @else {

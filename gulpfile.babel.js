@@ -19,6 +19,7 @@ import sassInlineSvg from "gulp-sass-inline-svg";
 import svgmin from "gulp-svgmin";
 //import sourcemaps from "gulp-sourcemaps";
 import autoprefixer from "gulp-autoprefixer";
+import replace from "gulp-replace";
 
 import log from "fancy-log";
 
@@ -79,7 +80,10 @@ gulp.task("sass:svg", function() {
       sassInlineSvg({
         destDir: "./_build/assets/sass/"
       })
-    );
+    )
+    .pipe(gulp.src('./_build/assets/sass/_sass-inline-svg.scss'))
+    .pipe(replace('call($functionname', 'call(get-function($functionname)'))
+    .pipe(gulp.dest('./_build/assets/sass'));
 });
 
 // Clean folder
