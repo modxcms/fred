@@ -1,7 +1,7 @@
 fred.panel.Home = function (config) {
     config = config || {};
     config.permission = config.permission || {};
-    
+
     Ext.apply(config, {
         border: false,
         baseCls: 'modx-formpanel',
@@ -14,7 +14,7 @@ fred.panel.Home = function (config) {
 Ext.extend(fred.panel.Home, MODx.Panel, {
     getHelpPath: function() {
         var defaultPath = '';
-        
+
         var tabs = this.find('stateId', 'fred-tab-home');
         if (tabs.length !== 1) {
             return defaultPath;
@@ -24,15 +24,15 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
 
         var topLevelTab = tabs.getActiveTab();
         var childTab = topLevelTab.find('xtype', 'modx-vtabs');
-        
+
         if (!topLevelTab.helpPath && (childTab.length === 1)) {
 
-            return childTab[0].getActiveTab().helpPath || defaultPath; 
+            return childTab[0].getActiveTab().helpPath || defaultPath;
         } else {
             return topLevelTab.helpPath || defaultPath;
         }
     },
-    
+
     getItems: function(config) {
         return [
             {
@@ -59,9 +59,9 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 hideMode: 'offsets',
                 items: this.getTopTabs(config)
             }
-        ];                     
+        ];
     },
-    
+
     getTopTabs: function(config) {
         var output = [];
 
@@ -86,7 +86,7 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         var blueprintsTabItems = this.getBlueprintsTab(config);
         if (blueprintsTabItems.length > 0) {
             output.push({
@@ -108,7 +108,7 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         var themesTabItems = this.getThemesTab(config);
         if (themesTabItems.length > 0) {
             output.push({
@@ -130,11 +130,11 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         if (config.permission.fred_media_sources) {
             output.push({
                 title: _('fred.home.media_sources'),
-                helpPath: 'cmp/media_sources/',
+                helpPath: 'themer/cmp/media_sources/',
                 items: [
                     {
                         xtype: 'fred-grid-media-sources',
@@ -144,17 +144,17 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
-        return output;                 
+
+        return output;
     },
-    
+
     getElementsTab: function(config) {
         var output = [];
-        
+
         if (config.permission.fred_elements) {
             output.push({
                 title: _('fred.home.elements'),
-                helpPath: 'cmp/elements/',
+                helpPath: 'themer/cmp/elements/',
                 items: [
                     {
                         xtype: 'fred-grid-elements',
@@ -165,11 +165,11 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         if (config.permission.fred_element_categories) {
             output.push({
                 title: _('fred.home.element_categories'),
-                helpPath: 'cmp/element_categories/',
+                helpPath: 'themer/cmp/element_categories/',
                 items: [
                     {
                         xtype: 'fred-grid-element-categories',
@@ -180,11 +180,11 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         if (config.permission.fred_element_option_sets) {
             output.push({
                 title: _('fred.home.option_sets'),
-                helpPath: 'cmp/option_sets/',
+                helpPath: 'themer/cmp/option_sets/',
                 items: [
                     {
                         xtype: 'fred-grid-element-option-sets',
@@ -195,11 +195,11 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         if (config.permission.fred_element_rtes) {
             output.push({
                 title: _('fred.home.rte_configs'),
-                helpPath: 'cmp/rte_configs/',
+                helpPath: 'themer/cmp/rte_configs/',
                 items: [
                     {
                         xtype: 'fred-grid-element-rte-configs',
@@ -210,11 +210,11 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         if (config.permission.fred_element_rebuild) {
             output.push({
                 title: _('fred.home.rebuild'),
-                helpPath: 'cmp/rebuild/',
+                helpPath: 'themer/cmp/rebuild/',
                 items: [
                     {
                         cls: 'main-wrapper',
@@ -227,16 +227,16 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                                 text: _('fred.rebuild.rebuild'),
                                 handler: function() {
                                     var topic = '/fred/mgr/generate/refresh/';
-    
+
                                     var console = MODx.load({
                                         xtype: 'modx-console',
                                         register: 'mgr',
                                         topic: topic,
                                         show_filename: 0
                                     });
-    
+
                                     console.show(Ext.getBody());
-    
+
                                     MODx.Ajax.request({
                                         url: fred.config.connectorUrl,
                                         params: {
@@ -261,17 +261,17 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         return output;
     },
-    
+
     getBlueprintsTab: function(config) {
         var output = [];
 
         if (config.permission.fred_blueprints) {
             output.push({
                 title: _('fred.home.blueprints'),
-                helpPath: 'cmp/blueprints/',
+                helpPath: 'themer/cmp/blueprints/',
                 items: [
                     {
                         xtype: 'fred-grid-blueprints',
@@ -282,11 +282,11 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         if (config.permission.fred_blueprint_categories) {
             output.push({
                 title: _('fred.home.blueprint_categories'),
-                helpPath: 'cmp/blueprint_categories/',
+                helpPath: 'themer/cmp/blueprint_categories/',
                 items: [
                     {
                         xtype: 'fred-grid-blueprint-categories',
@@ -297,17 +297,17 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
-        return output;             
+
+        return output;
     },
-    
+
     getThemesTab: function(config) {
         var output = [];
 
         if (config.permission.fred_themes) {
             output.push({
                 title: _('fred.home.themes'),
-                helpPath: 'cmp/themes/',
+                helpPath: 'themer/cmp/themes/',
                 items: [
                     {
                         xtype: 'fred-grid-themes',
@@ -318,11 +318,11 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         if (config.permission.fred_themed_templates) {
             output.push({
                 title: _('fred.home.themed_templates'),
-                helpPath: 'cmp/themed_templates/',
+                helpPath: 'themer/cmp/themed_templates/',
                 items: [
                     {
                         xtype: 'fred-grid-themed-templates',
@@ -333,7 +333,7 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                 ]
             });
         }
-        
+
         return output;
     }
 });

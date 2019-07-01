@@ -1,8 +1,8 @@
 fred.window.ElementOptionSet = function (config) {
     config = config || {};
-    
-    config.showSaveCloseOnly = config.showSaveCloseOnly || false; 
-    
+
+    config.showSaveCloseOnly = config.showSaveCloseOnly || false;
+
     Ext.applyIf(config, {
         title: _('fred.element_option_sets.quick_update'),
         closeAction: 'close',
@@ -31,7 +31,7 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
         var buttons = [
             {
                 xtype: 'fred-button-help',
-                path: 'cmp/option_sets/'
+                path: 'themer/cmp/option_sets/'
             },
             '->',
             {
@@ -41,8 +41,8 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
                 config.closeAction !== 'close' ? this.hide() : this.close();
             }
         }];
-        
-        
+
+
         if (!config.showSaveCloseOnly) {
             buttons.push({
                 text: config.saveBtnText || _('save'),
@@ -59,8 +59,8 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
             scope: this,
             handler: this.submit
         });
-        
-        return buttons;                     
+
+        return buttons;
     },
 
     getFields: function (config) {
@@ -254,8 +254,8 @@ fred.window.ElementOptionSetPreview = function (config) {
         buttons: [{
             text: _('cancel'),
             scope: this,
-            handler: function() { 
-                this.close(); 
+            handler: function() {
+                this.close();
             }
         }]
     });

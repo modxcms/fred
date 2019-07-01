@@ -12,7 +12,7 @@ fred.window.BlueprintCategory = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'cmp/blueprint_categories/'
+                path: 'themer/cmp/blueprint_categories/'
             },
             '->',
             {
@@ -44,7 +44,7 @@ Ext.extend(fred.window.BlueprintCategory, MODx.Window, {
                 name: 'theme'
             }]);
         }
-        
+
         fields.push([
             {
                 xtype: 'textfield',
@@ -83,7 +83,7 @@ Ext.extend(fred.window.BlueprintCategory, MODx.Window, {
                 allowBlank: true
             }
         ]);
-        
+
         return fields;
     }
 });

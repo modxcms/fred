@@ -12,7 +12,7 @@ fred.window.ElementCategory = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'cmp/element_categories/'
+                path: 'themer/cmp/element_categories/'
             },
             '->',
             {
@@ -37,14 +37,14 @@ Ext.extend(fred.window.ElementCategory, MODx.Window, {
             xtype: 'hidden',
             name: 'id'
         }];
-        
+
         if (config.isUpdate) {
             fields.push([{
                 xtype: 'hidden',
                 name: 'theme'
             }]);
         }
-        
+
         fields.push([
             {
                 xtype: 'textfield',
@@ -73,7 +73,7 @@ Ext.extend(fred.window.ElementCategory, MODx.Window, {
                 allowBlank: true
             }
         ]);
-        
+
         return fields;
     }
 });

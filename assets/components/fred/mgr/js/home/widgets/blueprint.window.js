@@ -13,7 +13,7 @@ fred.window.Blueprint = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'cmp/blueprints/'
+                path: 'themer/cmp/blueprints/'
             },
             '->',
             {
@@ -30,9 +30,9 @@ fred.window.Blueprint = function (config) {
         ],
         width: 800
     });
-    
+
     this.theme_folder = config.record.theme_theme_folder;
-    
+
     fred.window.Blueprint.superclass.constructor.call(this, config);
 };
 Ext.extend(fred.window.Blueprint, MODx.Window, {
@@ -104,7 +104,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                         if (!category[0]) return;
 
                                         this.theme_folder = record.data.theme_folder;
-                                        
+
                                         category = category[0];
                                         category.setValue();
                                         category.enable();

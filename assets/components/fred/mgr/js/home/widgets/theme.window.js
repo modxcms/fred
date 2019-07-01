@@ -134,7 +134,7 @@ fred.window.ThemeBuild = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'cmp/themes/#build'
+                path: 'themer/cmp/themes/#build'
             }, '->', {
                 text: config.cancelBtnText || _('cancel'),
                 scope: this,

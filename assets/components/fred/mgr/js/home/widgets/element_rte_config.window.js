@@ -14,7 +14,7 @@ fred.window.ElementRTEConfig = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'cmp/rte_configs/'
+                path: 'themer/cmp/rte_configs/'
             },
             '->',
             {
@@ -150,7 +150,7 @@ Ext.extend(fred.window.ElementRTEConfig, MODx.Window, {
                                             v = JSON.stringify(v, null, 2);
                                         }
                                     }
-                                    
+
                                     this.superclass().setValue.call(this, v);
                                 }
                             }
