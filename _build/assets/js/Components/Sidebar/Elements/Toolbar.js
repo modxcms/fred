@@ -1,4 +1,4 @@
-import { div, button } from "../../../UI/Elements";
+import { h3, div, button } from "../../../UI/Elements";
 import ElementScreenshot from "./Toolbar/ElementScreenshot";
 import PartialBlueprint from "./Toolbar/PartialBlueprint";
 import ElementSettings from "./Toolbar/ElementSettings";
@@ -17,6 +17,7 @@ export default class Toolbar {
     render() {
         const toolbar = div(['fred--toolbar']);
         this.pluginWrapper = div(['fred--toolbar-plugins', 'fred--hidden']);
+        this.pluginWrapper.appendChild(h3(this.el.title));
 
         const pluginToggle = button('', 'fred.fe.content.settings', ['fred--element-settings'], () => {
             if (this.pluginWrapper.classList.contains('fred--hidden')) {
@@ -32,10 +33,10 @@ export default class Toolbar {
         });
 
         const plugins = [
+            ElementSettings,
             RefreshElementCache,
             ElementScreenshot,
             PartialBlueprint,
-            ElementSettings,
             Duplicate,
             Delete,
         ];
@@ -65,7 +66,6 @@ export default class Toolbar {
         plugins.forEach(plugin => {
             new plugin(this.el, this.pluginWrapper);
         });
-
         toolbar.appendChild(this.pluginWrapper);
         toolbar.appendChild(pluginToggle);
         new Move(this.el, toolbar);

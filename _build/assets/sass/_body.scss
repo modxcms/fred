@@ -204,6 +204,15 @@
       text-align: left;
       padding: 4px;
       border-radius: $radius;
+      h3{
+        color: $black;
+        display: block;
+        padding: 6px 12px;
+        margin: 0 0 6px 0;
+        font-size: 12px;
+        text-transform: uppercase;
+        border-bottom: 1px solid $border;
+      }
       a{
         color: $black;
         display: block;
