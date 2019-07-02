@@ -83,7 +83,9 @@ The following Settings types are used to configure Elements in Fred.
     - Color can be either a `string` or an `object` with following properties:
       - `value` - the value passed to Twig for the color, which can be anything
       - `color` - the displayed color for the swatch
+      - `colorAsClass` - if set to `true` the `color` value will be added as a class to the option, instead of setting as a background
       - `label` - an arbitrary label for the swatch
+      - `width` - width of the color option, default is `1`
   
 #### colorpicker
 
