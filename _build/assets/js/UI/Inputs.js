@@ -216,8 +216,15 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
     if (setting.options) {
         setting.options.forEach(value => {
             if (typeof value === 'object') {
+                const colorAsClass = !!value.colorAsClass;
+
                 const option = div('fred--color_swatch-color');
-                option.style.background = value.color;
+
+                if (colorAsClass) {
+                    option.classList.add(value.color);
+                } else {
+                    option.style.background = value.color;
+                }
 
                 if (value.width && parseFloat(value.width) > 1) {
                     option.style.width = (parseFloat(value.width) * 30) + 'px';
@@ -231,7 +238,11 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
                     defaultValueTranslated = true;
 
                     if (defaultValue) {
-                        preview.style.background = value.color;
+                        if (colorAsClass) {
+                            preview.classList.add(value.color);
+                        } else {
+                            preview.style.background = value.color;
+                        }
                     }
                 }
 
@@ -241,7 +252,11 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
                         onChange(setting.name, value.value, option, setting);
                     }
 
-                    preview.style.background = value.color;
+                    if (colorAsClass) {
+                        preview.classList.add(value.color);
+                    } else {
+                        preview.style.background = value.color;
+                    }
                 });
 
                 colors.appendChild(option);
