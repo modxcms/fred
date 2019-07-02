@@ -204,16 +204,17 @@
       text-align: left;
       padding: 4px;
       border-radius: $radius;
-      h3{
-        color: $black;
-        display: block;
-        padding: 6px 12px;
-        margin: 0 0 6px 0;
+      h3 {
         font-size: 12px;
+        font-weight: bold;
+        letter-spacing: .5px;
         text-transform: uppercase;
+        margin: 0 10px 8px 10px;
+        padding: 10px 2px 8px 2px;
+        color: $dark-gray;
         border-bottom: 1px solid $border;
       }
-      a{
+      a {
         color: $black;
         display: block;
         padding: 6px 12px;
