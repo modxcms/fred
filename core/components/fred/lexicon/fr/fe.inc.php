@@ -26,7 +26,7 @@ $_lang['fred.fe.preparing_content'] = 'Préparation du contenu';
 $_lang['fred.fe.open_sidebar'] = 'Ouvrir la barre latérale';
 $_lang['fred.fe.toggle_preview'] = 'Toggle Preview';
 $_lang['fred.fe.close_sidebar'] = 'Fermer la barre latérale';
-$_lang['fred.fe.element_settings'] = 'Paramètres de l\'élément';
+$_lang['fred.fe.element_settings'] = 'Paramètres de l\\'élément';
 $_lang['fred.fe.apply'] = 'Appliquer';
 $_lang['fred.fe.cancel'] = 'Annuler';
 $_lang['fred.fe.clear'] = 'Effacer';
@@ -105,7 +105,7 @@ $_lang['fred.fe.blueprints.blueprint_image'] = 'Image';
 
 $_lang['fred.fe.content.duplicate'] = 'Dupliquer';
 $_lang['fred.fe.content.delete'] = 'Supprimer';
-$_lang['fred.fe.content.settings'] = 'Open Settings & Plugins';
+$_lang['fred.fe.content.settings'] = 'Open Settings';
 $_lang['fred.fe.content.move_up'] = 'Déplacer vers le haut';
 $_lang['fred.fe.content.move_down'] = 'Déplacer vers le bas';
 $_lang['fred.fe.content.partial_blueprint'] = 'Create Partial Blueprint';
