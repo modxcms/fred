@@ -2,6 +2,12 @@
 
 Fred Elements are made of HTML with specific attributes. The markup can be enhanced using Twig and Element Settings.
 
+## Custom Tags
+
+### themplate.theme_dir
+
+To make themes more portable `{{template.theme_dir}}` can be used in an element as a dynamic placeholder reference to the template's theme directory (e.g. '/assets/theme/default/'.)
+
 ## Markup Examples
 
 ```html
