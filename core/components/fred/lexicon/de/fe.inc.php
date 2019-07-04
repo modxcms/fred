@@ -87,9 +87,9 @@ $_lang['fred.fe.more.openmanager'] = 'Im Manager anzeigen';
 $_lang['fred.fe.more.logout'] = 'Logout';
 
 $_lang['fred.fe.blueprints'] = 'Blaupausen';
-$_lang['fred.fe.blueprints.create_category'] = 'New Category';
+$_lang['fred.fe.blueprints.create_category'] = 'Neue Kategorie';
 $_lang['fred.fe.blueprints.category_name'] = 'Name';
-$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Adding Blueprint Category';
+$_lang['fred.fe.blueprints.creating_blueprint_category'] = 'Füge Blaupausen-Kategorie hinzu';
 $_lang['fred.fe.blueprints.create_blueprint'] = 'Blaupause anlegen';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'Blaupause wird angelegt';
 $_lang['fred.fe.blueprints.category_public'] = 'Öffentlich';
@@ -105,7 +105,7 @@ $_lang['fred.fe.blueprints.blueprint_image'] = 'Bild';
 
 $_lang['fred.fe.content.duplicate'] = 'Duplizieren';
 $_lang['fred.fe.content.delete'] = 'Löschen';
-$_lang['fred.fe.content.settings'] = 'Einstellungen & Plugins öffnen';
+$_lang['fred.fe.content.settings'] = 'Open Settings';
 $_lang['fred.fe.content.move_up'] = 'Nach oben bewegen';
 $_lang['fred.fe.content.move_down'] = 'Nach unten bewegen';
 $_lang['fred.fe.content.partial_blueprint'] = 'Erzeuge einen Teil einer Blaupause';

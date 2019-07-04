@@ -105,7 +105,7 @@ $_lang['fred.fe.blueprints.blueprint_image'] = 'Изображение';
 
 $_lang['fred.fe.content.duplicate'] = 'Дубликат';
 $_lang['fred.fe.content.delete'] = 'Удалить';
-$_lang['fred.fe.content.settings'] = 'Open Settings & Plugins';
+$_lang['fred.fe.content.settings'] = 'Open Settings';
 $_lang['fred.fe.content.move_up'] = 'Переместить вверх';
 $_lang['fred.fe.content.move_down'] = 'Переместить вниз';
 $_lang['fred.fe.content.partial_blueprint'] = 'Создание схемы макета';
