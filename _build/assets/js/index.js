@@ -293,6 +293,14 @@ export default class Fred {
     loadContent() {
         emitter.emit('fred-loading', fredConfig.lng('fred.fe.preparing_content'));
 
+        const dropZones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""]');
+        for (let dz of dropZones) {
+            const minHeight = dz.dataset.fredMinHeight;
+            if (minHeight) {
+                dz.style.minHeight = minHeight;
+            }
+        }
+
         return fetchContent().then(json => {
             if (json.data.pageSettings.tagger && Array.isArray(json.data.pageSettings.tagger)) json.data.pageSettings.tagger = {};
 

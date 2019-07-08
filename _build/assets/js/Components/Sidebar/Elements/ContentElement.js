@@ -355,6 +355,11 @@ export class ContentElement {
         let prev = null;
 
         for (let dz of dzs) {
+            const minHeight = dz.dataset.fredMinHeight;
+            if (minHeight) {
+                dz.style.minHeight = minHeight;
+            }
+
             if (prev === null) {
                 prev = dz;
                 dz.fredEl = this;
@@ -796,6 +801,11 @@ export class ContentElement {
                 } else {
                     el.removeAttribute('data-fred-render');
                 }
+            }
+
+            const dzMinHeightElements = element.querySelectorAll('[data-fred-min-height]');
+            for (let el of dzMinHeightElements) {
+                el.removeAttribute('data-fred-min-height');
             }
 
             const fredElements = element.querySelectorAll('[data-fred-name]');

@@ -231,6 +231,11 @@ final class RenderResource {
             }
         });
 
+        $dzMinHeightElements = $html->filter('[data-fred-min-height]');
+        $dzMinHeightElements->each(function(HtmlPageCrawler $node, $i) use ($item, $html) {
+            $node->removeAttribute('data-fred-min-height');
+        });
+
         $images = $html->filter('img');
         $images->each(function(HtmlPageCrawler $node, $i) {
             $node->setAttribute('data-fred-fake-src', $node->getAttribute('src'));

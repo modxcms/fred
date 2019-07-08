@@ -233,3 +233,13 @@ Used by the TinyMCE RTE with a `data-fred-link-page` attribute to create links i
 ```html
 <a href="fred.html" data-fred-link-type="page" data-fred-link-page="2">Fred</a>
 ```
+
+## data-fred-min-height
+
+Applicable for dropzones. When set, the value used in this attribute will be set in the dropzone's style min-height. 
+
+### Example
+
+```html
+<div data-fred-dropzone="content" data-fred-min-height="50px"></div>
+```
