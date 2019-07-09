@@ -8,7 +8,7 @@ import fredConfig from './Config';
 import { div, section, a, iFrame } from './UI/Elements'
 import Mousetrap from 'mousetrap';
 import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-bind.min'
-import {loadElements, pluginTools} from "./Utils";
+import {loadElements, pluginTools, valueParser} from "./Utils";
 import utilitySidebar from './Components/UtilitySidebar';
 import { getPreview, saveContent, fetchContent, fetchLexicons } from './Actions/fred';
 import ContentElement from "./Components/Sidebar/Elements/ContentElement";
@@ -258,8 +258,16 @@ export default class Fred {
         body.id = fredConfig.resource.id;
         body.data = data;
         body.plugins = fredConfig.pluginsData;
-        body.pageSettings = fredConfig.pageSettings;
+        body.pageSettings = JSON.parse(JSON.stringify(fredConfig.pageSettings));
         body.fingerprint = this.fingerprint;
+
+        if (body.pageSettings.tvs) {
+            for (let tvName in body.pageSettings.tvs) {
+                if (body.pageSettings.tvs.hasOwnProperty(tvName)) {
+                    body.pageSettings.tvs[tvName] = valueParser(body.pageSettings.tvs[tvName], true);
+                }
+            }
+        }
 
         Promise.all(promises).then(() => {
             saveContent(body)
@@ -314,6 +322,8 @@ export default class Fred {
             fredConfig.tagger = json.data.tagger || [];
             fredConfig.tvs = json.data.tvs || [];
             fredConfig.pluginsData = json.data.plugins || {};
+
+            this.renderComponents();
 
             return loadElements(json.data).then(() => {
                 drake.reloadContainers();
@@ -473,7 +483,7 @@ export default class Fred {
         let registeredDropzones = [];
 
         for (let zoneIndex = 0; zoneIndex < this.dropzones.length; zoneIndex++) {
-            if (registeredDropzones.indexOf(this.dropzones[zoneIndex].dataset.fredDropzone) != -1) {
+            if (registeredDropzones.indexOf(this.dropzones[zoneIndex].dataset.fredDropzone) !== -1) {
                 console.error('There are several dropzones with same name: ' + this.dropzones[zoneIndex].dataset.fredDropzone + '. The name of each dropzone has to be unique.');
                 return false;
             }
@@ -493,8 +503,6 @@ export default class Fred {
             if (this.scriptsToReplace[0]) {
                 this.replaceScript(0);
             }
-
-            this.renderComponents();
         });
 
     }
@@ -531,7 +539,6 @@ export default class Fred {
     }
 
     logoutUser() {
-        const url = fredConfig.config.managerUrl + '?a=security/logout';
-        document.location.href = url;
+        document.location.href = fredConfig.config.managerUrl + '?a=security/logout';
     }
 }
