@@ -10,6 +10,10 @@ The followng control individual settings and grouping for an Element in a Fred-p
 
 Set to `true` to cause XHR requests to render the Element through both the Twig and MODX parsers. The element also re-renders through both the Twig and MODX parser when you change element settings. This means you can have dynamic content that references other pages within a Fred page using MODX Snippets. Default: `false`.
 
+### cacheOutput
+
+This will cache output of an element to static HTML when set to `true` and when the previous `remote` global setting is also set to `true`.
+
 ### mediaSource
 
 Name of the Media Source to use for Finder. Multiple Names can be passed separated by comma `,`.
@@ -17,11 +21,6 @@ Name of the Media Source to use for Finder. Multiple Names can be passed separat
 ### imageMediaSource
 
 Name of the Media Source to use for Image fields. Multiple Names can be passed separated by comma `,`. This option overrides `mediaSource`.
-
-### cacheOutput
-
-Only applicable when `remote` is set to `true`.
-Will cache output of the element to static HTML.
 
 ### toolbarPluginsInclude
 
