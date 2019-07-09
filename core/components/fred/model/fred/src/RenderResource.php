@@ -236,6 +236,11 @@ final class RenderResource {
             $node->removeAttribute('data-fred-min-height');
         });
 
+        $dzMinWidthElements = $html->filter('[data-fred-min-width]');
+        $dzMinWidthElements->each(function(HtmlPageCrawler $node, $i) use ($item, $html) {
+            $node->removeAttribute('data-fred-min-width');
+        });
+
         $images = $html->filter('img');
         $images->each(function(HtmlPageCrawler $node, $i) {
             $node->setAttribute('data-fred-fake-src', $node->getAttribute('src'));

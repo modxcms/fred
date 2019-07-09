@@ -299,6 +299,11 @@ export default class Fred {
             if (minHeight) {
                 dz.style.minHeight = minHeight;
             }
+
+            const minWidth = dz.dataset.fredMinWidth;
+            if (minWidth) {
+                dz.style.minWidth = minWidth;
+            }
         }
 
         return fetchContent().then(json => {

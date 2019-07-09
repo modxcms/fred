@@ -808,6 +808,11 @@ export class ContentElement {
                 el.removeAttribute('data-fred-min-height');
             }
 
+            const dzMinWidthElements = element.querySelectorAll('[data-fred-min-width]');
+            for (let el of dzMinWidthElements) {
+                el.removeAttribute('data-fred-min-width');
+            }
+
             const fredElements = element.querySelectorAll('[data-fred-name]');
             for (let el of fredElements) {
                 this.initValue(el, element, isPreview);

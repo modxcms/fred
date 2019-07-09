@@ -243,3 +243,13 @@ Applicable for dropzones. When set, the value used in this attribute will be set
 ```html
 <div data-fred-dropzone="content" data-fred-min-height="50px"></div>
 ```
+
+## data-fred-min-width
+
+Applicable for dropzones. When set, the value used in this attribute will be set in the dropzone's style min-width. 
+
+### Example
+
+```html
+<div data-fred-dropzone="content" data-fred-min-width="50px"></div>
+```
