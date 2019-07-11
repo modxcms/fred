@@ -338,6 +338,33 @@ Ext.extend(fred.window.ThemeBuild, MODx.Window, {
                         ]
                     },
                     {
+                        title: _('fred.themes.extract_tpl'),
+                        items: [
+                            {
+                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
+                                mimeType: 'application/json',
+                                fieldLabel: _('fred.themes.extract_tpl'),
+                                name: 'extract_tpl',
+                                anchor: '100%',
+                                grow: true,
+                                growMax: 300,
+                                growMin: 200,
+                                allowBlank: true,
+                                setValue: function (v) {
+                                    if (Array.isArray(v) && v.length === 0) {
+                                        v = '';
+                                    } else {
+                                        if (typeof v === 'object') {
+                                            v = JSON.stringify(v, null, 2);
+                                        }
+                                    }
+
+                                    this.superclass().setValue.call(this, v);
+                                }
+                            }
+                        ]
+                    },
+                    {
                         title: _('fred.themes.resolvers'),
                         items: [
                             {

@@ -83,7 +83,17 @@ class FredThemeBuildProcessor extends modObjectProcessor
             return $this->failure();
         }
 
-        $built = $this->build($name, $version, $release, $theme);
+        $extractTpl = $this->getProperty('extract_tpl', '');
+        if (!empty($extractTpl)) {
+            $extractTpl = json_decode($extractTpl, true);
+
+            if (!is_array($extractTpl)) {
+                $this->addFieldError('extract_tpl', $this->modx->lexicon('fred.err.themes_extract_tpl_parse_error'));
+                return $this->failure();
+            }
+        }
+
+        $built = $this->build($name, $version, $release, $theme, $extractTpl);
 
         if ($built !== true) {
             if ($built === false) {
@@ -96,12 +106,13 @@ class FredThemeBuildProcessor extends modObjectProcessor
         return $this->success();
     }
 
-    private function build($name, $version, $release, $themeId)
+    private function build($name, $version, $release, $themeId, $extractTpl)
     {
         $buildConfig = [
             'name' => $name,
             'version' => $version,
             'release' => $release,
+            'extract_tpl' => $extractTpl,
             'dependencies' => [],
             'mediaSources' => [],
             'resolvers' => [],
@@ -114,10 +125,40 @@ class FredThemeBuildProcessor extends modObjectProcessor
 
         $this->modx->loadClass('transport.xPDOScriptVehicle');
 
+        $packagesToLoad = [];
+
+        if (!empty($extractTpl['packages'])) {
+            foreach ($extractTpl['packages'] as $package) {
+                if (empty($package['name'])) {
+                    return $this->modx->lexicon('fred.err.themes_extract_tpl_package_name');
+                }
+
+                if (empty($package['class'])) {
+                    return $this->modx->lexicon('fred.err.themes_extract_tpl_package_class');
+                }
+
+                $packagesToLoad[] = $package;
+
+                $componentName = empty($package['componentName']) ? $package['name'] : $package['componentName'];
+                $modelName = empty($package['modelName']) ? $package['name'] : $package['modelName'];
+                $settingPrefix = empty($package['settingPrefix']) ? $package['name'] : $package['settingPrefix'];
+                $service = $this->modx->getService($package['name'],$package['class'],$this->modx->getOption($settingPrefix . '.core_path',null,$this->modx->getOption('core_path').'components/' . $componentName . '/').'model/' . $modelName . '/',[]);
+
+                if (!($service instanceof $package['class'])) {
+                    return $this->modx->lexicon('fred.err.themes_extract_tpl_package_load', ['name' => $package['name']]);
+                }
+            }
+        }
+
         $vehicle = $builder->createVehicle([
             "source" => $this->fred->getOption('buildHelpers') . 'get_fred.resolver.php'
         ], [
-            "vehicle_class" => "xPDOScriptVehicle"
+            "vehicle_class" => "xPDOScriptVehicle",
+            xPDOTransport::ABORT_INSTALL_ON_VEHICLE_FAIL => true
+        ]);
+        $vehicle->validate('php', [
+            'source' => $this->fred->getOption('buildHelpers') . 'install.validator.php',
+            'packages' => $packagesToLoad
         ]);
         $builder->putVehicle($vehicle);
 
@@ -498,6 +539,28 @@ class FredThemeBuildProcessor extends modObjectProcessor
             }
         }
 
+        if (!empty($extractTpl['vehicles'])) {
+            foreach ($extractTpl['vehicles'] as $vehicleData) {
+                $graph = isset($vehicleData['object']['graph']) && is_array($vehicleData['object']['graph']) ? $vehicleData['object']['graph'] : [];
+                $graphCriteria = isset($vehicleData['object']['graphCriteria']) && is_array($vehicleData['object']['graphCriteria']) ? $vehicleData['object']['graphCriteria'] : null;
+                $criteria = !empty($vehicleData['object']['criteria']) ? ((array)$vehicleData['object']['criteria']) : [];
+
+                /** @var xPDOObject[] $iterator */
+                $iterator = $this->modx->getIterator($vehicleData['object']['class'], $criteria, false);
+                foreach ($iterator as $object) {
+                    $object->getGraph($graph, $graphCriteria, false);
+
+                    $vehicle = $builder->createVehicle($object, $vehicleData['attributes']);
+
+                    $vehicle->validate('php', [
+                        'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
+                    ]);
+
+                    $builder->putVehicle($vehicle);
+                }
+            }
+        }
+
         $installedTemplates = array_keys(array_flip($installedTemplates));
         $installedTVs = array_keys(array_flip($installedTVs));
 
@@ -509,7 +572,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
             "vehicle_class" => "xPDOScriptVehicle",
         ]);
         $vehicle->validate('php', [
-            'source' => $this->fred->getOption('buildHelpers') . 'uninstall.validator.php'
+            'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
         ]);
         $builder->putVehicle($vehicle);
 
@@ -517,6 +580,11 @@ class FredThemeBuildProcessor extends modObjectProcessor
             "source" => $this->fred->getOption('buildHelpers') . 'get_fred_uninstall.resolver.php'
         ], [
             "vehicle_class" => "xPDOScriptVehicle"
+        ]);
+
+        $vehicle->validate('php', [
+            'source' => $this->fred->getOption('buildHelpers') . 'uninstall.validator.php',
+            'packages' => $packagesToLoad
         ]);
 
         $resolvers = json_decode($this->getProperty('resolvers'), true);
