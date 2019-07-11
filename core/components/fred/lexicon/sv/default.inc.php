@@ -212,6 +212,7 @@ $_lang['fred.themes.theme_build_resolvers_desc'] = 'Lista på anpassade PHP-reso
 $_lang['fred.themes.remove_resolver'] = 'Ta bort resolver';
 $_lang['fred.themes.resolver_already_added'] = 'Resolvern har redan lagts till';
 $_lang['fred.themes.resolver_already_added_desc'] = 'Den här resolvern har redan lagts till i byggprocessen.';
+$_lang['fred.themes.extract_tpl'] = 'Extract Template';
 
 $_lang['fred.themed_templates.theme'] = 'Tema';
 $_lang['fred.themed_templates.template'] = 'Mall';
@@ -299,3 +300,7 @@ $_lang['fred.err.blueprints_ae_name'] = 'Det finns redan en ritning med det här
 $_lang['fred.err.element_categories_ae_name'] = 'Det finns redan en elementkategori med det här namnet.';
 $_lang['fred.err.elements_ae_name'] = 'Det finns redan ett element med det här namnet.';
 $_lang['fred.err.theme_ae_name'] = 'Det finns redan ett tema med det här namnet.';
+$_lang['fred.err.themes_extract_tpl_parse_error'] = 'Extract Template is not a valid JSON.';
+$_lang['fred.err.themes_extract_tpl_package_name'] = 'Extract Template: Package has to have name';
+$_lang['fred.err.themes_extract_tpl_package_class'] = 'Extract Template: Package has to have class';
+$_lang['fred.err.themes_extract_tpl_package_load'] = 'Could not load a service for package: [[+name]].';
