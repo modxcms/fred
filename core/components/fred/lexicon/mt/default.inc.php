@@ -212,6 +212,7 @@ $_lang['fred.themes.theme_build_resolvers_desc'] = 'List of custom PHP resolvers
 $_lang['fred.themes.remove_resolver'] = 'Remove Resolver';
 $_lang['fred.themes.resolver_already_added'] = 'Resolver already added';
 $_lang['fred.themes.resolver_already_added_desc'] = 'This Resolver is already added to the build process.';
+$_lang['fred.themes.extract_tpl'] = 'Extract Template';
 
 $_lang['fred.themed_templates.theme'] = 'Theme';
 $_lang['fred.themed_templates.template'] = 'Template';
@@ -299,3 +300,7 @@ $_lang['fred.err.blueprints_ae_name'] = 'Blueprint with this name already exists
 $_lang['fred.err.element_categories_ae_name'] = 'Element Category with this name already exists.';
 $_lang['fred.err.elements_ae_name'] = 'Element with this name already exists.';
 $_lang['fred.err.theme_ae_name'] = 'Theme with this name already exists.';
+$_lang['fred.err.themes_extract_tpl_parse_error'] = 'Extract Template is not a valid JSON.';
+$_lang['fred.err.themes_extract_tpl_package_name'] = 'Extract Template: Package has to have name';
+$_lang['fred.err.themes_extract_tpl_package_class'] = 'Extract Template: Package has to have class';
+$_lang['fred.err.themes_extract_tpl_package_load'] = 'Could not load a service for package: [[+name]].';
