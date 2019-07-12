@@ -19,10 +19,10 @@ class Tagger {
 
             currentTags = fredConfig.pageSettings.tagger[`tagger-${this.group.id}`];
         }
-        
+
         this.currentTags = currentTags;
         this.onChange = onChange.bind(this);
-        
+
         this.onTagToggle = this.onTagToggle.bind(this);
         this.onTagRemove = this.onTagRemove.bind(this);
     }
@@ -33,21 +33,21 @@ class Tagger {
         switch (this.group.field_type) {
             case 'tagger-field-tags' :
                 const tagsWrapper = div('fred--tagger_tags_wrapper');
-                
+
                 if (this.group.hide_input === false) {
                     this.renderInput(tagsWrapper);
                     field.appendChild(this.inputToggle);
                     field.appendChild(this.inputWrapper);
                 }
-        
+
                 if (this.group.show_autotag) {
                     this.renderAutoTag(tagsWrapper);
                 } else {
                     this.renderTags(tagsWrapper);
                 }
-        
+
                 this.toggleInput();
-                
+
                 field.appendChild(tagsWrapper);
                 break;
             case 'tagger-combo-tag':
@@ -56,18 +56,18 @@ class Tagger {
                 } else {
                     this.renderSingleTagInput();
                 }
-                
+
                 field.appendChild(this.inputWrapper);
-                
+
                 break;
             default:
                 return false;
-                
+
         }
-        
+
         return field;
     }
-    
+
     renderTagInput(tagsWrapper) {
         const inputField = input('', 'text', 'fred--tagger_input');
 
@@ -128,33 +128,33 @@ class Tagger {
         });
 
         fixChoices(tagChoices);
-        
+
         if (tagsWrapper !== null) {
             tagChoices._handleChoiceAction = function(activeItems, element) {
                 if (!activeItems || !element) {
                     return;
                 }
-    
+
                 // If we are clicking on an option
                 const id = element.getAttribute('data-id');
                 const choice = this.store.getChoiceById(id);
                 const passedKeyCode  = activeItems[0] && activeItems[0].keyCode ? activeItems[0].keyCode : null;
                 const hasActiveDropdown = this.dropdown.classList.contains(this.config.classNames.activeState);
-    
+
                 // Update choice keyCode
                 choice.keyCode = passedKeyCode;
-    
+
                 const event = new CustomEvent('choice', {
                     detail: null,
                     bubbles: true,
                     cancelable: true
                 });
-    
+
                 this.passedElement.dispatchEvent(event);
-                
+
                 if (choice && !choice.selected && !choice.disabled) {
                     const canAddItem = this._canAddItem(activeItems, choice.value);
-    
+
                     if (canAddItem.response) {
                         this._addItem(
                             choice.value,
@@ -168,9 +168,9 @@ class Tagger {
                         this._triggerChange(choice.value);
                     }
                 }
-    
+
                 // this.clearInput();
-    
+
                 // We wont to close the dropdown if we are dealing with a single select box
                 if (hasActiveDropdown && this.isSelectOneElement) {
                     // this.hideDropdown();
@@ -178,7 +178,7 @@ class Tagger {
                 }
             };
         }
-        
+
         if (defaultValue !== null) {
             tagChoices.setValue([defaultValue]);
         }
@@ -193,7 +193,7 @@ class Tagger {
                             label: '' + tag
                         });
                     });
-                    
+
                     initData = tags;
                     callback(tags, 'value', 'label');
                 })
@@ -220,7 +220,7 @@ class Tagger {
                                 label: '' + tag
                             });
                         });
-                        
+
                         lookupCache[query] = tags;
                         populateOptions(tags);
                     })
@@ -237,7 +237,8 @@ class Tagger {
 
         tagChoices.passedElement.addEventListener('change', event => {
             if (tagsWrapper === null) {
-                this.currentTags = [event.detail.value.trim()];
+                this.currentTags.length = 0;
+                this.currentTags.push(event.detail.value.trim());
                 this.onChange(this.currentTags);
                 tagChoices.setChoices(initData, 'value', 'label', true);
             } else {
@@ -253,20 +254,20 @@ class Tagger {
             });
         }
     }
-    
+
     renderSingleSelectInput() {
         this.inputWrapper = div('fred--tagger_input_wrapper');
         let value = null;
         if (this.currentTags.length > 0) {
             value = this.currentTags[0];
         }
-        
+
         this.renderSelectInput(null, value);
     }
-    
+
     renderSingleTagInput() {
         this.inputWrapper = div('fred--tagger_input_wrapper');
-        
+
         const inputField = input('', 'text', 'fred--tagger_input');
 
         if (this.currentTags.length > 0) {
@@ -278,7 +279,7 @@ class Tagger {
                 e.preventDefault();
             }
         });
-        
+
         inputField.addEventListener('keyup', e => {
             this.currentTags = [inputField.value.trim()];
             this.onChange(this.currentTags);
@@ -289,12 +290,12 @@ class Tagger {
                 inputField.blur();
             } else {
                 inputField.openList(inputField.value, 0);
-                inputField.focus();     
+                inputField.focus();
             }
         });
 
         showList.addEventListener('mousedown', e => {
-            showList.listVisible = (inputField.sc.style.display === 'block'); 
+            showList.listVisible = (inputField.sc.style.display === 'block');
         });
 
         this.inputWrapper.appendChild(inputField);
@@ -323,7 +324,7 @@ class Tagger {
             }
         });
     }
-    
+
     renderInput(tagsWrapper) {
         this.inputWrapper = div(['fred--tagger_input_wrapper', 'fred--hidden']);
 
@@ -343,11 +344,11 @@ class Tagger {
             this.renderSelectInput(tagsWrapper);
         }
     }
-    
+
     renderTag(tag, active = false, onClick = () => {}) {
         const tagToggle = span('fred--tagger_tag', tag);
         tagToggle.setAttribute('data-tag', tag);
-        
+
         if (active) {
             tagToggle.classList.add('fred--tagger_tag_active');
         }
@@ -358,14 +359,14 @@ class Tagger {
                 onClick(tagToggle, tag);
             });
         }
-        
+
         return tagToggle;
     }
 
     renderAutoTag(tagsWrapper) {
         this.group.tags.forEach(tag => {
             let active = false;
-            
+
             if (~this.currentTags.indexOf(tag)) {
                 active = true;
             }
@@ -396,7 +397,7 @@ class Tagger {
                 tagToggle.classList.add('fred--tagger_tag_active');
                 this.currentTags = [tag];
             }
-            
+
             this.onChange(this.currentTags);
 
             return;
@@ -433,10 +434,10 @@ class Tagger {
 
         inputField.value = '';
     }
-    
+
     onTagAdd(tagsWrapper, tagsString) {
         const tags = tagsString.trim().split(',');
-        
+
         tags.forEach(tag => {
             if (this.checkTagLimit()) {
                 tag = tag.trim();
@@ -506,7 +507,7 @@ class Tagger {
             hideOnSelect: false,
             onSelect: (e, term, item) => {}
         };
-        
+
         for (let k in options) {
             if (options.hasOwnProperty(k)) o[k] = options[k];
         }
@@ -518,7 +519,7 @@ class Tagger {
         element.sc = div(['fred--autocomplete_suggestions']);
         element.autocompleteAttr = element.getAttribute('autocomplete');
         element.setAttribute('autocomplete', 'off');
-        
+
         element.cache = {};
         element.last_val = '';
 
@@ -554,28 +555,28 @@ class Tagger {
                 });
             }
         };
-        
+
         element.updateSC = (resize, next) => {
             const rect = element.getBoundingClientRect();
             element.sc.style.width = Math.round(rect.right - rect.left) + 'px'; // outerWidth
-            
+
             if (!resize) {
                 element.sc.style.display = 'block';
                 if (!element.sc.maxHeight) {
                     element.sc.maxHeight = parseInt((window.getComputedStyle ? getComputedStyle(element.sc, null) : element.sc.currentStyle).maxHeight);
                 }
-                
+
                 if (!element.sc.suggestionHeight) {
                     element.sc.suggestionHeight = element.sc.querySelector('.fred--autocomplete_suggestion').offsetHeight;
                 }
-                
+
                 if (element.sc.suggestionHeight) {
                     if (!next) {
                         element.sc.scrollTop = 0;
                     } else {
                         const scrTop = element.sc.scrollTop;
                         const selTop = next.getBoundingClientRect().top - element.sc.getBoundingClientRect().top;
-                        
+
                         if (selTop + element.sc.suggestionHeight - element.sc.maxHeight > 0) {
                             element.sc.scrollTop = selTop + element.sc.suggestionHeight + scrTop - element.sc.maxHeight;
                         } else if (selTop < 0) {
@@ -587,17 +588,17 @@ class Tagger {
         };
         element.blurHandler = () => {
             let over_sb = false;
-            
+
             try {
                 over_sb = element.parentNode.querySelector('.fred--autocomplete_suggestions:hover');
             } catch (e) {
                 over_sb = false;
             }
-            
+
             if (!over_sb) {
                 element.last_val = element.value;
                 element.sc.style.display = 'none';
-                
+
                 // setTimeout(() => {
                 //     element.sc.style.display = 'none';
                 // }, 350);
@@ -613,14 +614,14 @@ class Tagger {
             if ((key === 40 || key === 38) && element.sc.innerHTML) {
                 let next;
                 let sel = element.sc.querySelector('.fred--autocomplete_suggestion.fred--autocomplete_suggestion_selected');
-                
+
                 if (!sel) {
                     next = (key === 40) ? element.sc.querySelector('.fred--autocomplete_suggestion') : element.sc.childNodes[element.sc.childNodes.length - 1]; // first : last
                     next.classList.add('fred--autocomplete_suggestion_selected');
                     element.value = next.getAttribute('data-val');
                 } else {
                     next = (key === 40) ? sel.nextSibling : sel.previousSibling;
-                    
+
                     if (next) {
                         sel.classList.remove('fred--autocomplete_suggestion_selected');
                         next.classList.add('fred--autocomplete_suggestion_selected');
@@ -632,7 +633,7 @@ class Tagger {
                     }
                 }
                 element.updateSC(0, next);
-                
+
                 return false;
             } else if (key === 27) { // esc
                 element.value = element.last_val;
@@ -641,7 +642,7 @@ class Tagger {
                 let sel = element.sc.querySelector('.fred--autocomplete_suggestion.fred--autocomplete_suggestion_selected');
                 if (sel && element.sc.style.display !== 'none') {
                     o.onSelect(e, sel.getAttribute('data-val'), sel);
-                    
+
                     if (o.hideOnSelect === true) {
                         setTimeout(function () {
                             element.sc.style.display = 'none';
@@ -654,7 +655,7 @@ class Tagger {
             const key = window.event ? e.keyCode : e.which;
             if (!key || (key < 35 || key > 40) && key !== 13 && key !== 27) {
                 const val = element.value;
-                
+
                 if (val.length >= o.minChars) {
                     if (val !== element.last_val) {
                         element.openList(val, o.delay);
@@ -680,14 +681,14 @@ class Tagger {
             suggestionItem.addEventListener('mouseover', e => {
                 suggestionItem.classList.add('fred--autocomplete_suggestion_selected');
             });
-            
+
             suggestionItem.addEventListener('mouseleave', e => {
                 const selectedItems = suggestionItem.parentElement.querySelectorAll('.fred--autocomplete_suggestion_selected');
                 for (let item of selectedItems) {
-                    item.classList.remove('fred--autocomplete_suggestion_selected');   
+                    item.classList.remove('fred--autocomplete_suggestion_selected');
                 }
             });
-            
+
             suggestionItem.addEventListener('mousedown', e => {
                 const value = suggestionItem.getAttribute('data-val');
                 element.value = value;
@@ -700,15 +701,15 @@ class Tagger {
 
             return suggestionItem;
         };
-        
+
         const suggest = (data, val, cache = true) => {
             if (cache === true) {
                 element.cache[val] = data;
             }
-            
+
             if (data.length && val.length >= o.minChars) {
                 element.sc.innerHTML = '';
-                
+
                 for (let i = 0; i < data.length; i++) {
                     element.sc.appendChild(renderItem(data[i], val));
                 }
@@ -718,12 +719,12 @@ class Tagger {
                 element.sc.style.display = 'none';
             }
         };
-        
+
         window.addEventListener('resize', element.updateSC);
         element.addEventListener('blur', element.blurHandler);
         element.addEventListener('keydown', element.keydownHandler);
         element.addEventListener('keyup', element.keyupHandler);
-        
+
         element.insertAdjacentElement('afterend', element.sc);
     }
 }
