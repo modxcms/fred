@@ -120,9 +120,9 @@ gulp.task("build-babel", gulp.series("clean"), () =>
     .pipe(gulp.dest(libFolder))
 );
 
-gulp.task("build-web-dev", gulp.series("webpack:build-web-dev", "css"), () => {
-  gulp.watch([sources], ["webpack:build-web-dev"]);
-  gulp.watch(["./_build/assets/sass/**/*.scss"], ["css"]);
+gulp.task("build-web-dev", () => {
+  gulp.watch([sources], gulp.series("webpack:build-web-dev"));
+  gulp.watch(["./_build/assets/sass/**/*.scss"], gulp.series("css"));
 });
 
 // Build for web
