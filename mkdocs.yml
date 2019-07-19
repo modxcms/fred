@@ -39,6 +39,7 @@ nav:
       - Building Themes: themer/cmp/themes.md
       - Themed Templates: themer/cmp/themed_templates.md
       - Media Sources: themer/cmp/media_sources.md
+      - Theme Settings, Extract Templates & Resolvers: themer/cmp/theme_settings_and_resolvers.md
     - Collaborating on Themes:
         - Intro to Collaborating: collab/index.md
         - Setting up Gitify: collab/gitify.md
