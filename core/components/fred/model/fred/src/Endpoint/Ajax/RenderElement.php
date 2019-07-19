@@ -65,13 +65,6 @@ class RenderElement extends Endpoint
         if ($parseModx === true) {
             $resource = $this->modx->getObject('modResource', $resourceId);
 
-            $theme = $this->fred->getTheme($resource->template);
-            if ($theme) {
-                $themeUri = $theme->getThemeFolderUri();
-                $this->modx->setPlaceholder('+fred.theme_dir', $themeUri);
-                $this->modx->setOption('fred.theme_dir', $themeUri);
-            }
-
             $queryParams = $this->getClaim('queryParams');
             if ($queryParams !== false) {
                 $queryParams = (array)$queryParams;

@@ -409,7 +409,8 @@ class FredThemeBuildProcessor extends modObjectProcessor
             /** @var modSystemSetting[] $settings */
             $settings = $this->modx->getIterator('modSystemSetting', [
                 'namespace' => $namespace->name,
-                'key:LIKE' => "{$namespace->name}.%"
+                'key:LIKE' => "{$namespace->name}.%",
+                'key:!=' => "{$namespace->name}.theme_dir"
             ]);
 
             $settingAttributes = [
@@ -429,7 +430,8 @@ class FredThemeBuildProcessor extends modObjectProcessor
             /** @var modLexiconEntry[] $lexicons */
             $lexicons = $this->modx->getIterator('modLexiconEntry', [
                 'namespace' => $namespace->name,
-                'name:LIKE' => "setting_{$namespace->name}.%"
+                'name:LIKE' => "setting_{$namespace->name}.%",
+                'name:!=' => "setting_{$namespace->name}.theme_dir"
             ]);
 
             $lexiconsAttributes = [

@@ -342,6 +342,14 @@ if ($object->xpdo) {
                 }
             }
 
+            if ($oldPackage && $oldPackage->compareVersion('1.1.0-rc2', '>')) {
+                /** @var FredTheme[] $themes */
+                $themes = $modx->getIterator('FredTheme');
+                foreach ($themes as $theme) {
+                    $theme->save();
+                }
+            }
+
             break;
     }
 }

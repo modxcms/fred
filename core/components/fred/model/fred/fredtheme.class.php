@@ -43,6 +43,48 @@ class FredTheme extends xPDOSimpleObject {
             }
         }
 
+        $themeDirSetting = $this->xpdo->getObject('modSystemSetting', ['key' => "{$this->namespace}.theme_dir"]);
+        if (!$themeDirSetting) {
+            $themeDirSetting = $this->xpdo->newObject('modSystemSetting');
+            $themeDirSetting->set('key', "{$this->namespace}.theme_dir");
+            $themeDirSetting->set('namespace', $this->namespace);
+        }
+
+        $themeDirSetting->set('value', $this->getThemeFolderUri());
+        $themeDirSetting->save();
+
+        /** @var $themeDirLexicon $lexicons */
+        $themeDirLexicon = $this->xpdo->getObject('modLexiconEntry', [
+            'namespace' => $this->namespace,
+            'name' => "setting_{$this->namespace}.theme_dir"
+        ]);
+        if (!$themeDirLexicon) {
+            $themeDirLexicon = $this->xpdo->newObject('modLexiconEntry');
+            $themeDirLexicon->set('namespace', $this->namespace);
+            $themeDirLexicon->set('name', "setting_{$this->namespace}.theme_dir");
+            $themeDirLexicon->set('language', "en");
+        }
+        $themeDirLexicon->set('value', 'Theme Dir');
+        $themeDirLexicon->save();
+
+        /** @var modLexiconEntry $themeDirDescLexicon */
+        $themeDirDescLexicon = $this->xpdo->getObject('modLexiconEntry', [
+            'namespace' => $this->namespace,
+            'name' => "setting_{$this->namespace}.theme_dir_desc"
+        ]);
+        if (!$themeDirDescLexicon) {
+            $themeDirDescLexicon = $this->xpdo->newObject('modLexiconEntry');
+            $themeDirDescLexicon->set('namespace', $this->namespace);
+            $themeDirDescLexicon->set('name', "setting_{$this->namespace}.theme_dir_desc");
+            $themeDirDescLexicon->set('language', "en");
+        }
+        $themeDirDescLexicon->set('value', '!!! DO NOT CHANGE !!! This setting is automatically generated.');
+        $themeDirDescLexicon->save();
+
+        $this->xpdo->cacheManager->refresh([
+            'system_settings' => []
+        ]);
+
         return parent::save($cacheFlag);
     }
 

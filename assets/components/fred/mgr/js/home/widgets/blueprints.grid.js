@@ -1,7 +1,7 @@
 fred.grid.Blueprints = function (config) {
     config = config || {};
     config.permission = config.permission || {};
-    
+
     if (config.permission.fred_blueprints_save) {
         config.save_action = 'mgr/blueprints/updatefromgrid';
         config.autosave = true;
@@ -12,7 +12,7 @@ fred.grid.Blueprints = function (config) {
     if (!config.permission.fred_blueprints_save && !config.permission.fred_blueprints_delete) {
         config.showGear = false;
     }
-    
+
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
         baseParams: {
@@ -40,7 +40,7 @@ fred.grid.Blueprints = function (config) {
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                     if (value) {
                         value = fred.prependBaseUrl(value, record.data.theme_theme_folder);
-                        
+
                         metaData.attr = 'ext:qtip=\'<img src=\"' + value + '\">\'';
                         return '<img src="' + value + '"  style="max-width:200px;max-height:150px;">';
                     }
@@ -148,7 +148,7 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
                 handler: this.updateBlueprint
             });
         }
-        
+
         if (this.config.permission.fred_blueprints_delete) {
             if (m.length > 0) {
                 m.push('-');
@@ -162,7 +162,7 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
 
         return m;
     },
-    
+
     getTbar: function(config) {
         return [
             '->',
@@ -252,7 +252,7 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
                     scope: this
                 }
             }
-        ];                 
+        ];
     },
 
     removeBlueprint: function (btn, e) {
@@ -280,6 +280,12 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
 
     filterCombo: function (combo, record) {
         var s = this.getStore();
+        if (!record) {
+            s.baseParams.category = 0;
+            categoryFilter.setValue();
+            return;
+        }
+
         s.baseParams[combo.filterName] = record.data[combo.valueField];
 
         if (combo.filterName === 'theme') {

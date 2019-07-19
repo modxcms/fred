@@ -399,9 +399,9 @@ final class RenderResource {
 
     private function mergeSetting($id, $settings = [])
     {
-        $settings['theme_dir'] = '[[++fred.theme_dir]]';
+        $settings['theme_dir'] = "[[++{$this->theme->namespace}.theme_dir]]";
         $settings['template'] = [
-            'theme_dir' => '[[++fred.theme_dir]]'
+            'theme_dir' => "[[++{$this->theme->namespace}.theme_dir]]"
         ];
 
         $settings['id'] = $id;
