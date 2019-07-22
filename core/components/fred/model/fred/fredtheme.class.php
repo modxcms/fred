@@ -64,7 +64,7 @@ class FredTheme extends xPDOSimpleObject {
             $themeDirLexicon->set('name', "setting_{$this->namespace}.theme_dir");
             $themeDirLexicon->set('language', "en");
         }
-        $themeDirLexicon->set('value', 'Theme Dir');
+        $themeDirLexicon->set('value', 'Theme Directory');
         $themeDirLexicon->save();
 
         /** @var modLexiconEntry $themeDirDescLexicon */
@@ -78,7 +78,7 @@ class FredTheme extends xPDOSimpleObject {
             $themeDirDescLexicon->set('name', "setting_{$this->namespace}.theme_dir_desc");
             $themeDirDescLexicon->set('language', "en");
         }
-        $themeDirDescLexicon->set('value', '!!! DO NOT CHANGE !!! This setting is automatically generated.');
+        $themeDirDescLexicon->set('value', 'WARNING! DO NOT CHANGE! This setting is automatically generated.');
         $themeDirDescLexicon->save();
 
         $this->xpdo->cacheManager->refresh([
