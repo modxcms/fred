@@ -1,7 +1,7 @@
 import ToolbarPlugin from "./ToolbarPlugin";
 import MoveHandle from "./MoveHandle";
-import {button, div} from "../../../../UI/Elements";
-import fredConfig from "../../../../Config";
+import {button, div} from "../../UI/Elements";
+import fredConfig from "../../Config";
 
 export default class Move extends ToolbarPlugin {
     static permission = 'fred_element_move';

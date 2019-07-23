@@ -1,6 +1,6 @@
 import Editor from './Editor';
 import Finder from '../Finder';
-import ContentElement from "../Components/Sidebar/Elements/ContentElement";
+import Element from "../Content/Element";
 import { div } from '../UI/Elements';
 import { image } from '../UI/Inputs';
 
@@ -10,7 +10,7 @@ export default class ImageEditor extends Editor {
     init() {
         this.state = {
             ...(this.state),
-            src: (ContentElement.getElValue(this.el) || '')
+            src: (Element.getElValue(this.el) || '')
         }
     }
 

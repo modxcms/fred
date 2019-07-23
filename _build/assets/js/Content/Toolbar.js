@@ -1,11 +1,11 @@
-import { h3, div, button } from "../../../UI/Elements";
+import { h3, div, button } from "../UI/Elements";
 import ElementScreenshot from "./Toolbar/ElementScreenshot";
 import PartialBlueprint from "./Toolbar/PartialBlueprint";
 import ElementSettings from "./Toolbar/ElementSettings";
 import Duplicate from "./Toolbar/Duplicate";
 import Delete from "./Toolbar/Delete";
 import Move from "./Toolbar/Move";
-import fredConfig from "../../../Config";
+import fredConfig from "../Config";
 import RefreshElementCache from "./Toolbar/RefreshElementCache";
 
 export default class Toolbar {

@@ -1,5 +1,5 @@
 import {div} from "./UI/Elements";
-import ContentElement from "./Components/Sidebar/Elements/ContentElement";
+import Element from "./Content/Element";
 import fredConfig from './Config';
 import ui from './UI';
 import emitter from './EE';
@@ -180,7 +180,7 @@ const loadChildren = (zones, parent, elements, fireEvents = false) => {
                     chunk.elementMarkup = elements[element.widget].html;
                     chunk.elementOptions = elements[element.widget].options || {};
 
-                    const contentElement = new ContentElement(chunk, zoneName, parent, element.values, (element.settings || {}), (element.pluginsData || {}), (element.elId || null));
+                    const contentElement = new Element(chunk, zoneName, parent, element.values, (element.settings || {}), (element.pluginsData || {}), (element.elId || null));
                     promises.push(contentElement.render().then(() => {
                         return loadChildren(element.children, contentElement, elements, fireEvents).then(() => {
                             if (fireEvents === true) {
@@ -233,7 +233,7 @@ export const loadElements = data => {
                         chunk.elementMarkup = data.elements[element.widget].html;
                         chunk.elementOptions = data.elements[element.widget].options || {};
 
-                        const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}), (element.pluginsData || {}), (element.elId || null));
+                        const contentElement = new Element(chunk, zoneName, null, element.values, (element.settings || {}), (element.pluginsData || {}), (element.elId || null));
                         promises.push(contentElement.render().then(wrapper => {
                             return loadChildren(element.children, contentElement, data.elements).then(() => {
                                 return wrapper;
@@ -289,7 +289,7 @@ export const buildBlueprint = (data, parent, target, sibling) => {
                             chunk.elementMarkup = data.elements[element.widget].html;
                             chunk.elementOptions = data.elements[element.widget].options;
 
-                            const contentElement = new ContentElement(chunk, zoneName, null, element.values, (element.settings || {}), (element.pluginsData || {}));
+                            const contentElement = new Element(chunk, zoneName, null, element.values, (element.settings || {}), (element.pluginsData || {}));
                             promises.push(contentElement.render().then(wrapper => {
                                 loadChildren(element.children, contentElement, data.elements, true).then(() => {
                                     const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
@@ -354,7 +354,7 @@ export const buildBlueprint = (data, parent, target, sibling) => {
         chunk.elementMarkup = data.elements[element.widget].html;
         chunk.elementOptions = data.elements[element.widget].options || {};
 
-        const contentElement = new ContentElement(chunk, target.dataset.fredDropzone, parent, element.values, (element.settings || {}), (element.pluginsData || {}));
+        const contentElement = new Element(chunk, target.dataset.fredDropzone, parent, element.values, (element.settings || {}), (element.pluginsData || {}));
 
         promises.push(contentElement.render().then(() => {
             if (parent) {

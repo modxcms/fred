@@ -1,6 +1,6 @@
 import emitter from './EE';
 import dragula from 'dragula';
-import ContentElement from './Components/Sidebar/Elements/ContentElement';
+import Element from './Content/Element';
 import fredConfig from "./Config";
 import { buildBlueprint } from "./Utils";
 import { loadBlueprint } from './Actions/blueprints';
@@ -63,7 +63,7 @@ class Drake {
                 const parent = target.fredEl || null;
 
                 if (source.classList.contains('elements-source')) {
-                    const contentElement = new ContentElement(el.lastChild, target.dataset.fredDropzone, parent);
+                    const contentElement = new Element(el.lastChild, target.dataset.fredDropzone, parent);
                     contentElement.render().then(() => {
                         if (parent) {
                             if (sibling === null) {

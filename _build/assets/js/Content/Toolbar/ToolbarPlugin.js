@@ -1,5 +1,5 @@
-import fredConfig from "../../../../Config";
-import { a } from "../../../../UI/Elements";
+import fredConfig from "../../Config";
+import { a } from "../../UI/Elements";
 
 export default class ToolbarPlugin {
     static permission = null;

@@ -1,17 +1,17 @@
-import drake from '../../../Drake';
-import emitter from '../../../EE';
+import drake from '../Drake';
+import emitter from '../EE';
 import { twig } from 'twig';
-import fredConfig from '../../../Config';
-import {div, img} from '../../../UI/Elements';
-import { applyScripts, valueParser, getTemplateSettings } from '../../../Utils';
+import fredConfig from '../Config';
+import {div, img} from '../UI/Elements';
+import { applyScripts, valueParser, getTemplateSettings } from '../Utils';
 import Mousetrap from 'mousetrap';
 import hoverintent from 'hoverintent';
 import elementSettings from './ElementSettings';
-import { renderElement } from '../../../Actions/elements';
+import { renderElement } from '../Actions/elements';
 import Toolbar from "./Toolbar";
 import jsSHA from "jssha";
 
-export class ContentElement {
+export class Element {
     constructor(el, dzName, parent = null, content = {}, settings = {}, pluginsData = {}, elId = null) {
         this.config = fredConfig.config;
         this.el = el;
@@ -965,7 +965,7 @@ export class ContentElement {
             if (dzs.hasOwnProperty(dzName)) {
                 dzs[dzName].children.forEach(child => {
                     if (this.dzs[dzName]) {
-                        const clonedChild = new ContentElement(child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings, child.fredEl.pluginsData);
+                        const clonedChild = new Element(child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings, child.fredEl.pluginsData);
                         clonedChild.render().then(() => {
                             this.addElementToDropZone(dzName, clonedChild);
 
@@ -978,7 +978,7 @@ export class ContentElement {
     }
 
     duplicate() {
-        const clone = new ContentElement(this.el, this.dzName, this.parent, this.content, this.settings, this.pluginsData);
+        const clone = new Element(this.el, this.dzName, this.parent, this.content, this.settings, this.pluginsData);
         clone.render().then(() => {
             clone.duplicateDropZones(this.dzs);
 
@@ -1036,4 +1036,4 @@ export class ContentElement {
     }
 }
 
-export default ContentElement;
+export default Element;

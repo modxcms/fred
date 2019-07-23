@@ -1,6 +1,6 @@
 import ToolbarPlugin from "./ToolbarPlugin";
 import elementSettings from '../ElementSettings';
-import fredConfig from "../../../../Config";
+import fredConfig from "../../Config";
 
 export default class ElementSettings extends ToolbarPlugin {
     static checkInvalidTheme = false;

@@ -1,10 +1,10 @@
 import ToolbarPlugin from "./ToolbarPlugin";
-import fredConfig from "../../../../Config";
-import {img, span} from "../../../../UI/Elements";
-import Modal from "../../../../Modal";
-import emitter from "../../../../EE";
-import {replaceImage} from "../../../../Actions/elements";
-import cache from "../../../../Cache";
+import fredConfig from "../../Config";
+import {img, span} from "../../UI/Elements";
+import Modal from "../../Modal";
+import emitter from "../../EE";
+import {replaceImage} from "../../Actions/elements";
+import cache from "../../Cache";
 import html2canvas from "html2canvas";
 
 export default class ElementScreenshot extends ToolbarPlugin {

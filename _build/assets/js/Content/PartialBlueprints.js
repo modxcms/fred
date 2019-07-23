@@ -1,11 +1,11 @@
-import utilitySidebar from './../../UtilitySidebar';
-import {choices, image, text, toggle} from "../../../UI/Inputs";
-import {button, div, fieldSet, form, img, legend, span} from "../../../UI/Elements";
-import cache from "../../../Cache";
-import emitter from "../../../EE";
-import fredConfig from "../../../Config";
+import utilitySidebar from '../Components/UtilitySidebar';
+import {choices, image, text, toggle} from "../UI/Inputs";
+import {button, div, fieldSet, form, legend, span} from "../UI/Elements";
+import cache from "../Cache";
+import emitter from "../EE";
+import fredConfig from "../Config";
 import html2canvas from "html2canvas";
-import { getBlueprints, createBlueprint } from '../../../Actions/blueprints';
+import { getBlueprints, createBlueprint } from '../Actions/blueprints';
 
 export class PartialBlueprints {
     open(el) {

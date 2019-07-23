@@ -11,8 +11,8 @@ import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-
 import {loadElements, pluginTools, valueParser} from "./Utils";
 import utilitySidebar from './Components/UtilitySidebar';
 import { getPreview, saveContent, fetchContent, fetchLexicons } from './Actions/fred';
-import ContentElement from "./Components/Sidebar/Elements/ContentElement";
-import ToolbarPlugin from "./Components/Sidebar/Elements/Toolbar/ToolbarPlugin";
+import Element from "./Content/Element";
+import ToolbarPlugin from "./Content/Toolbar/ToolbarPlugin";
 
 export default class Fred {
     constructor(config = {}) {
@@ -239,16 +239,16 @@ export default class Fred {
             const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
             for (let target of targets) {
                 if (fredConfig.pageSettings.hasOwnProperty(target.dataset.fredTarget)) {
-                    fredConfig.pageSettings[target.dataset.fredTarget] = ContentElement.getElValue(target);
+                    fredConfig.pageSettings[target.dataset.fredTarget] = Element.getElValue(target);
                     continue;
                 }
 
                 if ((target.dataset.fredTarget.indexOf('tv_') === 0) && (target.dataset.fredTarget.substr(3) !== '')) {
-                    fredConfig.pageSettings.tvs[target.dataset.fredTarget.substr(3)] = ContentElement.getElValue(target);
+                    fredConfig.pageSettings.tvs[target.dataset.fredTarget.substr(3)] = Element.getElValue(target);
                     continue;
                 }
 
-                body[target.dataset.fredTarget] = ContentElement.getElValue(target);
+                body[target.dataset.fredTarget] = Element.getElValue(target);
             }
             promises.push(this.getCleanDropZoneContent(this.dropzones[i]).then(content => {
                 body[this.dropzones[i].dataset.fredDropzone] = content;

@@ -1,5 +1,5 @@
 import Editor from './Editor';
-import ContentElement from "../Components/Sidebar/Elements/ContentElement";
+import Element from "../Content/Element";
 import { div } from '../UI/Elements';
 import { text } from '../UI/Inputs';
 
@@ -9,7 +9,7 @@ export default class IconEditor extends Editor {
     init() {
         this.state = {
             ...(this.state),
-            icon: (ContentElement.getElValue(this.el) || '')
+            icon: (Element.getElValue(this.el) || '')
         };
     }
 
