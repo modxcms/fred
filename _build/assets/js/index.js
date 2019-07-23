@@ -13,6 +13,7 @@ import utilitySidebar from './Components/UtilitySidebar';
 import { getPreview, saveContent, fetchContent, fetchLexicons } from './Actions/fred';
 import Element from "./Content/Element";
 import ToolbarPlugin from "./Content/Toolbar/ToolbarPlugin";
+import Dropzone from "./Content/Dropzone";
 
 export default class Fred {
     constructor(config = {}) {
@@ -157,14 +158,14 @@ export default class Fred {
     getPreviewContent() {
         const promises = [];
 
-        for (let i = 0; i < this.dropzones.length; i++) {
-            promises.push(this.getCleanDropZoneContent(this.dropzones[i], true, false, true).then(content => {
-                const dz = this.previewDocument.querySelector('[data-fred-dropzone="' + this.dropzones[i].dataset.fredDropzone + '"]');
+        this.dropzones.forEach(dropzone => {
+            promises.push(dropzone.getCleanContent(true, false, true).then(content => {
+                const dz = this.previewDocument.querySelector('[data-fred-dropzone="' + dropzone.name + '"]');
                 if (dz) {
                     dz.innerHTML = content;
                 }
             }));
-        }
+        });
 
         let base = this.previewDocument.querySelector('base');
         if (base) {
@@ -195,33 +196,6 @@ export default class Fred {
         utilitySidebar.render();
     }
 
-    getDataFromDropZone(dropZone) {
-        const data = [];
-
-        for (let child of dropZone.children) {
-            data.push(child.fredEl.getContent());
-        }
-
-        return data;
-    }
-
-    getCleanDropZoneContent(dropZone, parseModx = false, handleLinks = true, isPreview = false) {
-        let cleanedContent = '';
-
-        const promises = [];
-        for (let child of dropZone.children) {
-            promises.push(child.fredEl.cleanRender(parseModx, handleLinks, isPreview));
-        }
-
-        return Promise.all(promises).then(values => {
-            values.forEach(el => {
-                cleanedContent += el.innerHTML;
-            });
-
-            return cleanedContent;
-        });
-    }
-
     save() {
         if(!fredConfig.permission.save_document){
             return;
@@ -233,10 +207,10 @@ export default class Fred {
 
         const promises = [];
 
-        for (let i = 0; i < this.dropzones.length; i++) {
-            data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropZone(this.dropzones[i]);
+        this.dropzones.forEach(dropzone => {
+            data[dropzone.name] = dropzone.getContent();
 
-            const targets = this.dropzones[i].querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
+            const targets = dropzone.el.querySelectorAll('[data-fred-target]:not([data-fred-target=""])');
             for (let target of targets) {
                 if (fredConfig.pageSettings.hasOwnProperty(target.dataset.fredTarget)) {
                     fredConfig.pageSettings[target.dataset.fredTarget] = Element.getElValue(target);
@@ -250,10 +224,9 @@ export default class Fred {
 
                 body[target.dataset.fredTarget] = Element.getElValue(target);
             }
-            promises.push(this.getCleanDropZoneContent(this.dropzones[i]).then(content => {
-                body[this.dropzones[i].dataset.fredDropzone] = content;
-            }))
-        }
+
+            promises.push(dropzone.getCleanContent().then(content => body[dropzone.name] = content));
+        });
 
         body.id = fredConfig.resource.id;
         body.data = data;
@@ -300,19 +273,6 @@ export default class Fred {
 
     loadContent() {
         emitter.emit('fred-loading', fredConfig.lng('fred.fe.preparing_content'));
-
-        const dropZones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""]');
-        for (let dz of dropZones) {
-            const minHeight = dz.dataset.fredMinHeight;
-            if (minHeight) {
-                dz.style.minHeight = minHeight;
-            }
-
-            const minWidth = dz.dataset.fredMinWidth;
-            if (minWidth) {
-                dz.style.minWidth = minWidth;
-            }
-        }
 
         return fetchContent().then(json => {
             if (json.data.pageSettings.tagger && Array.isArray(json.data.pageSettings.tagger)) json.data.pageSettings.tagger = {};
@@ -369,7 +329,7 @@ export default class Fred {
 
         emitter.on('fred-page-setting-change', (settingName, settingValue, parsedValue, sourceEl) => {
             this.dropzones.forEach(dz => {
-                const targets = dz.querySelectorAll(`[data-fred-target="${settingName}"]`);
+                const targets = dz.el.querySelectorAll(`[data-fred-target="${settingName}"]`);
                 for (let target of targets) {
                     if (target !== sourceEl) {
                         target.fredEl.setElValue(target, settingValue, '_value', '_raw', null, false, true);
@@ -479,16 +439,20 @@ export default class Fred {
         this.registerListeners();
         this.registerKeyboardShortcuts();
 
-        this.dropzones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
-        let registeredDropzones = [];
+        this.dropzones = [];
+        const dropzones = document.querySelectorAll('[data-fred-dropzone]:not([data-fred-dropzone=""])');
+        const registeredDropzones = [];
 
-        for (let zoneIndex = 0; zoneIndex < this.dropzones.length; zoneIndex++) {
-            if (registeredDropzones.indexOf(this.dropzones[zoneIndex].dataset.fredDropzone) !== -1) {
-                console.error('There are several dropzones with same name: ' + this.dropzones[zoneIndex].dataset.fredDropzone + '. The name of each dropzone has to be unique.');
+        for (let dz of dropzones) {
+            if (registeredDropzones.indexOf(dz.dataset.fredDropzone) !== -1) {
+                console.error('There are several dropzones with same name: ' + dz.dataset.fredDropzone + '. The name of each dropzone has to be unique.');
                 return false;
             }
 
-            registeredDropzones.push(this.dropzones[zoneIndex].dataset.fredDropzone);
+            registeredDropzones.push(dz.dataset.fredDropzone);
+            dz.dropzone = new Dropzone(dz, null);
+
+            this.dropzones.push(dz.dropzone);
         }
 
         if (typeof fredConfig.config.beforeRender === 'function') {
@@ -531,9 +495,7 @@ export default class Fred {
     getContent() {
         const data = {};
 
-        for (let i = 0; i < this.dropzones.length; i++) {
-            data[this.dropzones[i].dataset.fredDropzone] = this.getDataFromDropZone(this.dropzones[i]);
-        }
+        this.dropzones.forEach(dropzone => data[dropzone.name] = dropzone.getContent());
 
         return data;
     }

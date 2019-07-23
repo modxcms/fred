@@ -10,9 +10,10 @@ import elementSettings from './ElementSettings';
 import { renderElement } from '../Actions/elements';
 import Toolbar from "./Toolbar";
 import jsSHA from "jssha";
+import Dropzone from "./Dropzone";
 
 export class Element {
-    constructor(el, dzName, parent = null, content = {}, settings = {}, pluginsData = {}, elId = null) {
+    constructor(el, dropzone, content = {}, settings = {}, pluginsData = {}, elId = null) {
         this.config = fredConfig.config;
         this.el = el;
         this.template = twig({data: this.el.elementMarkup});
@@ -33,8 +34,8 @@ export class Element {
 
         this.render = this.render.bind(this);
 
-        this.parent = parent;
-        this.dzName = dzName;
+        this.dropzone = dropzone;
+
         this.options = JSON.parse(JSON.stringify((this.el.elementOptions || {})));
         this.content = JSON.parse(JSON.stringify(content));
         this.pluginsData = JSON.parse(JSON.stringify(pluginsData));
@@ -76,6 +77,18 @@ export class Element {
         this.dzs = {};
 
         this.inEditor = false;
+    }
+
+    static fromMarkup(data, markup, dropzone) {
+        const chunk = div(['chunk']);
+        chunk.setAttribute('hidden', 'hidden');
+        chunk.dataset.fredElementId = data.widget;
+        chunk.dataset.fredElementTitle = markup.title;
+        chunk.dataset.invalidTheme = markup.invalidTheme;
+        chunk.elementMarkup = markup.html;
+        chunk.elementOptions = markup.options || {};
+
+        return new Element(chunk, dropzone, data.values, (data.settings || {}), (data.pluginsData || {}), (data.elId || null));
     }
 
     generateElId() {
@@ -123,13 +136,7 @@ export class Element {
 
         for (let dzName in this.dzs) {
             if (this.dzs.hasOwnProperty(dzName)) {
-                if (this.dzs[dzName].children.length > 0) {
-                    content.children[dzName] = [];
-
-                    this.dzs[dzName].children.forEach(child => {
-                        content.children[dzName].push(child.fredEl.getContent());
-                    });
-                }
+                content.children[dzName] = this.dzs[dzName].getContent();
             }
         }
 
@@ -328,18 +335,11 @@ export class Element {
             }
 
             this.initElements(wrapper);
-            this.initDropZones(wrapper);
+            this.initDropZones();
 
             wrapper.appendChild(this.contentEl);
 
             if (this.wrapper !== null) {
-                if (this.parent) {
-                    const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
-                    if (index > -1) {
-                        this.parent.dzs[this.dzName].children[index] = wrapper;
-                    }
-                }
-
                 this.wrapper.replaceWith(wrapper);
             }
 
@@ -349,46 +349,29 @@ export class Element {
         });
     }
 
-    initDropZones(wrapper) {
+    initDropZones() {
         const dzs = this.contentEl.querySelectorAll('[data-fred-dropzone]');
 
         let prev = null;
 
         for (let dz of dzs) {
-            const minHeight = dz.dataset.fredMinHeight;
-            if (minHeight) {
-                dz.style.minHeight = minHeight;
-            }
-
             if (prev === null) {
                 prev = dz;
-                dz.fredEl = this;
-                if (!this.dzs[dz.dataset.fredDropzone]) {
-                    this.dzs[dz.dataset.fredDropzone] = {
-                        el: dz,
-                        children: []
-                    };
-                } else {
-                    this.dzs[dz.dataset.fredDropzone].el = dz;
-                    this.dzs[dz.dataset.fredDropzone].children.forEach(child => {
-                        this.dzs[dz.dataset.fredDropzone].el.appendChild(child);
-                    });
+
+                if (!dz.dropzone) {
+                    dz.dropzone = new Dropzone(dz, this);
                 }
+
+                this.dzs[dz.dropzone.name] = dz.dropzone;
             } else {
                 if (!prev.contains(dz)) {
-                    dz.fredEl = this;
                     prev = dz;
-                    if (!this.dzs[dz.dataset.fredDropzone]) {
-                        this.dzs[dz.dataset.fredDropzone] = {
-                            el: dz,
-                            children: []
-                        };
-                    } else {
-                        this.dzs[dz.dataset.fredDropzone].el = dz;
-                        this.dzs[dz.dataset.fredDropzone].children.forEach(child => {
-                            this.dzs[dz.dataset.fredDropzone].el.appendChild(child);
-                        });
+
+                    if (!dz.dropzone) {
+                        dz.dropzone = new Dropzone(dz, this);
                     }
+
+                    this.dzs[dz.dropzone.name] = dz.dropzone;
                 }
             }
         }
@@ -916,22 +899,8 @@ export class Element {
                     if (dzEl) {
                         dzEl.removeAttribute('data-fred-dropzone');
 
-                        if (this.dzs[dzName].children.length > 0) {
-
-                            let cleanedDropZoneContent = '';
-                            const childPromises = [];
-
-                            this.dzs[dzName].children.forEach(child => {
-                                childPromises.push(child.fredEl.cleanRender(parseModx, handleLinks, isPreview));
-                            });
-
-                            dzPromises.push(Promise.all(childPromises).then(values => {
-                                values.forEach(childEl => {
-                                    cleanedDropZoneContent += childEl.innerHTML;
-                                });
-
-                                dzEl.innerHTML = cleanedDropZoneContent;
-                            }));
+                        if (this.dzs[dzName].elements.length > 0) {
+                            dzPromises.push(this.dzs[dzName].getCleanContent(parseModx, handleLinks, isPreview).then(cleanedContent => dzEl.innerHTML = cleanedContent));
                         }
                     }
                 }
@@ -946,93 +915,26 @@ export class Element {
     remove() {
         if (!fredConfig.permission.fred_element_front_end_delete) return;
 
-        if (this.parent) {
-            const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
-            if (index > -1) {
-                this.parent.dzs[this.dzName].children.splice(index, 1);
-            }
-        }
-
-        this.wrapper.remove();
+        this.dropzone.removeElement(this);
 
         if (fredConfig.invalidElements) {
             emitter.emit('fred-clear-invalid-elements-warning');
         }
     }
 
-    duplicateDropZones(dzs) {
-        for (let dzName in dzs) {
-            if (dzs.hasOwnProperty(dzName)) {
-                dzs[dzName].children.forEach(child => {
-                    if (this.dzs[dzName]) {
-                        const clonedChild = new Element(child.fredEl.el, dzName, this, child.fredEl.content, child.fredEl.settings, child.fredEl.pluginsData);
-                        clonedChild.render().then(() => {
-                            this.addElementToDropZone(dzName, clonedChild);
-
-                            clonedChild.duplicateDropZones(child.fredEl.dzs);
-                        });
-                    }
-                });
-            }
-        }
-    }
-
     duplicate() {
-        const clone = new Element(this.el, this.dzName, this.parent, this.content, this.settings, this.pluginsData);
+        const clone = new Element(this.el, this.dropzone, this.content, this.settings, this.pluginsData);
         clone.render().then(() => {
-            clone.duplicateDropZones(this.dzs);
-
-            if (this.wrapper.nextSibling === null) {
-                this.wrapper.parentNode.appendChild(clone.wrapper);
-            } else {
-                this.wrapper.parentNode.insertBefore(clone.wrapper, this.wrapper.nextSibling);
-            }
-
-            if (this.parent) {
-                const index = this.parent.dzs[this.dzName].children.indexOf(this.wrapper);
-                if (index > -1) {
-                    this.parent.dzs[this.dzName].children.splice(index + 1, 0, clone.wrapper);
+            for (let dzName in this.dzs) {
+                if (this.dzs.hasOwnProperty(dzName)) {
+                    this.dzs[dzName].duplicate(clone.dzs[dzName]);
                 }
             }
 
+            this.dropzone.insertAfter(clone, this);
+
             drake.reloadContainers();
         });
-    }
-
-    addElementToDropZone(zoneName, element) {
-        if (!this.dzs[zoneName]) return false;
-        element.dzName = zoneName;
-        element.parent = this;
-
-        this.dzs[zoneName].children.push(element.wrapper);
-        this.dzs[zoneName].el.appendChild(element.wrapper);
-
-        return true;
-    }
-
-    unshiftElementToDropZone(zoneName, element) {
-        if (!this.dzs[zoneName]) return false;
-        element.dzName = zoneName;
-        element.parent = this;
-
-        this.dzs[zoneName].children.unshift(element.wrapper);
-
-        if (this.dzs[zoneName].el.firstElementChild) {
-            this.dzs[zoneName].el.insertBefore(element.wrapper, this.dzs[zoneName].el.firstElementChild);
-        } else {
-            this.dzs[zoneName].el.appendChild(element.wrapper);
-        }
-
-        return true;
-    }
-
-    insertBeforeElementToDropZone(zoneName, before, element) {
-        if (!this.dzs[zoneName]) return false;
-        element.dzName = zoneName;
-        element.parent = this;
-
-        this.dzs[zoneName].children.splice(this.dzs[zoneName].children.indexOf(before.wrapper), 0, element.wrapper);
-        before.wrapper.insertAdjacentElement('beforebegin', element.wrapper);
     }
 }
 

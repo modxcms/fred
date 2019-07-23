@@ -163,90 +163,15 @@ export const fixChoices = choices => {
     }
 };
 
-const loadChildren = (zones, parent, elements, fireEvents = false) => {
-    const dzPromises = [];
-
-    for (let zoneName in zones) {
-        if (zones.hasOwnProperty(zoneName)) {
-            const promises = [];
-
-            zones[zoneName].forEach(element => {
-                if (elements[element.widget].html) {
-                    const chunk = div(['chunk']);
-                    chunk.setAttribute('hidden', 'hidden');
-                    chunk.dataset.fredElementId = element.widget;
-                    chunk.dataset.fredElementTitle = elements[element.widget].title;
-                    chunk.dataset.invalidTheme = elements[element.widget].invalidTheme;
-                    chunk.elementMarkup = elements[element.widget].html;
-                    chunk.elementOptions = elements[element.widget].options || {};
-
-                    const contentElement = new Element(chunk, zoneName, parent, element.values, (element.settings || {}), (element.pluginsData || {}), (element.elId || null));
-                    promises.push(contentElement.render().then(() => {
-                        return loadChildren(element.children, contentElement, elements, fireEvents).then(() => {
-                            if (fireEvents === true) {
-                                const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
-                                document.body.dispatchEvent(event);
-
-                                const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
-                                for (let jsEl of jsElements) {
-                                    if (window[jsEl.dataset.fredOnDrop]) {
-                                        window[jsEl.dataset.fredOnDrop](jsEl);
-                                    }
-                                }
-                            }
-
-                            return {zoneName, contentElement, parent};
-                        });
-                    }));
-                }
-            });
-
-            dzPromises.push(Promise.all(promises).then(items => {
-                items.forEach(item => {
-                    item.parent.addElementToDropZone(item.zoneName, item.contentElement);
-                })
-            }));
-        }
-    }
-
-    return Promise.all(dzPromises);
-};
-
-export const loadElements = data => {
+export const loadElements = (data, fireEvents = false) => {
     const zones = data.data;
     const dzPromises = [];
 
     for (let zoneName in zones) {
         if (zones.hasOwnProperty(zoneName)) {
             const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
-            if (zoneEl) {
-                const promises = [];
-
-                zoneEl.innerHTML = '';
-                zones[zoneName].forEach(element => {
-                    if (data.elements[element.widget].html) {
-                        const chunk = div(['chunk']);
-                        chunk.setAttribute('hidden', 'hidden');
-                        chunk.dataset.fredElementId = element.widget;
-                        chunk.dataset.fredElementTitle = data.elements[element.widget].title;
-                        chunk.dataset.invalidTheme = data.elements[element.widget].invalidTheme;
-                        chunk.elementMarkup = data.elements[element.widget].html;
-                        chunk.elementOptions = data.elements[element.widget].options || {};
-
-                        const contentElement = new Element(chunk, zoneName, null, element.values, (element.settings || {}), (element.pluginsData || {}), (element.elId || null));
-                        promises.push(contentElement.render().then(wrapper => {
-                            return loadChildren(element.children, contentElement, data.elements).then(() => {
-                                return wrapper;
-                            });
-                        }));
-                    }
-                });
-
-                dzPromises.push(Promise.all(promises).then(wrappers => {
-                    wrappers.forEach(wrapper => {
-                        zoneEl.appendChild(wrapper);
-                    });
-                }));
+            if (zoneEl && zoneEl.dropzone) {
+                dzPromises.push(zoneEl.dropzone.loadElements(zones[zoneName], data.elements, null, true, fireEvents));
             }
         }
     }
@@ -254,12 +179,12 @@ export const loadElements = data => {
     return Promise.all(dzPromises);
 };
 
-export const buildBlueprint = (data, parent, target, sibling) => {
+export const buildBlueprint = (data, dropzone, before) => {
     const complete = data.complete || false;
     let emptyPage = true;
 
     for (let dz of fredConfig.fred.dropzones) {
-        if (dz.querySelector('.fred--block')) {
+        if (dz.el.querySelector('.fred--block')) {
             emptyPage = false;
             break;
         }
@@ -271,68 +196,15 @@ export const buildBlueprint = (data, parent, target, sibling) => {
         elements = data.data;
     } else {
         if (emptyPage === true) {
-            const zones = data.data;
-            const dzPromises = [];
-
-            for (let zoneName in zones) {
-                if (zones.hasOwnProperty(zoneName)) {
-                    const zoneEl = document.querySelector(`[data-fred-dropzone="${zoneName}"]`);
-                    if (zoneEl) {
-                        const promises = [];
-
-                        zones[zoneName].forEach(element => {
-                            const chunk = div(['chunk']);
-                            chunk.setAttribute('hidden', 'hidden');
-                            chunk.dataset.fredElementId = element.widget;
-
-                            chunk.dataset.fredElementTitle = data.elements[element.widget].title;
-                            chunk.elementMarkup = data.elements[element.widget].html;
-                            chunk.elementOptions = data.elements[element.widget].options;
-
-                            const contentElement = new Element(chunk, zoneName, null, element.values, (element.settings || {}), (element.pluginsData || {}));
-                            promises.push(contentElement.render().then(wrapper => {
-                                loadChildren(element.children, contentElement, data.elements, true).then(() => {
-                                    const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
-                                    document.body.dispatchEvent(event);
-
-                                    const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
-                                    for (let jsEl of jsElements) {
-                                        if (window[jsEl.dataset.fredOnDrop]) {
-                                            window[jsEl.dataset.fredOnDrop](jsEl);
-                                        }
-                                    }
-                                });
-
-                                return wrapper;
-                            }));
-
-                        });
-
-                        dzPromises.push(Promise.all(promises).then(wrappers => {
-                            wrappers.forEach(wrapper => {
-                                zoneEl.appendChild(wrapper);
-                            });
-                        }));
-                    }
-                }
-            }
-
-            return Promise.all(dzPromises);
+            return loadElements(data, true);
         }
 
         let dzName = '';
 
-        if (parent === null) {
-            if (data.data[target.dataset.fredDropzone]) {
-                dzName = target.dataset.fredDropzone;
-
-            } else if (data.data['content']) {
-                dzName = 'content';
-            }
-        } else {
-            if (data.data['content']) {
-                dzName = 'content';
-            }
+        if (data.data[dropzone.name]) {
+            dzName = dropzone.name;
+        } else if (data.data['content']) {
+            dzName = 'content';
         }
 
         if (dzName === '') {
@@ -343,49 +215,7 @@ export const buildBlueprint = (data, parent, target, sibling) => {
         elements = data.data[dzName];
     }
 
-    const promises = [];
-
-    elements.forEach(element => {
-        const chunk = div(['chunk']);
-        chunk.setAttribute('hidden', 'hidden');
-        chunk.dataset.fredElementId = element.widget;
-
-        chunk.dataset.fredElementTitle = data.elements[element.widget].title;
-        chunk.elementMarkup = data.elements[element.widget].html;
-        chunk.elementOptions = data.elements[element.widget].options || {};
-
-        const contentElement = new Element(chunk, target.dataset.fredDropzone, parent, element.values, (element.settings || {}), (element.pluginsData || {}));
-
-        promises.push(contentElement.render().then(() => {
-            if (parent) {
-                if (sibling === null) {
-                    parent.dzs[target.dataset.fredDropzone].children.push(contentElement.wrapper);
-                } else {
-                    parent.dzs[target.dataset.fredDropzone].children.splice(parent.dzs[target.dataset.fredDropzone].children.indexOf(sibling), 0, contentElement.wrapper);
-                }
-            }
-
-            loadChildren(element.children, contentElement, data.elements, true).then(() => {
-                const event = new CustomEvent('FredElementDrop', {detail: {fredEl: contentElement}});
-                document.body.dispatchEvent(event);
-
-                const jsElements = contentElement.wrapper.querySelectorAll('[data-fred-on-drop]');
-                for (let jsEl of jsElements) {
-                    if (window[jsEl.dataset.fredOnDrop]) {
-                        window[jsEl.dataset.fredOnDrop](jsEl);
-                    }
-                }
-            });
-
-            if (sibling !== null) {
-                sibling.insertAdjacentElement('beforeBegin', contentElement.wrapper);
-            } else {
-                target.appendChild(contentElement.wrapper);
-            }
-        }));
-    });
-
-    return Promise.all(promises);
+    return dropzone.loadElements(elements, data.elements, before, false, true);
 };
 
 export const getTemplateSettings = (cleanRender = false) => {
@@ -413,7 +243,7 @@ export const valueParser = (value, clean = false) => {
 
 /**
  *
- * @returns {{ui: {els, ins}, valueParser: valueParser, Modal: Modal, emitter, fetch}}
+ * @returns {{ui: {els, ins}, valueParser, Modal, Finder, emitter, fetch, fredConfig, utilitySidebar, actions, Mousetrap, Choices, flatpicker, ColorPicker, noUiSlider, hoverintent}}
  */
 export const pluginTools = () => {
     return {

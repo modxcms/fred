@@ -63,13 +63,13 @@ class Drake {
                 const parent = target.fredEl || null;
 
                 if (source.classList.contains('elements-source')) {
-                    const contentElement = new Element(el.lastChild, target.dataset.fredDropzone, parent);
+                    const contentElement = new Element(el.lastChild, target.dropzone);
                     contentElement.render().then(() => {
-                        if (parent) {
-                            if (sibling === null) {
-                                parent.dzs[target.dataset.fredDropzone].children.push(contentElement.wrapper);
-                            } else {
-                                parent.dzs[target.dataset.fredDropzone].children.splice(parent.dzs[target.dataset.fredDropzone].children.indexOf(sibling), 0, contentElement.wrapper);
+                        if (sibling === null) {
+                            target.dropzone.pushElement(contentElement, false);
+                        } else {
+                            if (sibling.fredEl) {
+                                target.dropzone.insertBefore(contentElement, sibling.fredEl, false);
                             }
                         }
 
@@ -96,7 +96,7 @@ class Drake {
 
                     loadBlueprint(el.lastChild.dataset.fredBlueprintId)
                         .then(json => {
-                            buildBlueprint(json.data, parent, target, sibling).then(() => {
+                            buildBlueprint(json.data, target.dropzone, sibling).then(() => {
                                 drake.reloadContainers();
                                 emitter.emit('fred-loading-hide');
                             });
@@ -106,21 +106,8 @@ class Drake {
                         });
                 }
             } else {
-                if (target && el.fredEl) {
-                    if (el.fredEl.parent) {
-                        el.fredEl.parent.dzs[source.dataset.fredDropzone].children.splice(el.fredEl.parent.dzs[source.dataset.fredDropzone].children.indexOf(el), 1);
-                    }
-
-                    const parent = target.fredEl || null;
-                    if (parent) {
-                        if (sibling === null) {
-                            parent.dzs[target.dataset.fredDropzone].children.push(el);
-                        } else {
-                            parent.dzs[target.dataset.fredDropzone].children.splice(parent.dzs[target.dataset.fredDropzone].children.indexOf(sibling), 0, el);
-                        }
-                    }
-                    el.fredEl.parent = parent;
-                    el.fredEl.dzName = target.dataset.fredDropzone;
+                if (target && el.fredEl && target.dropzone) {
+                    el.fredEl.dropzone.moveElement(el.fredEl, target.dropzone, ((sibling && sibling.fredEl) ? sibling.fredEl : null), false);
                 }
 
                 this.reloadContainers();
