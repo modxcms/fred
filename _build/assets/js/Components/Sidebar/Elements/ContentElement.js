@@ -409,6 +409,16 @@ export class ContentElement {
     onRTEFocusFactory (wrapper, el) {
         return () => {
             this.inEditor = true;
+            const toolbars = wrapper.querySelectorAll('.fred--toolbar');
+            for (let toolbar of toolbars){
+                console.log(toolbar);
+                toolbar.classList.add('fred--hidden');
+            }
+
+            const titles = wrapper.querySelectorAll('.fred--block_title');
+            for (let title of titles){
+                title.classList.add('fred--hidden');
+            }
         }
     }
 
@@ -420,6 +430,17 @@ export class ContentElement {
             wrapper.classList.remove('fred--block-active_short');
             wrapper.classList.remove('fred--block-active_narrow');
             wrapper.classList.remove('fred--block-active_parent');
+
+            const toolbars = wrapper.querySelectorAll('.fred--toolbar');
+            for (let toolbar of toolbars){
+                console.log(toolbar);
+                toolbar.classList.remove('fred--hidden');
+            }
+
+            const titles = wrapper.querySelectorAll('.fred--block_title');
+            for (let title of titles){
+                title.classList.remove('fred--hidden');
+            }
         }
     }
 
