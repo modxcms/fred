@@ -10,17 +10,17 @@ Changelog for Fred
 - When creating a new page from Fred, you can specify a Blueprint to use. Further, each Fred-enabled Template can now have a default Blueprint associated with it so that making new content can be streamlined.
 - A new Folder picker option setting is handy for things like simple galleries built from images on the file system.
 - Themes now can include Media Sources to help keep things tidy.
-- Documentation and an installer check for specific PHP extensions was added so people don't get frustrated when Fred mysteriously decided not to work.
+- Documentation and an installer check for specific PHP extensions were added so people don't get frustrated when Fred mysteriously decided not to work.
 
 ## Updates & Improvements
-- Updated styles to to make the overall UI more consistent with the upcoming MODX3 Manager.
+- Updated styles to make the overall UI more consistent with the upcoming MODX3 Manager.
 - Dragging Elements now shrink to a smaller size to make them easier to work with.
 - Updated build process to use the latest versions of Node and Gulp.
 - Remove build files from the repo in favor of using Github releases.
 - When pasting text from word processors and web browsers, a lot of messy markup sometimes tags along, making it hard to create clean content. Fred now forces text to be pasted as plain text to minimize tedious cleanup chores as much as possible.
 - A special `{{theme_dir}}` placeholder makes for more portable themes for Element Settings and Media fields.
 - The root `<html>` tag now gets a class when Fred is enabled to allow for custom styling when needed: `<html class="fred--active">`.
-- Option Set Overrides can now also be merged, so that you can override just a single thing in the assiged Option Set.
+- Option Set Overrides can now also be merged so that you can override just a single thing in the assigned Option Set.
 - A policy for deleting inadvertently added Elements on the front-end for the Fred Editor role was added.
 
 ## Bugfixes
