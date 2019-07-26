@@ -411,7 +411,6 @@ export class ContentElement {
             this.inEditor = true;
             const toolbars = wrapper.querySelectorAll('.fred--toolbar');
             for (let toolbar of toolbars){
-                console.log(toolbar);
                 toolbar.classList.add('fred--hidden');
             }
 
@@ -433,7 +432,6 @@ export class ContentElement {
 
             const toolbars = wrapper.querySelectorAll('.fred--toolbar');
             for (let toolbar of toolbars){
-                console.log(toolbar);
                 toolbar.classList.remove('fred--hidden');
             }
 
@@ -682,86 +680,88 @@ export class ContentElement {
                 el.setAttribute('contenteditable', el.getAttribute('data-fred-editable'));
             }
 
-
-            if ((!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
-                el.addEventListener('input', () => {
-                    this.setValue(el, el.innerHTML);
-                });
-
-                el.addEventListener('copy', e => {
-                    e.clipboardData.setData('text/plain', window.getSelection().toString());
-                    e.clipboardData.setData('text/html', this.getSelectionHtml());
-                    e.preventDefault();
-                });
-
-                el.addEventListener('cut', e => {
-                    e.clipboardData.setData('text/plain', window.getSelection().toString());
-                    e.clipboardData.setData('text/html', this.getSelectionHtml());
-                    window.getSelection().deleteFromDocument();
-                    e.preventDefault();
-                });
-
-                el.addEventListener('paste', e => {
-                    e.preventDefault();
-
-                    const text = (e.originalEvent || e).clipboardData.getData('text/plain');
-
-                    document.execCommand("insertHTML", false, text);
-                });
-
-                el.addEventListener('keydown', e => {
-                    if(e.ctrlKey || e.metaKey){
-                        if(e.which == 66){
-                            e.preventDefault();
-                            document.execCommand('bold', false, null);
-                        }
-                        if(e.which == 73){
-                            e.preventDefault();
-                            document.execCommand('italic', false, null);
-                        }
-                        if(e.which == 85){
-                            e.preventDefault();
-                            document.execCommand('underline', false, null);
-                        }
-                        if(e.which == 32){
-                            e.preventDefault();
-                            const text = window.getSelection().toString();
-                            window.getSelection().deleteFromDocument();
-                            document.execCommand("insertHTML", false, text);
-                        }
-                    }
-                });
-
-                el.addEventListener('keyup', e => {
-                    if(e.ctrlKey){
-                        e.preventDefault();
-                    }
-                });
-
-                el.addEventListener('keypress', e => {
-                    if(e.ctrlKey){
-                        e.preventDefault();
-                    }
-                });
-            }
-
+            let rteInitPromise = null;
             if (!!el.dataset.fredRte && (el.dataset.fredRte !== 'false')) {
                 if (this.config.rte && fredConfig.rtes[this.config.rte]) {
-                    fredConfig.rtes[this.config.rte](el, this.getRTEConfig(el), this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
+                    rteInitPromise = fredConfig.rtes[this.config.rte](el, this.getRTEConfig(el), this.onRTEInitFactory(el), this.onRTEContentChangeFactory(el), this.onRTEFocusFactory(wrapper, el), this.onRTEBlurFactory(wrapper, el));
                 }
             }
 
-            if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
-            if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+            Promise.resolve(rteInitPromise).then(() => {
+                if ((!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
 
-            if (el.dataset.fredTarget) {
-                if (fredConfig.pageSettings[el.dataset.fredTarget]) {
-                    this.content[el.dataset.fredName]._raw._value = fredConfig.pageSettings[el.dataset.fredTarget];
+                    el.addEventListener('input', () => {
+                        this.setValue(el, el.innerHTML);
+                    });
+
+                    el.addEventListener('copy', e => {
+                        e.clipboardData.setData('text/plain', window.getSelection().toString());
+                        e.clipboardData.setData('text/html', this.getSelectionHtml());
+                        e.preventDefault();
+                    });
+
+                    el.addEventListener('cut', e => {
+                        e.clipboardData.setData('text/plain', window.getSelection().toString());
+                        e.clipboardData.setData('text/html', this.getSelectionHtml());
+                        window.getSelection().deleteFromDocument();
+                        e.preventDefault();
+                    });
+
+                    el.addEventListener('paste', e => {
+                        e.preventDefault();
+                        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+
+                        document.execCommand("insertHTML", false, text);
+                    });
+
+                    el.addEventListener('keydown', e => {
+                        if(e.ctrlKey || e.metaKey){
+                            if(e.which == 66){
+                                e.preventDefault();
+                                document.execCommand('bold', false, null);
+                            }
+                            if(e.which == 73){
+                                e.preventDefault();
+                                document.execCommand('italic', false, null);
+                            }
+                            if(e.which == 85){
+                                e.preventDefault();
+                                document.execCommand('underline', false, null);
+                            }
+                            if(e.which == 32){
+                                e.preventDefault();
+                                const text = window.getSelection().toString();
+                                window.getSelection().deleteFromDocument();
+                                document.execCommand("insertHTML", false, text);
+                            }
+                        }
+                    });
+
+                    el.addEventListener('keyup', e => {
+                        if(e.ctrlKey){
+                            e.preventDefault();
+                        }
+                    });
+
+                    el.addEventListener('keypress', e => {
+                        if(e.ctrlKey){
+                            e.preventDefault();
+                        }
+                    });
                 }
-            }
 
-            this.initValue(el);
-            this.initEvents(el);
+                if (!this.content[el.dataset.fredName]) this.content[el.dataset.fredName] = {};
+                if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
+
+                if (el.dataset.fredTarget) {
+                    if (fredConfig.pageSettings[el.dataset.fredTarget]) {
+                        this.content[el.dataset.fredName]._raw._value = fredConfig.pageSettings[el.dataset.fredTarget];
+                    }
+                }
+
+                this.initValue(el);
+                this.initEvents(el);
+            });
         }
     }
 
