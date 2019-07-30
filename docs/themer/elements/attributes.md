@@ -178,7 +178,7 @@ When Fred is _not_ loaded, the class is added:
 
 ## data-fred-bind
 
-This allows you to bind the value of another part of the page to another locaion within one Element.
+This allows you to bind the value of another part of the page to another location within one Element.
 
 ### Example
 
