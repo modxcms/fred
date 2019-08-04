@@ -30,7 +30,7 @@ export default class PageSettings extends SidebarPlugin {
         const settingsForm = form(['fred--page_settings_form']);
 
         settingsForm.appendChild(this.getGeneralFields());
-        
+
         if (fredConfig.permission.fred_settings_advanced) {
             settingsForm.appendChild(this.getAdvancedFields());
         }
@@ -59,7 +59,7 @@ export default class PageSettings extends SidebarPlugin {
         fields.appendChild(ui.area({name: 'introtext', label: 'fred.fe.page_settings.intro_text'}, this.pageSettings.introtext, this.setSettingWithEmitter, this.addSettingChangeListener));
         fields.appendChild(ui.text({name: 'menutitle', label: 'fred.fe.page_settings.menu_title'}, this.pageSettings.menutitle, this.setSettingWithEmitter, this.addSettingChangeListener));
         fields.appendChild(ui.text({name: 'alias', label: 'fred.fe.page_settings.alias'}, this.pageSettings.alias, this.setSettingWithEmitter, this.addSettingChangeListener));
-        
+
         const publishedToggle = ui.toggle({name: 'published', label: 'fred.fe.page_settings.published'}, this.pageSettings.published, (name, value) => {this.setSetting(name, value)});
 
         if (!(fredConfig.permission.publish_document && fredConfig.resource.publish) && !this.pageSettings.published) {
@@ -69,7 +69,7 @@ export default class PageSettings extends SidebarPlugin {
         if (!(fredConfig.permission.unpublish_document && fredConfig.resource.unpublish) && this.pageSettings.published) {
             publishedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
-        
+
         fields.appendChild(publishedToggle);
         fields.appendChild(ui.toggle({name: 'hidemenu', label: 'fred.fe.page_settings.hide_from_menu'}, this.pageSettings.hidemenu, (name, value) => {this.setSetting(name, value)}));
 
@@ -82,7 +82,7 @@ export default class PageSettings extends SidebarPlugin {
                 publishedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
         });
-        
+
         return fields;
     }
 
@@ -103,21 +103,21 @@ export default class PageSettings extends SidebarPlugin {
                 e.stopPropagation();
                 emitter.emit('fred-sidebar-dt-active', advancedTab, advancedContent);
             }
-            
+
         });
 
         const advancedContent = dd();
         const advancedHeader = h3('fred.fe.page_settings.advanced_settings');
         const fields = fieldSet(['fred--page_settings_form_advanced']);
         const publishedOn = ui.dateTime({name: 'publishedon', label: 'fred.fe.page_settings.published_on'}, this.pageSettings.publishedon, (name, value) => {this.setSetting(name, value)});
-        
+
         fields.appendChild(publishedOn);
         fields.appendChild(ui.dateTime({name: 'publishon', label: 'fred.fe.page_settings.publish_on'}, this.pageSettings.publishon, (name, value) => {this.setSetting(name, value)}));
         fields.appendChild(ui.dateTime({name: 'unpublishon', label: 'fred.fe.page_settings.unpublish_on'}, this.pageSettings.unpublishon, (name, value) => {this.setSetting(name, value)}));
         fields.appendChild(ui.text({name: 'menuindex', label: 'fred.fe.page_settings.menu_index'}, this.pageSettings.menuindex, (name, value) => {this.setSetting(name, value)}));
-        
+
         const deletedToggle = ui.toggle({name: 'deleted', label: 'fred.fe.page_settings.deleted'}, this.pageSettings.deleted, (name, value) => {this.setSetting(name, value)});
-        
+
         if (!(fredConfig.permission.delete_document && fredConfig.resource.delete) && !this.pageSettings.deleted) {
             deletedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
@@ -125,7 +125,7 @@ export default class PageSettings extends SidebarPlugin {
         if (!(fredConfig.permission.undelete_document && fredConfig.resource.undelete) && this.pageSettings.deleted) {
             deletedToggle.inputEl.setAttribute('disabled', 'disabled');
         }
-        
+
         fields.appendChild(deletedToggle);
         advancedContent.appendChild(advancedHeader);
         advancedContent.appendChild(fields);
@@ -140,17 +140,17 @@ export default class PageSettings extends SidebarPlugin {
             if (!(fredConfig.permission.undelete_document && fredConfig.resource.undelete) && this.pageSettings.deleted) {
                 deletedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
-            
+
             if (this.pageSettings.publishedon) {
                 publishedOn.picker.setDate(this.pageSettings.publishedon * 1000);
             } else {
                 publishedOn.picker.clear();
             }
         });
-        
+
         return advancedList;
     }
-    
+
     getTaggerFields() {
         const taggerList = dl();
 
@@ -158,7 +158,7 @@ export default class PageSettings extends SidebarPlugin {
             const activeTabs = taggerList.parentElement.querySelectorAll('dt.active');
 
             const isActive = taggerTab.classList.contains('active');
-            
+
             for (let tab of activeTabs) {
                 tab.classList.remove('active');
             }
@@ -179,7 +179,7 @@ export default class PageSettings extends SidebarPlugin {
                 emitter.emit('fred-content-changed');
             });
             const rendered = taggerField.render();
-            
+
             if (rendered) {
                 fields.appendChild(rendered);
             }
@@ -192,7 +192,7 @@ export default class PageSettings extends SidebarPlugin {
 
         return taggerList;
     }
-    
+
     getTVFields() {
         const tvList = dl();
 
@@ -200,7 +200,7 @@ export default class PageSettings extends SidebarPlugin {
             const activeTabs = tvList.parentElement.querySelectorAll('dt.active');
 
             const isActive = tvTab.classList.contains('active');
-            
+
             for (let tab of activeTabs) {
                 tab.classList.remove('active');
             }
@@ -224,7 +224,7 @@ export default class PageSettings extends SidebarPlugin {
                     fields.appendChild(ui.area(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
                     break;
                 default:
-                    fields.appendChild(ui.text(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));        
+                    fields.appendChild(ui.text(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
             }
         });
 
@@ -237,20 +237,24 @@ export default class PageSettings extends SidebarPlugin {
     }
 
     setSetting(name, value, namespace = null) {
-        emitter.emit('fred-content-changed');
-        
         if (namespace) {
             if (!this.pageSettings[namespace]) this.pageSettings[namespace] = {};
-            
+
+            if (this.pageSettings[namespace][name] !== value) {
+                emitter.emit('fred-content-changed');
+            }
+
             this.pageSettings[namespace][name] = value;
         } else {
+            if (this.pageSettings[name] !== value) {
+                emitter.emit('fred-content-changed');
+            }
+
             this.pageSettings[name] = value;
         }
     }
 
     setSettingWithEmitter(name, value, input) {
-        emitter.emit('fred-content-changed');
-        
         this.setSetting(name, value);
 
         emitter.emit('fred-page-setting-change', name, value, valueParser(value), input);
@@ -266,8 +270,6 @@ export default class PageSettings extends SidebarPlugin {
     }
 
     setTVWithEmitter(name, value, input) {
-        emitter.emit('fred-content-changed');
-        
         this.setSetting(name, value, 'tvs');
 
         emitter.emit('fred-page-setting-change', 'tv_' + name, value, valueParser(value), input);
@@ -279,7 +281,7 @@ export default class PageSettings extends SidebarPlugin {
             if ((input !== sourceEl) && (('tv_' + setting.name) === settingName)) {
                 this.setSetting(setting.name, settingValue, 'tvs');
                 input.value = settingValue;
-                
+
                 if (label.setPreview && (typeof label.setPreview === 'function')) {
                     label.setPreview(input.value);
                 }
