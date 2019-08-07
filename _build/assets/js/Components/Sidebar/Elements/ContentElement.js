@@ -922,7 +922,7 @@ export class ContentElement {
                             const childPromises = [];
 
                             this.dzs[dzName].children.forEach(child => {
-                                childPromises.push(child.fredEl.cleanRender(parseModx, handleLinks));
+                                childPromises.push(child.fredEl.cleanRender(parseModx, handleLinks, isPreview));
                             });
 
                             dzPromises.push(Promise.all(childPromises).then(values => {
