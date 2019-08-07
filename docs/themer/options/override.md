@@ -34,7 +34,7 @@ Assume you have an Intro plan with a background image and a call to action link.
       "value": "assets/themes/starter/img/Fred-hero.jpg"
     },
     {
-      "fred-import": "background_settings
+      "fred-import": "background_settings"
     },
     {
       "name": "linkscroll",
@@ -64,7 +64,7 @@ Assume you have an Intro plan with a background image and a call to action link.
       "value": "assets/themes/starter/img/Fred-hero.jpg"
     },
     {
-      "fred-import": "background_settings
+      "fred-import": "background_settings"
     },
     {
       "name": "link",
