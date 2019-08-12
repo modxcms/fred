@@ -157,15 +157,9 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
                             anchor: '100%'
                         },
                         items: [
-                            {
-                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
-                                mimeType: 'application/json',
-                                name: 'data',
+                            fred.field.JSONField({
                                 fieldLabel: _('fred.element_option_sets.data'),
-                                anchor: '100%',
-                                height: 400,
-                                grow: false,
-                                value: '',
+                                hideLabel: false,
                                 setValue: function (v) {
                                     if (Array.isArray(v) && v.length === 0) {
                                         v = '';
@@ -177,7 +171,7 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
 
                                     this.superclass().setValue.call(this, v);
                                 }
-                            }
+                            })
                         ]
                     }
                 ]

@@ -30,9 +30,7 @@ class FredHomeManagerController extends FredBaseManagerController
 
     public function loadCustomCssJs()
     {
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/griddraganddrop.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
 
         if ($this->permissions['fred_media_sources']) {
             $this->addJavascript($this->fred->getOption('jsUrl') . 'home/widgets/media_sources.grid.js');

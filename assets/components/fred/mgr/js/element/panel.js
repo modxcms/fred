@@ -26,7 +26,7 @@ fred.panel.Element = function (config) {
     });
 
     this.theme_folder = '';
-    
+
     fred.panel.Element.superclass.constructor.call(this, config);
 };
 
@@ -54,11 +54,11 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                     Ext.getCmp('fred-element-panel-new_from_override').disable();
                                 }
                             }
-                            
+
                             if (r.object.option_set === 0) {
                                 Ext.getCmp('fred-element-panel-preview-option-set').disable();
                             }
-                            
+
                             this.getForm().setValues(r.object);
 
                             var category = this.find('name', 'category');
@@ -66,7 +66,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 category = category[0];
                                 category.baseParams.theme = r.object.theme;
                             }
-                            
+
                             var optionSet = this.find('name', 'option_set');
                             if (optionSet[0]) {
                                 optionSet = optionSet[0];
@@ -79,7 +79,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                             } else {
                                 r.object.image = "https://via.placeholder.com/300x150?text=No+image";
                             }
-                            
+
                             Ext.getCmp('image_preview').el.dom.querySelector('img').src = r.object.image;
 
                             this.fireEvent('ready', r.object);
@@ -95,7 +95,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
             if (this.config.permission.fred_element_option_sets_save) {
                 Ext.getCmp('fred-element-panel-new_from_override').disable();
             }
-            
+
             var theme = MODx.request.theme;
             if (theme) {
                 var categoryField = this.find('name', 'category');
@@ -105,14 +105,14 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 if (!optionSetField[0]) return;
 
                 var category = MODx.request.category;
-                
+
                 this.getForm().setValues({theme: theme, category: category});
 
                 optionSetField = optionSetField[0];
                 optionSetField.enable();
                 optionSetField.baseParams.theme = theme;
             }
-            
+
             this.fireEvent('ready');
             MODx.fireEvent('ready');
         }
@@ -220,7 +220,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                         if (!category[0]) return;
 
                                                         this.theme_folder = record.data.theme_folder;
-                                                        
+
                                                         category = category[0];
                                                         category.setValue();
                                                         category.enable();
@@ -238,7 +238,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
 
                                                         var previewButton = Ext.getCmp('fred-element-panel-preview-option-set');
                                                         if (previewButton) previewButton.disable();
-                                                        
+
                                                         var image = Ext.getCmp('fred-element-image-field');
                                                         if (image) {
                                                             image.updatePreview(this.theme_folder);
@@ -301,13 +301,13 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                 allowBlank: true,
                                                 updatePreview: function (theme_folder = '') {
                                                     var value = this.getValue();
-                                                    
+
                                                     if (value) {
                                                         value = fred.prependBaseUrl(value, theme_folder);
                                                     } else {
                                                         value = "https://via.placeholder.com/300x150?text=No+image";
                                                     }
-                                                    
+
                                                     Ext.getCmp('image_preview').el.dom.querySelector('img').src = value;
                                                 },
                                                 listeners: {
@@ -364,7 +364,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 }
             ]
         }];
-        
+
         if (config.permission.fred_element_option_sets_save) {
             optionSetButtons.push({
                 columnWidth: .2,
@@ -385,7 +385,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 ]
             });
         }
-        
+
         var items = [
             {
                 xtype: 'modx-tabs',
@@ -480,7 +480,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                     select: {
                                                         fn: function(combo) {
                                                             var previewButton = Ext.getCmp('fred-element-panel-preview-option-set');
-                                                            
+
                                                             if (combo.getValue() === 0) {
                                                                 previewButton.disable();
                                                             } else {
@@ -496,16 +496,12 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                     optionSetButtons
                                 ]
                             },
-                            {
-                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
-                                fieldLabel: _('fred.elements.options_override'),
-                                mimeType: 'application/json',
+                            fred.field.JSONField({
                                 name: 'options_override',
                                 id: 'fred-element-options-override',
-                                anchor: '100%',
-                                height: 400,
+                                fieldLabel: _('fred.elements.options_override'),
+                                hideLabel: false,
                                 enableKeyEvents: !!config.permission.fred_element_option_sets_save,
-                                grow: false,
                                 listeners: {
                                     keyup: function() {
                                         if (config.permission.fred_element_option_sets_save) {
@@ -517,7 +513,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                         }
                                     }
                                 }
-                            }
+                            })
                         ]
                     }
                 ]
@@ -529,9 +525,9 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
 
     previewOptionSet: function(btn, e) {
         var optionSetId = this.getField('option_set').getValue();
-        
+
         if (optionSetId === 0) return;
-        
+
         MODx.Ajax.request({
             url: this.config.url,
             params: {
@@ -542,7 +538,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 'success': {
                     fn: function (r) {
                         var record = {data: ''};
-                        
+
                         if (Array.isArray(r.object.data) && r.object.data.length === 0) {
                             record.data = '';
                         } else {
@@ -576,13 +572,13 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
 
     newFromOverride: function(btn, e) {
         if (!this.config.permission.fred_element_option_sets_save) return false;
-        
+
         var record = {
             data: this.getField('options_override').getValue(),
             theme: this.getField('theme').getValue(),
             complete: 1
         };
-        
+
         var createOptionSet = MODx.load({
             xtype: 'fred-window-element-option-set',
             title: _('fred.element_option_sets.new_from_override'),
@@ -594,7 +590,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                 success: {
                     fn: function (r) {
                         var optionSet = this.getField('option_set');
-                        
+
                         Ext.getCmp('fred-element-panel-new_from_override').disable();
                         this.getField('options_override').setValue('');
 
@@ -604,7 +600,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                             optionSet.setValue(r.a.result.object.id);
                             Ext.getCmp('fred-element-panel-preview-option-set').enable();
                         }, this, {single: true});
-                        
+
                         optionSet.store.load();
                     },
                     scope: this

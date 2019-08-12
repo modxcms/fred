@@ -17,7 +17,7 @@ require_once dirname(dirname(dirname(__FILE__))) . '/index.class.php';
 class FredBlueprintUpdateManagerController extends FredBaseManagerController
 {
     protected $permissions = [];
-    
+
     public function process(array $scriptProperties = array())
     {
         $this->loadPermissions();
@@ -30,9 +30,6 @@ class FredBlueprintUpdateManagerController extends FredBaseManagerController
 
     public function loadCustomCssJs()
     {
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
-        
         $this->addJavascript($this->fred->getOption('jsUrl') . 'blueprint/panel.js');
         $this->addLastJavascript($this->fred->getOption('jsUrl') . 'blueprint/page.js');
 

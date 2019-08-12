@@ -45,7 +45,7 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                                     r.object.data = JSON.stringify(r.object.data, null, 2);
                                 }
                             }
-                            
+
                             this.getForm().setValues(r.object);
 
                             this.fireEvent('ready', r.object);
@@ -60,7 +60,7 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
             if (theme) {
                 this.getForm().setValues({theme: theme});
             }
-            
+
             this.fireEvent('ready');
             MODx.fireEvent('ready');
         }
@@ -230,17 +230,7 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                                             msgTarget: 'under'
                                         },
                                         items: [
-                                            {
-                                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
-                                                mimeType: 'application/json',
-                                                name: 'data',
-                                                id: 'data',
-                                                hideLabel: true,
-                                                anchor: '100%',
-                                                height: 400,
-                                                grow: false,
-                                                value: ''
-                                            }
+                                            fred.field.JSONField()
                                         ]
                                     }
                                 ]

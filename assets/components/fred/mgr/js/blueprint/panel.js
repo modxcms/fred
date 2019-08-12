@@ -1,7 +1,7 @@
 fred.panel.Blueprint = function (config) {
     config = config || {};
     config.permission = config.permission || {};
-    
+
     config.id = config.id || 'fred-panel-blueprint';
 
     Ext.applyIf(config, {
@@ -24,9 +24,9 @@ fred.panel.Blueprint = function (config) {
             }
         }
     });
-    
+
     this.theme_folder = '';
-    
+
     fred.panel.Blueprint.superclass.constructor.call(this, config);
 };
 
@@ -49,7 +49,7 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                     r.object.data = JSON.stringify(r.object.data, null, 2);
                                 }
                             }
-                            
+
                             this.getForm().setValues(r.object);
 
                             if (r.object.image) {
@@ -209,13 +209,13 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                                         if (!category[0]) return;
 
                                                         this.theme_folder = record.data.theme_folder;
-                                                        
+
                                                         category = category[0];
                                                         category.setValue();
                                                         category.enable();
                                                         category.baseParams.theme = record.id;
                                                         category.store.load();
-                                                        
+
                                                         var image = Ext.getCmp('fred-blueprint-image-field');
                                                         if (image) {
                                                             image.updatePreview(this.theme_folder);
@@ -344,17 +344,7 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                             msgTarget: 'under'
                                         },
                                         items: [
-                                            {
-                                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
-                                                mimeType: 'application/json',
-                                                name: 'data',
-                                                id: 'data',
-                                                hideLabel: true,
-                                                anchor: '100%',
-                                                height: 400,
-                                                grow: false,
-                                                value: ''
-                                            }
+                                            fred.field.JSONField()
                                         ]
                                     }
                                 ]

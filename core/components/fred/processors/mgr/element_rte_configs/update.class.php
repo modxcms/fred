@@ -20,7 +20,7 @@ class FredElementRTEConfigsUpdateProcessor extends modObjectUpdateProcessor
 
         return parent::initialize();
     }
-    
+
     public function beforeSet()
     {
         $name = $this->getProperty('name');
@@ -29,7 +29,7 @@ class FredElementRTEConfigsUpdateProcessor extends modObjectUpdateProcessor
         if (empty($theme)) {
             $this->addFieldError('theme', $this->modx->lexicon('fred.err.element_rte_configs_ns_theme'));
         }
-        
+
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ns_name'));
         } else {
@@ -39,6 +39,16 @@ class FredElementRTEConfigsUpdateProcessor extends modObjectUpdateProcessor
         }
 
         return parent::beforeSet();
+    }
+
+    public function beforeSave()
+    {
+        $data = $this->getProperty('data');
+        if (($data !== null) && empty($data)) {
+            $this->object->set('data', []);
+        }
+
+        return parent::beforeSave();
     }
 }
 

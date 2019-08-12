@@ -29,7 +29,7 @@ abstract class FredBaseManagerController extends modExtraManagerController
                 'core_path' => $corePath
             )
         );
-        
+
 
         $this->addCss($this->fred->getOption('cssUrl') . 'fred.css');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'fred.js');
@@ -40,6 +40,10 @@ abstract class FredBaseManagerController extends modExtraManagerController
                 fred.config.connector_url = "' . $this->fred->getOption('connectorUrl') . '";
             });
         </script>');
+
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
+        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/fields.js');
 
         parent::initialize();
     }

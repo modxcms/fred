@@ -27,9 +27,6 @@ class FredElementOptionSetUpdateManagerController extends FredBaseManagerControl
 
     public function loadCustomCssJs()
     {
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
-        $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
-        
         $this->addJavascript($this->fred->getOption('jsUrl') . 'element_option_set/panel.js');
         $this->addLastJavascript($this->fred->getOption('jsUrl') . 'element_option_set/page.js');
 

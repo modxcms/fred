@@ -20,7 +20,7 @@ class FredBlueprintsUpdateProcessor extends modObjectUpdateProcessor
 
         return parent::initialize();
     }
-    
+
     public function beforeSet()
     {
         $name = $this->getProperty('name');
@@ -38,16 +38,16 @@ class FredBlueprintsUpdateProcessor extends modObjectUpdateProcessor
         if (empty($category)) {
             $this->addFieldError('category', $this->modx->lexicon('fred.err.blueprints_ns_category'));
         }
-        
+
         $rank = $this->getProperty('rank', '');
         if ($rank === '') {
             $c = $this->modx->newQuery($this->classKey);
-            
+
             $c->where([
                 'id:!=' => $this->object->id,
                 'category' => $category,
             ]);
-            
+
             $c->limit(1);
             $c->sortby('rank', 'DESC');
 
@@ -73,8 +73,18 @@ class FredBlueprintsUpdateProcessor extends modObjectUpdateProcessor
         if (!$this->modx->hasPermission('fred_blueprints_create_public')) {
             $this->setProperty('public', $this->object->get('public'));
         }
-        
+
         return parent::beforeSet();
+    }
+
+    public function beforeSave()
+    {
+        $data = $this->getProperty('data');
+        if (($data !== null) && empty($data)) {
+            $this->object->set('data', []);
+        }
+
+        return parent::beforeSave();
     }
 }
 

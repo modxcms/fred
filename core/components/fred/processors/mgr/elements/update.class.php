@@ -20,7 +20,7 @@ class FredElementsUpdateProcessor extends modObjectUpdateProcessor
 
         return parent::initialize();
     }
-    
+
     public function beforeSet()
     {
         $name = $this->getProperty('name');
@@ -34,7 +34,7 @@ class FredElementsUpdateProcessor extends modObjectUpdateProcessor
                 $this->addFieldError('name', $this->modx->lexicon('fred.err.elements_ae_name'));
             }
         }
-        
+
         if (empty($category)) {
             $this->addFieldError('category', $this->modx->lexicon('fred.err.elements_ns_category'));
         }
@@ -61,17 +61,21 @@ class FredElementsUpdateProcessor extends modObjectUpdateProcessor
             $this->setProperty('rank', $last);
         }
 
-        $optionsOverride = $this->getProperty('options_override');
-        
-        if (($optionsOverride !== null) && empty($optionsOverride)) {
-            $this->setProperty('options_override', '{}');
-        }
-
         if (empty($image)) {
             $this->setProperty('image', 'https://via.placeholder.com/300x150?text=' . urlencode($name));
         }
 
         return parent::beforeSet();
+    }
+
+    public function beforeSave()
+    {
+        $data = $this->getProperty('options_override');
+        if (($data !== null) && empty($data)) {
+            $this->object->set('options_override', []);
+        }
+
+        return parent::beforeSave();
     }
 }
 

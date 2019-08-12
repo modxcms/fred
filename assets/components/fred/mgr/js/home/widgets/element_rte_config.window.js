@@ -133,15 +133,9 @@ Ext.extend(fred.window.ElementRTEConfig, MODx.Window, {
                                 anchor: '100%',
                                 allowBlank: true
                             },
-                            {
-                                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
-                                mimeType: 'application/json',
-                                name: 'data',
+                            fred.field.JSONField({
                                 fieldLabel: _('fred.element_rte_configs.data'),
-                                anchor: '100%',
-                                height: 400,
-                                grow: false,
-                                value: '',
+                                hideLabel: false,
                                 setValue: function(v) {
                                     if (Array.isArray(v) && v.length === 0) {
                                         v = '';
@@ -153,7 +147,7 @@ Ext.extend(fred.window.ElementRTEConfig, MODx.Window, {
 
                                     this.superclass().setValue.call(this, v);
                                 }
-                            }
+                            })
                         ]
                     }
                 ]

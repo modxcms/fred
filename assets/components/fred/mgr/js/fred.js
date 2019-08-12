@@ -9,6 +9,7 @@ Ext.extend(Fred, Ext.Component, {
     tree: {},
     panel: {},
     combo: {},
+    field: {},
     config: {},
     button: {},
     loadPage: function (action, parameters) {
@@ -31,18 +32,18 @@ Ext.extend(Fred, Ext.Component, {
 
         MODx.loadPage(action, parameters);
     },
-    
+
     prependBaseUrl: function(url, theme_folder = '') {
         url = url.replace('{{assets_url}}', MODx.config.assets_url);
-        
+
         if (theme_folder) {
             url = url.replace('{{theme_dir}}', MODx.config.assets_url + 'themes/' + theme_folder + '/');
         }
-        
+
         if ((url.substr(0,7).toLowerCase() !== 'http://') && (url.substr(0,8).toLowerCase() !== 'https://') && (url.substr(0,2).toLowerCase() !== '//')  && (url.substr(0,1).toLowerCase() !== '/')) {
             url = MODx.config.base_url + url;
         }
-        
+
         return url;
     },
 
@@ -63,7 +64,7 @@ Ext.extend(Fred, Ext.Component, {
             }
             parameters += '&namespace=fred';
         }
-        
+
         // Handles url, passed as first argument
         var parts = [];
         if (action) {
@@ -80,21 +81,21 @@ Ext.extend(Fred, Ext.Component, {
 
         return parts.join('&');
     },
-    
+
     getHelp: function(path = '', handler = true) {
         if (handler === true) {
             return function() {
                 var realPath = (typeof path === 'function') ? path() : path;
                 var win = window.open('https://modxcms.github.io/fred/' + realPath, '_blank');
                 win.focus();
-            };       
+            };
         } else {
             var realPath = (typeof path === 'function') ? path() : path;
             var win = window.open('https://modxcms.github.io/fred/' + realPath, '_blank');
             win.focus();
         }
     },
-    
+
     globalEvents: new Ext.util.Observable()
 });
 Ext.reg('fred', Fred);
