@@ -44,13 +44,43 @@ export const errorHandler = response => {
 
 export const applyScripts = el => {
     const scripts = el.querySelectorAll('script');
+    const scriptsToReplace = [];
 
-    for (let scriptEl of scripts) {
-        const script = document.createElement('script');
-        script.dataset.fredRender = 'false';
-        script.innerHTML = scriptEl.innerHTML;
+    for (let script of scripts) {
+        const newScript = document.createElement('script');
 
-        scriptEl.parentNode.replaceChild(script, scriptEl);
+        for (let i = 0; i < script.attributes.length; i++) {
+            newScript.setAttribute(script.attributes[i].name, script.attributes[i].value);
+        }
+
+        newScript.innerHTML = script.innerHTML;
+
+        scriptsToReplace.push({old: script, 'new': newScript});
+    }
+
+    const replaceScript = (index) => {
+        const next = index + 1;
+
+        if (scriptsToReplace[index].new.src) {
+            scriptsToReplace[index].new.addEventListener('load', () => {
+                if (scriptsToReplace[next]) {
+                    replaceScript(next);
+                }
+            });
+
+            scriptsToReplace[index].old.parentElement.replaceChild(scriptsToReplace[index].new, scriptsToReplace[index].old);
+            return;
+        }
+
+        scriptsToReplace[index].old.parentElement.replaceChild(scriptsToReplace[index].new, scriptsToReplace[index].old);
+
+        if (scriptsToReplace[next]) {
+            replaceScript(next);
+        }
+    };
+
+    if (scriptsToReplace[0]) {
+        replaceScript(0);
     }
 };
 
