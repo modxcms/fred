@@ -35,7 +35,7 @@ switch ($modx->event->name) {
             //Load Open in Fred button
             $modx->lexicon->load('fred:default');
             $modx->controller->addLexiconTopic('fred:default');
-            // @TODO make a fred preview URL:
+
             $preview_url = 'panel.config.preview_url';
             if ($modx->getOption('fred.use_custom_editor_url')) {
                 $preview_url = "'".rtrim($modx->makeUrl($modx->getOption('site_start')), '/')."/fred-editor-".$resource->get('id')."'";
@@ -50,7 +50,7 @@ switch ($modx->event->name) {
                     panel = Ext.getCmp('modx-page-update-resource'); 
                     
                     content.destroy();
-                    // LCI FRED?
+
                     right.insert(0,{
                         xtype: 'button' 
                         ,fieldLabel: _('fred.open_in_fred')
