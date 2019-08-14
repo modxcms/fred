@@ -257,6 +257,8 @@ $_lang['setting_fred.secret'] = 'Secret';
 $_lang['setting_fred.secret_desc'] = 'Secret used in signing XHR requests';
 $_lang['setting_fred.default_enabled'] = 'Fred Enabled';
 $_lang['setting_fred.default_enabled_desc'] = 'Enable or Disable Fred by default';
+$_lang['setting_fred.use_custom_editor_url'] = 'Use custom Fred editor URLs';
+$_lang['setting_fred.use_custom_editor_url_desc'] = 'Requires friendly URLs. If yes opening Fred links from a Resource will be unique to Fred. Ex: www.yoursite.com/fred-editor-123 Helpful for static site generators.';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Name is required';
 $_lang['fred.err.blueprints_ns_name'] = 'Name is required';

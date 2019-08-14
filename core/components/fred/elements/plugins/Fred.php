@@ -35,6 +35,12 @@ switch ($modx->event->name) {
             //Load Open in Fred button
             $modx->lexicon->load('fred:default');
             $modx->controller->addLexiconTopic('fred:default');
+            // @TODO make a fred preview URL:
+            $preview_url = 'panel.config.preview_url';
+            if ($modx->getOption('fred.use_custom_editor_url')) {
+                $preview_url = "'".rtrim($modx->makeUrl($modx->getOption('site_start')), '/')."/fred-editor-".$resource->get('id')."'";
+            }
+
             $modx->controller->addHtml("
         <script>
             Ext.ComponentMgr.onAvailable('modx-resource-content', function(right) {
@@ -44,7 +50,7 @@ switch ($modx->event->name) {
                     panel = Ext.getCmp('modx-page-update-resource'); 
                     
                     content.destroy();
-                     
+                    // LCI FRED?
                     right.insert(0,{
                         xtype: 'button' 
                         ,fieldLabel: _('fred.open_in_fred')
@@ -53,7 +59,7 @@ switch ($modx->event->name) {
                         ,style: {padding: '10px 15px'}
                         ,html: _('fred.open_in_fred')
                         ,handler: function(){
-                            window.open(panel.config.preview_url)
+                            window.open({$preview_url})
                         }
                     });
                      
@@ -285,6 +291,7 @@ switch ($modx->event->name) {
             });
         </script>';
 
+            $modx->resource->cacheable = 0;
             $modx->resource->_output = preg_replace('/(<\/head>(?:<\/head>)?)/i', "{$fredContent}\r\n$1", $modx->resource->_output);
         }
         break;
@@ -341,6 +348,26 @@ switch ($modx->event->name) {
             'id' => $resource->get('id'),
             'resource' => &$resource
         ));
+
+        break;
+
+    case 'OnPageNotFound':
+        /** This is only fired when a user clicks on the Mgr button Open in Fred and the system setting fred.use_custom_editor_url is set to Yes/1 */
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        $baseUrl = $modx->getOption('base_url', null, MODX_BASE_URL);
+        if(!empty($baseUrl) && $baseUrl != '/' && $baseUrl != ' ') {
+            $path = str_replace($baseUrl,'', $path);
+        }
+        $path = ltrim($path,'/');
+
+        if (!empty($path) && $modx->getOption('fred.use_custom_editor_url')) {
+            // Fred URLs look like: fred-editor-123
+            $parts = explode('-', $path);
+            if (count($parts) == 3 && $parts[0] == 'fred' && $parts[1] == 'editor') {
+                $modx->sendForward($parts[2]);
+            }
+        }
 
         break;
     case 'OnTemplateRemove':

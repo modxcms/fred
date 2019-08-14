@@ -23,6 +23,7 @@
             "OnDocFormPrerender",
             "OnDocFormSave",
             "OnBeforeDocFormSave",
+            "OnPageNotFound",
             "OnTemplateRemove",
             "OnTVInputRenderList",
             "OnTVInputPropertiesList",
@@ -79,6 +80,12 @@
         "key": "default_enabled",
         "type" : "combo-boolean",
         "value": "1"
+      },
+      {
+        "area": "Manager",
+        "key": "use_custom_editor_url",
+        "type" : "combo-boolean",
+        "value": "0"
       }
     ]
   },
