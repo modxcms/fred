@@ -445,6 +445,10 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
     const labelEl = label((setting.label || setting.name), 'fred--label-choices');
     const selectEl = selectElement();
 
+    if (!defaultValue || (typeof(defaultValue) !== 'object') || (defaultValue.id === undefined) || (defaultValue.url === undefined)) {
+        defaultValue = {id: 0, url: ''};
+    }
+
     wrapper.appendChild(labelEl);
     wrapper.appendChild(selectEl);
 
