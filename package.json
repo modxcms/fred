@@ -46,7 +46,11 @@
     "randomatic": ">=3.0.0",
     "through2": "^3.0.1",
     "webpack": "^1.12.11",
-    "webpack-node-externals": "^0.4.1"
+    "webpack-node-externals": "^0.4.1",
+    "lodash": ">=4.17.13",
+    "lodash.template": ">=4.5.0",
+    "braces": ">=2.3.1",
+    "js-yaml": ">=3.13.1"
   },
   "library": {
     "name": "Fred",
@@ -62,7 +66,6 @@
     "html2canvas": "^1.0.0-rc.3",
     "isomorphic-fetch": "^2.2.1",
     "jssha": "^2.3.1",
-    "lodash": ">=4.17.5",
     "mousetrap": "^1.6.3",
     "nouislider": "^11.1.0",
     "promise-cancel": "^2.0.1",
