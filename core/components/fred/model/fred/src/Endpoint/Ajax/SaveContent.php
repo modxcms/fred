@@ -248,12 +248,12 @@ class SaveContent extends Endpoint
             }
         }
 
+        $this->modx->getCacheManager()->refresh();
+
         $this->modx->invokeEvent('FredOnFredResourceSave', [
             'id' => $object->get('id'),
             'resource' => &$object
         ]);
-
-        $this->modx->getCacheManager()->refresh();
 
         $response = [
             'message' => $this->modx->lexicon('fred.fe.pages.updated'),
