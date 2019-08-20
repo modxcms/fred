@@ -14,9 +14,10 @@ Changelog for Fred
 
 ## Updates & Improvements
 - Updated styles to make the overall UI more consistent with the upcoming MODX3 Manager.
-- Dragging Elements now shrink to a smaller size to make them easier to work with.
-- Updated build process to use the latest versions of Node and Gulp.
-- Remove build files from the repo in favor of using Github releases.
+- Dragging Elements now shrinks them to a smaller size to make them easier to work with.
+- When editing Option Sets in the Manager, it warns you if there is a JSON syntax error so you can fix it and save your work. It’s even prettier when using the Fred Ace integration, too. 
+- Updated the build process to use the latest versions of Node and Gulp.
+- Removed build files from the repo in favor of using Github releases.
 - When pasting text from word processors and web browsers, a lot of messy markup sometimes tags along, making it hard to create clean content. Fred now forces text to be pasted as plain text to minimize tedious cleanup chores as much as possible.
 - A special `{{theme_dir}}` placeholder makes for more portable themes for Element Settings and Media fields.
 - The root `<html>` tag now gets a class when Fred is enabled to allow for custom styling when needed: `<html class="fred--active">`.
