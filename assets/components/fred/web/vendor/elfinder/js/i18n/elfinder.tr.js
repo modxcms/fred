@@ -3,7 +3,8 @@
  * @author I.Taskinoglu & A.Kaya <alikaya@armsyazilim.com>
  * @author Abdullah ELEN <abdullahelen@msn.com>
  * @author Osman KAYAN <osmnkayan@gmail.com>
- * @version 2018-01-10
+ * @author alikayan95@gmail.com
+ * @version 2018-11-02
  */
 (function(root, factory) {
 	if (typeof define === 'function' && define.amd) {
@@ -15,12 +16,12 @@
 	}
 }(this, function(elFinder) {
 	elFinder.prototype.i18.tr = {
-		translator : 'I.Taskinoglu & A.Kaya &lt;alikaya@armsyazilim.com&gt;, Abdullah ELEN &lt;abdullahelen@msn.com&gt;, Osman KAYAN &lt;osmnkayan@gmail.com&gt;',
+		translator : 'I.Taskinoglu & A.Kaya &lt;alikaya@armsyazilim.com&gt;, Abdullah ELEN &lt;abdullahelen@msn.com&gt;, Osman KAYAN &lt;osmnkayan@gmail.com&gt;, alikayan95@gmail.com',
 		language   : 'Türkçe',
 		direction  : 'ltr',
-		dateFormat : 'd.m.Y H:i', // Mar 13, 2012 05:27 PM
-		fancyDateFormat : '$1 H:i', // will produce smth like: Today 12:25 PM
-		nonameDateFormat : 'ymd-His', // to apply if upload file is noname: 120513172700
+		dateFormat : 'd.m.Y H:i', // will show like: 02.11.2018 11:51
+		fancyDateFormat : '$1 H:i', // will show like: Bugün 11:51
+		nonameDateFormat : 'ymd-His', // noname upload will show like: 181102-115159
 		messages   : {
 
 			/********************************** errors **********************************/
@@ -108,7 +109,7 @@
 			'errExtractExec'       : '"$1" Dosyaları arşivden çıkartılırken hata oluştu.',
 			'errNetUnMount'        : 'Bağlantı kaldırılamıyor.', // from v2.1 added 30.04.2012
 			'errConvUTF8'          : 'UTF-8\'e dönüştürülemez.', // from v2.1 added 08.04.2014
-			'errFolderUpload'      : 'Try Google Chrome, If you\'d like to upload the folder.', // from v2.1 added 26.6.2015
+			'errFolderUpload'      : 'Klasör yükleyebilmek için daha modern bir tarayıcıya ihtiyacınız var.', // from v2.1 added 26.6.2015
 			'errSearchTimeout'     : '"$1" araması zaman aşımına uğradı. Kısmi arama sonuçları listeleniyor.', // from v2.1 added 12.1.2016
 			'errReauthRequire'     : 'Yeniden yetkilendirme gerekiyor.', // from v2.1.10 added 24.3.2016
 			'errMaxTargets'        : 'Maksimum seçilebilir öge sayısı $1 adettir', // from v2.1.17 added 17.10.2016
@@ -131,9 +132,9 @@
 			'cmdhelp'      : 'Bu yazılım hakkında',
 			'cmdhome'      : 'Anasayfa',
 			'cmdinfo'      : 'Bilgi göster',
-			'cmdmkdir'     : 'Yeni Klasör',
-			'cmdmkdirin'   : 'Into new folder', // from v2.1.7 added 19.2.2016
-			'cmdmkfile'    : 'Yeni metin dosyası',
+			'cmdmkdir'     : 'Yeni klasör',
+			'cmdmkdirin'   : 'Yeni Klasör / aç', // from v2.1.7 added 19.2.2016
+			'cmdmkfile'    : 'Yeni dosya',
 			'cmdopen'      : 'Aç',
 			'cmdpaste'     : 'Yapıştır',
 			'cmdquicklook' : 'Ön izleme',
@@ -163,6 +164,8 @@
 			'cmdselectall' : 'Tümünü seç', // from v2.1.28 added 15.08.2017
 			'cmdselectnone': 'Seçimi temizle', // from v2.1.28 added 15.08.2017
 			'cmdselectinvert': 'Diğerlerini seç', // from v2.1.28 added 15.08.2017
+			'cmdopennew'   : 'Yeni Sekmede aç', // from v2.1.38 added 3.4.2018
+			'cmdhide'      : 'Ögeyi Gizle', // from v2.1.41 added 24.7.2018
 
 			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Kapat',
@@ -207,7 +210,7 @@
 			'ntfextract'  : 'Arşivden dosyalar çıkartılıyor',
 			'ntfsearch'   : 'Dosyalar aranıyor',
 			'ntfresize'   : 'Resimler boyutlandırılıyor',
-			'ntfsmth'     : 'İşlem yapılıyor >_<',
+			'ntfsmth'     : 'İşlem yapılıyor',
 			'ntfloadimg'  : 'Resim yükleniyor',
 			'ntfnetmount' : 'Ağ birimine bağlanılıyor', // added 18.04.2012
 			'ntfnetunmount': 'Ağ birimi bağlantısı kesiliyor', // from v2.1 added 30.04.2012
@@ -220,10 +223,11 @@
 			'ntfparents'  : 'Dosya yolu bilgileri alınıyor', // from v2.1.17 added 2.11.2016
 			'ntfchunkmerge': 'Yüklenen dosya işleniyor', // from v2.1.17 added 2.11.2016
 			'ntftrash'    : 'Çöp kutusuna atma', // from v2.1.24 added 2.5.2017
-			'ntfrestore'  : 'Doing restore from the trash	', // from v2.1.24 added 3.5.2017
-			'ntfchkdir'   : 'Çöp kutusundan geri yükleme', // from v2.1.24 added 3.5.2017
+			'ntfrestore'  : 'Çöp kutusundan geri yükle', // from v2.1.24 added 3.5.2017
+			'ntfchkdir'   : 'Hedef klasör kontrol ediliyor', // from v2.1.24 added 3.5.2017
 			'ntfundo'     : 'Önceki işlemi geri alma', // from v2.1.27 added 31.07.2017
 			'ntfredo'     : 'Önceki geri almayı tekrarlama', // from v2.1.27 added 31.07.2017
+			'ntfchkcontent' : 'Checking contents', // from v2.1.41 added 3.8.2018
 
 			/*********************************** volumes *********************************/
 			'volume_Trash' : 'Çöp', //from v2.1.24 added 29.4.2017
@@ -287,6 +291,9 @@
 			'untitled file.txt' : 'YeniDosya.txt', // added 10.11.2015
 			'untitled folder'   : 'YeniKlasor',   // added 10.11.2015
 			'Archive'           : 'YeniArsiv',  // from v2.1 added 10.11.2015
+			'untitled file'     : 'YeniDosya.$1',  // from v2.1.41 added 6.8.2018
+			'extentionfile'     : '$1: Dosya',    // from v2.1.41 added 6.8.2018
+			'extentiontype'     : '$1: $2',      // from v2.1.43 added 17.10.2018
 
 			/********************************** messages **********************************/
 			'confirmReq'      : 'Onay gerekli',
@@ -314,6 +321,10 @@
 			'selectlfile'     : 'Son dosyayı seç',
 			'viewlist'        : 'Liste görünümü',
 			'viewicons'       : 'Simge görünümü',
+			'viewSmall'       : 'Small iconlar', // from v2.1.39 added 22.5.2018
+			'viewMedium'      : 'Medium iconlar', // from v2.1.39 added 22.5.2018
+			'viewLarge'       : 'Large iconlar', // from v2.1.39 added 22.5.2018
+			'viewExtraLarge'  : 'Extra large iconlar', // from v2.1.39 added 22.5.2018
 			'places'          : 'Yerler',
 			'calc'            : 'Hesapla',
 			'path'            : 'Yol',
@@ -398,8 +409,8 @@
 			'nowLoading'      : 'Şimdi yükleniyor...', // from v2.1.12 added 4.26.2016
 			'openMulti'       : 'Çoklu dosya aç', // from v2.1.12 added 5.14.2016
 			'openMultiConfirm': '$1 dosyalarını açmaya çalışıyorsunuz. Tarayıcıda açmak istediğinizden emin misiniz?', // from v2.1.12 added 5.14.2016
-			'emptySearch'     : 'No match results in search targets', // from v2.1.12 added 5.16.2016
-			'editingFile'     : 'You are editing a file.', // from v2.1.13 added 6.3.2016
+			'emptySearch'     : 'Arama hedefinde eşleşen sonuç bulunamadı.', // from v2.1.12 added 5.16.2016
+			'editingFile'     : 'Dosya düzenleniyor.', // from v2.1.13 added 6.3.2016
 			'hasSelected'     : '$1 öğe seçtiniz.', // from v2.1.13 added 6.3.2016
 			'hasClipboard'    : 'Panonuzda $1 öğeniz var.', // from v2.1.13 added 6.3.2016
 			'incSearchOnly'   : 'Artan arama yalnızca geçerli görünümden yapılır.', // from v2.1.13 added 6.30.2016
@@ -411,7 +422,7 @@
 			'reset'           : 'Sıfırla', // from v2.1.16 added 1.10.2016
 			'bgcolor'         : 'Arkaplan rengi', // from v2.1.16 added 1.10.2016
 			'colorPicker'     : 'Renk seçici', // from v2.1.16 added 1.10.2016
-			'8pxgrid'         : '8px tablo', // from v2.1.16 added 4.10.2016
+			'8pxgrid'         : '8px Izgara', // from v2.1.16 added 4.10.2016
 			'enabled'         : 'Etkin', // from v2.1.16 added 4.10.2016
 			'disabled'        : 'Engelli', // from v2.1.16 added 4.10.2016
 			'emptyIncSearch'  : 'Geçerli görünümde arama sonucu bulunamadı. Arama sonucunu genişletmek için \\APress [Enter]  yapın', // from v2.1.16 added 5.10.2016
@@ -445,6 +456,38 @@
 			'asPrefix'        : 'Ön ek kele', // from v2.1.31 added 8.12.2017
 			'asSuffix'        : 'Son ek ekle', // from v2.1.31 added 8.12.2017
 			'changeExtention' : 'Uzantıyı değiştir', // from v2.1.31 added 8.12.2017
+			'columnPref'      : 'Sütun ayarları (Liste görünümü)', // from v2.1.32 added 6.2.2018
+			'reflectOnImmediate' : 'Tüm değişiklikler hemen arşive yansıtılacaktır.', // from v2.1.33 added 2.3.2018
+			'reflectOnUnmount'   : 'Herhangi bir değişiklik, bu birimi kaldırılıncaya kadar yansıtılmayacaktır.', // from v2.1.33 added 2.3.2018
+			'unmountChildren' : 'Bu cihaza monte edilen aşağıdaki birim (ler) de bağlanmamıştır. Çıkardığınızdan emin misiniz?', // from v2.1.33 added 5.3.2018
+			'selectionInfo'   : 'Seçim Bilgisi', // from v2.1.33 added 7.3.2018
+			'hashChecker'     : 'Dosya imza(hash) algoritmaları', // from v2.1.33 added 10.3.2018
+			'infoItems'       : 'öğelerin bilgisi (Seçim Bilgi Paneli)', // from v2.1.38 added 28.3.2018
+			'pressAgainToExit': 'Çıkmak için tekrar basın.', // from v2.1.38 added 1.4.2018
+			'toolbar'         : 'Araç Çubuğu', // from v2.1.38 added 4.4.2018
+			'workspace'       : 'Çalışma alanı', // from v2.1.38 added 4.4.2018
+			'dialog'          : 'Diyalog', // from v2.1.38 added 4.4.2018
+			'all'             : 'Tümü', // from v2.1.38 added 4.4.2018
+			'iconSize'        : 'İcon Boyutu (İcon Görünümü İçin)', // from v2.1.39 added 7.5.2018
+			'editorMaximized' : 'Maksimum düzenleyici penceresini aç', // from v2.1.40 added 30.6.2018
+			'editorConvNoApi' : 'Because conversion by API is not currently available, please convert on the website.', //from v2.1.40 added 8.7.2018
+			'editorConvNeedUpload' : 'After conversion, you must be upload with the item URL or a downloaded file to save the converted file.', //from v2.1.40 added 8.7.2018
+			'convertOn'       : 'Convert on the site of $1', // from v2.1.40 added 10.7.2018
+			'integrations'    : 'Entegrasyonlar', // from v2.1.40 added 11.7.2018
+			'integrationWith' : 'This elFinder has the following external services integrated. Please check the terms of use, privacy policy, etc. before using it.', // from v2.1.40 added 11.7.2018
+			'showHidden'      : 'Gizli ögeleri aç.', // from v2.1.41 added 24.7.2018
+			'hideHidden'      : 'Gizli ögeleri kapat.', // from v2.1.41 added 24.7.2018
+			'toggleHidden'    : 'Gizli ögeleri aç/kapat', // from v2.1.41 added 24.7.2018
+			'makefileTypes'   : 'File types to enable with "New file"', // from v2.1.41 added 7.8.2018
+			'typeOfTextfile'  : 'Text dosyası tipi.', // from v2.1.41 added 7.8.2018
+			'add'             : 'Ekle', // from v2.1.41 added 7.8.2018
+			'theme'           : 'Tema', // from v2.1.43 added 19.10.2018
+			'default'         : 'Varsayılan', // from v2.1.43 added 19.10.2018
+			'description'     : 'Açıklama', // from v2.1.43 added 19.10.2018
+			'website'         : 'Websayfası', // from v2.1.43 added 19.10.2018
+			'author'          : 'Yazar', // from v2.1.43 added 19.10.2018
+			'email'           : 'E-mail', // from v2.1.43 added 19.10.2018
+			'license'         : 'Lisans', // from v2.1.43 added 19.10.2018
 
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : 'Bilinmiyor',
