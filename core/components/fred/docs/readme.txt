@@ -1,7 +1,7 @@
 ---------------------------------------
 Fred
 ---------------------------------------
-Version: 1.0.0
+Version: 1.1.0
 Author: John Peca <john@modx.com>
 ---------------------------------------
 Fred is a visual drag-and-drop front-end editor for MODX Revolution.
@@ -16,7 +16,7 @@ UPGRADE NOTES
 If you are upgrading from a previous release to the following versions, please note the important changes:
 
 ------------
--> rc1 
+-> rc1
 ------------
 Make sure all Themes are named uniquely, and any Elements, Blueprints, Element categories, or Blueprint categories within a Themes likewise have unique names. You can share names across Themes, except for the Theme name itself.
 
