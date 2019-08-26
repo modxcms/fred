@@ -10,9 +10,7 @@ export const getPreview = () => {
 
 export const saveContent = body => {
     if(!fredConfig.permission.save_document){
-        return Promise.resolve(() => {
-            throw new Error();
-        });
+        return Promise.reject(new Error());
     }
     
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=save-content`, {
