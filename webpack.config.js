@@ -4,6 +4,8 @@ var assign = require('object-assign');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
+require("babel-polyfill");
+
 module.exports = function getConfig(options) {
 
     var options = options || {};
@@ -49,7 +51,7 @@ function getBaseConfig(isProd) {
 
     // generate webpack base config
     return {
-        entry: path.join(__dirname, libraryEntryPoint),
+        entry: ['babel-polyfill', path.join(__dirname, libraryEntryPoint)],
         output: {
             // ommitted - will be filled according to target env
         },

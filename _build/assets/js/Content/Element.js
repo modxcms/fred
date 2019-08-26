@@ -3,7 +3,7 @@ import emitter from '../EE';
 import { twig } from 'twig';
 import fredConfig from '../Config';
 import {div, img} from '../UI/Elements';
-import { applyScripts, valueParser, getTemplateSettings } from '../Utils';
+import { replaceScripts, applyScripts, valueParser, getTemplateSettings } from '../Utils';
 import Mousetrap from 'mousetrap';
 import hoverintent from 'hoverintent';
 import elementSettings from './ElementSettings';
@@ -296,7 +296,7 @@ export class Element {
         return (element.offsetWidth  < 280 || element.offsetHeight  < 160);
     }
 
-    render(refreshCache = false) {
+    async render(refreshCache = false, initScripts = true) {
         const wrapperClasses = ['fred--block'];
 
         if (this.invalidTheme) {
@@ -322,35 +322,35 @@ export class Element {
         wrapper.appendChild(titleEl);
         this.contentEl.titleEl = titleEl;
 
+        this.contentEl.innerHTML = await this.templateRender(true, false, refreshCache);
+        replaceScripts(this.contentEl);
 
-        return this.templateRender(true, false, refreshCache).then(html => {
-            this.contentEl.innerHTML = html;
+        const blockClasses = this.contentEl.querySelectorAll('[data-fred-block-class]');
+        for (let blockClass of blockClasses) {
+            const classes = blockClass.dataset.fredBlockClass.split(' ').filter(e => {return e;});
 
+            if (classes.length > 0) {
+                wrapper.classList.add(...classes);
+            }
+        }
+
+        await this.initElements(wrapper);
+        this.initDropZones();
+
+        wrapper.appendChild(this.contentEl);
+
+        if (this.wrapper !== null) {
+            this.wrapper.replaceWith(wrapper);
+            drake.reloadContainers();
+        }
+
+        this.wrapper = wrapper;
+
+        if (initScripts) {
             applyScripts(this.contentEl);
+        }
 
-            const blockClasses = this.contentEl.querySelectorAll('[data-fred-block-class]');
-            for (let blockClass of blockClasses) {
-                const classes = blockClass.dataset.fredBlockClass.split(' ').filter(e => {return e;});
-
-                if (classes.length > 0) {
-                    wrapper.classList.add(...classes);
-                }
-            }
-
-            this.initElements(wrapper);
-            this.initDropZones();
-
-            wrapper.appendChild(this.contentEl);
-
-            if (this.wrapper !== null) {
-                this.wrapper.replaceWith(wrapper);
-                drake.reloadContainers();
-            }
-
-            this.wrapper = wrapper;
-
-            return wrapper;
-        });
+        return wrapper;
     }
 
     initDropZones() {
@@ -661,7 +661,9 @@ export class Element {
         return html;
     }
 
-    initElements(wrapper) {
+    async initElements(wrapper) {
+        const promises = [];
+
         const fredElements = this.contentEl.querySelectorAll('[data-fred-name]');
         for (let el of fredElements) {
             el.fredEl = this;
@@ -681,7 +683,7 @@ export class Element {
                 }
             }
 
-            Promise.resolve(rteInitPromise).then(() => {
+            promises.push(Promise.resolve(rteInitPromise).then(() => {
                 if ((!el.dataset.fredRte || el.dataset.fredRte === 'false' || !el.rteInited)) {
 
                     el.addEventListener('input', () => {
@@ -755,8 +757,10 @@ export class Element {
 
                 this.initValue(el);
                 this.initEvents(el);
-            });
+            }));
         }
+
+        return Promise.all(promises);
     }
 
     static getElValue(el, name = '_value', namespace = '_raw') {
@@ -797,10 +801,10 @@ export class Element {
 
             return html;
         })
-        .catch(err => {
-            emitter.emit('fred-loading', err.message);
-            return '';
-        });
+            .catch(err => {
+                emitter.emit('fred-loading', err.message);
+                return '';
+            });
     }
 
     cleanRender(parseModx = false, handleLinks = true, isPreview = false) {
@@ -935,16 +939,21 @@ export class Element {
 
     duplicate() {
         const clone = new Element(this.el, this.dropzone, this.content, this.settings, this.pluginsData);
-        clone.render().then(() => {
+        clone.render(false, false).then(() => {
+            const promises = [];
+
             for (let dzName in this.dzs) {
                 if (this.dzs.hasOwnProperty(dzName)) {
-                    this.dzs[dzName].duplicate(clone.dzs[dzName]);
+                    promises.push(this.dzs[dzName].duplicate(clone.dzs[dzName]));
                 }
             }
 
             this.dropzone.insertAfter(clone, this);
 
-            drake.reloadContainers();
+            Promise.all(promises).then(() => {
+                applyScripts(clone.wrapper);
+                drake.reloadContainers();
+            });
         });
     }
 }

@@ -8,7 +8,7 @@ import fredConfig from './Config';
 import { div, section, a, iFrame } from './UI/Elements'
 import Mousetrap from 'mousetrap';
 import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-bind.min'
-import {loadElements, pluginTools, valueParser} from "./Utils";
+import {loadElements, pluginTools, valueParser, applyScripts} from "./Utils";
 import utilitySidebar from './Components/UtilitySidebar';
 import { getPreview, saveContent, fetchContent, fetchLexicons } from './Actions/fred';
 import Element from "./Content/Element";
@@ -38,8 +38,6 @@ export default class Fred {
         this.fingerprint = '';
 
         this.previewDocument = null;
-        this.replaceScript = this.replaceScript.bind(this);
-        this.scriptsToReplace = [];
 
         this.unsavedChanges = false;
 
@@ -53,27 +51,9 @@ export default class Fred {
 
         const lexiconsLoaded = this.loadLexicons();
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const scripts = document.body.querySelectorAll('script-fred');
-            for (let script of scripts) {
-                const newScript = document.createElement('script');
-
-                for (let i = 0; i < script.attributes.length; i++) {
-                    newScript.setAttribute(script.attributes[i].name, script.attributes[i].value);
-                }
-
-                if (script.dataset.fredScript) {
-                    newScript.innerHTML = script.dataset.fredScript;
-                }
-
-                newScript.removeAttribute('data-fred-script');
-
-                this.scriptsToReplace.push({old: script, 'new': newScript});
-            }
-
-            lexiconsLoaded.then(() => {
-                this.init();
-            });
+        document.addEventListener("DOMContentLoaded", async () => {
+            await lexiconsLoaded;
+            await this.init();
         });
     }
 
@@ -140,22 +120,21 @@ export default class Fred {
         this.wrapper.insertBefore(previewWrapper, this.wrapper.firstChild);
     }
 
-    previewContent() {
+    async previewContent() {
         if (!this.previewDocument) {
             this.renderPreview();
             this.iframe.src = fredConfig.resource.emptyUrl;
 
-            return getPreview().then(text => {
-                const parser = new DOMParser();
-                this.previewDocument = parser.parseFromString(text, 'text/html');
-                return this.getPreviewContent();
-            });
-        } else {
-            return this.getPreviewContent();
+            const text = await getPreview();
+
+            const parser = new DOMParser();
+            this.previewDocument = parser.parseFromString(text, 'text/html');
         }
+
+        return this.getPreviewContent();
     }
 
-    getPreviewContent() {
+    async getPreviewContent() {
         const promises = [];
 
         this.dropzones.forEach(dropzone => {
@@ -177,16 +156,16 @@ export default class Fred {
             head.appendChild(base);
         }
 
-        return Promise.all(promises).then(() => {
-            this.iframe.contentWindow.document.open();
-            this.iframe.contentWindow.document.write(this.previewDocument.documentElement.innerHTML);
-            this.iframe.contentWindow.document.close();
+        await Promise.all(promises);
 
-            return new Promise(resolve => {
-                this.iframe.onload = resolve;
-            }).then(() => {
-                return this.iframe;
-            });
+        this.iframe.contentWindow.document.open();
+        this.iframe.contentWindow.document.write(this.previewDocument.documentElement.innerHTML);
+        this.iframe.contentWindow.document.close();
+
+        return new Promise(resolve => {
+            this.iframe.onload = resolve;
+        }).then(() => {
+            return this.iframe;
         });
     }
 
@@ -196,7 +175,7 @@ export default class Fred {
         utilitySidebar.render();
     }
 
-    save() {
+    async save() {
         if(!fredConfig.permission.save_document){
             return;
         }
@@ -242,62 +221,59 @@ export default class Fred {
             }
         }
 
-        Promise.all(promises).then(() => {
-            saveContent(body)
-            .then(json => {
-                this.unsavedChanges = false;
+        await Promise.all(promises);
+        try {
+            const json = await saveContent(body);
+            this.unsavedChanges = false;
 
-                if (json.url) {
-                    location.href = json.url;
-                }
+            if (json.url) {
+                location.href = json.url;
+            }
 
-                if (json.fingerprint) {
-                    this.fingerprint = json.fingerprint;
-                }
+            if (json.fingerprint) {
+                this.fingerprint = json.fingerprint;
+            }
 
-                fredConfig.pageSettings.publishedon = json.publishedon;
+            fredConfig.pageSettings.publishedon = json.publishedon;
 
-                emitter.emit('fred-loading-hide');
-                emitter.emit('fred-after-save');
-            })
-            .catch(err => {
-                if (err.response) {
-                    console.error(err.response.message);
-                    alert(err.response.message);
-                }
+            emitter.emit('fred-loading-hide');
+            emitter.emit('fred-after-save');
+        } catch(err) {
+            if (err.response) {
+                console.error(err.response.message);
+                alert(err.response.message);
+            }
 
-                emitter.emit('fred-loading-hide');
-            });
-        });
+            emitter.emit('fred-loading-hide');
+        }
     }
 
-    loadContent() {
+    async loadContent() {
         emitter.emit('fred-loading', fredConfig.lng('fred.fe.preparing_content'));
 
-        return fetchContent().then(json => {
-            if (json.data.pageSettings.tagger && Array.isArray(json.data.pageSettings.tagger)) json.data.pageSettings.tagger = {};
+        const json = await fetchContent();
+        if (json.data.pageSettings.tagger && Array.isArray(json.data.pageSettings.tagger)) json.data.pageSettings.tagger = {};
 
-            this.fingerprint = json.data.fingerprint || '';
-            fredConfig.pageSettings = json.data.pageSettings || {};
-            fredConfig.tagger = json.data.tagger || [];
-            fredConfig.tvs = json.data.tvs || [];
-            fredConfig.pluginsData = json.data.plugins || {};
+        this.fingerprint = json.data.fingerprint || '';
+        fredConfig.pageSettings = json.data.pageSettings || {};
+        fredConfig.tagger = json.data.tagger || [];
+        fredConfig.tvs = json.data.tvs || [];
+        fredConfig.pluginsData = json.data.plugins || {};
 
-            this.renderComponents();
+        this.renderComponents();
 
-            return loadElements(json.data).then(() => {
-                drake.reloadContainers();
+        await loadElements(json.data);
 
-                if (document.querySelectorAll('.fred--block-invalid').length > 0) {
-                    fredConfig.invalidElements = true;
+        drake.reloadContainers();
 
-                    this.invalidElementsWarning = div(['fred--alert-invalid'], 'fred.fe.invalid_elements_warning');
-                    this.wrapper.appendChild(this.invalidElementsWarning);
-                }
+        if (document.querySelectorAll('.fred--block-invalid').length > 0) {
+            fredConfig.invalidElements = true;
 
-                emitter.emit('fred-loading-hide');
-            });
-        });
+            this.invalidElementsWarning = div(['fred--alert-invalid'], 'fred.fe.invalid_elements_warning');
+            this.wrapper.appendChild(this.invalidElementsWarning);
+        }
+
+        emitter.emit('fred-loading-hide');
     }
 
     registerListeners() {
@@ -338,13 +314,12 @@ export default class Fred {
             });
         });
 
-        emitter.on('fred-preview-on', () => {
-            this.previewContent().then(iframe => {
-                document.body.classList.add('fred--fixed');
-                iframe.parentNode.style.opacity = null;
-                iframe.parentNode.style.zIndex = null;
-                iframe.parentNode.style.display = 'block';
-            });
+        emitter.on('fred-preview-on', async () => {
+            const iframe = await this.previewContent();
+            document.body.classList.add('fred--fixed');
+            iframe.parentNode.style.opacity = null;
+            iframe.parentNode.style.zIndex = null;
+            iframe.parentNode.style.display = 'block';
         });
 
         emitter.on('fred-preview-off', () => {
@@ -424,18 +399,19 @@ export default class Fred {
         return fredConfig.registerToolbarPlugin(name, initFn(this, ToolbarPlugin, pluginTools()));
     }
 
-    loadLexicons() {
+    async loadLexicons() {
         let topics = '';
         if (fredConfig.config.lexicons && Array.isArray(fredConfig.config.lexicons)) {
             topics = '&topics=' + fredConfig.config.lexicons.join(',');
         }
-        return fetchLexicons(topics).then(json => {
-            fredConfig.lang = json.data;
-            return true;
-        });
+
+        const json = await fetchLexicons(topics);
+        fredConfig.lang = json.data;
+
+        return true;
     }
 
-    init() {
+    async init() {
         this.registerListeners();
         this.registerKeyboardShortcuts();
 
@@ -463,33 +439,8 @@ export default class Fred {
         this.render();
         drake.initDrake();
 
-        this.loadContent().then(() => {
-            if (this.scriptsToReplace[0]) {
-                this.replaceScript(0);
-            }
-        });
-
-    }
-
-    replaceScript(index) {
-        const next = index + 1;
-
-        if (this.scriptsToReplace[index].new.src) {
-            this.scriptsToReplace[index].new.addEventListener('load', () => {
-                if (this.scriptsToReplace[next]) {
-                    this.replaceScript(next);
-                }
-            });
-
-            this.scriptsToReplace[index].old.parentElement.replaceChild(this.scriptsToReplace[index].new, this.scriptsToReplace[index].old);
-            return;
-        }
-
-        this.scriptsToReplace[index].old.parentElement.replaceChild(this.scriptsToReplace[index].new, this.scriptsToReplace[index].old);
-
-        if (this.scriptsToReplace[next]) {
-            this.replaceScript(next);
-        }
+        await this.loadContent();
+        await applyScripts(document.body);
     }
 
     getContent(noId = false) {

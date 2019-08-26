@@ -41,7 +41,7 @@ export class Dropzone {
                 const contentElement = Element.fromMarkup(element, markup[element.widget], this);
 
                 promises.push(
-                    contentElement.render()
+                    contentElement.render(false, false)
                         .then(wrapper => {
                             const dzPromises = [];
 
@@ -81,6 +81,8 @@ export class Dropzone {
                     this.insertBefore(wrapper.fredEl, before.fredEl);
                 }
             });
+
+            return wrappers;
         });
     }
 
@@ -169,11 +171,13 @@ export class Dropzone {
     }
 
     duplicate(targetDropzone) {
+        const promises = [];
+
         this.elements.forEach(el => {
             const clone = new Element(el.el, targetDropzone, el.content, el.settings, el.pluginsData);
             targetDropzone.elements.push(clone);
 
-            clone.render().then(() => {
+            promises.push(clone.render(false, false).then(() => {
                 targetDropzone.el.appendChild(clone.wrapper);
 
                 for (let dzName in el.dzs) {
@@ -181,8 +185,10 @@ export class Dropzone {
                         el.dzs[dzName].duplicate(clone.dzs[dzName]);
                     }
                 }
-            });
+            }));
         });
+
+        return Promise.all(promises);
     }
 
     moveElement(element, target, before = null, manipulateDom = true) {

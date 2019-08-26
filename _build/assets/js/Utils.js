@@ -42,45 +42,71 @@ export const errorHandler = response => {
     })
 };
 
-export const applyScripts = el => {
-    const scripts = el.querySelectorAll('script');
-    const scriptsToReplace = [];
+export const applyScripts = async wrapper => {
+    return new Promise(resolve => {
+        const scriptsToReplace = [];
+
+        const doReplace = index => {
+            const next = index + 1;
+
+            if (scriptsToReplace[index].new.src) {
+                scriptsToReplace[index].new.addEventListener('load', () => {
+                    if (scriptsToReplace[next]) {
+                        doReplace(next);
+                    } else {
+                        resolve();
+                    }
+                });
+
+                scriptsToReplace[index].old.parentElement.replaceChild(scriptsToReplace[index].new, scriptsToReplace[index].old);
+                return;
+            }
+
+            scriptsToReplace[index].old.parentElement.replaceChild(scriptsToReplace[index].new, scriptsToReplace[index].old);
+
+            if (scriptsToReplace[next]) {
+                doReplace(next);
+            } else {
+                resolve();
+            }
+        };
+
+        const scripts = wrapper.querySelectorAll('script-fred');
+        for (let script of scripts) {
+            const newScript = document.createElement('script');
+
+            for (let i = 0; i < script.attributes.length; i++) {
+                newScript.setAttribute(script.attributes[i].name, script.attributes[i].value);
+            }
+
+            if (script.dataset.fredScript) {
+                newScript.innerHTML = script.dataset.fredScript;
+            }
+
+            newScript.removeAttribute('data-fred-script');
+
+            scriptsToReplace.push({old: script, 'new': newScript});
+        }
+
+        if (scriptsToReplace[0]) {
+            doReplace(0);
+        }
+    });
+};
+
+export const replaceScripts = wrapper => {
+    const scripts = wrapper.querySelectorAll('script');
 
     for (let script of scripts) {
-        const newScript = document.createElement('script');
+        const newScript = document.createElement('script-fred');
 
         for (let i = 0; i < script.attributes.length; i++) {
             newScript.setAttribute(script.attributes[i].name, script.attributes[i].value);
         }
 
-        newScript.innerHTML = script.innerHTML;
+        newScript.dataset.fredScript = script.innerHTML;
 
-        scriptsToReplace.push({old: script, 'new': newScript});
-    }
-
-    const replaceScript = (index) => {
-        const next = index + 1;
-
-        if (scriptsToReplace[index].new.src) {
-            scriptsToReplace[index].new.addEventListener('load', () => {
-                if (scriptsToReplace[next]) {
-                    replaceScript(next);
-                }
-            });
-
-            scriptsToReplace[index].old.parentElement.replaceChild(scriptsToReplace[index].new, scriptsToReplace[index].old);
-            return;
-        }
-
-        scriptsToReplace[index].old.parentElement.replaceChild(scriptsToReplace[index].new, scriptsToReplace[index].old);
-
-        if (scriptsToReplace[next]) {
-            replaceScript(next);
-        }
-    };
-
-    if (scriptsToReplace[0]) {
-        replaceScript(0);
+        script.parentElement.replaceChild(newScript, script);
     }
 };
 
@@ -163,7 +189,7 @@ export const fixChoices = choices => {
     }
 };
 
-export const loadElements = (data, fireEvents = false) => {
+export const loadElements = async (data, fireEvents = false) => {
     const zones = data.data;
     const dzPromises = [];
 
@@ -196,7 +222,9 @@ export const buildBlueprint = (data, dropzone, before) => {
         elements = data.data;
     } else {
         if (emptyPage === true) {
-            return loadElements(data, true);
+            return loadElements(data, true).then(() => {
+                applyScripts(document.body)
+            });
         }
 
         let dzName = '';
@@ -215,7 +243,11 @@ export const buildBlueprint = (data, dropzone, before) => {
         elements = data.data[dzName];
     }
 
-    return dropzone.loadElements(elements, data.elements, before, false, true);
+    return dropzone.loadElements(elements, data.elements, before, false, true).then(wrappers => {
+        wrappers.forEach(wrapper => {
+            applyScripts(wrapper);
+        })
+    });
 };
 
 export const getTemplateSettings = (cleanRender = false) => {
