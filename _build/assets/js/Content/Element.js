@@ -124,9 +124,8 @@ export class Element {
         this.template = twig({data: this.el.elementMarkup});
     }
 
-    getContent() {
+    getContent(noId = false) {
         const content = {
-            elId: this.elId,
             widget: this.id,
             values: this.content,
             pluginsData: this.pluginsData,
@@ -134,9 +133,13 @@ export class Element {
             children: {}
         };
 
+        if (noId === false) {
+            content.elId = this.elId;
+        }
+
         for (let dzName in this.dzs) {
             if (this.dzs.hasOwnProperty(dzName)) {
-                content.children[dzName] = this.dzs[dzName].getContent();
+                content.children[dzName] = this.dzs[dzName].getContent(noId);
             }
         }
 

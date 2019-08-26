@@ -305,7 +305,7 @@ export default class Blueprints extends SidebarPlugin {
             const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
                 emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
 
-                createBlueprint(this.state.blueprint.name, this.state.blueprint.description, this.state.blueprint.category, this.state.blueprint.rank, this.state.blueprint.public, fredConfig.fred.getContent(), this.state.blueprint.generatedImage, this.state.blueprint.image, true)
+                createBlueprint(this.state.blueprint.name, this.state.blueprint.description, this.state.blueprint.category, this.state.blueprint.rank, this.state.blueprint.public, fredConfig.fred.getContent(true), this.state.blueprint.generatedImage, this.state.blueprint.image, true)
                     .then(json => {
                         cache.killNamespace('blueprints');
                         this.click().then(newContent => {

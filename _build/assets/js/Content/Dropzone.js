@@ -92,10 +92,10 @@ export class Dropzone {
         element.wrapper.remove();
     }
 
-    getContent() {
+    getContent(noId = false) {
         const data = [];
 
-        this.elements.forEach(el => data.push(el.getContent()));
+        this.elements.forEach(el => data.push(el.getContent(noId)));
 
         return data;
     }

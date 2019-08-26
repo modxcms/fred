@@ -492,10 +492,10 @@ export default class Fred {
         }
     }
 
-    getContent() {
+    getContent(noId = false) {
         const data = {};
 
-        this.dropzones.forEach(dropzone => data[dropzone.name] = dropzone.getContent());
+        this.dropzones.forEach(dropzone => data[dropzone.name] = dropzone.getContent(noId));
 
         return data;
     }

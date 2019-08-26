@@ -155,7 +155,7 @@ export class PartialBlueprints {
         const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
 
-            createBlueprint(this.state.name, this.state.description, this.state.category, this.state.rank, this.state.public, [this.el.getContent()], this.state.generatedImage, this.state.image, false)
+            createBlueprint(this.state.name, this.state.description, this.state.category, this.state.rank, this.state.public, [this.el.getContent(true)], this.state.generatedImage, this.state.image, false)
                 .then(json => {
                     cache.killNamespace('blueprints');
                     utilitySidebar.close();

@@ -17,7 +17,7 @@ class LoadBlueprint extends Endpoint
         /** @var \FredBlueprint $blueprint */
         $blueprint = $this->modx->getObject('FredBlueprint', $id);
         $complete = $blueprint->get('complete');
-        
+
         $data = $blueprint->get('data');
         $elements = [];
 
@@ -34,16 +34,17 @@ class LoadBlueprint extends Endpoint
         ]);
     }
 
-    protected function gatherElements(&$elements, $dropZones)
+    protected function gatherElements(&$elements, &$dropZones)
     {
-        foreach ($dropZones as $dropZone) {
+        foreach ($dropZones as &$dropZone) {
             $this->iterateElements($elements, $dropZone);
         }
     }
-    
-    protected function iterateElements(&$elements, $dropZone) {
-        foreach ($dropZone as $element) {
+
+    protected function iterateElements(&$elements, &$dropZone) {
+        foreach ($dropZone as &$element) {
             $elementId = $element['widget'];
+            $element['elId'] = null;
 
             if (!isset($elements[$elementId])) {
                 $elements[$elementId] = $this->getElement($elementId);
