@@ -341,6 +341,7 @@ export class Element {
 
             if (this.wrapper !== null) {
                 this.wrapper.replaceWith(wrapper);
+                drake.reloadContainers();
             }
 
             this.wrapper = wrapper;
@@ -358,20 +359,27 @@ export class Element {
             if (prev === null) {
                 prev = dz;
 
-                if (!dz.dropzone) {
+                if (!this.dzs[dz.dataset.fredDropzone]) {
                     dz.dropzone = new Dropzone(dz, this);
+                    this.dzs[dz.dataset.fredDropzone] = dz.dropzone;
+                } else {
+                    dz.dropzone = this.dzs[dz.dataset.fredDropzone];
+                    this.dzs[dz.dataset.fredDropzone].el = dz;
+                    this.dzs[dz.dataset.fredDropzone].render();
                 }
 
-                this.dzs[dz.dropzone.name] = dz.dropzone;
             } else {
                 if (!prev.contains(dz)) {
                     prev = dz;
 
-                    if (!dz.dropzone) {
+                    if (!this.dzs[dz.dataset.fredDropzone]) {
                         dz.dropzone = new Dropzone(dz, this);
+                        this.dzs[dz.dataset.fredDropzone] = dz.dropzone;
+                    } else {
+                        dz.dropzone = this.dzs[dz.dataset.fredDropzone];
+                        this.dzs[dz.dataset.fredDropzone].el = dz;
+                        this.dzs[dz.dataset.fredDropzone].render();
                     }
-
-                    this.dzs[dz.dropzone.name] = dz.dropzone;
                 }
             }
         }

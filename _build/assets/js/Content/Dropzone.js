@@ -22,6 +22,13 @@ export class Dropzone {
         }
     }
 
+    render() {
+        this.setProperties();
+        this.elements.forEach(element => {
+            this.el.appendChild(element.wrapper);
+        });
+    }
+
     loadElements(data, markup, before = null, clear = true, fireEvents = false) {
         const promises = [];
 

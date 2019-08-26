@@ -97,7 +97,7 @@ class Drake {
                     loadBlueprint(el.lastChild.dataset.fredBlueprintId)
                         .then(json => {
                             buildBlueprint(json.data, target.dropzone, sibling).then(() => {
-                                drake.reloadContainers();
+                                this.reloadContainers();
                                 emitter.emit('fred-loading-hide');
                             });
                         })
