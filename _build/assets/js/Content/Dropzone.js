@@ -257,8 +257,6 @@ export class Dropzone {
             this.parent.dropzone.insertBefore(element, this.parent);
             this.elements.splice(index, 1);
 
-
-            console.log('first element');
             return;
         }
 

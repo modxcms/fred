@@ -282,17 +282,14 @@ export class Element {
             this.toTop += (element.offsetTop - element.scrollTop + element.clientTop);
             element = element.offsetParent;
         }
-        //console.log('toTop ' + this.toTop)
         return (this.toTop  < 38);
     }
 
     atHeight(element) {
-        //console.log('Height ' + element.offsetHeight)
         return (element.offsetHeight  < 280);
     }
 
     atWidth(element) {
-        //console.log('Width ' + element.offsetWidth)
         return (element.offsetWidth  < 280 || element.offsetHeight  < 160);
     }
 
