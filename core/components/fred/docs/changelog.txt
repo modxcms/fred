@@ -1,5 +1,19 @@
 Changelog for Fred
 
+1.1.1
+============
+## Updates & Improvements
+- El Finder was updated to version 2.1.50. This fixed a few pesky bugs, especially the one where you couldn’t see the directory names.   
+- Refactored the Dropzone class for ~future evil schemes~ to make it perform more consistently with less code.
+
+## Bugfixes
+- Some remnant development console logging was accidentally left in. Now it’s gone.
+- Fred Themes delayed loading script tags in in a too-clever way. Now it loads them in order from top to bottom as. 
+- Fixed a user permission error around saving. Because content creators typically like to do that.
+- Blueprints no longer store the Element IDs, making them unique again (as they’re always regenerated when used).
+- Nested Dropzones sometimes refused to allow you to change the Elements inside them when they shouldn’t. Fixed.
+- Reorganized some code for future maintainability, and sanity in general.
+
 1.1.0
 ============
 ## New
