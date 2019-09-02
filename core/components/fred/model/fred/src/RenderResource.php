@@ -328,6 +328,28 @@ final class RenderResource {
             $node->removeAttr('data-fred-image-media-source');
         });
 
+        $fredLinks = $html->filter('[data-fred-link-type]');
+        $fredLinks->each(function(HtmlPageCrawler $node, $i) use ($item) {
+            $linkType = $node->attr('data-fred-link-type');
+            $node->removeAttr('data-fred-link-type');
+
+            if ($linkType === 'page') {
+                $resourceId = intval($node->attr('data-fred-link-page'));
+                $anchor = $node->attr('data-fred-link-anchor') ? ('#' . $node->attr('data-fred-link-anchor')) : '';
+
+                if ($resourceId > 0) {
+                    $node->attr('data-fred-fake-href', "[[~{$resourceId}]]{$anchor}");
+                } else {
+                    $node->attr('data-fred-fake-href', $anchor);
+                }
+
+                $node->removeAttr('href');
+
+                $node->removeAttr('data-fred-link-page');
+                $node->removeAttr('data-fred-link-anchor');
+            }
+        });
+
         $blockClasses = $html->filter('[data-fred-block-class]');
         $blockClasses->each(function(HtmlPageCrawler $node, $i) use ($item) {
             $classes = $node->attr('data-fred-block-class');
@@ -377,7 +399,7 @@ final class RenderResource {
 
                 foreach ($item['children'][$dzName] as $childItem) {
                     try {
-                        $html .= $self->renderElement($self->twig->render($childItem['widget'], $this->mergeSetting(!empty($childItem['elId']) ? $childItem['elId'] : '', $childItem['settings'])), $childItem);;
+                        $html .= $self->renderElement($self->twig->render($childItem['widget'], $this->mergeSetting(!empty($childItem['elId']) ? $childItem['elId'] : '', $childItem['settings'])), $childItem);
                     } catch (\Exception $e) {}
                 }
 
