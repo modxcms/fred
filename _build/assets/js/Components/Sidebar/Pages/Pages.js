@@ -384,7 +384,7 @@ export default class Pages extends SidebarPlugin {
                 const content = [
                     text({
                         label: 'fred.fe.pages.page_title',
-                        name: 'pagetitle'
+                        name: 'title'
                     }, duplicateState.title, setState)
                 ];
 
