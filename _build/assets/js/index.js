@@ -235,6 +235,7 @@ export default class Fred {
             }
 
             fredConfig.pageSettings.publishedon = json.publishedon;
+            fredConfig.pageSettings.alias = json.alias;
 
             emitter.emit('fred-loading-hide');
             emitter.emit('fred-after-save');

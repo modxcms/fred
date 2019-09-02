@@ -17,6 +17,12 @@ class SaveContent extends Endpoint
     protected $taggerLoaded = false;
     protected $tagger = null;
 
+    /** @var \modResource */
+    protected $object = null;
+
+    /** @var \modContext */
+    protected $context = null;
+
     function process()
     {
         if (!isset($this->body['id'])) {
@@ -33,17 +39,24 @@ class SaveContent extends Endpoint
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_data'));
         }
 
-        /** @var \modResource $object */
-        $object = $this->modx->getObject('modResource', $id);
-        if (!$object instanceof \modResource) {
+        $context = $this->getClaim('context');
+        $context = !empty($context) ? $context : 'web';
+
+        $this->context = $this->modx->getObject('modContext', ['key' => $context]);
+        if (empty($this->context)) {
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_context_nf'));
+        }
+
+        $this->object = $this->modx->getObject('modResource', $id);
+        if (!$this->object instanceof \modResource) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_nf_id', ['id' => $id]));
         }
 
-        if (!$this->modx->hasPermission('save_document') || !$object->checkPolicy('save')) {
+        if (!$this->modx->hasPermission('save_document') || !$this->object->checkPolicy('save')) {
             return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
 
-        $data = $object->getProperty('data', 'fred');
+        $data = $this->object->getProperty('data', 'fred');
         if (!empty($data['fingerprint'])) {
             if (empty($this->body['fingerprint'])) {
                 return $this->failure('No fingerprint was provided.');
@@ -62,7 +75,7 @@ class SaveContent extends Endpoint
             $content = $this->body['content'];
             $content = Utils::htmlDecodeTags($content, $parser);
 
-            $object->setContent($content);
+            $this->object->setContent($content);
         }
 
         $c = $this->modx->newQuery('modTemplateVar');
@@ -70,7 +83,7 @@ class SaveContent extends Endpoint
 
         $c->where([
             'type' => 'freddropzone',
-            'TemplateVarTemplates.templateid' => $object->get('template')
+            'TemplateVarTemplates.templateid' => $this->object->get('template')
         ]);
 
         /** @var \modTemplateVar[] $tvs */
@@ -82,96 +95,106 @@ class SaveContent extends Endpoint
                 $tvContent = $this->body[$tvName];
                 $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
 
-                $object->setTVValue($tvName, $tvContent);
+                $this->object->setTVValue($tvName, $tvContent);
             }
         }
 
         if (isset($this->body['pageSettings']['introtext'])) {
-            $object->set('introtext', $this->body['pageSettings']['introtext']);
+            $this->object->set('introtext', $this->body['pageSettings']['introtext']);
         }
 
         if (isset($this->body['pageSettings']['description'])) {
-            $object->set('description', $this->body['pageSettings']['description']);
+            $this->object->set('description', $this->body['pageSettings']['description']);
         }
 
         if (isset($this->body['pageSettings']['pagetitle'])) {
-            $object->set('pagetitle', $this->body['pageSettings']['pagetitle']);
+            if (empty($this->body['pageSettings']['pagetitle'])) {
+                return $this->failure($this->modx->lexicon('fred.fe.err.pagetitle_ns'));
+            }
+
+            $this->object->set('pagetitle', $this->body['pageSettings']['pagetitle']);
         }
 
         if (isset($this->body['pageSettings']['menutitle'])) {
-            $object->set('menutitle', $this->body['pageSettings']['menutitle']);
+            $this->object->set('menutitle', $this->body['pageSettings']['menutitle']);
         }
 
         if (isset($this->body['pageSettings']['longtitle'])) {
-            $object->set('longtitle', $this->body['pageSettings']['longtitle']);
+            $this->object->set('longtitle', $this->body['pageSettings']['longtitle']);
         }
 
         if (isset($this->body['pageSettings']['menuindex'])) {
-            $object->set('menuindex', (integer)$this->body['pageSettings']['menuindex']);
+            $this->object->set('menuindex', (integer)$this->body['pageSettings']['menuindex']);
         }
 
         if (isset($this->body['pageSettings']['hidemenu'])) {
-            $object->set('hidemenu', (boolean)$this->body['pageSettings']['hidemenu']);
+            $this->object->set('hidemenu', (boolean)$this->body['pageSettings']['hidemenu']);
         }
 
         if (isset($this->body['pageSettings']['deleted'])) {
-            $currentValue = (boolean)$object->get('deleted');
+            $currentValue = (boolean)$this->object->get('deleted');
             $incomingValue = (boolean)$this->body['pageSettings']['deleted'];
 
             if ($incomingValue) {
-                if (!$this->modx->hasPermission('delete_document') || !$object->checkPolicy('delete')) {
+                if (!$this->modx->hasPermission('delete_document') || !$this->object->checkPolicy('delete')) {
                     $incomingValue = $currentValue;
                 }
             } else {
-                if (!$this->modx->hasPermission('undelete_document') || !$object->checkPolicy('undelete')) {
+                if (!$this->modx->hasPermission('undelete_document') || !$this->object->checkPolicy('undelete')) {
                     $incomingValue = $currentValue;
                 }
             }
 
             if ($incomingValue !== $currentValue) {
-                $object->set('deleted', $incomingValue);
-                $object->set('deletedon', $incomingValue ? time() : false);
-                $object->set('deletedby', $incomingValue ? $this->modx->user->get('id') : 0);
+                $this->object->set('deleted', $incomingValue);
+                $this->object->set('deletedon', $incomingValue ? time() : false);
+                $this->object->set('deletedby', $incomingValue ? $this->modx->user->get('id') : 0);
             }
         }
 
         if (isset($this->body['pageSettings']['publishon'])) {
-            $currentValue = (int)$object->get('pub_date');
+            $currentValue = (int)$this->object->get('pub_date');
             $incomingValue = (int)$this->body['pageSettings']['publishon'];
 
-            if (!$this->modx->hasPermission('publish_document') || !$object->checkPolicy('publish')) {
+            if (!$this->modx->hasPermission('publish_document') || !$this->object->checkPolicy('publish')) {
                 $incomingValue = $currentValue;
             }
 
-            $object->set('pub_date', $incomingValue);
+            $this->object->set('pub_date', $incomingValue);
         }
 
         if (isset($this->body['pageSettings']['unpublishon'])) {
-            $currentValue = (int)$object->get('unpub_date');
+            $currentValue = (int)$this->object->get('unpub_date');
             $incomingValue = (int)$this->body['pageSettings']['unpublishon'];
 
-            if (!$this->modx->hasPermission('unpublish_document') || !$object->checkPolicy('unpublish')) {
+            if (!$this->modx->hasPermission('unpublish_document') || !$this->object->checkPolicy('unpublish')) {
                 $incomingValue = $currentValue;
             }
-            $object->set('unpub_date', $incomingValue);
+            $this->object->set('unpub_date', $incomingValue);
         }
 
         $uriChanged = false;
         if (isset($this->body['pageSettings']['alias'])) {
-            $object->set('alias', $this->body['pageSettings']['alias']);
-            $uriChanged = $object->isDirty('alias');
+            $pagetitle = isset($this->body['pageSettings']['pagetitle']) ? $this->body['pageSettings']['pagetitle'] : '';
+            $aliasSet = $this->setAlias($this->body['pageSettings']['alias'], $pagetitle);
+
+            if ($aliasSet !== true) {
+                return $this->failure($aliasSet);
+            }
+
+            $uriChanged = $this->object->isDirty('alias');
         }
 
         if (isset($this->body['pageSettings']['published'])) {
-            $currentValue = (boolean)$object->get('published');
+            $currentValue = (boolean)$this->object->get('published');
             $incomingValue = (boolean)$this->body['pageSettings']['published'];
 
             if ($incomingValue) {
-                if (!$this->modx->hasPermission('publish_document') || !$object->checkPolicy('publish')) {
+                if (!$this->modx->hasPermission('publish_document') || !$this->object->checkPolicy('publish')) {
                     $incomingValue = $currentValue;
                 }
             } else {
-                if (!$this->modx->hasPermission('unpublish_document') || !$object->checkPolicy('unpublish')) {
+                if (!$this->modx->hasPermission('unpublish_document') || !$this->object->checkPolicy('unpublish')) {
                     $incomingValue = $currentValue;
                 }
             }
@@ -187,37 +210,37 @@ class SaveContent extends Endpoint
                     $publishedOn = false;
                 }
 
-                $object->set('published', (boolean)$this->body['pageSettings']['published']);
-                $object->set('publishedon', $publishedOn);
-                $object->set('publishedby', $incomingValue ? $this->modx->user->get('id') : 0);
+                $this->object->set('published', (boolean)$this->body['pageSettings']['published']);
+                $this->object->set('publishedon', $publishedOn);
+                $this->object->set('publishedby', $incomingValue ? $this->modx->user->get('id') : 0);
             } else {
                 if (isset($this->body['pageSettings']['publishedon'])) {
-                    $object->set('publishedon', (int)$this->body['pageSettings']['publishedon']);
+                    $this->object->set('publishedon', (int)$this->body['pageSettings']['publishedon']);
                 }
             }
         }
 
         if (!empty($this->body['plugins'])) {
-            $object->setProperty('plugins', $this->body['plugins'], 'fred');
+            $this->object->setProperty('plugins', $this->body['plugins'], 'fred');
         } else {
-            $object->setProperty('plugins', (object)[], 'fred');
+            $this->object->setProperty('plugins', (object)[], 'fred');
         }
 
-        $object->setProperty('data', $this->body['data'], 'fred');
+        $this->object->setProperty('data', $this->body['data'], 'fred');
 
-        $object->set('editedon', time());
-        $object->set('editedby', $this->modx->user->get('id'));
+        $this->object->set('editedon', time());
+        $this->object->set('editedby', $this->modx->user->get('id'));
 
         if ($this->taggerLoaded) {
-            $this->handleTagger($object);
+            $this->handleTagger($this->object);
         }
 
-        $this->body['data']['fingerprint'] = Utils::resourceFingerprint($object);
-        $object->setProperty('data', $this->body['data'], 'fred');
+        $this->body['data']['fingerprint'] = Utils::resourceFingerprint($this->object);
+        $this->object->setProperty('data', $this->body['data'], 'fred');
 
         $beforeSave = $this->modx->invokeEvent('FredOnBeforeFredResourceSave', [
-            'id' => $object->get('id'),
-            'resource' => &$object
+            'id' => $this->object->get('id'),
+            'resource' => &$this->object
         ]);
 
         if (is_array($beforeSave)) {
@@ -236,7 +259,7 @@ class SaveContent extends Endpoint
             return $this->failure($preventSave);
         }
 
-        $saved = $object->save();
+        $saved = $this->object->save();
 
         if (!$saved) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
@@ -244,25 +267,26 @@ class SaveContent extends Endpoint
 
         if (isset($this->body['pageSettings']['tvs']) && is_array($this->body['pageSettings']['tvs'])) {
             foreach ($this->body['pageSettings']['tvs'] as $tvName => $tvValue) {
-                $object->setTVValue($tvName, $tvValue);
+                $this->object->setTVValue($tvName, $tvValue);
             }
         }
 
         $this->modx->getCacheManager()->refresh();
 
         $this->modx->invokeEvent('FredOnFredResourceSave', [
-            'id' => $object->get('id'),
-            'resource' => &$object
+            'id' => $this->object->get('id'),
+            'resource' => &$this->object
         ]);
 
         $response = [
             'message' => $this->modx->lexicon('fred.fe.pages.updated'),
             'fingerprint' => $this->body['data']['fingerprint'],
-            'publishedon' => $object->publishedon
+            'publishedon' => $this->object->publishedon,
+            'alias' => $this->object->alias,
         ];
 
         if ($uriChanged) {
-            $response['url'] = $this->modx->makeUrl($object->get('id'), $object->get('context_key'), '', 'full');
+            $response['url'] = $this->modx->makeUrl($this->object->get('id'), $this->object->get('context_key'), '', 'full');
         }
 
         return $this->success($response);
@@ -378,5 +402,41 @@ class SaveContent extends Endpoint
                 }
             }
         }
+    }
+
+    protected function setAlias($alias, $pageTitle) {
+        $autoGenerated = false;
+
+        $pageTitle = empty($pageTitle) ? $this->object->pagetitle : $pageTitle;
+
+        if (empty($alias) && $this->context->getOption('automatic_alias', false)) {
+            $alias = $this->object->cleanAlias($pageTitle);
+            $autoGenerated = true;
+        }
+
+        $friendlyUrlsEnabled = $this->context->getOption('friendly_urls', false) && !empty($pageTitle);
+
+        $duplicateContext = $this->context->getOption('global_duplicate_uri_check', false) ? '' : $this->object->context_key;
+
+        $aliasPath = $this->object->getAliasPath($alias,$this->object->toArray());
+        $duplicateId = $this->object->isDuplicateAlias($aliasPath, $duplicateContext);
+
+        if ($duplicateId) {
+            if ($friendlyUrlsEnabled) {
+                return $this->modx->lexicon('duplicate_uri_found', [
+                    'id' => $duplicateId,
+                    'uri' => $aliasPath,
+                ]);
+            } elseif ($autoGenerated) {
+                $alias = '';
+            }
+        }
+
+        if (empty($alias) && $friendlyUrlsEnabled) {
+            return $this->modx->lexicon('fred.fe.err.alias_ns');
+        }
+
+        $this->object->set('alias', $alias);
+        return true;
     }
 }

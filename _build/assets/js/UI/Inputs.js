@@ -21,6 +21,8 @@ export const text = (setting, defaultValue = '', onChange, onInit) => {
 
     const inputEl = input(defaultValue);
 
+    labelEl.inputEl = inputEl;
+
     if (setting.labelAsPlaceholder === true) {
         inputEl.setAttribute('placeholder', setting.label || setting.name);
     }
@@ -62,6 +64,7 @@ export const select = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
 
     const selectEl = selectElement();
+    labelEl.inputEl = selectEl;
 
     if (setting.options) {
         for (let value in setting.options) {
@@ -125,6 +128,7 @@ export const area = (setting, defaultValue = '', onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
 
     const textAreaEl = textArea(defaultValue);
+    labelEl.inputEl = textAreaEl;
 
     if (setting.rows && (parseInt(setting.rows) > 0)) {
         textAreaEl.setAttribute('rows', parseInt(setting.rows));
@@ -153,6 +157,7 @@ export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
     const labelEl = label(setting.label || setting.name);
     const group = div(['fred--input-group', 'fred--datetime']);
     const inputEl = input();
+    labelEl.inputEl = inputEl;
 
     const picker = flatpickr(inputEl, {
         enableTime: true,
@@ -568,6 +573,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
     const inputWrapper = div(['fred--input-group', 'fred--browse']);
 
     const inputEl = input(defaultValue);
+    labelEl.inputEl = inputEl;
 
     const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 
@@ -666,6 +672,7 @@ export const file = (setting, defaultValue = '', onChange, onInit) => {
     const inputWrapper = div(['fred--input-group', 'fred--browse']);
 
     const inputEl = input(defaultValue);
+    labelEl.inputEl = inputEl;
 
     const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 
@@ -721,6 +728,7 @@ export const folder = (setting, defaultValue = '', onChange, onInit) => {
     const inputWrapper = div(['fred--input-group', 'fred--browse']);
 
     const inputEl = input(defaultValue);
+    labelEl.inputEl = inputEl;
 
     const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 

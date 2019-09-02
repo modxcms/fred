@@ -58,7 +58,9 @@ export default class PageSettings extends SidebarPlugin {
         fields.appendChild(ui.area({name: 'description', label: 'fred.fe.page_settings.description'}, this.pageSettings.description, this.setSettingWithEmitter, this.addSettingChangeListener));
         fields.appendChild(ui.area({name: 'introtext', label: 'fred.fe.page_settings.intro_text'}, this.pageSettings.introtext, this.setSettingWithEmitter, this.addSettingChangeListener));
         fields.appendChild(ui.text({name: 'menutitle', label: 'fred.fe.page_settings.menu_title'}, this.pageSettings.menutitle, this.setSettingWithEmitter, this.addSettingChangeListener));
-        fields.appendChild(ui.text({name: 'alias', label: 'fred.fe.page_settings.alias'}, this.pageSettings.alias, this.setSettingWithEmitter, this.addSettingChangeListener));
+
+        const aliasField = ui.text({name: 'alias', label: 'fred.fe.page_settings.alias'}, this.pageSettings.alias, this.setSettingWithEmitter, this.addSettingChangeListener);
+        fields.appendChild(aliasField);
 
         const publishedToggle = ui.toggle({name: 'published', label: 'fred.fe.page_settings.published'}, this.pageSettings.published, (name, value) => {this.setSetting(name, value)});
 
@@ -81,6 +83,8 @@ export default class PageSettings extends SidebarPlugin {
             if (!(fredConfig.permission.unpublish_document && fredConfig.resource.unpublish) && this.pageSettings.published) {
                 publishedToggle.inputEl.setAttribute('disabled', 'disabled');
             }
+
+            aliasField.inputEl.value = this.pageSettings.alias;
         });
 
         return fields;
