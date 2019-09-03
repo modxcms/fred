@@ -167,3 +167,6 @@ $_lang['fred.fe.err.resource_stale'] = 'Your page is outdated, please reload the
 $_lang['fred.fe.err.resource_save'] = 'Error saving resource';
 $_lang['fred.fe.err.tagger_ns_group'] = 'Group is required';
 $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Files cannot be selected, please select a folder.';
+$_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
+$_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
+$_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';
