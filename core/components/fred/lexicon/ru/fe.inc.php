@@ -167,3 +167,6 @@ $_lang['fred.fe.err.resource_stale'] = 'Ваша страница устарел
 $_lang['fred.fe.err.resource_save'] = 'Ошибка сохранения ресурса';
 $_lang['fred.fe.err.tagger_ns_group'] = 'Требуется группа';
 $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Файлы не могут быть выбраны, пожалуйста, выберите папку.';
+$_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
+$_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
+$_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';
