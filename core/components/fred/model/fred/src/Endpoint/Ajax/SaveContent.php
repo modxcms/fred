@@ -272,6 +272,7 @@ class SaveContent extends Endpoint
         }
 
         $this->modx->getCacheManager()->refresh();
+        $this->modx->setOption('cache_alias_map', false);
 
         $this->modx->invokeEvent('FredOnFredResourceSave', [
             'id' => $this->object->get('id'),
