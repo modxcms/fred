@@ -5,8 +5,13 @@ Changelog for Fred
 ## Updates & Improvements
 - El Finder was updated to version 2.1.50. This fixed a few pesky bugs, especially the one where you couldn’t see the directory names.   
 - Refactored the Dropzone class for ~future evil schemes~ to make it perform more consistently with less code.
+- Translation updates.
 
 ## Bugfixes
+- Fred now properly redirects to the new page URL when updating the alias from the front-end.
+- Speaking of aliases, Fred also now auto-generates one if it’s somehow empty making it infinitely more likely that people, you know, can see the beautiful content you just created.
+- Fred now helpfully saves the page title you entered when duplicating an existing page rather than the default.
+- Links in RTE content were broken when saving the page in the Manager. Now they’re not.
 - Some remnant development console logging was accidentally left in. Now it’s gone.
 - Fred Themes delayed loading script tags in in a too-clever way. Now it loads them in order from top to bottom as. 
 - Fixed a user permission error around saving. Because content creators typically like to do that.
