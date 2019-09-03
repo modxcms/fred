@@ -167,3 +167,6 @@ $_lang['fred.fe.err.resource_stale'] = 'Ihre Seite ist nicht aktuell, bitte lade
 $_lang['fred.fe.err.resource_save'] = 'Fehler beim Speichern der Ressource';
 $_lang['fred.fe.err.tagger_ns_group'] = 'Gruppe ist erforderlich';
 $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Dateien können nicht ausgewählt werden, bitte wähle einen Ordner.';
+$_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
+$_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
+$_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';
