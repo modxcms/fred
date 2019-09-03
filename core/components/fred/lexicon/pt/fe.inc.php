@@ -167,3 +167,6 @@ $_lang['fred.fe.err.resource_stale'] = 'A página está desatualizada. Por favor
 $_lang['fred.fe.err.resource_save'] = 'Erro ao guardar o recurso';
 $_lang['fred.fe.err.tagger_ns_group'] = 'O Grupo é obrigatório';
 $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Não pode selecionar ficheiros. Por favor, selecione um diretório.';
+$_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
+$_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
+$_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';

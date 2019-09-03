@@ -167,3 +167,6 @@ $_lang['fred.fe.err.resource_stale'] = 'La pagina è obsoleta, si prega di ricar
 $_lang['fred.fe.err.resource_save'] = 'Errore nel salvataggio della risorsa';
 $_lang['fred.fe.err.tagger_ns_group'] = 'Il Gruppo è obbligatorio';
 $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'I file non possono essere selezionati, si prega di selezionare una cartella.';
+$_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
+$_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
+$_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';

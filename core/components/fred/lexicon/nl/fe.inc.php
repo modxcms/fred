@@ -167,3 +167,6 @@ $_lang['fred.fe.err.resource_stale'] = 'Je pagina is niet up-to-date, ververs de
 $_lang['fred.fe.err.resource_save'] = 'Fout bij opslaan pagina';
 $_lang['fred.fe.err.tagger_ns_group'] = 'Groep is verplicht';
 $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Files cannot be selected, please select a folder.';
+$_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
+$_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
+$_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';

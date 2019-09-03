@@ -167,3 +167,6 @@ $_lang['fred.fe.err.resource_stale'] = 'Din sida är inaktuell. Ladda om sidan.'
 $_lang['fred.fe.err.resource_save'] = 'Det gick inte att spara resursen';
 $_lang['fred.fe.err.tagger_ns_group'] = 'Grupp är obligatorisk';
 $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Det går inte att välja filer. Välj en mapp istället.';
+$_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
+$_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
+$_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';
