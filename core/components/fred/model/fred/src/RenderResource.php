@@ -348,6 +348,13 @@ final class RenderResource {
                 $node->removeAttr('data-fred-link-page');
                 $node->removeAttr('data-fred-link-anchor');
             }
+
+            if ($linkType === 'url') {
+                $href = $node->attr('href');
+                $node->removeAttr('href');
+
+                $node->attr('data-fred-fake-href', $href);
+            }
         });
 
         $blockClasses = $html->filter('[data-fred-block-class]');
