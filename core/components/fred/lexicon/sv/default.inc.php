@@ -253,8 +253,8 @@ $_lang['setting_fred.blueprint_category_sort'] = 'Blueprint\'s Category Sort';
 $_lang['setting_fred.blueprint_category_sort_desc'] = 'Sort Blueprint Categories by name or rank';
 $_lang['setting_fred.blueprint_sort'] = 'Blueprint Sort';
 $_lang['setting_fred.blueprint_sort_desc'] = 'Sortera ritningar efter namn eller rang';
-$_lang['setting_fred.secret'] = 'Secret';
-$_lang['setting_fred.secret_desc'] = 'Secret used in signing XHR requests';
+$_lang['setting_fred.secret'] = 'Hemlig nyckel';
+$_lang['setting_fred.secret_desc'] = 'Hemlig nyckel som används för att signera XHR-anrop';
 $_lang['setting_fred.default_enabled'] = 'Fred aktiverad';
 $_lang['setting_fred.default_enabled_desc'] = 'Aktivera eller inaktivera Fred som standard';
 
