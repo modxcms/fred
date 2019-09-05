@@ -113,25 +113,25 @@ $_lang['fred.fe.content.element_screenshot'] = 'Element Screenshot';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Replace Element Thumbnail';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Replacing Element\'s Thumbnail';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
-$_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
+$_lang['fred.fe.content.element_cache_warning'] = 'Elementet är cachat. Ändringarna kommer inte att synas förrän du verkställer dom.';
 
-$_lang['fred.fe.element_settings.unsaved_changes'] = 'There are unsaved changes, are you sure?';
+$_lang['fred.fe.element_settings.unsaved_changes'] = 'Det finns osparade ändringar - är du säker?';
 
 $_lang['fred.fe.editor.edit'] = 'Redigera';
 $_lang['fred.fe.editor.edit_icon'] = 'Redigera ikon';
 $_lang['fred.fe.editor.edit_image'] = 'Redigera bild';
 $_lang['fred.fe.editor.image_uri'] = 'Bild-URI';
 
-$_lang['fred.fe.preview.tablet_portrait'] = 'Tablet Portrait';
-$_lang['fred.fe.preview.tablet_landscape'] = 'Tablet Landscape';
-$_lang['fred.fe.preview.phone_portrait'] = 'Phone Portrait';
-$_lang['fred.fe.preview.phone_landscape'] = 'Phone Landscape';
+$_lang['fred.fe.preview.tablet_portrait'] = 'Stående läsplatta';
+$_lang['fred.fe.preview.tablet_landscape'] = 'Liggande läsplatta';
+$_lang['fred.fe.preview.phone_portrait'] = 'Stående telefon';
+$_lang['fred.fe.preview.phone_landscape'] = 'Liggande telefon';
 $_lang['fred.fe.preview.auto'] = 'Auto';
 
 $_lang['fred.fe.tagger.tagger'] = 'Taggar';
 $_lang['fred.fe.tagger.add'] = 'Lägg till tagg';
 $_lang['fred.fe.tagger.toggle_list'] = 'Växla lista';
-$_lang['fred.fe.tagger.toggle_input'] = 'Toggle Input';
+$_lang['fred.fe.tagger.toggle_input'] = 'Växla indata';
 
 $_lang['fred.fe.permission.save'] = 'Otillräckliga rättigheter för att spara den här resursen!';
 $_lang['fred.fe.permission.new_document'] = 'Otillräckliga rättigheter för att skapa en resurs!';
@@ -167,6 +167,6 @@ $_lang['fred.fe.err.resource_stale'] = 'Din sida är inaktuell. Ladda om sidan.'
 $_lang['fred.fe.err.resource_save'] = 'Det gick inte att spara resursen';
 $_lang['fred.fe.err.tagger_ns_group'] = 'Grupp är obligatorisk';
 $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Det går inte att välja filer. Välj en mapp istället.';
-$_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
-$_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
-$_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';
+$_lang['fred.fe.err.pagetitle_ns'] = 'Sidtitel är obligatorisk.';
+$_lang['fred.fe.err.alias_ns'] = 'Alias är obligatoriskt.';
+$_lang['fred.fe.err.resource_context_nf'] = 'Kontexten kunde inte hittas.';
