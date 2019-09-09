@@ -9,14 +9,14 @@
         var pair = pairs[i].split('=');
         query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
     }
-    
+
     var fredToken = query.fredToken || '';
     delete query.fredToken;
     var type = query.type || '';
     delete query.type;
     var showOnlyFolders = query.showOnlyFolders === "true";
     delete query.showOnlyFolders;
-    
+
     var serialize = function(obj, prefix) {
         var str = [],
             p;
@@ -35,11 +35,11 @@
     if (type !== '') {
         query.fred_type = type;
     }
-    
+
     query.fred_show_only_folders = showOnlyFolders;
-    
+
     queryString = serialize(query);
-    
+
     if (queryString.length > 0) {
         queryString = '?' + queryString;
     }
@@ -51,7 +51,7 @@
             }
         }
     }
-    
+
     var jqver = '3.2.1',
         uiver = '1.12.1',
 
@@ -72,7 +72,7 @@
         })(),
 
         opts = {
-            cssAutoLoad : ['../vendor/elfinder-themes/material/css/theme-gray.css'],
+            cssAutoLoad : ['../elfinder-themes/material/css/theme-gray.css'],
             getFileCallback : function(file, fm) {
                 if (type === 'folder') {
                     if (file.mime === 'directory') {
@@ -93,7 +93,7 @@
                         parent.fredFinderOnChange(file, fm);
                     }
                 }
-                
+
             },
             commandsOptions: commandsOptions,
             resizable : false,
@@ -133,12 +133,12 @@
                         return Encoding.convert(s,{to:'UNICODE',type:'string'});
                     };
                 }
-                
+
                 $('#elfinder').elfinder(opts).elfinder('instance').exec('fullscreen');
             });
         },
 
-        
+
         load = function() {
             require(
                 [
