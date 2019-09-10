@@ -499,7 +499,7 @@
     font-style: italic;
   }
   &_hidden {
-    color: $border-light;
+    color: darken($border-light, 35%);
   }
   &_create img {
     border: 1px solid $border-light;
