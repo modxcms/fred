@@ -247,6 +247,12 @@ final class RenderResource {
             $node->removeAttribute('src');
         });
 
+        $forms = $html->filter('form');
+        $forms->each(function(HtmlPageCrawler $node, $i) {
+            $node->setAttribute('data-fred-fake-action', $node->getAttribute('action'));
+            $node->removeAttribute('action');
+        });
+
         $fredLinks = $html->filter('[data-fred-link-type]');
         $fredLinks->each(function(HtmlPageCrawler $node, $i) use ($item) {
             $linkType = $node->attr('data-fred-link-type');
@@ -421,6 +427,7 @@ final class RenderResource {
         if ($replaceFakes) {
             $html = str_replace(' data-fred-fake-href=', ' href=', $html);
             $html = str_replace(' data-fred-fake-src=', ' src=', $html);
+            $html = str_replace('data-fred-fake-action=', ' action=', $html);
         }
 
         return $html;
