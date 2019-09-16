@@ -163,6 +163,24 @@ Groups are used to organize related Option Sets, or to remove infrequently used 
 }
 ```
 
+### Setting Name Conventions
+
+Since the frontend is rendered through Twig, all `"name"` values need to follow JavaScript conventions. This primarily means hyphens, spaces and other special characters are not allowed as they may have reserved functions in JavaScript. 
+
+#### Joining Multiple Words in Setting Names
+
+**Underscore:**
+
+cta_title, cta_image, cta_link
+
+**Upper Camel Case (Pascal Case):**
+
+CtaTitle, CtaImage, CtaLink
+
+**Lower Camel Case:**
+
+ctaTitle, ctaImage, ctaLink
+
 ## Example Option Set with Settings
 
 ```json

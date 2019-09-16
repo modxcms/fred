@@ -1,6 +1,6 @@
 # HTML Markup in Fred Elements
 
-Fred Elements are made of HTML with specific attributes. The markup can be enhanced using Twig and Element Settings.
+Fred Elements are made of HTML with specific attributes. The markup can be enhanced using Twig and Element [Settings](../options/index.md).
 
 ## Custom Tags
 
