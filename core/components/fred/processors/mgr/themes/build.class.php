@@ -35,6 +35,10 @@ class FredThemeBuildProcessor extends modObjectProcessor
             )
         );
 
+        $this->modx->loadClass('xpdo.transport.xPDOVehicle', $this->modx->getOption('core_path'), false, true);
+        $this->modx->loadClass('xpdo.transport.xPDOFileVehicle', $this->modx->getOption('core_path'), false, true);
+        $this->modx->loadClass('fred.FredFileVehicle', $this->fred->getOption('modelPath'), false, true);
+
         $name = $this->getProperty('name');
         $version = $this->getProperty('version', '1.0.0');
         $release = $this->getProperty('release', 'pl');
@@ -196,10 +200,13 @@ class FredThemeBuildProcessor extends modObjectProcessor
 
         if (is_dir($themeFolderPath) && is_readable($themeFolderPath)) {
             $vehicle = $builder->createVehicle([
-                "source" => $themeFolderPath,
-                "target" => "return MODX_ASSETS_PATH . '{$themesFolder}';"
+                "in" => $themeFolderPath,
+                "notPath" => [
+                    "/^_data/"
+                ],
+                "target" => "return MODX_ASSETS_PATH . '{$themeFolder}';"
             ], [
-                "vehicle_class" => "xPDOFileVehicle"
+                "vehicle_class" => "FredFileVehicle"
             ]);
             $vehicle->validate('php', [
                 'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
