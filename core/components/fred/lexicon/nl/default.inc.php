@@ -21,7 +21,7 @@ $_lang['freddropzone'] = 'Fred Dropzone';
 $_lang['fred.global.any'] = 'Alle';
 $_lang['fred.global.change_order'] = 'Volgorde wijzigen: [[+name]]';
 $_lang['fred.global.help'] = 'Help';
-$_lang['fred.global.none'] = 'None';
+$_lang['fred.global.none'] = 'Geen';
 
 $_lang['fred.open_in_fred'] = 'Openen in Fred';
 
