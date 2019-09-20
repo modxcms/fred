@@ -290,6 +290,8 @@ switch ($modx->event->name) {
         break;
     case 'OnBeforeDocFormSave':
         if ($mode !== 'upd') return;
+        
+        if (in_array($resource->class_key, array('modWebLink', 'modSymLink'))) return;
 
         if (empty($fred->getTheme($resource->template))) return;
 
@@ -331,6 +333,8 @@ switch ($modx->event->name) {
         break;
     case 'OnDocFormSave':
         if ($mode !== 'upd') return;
+        
+        if (in_array($resource->class_key, array('modWebLink', 'modSymLink'))) return;
 
         if (empty($fred->getTheme($resource->template))) return;
 
