@@ -1,7 +1,7 @@
 import emitter from '../EE';
 import fredConfig from './../Config';
 import { div, span, dt, h3 } from '../UI/Elements';
-    
+
 export default class SidebarPlugin {
     static title = 'TITLE NOT SET';
     static icon = '';
@@ -12,7 +12,7 @@ export default class SidebarPlugin {
         this.config = fredConfig.config;
         this.titleEl = null;
         this.contentEl = null;
-        
+
         const render = (text, expandable = false) => {
             this.titleEl = dt(text);
 
@@ -21,7 +21,7 @@ export default class SidebarPlugin {
             }
 
             if (expandable === false) {
-                this.titleEl.addEventListener('click', this.click);
+                this.titleEl.addEventListener('click', this.click.bind(this));
             } else {
                 this.titleEl.addEventListener('click', () => {
                     if (this.titleEl.classList.contains('active')) {
@@ -46,15 +46,15 @@ export default class SidebarPlugin {
     init() {}
 
     click() {}
-    
+
     expand() {
         this.titleEl.classList.add('active');
     }
-    
+
     collapse() {
         this.titleEl.classList.remove('active');
     }
-    
+
     setContent(content) {
         if ((typeof content === 'object') && (content.outerHTML !== undefined)) {
             this.contentEl.innerHTML = '';
@@ -65,16 +65,16 @@ export default class SidebarPlugin {
         this.contentEl.appendChild(h3(this.constructor.title));
         this.contentEl.innerHTML = content;
     }
-    
+
     loading(text = '') {
-        const title = fredConfig.lngExists(this.constructor.title) ? fredConfig.lng(this.constructor.title) : this.constructor.title; 
+        const title = fredConfig.lngExists(this.constructor.title) ? fredConfig.lng(this.constructor.title) : this.constructor.title;
         text = text || `Retrieving ${title}`;
-        
+
         const wrapper = div('fred--loading_wrapper', [
             span('fred--loading'),
             text
         ]);
-        
+
         this.setContent(wrapper);
     }
 

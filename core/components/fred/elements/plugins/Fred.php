@@ -14,10 +14,12 @@ $fred = $modx->getService(
     'fred',
     'Fred',
     $corePath . 'model/fred/',
-    array(
+    [
         'core_path' => $corePath
-    )
+    ]
 );
+
+$disabledClassKeys = ['modWebLink', 'modSymLink'];
 
 switch ($modx->event->name) {
     case 'OnDocFormPrerender':
@@ -290,8 +292,8 @@ switch ($modx->event->name) {
         break;
     case 'OnBeforeDocFormSave':
         if ($mode !== 'upd') return;
-        
-        if (in_array($resource->class_key, array('modWebLink', 'modSymLink'))) return;
+
+        if (in_array($resource->class_key, $disabledClassKeys)) return;
 
         if (empty($fred->getTheme($resource->template))) return;
 
@@ -333,18 +335,18 @@ switch ($modx->event->name) {
         break;
     case 'OnDocFormSave':
         if ($mode !== 'upd') return;
-        
-        if (in_array($resource->class_key, array('modWebLink', 'modSymLink'))) return;
+
+        if (in_array($resource->class_key, $disabledClassKeys)) return;
 
         if (empty($fred->getTheme($resource->template))) return;
 
         $renderResource = new \Fred\RenderResource($resource, $modx);
         $renderResource->render();
 
-        $modx->invokeEvent('FredOnFredResourceSave', array(
+        $modx->invokeEvent('FredOnFredResourceSave', [
             'id' => $resource->get('id'),
             'resource' => &$resource
-        ));
+        ]);
 
         break;
     case 'OnTemplateRemove':
