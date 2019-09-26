@@ -5,7 +5,7 @@ import Launcher from './Launcher';
 import drake from './Drake';
 import Editor from './Editors/Editor';
 import fredConfig from './Config';
-import { div, section, a, iFrame } from './UI/Elements'
+import {div, section, a, iFrame, span} from './UI/Elements'
 import Mousetrap from 'mousetrap';
 import MousetrapGlobalBind from 'mousetrap/plugins/global-bind/mousetrap-global-bind.min'
 import {loadElements, pluginTools, valueParser, applyScripts} from "./Utils";
@@ -40,7 +40,7 @@ export default class Fred {
         this.previewDocument = null;
 
         this.unsavedChanges = false;
-
+window.testEmitter = emitter;
         window.onbeforeunload = () => {
             if (this.unsavedChanges === true) {
                 return fredConfig.lng('fred.fe.unsaved_data_warning');
@@ -292,9 +292,36 @@ export default class Fred {
             text = text || '';
 
             this.loading = section(['fred--modal-bg', 'fred--modal_loading']);
-            this.loading.innerHTML = `<div class="fred--modal" aria-hidden="false"><div style="color:white;text-align:center;"><span class="fred--loading"></span> ${text}</div></div>`;
+            const modal = div('fred--modal');
+            modal.setAttribute('aria-hidden', 'false');
+
+            const inner = div();
+            inner.style.color = 'white';
+            inner.style.textAlign= 'center';
+
+            const spinner = span('fred--loading');
+            const textSpan = span();
+            textSpan.innerHTML = text;
+
+            inner.appendChild(spinner);
+            inner.appendChild(textSpan);
+
+            this.loading.setText = (text = '') => {
+                textSpan.innerHTML = text;
+            };
+
+            modal.appendChild(inner);
+
+            this.loading.appendChild(modal);
 
             this.wrapper.appendChild(this.loading);
+        });
+
+        emitter.on('fred-loading-change', text => {
+            if (this.loading === null) return;
+
+            text = text || '';
+            this.loading.setText(text);
         });
 
         emitter.on('fred-loading-hide', () => {
