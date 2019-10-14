@@ -25,12 +25,12 @@ class ElFinder extends Endpoint
             $payload = $this->fred->getJWTPayload();
 
             $this->modx->switchContext($payload['context']);
-            
+
             if (!$this->modx->hasPermission('fred')) {
                 http_response_code(403);
                 return;
             }
-            
+
             if ($payload['iss'] !== $this->modx->user->id) {
                 http_response_code(403);
                 return;
@@ -66,7 +66,7 @@ class ElFinder extends Endpoint
         foreach ($mediaSources as $mediaSource) {
             $mediaSource->initialize();
             if(!$mediaSource->checkPolicy('list')) continue;
-            
+
             $properties = $mediaSource->getProperties();
             if (isset($properties['fred']) && ($properties['fred']['value'] === true)) {
                 $bases = $mediaSource->getBases();
@@ -76,7 +76,7 @@ class ElFinder extends Endpoint
 
                 $readOnly = false;
                 if (isset($properties['fredReadOnly']) && ($properties['fredReadOnly']['value'] === true)) $readOnly = true;
-                
+
                 $roots[] = [
                     'id' => 'ms' . $mediaSource->id,
                     'driver' => 'LocalFileSystem',
@@ -93,11 +93,25 @@ class ElFinder extends Endpoint
             }
         }
 
+        $params = new \stdClass();
+        $params->roots =& $roots;
+
+        $this->modx->invokeEvent('FredOnElfinderRoots', [
+            'params' => &$params
+        ]);
+
+        foreach ($roots as &$root) {
+            if (!isset($root['attributes']) && !empty($root['rootParams'])) {
+                $root['attributes'] = $this->getRootAttributes($root['rootParams']);
+                unset($root['rootParams']);
+            }
+        }
+
         $options = ['roots' => $roots];
         $connector = new \elFinderConnector(new \elFinder($options));
         $connector->run();
     }
-    
+
     private function getRootAttributes($properties)
     {
         $readOnly = false;
@@ -112,7 +126,7 @@ class ElFinder extends Endpoint
         $attributes = [];
 
         $showOnlyFolders = isset($_GET['fred_show_only_folders']) ? ($_GET['fred_show_only_folders'] === "true") : false;
-        
+
         if ($showOnlyFolders) {
             $attributes[] = [
                 'pattern' => '/\..*/',
@@ -122,7 +136,7 @@ class ElFinder extends Endpoint
                 'hidden' => true,
             ];
         }
-        
+
         if (!empty($allowedFileTypes)) {
             foreach ($allowedFileTypes as $fileType) {
                 $attributes[] = [
@@ -167,7 +181,7 @@ class ElFinder extends Endpoint
                 'locked' => false
             ];
         }
-        
+
         return $attributes;
     }
 }

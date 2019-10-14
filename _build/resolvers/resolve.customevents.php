@@ -2,16 +2,17 @@
 if ($object->xpdo) {
     /** @var modX $modx */
     $modx =& $object->xpdo;
-    
+
     $events = [
         'FredBeforeRender',
         'FredElementFormRender',
         'FredOnBeforeFredResourceSave',
         'FredOnFredResourceSave',
         'FredOnFredResourceLoad',
-        'FredOnBeforeGetResourceTree'
+        'FredOnBeforeGetResourceTree',
+        'FredOnElfinderRoots'
     ];
-    
+
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
@@ -25,7 +26,7 @@ if ($object->xpdo) {
                     $event->save();
                 }
             }
-            
+
             break;
         case xPDOTransport::ACTION_UNINSTALL:
             foreach ($events as $eventName) {
@@ -34,7 +35,7 @@ if ($object->xpdo) {
                     $event->remove();
                 }
             }
-            
+
             break;
     }
 }
