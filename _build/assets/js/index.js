@@ -40,7 +40,7 @@ export default class Fred {
         this.previewDocument = null;
 
         this.unsavedChanges = false;
-window.testEmitter = emitter;
+
         window.onbeforeunload = () => {
             if (this.unsavedChanges === true) {
                 return fredConfig.lng('fred.fe.unsaved_data_warning');

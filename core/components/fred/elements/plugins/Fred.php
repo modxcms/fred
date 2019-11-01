@@ -43,12 +43,12 @@ switch ($modx->event->name) {
                 right.on('beforerender', function() {
                     var content = Ext.getCmp('ta'),
                     contentvalue = content.getValue(),
-                    panel = Ext.getCmp('modx-page-update-resource'); 
-                    
+                    panel = Ext.getCmp('modx-page-update-resource');
+
                     content.destroy();
-                     
+
                     right.insert(0,{
-                        xtype: 'button' 
+                        xtype: 'button'
                         ,fieldLabel: _('fred.open_in_fred')
                         ,hideLabel: true
                         ,cls: 'primary-button'
@@ -58,9 +58,9 @@ switch ($modx->event->name) {
                             window.open(panel.config.preview_url)
                         }
                     });
-                     
+
                     right.insert(1,{
-                        xtype: 'textarea' 
+                        xtype: 'textarea'
                         ,hideLabel: true
                         ,anchor: '100%'
                         ,grow: true
@@ -69,14 +69,14 @@ switch ($modx->event->name) {
                         ,value: contentvalue
                     });
                 });
-                
+
                 right.on('afterrender', function() {
                     var panel = Ext.getCmp('modx-panel-resource');
-                    
+
                     panel.on('success', function(){
                         location.reload();
                     });
-                    
+
                     var fingerprint = document.createElement('input');
                     fingerprint.setAttribute('type', 'hidden');
                     fingerprint.setAttribute('name', 'fingerprint');
@@ -84,7 +84,7 @@ switch ($modx->event->name) {
                     panel.form.el.dom.appendChild(fingerprint);
                 });
             });
-            
+
         </script>");
         }
         break;
@@ -201,10 +201,10 @@ switch ($modx->event->name) {
             foreach ($rteConfigs as $rteConfig) {
                 if (empty($rteConfig->get('data'))) continue;
 
-                $rteConfigString[] = $rteConfig->name . ':' . $rteConfig->data;
+                $rteConfigString[$rteConfig->name] = $rteConfig->get('data');
             }
 
-            $rteConfigString = implode(',', $rteConfigString);
+            $rteConfigString = json_encode($rteConfigString);
 
             $payload = [
                 'iss' => $modx->user->id,
@@ -237,7 +237,7 @@ switch ($modx->event->name) {
                 iconEditor: "' . $fred->getOption('icon_editor') . '",
                 imageEditor: "' . $fred->getOption('image_editor') . '",
                 rte: "' . $fred->getOption('rte') . '",
-                rteConfig: {' . $rteConfigString . '},
+                rteConfig: ' . $rteConfigString . ',
                 jwt: "' . $jwt . '",
                 resource: {
                     "id": ' . $modx->resource->id . ',
@@ -265,7 +265,7 @@ switch ($modx->event->name) {
                     "fred_blueprint_categories_create_public": ' . (int)$modx->hasPermission('fred_blueprint_categories_create_public') . ',
                     "fred_blueprints_save": ' . (int)$modx->hasPermission('fred_blueprints_save') . ',
                     "fred_blueprints_create_public": ' . (int)$modx->hasPermission('fred_blueprints_create_public') . ',
-                
+
                     "save_document": ' . (int)$modx->hasPermission('save_document') . ',
                     "delete_document" : ' . (int)$modx->hasPermission('delete_document') . ',
                     "undelete_document" : ' . (int)$modx->hasPermission('undelete_document') . ',
@@ -281,7 +281,7 @@ switch ($modx->event->name) {
                 },
                 modifyPermissions: function(permissions) {
                     ' . $modifyPermissions . '
-                    
+
                     return permissions;
                 }
             });
