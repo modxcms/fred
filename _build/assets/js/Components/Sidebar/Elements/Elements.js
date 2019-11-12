@@ -87,6 +87,14 @@ export default class Elements extends SidebarPlugin {
 
         imageWrapper.appendChild(elementImage);
 
+        if (fredConfig.lngExists(title)) {
+            title = fredConfig.lng(title);
+        } 
+
+        if (fredConfig.lngExists(description)) {
+            description = fredConfig.lng(description);
+        } 
+        
         const caption = figCaption(`<strong>${title}</strong><em>${description}</em>`);
 
         const chunk = div(['chunk']);

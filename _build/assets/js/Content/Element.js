@@ -310,7 +310,11 @@ export class Element {
 
         this.contentEl = div(['fred--block_content']);
         this.contentEl.dataset.fredElementId = this.el.dataset.fredElementId;
-        this.contentEl.dataset.fredElementTitle = this.title;
+        if (fredConfig.lngExists(this.title)) {
+            this.contentEl.dataset.fredElementTitle = fredConfig.lng(this.title);
+        } else {
+            this.contentEl.dataset.fredElementTitle = this.title;
+        }
 
         const titleEl = div(['fred--block_title'], this.title);
         titleEl.addEventListener('click', e => {
