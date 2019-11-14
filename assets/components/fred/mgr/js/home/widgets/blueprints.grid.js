@@ -280,6 +280,8 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
 
     filterCombo: function (combo, record) {
         var s = this.getStore();
+        var categoryFilter = Ext.getCmp('fred-blueprint-filter-category');
+
         if (!record) {
             s.baseParams.category = 0;
             categoryFilter.setValue();
@@ -289,8 +291,6 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
         s.baseParams[combo.filterName] = record.data[combo.valueField];
 
         if (combo.filterName === 'theme') {
-            var categoryFilter = Ext.getCmp('fred-blueprint-filter-category');
-
             if (record.data[combo.valueField] !== 0) {
                 s.baseParams.category = 0;
                 categoryFilter.setValue();
