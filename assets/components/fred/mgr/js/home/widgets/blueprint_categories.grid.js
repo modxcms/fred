@@ -1,25 +1,34 @@
 fred.grid.BlueprintCategories = function (config) {
     config = config || {};
     config.permission = config.permission || {};
-    
+
     if (config.permission.fred_blueprint_categories_save) {
         config.save_action = 'mgr/blueprint_categories/updatefromgrid';
         config.autosave = true;
         config.ddGroup = 'FredBlueprintCategoriesDDGroup';
         config.enableDragDrop = true;
     }
-    
+
     if (!config.permission.fred_blueprint_categories_save && !config.permission.fred_blueprint_categories_delete) {
         config.showGear = false;
     }
-    
+
+    this.homePanel = config.homePanel;
+
+    var baseParams = {
+        action: 'mgr/blueprint_categories/getlist',
+        sort: 'rank',
+        dir: 'asc'
+    };
+
+    var initialThemeFilter = this.homePanel.state.get('fred-home-panel-filter-theme', '');
+    if (initialThemeFilter) {
+        baseParams.theme = initialThemeFilter;
+    }
+
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
-        baseParams: {
-            action: 'mgr/blueprint_categories/getlist',
-            sort: 'rank',
-            dir: 'asc'
-        },
+        baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints', 'theme', 'theme_name'],
         paging: true,
@@ -93,21 +102,21 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
                 handler: this.updateCategory
             });
         }
-        
+
         if (this.config.permission.fred_blueprint_categories_delete) {
             if (m.length > 0) {
                 m.push('-');
             }
-            
+
             m.push({
                 text: _('fred.blueprint_categories.remove'),
                 handler: this.removeCategory
             });
         }
-        
+
         return m;
     },
-    
+
     getTbar: function(config) {
         var output = [];
 
@@ -117,7 +126,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
                 handler: this.createCategory
             });
         }
-        
+
         output.push([
             '->',
             {
@@ -161,6 +170,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
                 addAll: 1,
                 isUpdate: true,
                 filterName: 'theme',
+                value: this.homePanel.state.get('fred-home-panel-filter-theme', ''),
                 syncFilter: function(combo, record) {
                     combo.setValue(record.data[combo.valueField]);
 
@@ -175,7 +185,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
                 }
             }
         ]);
-        
+
         return output;
     },
 
@@ -200,7 +210,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
 
     updateCategory: function (btn, e) {
         this.menu.record.theme_id = this.menu.record.theme;
-        
+
         var updateCategory = MODx.load({
             xtype: 'fred-window-blueprint-category',
             canPublic: this.config.permission.fred_blueprint_categories_create_public,
@@ -277,6 +287,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
 
         if (combo.filterName === 'theme') {
             var ids = ['fred-element-filter-theme', 'fred-rte-config-filter-theme', 'fred-option-set-filter-theme', 'fred-element-category-filter-theme', 'fred-blueprint-filter-theme', 'fred-blueprint-category-filter-theme'];
+            this.homePanel.state.set('fred-home-panel-filter-theme', record.data[combo.valueField]);
 
             ids.forEach(function(id){
                 if (id === combo.id) return true;
@@ -317,7 +328,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
         if (!((themeFilter !== undefined) && (themeFilter !== null) && (themeFilter !== '') && (themeFilter !== 0))) {
             return _('fred.err.required_filter', {filter: 'theme'});
         }
-        
+
         if (this.isGridFiltered()) {
             return _('fred.err.clear_filter');
         }
@@ -337,7 +348,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
 
                 'afterrowmove': function (objThis, oldIndex, newIndex, records) {
                     var currentElement = records.pop();
-                    
+
                     MODx.Ajax.request({
                         url: fred.config.connectorUrl,
                         params: {

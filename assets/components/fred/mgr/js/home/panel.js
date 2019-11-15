@@ -2,6 +2,8 @@ fred.panel.Home = function (config) {
     config = config || {};
     config.permission = config.permission || {};
 
+    this.state = Ext.state.Manager.getProvider();
+
     Ext.apply(config, {
         border: false,
         baseCls: 'modx-formpanel',
@@ -160,7 +162,8 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                         xtype: 'fred-grid-elements',
                         preventRender: true,
                         cls: 'main-wrapper',
-                        permission: config.permission
+                        permission: config.permission,
+                        homePanel: this
                     }
                 ]
             });
@@ -175,7 +178,8 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                         xtype: 'fred-grid-element-categories',
                         preventRender: true,
                         cls: 'main-wrapper',
-                        permission: config.permission
+                        permission: config.permission,
+                        homePanel: this
                     }
                 ]
             });
@@ -190,7 +194,8 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                         xtype: 'fred-grid-element-option-sets',
                         preventRender: true,
                         cls: 'main-wrapper',
-                        permission: config.permission
+                        permission: config.permission,
+                        homePanel: this
                     }
                 ]
             });
@@ -205,7 +210,8 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                         xtype: 'fred-grid-element-rte-configs',
                         preventRender: true,
                         cls: 'main-wrapper',
-                        permission: config.permission
+                        permission: config.permission,
+                        homePanel: this
                     }
                 ]
             });
@@ -277,7 +283,8 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                         xtype: 'fred-grid-blueprints',
                         preventRender: true,
                         cls: 'main-wrapper',
-                        permission: config.permission
+                        permission: config.permission,
+                        homePanel: this
                     }
                 ]
             });
@@ -292,7 +299,8 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                         xtype: 'fred-grid-blueprint-categories',
                         preventRender: true,
                         cls: 'main-wrapper',
-                        permission: config.permission
+                        permission: config.permission,
+                        homePanel: this
                     }
                 ]
             });
@@ -313,7 +321,8 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                         xtype: 'fred-grid-themes',
                         preventRender: true,
                         cls: 'main-wrapper',
-                        permission: config.permission
+                        permission: config.permission,
+                        homePanel: this
                     }
                 ]
             });
@@ -328,7 +337,8 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                         xtype: 'fred-grid-themed-templates',
                         preventRender: true,
                         cls: 'main-wrapper',
-                        permission: config.permission
+                        permission: config.permission,
+                        homePanel: this
                     }
                 ]
             });

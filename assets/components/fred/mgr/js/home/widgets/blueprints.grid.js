@@ -13,13 +13,22 @@ fred.grid.Blueprints = function (config) {
         config.showGear = false;
     }
 
+    this.homePanel = config.homePanel;
+
+    var baseParams = {
+        action: 'mgr/blueprints/getlist',
+        sort: 'rank',
+        dir: 'asc'
+    };
+
+    var initialThemeFilter = this.homePanel.state.get('fred-home-panel-filter-theme', '');
+    if (initialThemeFilter) {
+        baseParams.theme = initialThemeFilter;
+    }
+
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
-        baseParams: {
-            action: 'mgr/blueprints/getlist',
-            sort: 'rank',
-            dir: 'asc'
-        },
+        baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname', 'theme_id', 'theme_name', 'theme_theme_folder'],
         paging: true,
@@ -216,6 +225,7 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
                 xtype: 'fred-combo-blueprint-categories',
                 emptyText: _('fred.blueprint_cateogries.all'),
                 addAll: 1,
+                theme: this.homePanel.state.get('fred-home-panel-filter-theme', null),
                 filterName: 'category',
                 listeners: {
                     select: this.filterCombo,
@@ -229,6 +239,7 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
                 addAll: 1,
                 isUpdate: true,
                 filterName: 'theme',
+                value: this.homePanel.state.get('fred-home-panel-filter-theme', ''),
                 syncFilter: function(combo, record) {
                     var categoryFilter = Ext.getCmp('fred-blueprint-filter-category');
                     var s = this.getStore();
@@ -291,6 +302,8 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
         s.baseParams[combo.filterName] = record.data[combo.valueField];
 
         if (combo.filterName === 'theme') {
+            this.homePanel.state.set('fred-home-panel-filter-theme', record.data[combo.valueField]);
+
             if (record.data[combo.valueField] !== 0) {
                 s.baseParams.category = 0;
                 categoryFilter.setValue();

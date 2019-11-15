@@ -138,7 +138,8 @@ fred.combo.BlueprintCategories = function (config) {
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'mgr/blueprint_categories/getlist',
-            addAll: config.addAll || 0
+            addAll: config.addAll || 0,
+            theme: config.theme || null,
         }
     });
     fred.combo.BlueprintCategories.superclass.constructor.call(this, config);
@@ -163,7 +164,8 @@ fred.combo.ElementCategories = function (config) {
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'mgr/element_categories/getlist',
-            addAll: config.addAll || 0
+            addAll: config.addAll || 0,
+            theme: config.theme || null,
         }
     });
     fred.combo.ElementCategories.superclass.constructor.call(this, config);

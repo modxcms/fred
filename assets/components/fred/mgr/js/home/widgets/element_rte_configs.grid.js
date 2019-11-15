@@ -6,16 +6,25 @@ fred.grid.ElementRTEConfigs = function (config) {
         config.save_action = 'mgr/element_rte_configs/updatefromgrid';
         config.autosave = true;
     }
-    
+
     if (!config.permission.fred_element_rte_config_save && !config.permission.fred_element_rte_config_delete) {
         config.showGear = false;
     }
-    
+
+    this.homePanel = config.homePanel;
+
+    var baseParams = {
+        action: 'mgr/element_rte_configs/getlist'
+    };
+
+    var initialThemeFilter = this.homePanel.state.get('fred-home-panel-filter-theme', '');
+    if (initialThemeFilter) {
+        baseParams.theme = initialThemeFilter;
+    }
+
     Ext.applyIf(config, {
         url: fred.config.connectorUrl,
-        baseParams: {
-            action: 'mgr/element_rte_configs/getlist'
-        },
+        baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'complete', 'data', 'theme', 'theme_name'],
         paging: true,
@@ -80,7 +89,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
             if (m.length > 0) {
                 m.push('-');
             }
-            
+
             m.push({
                 text: _('fred.element_rte_configs.remove')
                 , handler: this.removeElementRTEConfig
@@ -89,7 +98,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
 
         return m;
     },
-    
+
     getTbar: function(config) {
         var output = [];
 
@@ -99,7 +108,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
                 handler: this.newElementRTEConfig
             });
         }
-        
+
         output.push([
             '->',
             {
@@ -132,6 +141,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
                 addAll: 1,
                 isUpdate: true,
                 filterName: 'theme',
+                value: this.homePanel.state.get('fred-home-panel-filter-theme', ''),
                 syncFilter: function (combo, record) {
                     combo.setValue(record.data[combo.valueField]);
 
@@ -146,7 +156,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
                 }
             }
         ]);
-        
+
         return output;
     },
 
@@ -180,6 +190,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
 
         if (combo.filterName === 'theme') {
             var ids = ['fred-element-filter-theme', 'fred-rte-config-filter-theme', 'fred-option-set-filter-theme', 'fred-element-category-filter-theme', 'fred-blueprint-filter-theme', 'fred-blueprint-category-filter-theme'];
+            this.homePanel.state.set('fred-home-panel-filter-theme', record.data[combo.valueField]);
 
             ids.forEach(function(id){
                 if (id === combo.id) return true;
@@ -205,7 +216,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
         if (s.baseParams.theme) {
             options.theme = s.baseParams.theme;
         }
-        
+
         fred.loadPage('element/rte_config/create', options);
     },
 
