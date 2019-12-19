@@ -24,6 +24,9 @@ $disabledClassKeys = ['modWebLink', 'modSymLink'];
 switch ($modx->event->name) {
     case 'OnDocFormPrerender':
         if(!empty($resource) && !empty($fred->getTheme($resource->template))) {
+            
+            if (in_array($resource->class_key, $disabledClassKeys)) return;
+
             //Disable ContentBlocks
             $isContentBlocks = $resource->getProperty('_isContentBlocks', 'contentblocks', null);
             if($isContentBlocks !== false){
@@ -95,6 +98,10 @@ switch ($modx->event->name) {
             if (!$modx->user) return;
             if (!($modx->user->hasSessionContext('mgr') || $modx->user->hasSessionContext($modx->resource->context_key))) return;
             if (!$modx->hasPermission('fred')) return;
+            
+            // Additional check to load unrender resource class key
+            $checkSym = $modx->getObject('modResource', $modx->resource->id);
+            if (in_array($checkSym->class_key, $disabledClassKeys)) return;
 
             $modx->lexicon->load('fred:fe');
 
