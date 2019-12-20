@@ -24,7 +24,7 @@ For an ultra-minimal streamlined RTE, for example for only allowing italics and 
 
 ```json
 {  
-   "theme": "inlite";
+   "theme": "inlite",
    "inline": true,
    "selection_toolbar": "bold italic"
 }
