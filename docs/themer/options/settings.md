@@ -195,7 +195,7 @@ ctaTitle, ctaImage, ctaLink
         },
         {
             "name": "logo",
-            "lable": "Logo",
+            "label": "Logo",
             "type": "image",
             "mediaSource": "site-assets",
             "value": "assets/images/logo.svg"
@@ -203,7 +203,7 @@ ctaTitle, ctaImage, ctaLink
         },
         {
             "name": "nda-file",
-            "lable": "Upload NDA",
+            "label": "Upload NDA",
             "type": "file",
             "mediaSource": "site-assets-files",
             "value": "assets/files/contract.pdf"
