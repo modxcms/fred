@@ -708,7 +708,7 @@ export class Element {
                         e.preventDefault();
                         const text = (e.originalEvent || e).clipboardData.getData('text/plain');
 
-                        document.execCommand("insertHTML", false, text);
+                        document.execCommand("insertText", false, text);
                     });
 
                     el.addEventListener('keydown', e => {
