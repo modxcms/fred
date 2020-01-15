@@ -251,6 +251,18 @@ class FredThemeBuildProcessor extends modObjectProcessor
                     $templateName = $template->get('templatename');
                     $installedTemplates[] = $templateName;
 
+                    $templateCategory = $template->getOne('Category');
+                    if ($templateCategory) {
+                        $templateRootCategory = $templateCategory->get('category');
+                        $templateParentCategory = $templateCategory->getOne('Parent');
+                        while($templateParentCategory) {
+                            $templateRootCategory = $templateParentCategory->get('category');
+                            $templateParentCategory = $templateParentCategory->getOne('Parent');
+                        }
+
+                        $rootCategories[] = $templateRootCategory;
+                    }
+
                     /** @var  modTemplateVarTemplate[] $templateVarTemplates */
                     $templateVarTemplates = $template->getMany('TemplateVarTemplates');
 
@@ -379,6 +391,19 @@ class FredThemeBuildProcessor extends modObjectProcessor
                                                     ]
                                                 ]
                                             ]
+                                        ]
+                                    ]
+                                ],
+                                'Category' => [
+                                    xPDOTransport::PRESERVE_KEYS => false,
+                                    xPDOTransport::UPDATE_OBJECT => true,
+                                    xPDOTransport::UNIQUE_KEY => 'category',
+                                    xPDOTransport::RELATED_OBJECTS => true,
+                                    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => [
+                                        'Parent' => [
+                                            xPDOTransport::PRESERVE_KEYS => false,
+                                            xPDOTransport::UPDATE_OBJECT => true,
+                                            xPDOTransport::UNIQUE_KEY => ['parent','category'],
                                         ]
                                     ]
                                 ]
