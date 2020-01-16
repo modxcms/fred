@@ -70,7 +70,11 @@ export const select = (setting, defaultValue = '', onChange, onInit) => {
         for (let value in setting.options) {
             if (setting.options.hasOwnProperty(value)) {
                 const option = document.createElement('option');
-                option.innerHTML = setting.options[value];
+                if (fredConfig.lngExists(setting.options[value])) {
+                    option.innerHTML = fredConfig.lng(setting.options[value]);
+                } else {
+                    option.innerHTML = setting.options[value];
+                }
                 option.value = value;
 
                 if (value === defaultValue) {
