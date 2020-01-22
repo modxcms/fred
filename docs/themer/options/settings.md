@@ -219,7 +219,7 @@ ctaTitle, ctaImage, ctaLink
             "name": "panel_type",
             "label": "Type of Panel",
             "type": "select",
-            "options": [{"value":"info", "value":"warn","value":"error"}],
+            "options": {"info":"Info Panel", "warn":"Warning Panel","error":"Error panel"},
             "value": "info"
         },
         {
