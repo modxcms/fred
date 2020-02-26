@@ -205,6 +205,7 @@ $_lang['fred.themes.remove_media_source'] = 'Удалить Медиа-исто�
 $_lang['fred.themes.media_source_already_added'] = 'Медиа-источник уже добавлен';
 $_lang['fred.themes.media_source_already_added_desc'] = 'Этот медиа источник уже добавлен в процесс сборки.';
 $_lang['fred.themes.namespace'] = 'Пространство имён';
+$_lang['fred.themes.settings_prefix'] = 'Settings Prefix';
 $_lang['fred.themes.resolvers'] = 'Резолверы';
 $_lang['fred.themes.resolver'] = 'Резолвер';
 $_lang['fred.themes.add_resolver'] = 'Добавить резолвер';
