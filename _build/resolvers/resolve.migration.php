@@ -350,6 +350,14 @@ if ($object->xpdo) {
                 }
             }
 
+            if ($oldPackage && $oldPackage->compareVersion('1.1.2-pl', '>')) {
+                /** @var FredTheme[] $themes */
+                $themes = $modx->getIterator('FredTheme');
+                foreach ($themes as $theme) {
+                    $theme->save();
+                }
+            }
+
             break;
     }
 }

@@ -165,6 +165,27 @@ class FredThemeBuildProcessor extends modObjectProcessor
         /** @var FredTheme $theme */
         $theme = $this->modx->getObject('FredTheme', ['id' => $themeId]);
 
+        $themeNamespace = $theme->namespace;
+        if (strpos($themeNamespace, '.') === false) {
+            $vehicle = $builder->createVehicle(
+                [
+                    "source"       => $this->fred->getOption('buildHelpers') . 'fix_namespace.resolver.php',
+                    "oldNamespace" => $theme->settingsPrefix,
+                    "newNamespace" => $theme->namespace
+                ],
+                [
+                    "vehicle_class" => "xPDOScriptVehicle"
+                ]
+            );
+            $vehicle->validate(
+                'php',
+                [
+                    'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
+                ]
+            );
+            $builder->putVehicle($vehicle);
+        }
+
         $theme->set('config', []);
 
         $assetsPath = rtrim($this->modx->getOption('assets_path'), '/');
@@ -434,8 +455,8 @@ class FredThemeBuildProcessor extends modObjectProcessor
             /** @var modSystemSetting[] $settings */
             $settings = $this->modx->getIterator('modSystemSetting', [
                 'namespace' => $namespace->name,
-                'key:LIKE' => "{$namespace->name}.%",
-                'key:!=' => "{$namespace->name}.theme_dir"
+                'key:LIKE' => "{$theme->settingsPrefix}.%",
+                'key:!=' => "{$theme->settingsPrefix}.theme_dir"
             ]);
 
             $settingAttributes = [
@@ -455,8 +476,8 @@ class FredThemeBuildProcessor extends modObjectProcessor
             /** @var modLexiconEntry[] $lexicons */
             $lexicons = $this->modx->getIterator('modLexiconEntry', [
                 'namespace' => $namespace->name,
-                'name:LIKE' => "setting_{$namespace->name}.%",
-                'name:!=' => "setting_{$namespace->name}.theme_dir"
+                'name:LIKE' => "setting_{$theme->settingsPrefix}.%",
+                'name:!=' => "setting_{$theme->settingsPrefix}.theme_dir"
             ]);
 
             $lexiconsAttributes = [

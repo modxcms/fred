@@ -7,6 +7,7 @@
  * @property array $config
  * @property string $theme_folder
  * @property string $namespace
+ * @property string $settingsPrefix
  * @property string $default_element
  *
  * @property FredElementCategory[] $ElementCategories
@@ -30,7 +31,7 @@ class FredTheme extends xPDOSimpleObject {
 
         $namespace = $this->get('namespace');
         if (empty($namespace)) {
-            $namespaceName = 'fred.theme.' . modResource::filterPathSegment($this->xpdo, $this->name);
+            $namespaceName = 'fred_theme_' . str_replace('.', '_', modResource::filterPathSegment($this->xpdo, $this->name));
             $this->_fields['namespace'] = $namespaceName;
             $this->setDirty('namespace');
 
@@ -43,10 +44,17 @@ class FredTheme extends xPDOSimpleObject {
             }
         }
 
-        $themeDirSetting = $this->xpdo->getObject('modSystemSetting', ['key' => "{$this->namespace}.theme_dir"]);
+        $settingsPrefix = $this->get('settingsPrefix');
+        if (empty($settingsPrefix)) {
+            $settingsPrefixValue = 'fred.theme.' . modResource::filterPathSegment($this->xpdo, $this->name);
+            $this->_fields['settingsPrefix'] = $settingsPrefixValue;
+            $this->setDirty('settingsPrefix');
+        }
+
+        $themeDirSetting = $this->xpdo->getObject('modSystemSetting', ['key' => "{$this->settingsPrefix}.theme_dir"]);
         if (!$themeDirSetting) {
             $themeDirSetting = $this->xpdo->newObject('modSystemSetting');
-            $themeDirSetting->set('key', "{$this->namespace}.theme_dir");
+            $themeDirSetting->set('key', "{$this->settingsPrefix}.theme_dir");
             $themeDirSetting->set('namespace', $this->namespace);
         }
 
@@ -56,12 +64,12 @@ class FredTheme extends xPDOSimpleObject {
         /** @var $themeDirLexicon $lexicons */
         $themeDirLexicon = $this->xpdo->getObject('modLexiconEntry', [
             'namespace' => $this->namespace,
-            'name' => "setting_{$this->namespace}.theme_dir"
+            'name' => "setting_{$this->settingsPrefix}.theme_dir"
         ]);
         if (!$themeDirLexicon) {
             $themeDirLexicon = $this->xpdo->newObject('modLexiconEntry');
             $themeDirLexicon->set('namespace', $this->namespace);
-            $themeDirLexicon->set('name', "setting_{$this->namespace}.theme_dir");
+            $themeDirLexicon->set('name', "setting_{$this->settingsPrefix}.theme_dir");
             $themeDirLexicon->set('language', "en");
         }
         $themeDirLexicon->set('value', 'Theme Directory');
@@ -70,12 +78,12 @@ class FredTheme extends xPDOSimpleObject {
         /** @var modLexiconEntry $themeDirDescLexicon */
         $themeDirDescLexicon = $this->xpdo->getObject('modLexiconEntry', [
             'namespace' => $this->namespace,
-            'name' => "setting_{$this->namespace}.theme_dir_desc"
+            'name' => "setting_{$this->settingsPrefix}.theme_dir_desc"
         ]);
         if (!$themeDirDescLexicon) {
             $themeDirDescLexicon = $this->xpdo->newObject('modLexiconEntry');
             $themeDirDescLexicon->set('namespace', $this->namespace);
-            $themeDirDescLexicon->set('name', "setting_{$this->namespace}.theme_dir_desc");
+            $themeDirDescLexicon->set('name', "setting_{$this->settingsPrefix}.theme_dir_desc");
             $themeDirDescLexicon->set('language', "en");
         }
         $themeDirDescLexicon->set('value', 'WARNING! DO NOT CHANGE! This setting is automatically generated.');
@@ -98,6 +106,7 @@ class FredTheme extends xPDOSimpleObject {
         }
 
         if ($k === 'namespace') return false;
+        if ($k === 'settingsPrefix') return false;
 
         return parent::set($k, $v, $vType);
     }

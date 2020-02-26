@@ -17,7 +17,7 @@ fred.grid.Themes = function (config) {
             action: 'mgr/themes/getlist'
         },
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace'],
+        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace', 'settingsPrefix'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -52,6 +52,11 @@ fred.grid.Themes = function (config) {
             {
                 header: _('fred.themes.namespace'),
                 dataIndex: 'namespace',
+                width: 80
+            },
+            {
+                header: _('fred.themes.settings_prefix'),
+                dataIndex: 'settingsPrefix',
                 width: 80
             },
             {
