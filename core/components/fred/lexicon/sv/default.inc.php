@@ -205,6 +205,7 @@ $_lang['fred.themes.remove_media_source'] = 'Ta bort mediakälla';
 $_lang['fred.themes.media_source_already_added'] = 'Mediakällan har redan lagts till';
 $_lang['fred.themes.media_source_already_added_desc'] = 'Den här mediakällan har redan lagts till i byggprocessen.';
 $_lang['fred.themes.namespace'] = 'Namnrymd';
+$_lang['fred.themes.settings_prefix'] = 'Settings Prefix';
 $_lang['fred.themes.resolvers'] = 'Resolvers';
 $_lang['fred.themes.resolver'] = 'Resolver';
 $_lang['fred.themes.add_resolver'] = 'Lägg till resolver';
