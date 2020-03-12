@@ -121,7 +121,7 @@
 { @supports (-webkit-appearance:none) {
 
   .fred--panel {
-    overflow-y: visible;
+    overflow-y: auto;
   }
   .fred--panel dl:last-of-type dt:last-of-type.active{
     margin-bottom: 0;
