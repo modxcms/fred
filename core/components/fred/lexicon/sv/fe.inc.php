@@ -24,7 +24,7 @@ $_lang['fred.fe.more'] = 'Mer';
 $_lang['fred.fe.saving_page'] = 'Sparar sidan';
 $_lang['fred.fe.preparing_content'] = 'Förbereder innehåll';
 $_lang['fred.fe.open_sidebar'] = 'Öppna sidopanel';
-$_lang['fred.fe.toggle_preview'] = 'Växla förhandsgranskning';
+$_lang['fred.fe.toggle_preview'] = 'Förhandsgranskning på/av';
 $_lang['fred.fe.close_sidebar'] = 'Stäng sidopanel';
 $_lang['fred.fe.element_settings'] = 'Elementinställningar';
 $_lang['fred.fe.apply'] = 'Tillämpa';
@@ -105,14 +105,14 @@ $_lang['fred.fe.blueprints.blueprint_image'] = 'Bild';
 
 $_lang['fred.fe.content.duplicate'] = 'Duplicera';
 $_lang['fred.fe.content.delete'] = 'Ta bort';
-$_lang['fred.fe.content.settings'] = 'Open Settings';
+$_lang['fred.fe.content.settings'] = 'Öppna inställningar';
 $_lang['fred.fe.content.move_up'] = 'Flytta upp';
 $_lang['fred.fe.content.move_down'] = 'Flytta ned';
 $_lang['fred.fe.content.partial_blueprint'] = 'Create Partial Blueprint';
 $_lang['fred.fe.content.element_screenshot'] = 'Element Screenshot';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Replace Element Thumbnail';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Replacing Element\'s Thumbnail';
-$_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
+$_lang['fred.fe.content.refresh_cache_element'] = 'Uppdatera cache';
 $_lang['fred.fe.content.element_cache_warning'] = 'Elementet är cachat. Ändringarna kommer inte att synas förrän du verkställer dom.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Det finns osparade ändringar - är du säker?';
