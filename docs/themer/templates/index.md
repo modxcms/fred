@@ -35,7 +35,7 @@ Sometimes you may want to have a more complex layout with multiple Dropzones, li
 3. From the `Input Options` tab choose "Fred Dropzone" from the Input Type select list
 4. If you want to see the rendered content from the Manager, change the value of the last “Hide Field from Manager:” option to “No”.
 5. From the `Template Access` tab and in the `Access` column, select the template(s) that will need access to the TV.
-6. Click the `Save` button then done.
+6. Click the `Save` button when done.
 
 ![Fred Dropzone TV Screenshot]()
 
