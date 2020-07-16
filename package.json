@@ -43,7 +43,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-svgmin": "^1.2.4",
     "js-yaml": ">=3.13.1",
-    "lodash": ">=4.17.13",
+    "lodash": ">=4.17.19",
     "lodash.template": ">=4.5.0",
     "merge-stream": "^1.0.1",
     "mixin-deep": "^2.0.1",
