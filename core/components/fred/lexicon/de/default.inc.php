@@ -205,6 +205,7 @@ $_lang['fred.themes.remove_media_source'] = 'Medienquelle entfernen';
 $_lang['fred.themes.media_source_already_added'] = 'Medienquelle bereits hinzugefügt';
 $_lang['fred.themes.media_source_already_added_desc'] = 'Diese Medienquelle wurde dem Pack-Prozess bereits hinzugefügt.';
 $_lang['fred.themes.namespace'] = 'Namensraum';
+$_lang['fred.themes.settings_prefix'] = 'Settings Prefix';
 $_lang['fred.themes.resolvers'] = 'Resolver';
 $_lang['fred.themes.resolver'] = 'Resolver';
 $_lang['fred.themes.add_resolver'] = 'Resolver hinzufügen';
