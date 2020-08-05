@@ -770,15 +770,15 @@ export class Element {
         return el.fredEl.content[el.dataset.fredName][namespace][name];
     }
 
-    templateRender(parseModx = true, cleanRender = false, refreshCache = false) {
+    templateRender(parseModx = true, cleanRender = false, isPreview = false, refreshCache = false) {
         if (this.options.remote === true) {
-            return this.remoteTemplateRender(parseModx, cleanRender, refreshCache);
+            return this.remoteTemplateRender(parseModx, cleanRender, isPreview, refreshCache);
         }
 
-        return Promise.resolve(this.localTemplateRender(parseModx, cleanRender));
+        return Promise.resolve(this.localTemplateRender(parseModx, cleanRender, isPreview));
     }
 
-    localTemplateRender(parseModx = true, cleanRender = false) {
+    localTemplateRender(parseModx = true, cleanRender = false, isPreview = false) {
         let settings;
         if (cleanRender === true) {
             if (parseModx === true) {
@@ -790,14 +790,14 @@ export class Element {
             settings = this.parsedSettings;
         }
 
-        return this.template.render({...settings, ...(getTemplateSettings(cleanRender)), id: this.elId});
+        return this.template.render({...settings, ...(getTemplateSettings(cleanRender && !isPreview)), id: this.elId});
     }
 
-    remoteTemplateRender(parseModx = true, cleanRender = false, refreshCache = false) {
+    remoteTemplateRender(parseModx = true, cleanRender = false, isPreview = false, refreshCache = false) {
         const cacheOutput = this.options.cacheOutput === true;
 
         return renderElement(this.id, {...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), id: this.elId}, parseModx, cacheOutput, refreshCache).then(json => {
-            const html = twig({data: json.data.html}).render(getTemplateSettings(cleanRender));
+            const html = twig({data: json.data.html}).render(getTemplateSettings(cleanRender && !isPreview));
             this.setEl(html);
 
             return html;
@@ -811,7 +811,7 @@ export class Element {
     cleanRender(parseModx = false, handleLinks = true, isPreview = false) {
         const element = div();
 
-        return this.templateRender(parseModx, true).then(html => {
+        return this.templateRender(parseModx, true, isPreview).then(html => {
             element.innerHTML = html;
 
             const renderElements = element.querySelectorAll('[data-fred-render]');
