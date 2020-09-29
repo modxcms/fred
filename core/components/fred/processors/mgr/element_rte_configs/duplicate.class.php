@@ -18,7 +18,7 @@ class FredElementRTEConfigsDuplicateProcessor extends modObjectDuplicateProcesso
 
         return parent::initialize();
     }
-    
+
     public function process() {
         $this->newObject->fromArray($this->object->toArray());
         $name = $this->getProperty('name');
@@ -27,11 +27,17 @@ class FredElementRTEConfigsDuplicateProcessor extends modObjectDuplicateProcesso
         if (empty($theme)) {
             $this->addFieldError('theme', $this->modx->lexicon('fred.err.element_rte_configs_ns_theme'));
         }
-        
+
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ns_name'));
             return $this->failure();
         } else {
+            $nameValid = preg_match('/^[a-zA-Z][a-zA-Z0-9]*$/', $name);
+            if (!$nameValid) {
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_invalid_name'));
+                return $this->failure();
+            }
+
             if ($this->modx->getCount($this->classKey, ['name' => $name, 'theme' => $theme]) > 0) {
                 $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ae_name'));
                 return $this->failure();

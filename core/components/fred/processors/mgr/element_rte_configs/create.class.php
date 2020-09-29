@@ -33,8 +33,13 @@ class FredElementRTEConfigsCreateProcessor extends modObjectCreateProcessor
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ns_name'));
         } else {
-            if ($this->doesAlreadyExist(['name' => $name, 'theme' => $theme])) {
-                $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ae_name'));
+            $nameValid = preg_match('/^[a-zA-Z][a-zA-Z0-9]*$/', $name);
+            if (!$nameValid) {
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_invalid_name'));
+            } else {
+                if ($this->doesAlreadyExist(['name' => $name, 'theme' => $theme])) {
+                    $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ae_name'));
+                }
             }
         }
 
