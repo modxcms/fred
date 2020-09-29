@@ -9,7 +9,7 @@ class FredElementOptionSetsUpdateProcessor extends modObjectUpdateProcessor
     public $classKey = 'FredElementOptionSet';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.element_option_sets';
-    /** @var FredElement $object */
+    /** @var FredElementOptionSet $object */
     public $object;
 
     public function initialize()

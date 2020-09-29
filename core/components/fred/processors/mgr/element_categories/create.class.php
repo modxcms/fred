@@ -9,7 +9,7 @@ class FredElementCategoriesCreateProcessor extends modObjectCreateProcessor
     public $classKey = 'FredElementCategory';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.element_categories';
-    /** @var FredBlueprintCategory $object */
+    /** @var FredElementCategory $object */
     public $object;
 
     public function initialize()
@@ -20,7 +20,7 @@ class FredElementCategoriesCreateProcessor extends modObjectCreateProcessor
 
         return parent::initialize();
     }
-    
+
     public function beforeSet()
     {
         $name = $this->getProperty('name');
@@ -33,7 +33,7 @@ class FredElementCategoriesCreateProcessor extends modObjectCreateProcessor
                 $this->addFieldError('name', $this->modx->lexicon('fred.err.element_categories_ae_name'));
             }
         }
-        
+
         if (empty($theme)) {
             $this->addFieldError('theme', $this->modx->lexicon('fred.err.element_categories_ns_theme'));
         }

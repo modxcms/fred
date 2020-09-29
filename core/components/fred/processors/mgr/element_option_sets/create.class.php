@@ -9,7 +9,7 @@ class FredElementOptionSetsCreateProcessor extends modObjectCreateProcessor
     public $classKey = 'FredElementOptionSet';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.element_option_sets';
-    /** @var FredElementSetting $object */
+    /** @var FredElementOptionSet $object */
     public $object;
 
     public function initialize()
@@ -20,7 +20,7 @@ class FredElementOptionSetsCreateProcessor extends modObjectCreateProcessor
 
         return parent::initialize();
     }
-    
+
     public function beforeSet()
     {
         $name = $this->getProperty('name');
@@ -29,7 +29,7 @@ class FredElementOptionSetsCreateProcessor extends modObjectCreateProcessor
         if (empty($theme)) {
             $this->addFieldError('theme', $this->modx->lexicon('fred.err.element_option_sets_ns_theme'));
         }
-        
+
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.element_option_sets_ns_name'));
         } else {

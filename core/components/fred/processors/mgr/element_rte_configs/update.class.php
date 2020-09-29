@@ -9,7 +9,7 @@ class FredElementRTEConfigsUpdateProcessor extends modObjectUpdateProcessor
     public $classKey = 'FredElementRTEConfig';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.element_rte_configs';
-    /** @var FredElement $object */
+    /** @var FredElementRTEConfig $object */
     public $object;
 
     public function initialize()

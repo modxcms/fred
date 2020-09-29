@@ -9,7 +9,7 @@ class FredElementRTEConfigsCreateProcessor extends modObjectCreateProcessor
     public $classKey = 'FredElementRTEConfig';
     public $languageTopics = array('fred:default');
     public $objectType = 'fred.element_rte_configs';
-    /** @var FredElementSetting $object */
+    /** @var FredElementRTEConfig $object */
     public $object;
 
     public function initialize()
@@ -20,7 +20,7 @@ class FredElementRTEConfigsCreateProcessor extends modObjectCreateProcessor
 
         return parent::initialize();
     }
-    
+
     public function beforeSet()
     {
         $name = $this->getProperty('name');
