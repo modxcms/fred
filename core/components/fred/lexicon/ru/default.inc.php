@@ -309,3 +309,4 @@ $_lang['fred.err.themes_extract_tpl_parse_error'] = 'Извлечение шаб
 $_lang['fred.err.themes_extract_tpl_package_name'] = 'Извлечение шаблона: пакет должен иметь имя';
 $_lang['fred.err.themes_extract_tpl_package_class'] = 'Извлечение шаблона: пакет должен иметь класс';
 $_lang['fred.err.themes_extract_tpl_package_load'] = 'Не удалось загрузить службу для пакета: [[+name]].';
+$_lang['fred.err.element_rte_configs_invalid_name'] = 'Name is not valid. It has to start with a letter and contain only letters and numbers.';
