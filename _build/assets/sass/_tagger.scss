@@ -60,7 +60,7 @@
     width:30px;
     height: 30px;
     margin-top: -25px;
-    background-image: inline-svg('plus', $white);
+    background-image: svg-load('plus.svg', fill=$white);
     background-size: 15px;
     background-repeat: no-repeat;
     background-position: center;
@@ -87,7 +87,7 @@
     position: relative;
     height: 36px; width: 36px;
     background-color: $green;
-    background-image: inline-svg('plus', $white);
+    background-image: svg-load('plus.svg', fill=$white);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 16px;
@@ -109,7 +109,7 @@
     position: relative;
     height: 36px; width: 36px;
     background-color: $primary;
-    background-image: inline-svg('caret-down',$white);
+    background-image: svg-load('caret-down.svg', fill=$white);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 16px;

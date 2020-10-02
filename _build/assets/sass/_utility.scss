@@ -30,7 +30,7 @@
       color: $black;
       display: block;
       box-sizing: border-box;
-      font-size: 12px;  
+      font-size: 12px;
     }
     input[type="text"], input[type="date"], textarea, select, .choices { // mirrored from _forms.scss
       background-color: $offwhite;
@@ -40,7 +40,7 @@
       padding: 0 4px;
       margin: auto -4px;
       height: 36px;
-        &:focus { 
+        &:focus {
         background-color: $white;
         border-bottom-color: $border;
         border-bottom-width: 2px;
@@ -139,7 +139,7 @@
       }
     }
     .tabulator-col-title {
-      font-weight: bold; 
+      font-weight: bold;
     }
     .tabulator-footer {
       border-top-width: 1px;
@@ -166,8 +166,8 @@
     background-color: $black;
     z-index: 100;
     display: flex;
-    flex-flow: row wrap; 
-    justify-content: center; 
+    flex-flow: row wrap;
+    justify-content: center;
     align-items: center;
   }
   iframe {
@@ -216,16 +216,16 @@
     }
 
     .fred--smartphone-portrait span, .fred--smartphone-landscape span {
-      mask: inline-svg('mobile-alt') no-repeat center center;
+      mask: svg-load('mobile-alt.svg') no-repeat center center;
       mask-size: 33%;
-      -webkit-mask: inline-svg('mobile-alt') no-repeat center center;
+      -webkit-mask: svg-load('mobile-alt.svg') no-repeat center center;
       -webkit-mask-size: 33%;
       background-color: $offwhite;
     }
     .fred--tablet-portrait span, .fred--tablet-landscape span {
-      mask: inline-svg('tabletalt') no-repeat center center;
+      mask: svg-load('tabletalt.svg') no-repeat center center;
       mask-size: 65%;
-      -webkit-mask: inline-svg('tabletalt') no-repeat center center;
+      -webkit-mask: svg-load('tabletalt.svg') no-repeat center center;
       -webkit-mask-size: 65%;
       background-color: $offwhite;
     }
@@ -258,7 +258,7 @@
   left: 50%;
   transform: translateX(-50%);
   &:before{
-    content: inline-svg('exclamation-triangle',$white);
+    content: svg-load('exclamation-triangle.svg', fill=$white);
     height: 14px;
     width: 14px;
     display: inline-block;

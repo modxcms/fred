@@ -51,7 +51,7 @@ If you are upgrading from a previous release to the following versions, please n
 Make sure all Themes are named uniquely, and any Elements, Blueprints, Element categories, or Blueprint categories within Themes likewise have unique names. You can have duplicate category and Element names across different Themes.
 
 ### -> beta7
-If you defined a Media Sources in Option Sets, in Element markup, or an Options Override, you need to adjust these from using the Media Source ID to the Media Source name.
+If you defined Media Sources in Option Sets, in Element markup, or Options Override, you need to adjust these from using the Media Source ID to the Media Source name.
 
 
 ## Folder structure
@@ -69,13 +69,13 @@ Fred installs the following into your MODX webroot directory:
 - MODX Revolution
 - GPM
 - Composer
-- Node JS
+- Yarn
 - Ruby Sass
 
 ### Developing Fred
 First, set up the project inside your MODX webroot: 
 
-1. `npm install` from web root
+1. `yarn install` from web root
 2. change directories to `core/components/fred/model`
 3. `composer install`
 4. install fred with GPM
@@ -83,5 +83,5 @@ First, set up the project inside your MODX webroot:
 ### Build
 Set up watchers to update the code for changes:
 
-1. Start watchers from webroot: `npm run build-dev`
-2. Minify CSS and JS and prepar code for production: `npm run build` 
+1. Start watchers from webroot: `yarn dev`
+2. Minify CSS and JS and prepare code for production: `yarn build` 

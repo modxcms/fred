@@ -25,27 +25,27 @@
     @include btn-disabled();
     &_fred {
       background-color: $white;
-      background-image: inline-svg('modx-revo-icon-48',$white);
+      background-image: svg-load('modx-revo-icon-48.svg', fill=$white);
       height: 80px;
       width: 80px;
     }
     &_elements{
       background-color: $modxorange;
-      background-image: inline-svg('clone', $white);
+      background-image: svg-load('clone.svg', fill=$white);
       position: absolute;
       top: 32px;
       right: -64px;
     }
     &_save {
       background-color: $green;
-      background-image: inline-svg('check',$white);
+      background-image: svg-load('check.svg', fill=$white);
       position: absolute;
       top: -64px;
       left: 20px;
     }
     &_preview {
       background-color: $modxblue;
-      background-image: inline-svg('eye',$white);
+      background-image: svg-load('eye.svg', fill=$white);
       position: absolute;
       top: -32px;
       right: -44px;
