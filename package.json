@@ -4,8 +4,8 @@
   "description": "Fred - The Friendly Editor",
   "main": "./_build/assets/js/index.js",
   "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack --watch --mode development"
+    "build": "webpack --progress --mode production",
+    "dev": "webpack --watch --progress --mode development"
   },
   "license": "MIT",
   "files": [
