@@ -25,6 +25,11 @@ module.exports = (env, options) => {
         module: {
             rules: [
                 {
+                    test: /\.ts$/,
+                    use: 'ts-loader',
+                    exclude: /node_modules/,
+                },
+                {
                     test: /\.js$/,
                     exclude: /(node_modules)/,
                     use: {
@@ -58,6 +63,10 @@ module.exports = (env, options) => {
                     ]
                 }
             ]
+        },
+
+        resolve: {
+            extensions: [ '.ts', '.js' ],
         },
 
         plugins: [
