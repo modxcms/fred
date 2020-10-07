@@ -10,6 +10,7 @@ module.exports = (env, options) => {
         devtool: isProd ? false : 'source-map',
 
         entry: [
+            '@babel/polyfill',
             './_build/assets/sass/fred.scss',
             './_build/assets/js/index.js'
         ],
@@ -33,13 +34,7 @@ module.exports = (env, options) => {
                     test: /\.js$/,
                     exclude: /(node_modules)/,
                     use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                ["@babel/preset-env", { "targets": "> 0.25%, not dead" }]
-                            ],
-                            plugins: ['@babel/plugin-proposal-class-properties']
-                        }
+                        loader: 'babel-loader'
                     }
                 },
                 {

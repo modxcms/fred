@@ -1,23 +1,16 @@
 {
   "name": "fred",
-  "version": "1.0.3",
+  "version": "1.2.0",
   "description": "Fred - The Friendly Editor",
-  "main": "./_build/assets/js/index.js",
   "scripts": {
     "build": "webpack --progress --mode production",
     "dev": "webpack --watch --progress --mode development"
   },
   "license": "MIT",
-  "files": [
-    "LICENSE",
-    "README.md",
-    "index.js",
-    "lib",
-    "dist"
-  ],
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/polyfill": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "autoprefixer": "^9.8.6",
     "babel-loader": "^8.1.0",
@@ -36,11 +29,6 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
-  "library": {
-    "name": "Fred",
-    "entry": "index.js",
-    "dist-web": "fred.min.js"
-  },
   "dependencies": {
     "choices.js": "^3.0.4",
     "dragula": "github:theboxer/dragula#master",
@@ -50,11 +38,10 @@
     "html2canvas": "^1.0.0-rc.5",
     "isomorphic-fetch": "^2.2.1",
     "jssha": "^3.1.2",
-    "lodash": ">=4.17.5",
+    "lodash": "^4.17.20",
     "mousetrap": "^1.6.3",
     "nouislider": "^11.1.0",
     "promise-cancel": "^2.0.1",
-    "twig": "^1.15.1"
-  },
-  "optionalDependencies": {}
+    "twig": "^1.15.2"
+  }
 }
