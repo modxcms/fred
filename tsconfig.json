@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
+    "baseUrl": "./_build/assets/js",
+    "paths": {
+      "@fred/Config": ["Config"]
+    },
     "outDir": "./assets/components/fred/web",
     "noImplicitAny": false,
     "moduleResolution": "node",
     "module": "es6",
     "target": "es5",
-    "allowJs": true
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "_build/assets/js/**/*"

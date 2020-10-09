@@ -61,6 +61,9 @@ module.exports = (env, options) => {
         },
 
         resolve: {
+            alias: {
+                '@fred/Config': path.resolve(__dirname, '_build/assets/js/Config')
+            },
             extensions: [ '.ts', '.js' ],
         },
 
