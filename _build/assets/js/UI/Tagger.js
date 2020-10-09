@@ -7,7 +7,7 @@ import { fixChoices } from "../Utils";
 import { getTags } from '../Actions/tagger';
 
 class Tagger {
-    constructor(group, currentTags = null, onChange = () => {}) {
+    constructor(group, currentTags = null, onChange = (newTags) => {}) {
         this.group = group;
 
         this.inputToggle = null;

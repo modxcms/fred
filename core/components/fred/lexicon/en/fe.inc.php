@@ -109,11 +109,12 @@ $_lang['fred.fe.content.settings'] = 'Open Settings';
 $_lang['fred.fe.content.move_up'] = 'Move Up';
 $_lang['fred.fe.content.move_down'] = 'Move Down';
 $_lang['fred.fe.content.partial_blueprint'] = 'Create Partial Blueprint';
-$_lang['fred.fe.content.element_screenshot'] = 'Element Screenshot';
+$_lang['fred.fe.content.element_screenshot'] = 'Element Thumbnail';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Replace Element Thumbnail';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Replacing Element\'s Thumbnail';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
 $_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
+$_lang['fred.fe.content.element_screenshot_text'] = 'Drag and drop or paste an image here.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'There are unsaved changes, are you sure?';
 
@@ -170,3 +171,4 @@ $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Files cannot be select
 $_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
 $_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';
+$_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';
