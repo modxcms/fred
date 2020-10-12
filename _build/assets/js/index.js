@@ -76,15 +76,15 @@ export default class Fred {
         this.devices = div(['fred--devices']);
 
         this.phoneP = a(`<span>${fredConfig.lng('fred.fe.preview.phone_portrait')}</span>`, fredConfig.lng('fred.fe.preview.phone_portrait'), '', ['fred--smartphone-portrait'], () => {
-            this.iframe.style.width = '360px';
-            this.iframe.style.height = '640px';
+            this.iframe.style.width = '375px';
+            this.iframe.style.height = '667px';
         });
 
         this.devices.appendChild(this.phoneP);
 
         this.phoneL = a(`<span>${fredConfig.lng('fred.fe.preview.phone_landscape')}</span>`, fredConfig.lng('fred.fe.preview.phone_landscape'), '', ['fred--smartphone-landscape'], () => {
-            this.iframe.style.width = '640px';
-            this.iframe.style.height = '360px';
+            this.iframe.style.width = '667px';
+            this.iframe.style.height = '375px';
         });
 
         this.devices.appendChild(this.phoneL);
