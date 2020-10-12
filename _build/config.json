@@ -79,6 +79,16 @@
         "key": "default_enabled",
         "type" : "combo-boolean",
         "value": "1"
+      },
+      {
+        "key": "sidebar_open",
+        "type" : "combo-boolean",
+        "value": "0"
+      },
+      {
+        "key": "force_sidebar",
+        "type" : "combo-boolean",
+        "value": "0"
       }
     ]
   },

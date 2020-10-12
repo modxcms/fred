@@ -258,6 +258,10 @@ $_lang['setting_fred.secret'] = 'Secret';
 $_lang['setting_fred.secret_desc'] = 'Secret used in signing XHR requests';
 $_lang['setting_fred.default_enabled'] = 'Fred Enabled';
 $_lang['setting_fred.default_enabled_desc'] = 'Enable or Disable Fred by default';
+$_lang['setting_fred.sidebar_open'] = 'Sidebar Open';
+$_lang['setting_fred.sidebar_open_desc'] = 'Open sidebar by default';
+$_lang['setting_fred.force_sidebar'] = 'Force Sidebar';
+$_lang['setting_fred.force_sidebar_desc'] = 'When enabled, user won\'t be able to close the sidebar.';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Name is required';
 $_lang['fred.err.blueprints_ns_name'] = 'Name is required';

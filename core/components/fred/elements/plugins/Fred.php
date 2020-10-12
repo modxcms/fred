@@ -243,6 +243,8 @@ switch ($modx->event->name) {
                 launcherPosition: "' . $fred->getOption('launcher_position') . '",
                 iconEditor: "' . $fred->getOption('icon_editor') . '",
                 imageEditor: "' . $fred->getOption('image_editor') . '",
+                sidebarOpen: ' . (int)$fred->getOption('sidebar_open') . ',
+                forceSidebar: ' . (int)$fred->getOption('force_sidebar') . ',
                 rte: "' . $fred->getOption('rte') . '",
                 rteConfig: ' . $rteConfigString . ',
                 jwt: "' . $jwt . '",

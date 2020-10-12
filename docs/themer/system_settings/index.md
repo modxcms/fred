@@ -39,3 +39,10 @@ Fred can use plugins that tap into different Element types. The Image Editor tar
 ### Secret (fred.secret)
 
 This is an automatically generated key used for signing XHR requests.
+
+### Sidebar Open (fred.sidebar_open)
+
+Open sidebar by default
+
+### Force Sidebar (fred.force_sidebar)
+When enabled, user won't be able to close the sidebar.
