@@ -89,6 +89,10 @@
         "key": "force_sidebar",
         "type" : "combo-boolean",
         "value": "0"
+      },
+      {
+        "key": "logout_url",
+        "value": ""
       }
     ]
   },

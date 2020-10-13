@@ -480,6 +480,11 @@ export default class Fred {
     }
 
     logoutUser() {
+        if (fredConfig.config.logoutUrl) {
+            document.location.href = fredConfig.config.logoutUrl;
+            return;
+        }
+
         document.location.href = fredConfig.config.managerUrl + '?a=security/logout';
     }
 }

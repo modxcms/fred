@@ -239,6 +239,7 @@ switch ($modx->event->name) {
                 assetsUrl: "' . $fred->getOption('webAssetsUrl') . '",
                 managerUrl: "' . MODX_MANAGER_URL . '",
                 fredOffUrl: "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', array_merge($get, ['fred' => 4]) , 'full')) . '",
+                logoutUrl: "' . $fred->getOption('logout_url') . '",
                 contextKey: "' . $modx->resource->context_key. '",
                 launcherPosition: "' . $fred->getOption('launcher_position') . '",
                 iconEditor: "' . $fred->getOption('icon_editor') . '",

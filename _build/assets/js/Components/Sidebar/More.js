@@ -27,7 +27,7 @@ export default class PageSettings extends SidebarPlugin {
             mgrLink.target = '_blank';
             moreList.appendChild(dt(mgrLink));
         }
-        
+
         moreList.appendChild(dt(helpLink));
         moreList.appendChild(dt(a('fred.fe.turn_off_fred', 'fred.fe.turn_off_fred', fredConfig.config.fredOffUrl)));
         moreList.appendChild(dt('fred.fe.more.logout', ['fred--dt_link'], e => { emitter.emit('fred-logout-user') }),);
