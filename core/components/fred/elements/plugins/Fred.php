@@ -275,6 +275,7 @@ switch ($modx->event->name) {
                     "fred_blueprints_save": ' . (int)$modx->hasPermission('fred_blueprints_save') . ',
                     "fred_blueprints_create_public": ' . (int)$modx->hasPermission('fred_blueprints_create_public') . ',
 
+                    "frames": ' . (int)$modx->hasPermission('frames') . ',
                     "save_document": ' . (int)$modx->hasPermission('save_document') . ',
                     "delete_document" : ' . (int)$modx->hasPermission('delete_document') . ',
                     "undelete_document" : ' . (int)$modx->hasPermission('undelete_document') . ',
