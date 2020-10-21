@@ -72,7 +72,9 @@
   margin: 0;
   padding: $sidebar-actions-padding;
   display: flex;
-  align-items: center;
+  align-items: start;
+  flex-direction: column;
+  flex-wrap: wrap;
   &.fred--hidden{
     display:none;
   }
@@ -121,6 +123,13 @@
     &:hover{
       background-color: $black;
     }
+  }
+  .fred--tagger_description{
+    margin: 0;
+    color: $black;
+    display: block;
+    box-sizing: border-box;
+    font-size: 12px;
   }
 }
 
