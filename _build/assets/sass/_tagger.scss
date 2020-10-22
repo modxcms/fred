@@ -181,6 +181,16 @@
       margin-left: calc(5% + 8px);
       margin-right: calc(5% + 8px);
       padding: 0;
+      .fred--tagger_group_title{
+        width: 100%;
+        margin: 0;
+      }
+      .fred--tagger_input_wrapper{
+        padding: 12px 0;
+      }
+      .fred--tagger_input_toggle{
+        right: 8px;
+      }
     }
   }
   dd .fred--tagger_field .choices{
