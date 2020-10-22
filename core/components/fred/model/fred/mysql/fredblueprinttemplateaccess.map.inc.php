@@ -2,10 +2,10 @@
 /**
  * @package fred
  */
-$xpdo_meta_map['FredThemedTemplate']= array (
+$xpdo_meta_map['FredBlueprintTemplateAccess']= array (
   'package' => 'fred',
   'version' => '0.1',
-  'table' => 'fred_themed_templates',
+  'table' => 'fred_blueprint_templates_access',
   'extends' => 'xPDOObject',
   'tableMeta' => 
   array (
@@ -13,13 +13,12 @@ $xpdo_meta_map['FredThemedTemplate']= array (
   ),
   'fields' => 
   array (
+    'blueprint' => NULL,
     'template' => NULL,
-    'theme' => NULL,
-    'default_blueprint' => 0,
   ),
   'fieldMeta' => 
   array (
-    'template' => 
+    'blueprint' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -28,22 +27,14 @@ $xpdo_meta_map['FredThemedTemplate']= array (
       'null' => false,
       'index' => 'pk',
     ),
-    'theme' => 
+    'template' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
       'precision' => '10',
       'phptype' => 'integer',
       'null' => false,
-    ),
-    'default_blueprint' => 
-    array (
-      'dbtype' => 'int',
-      'attributes' => 'unsigned',
-      'precision' => '10',
-      'phptype' => 'integer',
-      'null' => false,
-      'default' => 0,
+      'index' => 'pk',
     ),
   ),
   'indexes' => 
@@ -56,6 +47,12 @@ $xpdo_meta_map['FredThemedTemplate']= array (
       'type' => 'BTREE',
       'columns' => 
       array (
+        'blueprint' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
         'template' => 
         array (
           'length' => '',
@@ -64,48 +61,21 @@ $xpdo_meta_map['FredThemedTemplate']= array (
         ),
       ),
     ),
-    'theme' => 
-    array (
-      'alias' => 'theme',
-      'primary' => false,
-      'unique' => false,
-      'type' => 'BTREE',
-      'columns' => 
-      array (
-        'theme' => 
-        array (
-          'length' => '',
-          'collation' => 'A',
-          'null' => false,
-        ),
-      ),
-    ),
-  ),
-  'composites' => 
-  array (
-    'ElementCategoryTemplatesAccess' => 
-    array (
-      'class' => 'FredElementCategoryTemplateAccess',
-      'local' => 'template',
-      'foreign' => 'template',
-      'cardinality' => 'many',
-      'owner' => 'local',
-    ),
   ),
   'aggregates' => 
   array (
-    'Theme' => 
+    'Template' => 
     array (
-      'class' => 'FredTheme',
-      'local' => 'theme',
-      'foreign' => 'id',
+      'class' => 'FredThemedTemplate',
+      'local' => 'template',
+      'foreign' => 'template',
       'cardinality' => 'one',
       'owner' => 'foreign',
     ),
-    'Template' => 
+    'Blueprint' => 
     array (
-      'class' => 'modTemplate',
-      'local' => 'template',
+      'class' => 'FredBlueprint',
+      'local' => 'blueprint',
       'foreign' => 'id',
       'cardinality' => 'one',
       'owner' => 'foreign',

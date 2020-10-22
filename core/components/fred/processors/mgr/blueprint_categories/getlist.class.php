@@ -15,14 +15,14 @@ class FredBlueprintCategoriesGetListProcessor extends modObjectGetListProcessor
     public function beforeIteration(array $list)
     {
         $addAll = (int)$this->getProperty('addAll', 0);
-        
+
         if ($addAll === 1) {
             $list[] = [
                 'id' => 0,
                 'name' => $this->modx->lexicon('fred.blueprint_cateogries.all')
             ];
         }
-        
+
         return parent::beforeIteration($list);
     }
 
@@ -33,14 +33,14 @@ class FredBlueprintCategoriesGetListProcessor extends modObjectGetListProcessor
         if (!empty($id)) {
             $c->where(['id' => $id]);
         }
-        
+
         $search = $this->getProperty('search', '');
         if (!empty($search)) {
             $c->where(['name:LIKE' => "%{$search}%"]);
         }
-        
+
         $public = $this->getProperty('public', '');
-        
+
         if ($public !== '') {
             $c->where(['public' => $public]);
         }
@@ -49,7 +49,7 @@ class FredBlueprintCategoriesGetListProcessor extends modObjectGetListProcessor
         if (!empty($theme)) {
             $c->where(['theme' => $theme]);
         }
-        
+
         return parent::prepareQueryBeforeCount($c);
     }
 
@@ -63,7 +63,8 @@ class FredBlueprintCategoriesGetListProcessor extends modObjectGetListProcessor
         $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['id', 'name']));
         $c->select($this->modx->getSelectColumns('modUserProfile', 'UserProfile', 'user_profile_'));
         $c->select([
-            '(SELECT count(id) FROM ' . $this->modx->getTableName('FredBlueprint') . ' WHERE category = FredBlueprintCategory.id) AS blueprints'
+            '(SELECT count(id) FROM ' . $this->modx->getTableName('FredBlueprint') . ' WHERE category = FredBlueprintCategory.id) AS blueprints',
+            '(SELECT IFNULL(GROUP_CONCAT(template SEPARATOR \',\'), \'\') FROM ' . $this->modx->getTableName('FredBlueprintCategoryTemplateAccess') . ' WHERE category = FredBlueprintCategory.id) AS templates'
         ]);
 
         return parent::prepareQueryAfterCount($c);

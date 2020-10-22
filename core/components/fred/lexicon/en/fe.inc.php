@@ -94,6 +94,7 @@ $_lang['fred.fe.blueprints.create_blueprint'] = 'Create Blueprint';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'Creating Blueprint';
 $_lang['fred.fe.blueprints.category_public'] = 'Public';
 $_lang['fred.fe.blueprints.category_rank'] = 'Rank';
+$_lang['fred.fe.blueprints.current_note'] = '* current template for this page';
 
 $_lang['fred.fe.blueprints.blueprint_name'] = 'Name';
 $_lang['fred.fe.blueprints.blueprint_description'] = 'Description';
@@ -102,6 +103,7 @@ $_lang['fred.fe.blueprints.blueprint_rank'] = 'Rank';
 $_lang['fred.fe.blueprints.blueprint_public'] = 'Public';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Building Content From Blueprint';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Image';
+$_lang['fred.fe.blueprints.templates'] = 'Templates';
 
 $_lang['fred.fe.content.duplicate'] = 'Duplicate';
 $_lang['fred.fe.content.delete'] = 'Delete';

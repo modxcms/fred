@@ -187,6 +187,14 @@ $xpdo_meta_map['FredBlueprintCategory']= array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
+    'BlueprintCategoryTemplatesAccess' => 
+    array (
+      'class' => 'FredBlueprintCategoryTemplateAccess',
+      'local' => 'id',
+      'foreign' => 'category',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
   ),
   'aggregates' => 
   array (

@@ -216,6 +216,8 @@ switch ($modx->event->name) {
             $payload = [
                 'iss' => $modx->user->id,
                 'resource' => $modx->resource->id,
+                'template' => $modx->resource->template,
+                'theme' => $theme->id,
                 'context' => $modx->resource->context_key,
                 'queryParams' => $_GET,
                 'postParams' => $_POST,

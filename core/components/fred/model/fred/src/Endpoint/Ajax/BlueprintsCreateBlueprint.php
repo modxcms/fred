@@ -3,6 +3,8 @@
 namespace Fred\Endpoint\Ajax;
 
 
+use Fred\Utils;
+
 class BlueprintsCreateBlueprint extends Endpoint
 {
     function process()
@@ -10,13 +12,13 @@ class BlueprintsCreateBlueprint extends Endpoint
         if (!$this->modx->hasPermission('fred_blueprints_save')) {
             return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
-        
+
         $category = isset($this->body['category']) ? intval($this->body['category']) : 0;
-        
+
         if (empty($this->body['name'])) {
             return $this->failure($this->modx->lexicon('fred.fe.err.blueprints_ns_name'), ['name' => $this->modx->lexicon('fred.fe.err.blueprints_ns_name')]);
         }
-        
+
         if (empty($category)) {
             return $this->failure($this->modx->lexicon('fred.fe.err.blueprints_ns_category'), ['category' => $this->modx->lexicon('fred.fe.err.blueprints_ns_category')]);
         }
@@ -24,7 +26,7 @@ class BlueprintsCreateBlueprint extends Endpoint
         if ($this->modx->getCount('FredBlueprint', ['name' => $this->body['name'], 'category' => $category]) > 0) {
             return $this->failure($this->modx->lexicon('fred.fe.err.blueprints_ae_name'), ['name' => $this->modx->lexicon('fred.fe.err.blueprints_ae_name')]);
         }
-        
+
         /** @var \FredBlueprintCategory $categoryObject */
         $categoryObject = $this->modx->getObject('FredBlueprintCategory', ['id' => $category]);
         if (!$categoryObject) {
@@ -44,11 +46,11 @@ class BlueprintsCreateBlueprint extends Endpoint
         if (!$this->modx->hasPermission('fred_blueprints_create_public')) {
             $public = 0;
         }
-        
+
         if (empty($rank)) {
             $c = $this->modx->newQuery('FredBlueprint');
             $c->where([
-                'category' => $category 
+                'category' => $category
             ]);
             $c->sortby('rank', 'desc');
             $c->limit(1);
@@ -72,19 +74,29 @@ class BlueprintsCreateBlueprint extends Endpoint
         $blueprint->set('data', $this->body['data']);
         $blueprint->set('complete', $complete);
         $saved = $blueprint->save();
-        
+
         if ($saved === true) {
+            $templates = !empty($this->body['templates']) ? $this->body['templates'] : '';
+            $templates = Utils::explodeAndClean($templates, ',', 'intval');
+
+            foreach ($templates as $template) {
+                $blueprintAccess = $this->modx->newObject('FredBlueprintTemplateAccess');
+                $blueprintAccess->set('blueprint', $blueprint->get('id'));
+                $blueprintAccess->set('template', $template);
+                $blueprintAccess->save();
+            }
+
             $path = $theme->getThemeFolderPath() . 'generated/';
-            
+
             $nfp = $this->modx->getOption('new_folder_permissions');
             $amode = !empty($nfp) ? octdec($this->modx->getOption('new_folder_permissions')) : 0777;
             if (!is_dir($path)) {
                 mkdir($path, $amode, true);
             }
-            
+
             if (!empty($this->body['generatedImage'])) {
                 $fileName = 'blueprint_' . $blueprint->id . '_' . time() . '.png';
-                
+
                 $img = $this->body['generatedImage'];
                 $img = str_replace('data:image/png;base64,', '', $img);
                 $img = str_replace(' ', '+', $img);
@@ -100,7 +112,7 @@ class BlueprintsCreateBlueprint extends Endpoint
             }
 
             $blueprint->save();
-           
+
             return $this->success();
         }
 

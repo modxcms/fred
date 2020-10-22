@@ -11,9 +11,18 @@ class FredBlueprintsGetProcessor extends modObjectGetProcessor
     public $objectType = 'fred.blueprints';
     /** @var FredBlueprint $object */
     public $object;
-    
+
     public function beforeOutput()
     {
+        $templatesAccess = $this->modx->getIterator('FredBlueprintTemplateAccess', ['blueprint' => $this->object->id]);
+        $templates = [];
+        foreach ($templatesAccess as $templateAccess) {
+            $templates[] = $templateAccess->get('template');
+        }
+
+        $templates = join(',', $templates);
+        $this->object->set('templates', $templates);
+
         $category = $this->object->Category;
 
         if ($category) {
@@ -27,7 +36,7 @@ class FredBlueprintsGetProcessor extends modObjectGetProcessor
 
         return true;
     }
-    
+
 }
 
 return 'FredBlueprintsGetProcessor';

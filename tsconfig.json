@@ -2,7 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./_build/assets/js",
     "paths": {
-      "@fred/Config": ["Config"]
+      "@fred/Config": ["Config"],
+      "@fred/UI/*": ["UI/*"],
+      "@fred/UI": ["UI"]
     },
     "outDir": "./assets/components/fred/web",
     "noImplicitAny": false,

@@ -1,5 +1,5 @@
-import { button, div, input, select, span } from "./Elements";
-import fredConfig from '../Config';
+import { button, div, input, select, span } from "@fred/UI/Elements";
+import fredConfig from '@fred/Config';
 import promiseCancel from 'promise-cancel';
 import emitter from "../EE";
 import Choices from 'choices.js';

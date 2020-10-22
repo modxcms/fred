@@ -1,13 +1,15 @@
 import SidebarPlugin from '../../SidebarPlugin';
 import emitter from '../../../EE';
-import {dd, dl, dt, form, fieldSet, legend, div, button, figCaption, figure, img, span} from '../../../UI/Elements';
-import {choices, text, toggle, image, area} from "../../../UI/Inputs";
+import {dd, dl, dt, form, fieldSet, legend, div, button, figCaption, figure, img, span} from '@fred/UI/Elements';
+import {choices, text, toggle, image, area} from "@fred/UI/Inputs";
 import fredConfig from "../../../Config";
 import cache from '../../../Cache';
 import hoverintent from "hoverintent";
 import drake from "../../../Drake";
 import html2canvas from 'html2canvas';
 import { getBlueprints, createBlueprint, createBlueprintCategory } from '../../../Actions/blueprints';
+import { getTemplates } from '../../../Actions/themes';
+import MultiSelect from "@fred/UI/MultiSelect";
 
 export default class Blueprints extends SidebarPlugin {
     static title = 'fred.fe.blueprints';
@@ -17,11 +19,13 @@ export default class Blueprints extends SidebarPlugin {
     init() {
         this.openCreateBlueprint = this.openCreateBlueprint.bind(this);
         this.categories = [];
+        this.tempaltes = [];
 
         this.state = {
             category: {
                 name: '',
                 rank: '',
+                templates: '',
                 public: !!fredConfig.permission.fred_blueprint_categories_create_public
             },
             blueprint: {
@@ -31,15 +35,16 @@ export default class Blueprints extends SidebarPlugin {
                 rank: '',
                 public: !!fredConfig.permission.fred_blueprints_create_public,
                 image: '',
-                generatedImage: ''
+                generatedImage: '',
+                templates: ''
             }
         };
     }
 
-    click() {
-        return getBlueprints().then(value => {
-            return this.buildPanel(value);
-        });
+    async click() {
+        const blueprints = await getBlueprints();
+
+        return this.buildPanel(blueprints);
     }
 
     buildBlueprints(content, categories) {
@@ -210,6 +215,21 @@ export default class Blueprints extends SidebarPlugin {
                 this.state.blueprint[name] = value;
             };
 
+            const onChangeTemplates = (tags) => {
+                this.state.blueprint.templates = tags.reduce(
+                    (acc, currentValue) => {
+                        if (acc === '') {
+                            acc = "" + currentValue.value;
+                        } else {
+                            acc += `,${currentValue.value}`;
+                        }
+
+                        return acc;
+                    },
+                    ''
+                );
+            };
+
             const imageEl = image({
                 name: 'image',
                 label: 'fred.fe.blueprints.blueprint_image'
@@ -242,7 +262,15 @@ export default class Blueprints extends SidebarPlugin {
                 publicToggle.inputEl.setAttribute('disabled', 'disabled');
             }
 
+            const templates = MultiSelect({
+                name: 'templates',
+                label: fredConfig.lng('fred.fe.blueprints.templates')
+            }, getTemplates, onChangeTemplates);
+
+            templates.querySelector('.fred--tagger_input_wrapper').appendChild(div('fred--tagger_description', 'fred.fe.blueprints.current_note'));
+
             fields.appendChild(publicToggle);
+            fields.appendChild(templates);
 
             if (this.state.blueprint.image === '') {
                 const loader = span(['fred--loading']);
@@ -305,7 +333,18 @@ export default class Blueprints extends SidebarPlugin {
             const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
                 emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
 
-                createBlueprint(this.state.blueprint.name, this.state.blueprint.description, this.state.blueprint.category, this.state.blueprint.rank, this.state.blueprint.public, fredConfig.fred.getContent(true), this.state.blueprint.generatedImage, this.state.blueprint.image, true)
+                createBlueprint(
+                    this.state.blueprint.name,
+                    this.state.blueprint.description,
+                    this.state.blueprint.category,
+                    this.state.blueprint.rank,
+                    this.state.blueprint.public,
+                    fredConfig.fred.getContent(true),
+                    this.state.blueprint.generatedImage,
+                    this.state.blueprint.image,
+                    true,
+                    this.state.blueprint.templates
+                )
                     .then(json => {
                         cache.killNamespace('blueprints');
                         this.click().then(newContent => {
@@ -351,6 +390,21 @@ export default class Blueprints extends SidebarPlugin {
             this.state.category[name] = value;
         };
 
+        const onChangeTemplates = (tags) => {
+            this.state.category.templates = tags.reduce(
+                (acc, currentValue) => {
+                    if (acc === '') {
+                        acc = "" + currentValue.value;
+                    } else {
+                        acc += `,${currentValue.value}`;
+                    }
+
+                    return acc;
+                },
+                ''
+            );
+        };
+
         fields.appendChild(title);
 
         const name = text({
@@ -362,6 +416,14 @@ export default class Blueprints extends SidebarPlugin {
             name: 'rank',
             label: 'fred.fe.blueprints.category_rank'
         }, this.state.category.rank, onChange);
+
+
+        const templates = MultiSelect({
+            name: 'templates',
+            label: fredConfig.lng('fred.fe.blueprints.templates')
+        }, getTemplates, onChangeTemplates);
+
+        templates.querySelector('.fred--tagger_input_wrapper').appendChild(div('fred--tagger_description', 'fred.fe.blueprints.current_note'));
 
         const publicToggle = toggle({
             name: 'public',
@@ -375,11 +437,12 @@ export default class Blueprints extends SidebarPlugin {
         fields.appendChild(name);
         fields.appendChild(rank);
         fields.appendChild(publicToggle);
+        fields.appendChild(templates);
 
         const createButton = button('fred.fe.blueprints.create_category', 'fred.fe.blueprints.create_category', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint_category'));
 
-            createBlueprintCategory(this.state.category.name, this.state.category.rank, +this.state.category.public)
+            createBlueprintCategory(this.state.category.name, this.state.category.rank, +this.state.category.public, this.state.category.templates)
                 .then(json => {
                     cache.killNamespace('blueprints');
                     this.state.blueprint.category = null;

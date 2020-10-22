@@ -61,6 +61,7 @@ $_lang['fred.blueprints.quick_update'] = 'Quick Update Blueprint';
 $_lang['fred.blueprints.update'] = 'Update Blueprint';
 $_lang['fred.blueprints.create'] = 'Create Blueprint';
 $_lang['fred.blueprints.theme'] = 'Theme';
+$_lang['fred.blueprints.templates'] = 'Templates';
 
 $_lang['fred.blueprint_cateogries.all'] = 'All Categories';
 $_lang['fred.blueprint_categories.none'] = 'No Categories were found.';
@@ -77,6 +78,7 @@ $_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Are you sure you 
 $_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Are you sure you want to remove the empty “[[+name]]” Blueprint Category? This cannot be undone.';
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Blueprints';
 $_lang['fred.blueprint_categories.theme'] = 'Theme';
+$_lang['fred.blueprint_categories.templates'] = 'Templates';
 
 $_lang['fred.elements.none'] = 'No Elements were found.';
 $_lang['fred.elements.image'] = 'Image';
@@ -98,6 +100,7 @@ $_lang['fred.elements.duplicate'] = 'Duplicate Element';
 $_lang['fred.elements.new_name'] = 'New Name';
 $_lang['fred.elements.has_override'] = 'Has Override';
 $_lang['fred.elements.theme'] = 'Theme';
+$_lang['fred.elements.templates'] = 'Templates';
 
 $_lang['fred.rebuild.rebuild'] = 'Rebuild';
 $_lang['fred.rebuild.rebuild_desc'] = 'Click the Rebuild button below to publish the changes in updated Elements to all existing Fred-powerd site pages.';
@@ -117,6 +120,7 @@ $_lang['fred.element_categories.remove_confirm_empty'] = 'Are you sure you want 
 $_lang['fred.element_categories.duplicate'] = 'Duplicate Category';
 $_lang['fred.element_categories.new_name'] = 'New Name';
 $_lang['fred.element_categories.theme'] = 'Theme';
+$_lang['fred.element_categories.templates'] = 'Templates';
 
 $_lang['fred.element_option_sets.none'] = 'No Option Sets were found.';
 $_lang['fred.element_option_sets.name'] = 'Name';

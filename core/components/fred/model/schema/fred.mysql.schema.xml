@@ -37,6 +37,7 @@
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="foreign" />
         <composite alias="Blueprints" class="FredBlueprint" local="id" foreign="category" cardinality="many" owner="local" />
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
+        <composite alias="BlueprintCategoryTemplatesAccess" class="FredBlueprintCategoryTemplateAccess" local="id" foreign="category" cardinality="many" owner="local" />
     </object>
 
     <object class="FredBlueprint" table="fred_blueprints" extends="xPDOSimpleObject">
@@ -81,6 +82,7 @@
 
         <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Category" class="FredBlueprintCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
+        <composite alias="BlueprintTemplatesAccess" class="FredBlueprintTemplateAccess" local="id" foreign="blueprint" cardinality="many" owner="local" />
     </object>
 
     <object class="FredElementCategory" table="fred_element_categories" extends="xPDOSimpleObject">
@@ -107,6 +109,7 @@
         </index>
 
         <composite alias="Elements" class="FredElement" local="id" foreign="category" cardinality="many" owner="local" />
+        <composite alias="ElementCategoryTemplatesAccess" class="FredElementCategoryTemplateAccess" local="id" foreign="category" cardinality="many" owner="local" />
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
     </object>
 
@@ -188,6 +191,7 @@
         <aggregate alias="Category" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="OptionSet" class="FredElementOptionSet" local="option_set" foreign="id" cardinality="one" owner="foreign" />
         <composite alias="Cache" class="FredCache" local="id" foreign="element" cardinality="many" owner="local" />
+        <composite alias="ElementTemplatesAccess" class="FredElementTemplateAccess" local="id" foreign="element" cardinality="many" owner="local" />
     </object>
 
     <object class="FredTheme" table="fred_themes" extends="xPDOSimpleObject">
@@ -230,6 +234,7 @@
 
         <aggregate alias="Theme" class="FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Template" class="modTemplate" local="template" foreign="id" cardinality="one" owner="foreign" />
+        <composite alias="ElementCategoryTemplatesAccess" class="FredElementCategoryTemplateAccess" local="template" foreign="template" cardinality="many" owner="local" />
     </object>
 
     <object class="FredCache" table="fred_cache" extends="xPDOObject">
@@ -252,5 +257,57 @@
 
         <aggregate alias="Resource" class="modResource" local="resource" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Element" class="FredElement" local="element" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="FredElementCategoryTemplateAccess" table="fred_element_category_templates_access" extends="xPDOObject">
+        <field key="category" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+        <field key="template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="category" length="" collation="A" null="false" />
+            <column key="template" length="" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Template" class="FredThemedTemplate" local="template" foreign="template" cardinality="one" owner="foreign" />
+        <aggregate alias="ElementCategory" class="FredElementCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="FredElementTemplateAccess" table="fred_element_templates_access" extends="xPDOObject">
+        <field key="element" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+        <field key="template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="element" length="" collation="A" null="false" />
+            <column key="template" length="" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Template" class="FredThemedTemplate" local="template" foreign="template" cardinality="one" owner="foreign" />
+        <aggregate alias="Element" class="FredElement" local="element" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="FredBlueprintCategoryTemplateAccess" table="fred_blueprint_category_templates_access" extends="xPDOObject">
+        <field key="category" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+        <field key="template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="category" length="" collation="A" null="false" />
+            <column key="template" length="" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Template" class="FredThemedTemplate" local="template" foreign="template" cardinality="one" owner="foreign" />
+        <aggregate alias="BlueprintCategory" class="FredBlueprintCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="FredBlueprintTemplateAccess" table="fred_blueprint_templates_access" extends="xPDOObject">
+        <field key="blueprint" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+        <field key="template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="blueprint" length="" collation="A" null="false" />
+            <column key="template" length="" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Template" class="FredThemedTemplate" local="template" foreign="template" cardinality="one" owner="foreign" />
+        <aggregate alias="Blueprint" class="FredBlueprint" local="blueprint" foreign="id" cardinality="one" owner="foreign" />
     </object>
 </model>

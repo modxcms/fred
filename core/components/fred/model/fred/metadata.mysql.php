@@ -15,5 +15,9 @@ $xpdo_meta_map = array (
   array (
     0 => 'FredThemedTemplate',
     1 => 'FredCache',
+    2 => 'FredElementCategoryTemplateAccess',
+    3 => 'FredElementTemplateAccess',
+    4 => 'FredBlueprintCategoryTemplateAccess',
+    5 => 'FredBlueprintTemplateAccess',
   ),
 );

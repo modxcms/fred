@@ -30,7 +30,7 @@ fred.grid.Elements = function (config) {
         url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name', 'theme_theme_folder'],
+        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name', 'theme_theme_folder', 'templates'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.elements.none'),
@@ -378,6 +378,8 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
     },
 
     duplicateElement: function (btn, e) {
+        this.menu.record['templates[]'] = this.menu.record.templates;
+
         var duplicateElement = MODx.load({
             xtype: 'fred-window-element-duplicate',
             record: this.menu.record,
@@ -398,7 +400,12 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
             category.baseParams.theme = this.menu.record.theme_id;
         }
 
-        duplicateElement.fp.getForm().reset();
+        var templates = duplicateElement.find('name', 'templates');
+        if (templates[0]) {
+            templates = templates[0];
+            templates.baseParams.theme = this.menu.record.theme_id;
+        }
+
         duplicateElement.fp.getForm().setValues(this.menu.record);
         duplicateElement.show(e.target);
 

@@ -86,6 +86,26 @@ class FredBlueprintsUpdateProcessor extends modObjectUpdateProcessor
 
         return parent::beforeSave();
     }
+
+    public function afterSave()
+    {
+        $templates = $this->getProperty('templates');
+        if ($templates === null) return parent::afterSave();
+
+        $templates = array_map('intval', $templates);
+        $templates = array_filter($templates);
+
+        $this->modx->removeCollection('FredBlueprintTemplateAccess', ['blueprint' => $this->object->id]);
+
+        foreach ($templates as $template) {
+            $categoryTemplate = $this->modx->newObject('FredBlueprintTemplateAccess');
+            $categoryTemplate->set('blueprint', $this->object->id);
+            $categoryTemplate->set('template', $template);
+            $categoryTemplate->save();
+        }
+
+        return parent::afterSave();
+    }
 }
 
 return 'FredBlueprintsUpdateProcessor';

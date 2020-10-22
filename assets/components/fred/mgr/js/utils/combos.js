@@ -308,6 +308,66 @@ fred.combo.Template = function (config, getStore) {
 Ext.extend(fred.combo.Template, Ext.ux.form.SuperBoxSelect);
 Ext.reg('fred-combo-template', fred.combo.Template);
 
+fred.combo.ThemedTemplate = function (config, getStore) {
+    config = config || {};
+
+    if (!config.clearBtnCls) {
+        if (MODx.config.connector_url) {
+            config.clearBtnCls = 'x-form-trigger';
+        } else {
+            config.clearBtnCls = null;
+        }
+    }
+
+    if (!config.expandBtnCls) {
+        if (MODx.config.connector_url) {
+            config.expandBtnCls = 'x-form-trigger';
+        } else {
+            config.expandBtnCls = null;
+        }
+    }
+
+    Ext.applyIf(config, {
+        name: 'templates',
+        hiddenName: 'templates[]',
+        displayField: 'templatename',
+        valueField: 'id',
+        fields: ['templatename', 'id'],
+        mode: 'remote',
+        triggerAction: 'all',
+        typeAhead: true,
+        editable: true,
+        forceSelection: false,
+        pageSize: 20,
+        url: fred.config.connectorUrl,
+        baseParams: {
+            action: 'mgr/extra/getthemedtemplates',
+            theme: config.theme
+        }
+    });
+    Ext.applyIf(config, {
+        store: new Ext.data.JsonStore({
+            url: config.url,
+            root: 'results',
+            totalProperty: 'total',
+            fields: config.fields,
+            errorReader: MODx.util.JSONReader,
+            baseParams: config.baseParams || {},
+            remoteSort: config.remoteSort || false,
+            autoDestroy: true
+        })
+    });
+    if (getStore === true) {
+        config.store.load();
+        return config.store;
+    }
+    fred.combo.ThemedTemplate.superclass.constructor.call(this, config);
+    this.config = config;
+    return this;
+};
+Ext.extend(fred.combo.ThemedTemplate, Ext.ux.form.SuperBoxSelect);
+Ext.reg('fred-combo-themed-template', fred.combo.ThemedTemplate);
+
 fred.combo.RootCategory = function (config, getStore) {
     config = config || {};
 

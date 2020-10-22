@@ -61,7 +61,38 @@ Ext.extend(fred.window.ElementCategory, MODx.Window, {
                 anchor: '100%',
                 disabled: config.isUpdate,
                 allowBlank: config.isUpdate,
-                isUpdate: config.isUpdate
+                isUpdate: config.isUpdate,
+                listeners: {
+                    select: function(combo, record) {
+                        var templates = this.find('name', 'templates');
+                        if (!templates[0]) return;
+
+                        templates = templates[0];
+                        templates.setValue();
+                        templates.enable();
+                        templates.baseParams.theme = record.id;
+                        templates.lastQuery = null;
+                        templates.loaded = false;
+                        templates.tries = 0;
+
+                        templates.store.on('load', function() {
+                            this.loaded = true;
+                        }, templates, {single: true});
+
+                        if (templates.pageTb) {
+                            templates.pageTb.show();
+                        }
+                    },
+                    scope: this
+                }
+            },
+            {
+                xtype: 'fred-combo-themed-template',
+                fieldLabel: _('fred.element_categories.templates'),
+                theme: config.record.theme,
+                disabled: !config.isUpdate,
+                anchor: '100%',
+                allowBlank: true
             },
             {
                 xtype: 'numberfield',
@@ -124,7 +155,36 @@ Ext.extend(fred.window.ElementCategoryDuplicate, MODx.Window, {
                 hiddenName: 'theme',
                 anchor: '100%',
                 allowBlank: false,
-                isUpdate: config.isUpdate
+                listeners: {
+                    select: function(combo, record) {
+                        var templates = this.find('name', 'templates');
+                        if (!templates[0]) return;
+
+                        templates = templates[0];
+                        templates.setValue();
+                        templates.enable();
+                        templates.baseParams.theme = record.id;
+                        templates.lastQuery = null;
+                        templates.loaded = false;
+                        templates.tries = 0;
+
+                        templates.store.on('load', function() {
+                            this.loaded = true;
+                        }, templates, {single: true});
+
+                        if (templates.pageTb) {
+                            templates.pageTb.show();
+                        }
+                    },
+                    scope: this
+                }
+            },
+            {
+                xtype: 'fred-combo-themed-template',
+                fieldLabel: _('fred.element_categories.templates'),
+                theme: config.record.theme,
+                anchor: '100%',
+                allowBlank: true
             }
         ]
     }

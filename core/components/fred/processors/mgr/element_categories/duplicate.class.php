@@ -18,7 +18,7 @@ class FredElementCategoriesDuplicateProcessor extends modObjectDuplicateProcesso
 
         return parent::initialize();
     }
-    
+
     public function process() {
         $this->newObject->fromArray($this->object->toArray());
         $name = $this->getProperty('name');
@@ -28,7 +28,7 @@ class FredElementCategoriesDuplicateProcessor extends modObjectDuplicateProcesso
             $this->addFieldError('name', $this->modx->lexicon('fred.err.element_categories_ns_name'));
             return $this->failure();
         }
-        
+
         if (empty($theme)) {
             $this->addFieldError('theme', $this->modx->lexicon('fred.err.element_categories_ns_theme'));
             return $this->failure();
@@ -37,7 +37,7 @@ class FredElementCategoriesDuplicateProcessor extends modObjectDuplicateProcesso
         $this->newObject->set('name', $name);
         $this->newObject->set('theme', $theme);
         $this->newObject->set('uuid', '');
-        
+
         $c = $this->modx->newQuery($this->classKey);
         $c->where(['theme' => $theme]);
         $c->limit(1);
@@ -56,6 +56,17 @@ class FredElementCategoriesDuplicateProcessor extends modObjectDuplicateProcesso
         if ($this->saveObject() === false) {
             $this->modx->error->checkValidation($this->newObject);
             return $this->failure($this->modx->lexicon($this->objectType.'_err_duplicate'));
+        }
+
+        $templates = $this->getProperty('templates');
+        $templates = array_map('intval', $templates);
+        $templates = array_filter($templates);
+
+        foreach ($templates as $template) {
+            $categoryTemplate = $this->modx->newObject('FredElementCategoryTemplateAccess');
+            $categoryTemplate->set('category', $this->newObject->id);
+            $categoryTemplate->set('template', $template);
+            $categoryTemplate->save();
         }
 
         return $this->success('');
