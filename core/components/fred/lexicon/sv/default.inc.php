@@ -61,6 +61,7 @@ $_lang['fred.blueprints.quick_update'] = 'Snabbuppdatera layout';
 $_lang['fred.blueprints.update'] = 'Uppdatera layout';
 $_lang['fred.blueprints.create'] = 'Skapa layout';
 $_lang['fred.blueprints.theme'] = 'Tema';
+$_lang['fred.blueprints.templates'] = 'Templates';
 
 $_lang['fred.blueprint_cateogries.all'] = 'Alla kategorier';
 $_lang['fred.blueprint_categories.none'] = 'Inga kategorier hittades.';
@@ -77,6 +78,7 @@ $_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Är du säker på
 $_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Är du säker på att du vill ta bort den tomma layoutkategorin "[[+name]]"? Detta går inte att ångra.';
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Layouter';
 $_lang['fred.blueprint_categories.theme'] = 'Tema';
+$_lang['fred.blueprint_categories.templates'] = 'Templates';
 
 $_lang['fred.elements.none'] = 'Det gick inte att hitta några element.';
 $_lang['fred.elements.image'] = 'Bild';
@@ -98,6 +100,7 @@ $_lang['fred.elements.duplicate'] = 'Duplicera element';
 $_lang['fred.elements.new_name'] = 'Nytt namn';
 $_lang['fred.elements.has_override'] = 'Åsidosatt';
 $_lang['fred.elements.theme'] = 'Tema';
+$_lang['fred.elements.templates'] = 'Templates';
 
 $_lang['fred.rebuild.rebuild'] = 'Bygg om';
 $_lang['fred.rebuild.rebuild_desc'] = 'Klicka på ombyggnationsknappen nedan för att publicera ändringar i uppdaterade element till alla sidor på webbplatsen som hanteras med Fred.';
@@ -117,6 +120,7 @@ $_lang['fred.element_categories.remove_confirm_empty'] = 'Är du säker på att 
 $_lang['fred.element_categories.duplicate'] = 'Duplicera kategori';
 $_lang['fred.element_categories.new_name'] = 'Nytt namn';
 $_lang['fred.element_categories.theme'] = 'Tema';
+$_lang['fred.element_categories.templates'] = 'Templates';
 
 $_lang['fred.element_option_sets.none'] = 'Det gick inte att hitta några inställningsuppsättningar.';
 $_lang['fred.element_option_sets.name'] = 'Namn';
@@ -258,6 +262,12 @@ $_lang['setting_fred.secret'] = 'Hemlig nyckel';
 $_lang['setting_fred.secret_desc'] = 'Hemlig nyckel som används för att signera XHR-anrop';
 $_lang['setting_fred.default_enabled'] = 'Fred aktiverad';
 $_lang['setting_fred.default_enabled_desc'] = 'Aktivera eller inaktivera Fred som standard';
+$_lang['setting_fred.sidebar_open'] = 'Sidebar Open';
+$_lang['setting_fred.sidebar_open_desc'] = 'Open sidebar by default';
+$_lang['setting_fred.force_sidebar'] = 'Force Sidebar';
+$_lang['setting_fred.force_sidebar_desc'] = 'When enabled, user won\'t be able to close the sidebar.';
+$_lang['setting_fred.logout_url'] = 'Logout Link';
+$_lang['setting_fred.logout_url_desc'] = 'Custom logout link. If filled, users will redirect there instead of to the manager logout after clicking the logout button.';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Namn är obligatoriskt';
 $_lang['fred.err.blueprints_ns_name'] = 'Namn är obligatoriskt';
