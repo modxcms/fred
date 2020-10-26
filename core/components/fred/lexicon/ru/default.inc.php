@@ -61,6 +61,7 @@ $_lang['fred.blueprints.quick_update'] = 'Быстрое обновление м
 $_lang['fred.blueprints.update'] = 'Обновление макета';
 $_lang['fred.blueprints.create'] = 'Создание макета';
 $_lang['fred.blueprints.theme'] = 'Тема';
+$_lang['fred.blueprints.templates'] = 'Templates';
 
 $_lang['fred.blueprint_cateogries.all'] = 'Все категории';
 $_lang['fred.blueprint_categories.none'] = 'Категории не найдены.';
@@ -77,6 +78,7 @@ $_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Вы уверен
 $_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Вы уверены, что хотите удалить "[[+name]]" категорию макетов?';
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Макеты';
 $_lang['fred.blueprint_categories.theme'] = 'Тема';
+$_lang['fred.blueprint_categories.templates'] = 'Templates';
 
 $_lang['fred.elements.none'] = 'Элементы не найдены.';
 $_lang['fred.elements.image'] = 'Изображение';
@@ -98,6 +100,7 @@ $_lang['fred.elements.duplicate'] = 'Дублировать элемент';
 $_lang['fred.elements.new_name'] = 'Новое имя';
 $_lang['fred.elements.has_override'] = 'Имеет переопределение';
 $_lang['fred.elements.theme'] = 'Тема';
+$_lang['fred.elements.templates'] = 'Templates';
 
 $_lang['fred.rebuild.rebuild'] = 'Перестроить';
 $_lang['fred.rebuild.rebuild_desc'] = 'Нажмите кнопку Перестроить ниже, чтобы опубликовать изменения в обновленных элементах на всех существующих страницах сайта с поддержкой Fred.';
@@ -117,6 +120,7 @@ $_lang['fred.element_categories.remove_confirm_empty'] = 'Вы уверены, �
 $_lang['fred.element_categories.duplicate'] = 'Дублировать категорию';
 $_lang['fred.element_categories.new_name'] = 'Новое имя';
 $_lang['fred.element_categories.theme'] = 'Тема';
+$_lang['fred.element_categories.templates'] = 'Templates';
 
 $_lang['fred.element_option_sets.none'] = 'Наборы параметров не найдены.';
 $_lang['fred.element_option_sets.name'] = 'Имя';
@@ -258,6 +262,12 @@ $_lang['setting_fred.secret'] = 'Секретный ключ';
 $_lang['setting_fred.secret_desc'] = 'Секрет, используемый при подписании запросов XHR';
 $_lang['setting_fred.default_enabled'] = 'Fred включен';
 $_lang['setting_fred.default_enabled_desc'] = 'Включить или отключить Fred по умолчанию';
+$_lang['setting_fred.sidebar_open'] = 'Sidebar Open';
+$_lang['setting_fred.sidebar_open_desc'] = 'Open sidebar by default';
+$_lang['setting_fred.force_sidebar'] = 'Force Sidebar';
+$_lang['setting_fred.force_sidebar_desc'] = 'When enabled, user won\'t be able to close the sidebar.';
+$_lang['setting_fred.logout_url'] = 'Logout Link';
+$_lang['setting_fred.logout_url_desc'] = 'Custom logout link. If filled, users will redirect there instead of to the manager logout after clicking the logout button.';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Имя обязательно';
 $_lang['fred.err.blueprints_ns_name'] = 'Имя обязательно';
