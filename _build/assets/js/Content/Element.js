@@ -101,7 +101,16 @@ export class Element {
         this.settings[name] = value;
         this.parsedSettings[name] = valueParser(value);
         this.parsedSettingsClean[name] = valueParser(value, true);
+    }
 
+    setSettings(settings) {
+        for (let setting in settings) {
+            if (!settings.hasOwnProperty(setting)) continue;
+
+            this.settings[setting] = settings[setting];
+            this.parsedSettings[setting] = valueParser(settings[setting]);
+            this.parsedSettingsClean[setting] = valueParser(settings[setting], true);
+        }
     }
 
     setUpEditors() {

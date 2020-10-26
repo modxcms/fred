@@ -148,36 +148,36 @@
   &_pages {
     &:before {
       //background: inline-svg('sitemap', $white) center center no-repeat;
-      mask-image: inline-svg('sitemap');
-      -webkit-mask-image: inline-svg('sitemap');
+      mask-image: svg-load('sitemap.svg');
+      -webkit-mask-image: svg-load('sitemap.svg');
     }
   }
   &_elements {
     &:before {
       //background: inline-svg('clone', $white) center center no-repeat;
-      mask-image: inline-svg('clone');
-      -webkit-mask-image: inline-svg('clone');
+      mask-image: svg-load('clone.svg');
+      -webkit-mask-image: svg-load('clone.svg');
     }
   }
   &_blueprints {
     &:before {
       //background: inline-svg('object-group-solid', $white) center center no-repeat;
-      mask-image: inline-svg('object-group-solid');
-      -webkit-mask-image: inline-svg('object-group-solid');
+      mask-image: svg-load('object-group-solid.svg');
+      -webkit-mask-image: svg-load('object-group-solid.svg');
     }
   }
   &_more {
     &:before {
       //background: inline-svg('ellipsis-h', $white) center center no-repeat;
-      mask-image: inline-svg('ellipsis-h');
-      -webkit-mask-image: inline-svg('ellipsis-h');
+      mask-image: svg-load('ellipsis-h.svg');
+      -webkit-mask-image: svg-load('ellipsis-h.svg');
     }
   }
   &_page_settings {
     &:before {
       //background: inline-svg('cog', $white) center center no-repeat;
-      mask-image: inline-svg('cog');
-      -webkit-mask-image: inline-svg('cog');
+      mask-image: svg-load('cog.svg');
+      -webkit-mask-image: svg-load('cog.svg');
     }
     + dd dt {
       &:hover{
@@ -399,7 +399,7 @@
           }
           &-plus{
             &:before{
-              background: inline-svg('plus-circle', $white) center center no-repeat;
+              background: svg-load('plus-circle.svg', fill=$white) center center no-repeat;
             }
             &.active{
               &before{

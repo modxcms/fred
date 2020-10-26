@@ -35,6 +35,10 @@ class FredThemeBuildProcessor extends modObjectProcessor
             )
         );
 
+        $this->modx->loadClass('xpdo.transport.xPDOVehicle', $this->modx->getOption('core_path'), false, true);
+        $this->modx->loadClass('xpdo.transport.xPDOFileVehicle', $this->modx->getOption('core_path'), false, true);
+        $this->modx->loadClass('fred.FredFileVehicle', $this->fred->getOption('modelPath'), false, true);
+
         $name = $this->getProperty('name');
         $version = $this->getProperty('version', '1.0.0');
         $release = $this->getProperty('release', 'pl');
@@ -196,10 +200,13 @@ class FredThemeBuildProcessor extends modObjectProcessor
 
         if (is_dir($themeFolderPath) && is_readable($themeFolderPath)) {
             $vehicle = $builder->createVehicle([
-                "source" => $themeFolderPath,
-                "target" => "return MODX_ASSETS_PATH . '{$themesFolder}';"
+                "in" => $themeFolderPath,
+                "notPath" => [
+                    "/^_data/"
+                ],
+                "target" => "return MODX_ASSETS_PATH . '{$themeFolder}';"
             ], [
-                "vehicle_class" => "xPDOFileVehicle"
+                "vehicle_class" => "FredFileVehicle"
             ]);
             $vehicle->validate('php', [
                 'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
@@ -316,6 +323,95 @@ class FredThemeBuildProcessor extends modObjectProcessor
         $categories = $this->getProperty('categories');
         if (!is_array($categories)) $categories = [];
         $buildConfig['categories'] = $categories;
+
+        $categoryVehicles = [];
+        foreach ($categories as $category) {
+            /** @var modCategory $categoryObject */
+            $categoryObject = $this->modx->getObject('modCategory', ['category' => $category]);
+            if ($categoryObject) {
+                $this->loadCategory($categoryObject, $installedTemplates, $installedTVs, $rootCategories);
+
+                $categoryVehicle = $builder->createVehicle($categoryObject, [
+                    xPDOTransport::PRESERVE_KEYS => false,
+                    xPDOTransport::UPDATE_OBJECT => true,
+                    xPDOTransport::UNIQUE_KEY => 'category',
+                    xPDOTransport::RELATED_OBJECTS => true,
+                    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => [
+                        'Children' => [
+                            xPDOTransport::PRESERVE_KEYS => false,
+                            xPDOTransport::UPDATE_OBJECT => true,
+                            xPDOTransport::UNIQUE_KEY => ['parent','category'],
+                        ],
+                        'Snippets' => array(
+                            xPDOTransport::PRESERVE_KEYS => false,
+                            xPDOTransport::UPDATE_OBJECT => true,
+                            xPDOTransport::UNIQUE_KEY => 'name',
+                        ),
+                        'Chunks' => array(
+                            xPDOTransport::PRESERVE_KEYS => false,
+                            xPDOTransport::UPDATE_OBJECT => true,
+                            xPDOTransport::UNIQUE_KEY => 'name',
+                        ),
+                        'Plugins' => array(
+                            xPDOTransport::UNIQUE_KEY => 'name',
+                            xPDOTransport::PRESERVE_KEYS => false,
+                            xPDOTransport::UPDATE_OBJECT => true,
+                            xPDOTransport::RELATED_OBJECTS => true,
+                            xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
+                                'PluginEvents' => array(
+                                    xPDOTransport::PRESERVE_KEYS => true,
+                                    xPDOTransport::UPDATE_OBJECT => false,
+                                    xPDOTransport::UNIQUE_KEY => array('pluginid','event'),
+                                ),
+                            ),
+                        ),
+                        'Templates' => [
+                            xPDOTransport::PRESERVE_KEYS => false,
+                            xPDOTransport::UPDATE_OBJECT => true,
+                            xPDOTransport::UNIQUE_KEY => 'templatename',
+                            xPDOTransport::RELATED_OBJECTS => true,
+                            xPDOTransport::RELATED_OBJECT_ATTRIBUTES => [
+                                'TemplateVarTemplates' => [
+                                    xPDOTransport::PRESERVE_KEYS => false,
+                                    xPDOTransport::UPDATE_OBJECT => true,
+                                    xPDOTransport::UNIQUE_KEY => ['tmplvarid', 'templateid'],
+                                    xPDOTransport::RELATED_OBJECTS => true,
+                                    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => [
+                                        'TemplateVar' => [
+                                            xPDOTransport::PRESERVE_KEYS => false,
+                                            xPDOTransport::UPDATE_OBJECT => true,
+                                            xPDOTransport::UNIQUE_KEY => 'name',
+                                            xPDOTransport::RELATED_OBJECTS => true,
+                                            xPDOTransport::RELATED_OBJECT_ATTRIBUTES => [
+                                                'Category' => [
+                                                    xPDOTransport::PRESERVE_KEYS => false,
+                                                    xPDOTransport::UPDATE_OBJECT => true,
+                                                    xPDOTransport::UNIQUE_KEY => 'category',
+                                                    xPDOTransport::RELATED_OBJECTS => true,
+                                                    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => [
+                                                        'Parent' => [
+                                                            xPDOTransport::PRESERVE_KEYS => false,
+                                                            xPDOTransport::UPDATE_OBJECT => true,
+                                                            xPDOTransport::UNIQUE_KEY => ['parent','category'],
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]);
+
+                $categoryVehicle->validate('php', [
+                    'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
+                ]);
+
+                $categoryVehicles[] = $categoryVehicle;
+            }
+        }
 
         $rootCategories = array_merge($rootCategories, $categories);
         $rootCategories = array_keys(array_flip($rootCategories));
@@ -536,55 +632,8 @@ class FredThemeBuildProcessor extends modObjectProcessor
             }
         }
 
-        foreach ($categories as $category) {
-            /** @var modCategory $categoryObject */
-            $categoryObject = $this->modx->getObject('modCategory', ['category' => $category]);
-            if ($categoryObject) {
-                $this->loadCategory($categoryObject);
-
-                $categoryVehicle = $builder->createVehicle($categoryObject, [
-                    xPDOTransport::PRESERVE_KEYS => false,
-                    xPDOTransport::UPDATE_OBJECT => true,
-                    xPDOTransport::UNIQUE_KEY => 'category',
-                    xPDOTransport::RELATED_OBJECTS => true,
-                    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => [
-                        'Children' => [
-                            xPDOTransport::PRESERVE_KEYS => false,
-                            xPDOTransport::UPDATE_OBJECT => true,
-                            xPDOTransport::UNIQUE_KEY => ['parent','category'],
-                        ],
-                        'Snippets' => array(
-                            xPDOTransport::PRESERVE_KEYS => false,
-                            xPDOTransport::UPDATE_OBJECT => true,
-                            xPDOTransport::UNIQUE_KEY => 'name',
-                        ),
-                        'Chunks' => array(
-                            xPDOTransport::PRESERVE_KEYS => false,
-                            xPDOTransport::UPDATE_OBJECT => true,
-                            xPDOTransport::UNIQUE_KEY => 'name',
-                        ),
-                        'Plugins' => array(
-                            xPDOTransport::UNIQUE_KEY => 'name',
-                            xPDOTransport::PRESERVE_KEYS => false,
-                            xPDOTransport::UPDATE_OBJECT => true,
-                            xPDOTransport::RELATED_OBJECTS => true,
-                            xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
-                                'PluginEvents' => array(
-                                    xPDOTransport::PRESERVE_KEYS => true,
-                                    xPDOTransport::UPDATE_OBJECT => false,
-                                    xPDOTransport::UNIQUE_KEY => array('pluginid','event'),
-                                ),
-                            ),
-                        )
-                    ]
-                ]);
-
-                $categoryVehicle->validate('php', [
-                    'source' => $this->fred->getOption('buildHelpers') . 'halt.validator.php'
-                ]);
-
-                $builder->putVehicle($categoryVehicle);
-            }
+        foreach ($categoryVehicles as $cV) {
+            $builder->putVehicle($cV);
         }
 
         if (!empty($extractTpl['vehicles'])) {
@@ -699,7 +748,7 @@ class FredThemeBuildProcessor extends modObjectProcessor
     /**
      * @param modCategory $category
      */
-    private function loadCategory(&$category)
+    private function loadCategory(&$category, &$installedTemplates, &$installedTVs, &$rootCategories)
     {
         $category->getMany('Chunks');
         $category->getMany('Snippets');
@@ -710,9 +759,41 @@ class FredThemeBuildProcessor extends modObjectProcessor
             $plugin->getMany('PluginEvents');
         }
 
+        /** @var modTemplate[] $templates */
+        $templates = $category->getMany('Templates', ['templatename:NOT IN' => $installedTemplates]);
+        foreach ($templates as $template) {
+            $templateName = $template->get('templatename');
+            $installedTemplates[] = $templateName;
+
+            /** @var  modTemplateVarTemplate[] $templateVarTemplates */
+            $templateVarTemplates = $template->getMany('TemplateVarTemplates');
+
+            if (is_array($templateVarTemplates)) {
+                foreach ($templateVarTemplates as $templateVarTemplate) {
+                    /** @var modTemplateVar $tv */
+                    $tv = $templateVarTemplate->getOne('TemplateVar');
+                    if ($tv) {
+                        $cat = $tv->getOne('Category');
+                        if ($cat) {
+                            $rootCategory = $cat->get('category');
+                            $parentCategory = $cat->getOne('Parent');
+                            while($parentCategory) {
+                                $rootCategory = $parentCategory->get('category');
+                                $parentCategory = $parentCategory->getOne('Parent');
+                            }
+
+                            $rootCategories[] = $rootCategory;
+                        }
+
+                        $installedTVs[] = $tv->get('name');
+                    }
+                }
+            }
+        }
+
         $childCategories = $category->getMany('Children');
         foreach ($childCategories as $childCategory) {
-            $this->loadCategory($childCategory);
+            $this->loadCategory($childCategory, $installedTemplates, $installedTVs, $rootCategories);
         }
     }
 }

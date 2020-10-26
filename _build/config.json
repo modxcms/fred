@@ -3,7 +3,7 @@
   "lowCaseName": "fred",
   "description": "Frontend Editor",
   "author": "John Peca",
-  "version": "1.1.1-pl",
+  "version": "1.2.0-alpha",
   "package": {
     "menus": [
       {
@@ -79,6 +79,20 @@
         "key": "default_enabled",
         "type" : "combo-boolean",
         "value": "1"
+      },
+      {
+        "key": "sidebar_open",
+        "type" : "combo-boolean",
+        "value": "0"
+      },
+      {
+        "key": "force_sidebar",
+        "type" : "combo-boolean",
+        "value": "0"
+      },
+      {
+        "key": "logout_url",
+        "value": ""
       }
     ]
   },
@@ -92,7 +106,11 @@
       "FredElementRTEConfig",
       "FredTheme",
       "FredThemedTemplate",
-      "FredCache"
+      "FredCache",
+      "FredElementCategoryTemplateAccess",
+      "FredElementTemplateAccess",
+      "FredBlueprintCategoryTemplateAccess",
+      "FredBlueprintTemplateAccess"
     ]
   },
   "build": {

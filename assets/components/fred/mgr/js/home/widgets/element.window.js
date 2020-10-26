@@ -298,6 +298,25 @@ Ext.extend(fred.window.ElementDuplicate, MODx.Window, {
                         category.enable();
                         category.baseParams.theme = record.id;
                         category.store.load();
+
+                        var templates = this.find('name', 'templates');
+                        if (!templates[0]) return;
+
+                        templates = templates[0];
+                        templates.setValue();
+                        templates.enable();
+                        templates.baseParams.theme = record.id;
+                        templates.lastQuery = null;
+                        templates.loaded = false;
+                        templates.tries = 0;
+
+                        templates.store.on('load', function() {
+                            this.loaded = true;
+                        }, templates, {single: true});
+
+                        if (templates.pageTb) {
+                            templates.pageTb.show();
+                        }
                     },
                     scope: this
                 },
@@ -310,6 +329,13 @@ Ext.extend(fred.window.ElementDuplicate, MODx.Window, {
                 hiddenName: 'category',
                 anchor: '100%',
                 allowBlank: false
+            },
+            {
+                xtype: 'fred-combo-themed-template',
+                fieldLabel: _('fred.elements.templates'),
+                theme: config.record.theme_id,
+                anchor: '100%',
+                allowBlank: true
             }
         ]
     }

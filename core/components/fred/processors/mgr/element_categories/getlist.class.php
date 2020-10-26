@@ -56,7 +56,8 @@ class FredElementCategoriesGetListProcessor extends modObjectGetListProcessor
         $c->select($this->modx->getSelectColumns('FredElementCategory', 'FredElementCategory'));
         $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['id', 'name']));
         $c->select([
-            '(SELECT count(id) FROM ' . $this->modx->getTableName('FredElement') . ' WHERE category = FredElementCategory.id) AS elements'
+            '(SELECT count(id) FROM ' . $this->modx->getTableName('FredElement') . ' WHERE category = FredElementCategory.id) AS elements',
+            '(SELECT IFNULL(GROUP_CONCAT(template SEPARATOR \',\'), \'\') FROM ' . $this->modx->getTableName('FredElementCategoryTemplateAccess') . ' WHERE category = FredElementCategory.id) AS templates'
         ]);
 
         return parent::prepareQueryAfterCount($c);

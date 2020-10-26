@@ -4,7 +4,7 @@ import fredConfig from "./Config";
 
 export class  Modal {
 
-    constructor(title, content = '', onSave = () => {}, config = {}) {
+    constructor(title, content = '', onSave = () => {}, config = {}, onClose = () => {}) {
         this.wrapper = null;
 
         if (fredConfig.lngExists(title)) {
@@ -14,6 +14,7 @@ export class  Modal {
         this.title = title;
         this.content = content;
         this.onSave = onSave;
+        this.onClose = onClose;
 
         this.showCancelButton = config.showCancelButton || false;
         this.cancelButtonText = config.cancelButtonText || 'fred.fe.cancel';
@@ -119,6 +120,7 @@ export class  Modal {
 
     close() {
         this.wrapper.remove();
+        this.onClose();
     }
 }
 

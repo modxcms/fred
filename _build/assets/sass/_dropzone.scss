@@ -58,7 +58,7 @@
     &:before {
       content: ' ';
       background-color: $light-gray;
-      background-image: inline-svg('plus-circle', $modxred);
+      background-image: svg-load('plus-circle.svg', fill=$modxred);
       background-position: center center;
       background-repeat: no-repeat;
       background-size: 46px;

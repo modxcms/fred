@@ -81,6 +81,17 @@ $xpdo_meta_map['FredThemedTemplate']= array (
       ),
     ),
   ),
+  'composites' => 
+  array (
+    'ElementCategoryTemplatesAccess' => 
+    array (
+      'class' => 'FredElementCategoryTemplateAccess',
+      'local' => 'template',
+      'foreign' => 'template',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
+  ),
   'aggregates' => 
   array (
     'Theme' => 

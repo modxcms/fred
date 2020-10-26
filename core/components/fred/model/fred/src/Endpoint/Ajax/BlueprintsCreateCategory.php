@@ -3,6 +3,8 @@
 namespace Fred\Endpoint\Ajax;
 
 
+use Fred\Utils;
+
 class BlueprintsCreateCategory extends Endpoint
 {
     function process()
@@ -10,13 +12,13 @@ class BlueprintsCreateCategory extends Endpoint
         if (!$this->modx->hasPermission('fred_blueprint_categories_save')) {
             return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
-        
+
         if (empty($this->body['name'])) {
             return $this->failure($this->modx->lexicon('fred.fe.err.blueprint_categories_ns_name'), ['name' => $this->modx->lexicon('fred.fe.err.blueprint_categories_ns_name')]);
         }
 
         $theme = isset($this->body['theme']) ? intval($this->body['theme']) : 0;
-        
+
         if (empty($theme)) {
             return $this->failure($this->modx->lexicon('fred.fe.err.blueprint_categories_ns_theme'), ['theme' => $this->modx->lexicon('fred.fe.err.blueprint_categories_ns_theme')]);
         }
@@ -31,7 +33,7 @@ class BlueprintsCreateCategory extends Endpoint
         if (!$this->modx->hasPermission('fred_blueprint_categories_create_public')) {
             $public = 0;
         }
-        
+
         if (empty($rank)) {
             $c = $this->modx->newQuery('FredBlueprintCategory');
             $c->sortby('rank', 'desc');
@@ -39,7 +41,7 @@ class BlueprintsCreateCategory extends Endpoint
 
             $lastRecord = $this->modx->getIterator('FredBlueprintCategory', $c);
             $rank = 1;
-         
+
             foreach ($lastRecord as $lastItem) {
                 $rank = $lastItem->rank + 1;
                 break;
@@ -52,8 +54,20 @@ class BlueprintsCreateCategory extends Endpoint
         $category->set('rank', $rank);
         $category->set('public', $public);
         $category->set('createdBy', $this->modx->user->id);
-        $category->save();
-       
+        $saved = $category->save();
+
+        if ($saved === true) {
+            $templates = !empty($this->body['templates']) ? $this->body['templates'] : '';
+            $templates = Utils::explodeAndClean($templates, ',', 'intval');
+
+            foreach ($templates as $template) {
+                $categoryAccess = $this->modx->newObject('FredBlueprintCategoryTemplateAccess');
+                $categoryAccess->set('category', $category->get('id'));
+                $categoryAccess->set('template', $template);
+                $categoryAccess->save();
+            }
+        }
+
         return $this->success();
     }
 }

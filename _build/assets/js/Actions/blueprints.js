@@ -16,7 +16,7 @@ export const getBlueprints = (complete = null, theme = fredConfig.config.theme) 
     });
 };
 
-export const createBlueprint = (name, description, category, rank, isPublic, data, generatedImage, image, complete) => {
+export const createBlueprint = (name, description, category, rank, isPublic, data, generatedImage, image, complete, templates) => {
     const body = {
         name,
         description,
@@ -26,7 +26,8 @@ export const createBlueprint = (name, description, category, rank, isPublic, dat
         data,
         generatedImage: '',
         image,
-        complete
+        complete,
+        templates
     };
 
     if (image === '') {
@@ -42,7 +43,8 @@ export const createBlueprint = (name, description, category, rank, isPublic, dat
     }).then(errorHandler);
 };
 
-export const createBlueprintCategory = (name, rank, isPublic) => {
+export const createBlueprintCategory = (name, rank, isPublic, templates) => {
+    console.log({name, rank, isPublic, templates});
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=blueprints-create-category`, {
         method: "post",
         headers: {
@@ -52,7 +54,8 @@ export const createBlueprintCategory = (name, rank, isPublic) => {
             name,
             rank,
             public: isPublic,
-            theme: fredConfig.config.theme
+            theme: fredConfig.config.theme,
+            templates
         })
     }).then(errorHandler);
 };
@@ -64,5 +67,5 @@ export const loadBlueprint = blueprint => {
             .catch(err => {
                 console.log(err);
             });
-    }); 
+    });
 };

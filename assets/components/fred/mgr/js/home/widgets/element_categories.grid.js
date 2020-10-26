@@ -30,7 +30,7 @@ fred.grid.ElementCategories = function (config) {
         url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'rank', 'elements', 'theme_name', 'theme'],
+        fields: ['id', 'name', 'rank', 'elements', 'theme_name', 'theme', 'templates'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.element_categories.none'),
@@ -189,7 +189,6 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
             }
         });
 
-        createCategory.fp.getForm().reset();
         createCategory.fp.getForm().setValues(record);
         createCategory.show(e.target);
 
@@ -198,6 +197,7 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
 
     updateCategory: function (btn, e) {
         this.menu.record.theme_id = this.menu.record.theme;
+        this.menu.record['templates[]'] = this.menu.record.templates;
 
         var updateCategory = MODx.load({
             xtype: 'fred-window-element-category',
@@ -215,7 +215,6 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
             }
         });
 
-        updateCategory.fp.getForm().reset();
         updateCategory.fp.getForm().setValues(this.menu.record);
         updateCategory.show(e.target);
 
@@ -223,6 +222,9 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
     },
 
     duplicateCategory: function (btn, e) {
+        this.menu.record.theme_id = this.menu.record.theme;
+        this.menu.record['templates[]'] = this.menu.record.templates;
+
         var duplicateCategory = MODx.load({
             xtype: 'fred-window-element-category-duplicate',
             title: _('fred.element_categories.duplicate'),
@@ -239,7 +241,6 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
             }
         });
 
-        duplicateCategory.fp.getForm().reset();
         duplicateCategory.fp.getForm().setValues(this.menu.record);
         duplicateCategory.show(e.target);
 

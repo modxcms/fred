@@ -20,7 +20,7 @@ class FredBlueprintCategoriesCreateProcessor extends modObjectCreateProcessor
 
         return parent::initialize();
     }
-    
+
     public function beforeSet()
     {
         $name = $this->getProperty('name');
@@ -62,8 +62,24 @@ class FredBlueprintCategoriesCreateProcessor extends modObjectCreateProcessor
         if (!$this->modx->hasPermission('fred_blueprint_categories_create_public')) {
             $this->setProperty('public', 0);
         }
-        
+
         return parent::beforeSet();
+    }
+
+    public function afterSave()
+    {
+        $templates = $this->getProperty('templates');
+        $templates = array_map('intval', $templates);
+        $templates = array_filter($templates);
+
+        foreach ($templates as $template) {
+            $categoryTemplate = $this->modx->newObject('FredBlueprintCategoryTemplateAccess');
+            $categoryTemplate->set('category', $this->object->id);
+            $categoryTemplate->set('template', $template);
+            $categoryTemplate->save();
+        }
+
+        return parent::afterSave();
     }
 }
 

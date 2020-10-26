@@ -236,7 +236,7 @@ export class ElementSettings {
     }
 
     realCancel() {
-        this.el.settings = this.originalValues;
+        this.el.setSettings(this.originalValues);
 
         if (this.cacheOutput === false) {
             this.el.render();

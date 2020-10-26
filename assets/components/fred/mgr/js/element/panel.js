@@ -59,8 +59,6 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 Ext.getCmp('fred-element-panel-preview-option-set').disable();
                             }
 
-                            this.getForm().setValues(r.object);
-
                             var category = this.find('name', 'category');
                             if (category[0]) {
                                 category = category[0];
@@ -72,6 +70,16 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 optionSet = optionSet[0];
                                 optionSet.baseParams.theme = r.object.theme;
                             }
+
+                            var templates = this.find('name', 'templates');
+                            if (templates[0]) {
+                                templates = templates[0];
+                                templates.baseParams.theme = r.object.theme;
+                            }
+
+                            r.object['templates[]'] = r.object.templates;
+
+                            this.getForm().setValues(r.object);
 
                             if (r.object.image) {
                                 this.theme_folder = r.object.theme_folder;
@@ -197,7 +205,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                 fieldLabel: _('fred.elements.description'),
                                                 name: 'description',
                                                 anchor: '100%',
-                                                height: 100
+                                                height: 170
                                             }
                                         ]
                                     },
@@ -236,6 +244,25 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                         optionSet.baseParams.theme = record.id;
                                                         optionSet.store.load();
 
+                                                        var templates = this.find('name', 'templates');
+                                                        if (!templates[0]) return;
+
+                                                        templates = templates[0];
+                                                        templates.setValue();
+                                                        templates.enable();
+                                                        templates.baseParams.theme = record.id;
+                                                        templates.lastQuery = null;
+                                                        templates.loaded = false;
+                                                        templates.tries = 0;
+
+                                                        templates.store.on('load', function() {
+                                                            this.loaded = true;
+                                                        }, templates, {single: true});
+
+                                                        if (templates.pageTb) {
+                                                            templates.pageTb.show();
+                                                        }
+
                                                         var previewButton = Ext.getCmp('fred-element-panel-preview-option-set');
                                                         if (previewButton) previewButton.disable();
 
@@ -257,6 +284,12 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                 anchor: '100%',
                                                 disabled: !config.isUpdate,
                                                 allowBlank: false
+                                            },
+                                            {
+                                                xtype: 'fred-combo-themed-template',
+                                                fieldLabel: _('fred.element_categories.templates'),
+                                                anchor: '100%',
+                                                allowBlank: true
                                             },
                                             {
                                                 xtype: 'numberfield',

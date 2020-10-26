@@ -163,7 +163,7 @@ input{
     color: $black;
     border-radius: 2.5px 2.5px 0 0;
     border-bottom: 1px solid $border-light;
-    &:focus { 
+    &:focus {
       background-color: $white;
       border-bottom-color: $border;
       border-bottom-width: 2px;
@@ -188,7 +188,7 @@ input{
     height: auto;
   }
 //  button {
-//  
+//
 //  }
   &_checkbox {
     margin-bottom: 4px !important;
@@ -345,7 +345,7 @@ input{
         background-color: $modxgreen;
       }
     }
-    
+
     &:disabled, &[disabled]{
       ~ span{
         opacity: .5;
@@ -363,7 +363,7 @@ select{
   appearance: none;
   position: relative;
   //background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMCA1Ij48ZGVmcz48c3R5bGU+LmJmNjg2ZjliLTQ3NjUtNGQxNy1hZTA0LTc1ZWFlM2VjMDQ4ZXtmaWxsOiNmZmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5Bc3NldCAxPC90aXRsZT48ZyBpZD0iMzZkY2ViNmYtYzdkYy00ZTFmLTk2MzAtNTg1ODg3OGQ2ZDE3IiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSI0ZTE5ZjQ5NC00NDI3LTRjZmQtYTc1My05MGQxODIwMzVjNDAiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+PHBvbHlnb24gY2xhc3M9ImJmNjg2ZjliLTQ3NjUtNGQxNy1hZTA0LTc1ZWFlM2VjMDQ4ZSIgcG9pbnRzPSIwIDAgNSA1IDEwIDAgMCAwIi8+PC9nPjwvZz48L3N2Zz4=);
-  background-image: inline-svg('triangle-down',$black);
+  background-image: svg-load('triangle-down.svg', fill=$black);
   background-position: calc(100% - 11.5px) center;
   background-repeat: no-repeat;
   -webkit-background-size: 10px;

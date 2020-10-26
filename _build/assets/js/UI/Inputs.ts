@@ -1,4 +1,4 @@
-import fredConfig from './../Config';
+import fredConfig from '@fred/Config';
 import emitter from "../EE";
 import flatpickr from "flatpickr";
 import Choices from 'choices.js';
@@ -11,7 +11,29 @@ import Tagger from "./Tagger";
 import { getResources } from '../Actions/pages';
 import { getGroups } from '../Actions/tagger';
 
-export const text = (setting, defaultValue = '', onChange, onInit) => {
+type Setting = {
+    label?: string;
+    name: string;
+    type: string;
+    value?: any;
+};
+
+type EnhancedLabel<R> = HTMLLabelElement & {
+    inputEl: R;
+};
+
+type OnInit<S = Setting, L = HTMLLabelElement, I = HTMLInputElement> = (setting: S, label: L, input: I) => void;
+type OnChange<S = Setting, I = HTMLInputElement> = (name: string, value: any, input: I, setting: S) => void;
+
+type TextSetting = Setting & {
+    labelAsPlaceholder?: boolean;
+};
+export const text = (
+    setting: TextSetting,
+    defaultValue: string = '',
+    onChange: OnChange<TextSetting>,
+    onInit: OnInit<TextSetting>
+) => {
     let labelEl;
     if (setting.labelAsPlaceholder === true) {
         labelEl = label();
@@ -60,8 +82,16 @@ export const text = (setting, defaultValue = '', onChange, onInit) => {
     return labelEl;
 };
 
-export const select = (setting, defaultValue = '', onChange, onInit) => {
-    const labelEl = label(setting.label || setting.name);
+type SelectSetting = Setting & {
+    options: {[key: string]: string};
+};
+export const select = (
+    setting: SelectSetting,
+    defaultValue: string = '',
+    onChange: OnChange<SelectSetting, HTMLSelectElement>,
+    onInit: OnInit<SelectSetting, EnhancedLabel<HTMLSelectElement>, HTMLSelectElement>
+) => {
+    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLSelectElement>;
 
     const selectEl = selectElement();
     labelEl.inputEl = selectEl;
@@ -103,8 +133,13 @@ export const select = (setting, defaultValue = '', onChange, onInit) => {
     return labelEl;
 };
 
-export const toggle = (setting, defaultValue = false, onChange, onInit) => {
-    const labelEl = label((setting.label || setting.name), 'fred--toggle');
+export const toggle = (
+    setting: Setting,
+    defaultValue: boolean = false,
+    onChange: OnChange,
+    onInit: (setting: Setting, label: EnhancedLabel<HTMLInputElement>, input: HTMLInputElement, span: HTMLSpanElement) => void
+) => {
+    const labelEl = label((setting.label || setting.name), 'fred--toggle') as EnhancedLabel<HTMLInputElement>;
 
     const inputEl = input(defaultValue, 'checkbox');
 
@@ -112,7 +147,7 @@ export const toggle = (setting, defaultValue = false, onChange, onInit) => {
 
     if (typeof onChange === 'function') {
         inputEl.addEventListener('change', e => {
-            onChange(setting.name, e.target.checked, inputEl, setting);
+            onChange(setting.name, (e.target as HTMLInputElement).checked, inputEl, setting);
         });
     }
 
@@ -128,16 +163,24 @@ export const toggle = (setting, defaultValue = false, onChange, onInit) => {
     return labelEl;
 };
 
-export const area = (setting, defaultValue = '', onChange, onInit) => {
-    const labelEl = label(setting.label || setting.name);
+type AreaSetting = Setting & {
+    rows: string|number;
+};
+export const area = (
+    setting: AreaSetting,
+    defaultValue: string = '',
+    onChange: OnChange<AreaSetting, HTMLTextAreaElement>,
+    onInit: OnInit<AreaSetting, EnhancedLabel<HTMLTextAreaElement>, HTMLTextAreaElement>
+) => {
+    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLTextAreaElement>;
 
     const textAreaEl = textArea(defaultValue);
     labelEl.inputEl = textAreaEl;
 
-    if (setting.rows && (parseInt(setting.rows) > 0)) {
-        textAreaEl.setAttribute('rows', parseInt(setting.rows));
+    if (setting.rows && (parseInt('' + setting.rows) > 0)) {
+        textAreaEl.setAttribute('rows', '' + parseInt('' + setting.rows));
     } else {
-        textAreaEl.setAttribute('rows', 4);
+        textAreaEl.setAttribute('rows', '4');
     }
 
     if (typeof onChange === 'function') {
@@ -155,10 +198,15 @@ export const area = (setting, defaultValue = '', onChange, onInit) => {
     return labelEl;
 };
 
-export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
-    defaultValue = parseInt(defaultValue) || 0;
+export const dateTime = (
+    setting: Setting,
+    defaultValue: string|number = 0,
+    onChange: OnChange<Setting, any>,
+    onInit: OnInit<Setting, EnhancedLabel<HTMLInputElement> & {picker: any}, any>
+) => {
+    defaultValue = parseInt('' + defaultValue) || 0;
 
-    const labelEl = label(setting.label || setting.name);
+    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLInputElement> & {picker: any};
     const group = div(['fred--input-group', 'fred--datetime']);
     const inputEl = input();
     labelEl.inputEl = inputEl;
@@ -197,7 +245,21 @@ export const dateTime = (setting, defaultValue = 0, onChange, onInit) => {
     return labelEl;
 };
 
-export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
+type ColorSwatchSetting = Setting & {
+    options: (string|{
+        color: string;
+        value: string;
+        label?: string;
+        width?: string|number;
+        colorAsClass?: boolean;
+    })[];
+};
+export const colorSwatch = (
+    setting: ColorSwatchSetting,
+    defaultValue: string = '',
+    onChange: OnChange<ColorSwatchSetting, HTMLDivElement>,
+    onInit: (setting: ColorSwatchSetting, label: HTMLLabelElement, wrapper: HTMLDivElement, preview: HTMLDivElement, colors: HTMLDivElement) => void
+) => {
     const labelEl = label(setting.label || setting.name);
     const wrapper = div('fred--color_swatch');
     const preview = div('fred--color_swatch-preview');
@@ -235,8 +297,8 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
                     option.style.background = value.color;
                 }
 
-                if (value.width && parseFloat(value.width) > 1) {
-                    option.style.width = (parseFloat(value.width) * 30) + 'px';
+                if (value.width && parseFloat('' + value.width) > 1) {
+                    option.style.width = (parseFloat('' + value.width) * 30) + 'px';
                 }
 
                 if (value.label && value.label.trim() !== '') {
@@ -299,7 +361,16 @@ export const colorSwatch = (setting, defaultValue = '', onChange, onInit) => {
     return labelEl;
 };
 
-export const colorPicker = (setting, defaultValue = '', onChange, onInit) => {
+type ColorPickerSetting = Setting & {
+    options: string[];
+    showAlpha?: boolean;
+};
+export const colorPicker = (
+    setting: ColorPickerSetting,
+    defaultValue = '',
+    onChange: OnChange<ColorPickerSetting>,
+    onInit: (setting:ColorPickerSetting, label: HTMLLabelElement, wrapper: HTMLDivElement, preview: HTMLDivElement, picker: HTMLDivElement) => void
+) => {
     const labelEl = label(setting.label || setting.name);
     const wrapper = div('fred--color_picker');
     const preview = div('fred--color_picker-preview');
@@ -356,7 +427,18 @@ export const colorPicker = (setting, defaultValue = '', onChange, onInit) => {
     return labelEl;
 };
 
-export const slider = (setting, defaultValue = 0, onChange, onInit) => {
+type SliderSetting = Setting & {
+    min?: number;
+    max?: number;
+    step?: number;
+    tooltipDecimals?: number;
+};
+export const slider = (
+    setting: SliderSetting,
+    defaultValue: number = 0,
+    onChange: OnChange<SliderSetting, HTMLDivElement>,
+    onInit: OnInit<SliderSetting, HTMLLabelElement, HTMLDivElement & {noUiSlider: any}>
+) => {
     const labelEl = label(setting.label || setting.name);
 
     if (!setting.min && !setting.max) {
@@ -364,7 +446,7 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
         return labelEl;
     }
 
-    const sliderEl = div();
+    const sliderEl = div() as HTMLDivElement & {noUiSlider: any};
 
     let init = false;
     let step = 1;
@@ -417,15 +499,16 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
         }
     });
 
-    sliderEl.querySelector('.noUi-handle').addEventListener('keydown', function( e ) {
-
+    sliderEl.querySelector('.noUi-handle').addEventListener('keydown', (e: KeyboardEvent) => {
         const value = Number(sliderEl.noUiSlider.get());
 
-        if (e.which === 37) {
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
             sliderEl.noUiSlider.set(value - step);
         }
 
-        if (e.which === 39) {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
             sliderEl.noUiSlider.set(value + step);
         }
     });
@@ -449,7 +532,18 @@ export const slider = (setting, defaultValue = 0, onChange, onInit) => {
     return labelEl;
 };
 
-export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit) => {
+type PageSetting = Setting & {
+    clearButton?: boolean;
+    parents?: string|(string|number)[];
+    resources?: string|(string|number)[];
+    depth?: number;
+};
+export const page = (
+    setting: PageSetting,
+    defaultValue: {id: number, url: string} = {id: 0, url: ''},
+    onChange: OnChange<PageSetting, any>,
+    onInit: OnInit<PageSetting, HTMLLabelElement, HTMLSelectElement>
+) => {
     const wrapper = div();
     const labelEl = label((setting.label || setting.name), 'fred--label-choices');
     const selectEl = selectElement();
@@ -469,11 +563,11 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
         shouldSort:false,
         removeItemButton: setting.clearButton || false,
         searchResultLimit: 0
-    });
+    }) as any;
 
     fixChoices(pageChoices);
 
-    const queryOptions = {};
+    const queryOptions: Pick<PageSetting, 'parents'|'resources'|'depth'> = {};
 
     if (setting.parents) {
         queryOptions.parents = setting.parents;
@@ -569,8 +663,17 @@ export const page = (setting, defaultValue = {id: 0, url: ''}, onChange, onInit)
     return wrapper;
 };
 
-export const image = (setting, defaultValue = '', onChange, onInit) => {
-    const labelEl = label(setting.label || setting.name);
+type ImageSetting = Setting & {
+    showPreview?: boolean;
+    mediaSource?: string;
+};
+export const image = (
+    setting: ImageSetting,
+    defaultValue: string = '',
+    onChange: OnChange<ImageSetting>,
+    onInit: OnInit<ImageSetting>
+) => {
+    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLInputElement> & {setPreview: (src: string) => void};
 
     setting.showPreview = (setting.showPreview === undefined) ? true : setting.showPreview;
 
@@ -584,7 +687,7 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
     const preview = img('');
     let previewAdded = false;
 
-    const finderOptions = {};
+    const finderOptions: Pick<ImageSetting, 'mediaSource'> = {};
 
     if (setting.mediaSource && (setting.mediaSource !== '')) {
         finderOptions.mediaSource = setting.mediaSource;
@@ -670,8 +773,16 @@ export const image = (setting, defaultValue = '', onChange, onInit) => {
     return labelEl;
 };
 
-export const file = (setting, defaultValue = '', onChange, onInit) => {
-    const labelEl = label(setting.label || setting.name);
+type FileSetting = Setting & {
+    mediaSource?: string;
+};
+export const file = (
+    setting: FileSetting,
+    defaultValue: string = '',
+    onChange: OnChange<FileSetting>,
+    onInit: OnInit<FileSetting>
+) => {
+    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLInputElement>;
 
     const inputWrapper = div(['fred--input-group', 'fred--browse']);
 
@@ -680,7 +791,7 @@ export const file = (setting, defaultValue = '', onChange, onInit) => {
 
     const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 
-    const finderOptions = {};
+    const finderOptions: Pick<FileSetting, 'mediaSource'> = {};
 
     if (setting.mediaSource && (setting.mediaSource !== '')) {
         finderOptions.mediaSource = setting.mediaSource;
@@ -726,8 +837,17 @@ export const file = (setting, defaultValue = '', onChange, onInit) => {
     return labelEl;
 };
 
-export const folder = (setting, defaultValue = '', onChange, onInit) => {
-    const labelEl = label(setting.label || setting.name);
+type FolderSetting = Setting & {
+    showOnlyFolders?: boolean;
+    mediaSource?: string;
+};
+export const folder = (
+    setting: FolderSetting,
+    defaultValue: string = '',
+    onChange: OnChange<FolderSetting>,
+    onInit: OnInit<FolderSetting>
+) => {
+    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLInputElement>;
 
     const inputWrapper = div(['fred--input-group', 'fred--browse']);
 
@@ -736,7 +856,7 @@ export const folder = (setting, defaultValue = '', onChange, onInit) => {
 
     const openFinderButton = a('', 'fred.fe.browse', '', 'fred--browse-small');
 
-    const finderOptions = {
+    const finderOptions: {type: string; showOnlyFolders: boolean; mediaSource?: string} = {
         type: 'folder',
         showOnlyFolders: setting.showOnlyFolders || false
     };
@@ -785,8 +905,16 @@ export const folder = (setting, defaultValue = '', onChange, onInit) => {
     return labelEl;
 };
 
-export const choices = (setting, defaultValue = '', onChange, onInit) => {
-    const wrapper = div();
+type ChoicesSetting = Setting & {
+    choices?: {[key: string]: any}
+};
+export const choices = (
+    setting: ChoicesSetting,
+    defaultValue: string = '',
+    onChange: (name: string, value: any, input: HTMLSelectElement, setting: ChoicesSetting, choices: Choices) => void,
+    onInit: (setting:ChoicesSetting, label: HTMLLabelElement, input: HTMLSelectElement, choices: Choices, defaultValue: string) => void
+) => {
+    const wrapper = div() as HTMLDivElement & {choices: any, onError: (msg: string) => void};
     const labelEl = label(setting.label || setting.name);
     const selectEl = selectElement();
 
@@ -803,7 +931,7 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
     wrapper.choices = choicesInstance;
 
     if (typeof onChange === 'function') {
-        choicesInstance.passedElement.addEventListener('choice', event => {
+        choicesInstance.passedElement.addEventListener('choice', (event: any) => {
             if (errorEl !== null) {
                 errorEl.remove();
                 errorEl = null;
@@ -829,7 +957,17 @@ export const choices = (setting, defaultValue = '', onChange, onInit) => {
     return wrapper;
 };
 
-export const tagger = (setting, defaultValue = '', onChange, onInit) => {
+type TaggerSetting = Setting & {
+    group: string|number;
+    limit?: number;
+    autoTag?: boolean;
+    hideInput?: boolean;
+};
+export const tagger = (
+    setting: TaggerSetting,
+    defaultValue: string = '',
+    onChange: (name: string, value: string, field: HTMLDivElement, setting: TaggerSetting, tagger: Tagger) => void,
+) => {
     setting.limit = setting.limit || 0;
 
     const tempField = div();
@@ -851,9 +989,10 @@ export const tagger = (setting, defaultValue = '', onChange, onInit) => {
                 onChange(setting.name, newTags.join(','), field, setting, taggerField);
             });
 
-            const field = taggerField.render();
-
-            tempField.replaceWith(field);
+            const field = taggerField.render() as HTMLDivElement;
+            if (field) {
+                tempField.replaceWith(field);
+            }
         })
         .catch(error => {
             emitter.emit('fred-loading', error.message);

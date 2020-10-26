@@ -1,6 +1,6 @@
 import SidebarPlugin from '../../SidebarPlugin';
 import drake from '../../../Drake';
-import { div, dl, dt, dd, figure, h3, img, figCaption } from './../../../UI/Elements'
+import { div, dl, dt, dd, figure, h3, img, figCaption } from '../../../UI/Elements'
 import emitter from "../../../EE";
 import fredConfig from '../../../Config';
 import hoverintent from 'hoverintent';
@@ -19,43 +19,43 @@ export default class Elements extends SidebarPlugin {
                 data.elements.forEach(category => {
                     const categoryTab = dt(category.category, [], (e, el) => {
                         const activeTabs = el.parentElement.querySelectorAll('dt.active');
-                        
+
                         const isActive = el.classList.contains('active');
-                        
+
                         for (let tab of activeTabs) {
                             if(tab === el) continue;
                             tab.classList.remove('active');
                         }
-                        
+
                         if (!isActive) {
                             el.classList.add('active');
                             e.stopPropagation();
                             emitter.emit('fred-sidebar-dt-active', categoryTab, categoryContent);
                         }
                     });
-                    
+
                     const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
-                    
+
                     if(!isSafari){
                         hoverintent(categoryTab,
                             function(e){
                                 let el = e.target;
                                 const activeTabs = el.parentElement.querySelectorAll('dt.active');
-    
+
                                 const isActive = el.classList.contains('active');
-    
+
                                 for (let tab of activeTabs) {
                                     if(tab === el) continue;
                                     tab.classList.remove('active');
                                 }
-    
+
                                 if (!isActive) {
                                     el.classList.add('active');
                                     emitter.emit('fred-sidebar-dt-active', categoryTab, categoryContent);
                                 }
                             },
                             function(e){
-    
+
                             }
                         );
                     }
@@ -64,7 +64,7 @@ export default class Elements extends SidebarPlugin {
                     const categoryContent = dd();
                     const categoryEl = div(['fred--thumbs', 'source', 'elements-source']);
                     const categoryHeader = h3(category.category);
-                    
+
                     category.elements.forEach(element => {
                         categoryEl.appendChild(Elements.elementWrapper(element.id, element.title, element.description, element.image, element.content, element.options || {}));
                     });
@@ -90,12 +90,12 @@ export default class Elements extends SidebarPlugin {
 
         if (fredConfig.lngExists(title)) {
             title = fredConfig.lng(title);
-        } 
+        }
 
         if (fredConfig.lngExists(description)) {
             description = fredConfig.lng(description);
-        } 
-        
+        }
+
         const caption = figCaption(`<strong>${title}</strong><em>${description}</em>`);
 
         const chunk = div(['chunk']);
@@ -108,7 +108,7 @@ export default class Elements extends SidebarPlugin {
         element.appendChild(imageWrapper);
         element.appendChild(caption);
         element.appendChild(chunk);
-        
+
         return element;
     }
 

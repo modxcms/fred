@@ -216,6 +216,17 @@ $xpdo_meta_map['FredBlueprint']= array (
       ),
     ),
   ),
+  'composites' => 
+  array (
+    'BlueprintTemplatesAccess' => 
+    array (
+      'class' => 'FredBlueprintTemplateAccess',
+      'local' => 'id',
+      'foreign' => 'blueprint',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
+  ),
   'aggregates' => 
   array (
     'User' => 

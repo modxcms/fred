@@ -33,6 +33,10 @@ if ($object->xpdo) {
             $manager->createObjectContainer('FredTheme');
             $manager->createObjectContainer('FredThemedTemplate');
             $manager->createObjectContainer('FredCache');
+            $manager->createObjectContainer('FredElementCategoryTemplateAccess');
+            $manager->createObjectContainer('FredElementTemplateAccess');
+            $manager->createObjectContainer('FredBlueprintCategoryTemplateAccess');
+            $manager->createObjectContainer('FredBlueprintTemplateAccess');
 
             break;
     }

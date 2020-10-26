@@ -30,7 +30,7 @@
       color: $black;
       display: block;
       box-sizing: border-box;
-      font-size: 12px;  
+      font-size: 12px;
     }
     input[type="text"], input[type="date"], textarea, select, .choices { // mirrored from _forms.scss
       background-color: $offwhite;
@@ -40,7 +40,7 @@
       padding: 0 4px;
       margin: auto -4px;
       height: 36px;
-        &:focus { 
+        &:focus {
         background-color: $white;
         border-bottom-color: $border;
         border-bottom-width: 2px;
@@ -115,6 +115,7 @@
     text-align: right;
     button{
       background: $green;
+      margin-left: 1rem;
     }
   }
 
@@ -139,7 +140,7 @@
       }
     }
     .tabulator-col-title {
-      font-weight: bold; 
+      font-weight: bold;
     }
     .tabulator-footer {
       border-top-width: 1px;
@@ -166,8 +167,8 @@
     background-color: $black;
     z-index: 100;
     display: flex;
-    flex-flow: row wrap; 
-    justify-content: center; 
+    flex-flow: row wrap;
+    justify-content: center;
     align-items: center;
   }
   iframe {
@@ -216,16 +217,16 @@
     }
 
     .fred--smartphone-portrait span, .fred--smartphone-landscape span {
-      mask: inline-svg('mobile-alt') no-repeat center center;
+      mask: svg-load('mobile-alt.svg') no-repeat center center;
       mask-size: 33%;
-      -webkit-mask: inline-svg('mobile-alt') no-repeat center center;
+      -webkit-mask: svg-load('mobile-alt.svg') no-repeat center center;
       -webkit-mask-size: 33%;
       background-color: $offwhite;
     }
     .fred--tablet-portrait span, .fred--tablet-landscape span {
-      mask: inline-svg('tabletalt') no-repeat center center;
+      mask: svg-load('tabletalt.svg') no-repeat center center;
       mask-size: 65%;
-      -webkit-mask: inline-svg('tabletalt') no-repeat center center;
+      -webkit-mask: svg-load('tabletalt.svg') no-repeat center center;
       -webkit-mask-size: 65%;
       background-color: $offwhite;
     }
@@ -258,7 +259,7 @@
   left: 50%;
   transform: translateX(-50%);
   &:before{
-    content: inline-svg('exclamation-triangle',$white);
+    content: svg-load('exclamation-triangle.svg', fill=$white);
     height: 14px;
     width: 14px;
     display: inline-block;
@@ -272,6 +273,37 @@
           display: none;
         }
       }
+    }
+  }
+}
+
+.fred--element_screenshot_upload_wrapper {
+  input {
+    display: none;
+  }
+
+  div {
+    cursor: pointer;
+
+    &.over {
+      padding: 5px;
+      border: thin dashed black;
+    }
+
+    i {
+      background-image: svg-load('upload-solid.svg', fill=$black);
+      width: 100%;
+      height: 50px;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: block;
+    }
+
+    span {
+      width: 100%;
+      text-align: center;
+      display: block;
+      margin-top: 10px;
     }
   }
 }

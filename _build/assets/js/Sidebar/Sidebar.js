@@ -6,7 +6,7 @@ import MoreComponent from './../Components/Sidebar/More';
 import BlueprintsComponent from './../Components/Sidebar/Blueprints/Blueprints';
 import promiseCancel from 'promise-cancel';
 import View from './SidebarView';
-import fredConfig from './../Config';
+import fredConfig from '@fred/Config';
 
 export default class Sidebar {
     constructor(fredWrapper) {
@@ -24,27 +24,27 @@ export default class Sidebar {
 
     render() {
         const components = [PagesComponent];
-        
+
         if (fredConfig.permission.fred_blueprints) {
             components.push(BlueprintsComponent);
         }
-        
+
         if (fredConfig.permission.fred_elements) {
             components.push(ElementsComponent);
         }
-        
+
         if (fredConfig.permission.fred_settings) {
             components.push(PageSettingsComponent);
         }
-        
+
         for (let pluginName in fredConfig.sidebarPlugins) {
             if (!fredConfig.sidebarPlugins.hasOwnProperty(pluginName)) continue;
-            
+
             components.push(fredConfig.sidebarPlugins[pluginName]);
         }
-        
+
         components.push(MoreComponent);
-        
+
         this.wrapper = View.render(
             components,
             component => {
@@ -61,10 +61,10 @@ export default class Sidebar {
             }
 
         );
-        
+
         emitter.emit('fred-wrapper-insert', this.wrapper);
     }
-    
+
     registerListeners() {
         emitter.on('fred-sidebar-expand', (cmp, title, data) => {
             cmp.loading();
@@ -128,7 +128,7 @@ export default class Sidebar {
                     this.wrapper.removeEventListener('click', listener);
                 }
             };
-            
+
             this.wrapper.addEventListener('click', listener);
         });
     }
@@ -145,18 +145,18 @@ export default class Sidebar {
 
     showSidebar(silent = false) {
         if (silent === true) {
-           if (this.visible === false) return; 
-        }   
-            
+           if (this.visible === false) return;
+        }
+
         this.visible = true;
-        
+
         View.show();
-        
+
         setTimeout(() => {
             window.addEventListener('click', this.globalHideSidebar);
         }, 50);
     }
-    
+
     globalHideSidebar(e) {
         if ((e.target.parentElement !== null) && !this.fredWrapper.contains(e.target)) {
             this.components.forEach(component => {

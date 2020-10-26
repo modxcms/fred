@@ -30,7 +30,7 @@ fred.grid.BlueprintCategories = function (config) {
         url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints', 'theme', 'theme_name'],
+        fields: ['id', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints', 'theme', 'theme_name', 'templates'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.blueprint_categories.none'),
@@ -190,8 +190,16 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
     },
 
     createCategory: function (btn, e) {
+        var record = {};
+
+        var s = this.getStore();
+        if (s.baseParams.theme) {
+            record.theme = s.baseParams.theme;
+        }
+
         var createCategory = MODx.load({
             xtype: 'fred-window-blueprint-category',
+            record: record,
             canPublic: this.config.permission.fred_blueprint_categories_create_public,
             listeners: {
                 success: {
@@ -210,6 +218,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
 
     updateCategory: function (btn, e) {
         this.menu.record.theme_id = this.menu.record.theme;
+        this.menu.record['templates[]'] = this.menu.record.templates;
 
         var updateCategory = MODx.load({
             xtype: 'fred-window-blueprint-category',
@@ -228,7 +237,6 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
             }
         });
 
-        updateCategory.fp.getForm().reset();
         updateCategory.fp.getForm().setValues(this.menu.record);
         updateCategory.show(e.target);
 

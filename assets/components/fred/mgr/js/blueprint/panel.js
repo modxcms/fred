@@ -50,6 +50,14 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                 }
                             }
 
+                            var templates = this.find('name', 'templates');
+                            if (templates[0]) {
+                                templates = templates[0];
+                                templates.baseParams.theme = r.object.theme;
+                            }
+
+                            r.object['templates[]'] = r.object.templates;
+
                             this.getForm().setValues(r.object);
 
                             if (r.object.image) {
@@ -152,7 +160,7 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                                 fieldLabel: _('fred.blueprints.description'),
                                                 name: 'description',
                                                 anchor: '100%',
-                                                height: 100
+                                                height: 170
                                             },
                                             {
                                                 id: 'fred-blueprint-image-field',
@@ -216,6 +224,25 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                                         category.baseParams.theme = record.id;
                                                         category.store.load();
 
+                                                        var templates = this.find('name', 'templates');
+                                                        if (!templates[0]) return;
+
+                                                        templates = templates[0];
+                                                        templates.setValue();
+                                                        templates.enable();
+                                                        templates.baseParams.theme = record.id;
+                                                        templates.lastQuery = null;
+                                                        templates.loaded = false;
+                                                        templates.tries = 0;
+
+                                                        templates.store.on('load', function() {
+                                                            this.loaded = true;
+                                                        }, templates, {single: true});
+
+                                                        if (templates.pageTb) {
+                                                            templates.pageTb.show();
+                                                        }
+
                                                         var image = Ext.getCmp('fred-blueprint-image-field');
                                                         if (image) {
                                                             image.updatePreview(this.theme_folder);
@@ -233,6 +260,12 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                                 hiddenName: 'category',
                                                 anchor: '100%',
                                                 allowBlank: false
+                                            },
+                                            {
+                                                xtype: 'fred-combo-themed-template',
+                                                fieldLabel: _('fred.blueprints.templates'),
+                                                anchor: '100%',
+                                                allowBlank: true
                                             },
                                             {
                                                 xtype: 'fred-combo-boolean',

@@ -102,7 +102,7 @@
   }
   &-invalid{
     &:before{
-      content: inline-svg('exclamation-triangle',$lightcoral);
+      content: svg-load('exclamation-triangle.svg', fill=$lightcoral);
       position: absolute;
       top: 0;
       right: 0;
@@ -142,7 +142,7 @@
       height: 30px;
       overflow: hidden;
       transition: $timing;
-      background-image: inline-svg('grip-horizontal', $black);
+      background-image: svg-load('grip-horizontal.svg', fill=$black);
       background-repeat: no-repeat;
       background-size: 20px;
       background-position: 6px;

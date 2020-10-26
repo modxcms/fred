@@ -1,6 +1,6 @@
 import emitter from './EE';
 import { div, button } from './UI/Elements';
-import fredConfig from './Config';
+import fredConfig from '@fred/Config';
 
 export default class Launcher {
     constructor(position = 'bottom_left') {
@@ -14,11 +14,13 @@ export default class Launcher {
     render() {
         const wrapper = div(['fred--launcher', `fred--launcher_${this.position}`]);
 
+        if (fredConfig.config.forceSidebar || fredConfig.config.sidebarOpen) {
+            this.hideLauncher(wrapper);
+        }
+
         const fred = button('', 'fred.fe.open_sidebar', ['fred--launcher_btn', 'fred--launcher_btn_fred'], () => {
             emitter.emit('fred-sidebar-toggle');
         });
-
-
 
         wrapper.appendChild(fred);
 
@@ -54,15 +56,17 @@ export default class Launcher {
 
         emitter.on('fred-sidebar-hide', silent => {
             if (silent !== true) {
-                this.hidden = false;
-                wrapper.classList.remove('fred--hidden');
+                if (!fredConfig.config.forceSidebar) {
+                    this.showLauncher(wrapper);
+                }
             }
         });
 
         emitter.on('fred-sidebar-show', silent => {
             if (silent !== true) {
-                this.hidden = true;
-                wrapper.classList.add('fred--hidden');
+                if (!fredConfig.config.forceSidebar) {
+                    this.hideLauncher(wrapper);
+                }
             }
         });
 
@@ -91,5 +95,15 @@ export default class Launcher {
         });
 
         emitter.emit('fred-wrapper-insert', wrapper);
+    }
+
+    hideLauncher(wrapper) {
+        this.hidden = true;
+        wrapper.classList.add('fred--hidden');
+    }
+
+    showLauncher(wrapper) {
+        this.hidden = false;
+        wrapper.classList.remove('fred--hidden');
     }
 }

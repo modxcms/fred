@@ -6,6 +6,8 @@ import emitter from "../EE";
 import fredConfig from "../Config";
 import html2canvas from "html2canvas";
 import { getBlueprints, createBlueprint } from '../Actions/blueprints';
+import MultiSelect from "@fred/UI/MultiSelect";
+import {getTemplates} from "../Actions/themes";
 
 export class PartialBlueprints {
     open(el) {
@@ -19,7 +21,8 @@ export class PartialBlueprints {
             public: !!fredConfig.permission.fred_blueprints_create_public,
             image: '',
             description: '',
-            generatedImage: ''
+            generatedImage: '',
+            templates: ''
         };
 
         getBlueprints().then(value => {
@@ -105,6 +108,30 @@ export class PartialBlueprints {
 
         fields.appendChild(publicToggle);
 
+        const onChangeTemplates = (tags) => {
+            this.state.templates = tags.reduce(
+                (acc, currentValue) => {
+                    if (acc === '') {
+                        acc = "" + currentValue.value;
+                    } else {
+                        acc += `,${currentValue.value}`;
+                    }
+
+                    return acc;
+                },
+                ''
+            );
+        };
+
+        const templates = MultiSelect({
+            name: 'templates',
+            label: fredConfig.lng('fred.fe.blueprints.templates')
+        }, getTemplates, onChangeTemplates);
+
+        templates.querySelector('.fred--tagger_input_wrapper').appendChild(div('fred--tagger_description', 'fred.fe.blueprints.current_note'));
+
+        fields.appendChild(templates);
+
         if (this.state.image === '') {
             const loader = span(['fred--loading']);
             imageEl.appendChild(loader);
@@ -155,7 +182,18 @@ export class PartialBlueprints {
         const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
 
-            createBlueprint(this.state.name, this.state.description, this.state.category, this.state.rank, this.state.public, [this.el.getContent(true)], this.state.generatedImage, this.state.image, false)
+            createBlueprint(
+                this.state.name,
+                this.state.description,
+                this.state.category,
+                this.state.rank,
+                this.state.public,
+                [this.el.getContent(true)],
+                this.state.generatedImage,
+                this.state.image,
+                false,
+                this.state.templates
+            )
                 .then(json => {
                     cache.killNamespace('blueprints');
                     utilitySidebar.close();

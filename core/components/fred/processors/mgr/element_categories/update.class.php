@@ -20,7 +20,7 @@ class FredElementCategoriesUpdateProcessor extends modObjectUpdateProcessor
 
         return parent::initialize();
     }
-    
+
     public function beforeSet()
     {
         $name = $this->getProperty('name');
@@ -61,6 +61,24 @@ class FredElementCategoriesUpdateProcessor extends modObjectUpdateProcessor
         }
 
         return parent::beforeSet();
+    }
+
+    public function afterSave()
+    {
+        $templates = $this->getProperty('templates');
+        $templates = array_map('intval', $templates);
+        $templates = array_filter($templates);
+
+        $this->modx->removeCollection('FredElementCategoryTemplateAccess', ['category' => $this->object->id]);
+
+        foreach ($templates as $template) {
+            $categoryTemplate = $this->modx->newObject('FredElementCategoryTemplateAccess');
+            $categoryTemplate->set('category', $this->object->id);
+            $categoryTemplate->set('template', $template);
+            $categoryTemplate->save();
+        }
+
+        return parent::afterSave();
     }
 }
 

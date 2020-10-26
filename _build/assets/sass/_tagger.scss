@@ -60,7 +60,7 @@
     width:30px;
     height: 30px;
     margin-top: -25px;
-    background-image: inline-svg('plus', $white);
+    background-image: svg-load('plus.svg', fill=$white);
     background-size: 15px;
     background-repeat: no-repeat;
     background-position: center;
@@ -72,7 +72,9 @@
   margin: 0;
   padding: $sidebar-actions-padding;
   display: flex;
-  align-items: center;
+  align-items: start;
+  flex-direction: column;
+  flex-wrap: wrap;
   &.fred--hidden{
     display:none;
   }
@@ -87,7 +89,7 @@
     position: relative;
     height: 36px; width: 36px;
     background-color: $green;
-    background-image: inline-svg('plus', $white);
+    background-image: svg-load('plus.svg', fill=$white);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 16px;
@@ -109,7 +111,7 @@
     position: relative;
     height: 36px; width: 36px;
     background-color: $primary;
-    background-image: inline-svg('caret-down',$white);
+    background-image: svg-load('caret-down.svg', fill=$white);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 16px;
@@ -121,6 +123,13 @@
     &:hover{
       background-color: $black;
     }
+  }
+  .fred--tagger_description{
+    margin: 0;
+    color: $black;
+    display: block;
+    box-sizing: border-box;
+    font-size: 12px;
   }
 }
 
@@ -172,6 +181,16 @@
       margin-left: calc(5% + 8px);
       margin-right: calc(5% + 8px);
       padding: 0;
+      .fred--tagger_group_title{
+        width: 100%;
+        margin: 0;
+      }
+      .fred--tagger_input_wrapper{
+        padding: 12px 0;
+      }
+      .fred--tagger_input_toggle{
+        right: 8px;
+      }
     }
   }
   dd .fred--tagger_field .choices{

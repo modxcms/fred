@@ -1,82 +1,80 @@
-var webpack = require('webpack');
-var path = require('path');
-var assign = require('object-assign');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-require("babel-polyfill");
+module.exports = (env, options) => {
+    const isProd = options.mode === 'production';
 
-module.exports = function getConfig(options) {
-
-    var options = options || {};
-
-    var isProd = (options.BUILD_ENV || process.env.BUILD_ENV) === 'PROD';
-
-    // get library details from JSON config
-    var libraryDesc = require('./package.json').library;
-    var libraryName = libraryDesc.name;
-
-    // determine output file name
-    var outputName = buildLibraryOutputName(libraryDesc, isProd);
-
-    // get base config
-    var config;
-
-    // for the web
-    config = assign(getBaseConfig(isProd), {
-        output: {
-            path: path.join(__dirname, './assets/components/fred/web'),
-            filename: outputName,
-            library: libraryName,
-            libraryTarget: 'umd',
-            umdNamedDefine: true
-        }
-    });
-
-    config.plugins.push(new CleanWebpackPlugin(['dist']));
-
-    return config;
-};
-
-/**
- * Build base config
- * @param  {Boolean} isProd [description]
- * @return {[type]}         [description]
- */
-function getBaseConfig(isProd) {
-
-    // get library details from JSON config
-    var libraryDesc = require('./package.json').library;
-    var libraryEntryPoint = path.join('./_build/assets/js', libraryDesc.entry);
-
-    // generate webpack base config
     return {
-        entry: ['babel-polyfill', path.join(__dirname, libraryEntryPoint)],
+        mode: options.mode,
+        devtool: isProd ? false : 'source-map',
+
+        entry: [
+            '@babel/polyfill',
+            './_build/assets/sass/fred.scss',
+            './_build/assets/js/index.js'
+        ],
+
         output: {
-            // ommitted - will be filled according to target env
+            path: path.resolve(__dirname, './assets/components/fred/web'),
+            library: 'Fred',
+            libraryTarget: 'umd',
+            libraryExport: 'default',
+            filename: 'fred.min.js'
         },
+
         module: {
-            loaders: [
-                {test: /\.js$/, exclude: /(node_modules|bower_components)/, loader: "babel-loader"},
+            rules: [
+                {
+                    test: /\.ts$/,
+                    use: 'ts-loader',
+                    exclude: /node_modules/,
+                },
+                {
+                    test: /\.js$/,
+                    exclude: /(node_modules)/,
+                    use: {
+                        loader: 'babel-loader'
+                    }
+                },
+                {
+                    test: /\.(sa|sc|c)ss$/,
+                    use: [
+                        {
+                            loader: MiniCssExtractPlugin.loader
+                        },
+                        {
+                            loader: "css-loader?url=false",
+                        },
+                        {
+                            loader: "postcss-loader"
+                        },
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                implementation: require("sass")
+                            }
+                        }
+                    ]
+                }
             ]
         },
+
         resolve: {
-            root: path.resolve('./src'),
-            extensions: ['', '.js']
+            alias: {
+                '@fred/Config': path.resolve(__dirname, '_build/assets/js/Config'),
+                '@fred/UI': path.resolve(__dirname, '_build/assets/js/UI')
+            },
+            extensions: [ '.ts', '.js' ],
         },
-        devtool: isProd ? null : '#eval-source-map',
-        debug: !isProd,
-        plugins: isProd ? [
-            new webpack.DefinePlugin({'process.env': {'NODE_ENV': '"production"'}}),
-            new UglifyJsPlugin({minimize: true})
-            // Prod plugins here
-        ] : [
-            new webpack.DefinePlugin({'process.env': {'NODE_ENV': '"development"'}})
-            // Dev plugins here
+
+        plugins: [
+            isProd ? new CleanWebpackPlugin({
+                cleanOnceBeforeBuildPatterns: ['fred.*']
+            }) : () => {},
+            new MiniCssExtractPlugin({
+                filename: "fred.css"
+            })
         ]
     };
-}
-
-function buildLibraryOutputName(libraryDesc, isProd) {
-    return libraryDesc["dist-web"] || [libraryDesc.name, 'web', (isProd ? 'min.js' : 'js')].join('.');
-}
+};

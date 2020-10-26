@@ -136,6 +136,14 @@ $xpdo_meta_map['FredElementCategory']= array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
+    'ElementCategoryTemplatesAccess' => 
+    array (
+      'class' => 'FredElementCategoryTemplateAccess',
+      'local' => 'id',
+      'foreign' => 'category',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
   ),
   'aggregates' => 
   array (
