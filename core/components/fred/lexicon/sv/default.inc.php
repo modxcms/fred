@@ -309,3 +309,4 @@ $_lang['fred.err.themes_extract_tpl_parse_error'] = 'Extract Template is not a v
 $_lang['fred.err.themes_extract_tpl_package_name'] = 'Extract Template: Package has to have name';
 $_lang['fred.err.themes_extract_tpl_package_class'] = 'Extract Template: Package has to have class';
 $_lang['fred.err.themes_extract_tpl_package_load'] = 'Could not load a service for package: [[+name]].';
+$_lang['fred.err.element_rte_configs_invalid_name'] = 'Namnet är ogiltigt. Det måste börja med en bokstav och får bara bestå av bokstäver och siffror.';

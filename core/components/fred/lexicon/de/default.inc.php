@@ -309,3 +309,4 @@ $_lang['fred.err.themes_extract_tpl_parse_error'] = 'Template extrahieren ist ke
 $_lang['fred.err.themes_extract_tpl_package_name'] = 'Template extrahieren: Package muss einen Namen haben';
 $_lang['fred.err.themes_extract_tpl_package_class'] = 'Template extrahieren: Package muss eine Class haben';
 $_lang['fred.err.themes_extract_tpl_package_load'] = 'Service für das Package [[+name]] konnte nicht geladen werden.';
+$_lang['fred.err.element_rte_configs_invalid_name'] = 'Name is not valid. It has to start with a letter and contain only letters and numbers.';
