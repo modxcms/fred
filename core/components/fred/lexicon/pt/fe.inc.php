@@ -94,6 +94,7 @@ $_lang['fred.fe.blueprints.create_blueprint'] = 'Criar Esquema';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'A Criar Esquema';
 $_lang['fred.fe.blueprints.category_public'] = 'Público';
 $_lang['fred.fe.blueprints.category_rank'] = 'Posição';
+$_lang['fred.fe.blueprints.current_note'] = '* current template for this page';
 
 $_lang['fred.fe.blueprints.blueprint_name'] = 'Nome';
 $_lang['fred.fe.blueprints.blueprint_description'] = 'Descrição';
@@ -102,6 +103,7 @@ $_lang['fred.fe.blueprints.blueprint_rank'] = 'Posição';
 $_lang['fred.fe.blueprints.blueprint_public'] = 'Público';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Construir Conteúdo a partir de Esquema';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Imagem';
+$_lang['fred.fe.blueprints.templates'] = 'Templates';
 
 $_lang['fred.fe.content.duplicate'] = 'Duplicar';
 $_lang['fred.fe.content.delete'] = 'Eliminar';
@@ -109,11 +111,12 @@ $_lang['fred.fe.content.settings'] = 'Abrir Configurações';
 $_lang['fred.fe.content.move_up'] = 'Mover para Cima';
 $_lang['fred.fe.content.move_down'] = 'Mover para Baixo';
 $_lang['fred.fe.content.partial_blueprint'] = 'Criar Esquema Parcial';
-$_lang['fred.fe.content.element_screenshot'] = 'Captura de Ecrã do Elemento';
+$_lang['fred.fe.content.element_screenshot'] = 'Element Thumbnail';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Substituir Miniatura do Elemento';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'A Substituir a Miniatura do Elemento';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Atualizar Cache';
 $_lang['fred.fe.content.element_cache_warning'] = 'Elemento em Cache. As alterações não serão visíveis enquanto não forem aplicadas.';
+$_lang['fred.fe.content.element_screenshot_text'] = 'Drag and drop or paste an image here.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Existem alerações não guardadas, tem a certeza?';
 
@@ -170,3 +173,4 @@ $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Não pode selecionar f
 $_lang['fred.fe.err.pagetitle_ns'] = 'O título da página é obrigatório.';
 $_lang['fred.fe.err.alias_ns'] = 'O pseudónimo é obrigatório.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Contexto não encontrado.';
+$_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';
