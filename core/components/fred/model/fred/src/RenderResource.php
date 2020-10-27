@@ -277,8 +277,12 @@ final class RenderResource {
 
         $links = $html->filter('a');
         $links->each(function(HtmlPageCrawler $node, $i) {
-            $node->setAttribute('data-fred-fake-href', $node->getAttribute('href'));
-            $node->removeAttribute('href');
+            $href = $node->getAttribute('href');
+
+            if (!empty($href)) {
+                $node->setAttribute('data-fred-fake-href', $href);
+                $node->removeAttribute('href');
+            }
         });
 
         $html = HtmlPageCrawler::create($html->first()->html());
@@ -353,13 +357,21 @@ final class RenderResource {
 
                 $node->removeAttr('data-fred-link-page');
                 $node->removeAttr('data-fred-link-anchor');
-            }
-
-            if ($linkType === 'url') {
+            } else {
                 $href = $node->attr('href');
                 $node->removeAttr('href');
 
                 $node->attr('data-fred-fake-href', $href);
+            }
+        });
+
+        $links = $html->filter('a');
+        $links->each(function(HtmlPageCrawler $node, $i) {
+            $href = $node->getAttribute('href');
+
+            if (!empty($href)) {
+                $node->setAttribute('data-fred-fake-href', $href);
+                $node->removeAttribute('href');
             }
         });
 
