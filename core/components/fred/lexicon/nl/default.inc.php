@@ -61,6 +61,7 @@ $_lang['fred.blueprints.quick_update'] = 'Blauwdruk bewerken';
 $_lang['fred.blueprints.update'] = 'Blauwdruk bewerken';
 $_lang['fred.blueprints.create'] = 'Nieuwe Blauwdruk';
 $_lang['fred.blueprints.theme'] = 'Thema';
+$_lang['fred.blueprints.templates'] = 'Templates';
 
 $_lang['fred.blueprint_cateogries.all'] = 'Alle categorieën';
 $_lang['fred.blueprint_categories.none'] = 'Geen categorieën gevonden.';
@@ -77,6 +78,7 @@ $_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Weet je zeker dat
 $_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Weet je zeker dat je categorie "[[+name]]" wilt verwijderen?';
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Blauwdrukken';
 $_lang['fred.blueprint_categories.theme'] = 'Thema';
+$_lang['fred.blueprint_categories.templates'] = 'Templates';
 
 $_lang['fred.elements.none'] = 'Geen elementen gevonden';
 $_lang['fred.elements.image'] = 'Afbeelding';
@@ -98,6 +100,7 @@ $_lang['fred.elements.duplicate'] = 'Dupliceer element';
 $_lang['fred.elements.new_name'] = 'Nieuwe naam';
 $_lang['fred.elements.has_override'] = 'Is overschreven';
 $_lang['fred.elements.theme'] = 'Thema';
+$_lang['fred.elements.templates'] = 'Templates';
 
 $_lang['fred.rebuild.rebuild'] = 'Opnieuw bouwen';
 $_lang['fred.rebuild.rebuild_desc'] = 'Om de wijzigingen van ge-update element te publiceren gebruik de "Opnieuw bouwen" button.';
@@ -117,6 +120,7 @@ $_lang['fred.element_categories.remove_confirm_empty'] = 'Weet je zeker dat je c
 $_lang['fred.element_categories.duplicate'] = 'Categorie dupliceren';
 $_lang['fred.element_categories.new_name'] = 'Nieuwe naam';
 $_lang['fred.element_categories.theme'] = 'Thema';
+$_lang['fred.element_categories.templates'] = 'Templates';
 
 $_lang['fred.element_option_sets.none'] = 'Geen optie sets gevonden.';
 $_lang['fred.element_option_sets.name'] = 'Naam';
@@ -258,6 +262,12 @@ $_lang['setting_fred.secret'] = 'Geheime sleutel';
 $_lang['setting_fred.secret_desc'] = 'Geheime sleutel voor XHR requests';
 $_lang['setting_fred.default_enabled'] = 'Fred Enabled';
 $_lang['setting_fred.default_enabled_desc'] = 'Enable or Disable Fred by default';
+$_lang['setting_fred.sidebar_open'] = 'Sidebar Open';
+$_lang['setting_fred.sidebar_open_desc'] = 'Open sidebar by default';
+$_lang['setting_fred.force_sidebar'] = 'Force Sidebar';
+$_lang['setting_fred.force_sidebar_desc'] = 'When enabled, user won\'t be able to close the sidebar.';
+$_lang['setting_fred.logout_url'] = 'Logout Link';
+$_lang['setting_fred.logout_url_desc'] = 'Custom logout link. If filled, users will redirect there instead of to the manager logout after clicking the logout button.';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Naam is verplicht';
 $_lang['fred.err.blueprints_ns_name'] = 'Naam is verplicht';

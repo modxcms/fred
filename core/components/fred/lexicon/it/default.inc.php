@@ -61,6 +61,7 @@ $_lang['fred.blueprints.quick_update'] = 'Aggiornamento rapido Schema';
 $_lang['fred.blueprints.update'] = 'Aggiorna Schema';
 $_lang['fred.blueprints.create'] = 'Crea Schema';
 $_lang['fred.blueprints.theme'] = 'Tema';
+$_lang['fred.blueprints.templates'] = 'Templates';
 
 $_lang['fred.blueprint_cateogries.all'] = 'Tutte le categorie';
 $_lang['fred.blueprint_categories.none'] = 'Nessuna Categoria trovata.';
@@ -77,6 +78,7 @@ $_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Sei sicuro di vol
 $_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Sei sicuro di che voler eliminare la Categoria di Schema "[[+name]]" vuota? L\'operazione non può essere annullata.';
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Schemi';
 $_lang['fred.blueprint_categories.theme'] = 'Tema';
+$_lang['fred.blueprint_categories.templates'] = 'Templates';
 
 $_lang['fred.elements.none'] = 'Nessun Elemento trovato.';
 $_lang['fred.elements.image'] = 'Immagine';
@@ -98,6 +100,7 @@ $_lang['fred.elements.duplicate'] = 'Duplica elemento';
 $_lang['fred.elements.new_name'] = 'Nuovo Nome';
 $_lang['fred.elements.has_override'] = 'Ha "Override"';
 $_lang['fred.elements.theme'] = 'Tema';
+$_lang['fred.elements.templates'] = 'Templates';
 
 $_lang['fred.rebuild.rebuild'] = 'Ricostruisci';
 $_lang['fred.rebuild.rebuild_desc'] = 'Clikka sul pulsante Ricostruisci qui sotto per pubblicare i cambiamenti negli Elementi modificati in tutte le pagine abilitate a Fred esistenti.';
@@ -117,6 +120,7 @@ $_lang['fred.element_categories.remove_confirm_empty'] = 'Sei sicuro di che vole
 $_lang['fred.element_categories.duplicate'] = 'Duplica le categorie';
 $_lang['fred.element_categories.new_name'] = 'Nuovo Nome';
 $_lang['fred.element_categories.theme'] = 'Tema';
+$_lang['fred.element_categories.templates'] = 'Templates';
 
 $_lang['fred.element_option_sets.none'] = 'Nessun set di Impostazioni è stato trovato.';
 $_lang['fred.element_option_sets.name'] = 'Nome';
@@ -258,6 +262,12 @@ $_lang['setting_fred.secret'] = 'Password';
 $_lang['setting_fred.secret_desc'] = 'Password usata per firmare richieste XHR';
 $_lang['setting_fred.default_enabled'] = 'Abilitato a Fred';
 $_lang['setting_fred.default_enabled_desc'] = 'Abilita o Disabilita Fred di default';
+$_lang['setting_fred.sidebar_open'] = 'Sidebar Open';
+$_lang['setting_fred.sidebar_open_desc'] = 'Open sidebar by default';
+$_lang['setting_fred.force_sidebar'] = 'Force Sidebar';
+$_lang['setting_fred.force_sidebar_desc'] = 'When enabled, user won\'t be able to close the sidebar.';
+$_lang['setting_fred.logout_url'] = 'Logout Link';
+$_lang['setting_fred.logout_url_desc'] = 'Custom logout link. If filled, users will redirect there instead of to the manager logout after clicking the logout button.';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Il nome è obbligatorio';
 $_lang['fred.err.blueprints_ns_name'] = 'Il nome è obbligatorio';

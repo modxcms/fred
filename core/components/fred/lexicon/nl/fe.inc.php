@@ -94,6 +94,7 @@ $_lang['fred.fe.blueprints.create_blueprint'] = 'Nieuwe blauwdruk';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'Blauwdruk aanmaken';
 $_lang['fred.fe.blueprints.category_public'] = 'Publiek';
 $_lang['fred.fe.blueprints.category_rank'] = 'Rang';
+$_lang['fred.fe.blueprints.current_note'] = '* current template for this page';
 
 $_lang['fred.fe.blueprints.blueprint_name'] = 'Naam';
 $_lang['fred.fe.blueprints.blueprint_description'] = 'Omschrijving';
@@ -102,6 +103,7 @@ $_lang['fred.fe.blueprints.blueprint_rank'] = 'Rang';
 $_lang['fred.fe.blueprints.blueprint_public'] = 'Publiek';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Content bouwen van blauwdruk';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Afbeelding';
+$_lang['fred.fe.blueprints.templates'] = 'Templates';
 
 $_lang['fred.fe.content.duplicate'] = 'Dupliceren';
 $_lang['fred.fe.content.delete'] = 'Verwijderen';
@@ -109,11 +111,12 @@ $_lang['fred.fe.content.settings'] = 'Open Settings';
 $_lang['fred.fe.content.move_up'] = 'Naar boven verplaatsen';
 $_lang['fred.fe.content.move_down'] = 'Naar onderen verplaatsen';
 $_lang['fred.fe.content.partial_blueprint'] = 'Nieuwe gedeeltelijke blauwdruk';
-$_lang['fred.fe.content.element_screenshot'] = 'Element schermafbeelding';
+$_lang['fred.fe.content.element_screenshot'] = 'Element Thumbnail';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Vervang element thumbnail';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Vervangen element thumbnail';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
 $_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
+$_lang['fred.fe.content.element_screenshot_text'] = 'Drag and drop or paste an image here.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Je hebt je wijzigingen nog niet opgeslagen, weet je het zeker?';
 
@@ -170,3 +173,4 @@ $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Files cannot be select
 $_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
 $_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';
+$_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';

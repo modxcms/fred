@@ -94,6 +94,7 @@ $_lang['fred.fe.blueprints.create_blueprint'] = 'Создать макет';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'Создание макета';
 $_lang['fred.fe.blueprints.category_public'] = 'Публичный';
 $_lang['fred.fe.blueprints.category_rank'] = 'Ранк';
+$_lang['fred.fe.blueprints.current_note'] = '* current template for this page';
 
 $_lang['fred.fe.blueprints.blueprint_name'] = 'Имя';
 $_lang['fred.fe.blueprints.blueprint_description'] = 'Описание';
@@ -102,6 +103,7 @@ $_lang['fred.fe.blueprints.blueprint_rank'] = 'Ранк';
 $_lang['fred.fe.blueprints.blueprint_public'] = 'Публичный';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Создание контента из макета';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Изображение';
+$_lang['fred.fe.blueprints.templates'] = 'Templates';
 
 $_lang['fred.fe.content.duplicate'] = 'Дубликат';
 $_lang['fred.fe.content.delete'] = 'Удалить';
@@ -109,11 +111,12 @@ $_lang['fred.fe.content.settings'] = 'Открыть настройки';
 $_lang['fred.fe.content.move_up'] = 'Переместить вверх';
 $_lang['fred.fe.content.move_down'] = 'Переместить вниз';
 $_lang['fred.fe.content.partial_blueprint'] = 'Создание схемы макета';
-$_lang['fred.fe.content.element_screenshot'] = 'Скриншот Элемента';
+$_lang['fred.fe.content.element_screenshot'] = 'Element Thumbnail';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Заменить миниатюру элемента';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Заменить миниатюры элементов';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Обновить кэш';
 $_lang['fred.fe.content.element_cache_warning'] = 'Элемент кэшируется. Изменения не будут отображаться, пока вы не примените.';
+$_lang['fred.fe.content.element_screenshot_text'] = 'Drag and drop or paste an image here.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Возможно, внесенные изменения не сохранятся.';
 
@@ -170,3 +173,4 @@ $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Файлы не мог
 $_lang['fred.fe.err.pagetitle_ns'] = 'Необходимо указать заголовок.';
 $_lang['fred.fe.err.alias_ns'] = 'Необходимо указать алиас.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Контекст не найден.';
+$_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';

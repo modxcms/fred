@@ -94,6 +94,7 @@ $_lang['fred.fe.blueprints.create_blueprint'] = 'Skapa layout';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'Skapar layout';
 $_lang['fred.fe.blueprints.category_public'] = 'Offentlig';
 $_lang['fred.fe.blueprints.category_rank'] = 'Rang';
+$_lang['fred.fe.blueprints.current_note'] = '* current template for this page';
 
 $_lang['fred.fe.blueprints.blueprint_name'] = 'Namn';
 $_lang['fred.fe.blueprints.blueprint_description'] = 'Beskrivning';
@@ -102,6 +103,7 @@ $_lang['fred.fe.blueprints.blueprint_rank'] = 'Rang';
 $_lang['fred.fe.blueprints.blueprint_public'] = 'Offentlig';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Bygger innehåll efter layout';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Bild';
+$_lang['fred.fe.blueprints.templates'] = 'Templates';
 
 $_lang['fred.fe.content.duplicate'] = 'Duplicera';
 $_lang['fred.fe.content.delete'] = 'Ta bort';
@@ -109,11 +111,12 @@ $_lang['fred.fe.content.settings'] = 'Öppna inställningar';
 $_lang['fred.fe.content.move_up'] = 'Flytta upp';
 $_lang['fred.fe.content.move_down'] = 'Flytta ned';
 $_lang['fred.fe.content.partial_blueprint'] = 'Create Partial Blueprint';
-$_lang['fred.fe.content.element_screenshot'] = 'Element Screenshot';
+$_lang['fred.fe.content.element_screenshot'] = 'Element Thumbnail';
 $_lang['fred.fe.content.replace_element_thumbnail'] = 'Replace Element Thumbnail';
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Replacing Element\'s Thumbnail';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Uppdatera cache';
 $_lang['fred.fe.content.element_cache_warning'] = 'Elementet är cachat. Ändringarna kommer inte att synas förrän du verkställer dom.';
+$_lang['fred.fe.content.element_screenshot_text'] = 'Drag and drop or paste an image here.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Det finns osparade ändringar - är du säker?';
 
@@ -170,3 +173,4 @@ $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Det går inte att väl
 $_lang['fred.fe.err.pagetitle_ns'] = 'Sidtitel är obligatorisk.';
 $_lang['fred.fe.err.alias_ns'] = 'Alias är obligatoriskt.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Kontexten kunde inte hittas.';
+$_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';
