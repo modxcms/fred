@@ -79,6 +79,15 @@ Note, the `cta_settings` import is defined above.
     "label": "Text Color",
     "type": "colorswatch",
     "value": "black",
-    "options": [{"value":"primary", "color":"blue","label":"Primary"}, "lightcoral", "black", "rgba(0,255,0,.5)"]
+    "options": [
+      {
+        "value":"primary", 
+        "color":"blue",
+        "label":"Primary"
+      }, 
+      "lightcoral", 
+      "black", 
+      "rgba(0,255,0,.5)"
+    ]
 }
 ```
