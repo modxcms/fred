@@ -33,13 +33,8 @@ class FredElementRTEConfigsUpdateProcessor extends modObjectUpdateProcessor
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ns_name'));
         } else {
-            $nameValid = preg_match('/^[a-zA-Z][a-zA-Z0-9]*$/', $name);
-            if (!$nameValid) {
-                $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_invalid_name'));
-            } else {
-                if ($this->modx->getCount($this->classKey, ['name' => $name, 'theme' => $theme, 'id:!=' => $this->object->id]) > 0) {
-                    $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ae_name'));
-                }
+            if ($this->modx->getCount($this->classKey, ['name' => $name, 'theme' => $theme, 'id:!=' => $this->object->id]) > 0) {
+                $this->addFieldError('name', $this->modx->lexicon('fred.err.element_rte_configs_ae_name'));
             }
         }
 
