@@ -319,4 +319,3 @@ $_lang['fred.err.themes_extract_tpl_parse_error'] = 'Extrair Modelo: JSON invál
 $_lang['fred.err.themes_extract_tpl_package_name'] = 'Extrair Modelo: O Pacote necessita de ter um nome';
 $_lang['fred.err.themes_extract_tpl_package_class'] = 'Extrair Modelo: O Pacote necessita de ter uma classe';
 $_lang['fred.err.themes_extract_tpl_package_load'] = 'Não foi possível carregar um serviço para o pacote: [[+name]].';
-$_lang['fred.err.element_rte_configs_invalid_name'] = 'O nome não é válido. Terá de começar com uma letra, e deve apenas conter números e letras.';
