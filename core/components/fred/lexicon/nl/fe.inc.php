@@ -103,6 +103,7 @@ $_lang['fred.fe.blueprints.blueprint_rank'] = 'Rang';
 $_lang['fred.fe.blueprints.blueprint_public'] = 'Publiek';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Content bouwen van blauwdruk';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Afbeelding';
+$_lang['fred.fe.blueprints.blueprint_thumbnail'] = 'Blueprint Thumbnail';
 $_lang['fred.fe.blueprints.templates'] = 'Templates';
 
 $_lang['fred.fe.content.duplicate'] = 'Dupliceren';
@@ -116,7 +117,7 @@ $_lang['fred.fe.content.replace_element_thumbnail'] = 'Vervang element thumbnail
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Vervangen element thumbnail';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Refresh Cache';
 $_lang['fred.fe.content.element_cache_warning'] = 'Element is cached. Changes will not show until you Apply.';
-$_lang['fred.fe.content.element_screenshot_text'] = 'Drag and drop or paste an image here.';
+$_lang['fred.fe.content.element_screenshot_text'] = 'Click to upload, drag and drop, or paste from your clipboard.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Je hebt je wijzigingen nog niet opgeslagen, weet je het zeker?';
 
@@ -174,3 +175,4 @@ $_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
 $_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';
 $_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';
+$_lang['fred.fe.err.blueprints_incorrect_image_type'] = 'Incorrect image type.';
