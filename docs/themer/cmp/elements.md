@@ -19,12 +19,19 @@ The following are the properties for an Element:
 
 ![Element Panel Options](img/element_panel_options.png)
 
-## Element images
+## Element Preview Images
 
-Element images are thumbnail previews used to drag-and-drop onto pages. You can create your own images/previews/screengrabs for Elements, or Fred can create ones for you in one of two ways:
+Element Previews are thumbnail images used to drag-and-drop onto pages. You can create your own images/previews/screengrabs for Elements from the back end CMP or from the front end when using Fred.
 
-- a gray box with the Element’s name centered in the gray box (this is the default unless you provide an image)
-- after an Element is used, and if you have the "Take Screenshots" permission, clicking the camera icon above the Element when focused.
+In the Manager CMP, you can upload images using the built-in MODX file manager. By default, the Element’s name centered in a gray box will be created. 
+
+Users with the "Take Screenshot" permission can also create Element previews from the front end. This is useful for creating the exact preview image you want for your theme. 
+
+- The most convenient way is to configure an Element for the preview image then take a screenshot using a built-in utility on your computer. When the screenshot is available in your system clipboard and the Element Preview Image is showing in the sidebar, simply paste to upload and process the image to the appropriate size (540px wide).
+- You can also drag and drop an image from your local computer to the Element’s preview image
+- Or, you can click the Element Preview to upload a new one using your local computer file browser
+
+Starting in version 1.2, existing Element Previews will be removed once you replace them.
 
 **Note:** the library used to take screenshots is very good, but it doesn’t understand some CSS properties and may not render the screenshots optimially for your use case. For best results make sure that manual Element screenshots are 500px wide.
 
