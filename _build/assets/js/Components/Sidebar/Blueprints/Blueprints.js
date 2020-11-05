@@ -1,15 +1,32 @@
 import SidebarPlugin from '../../SidebarPlugin';
 import emitter from '../../../EE';
-import {dd, dl, dt, form, fieldSet, legend, div, button, figCaption, figure, img, span} from '@fred/UI/Elements';
+import {
+    dd,
+    dl,
+    dt,
+    form,
+    fieldSet,
+    legend,
+    div,
+    button,
+    figCaption,
+    figure,
+    img,
+    span,
+    i,
+    input, label
+} from '@fred/UI/Elements';
 import {choices, text, toggle, image, area} from "@fred/UI/Inputs";
 import fredConfig from "../../../Config";
 import cache from '../../../Cache';
 import hoverintent from "hoverintent";
 import drake from "../../../Drake";
-import html2canvas from 'html2canvas';
 import { getBlueprints, createBlueprint, createBlueprintCategory } from '../../../Actions/blueprints';
 import { getTemplates } from '../../../Actions/themes';
 import MultiSelect from "@fred/UI/MultiSelect";
+
+const IMAGE_MIME_REGEX = /^image\/(jpe?g|png)$/i;
+const maxWidth = 540;
 
 export default class Blueprints extends SidebarPlugin {
     static title = 'fred.fe.blueprints';
@@ -20,6 +37,7 @@ export default class Blueprints extends SidebarPlugin {
         this.openCreateBlueprint = this.openCreateBlueprint.bind(this);
         this.categories = [];
         this.tempaltes = [];
+        this.pasteHandler = null;
 
         this.state = {
             category: {
@@ -34,7 +52,6 @@ export default class Blueprints extends SidebarPlugin {
                 category: null,
                 rank: '',
                 public: !!fredConfig.permission.fred_blueprints_create_public,
-                image: '',
                 generatedImage: '',
                 templates: ''
             }
@@ -42,6 +59,7 @@ export default class Blueprints extends SidebarPlugin {
     }
 
     async click() {
+        this.pasteHandler = null;
         const blueprints = await getBlueprints();
 
         return this.buildPanel(blueprints);
@@ -160,6 +178,21 @@ export default class Blueprints extends SidebarPlugin {
         this.createBlueprintButton = dt('fred.fe.blueprints.create_blueprint', ['fred--accordion-cog'], e => this.openCreateBlueprint(e, content));
         this.createBlueprintButton.setAttribute('hidden', 'hidden');
 
+        const mutationCallback = (mutationsList, observer) => {
+            for (const mutation of mutationsList) {
+                if (mutation.type !== 'attributes') continue;
+                if (mutation.attributeName !== 'class') continue;
+
+                if (!mutation.target.classList.contains('active')) {
+                     if (this.pasteHandler !== null) {
+                         document.removeEventListener('paste', this.pasteHandler);
+                     }
+                }
+            }
+        };
+        const observer = new MutationObserver(mutationCallback);
+        observer.observe(this.createBlueprintButton, {attributes: true});
+
         this.createBlueprintButtonSm = button('+','fred.fe.blueprints.create_blueprint',['fred--btn-small','fred--btn-add'], e => this.openCreateBlueprint(e, content));
 
         this.formWrapper.appendChild(this.pageForm);
@@ -207,14 +240,6 @@ export default class Blueprints extends SidebarPlugin {
                 label: 'fred.fe.blueprints.blueprint_description'
             }, this.state.blueprint.description, onChange));
 
-            const onImageChange = (name, value) => {
-                if (value === '') {
-                    imageEl.setPreview(this.state.blueprint.generatedImage);
-                }
-
-                this.state.blueprint[name] = value;
-            };
-
             const onChangeTemplates = (tags) => {
                 this.state.blueprint.templates = tags.reduce(
                     (acc, currentValue) => {
@@ -230,12 +255,43 @@ export default class Blueprints extends SidebarPlugin {
                 );
             };
 
-            const imageEl = image({
-                name: 'image',
-                label: 'fred.fe.blueprints.blueprint_image'
-            }, this.state.blueprint.image, onImageChange);
+            const loadImage = (file) => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const image = new Image();
+                    image.src = e.target.result;
 
-            fields.appendChild(imageEl);
+                    image.onload = () => {
+                        if (image.width > maxWidth) {
+                            const ratio = maxWidth / image.width;
+
+                            const resizedCanvas = document.createElement("canvas");
+                            const ctx = resizedCanvas.getContext("2d");
+
+                            resizedCanvas.width = image.width * ratio;
+                            resizedCanvas.height = image.height * ratio;
+
+                            ctx.drawImage(image, 0, 0, resizedCanvas.width, resizedCanvas.height);
+
+                            this.state.blueprint.generatedImage = resizedCanvas.toDataURL();
+                        } else {
+                            this.state.blueprint.generatedImage = e.target.result;
+                        }
+
+                        dropArea.innerHTML = '';
+                        dropArea.appendChild(img(this.state.blueprint.generatedImage));
+                    };
+                };
+                reader.readAsDataURL(file);
+            };
+
+            const {dropArea, wrapper, pasteHandler} = this.createDropArea(loadImage);
+            this.pasteHandler = pasteHandler;
+
+            const imageLabel = label('fred.fe.blueprints.blueprint_thumbnail');
+            imageLabel.appendChild(wrapper);
+
+            fields.appendChild(imageLabel);
 
             const category = choices({
                 name: 'category',
@@ -272,64 +328,6 @@ export default class Blueprints extends SidebarPlugin {
             fields.appendChild(publicToggle);
             fields.appendChild(templates);
 
-            if (this.state.blueprint.image === '') {
-                const loader = span(['fred--loading']);
-                imageEl.appendChild(loader);
-
-                fredConfig.fred.previewContent().then(iframe => {
-                    iframe.parentNode.style.display = 'block';
-                    iframe.parentNode.style.opacity = '0';
-                    iframe.parentNode.style.zIndex = '-99999999';
-
-                    html2canvas(iframe.contentWindow.document.body, {
-                        logging: false
-                    }).then(canvas => {
-                        const maxWidth = 540;
-
-                        if (canvas.width > maxWidth) {
-                            const ratio = maxWidth / canvas.width;
-                            const image = new Image();
-
-                            image.onload = () => {
-                                const resizedCanvas = document.createElement("canvas");
-                                const ctx = resizedCanvas.getContext("2d");
-
-                                resizedCanvas.width = canvas.width * ratio;
-                                resizedCanvas.height = canvas.height * ratio;
-
-                                ctx.drawImage(image, 0, 0, resizedCanvas.width, resizedCanvas.height);
-
-                                this.state.blueprint.generatedImage = resizedCanvas.toDataURL();
-                                loader.remove();
-                                imageEl.setPreview(this.state.blueprint.generatedImage);
-
-                                iframe.parentNode.style.display = 'none';
-                                iframe.parentNode.style.opacity = null;
-                                iframe.parentNode.style.zIndex = null;
-                            };
-
-                            image.src = canvas.toDataURL();
-                        } else {
-                            this.state.blueprint.generatedImage = canvas.toDataURL();
-                            loader.remove();
-                            imageEl.setPreview(this.state.blueprint.generatedImage);
-
-                            iframe.parentNode.style.display = 'none';
-                            iframe.parentNode.style.opacity = null;
-                            iframe.parentNode.style.zIndex = null;
-                        }
-                    })
-                        .catch(err => {
-                            iframe.parentNode.style.display = 'none';
-                            iframe.parentNode.style.opacity = null;
-                            iframe.parentNode.style.zIndex = null;
-                            loader.remove();
-
-                            imageEl.setPreview('https://via.placeholder.com/300x150/000000/FF0000?text=Generation%20Failed');
-                        });
-                });
-            }
-
             const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
                 emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
 
@@ -341,7 +339,6 @@ export default class Blueprints extends SidebarPlugin {
                     this.state.blueprint.public,
                     fredConfig.fred.getContent(true),
                     this.state.blueprint.generatedImage,
-                    this.state.blueprint.image,
                     true,
                     this.state.blueprint.templates
                 )
@@ -377,6 +374,86 @@ export default class Blueprints extends SidebarPlugin {
         }
     }
 
+    createDropArea(loadImage) {
+        const dropArea = div('', [i(), span([], 'fred.fe.content.element_screenshot_text')]);
+        const fileInput = input('', 'file');
+        const wrapper = div('fred--element_screenshot_upload_wrapper', [fileInput, dropArea]);
+
+        const pasteHandler = (e) => {
+            e.preventDefault();
+            var items = e.clipboardData.items;
+
+            for (var i = 0; i < items.length; i++) {
+                if (IMAGE_MIME_REGEX.test(items[i].type)) {
+                    loadImage(items[i].getAsFile());
+                    return;
+                }
+            }
+        };
+        const handleFiles = (files) => {
+            for (var i = 0; i < files.length; i++) {
+
+                // get the next file that the user selected
+                var file = files[i];
+                var imageType = /image.*/;
+
+                // don't try to process non-images
+                if (!file.type.match(imageType)) {
+                    continue;
+                }
+
+                loadImage(file);
+                break;
+            }
+        }
+
+        fileInput.setAttribute('accept', 'image/*');
+        fileInput.addEventListener("change", (e) => {
+            handleFiles(e.target.files);
+        }, false);
+
+        dropArea.addEventListener('dragenter', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            dropArea.classList.add('over');
+        });
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            dropArea.classList.add('over');
+        });
+        dropArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            dropArea.classList.remove('over');
+        });
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const files = e.dataTransfer.files;
+            dropArea.classList.remove('over');
+
+            handleFiles(files);
+        });
+        dropArea.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            fileInput.click();
+        });
+
+        document.addEventListener('paste', pasteHandler);
+
+        return {
+            dropArea,
+            pasteHandler,
+            wrapper
+        };
+    }
 
     buildCreateCategory(content) {
         const formWrapper = dd();
@@ -489,5 +566,12 @@ export default class Blueprints extends SidebarPlugin {
 
     afterExpand() {
         drake.reloadContainers();
+    }
+
+    collapse() {
+        if (this.pasteHandler !== null) {
+            document.removeEventListener('paste', this.pasteHandler);
+        }
+        this.titleEl.classList.remove('active');
     }
 }

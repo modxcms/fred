@@ -16,7 +16,7 @@ export const getBlueprints = (complete = null, theme = fredConfig.config.theme) 
     });
 };
 
-export const createBlueprint = (name, description, category, rank, isPublic, data, generatedImage, image, complete, templates) => {
+export const createBlueprint = (name, description, category, rank, isPublic, data, generatedImage, complete, templates) => {
     const body = {
         name,
         description,
@@ -24,15 +24,10 @@ export const createBlueprint = (name, description, category, rank, isPublic, dat
         rank,
         public: isPublic,
         data,
-        generatedImage: '',
-        image,
+        generatedImage,
         complete,
         templates
     };
-
-    if (image === '') {
-        body.generatedImage = generatedImage;
-    }
 
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=blueprints-create-blueprint`, {
         method: "post",

@@ -1,13 +1,15 @@
 import utilitySidebar from '../Components/UtilitySidebar';
-import {choices, image, text, toggle} from "../UI/Inputs";
-import {button, div, fieldSet, form, legend, span} from "../UI/Elements";
+import {choices, text, toggle} from "../UI/Inputs";
+import {button, div, fieldSet, form, i, img, input, label, legend, span} from "../UI/Elements";
 import cache from "../Cache";
 import emitter from "../EE";
 import fredConfig from "../Config";
-import html2canvas from "html2canvas";
 import { getBlueprints, createBlueprint } from '../Actions/blueprints';
 import MultiSelect from "@fred/UI/MultiSelect";
 import {getTemplates} from "../Actions/themes";
+
+const IMAGE_MIME_REGEX = /^image\/(jpe?g|png)$/i;
+const maxWidth = 540;
 
 export class PartialBlueprints {
     open(el) {
@@ -19,7 +21,6 @@ export class PartialBlueprints {
             category: null,
             rank: '',
             public: !!fredConfig.permission.fred_blueprints_create_public,
-            image: '',
             description: '',
             generatedImage: '',
             templates: ''
@@ -66,20 +67,42 @@ export class PartialBlueprints {
 
         fields.appendChild(name);
 
-        const onImageChange = (name, value) => {
-            if (value === '') {
-                imageEl.setPreview(this.state.generatedImage);
-            }
+        const loadImage = (file) => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const image = new Image();
+                image.src = e.target.result;
 
-            this.state[name] = value;
+                image.onload = () => {
+                    if (image.width > maxWidth) {
+                        const ratio = maxWidth / image.width;
+
+                        const resizedCanvas = document.createElement("canvas");
+                        const ctx = resizedCanvas.getContext("2d");
+
+                        resizedCanvas.width = image.width * ratio;
+                        resizedCanvas.height = image.height * ratio;
+
+                        ctx.drawImage(image, 0, 0, resizedCanvas.width, resizedCanvas.height);
+
+                        this.state.generatedImage = resizedCanvas.toDataURL();
+                    } else {
+                        this.state.generatedImage = e.target.result;
+                    }
+
+                    dropArea.innerHTML = '';
+                    dropArea.appendChild(img(this.state.generatedImage));
+                };
+            };
+            reader.readAsDataURL(file);
         };
 
-        const imageEl = image({
-            name: 'image',
-            label: 'fred.fe.blueprints.blueprint_image'
-        }, this.state.image, onImageChange);
+        const {dropArea, wrapper, pasteHandler} = this.createDropArea(loadImage);
 
-        fields.appendChild(imageEl);
+        const imageLabel = label('fred.fe.blueprints.blueprint_thumbnail');
+        imageLabel.appendChild(wrapper);
+
+        fields.appendChild(imageLabel);
 
         const category = choices({
             name: 'category',
@@ -132,53 +155,6 @@ export class PartialBlueprints {
 
         fields.appendChild(templates);
 
-        if (this.state.image === '') {
-            const loader = span(['fred--loading']);
-            imageEl.appendChild(loader);
-
-            html2canvas(this.el.wrapper, {
-                logging: false,
-                ignoreElements: el => {
-                    if (el.classList.contains('fred')) return true;
-                    if (el.classList.contains('fred--toolbar')) return true;
-                    if (el.classList.contains('fred--block_title')) return true;
-
-                    return false;
-                }
-            }).then(canvas => {
-                const maxWidth = 540;
-
-                if (canvas.width > maxWidth) {
-                    const ratio = maxWidth / canvas.width;
-                    const image = new Image();
-
-                    image.onload = () => {
-                        const resizedCanvas = document.createElement("canvas");
-                        const ctx = resizedCanvas.getContext("2d");
-
-                        resizedCanvas.width = canvas.width * ratio;
-                        resizedCanvas.height = canvas.height * ratio;
-
-                        ctx.drawImage(image, 0, 0, resizedCanvas.width, resizedCanvas.height);
-
-                        this.state.generatedImage = resizedCanvas.toDataURL();
-                        loader.remove();
-                        imageEl.setPreview(this.state.generatedImage);
-                    };
-
-                    image.src = canvas.toDataURL();
-                } else {
-                    this.state.generatedImage = canvas.toDataURL();
-                    loader.remove();
-                    imageEl.setPreview(this.state.generatedImage);
-                }
-            })
-            .catch(err => {
-                loader.remove();
-                imageEl.setPreview('https://via.placeholder.com/300x150/000000/FF0000?text=Generation%20Failed');
-            });
-        }
-
         const createButton = button('fred.fe.blueprints.create_blueprint', 'fred.fe.blueprints.create_blueprint', ['fred--btn-panel', 'fred--btn-apply'], () => {
             emitter.emit('fred-loading', fredConfig.lng('fred.fe.blueprints.creating_blueprint'));
 
@@ -190,7 +166,6 @@ export class PartialBlueprints {
                 this.state.public,
                 [this.el.getContent(true)],
                 this.state.generatedImage,
-                this.state.image,
                 false,
                 this.state.templates
             )
@@ -214,6 +189,7 @@ export class PartialBlueprints {
         });
         const cancelButton = button('fred.fe.cancel', 'fred.fe.cancel', ['fred--btn-panel'], () => {
             utilitySidebar.close();
+            document.removeEventListener('paste', pasteHandler);
         });
 
         const buttonGroup = div(['fred--panel_button_wrapper']);
@@ -224,6 +200,87 @@ export class PartialBlueprints {
         pageForm.appendChild(fields);
 
         return pageForm;
+    }
+
+    createDropArea(loadImage) {
+        const dropArea = div('', [i(), span([], 'fred.fe.content.element_screenshot_text')]);
+        const fileInput = input('', 'file');
+        const wrapper = div('fred--element_screenshot_upload_wrapper', [fileInput, dropArea]);
+
+        const pasteHandler = (e) => {
+            e.preventDefault();
+            var items = e.clipboardData.items;
+
+            for (var i = 0; i < items.length; i++) {
+                if (IMAGE_MIME_REGEX.test(items[i].type)) {
+                    loadImage(items[i].getAsFile());
+                    return;
+                }
+            }
+        };
+        const handleFiles = (files) => {
+            for (var i = 0; i < files.length; i++) {
+
+                // get the next file that the user selected
+                var file = files[i];
+                var imageType = /image.*/;
+
+                // don't try to process non-images
+                if (!file.type.match(imageType)) {
+                    continue;
+                }
+
+                loadImage(file);
+                break;
+            }
+        }
+
+        fileInput.setAttribute('accept', 'image/*');
+        fileInput.addEventListener("change", (e) => {
+            handleFiles(e.target.files);
+        }, false);
+
+        dropArea.addEventListener('dragenter', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            dropArea.classList.add('over');
+        });
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            dropArea.classList.add('over');
+        });
+        dropArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            dropArea.classList.remove('over');
+        });
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const files = e.dataTransfer.files;
+            dropArea.classList.remove('over');
+
+            handleFiles(files);
+        });
+        dropArea.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            fileInput.click();
+        });
+
+        document.addEventListener('paste', pasteHandler);
+
+        return {
+            dropArea,
+            pasteHandler,
+            wrapper
+        };
     }
 }
 

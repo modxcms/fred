@@ -95,18 +95,29 @@ class BlueprintsCreateBlueprint extends Endpoint
             }
 
             if (!empty($this->body['generatedImage'])) {
-                $fileName = 'blueprint_' . $blueprint->id . '_' . time() . '.png';
-
+                $type = [];
                 $img = $this->body['generatedImage'];
-                $img = str_replace('data:image/png;base64,', '', $img);
+                $isImage = preg_match('/^data:image\/([^;]+);base64,/', $img, $type);
+                $imageExtension = null;
+                if ($isImage) {
+                    if (isset($type) && isset($type[1]) && (in_array(strtolower($type[1]), ['jpg', 'jpeg', 'png']))) {
+                        $imageExtension = strtolower($type[1]);
+                    }
+                }
+
+                if (empty($imageExtension)) {
+                    return $this->failure($this->modx->lexicon('fred.fe.err.blueprints_incorrect_image_type'));
+                }
+
+                $fileName = 'blueprint_' . $blueprint->id . '.' . $imageExtension;
+
+                $img = preg_replace('/^data:image\/[^;]+;base64,/', '', $img);
                 $img = str_replace(' ', '+', $img);
                 $data = base64_decode($img);
                 $file = $path . $fileName;
                 file_put_contents($file, $data);
 
-                $blueprint->set('image', '{{theme_dir}}generated/' . $fileName);
-            } else if (!empty($this->body['image'])) {
-                $blueprint->set('image', $this->body['image']);
+                $blueprint->set('image', '{{theme_dir}}generated/' . $fileName . '?timestamp=' . time());
             } else {
                 $blueprint->set('image', 'https://via.placeholder.com/300x150?text=' . urlencode($this->body['name']));
             }
