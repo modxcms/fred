@@ -31,9 +31,7 @@ Users with the "Take Screenshot" permission can also create Element previews fro
 - You can also drag and drop an image from your local computer to the Element’s preview image
 - Or, you can click the Element Preview to upload a new one using your local computer file browser
 
-Starting in version 1.2, existing Element Previews will be removed once you replace them.
-
-**Note:** the library used to take screenshots is very good, but it doesn’t understand some CSS properties and may not render the screenshots optimially for your use case. For best results make sure that manual Element screenshots are 500px wide.
+Starting in version 1.2, existing Element Previews will be removed once you replace them. 
 
 ## Updating Elements
 
