@@ -1,173 +1,24 @@
 Changelog for Fred
 
-1.1.1
-============
-## Updates & Improvements
-- El Finder was updated to version 2.1.50. This fixed a few pesky bugs, especially the one where you couldn’t see the directory names.   
-- Refactored the Dropzone class for ~future evil schemes~ to make it perform more consistently with less code.
-- Translation updates.
-
-## Bugfixes
-- Fred now properly redirects to the new page URL when updating the alias from the front-end.
-- Speaking of aliases, Fred also now auto-generates one if it’s somehow empty making it infinitely more likely that people, you know, can see the beautiful content you just created.
-- Fred now helpfully saves the page title you entered when duplicating an existing page rather than the default.
-- Links in RTE content were broken when saving the page in the Manager. Now they’re not.
-- Some remnant development console logging was accidentally left in. Now it’s gone.
-- Fred Themes delayed loading script tags in in a too-clever way. Now it loads them in order from top to bottom as. 
-- Fixed a user permission error around saving. Because content creators typically like to do that.
-- Blueprints no longer store the Element IDs, making them unique again (as they’re always regenerated when used).
-- Nested Dropzones sometimes refused to allow you to change the Elements inside them when they shouldn’t. Fixed.
-- Reorganized some code for future maintainability, and sanity in general.
-
-1.1.0
-============
-## New
-- If you have updated or started working on a page, Fred warns you before leaving without saving so you don’t accidentally lose your work (not that we ever needed that ourselves…).
-- Toolbar and Sidebar Plugins allow for custom functionality when creating or editing content with Fred. To demonstrate the awesomeness of this, Collections now supports creating or updating pages with Fred-enabled templates directly with Fred from the front-end.
-- Support for rendering Snippets to cache inside Fred Elements. This can be used, for example, to dynamically pull author information for a blog or other custom data source.
-- The MODX event `onDocFormSave` is now triggered when Fred saves, so that MODX plugins can tap into this. We’re looking at you, VersionX…
-- When creating a new page from Fred, you can specify a Blueprint to use. Further, each Fred-enabled Template can now have a default Blueprint associated with it so that making new content can be streamlined.
-- A new Folder picker option setting is handy for things like simple galleries built from images on the file system.
-- Themes now can include Media Sources to help keep things tidy.
-- Documentation and an installer check for specific PHP extensions were added so people don't get frustrated when Fred mysteriously decided not to work.
-
-## Updates & Improvements
-- Updated styles to make the overall UI more consistent with the upcoming MODX3 Manager.
-- Dragging Elements now shrinks them to a smaller size to make them easier to work with.
-- When editing Option Sets in the Manager, it warns you if there is a JSON syntax error so you can fix it and save your work. It’s even prettier when using the Fred Ace integration, too. 
-- Updated the build process to use the latest versions of Node and Gulp.
-- Removed build files from the repo in favor of using Github releases.
-- When pasting text from word processors and web browsers, a lot of messy markup sometimes tags along, making it hard to create clean content. Fred now forces text to be pasted as plain text to minimize tedious cleanup chores as much as possible.
-- A special `{{theme_dir}}` placeholder makes for more portable themes for Element Settings and Media fields.
-- The root `<html>` tag now gets a class when Fred is enabled to allow for custom styling when needed: `<html class="fred--active">`.
-- Option Set Overrides can now also be merged so that you can override just a single thing in the assigned Option Set.
-- A policy for deleting inadvertently added Elements on the front-end for the Fred Editor role was added.
-
-## Bugfixes
-- Image pickers no longer return the full URL to images, improving website portability.
-- Importing option set overrides functions again as intended.
-- Certain Elements refused to save from the front-end. The error in its ways has been rectified.
-- Firefox is special. So we made a special case for it to ensure that `contenteditable` would behave the same as every other modern browser. 
-- Missing screenshots and the Media Source section in the documentation have been fixed.
-- Fred and its browser built on ElFinder did not respect the `skipFiles` setting. Now they do.
-- Checks for PHP dependencies didn’t happen during installation which could lead to failure. Now it checks and warns when the dependencies aren’t met.
-
-1.0.0
-============
-- Gitify support added for using version control in your workflow
-- Scrolling issues have been fixed in Chrome and Safari
-- TVs no longer need to be Fred enabled in order to be saved to
-- New element setting added for file types and text areas
-- Fixed the search for the page type element setting
-- Fixed an issue for element settings with the default value of 0
-- Fixed a visibility issue with adding new pages
-- Fixed toggle boxes overlapping drop menus
-- Improved context support for frontend endpoints
-- Grids now refresh when a category is deleted in the CMP
-- Fixed publish on date when saving a resource from Fred
-- Parent select boxes now respect "list" policy
-- Added translations for Dutch, German and Russian languages
-
-1.0.0 rc1
-============
-- Each theme now gets its own defaut_element, which is handy when migrating content from non-Fred sites into Fred.
-- Pages were sometimes hiding from the front end, which made it difficult to work on sites. Now it's a lot easier, and we have outlawed games of hide and seek going forward.
-- When switching Themes, pages can have Elements from other themes, which can lead to Bad Things™. Now we warn when this has happened so you can prevent future frustration.
-- Elements, Blueprints, Element categories, Blueprint categories and Themes now have to have unique names. This is so multiple Themes don't co-mingle their assets with a potentially messy outcome.
-- Found a few places where XHR errors had been left as static strings. Now they can be translated for better feedback if things go awry.
-
-1.0.0 beta12
-============
-- Fix showing enable Fred button for users without permissions
-- Fix double sidebar in preview mode
-
-1.0.0 beta11
-============
-- Removed some of the mystery from building Themes by displaying an alert when the change log, readme or license files were missing. Silence is good for movie watchers—not so much for letting folks know why they can't export the Theme they've worked hard on creating. Sorry about that! 
-- Fred now opens all links in the Preview mode in a new tab because loading them in the iframe created an undesired Fredception. 
-- Fixed initializing javascript when remote Elements are dropped into dropzones. This bodes well for things like galleries and sliders initiated by a document.ready function.
-- Fixed loading the Resource Tree with nested Fred Resources.
-- Fixed generating preview URLs for unpublished Resources.
-- Prevent copying outer HTML from contenteditable Elements, which could lead to serious messes. We don't like messes.
-- Ensure Elements are loaded in the correct order when Fred initializes, because randomly reordering peoples' nested content is apparently not a desired feature. 
-- Add a new mode to disable/enable Fred, making those final QA chores a lot easier and less click-error prone.
-- Automatically set contenteditable to true for all Elements with a data-fred-name attribute. If you don't want them editable, you must declare it false. But since this is meant as a front-end editor, this could save a few keystrokes and make learning how to create Elements slightly easier to learn by approximately 4.2%.
-- Pass GET params from the page to the render Element endpoint so to make Fred behave properly with things like Tagger.
-- Fix the preview window from cutting off because, as it turns out, 51px really does make a difference.
-
-1.0.0 beta10
-============
-- Supports multiple dropzones thanks to a new custom "Fred Dropzone" Template Variable. 
-- A new element_sort system setting determines, shockingly, how Elements are sorted: either by their name or by a rank specified in the Manager component (previously was by ID). Defaults to name.
-- Fred didn't allow using Snippets in image tag src attributes. Now it does making @reikotec at least 42% more happy. You're welcome! 
-- Fixed an annoying oversight that broke how Fred-managed content rendered after saving a page in the Manager (which was not very well at all).
-- Now you can clone, delete, publish/unpublish and create child pages from the Fred sidebar menu Site option. Click a page name to see the available options. 
-
-1.0.0 beta9
-==============
-- Fred now supports Permissions and Policies, ticking off the last big 1.0 feature checklist item. Time to thoroughly work over every bit of Fred ahead of its initial public release! 
-- The width of the toolbar on small Elements hid important icons. Now it doesn't. 
-- While mildly entertaining at first, the flashing cycles when hovering the parent Element of nested ones quickly becomes annoying. Fixed.
-- You get to see the magical preview soon after clicking the button when generating full-page Blueprints. So much for delayed gratification. 
-- Validate the name, version, and release when building a Theme, because themes are cool and it's the right thing to do.
-- Check `list` policy on media sources so people can't rearrange the root-level file system for you.
-- Sign every XHR call so that less than scrupulous people don't edit—or remove—your site for you.
-- Display an error message that explains why trying to download a theme without a transport package doesn't work so well.
-
-1.0.0 beta8
-==============
-- Now with 100% more German. Danke für die Übersetzung.
-- Fix HTML generation when saving Fred Resource from the Manager,  which didn't work and was a bummer. Now it's not.
-- Show a loading icon when generating Blueprint screenshots. This helps calm user anxiety over "Didn't I just push that button? …" as it can take a few seconds when doing full-page Blueprints.
-- Duplicating an image that saved to a TV caused an infinite loop. Inception is good for movies, not for software, so we fixed that.
-- Fix toggling fred and fredReadOnly attributes from in the Media Source tab of the Manager page because it's the right thing to do.
-
-1.0.0 beta7
-==============
-- Move elFinder's processors under core for better security
-- Streamline elFinder buttons shown
-- Create a Media Source on Fred installation: /assets
-- Add a tab to the Manager component for managing the Media Sources available to Fred
-- Fix toggle option setting control when the default value was set to true
-- Change referencing Media Sources by ID to Name in option sets and Element markup
-
-1.0.0 beta6
-==============
-- Add theme directory for theme's assets
-- Use new placeholder {{theme_dir}} when generating elements & blueprints images
-- Add placeholder for templates & chunk [[++fred.theme_dir]] to reference theme directory
-- Add Build theme action (creates a transport package from theme)
-- Consolidate tabs in the CMP
-- Generate screenshot for complete blueprint from page preview (instead of from Fred's view)
-- Remove deprecated system settings
-- Add help buttons to CMP and frontend (under "More" sidebar)
-- Remove theme-template relation when template is deleted
-- When deleting theme, give an option to delete theme directory
-- When duplicating theme, give an options to duplicate theme's objects and theme directory
-- Fix selecting option set from current theme in element's quick update window and update panel 
-
-1.0.0 beta5
-==============
-- Lower dependencies to support PHP 5.6+
-- Security fixes
-
-1.0.0 beta4
-==============
-- Add CMP for Elements, RTE Configs, Option Sets, Themes
-- Add UUID for elements, element categories, blueprints and blueprint categories
-- Make blueprint's & element's image not required and fill it with placeholder image if empty
-- TVs as a target & in Page Settings
-
-1.0.0 beta3
-==============
-- Add CMP for Blueprints
-- Add blueprints
-- Add default image for elements, if none is set
-
-1.0.0 beta2
-==============
-- Prevent child blocks from remaining active on scroll
-- Add context_key check to site tree
-- Fixed foreach warning on RenderContent and LoadContent
-- Update documentation
-- Add ru lexicon
+## New in 1.2
+- Theme designers can limit Elements, Blueprints, and their categories to specific MODX Templates
+- Element and Blueprint screenshots are now handled via drag & drop, pasting from the clipboard, or uploading in your browser
+- A `logout_url` system setting to specify a URL to use with front-end logins
+- A keyboard shortcut to disable Fred (cmd/ctrl + shift + f)
+- All Templates in Fred categories are now included when building Themes for distribution, even ones not specifically Fred-enabled
+- Lexicon support for Element titles and descriptions for multi-language Themes
+- Open the sidebar by default with the `sidebar_open` system setting (closable)
+- Always have the sidebar open via a `force_sidebar` system setting
+## Bug Fixes & Updates
+- The Theme filter now persists across Manager page loads for Theme designers working on multiple themes in a single installation
+- Exclude the `_data` directory inside the themes folder when building Themes
+- Old screenshots are now deleted when replacing them for Elements or Blueprints
+- Fixed a bug that prevented Template categories from being included in Themes
+- Updated mobile screen sizes when Previewing Fred content
+- MODX tags in forms were improperly encoded when saving in the Manager
+- Fred no longer loads on Weblinks or Symlinks
+- RTE configuration names with non-alphanumeric characters no longer show errors on the front-end
+- Preserve new lines when pasting content
+- Fixed rendering `{{template.theme_dir}}` when Previewing Fred content
+- Fixed the Cancel button in Element settings to actually cancel changes without saving
+- Users without Manager access no longer see the View in Manager menu item

@@ -1,7 +1,7 @@
 ---------------------------------------
 Fred
 ---------------------------------------
-Version: 1.1.1
+Version: 1.2.0
 Author: John Peca <john@modx.com>
 ---------------------------------------
 Fred is a visual drag-and-drop front-end editor for MODX Revolution.
