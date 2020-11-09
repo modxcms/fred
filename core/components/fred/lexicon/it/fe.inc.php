@@ -103,6 +103,7 @@ $_lang['fred.fe.blueprints.blueprint_rank'] = 'Posizione';
 $_lang['fred.fe.blueprints.blueprint_public'] = 'Pubblico';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Compila Contenuto dal Modello';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Immagine';
+$_lang['fred.fe.blueprints.blueprint_thumbnail'] = 'Blueprint Thumbnail';
 $_lang['fred.fe.blueprints.templates'] = 'Templates';
 
 $_lang['fred.fe.content.duplicate'] = 'Duplica';
@@ -116,7 +117,7 @@ $_lang['fred.fe.content.replace_element_thumbnail'] = 'Sostituisci Anteprima Ele
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'Sostituizione Anteprima Elemento';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Aggiorna la cache';
 $_lang['fred.fe.content.element_cache_warning'] = 'Elemento in cache. I cambiamenti non saranno visibili fino a quando non Applichi.';
-$_lang['fred.fe.content.element_screenshot_text'] = 'Drag and drop or paste an image here.';
+$_lang['fred.fe.content.element_screenshot_text'] = 'Click to upload, drag and drop, or paste from your clipboard.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Ci sono modifiche non salvate, sei sicuro?';
 
@@ -174,3 +175,4 @@ $_lang['fred.fe.err.pagetitle_ns'] = 'Page Title is required.';
 $_lang['fred.fe.err.alias_ns'] = 'Alias is required.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Context not found.';
 $_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';
+$_lang['fred.fe.err.blueprints_incorrect_image_type'] = 'Incorrect image type.';

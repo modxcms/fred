@@ -103,6 +103,7 @@ $_lang['fred.fe.blueprints.blueprint_rank'] = 'Posição';
 $_lang['fred.fe.blueprints.blueprint_public'] = 'Público';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Construir Conteúdo a partir de Esquema';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Imagem';
+$_lang['fred.fe.blueprints.blueprint_thumbnail'] = 'Blueprint Thumbnail';
 $_lang['fred.fe.blueprints.templates'] = 'Templates';
 
 $_lang['fred.fe.content.duplicate'] = 'Duplicar';
@@ -116,7 +117,7 @@ $_lang['fred.fe.content.replace_element_thumbnail'] = 'Substituir Miniatura do E
 $_lang['fred.fe.content.element_replacing_thumbnail'] = 'A Substituir a Miniatura do Elemento';
 $_lang['fred.fe.content.refresh_cache_element'] = 'Atualizar Cache';
 $_lang['fred.fe.content.element_cache_warning'] = 'Elemento em Cache. As alterações não serão visíveis enquanto não forem aplicadas.';
-$_lang['fred.fe.content.element_screenshot_text'] = 'Drag and drop or paste an image here.';
+$_lang['fred.fe.content.element_screenshot_text'] = 'Click to upload, drag and drop, or paste from your clipboard.';
 
 $_lang['fred.fe.element_settings.unsaved_changes'] = 'Existem alerações não guardadas, tem a certeza?';
 
@@ -174,3 +175,4 @@ $_lang['fred.fe.err.pagetitle_ns'] = 'O título da página é obrigatório.';
 $_lang['fred.fe.err.alias_ns'] = 'O pseudónimo é obrigatório.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Contexto não encontrado.';
 $_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';
+$_lang['fred.fe.err.blueprints_incorrect_image_type'] = 'Incorrect image type.';
