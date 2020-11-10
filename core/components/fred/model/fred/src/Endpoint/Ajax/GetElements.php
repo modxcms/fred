@@ -59,8 +59,10 @@ class GetElements extends Endpoint
             $elementCriteria->where(
                 [
                     'category' => $category->id,
-                    'ElementTemplatesAccess.template' => $this->getClaim('template'),
-                    'OR:ElementTemplatesAccess.template:IS' => null,
+                    [
+                        'ElementTemplatesAccess.template' => $this->getClaim('template'),
+                        'OR:ElementTemplatesAccess.template:IS' => null,
+                    ]
                 ]
             );
             $elementCriteria->sortby($elementSort);
