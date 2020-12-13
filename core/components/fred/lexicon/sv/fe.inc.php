@@ -94,7 +94,7 @@ $_lang['fred.fe.blueprints.create_blueprint'] = 'Skapa layout';
 $_lang['fred.fe.blueprints.creating_blueprint'] = 'Skapar layout';
 $_lang['fred.fe.blueprints.category_public'] = 'Offentlig';
 $_lang['fred.fe.blueprints.category_rank'] = 'Rang';
-$_lang['fred.fe.blueprints.current_note'] = '* current template for this page';
+$_lang['fred.fe.blueprints.current_note'] = '* aktuell mall för den här sidan';
 
 $_lang['fred.fe.blueprints.blueprint_name'] = 'Namn';
 $_lang['fred.fe.blueprints.blueprint_description'] = 'Beskrivning';
@@ -104,7 +104,7 @@ $_lang['fred.fe.blueprints.blueprint_public'] = 'Offentlig';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Bygger innehåll efter layout';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Bild';
 $_lang['fred.fe.blueprints.blueprint_thumbnail'] = 'Blueprint Thumbnail';
-$_lang['fred.fe.blueprints.templates'] = 'Templates';
+$_lang['fred.fe.blueprints.templates'] = 'Mallar';
 
 $_lang['fred.fe.content.duplicate'] = 'Duplicera';
 $_lang['fred.fe.content.delete'] = 'Ta bort';
@@ -174,5 +174,5 @@ $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Det går inte att väl
 $_lang['fred.fe.err.pagetitle_ns'] = 'Sidtitel är obligatorisk.';
 $_lang['fred.fe.err.alias_ns'] = 'Alias är obligatoriskt.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Kontexten kunde inte hittas.';
-$_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';
-$_lang['fred.fe.err.blueprints_incorrect_image_type'] = 'Incorrect image type.';
+$_lang['fred.fe.err.elements_incorrect_image_type'] = 'Felaktig bildtyp.';
+$_lang['fred.fe.err.blueprints_incorrect_image_type'] = 'Felaktig bildtyp.';
