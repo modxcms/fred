@@ -224,10 +224,10 @@ final class RenderResource {
         $renderElements = $html->filter('[data-fred-render]');
         $renderElements->each(function(HtmlPageCrawler $node, $i) use ($item, $html) {
             $render = $node->attr('data-fred-render');
-            if ($render === 'false') {
-                $node->remove();
-            } else {
+            if (($render === 'true') || ($render === '1')) {
                 $node->removeAttribute('data-fred-render');
+            } else {
+                $node->remove();
             }
         });
 
