@@ -61,7 +61,7 @@ $_lang['fred.blueprints.quick_update'] = 'Быстрое обновление м
 $_lang['fred.blueprints.update'] = 'Обновление макета';
 $_lang['fred.blueprints.create'] = 'Создание макета';
 $_lang['fred.blueprints.theme'] = 'Тема';
-$_lang['fred.blueprints.templates'] = 'Templates';
+$_lang['fred.blueprints.templates'] = 'Шаблоны';
 
 $_lang['fred.blueprint_cateogries.all'] = 'Все категории';
 $_lang['fred.blueprint_categories.none'] = 'Категории не найдены.';
@@ -78,7 +78,7 @@ $_lang['fred.blueprint_categories.remove_confirm_singular'] = 'Вы уверен
 $_lang['fred.blueprint_categories.remove_confirm_empty'] = 'Вы уверены, что хотите удалить "[[+name]]" категорию макетов?';
 $_lang['fred.blueprint_categories.number_of_blueprints'] = '# Макеты';
 $_lang['fred.blueprint_categories.theme'] = 'Тема';
-$_lang['fred.blueprint_categories.templates'] = 'Templates';
+$_lang['fred.blueprint_categories.templates'] = 'Шаблоны';
 
 $_lang['fred.elements.none'] = 'Элементы не найдены.';
 $_lang['fred.elements.image'] = 'Изображение';
@@ -100,7 +100,7 @@ $_lang['fred.elements.duplicate'] = 'Дублировать элемент';
 $_lang['fred.elements.new_name'] = 'Новое имя';
 $_lang['fred.elements.has_override'] = 'Имеет переопределение';
 $_lang['fred.elements.theme'] = 'Тема';
-$_lang['fred.elements.templates'] = 'Templates';
+$_lang['fred.elements.templates'] = 'Шаблоны';
 
 $_lang['fred.rebuild.rebuild'] = 'Перестроить';
 $_lang['fred.rebuild.rebuild_desc'] = 'Нажмите кнопку Перестроить ниже, чтобы опубликовать изменения в обновленных элементах на всех существующих страницах сайта с поддержкой Fred.';
