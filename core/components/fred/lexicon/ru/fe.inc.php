@@ -104,7 +104,7 @@ $_lang['fred.fe.blueprints.blueprint_public'] = 'Публичный';
 $_lang['fred.fe.blueprints.building_content_from_blueprint'] = 'Создание контента из макета';
 $_lang['fred.fe.blueprints.blueprint_image'] = 'Изображение';
 $_lang['fred.fe.blueprints.blueprint_thumbnail'] = 'Blueprint Thumbnail';
-$_lang['fred.fe.blueprints.templates'] = 'Templates';
+$_lang['fred.fe.blueprints.templates'] = 'Шаблоны';
 
 $_lang['fred.fe.content.duplicate'] = 'Дубликат';
 $_lang['fred.fe.content.delete'] = 'Удалить';
@@ -174,5 +174,5 @@ $_lang['fred.fe.err.browse_folders_invalid_selection'] = 'Файлы не мог
 $_lang['fred.fe.err.pagetitle_ns'] = 'Необходимо указать заголовок.';
 $_lang['fred.fe.err.alias_ns'] = 'Необходимо указать алиас.';
 $_lang['fred.fe.err.resource_context_nf'] = 'Контекст не найден.';
-$_lang['fred.fe.err.elements_incorrect_image_type'] = 'Incorrect image type.';
-$_lang['fred.fe.err.blueprints_incorrect_image_type'] = 'Incorrect image type.';
+$_lang['fred.fe.err.elements_incorrect_image_type'] = 'Некорректный формат файла';
+$_lang['fred.fe.err.blueprints_incorrect_image_type'] = 'Некорректный формат файла';
