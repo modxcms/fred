@@ -120,7 +120,7 @@ $_lang['fred.element_categories.remove_confirm_empty'] = 'Вы уверены, �
 $_lang['fred.element_categories.duplicate'] = 'Дублировать категорию';
 $_lang['fred.element_categories.new_name'] = 'Новое имя';
 $_lang['fred.element_categories.theme'] = 'Тема';
-$_lang['fred.element_categories.templates'] = 'Templates';
+$_lang['fred.element_categories.templates'] = 'Шаблоны';
 
 $_lang['fred.element_option_sets.none'] = 'Наборы параметров не найдены.';
 $_lang['fred.element_option_sets.name'] = 'Имя';
@@ -209,7 +209,7 @@ $_lang['fred.themes.remove_media_source'] = 'Удалить Медиа-исто�
 $_lang['fred.themes.media_source_already_added'] = 'Медиа-источник уже добавлен';
 $_lang['fred.themes.media_source_already_added_desc'] = 'Этот медиа источник уже добавлен в процесс сборки.';
 $_lang['fred.themes.namespace'] = 'Пространство имён';
-$_lang['fred.themes.settings_prefix'] = 'Settings Prefix';
+$_lang['fred.themes.settings_prefix'] = 'Префикс настроек';
 $_lang['fred.themes.resolvers'] = 'Резолверы';
 $_lang['fred.themes.resolver'] = 'Резолвер';
 $_lang['fred.themes.add_resolver'] = 'Добавить резолвер';
@@ -266,7 +266,7 @@ $_lang['setting_fred.sidebar_open'] = 'Sidebar Open';
 $_lang['setting_fred.sidebar_open_desc'] = 'Open sidebar by default';
 $_lang['setting_fred.force_sidebar'] = 'Force Sidebar';
 $_lang['setting_fred.force_sidebar_desc'] = 'When enabled, user won\'t be able to close the sidebar.';
-$_lang['setting_fred.logout_url'] = 'Logout Link';
+$_lang['setting_fred.logout_url'] = 'Ссылка Выхода';
 $_lang['setting_fred.logout_url_desc'] = 'Custom logout link. If filled, users will redirect there instead of to the manager logout after clicking the logout button.';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Имя обязательно';
