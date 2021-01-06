@@ -157,7 +157,7 @@ class ElFinder extends Endpoint
             ];
         } else {
             $attributes[] = [
-                'pattern' => '/.php/',
+                'pattern' => '/\.php$/',
                 'read' => false,
                 'write' => false,
                 'locked' => true,
@@ -165,6 +165,7 @@ class ElFinder extends Endpoint
             ];
 
             foreach ($skipFiles as $file) {
+                $file = (substr( $file, 0, 1 ) === ".") ? '\\'.$file.'$' : $file;
                 $attributes[] = [
                     'pattern' => '/' . $file . '/',
                     'read' => false,
