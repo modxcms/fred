@@ -238,6 +238,7 @@ switch ($modx->event->name) {
                 theme: ' . $theme->id . ',
                 themeDir: "' . $theme->getThemeFolderUri() . '",
                 themeNamespace: "'. $theme->get('namespace') .'",
+                themeSettingsPrefix: "'. $theme->get('settingsPrefix') .'",
                 assetsUrl: "' . $fred->getOption('webAssetsUrl') . '",
                 managerUrl: "' . MODX_MANAGER_URL . '",
                 fredOffUrl: "' . str_replace('&amp;', '&', $modx->makeUrl($modx->resource->id, '', array_merge($get, ['fred' => 4]) , 'full')) . '",

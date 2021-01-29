@@ -254,7 +254,7 @@ export const getTemplateSettings = (cleanRender = false) => {
     return {
         theme_dir: '{{theme_dir}}',
         template: {
-            theme_dir: cleanRender ? `[[++${fredConfig.config.themeNamespace}.theme_dir]]` : fredConfig.config.themeDir
+            theme_dir: cleanRender ? `[[++${fredConfig.config.themeSettingsPrefix}.theme_dir]]` : fredConfig.config.themeDir
         }
     };
 };
@@ -263,7 +263,7 @@ export const valueParser = (value, clean = false) => {
     if (typeof value !== 'string') return value;
 
     if (clean === true) {
-        value = value.replace('{{theme_dir}}', `[[++${fredConfig.config.themeNamespace}.theme_dir]]`);
+        value = value.replace('{{theme_dir}}', `[[++${fredConfig.config.themeSettingsPrefix}.theme_dir]]`);
 
         return value;
     }
