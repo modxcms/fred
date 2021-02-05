@@ -1,1 +1,1 @@
-Fred 1.2.1 fixes an annoying issue where all Elements appeared in all categories. While great for making sure you know what all your options are, we concur with the bug reporter that, indeed, it's a bit overzealous. You can find the other new additions and bug fixes in the original [1.2 release announcement](https://github.com/modxcms/fred/releases/tag/1.2.0-pl).
+Fred 1.2.2 fixes some issues withnot assigning media source paths, elFinder hiding certain paths, and a bug with the fred-render function not working consistently. 
