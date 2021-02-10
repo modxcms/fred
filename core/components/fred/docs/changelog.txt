@@ -1,1 +1,1 @@
-Fred 1.2.2 fixes some issues withnot assigning media source paths, elFinder hiding certain paths, and a bug with the fred-render function not working consistently. 
+Fred 1.2.3 fixes an issue with some broken dependencies during last package build. 
