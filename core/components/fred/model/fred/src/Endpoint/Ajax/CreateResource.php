@@ -70,6 +70,14 @@ class CreateResource extends Endpoint
             'menuindex' => $menuindex,
         ];
 
+        if (isset($this->body['published']) && ($this->body['published'] !== null)) {
+            $props['published'] = $this->body['published'];
+        }
+
+        if (isset($this->body['hidemenu']) && ($this->body['hidemenu'] !== null)) {
+            $props['hidemenu'] = $this->body['hidemenu'];
+        }
+
         /** @var \modProcessorResponse $response */
         $response = $this->modx->runProcessor('resource/create', $props);
 

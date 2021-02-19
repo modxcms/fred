@@ -21,7 +21,7 @@ export const getTemplates = contextKey => {
     });
 };
 
-export const createResource = (parent, template, pagetitle, blueprint) => {
+export const createResource = (parent, template, pagetitle, blueprint, published = null, hidemenu = null) => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
         method: "post",
         headers: {
@@ -32,6 +32,8 @@ export const createResource = (parent, template, pagetitle, blueprint) => {
             template,
             pagetitle,
             blueprint,
+            published,
+            hidemenu,
             contextKey: fredConfig.config.contextKey
         })
     }).then(errorHandler)
@@ -39,17 +41,17 @@ export const createResource = (parent, template, pagetitle, blueprint) => {
 
 export const getResources = (currentResource = null, query = {}) => {
     let queryString = '';
-    
+
     if (currentResource !== null) {
         queryString += `&current=${currentResource}`;
     }
-    
+
     for (let key in query) {
         if (query.hasOwnProperty(key)) {
             queryString += `&${key}=${query[key]}`;
         }
     }
-    
+
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources${queryString}`).then(errorHandler)
 };
 
