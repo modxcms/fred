@@ -154,6 +154,7 @@ $_lang['fred.fe.err.blueprint_categories_ae_name'] = 'La Categoria Modello con q
 $_lang['fred.fe.err.resource_ns_parent'] = 'Il Genitore è obbligatorio';
 $_lang['fred.fe.err.resource_ns_template'] = 'Il Template è obbligatorio';
 $_lang['fred.fe.err.resource_ns_pagetitle'] = 'Il Titolo Pagina è obbligatorio';
+$_lang['fred.fe.err.resource_ae_pagetitle'] = 'Page Title already used';
 $_lang['fred.fe.err.resource_save_new'] = 'Errore nel creare una nuova risorsa';
 $_lang['fred.fe.err.resource_ns_id'] = 'Risorsa è obbligatoria';
 $_lang['fred.fe.err.resource_nf'] = 'Risorsa non trovata';

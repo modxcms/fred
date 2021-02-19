@@ -154,6 +154,7 @@ $_lang['fred.fe.err.blueprint_categories_ae_name'] = 'Já existe uma Categoria d
 $_lang['fred.fe.err.resource_ns_parent'] = 'O Pai é obrigatório';
 $_lang['fred.fe.err.resource_ns_template'] = 'O Modelo é obrigatório';
 $_lang['fred.fe.err.resource_ns_pagetitle'] = 'O título da página é obrigatório';
+$_lang['fred.fe.err.resource_ae_pagetitle'] = 'Page Title already used';
 $_lang['fred.fe.err.resource_save_new'] = 'Erro ao criar novo recurso';
 $_lang['fred.fe.err.resource_ns_id'] = 'O Recurso é obrigatório';
 $_lang['fred.fe.err.resource_nf'] = 'Recurso não encontrado';
