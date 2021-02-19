@@ -154,6 +154,7 @@ $_lang['fred.fe.err.blueprint_categories_ae_name'] = 'Det finns redan en layoutk
 $_lang['fred.fe.err.resource_ns_parent'] = 'Förälder är obligatorisk';
 $_lang['fred.fe.err.resource_ns_template'] = 'Mall är obligatorisk';
 $_lang['fred.fe.err.resource_ns_pagetitle'] = 'Sidtitel är obligatorisk';
+$_lang['fred.fe.err.resource_ae_pagetitle'] = 'Page Title already used';
 $_lang['fred.fe.err.resource_save_new'] = 'Ett fel inträffade när resursen skulle skapas';
 $_lang['fred.fe.err.resource_ns_id'] = 'Resurs är obligatorisk';
 $_lang['fred.fe.err.resource_nf'] = 'Resursen hittades inte';
