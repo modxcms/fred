@@ -154,6 +154,7 @@ $_lang['fred.fe.err.blueprint_categories_ae_name'] = 'Категория мак�
 $_lang['fred.fe.err.resource_ns_parent'] = 'Требуется указать родитель';
 $_lang['fred.fe.err.resource_ns_template'] = 'Шаблон обязателен';
 $_lang['fred.fe.err.resource_ns_pagetitle'] = 'Необходимо указать заголовок';
+$_lang['fred.fe.err.resource_ae_pagetitle'] = 'Page Title already used';
 $_lang['fred.fe.err.resource_save_new'] = 'Ошибка создания нового ресурса';
 $_lang['fred.fe.err.resource_ns_id'] = 'Требуется имя';
 $_lang['fred.fe.err.resource_nf'] = 'Ресурс не найден';
