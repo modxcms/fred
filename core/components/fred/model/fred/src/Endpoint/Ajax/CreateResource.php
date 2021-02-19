@@ -20,27 +20,27 @@ class CreateResource extends Endpoint
         if (!$this->modx->hasPermission('new_document')) {
             return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
-        
+
         if (!isset($this->body['parent'])) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_parent'));
         }
-        
+
         $parentId = intval($this->body['parent']);
 
         if (!isset($this->body['template'])) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_template'));
         }
-        
+
         if (empty($this->body['pagetitle'])) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_pagetitle'), ['pagetitle' => $this->modx->lexicon('fred.fe.err.resource_ns_pagetitle')]);
         }
-        
+
         if (empty($this->body['contextKey'])) {
             $context = 'web';
         } else {
             $context = $this->body['contextKey'];
         }
-        
+
         if (!empty($parentId)) {
             /** @var \modResource $parent */
             $parent = $this->modx->getObject('modResource', ['id' => intval($parentId)]);
@@ -54,33 +54,41 @@ class CreateResource extends Endpoint
         $c = $this->modx->newQuery('modResource');
         $c->where([
             'context_key' => $context,
-            'parent' => $parentId
+            'parent' => $parentId,
         ]);
         $c->sortby('menuindex', 'DESC');
         $c->limit(1);
         $lastResource = $this->modx->getObject('modResource', $c);
         $menuindex = $lastResource ? ($lastResource->menuindex + 1) : 0;
-        
+
         $props = [
             'context_key' => $context,
             'parent' => $parentId,
             'template' => $this->body['template'],
             'pagetitle' => $this->body['pagetitle'],
             'richtext' => 0,
-            'menuindex' => $menuindex
+            'menuindex' => $menuindex,
         ];
-        
+
+        /** @var \modProcessorResponse $response */
         $response = $this->modx->runProcessor('resource/create', $props);
-        
+
         if ($response->isError()) {
-            return $this->failure($this->modx->lexicon('fred.fe.err.resource_save_new'));
+            $fields = [];
+            /** @var \modProcessorResponseError $error */
+            foreach ($response->errors as $error) {
+                if (!empty($error->field) && ($error->field === 'alias')) {
+                    $fields['pagetitle'] = $this->modx->lexicon('fred.fe.err.resource_ae_pagetitle');
+                }
+            }
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_save_new'), $fields);
         }
-        
+
         $object = $response->getObject();
 
         /** @var \modResource $resource */
         $resource = $this->modx->getObject('modResource', $object['id']);
-        
+
         if (!empty($blueprint)) {
             $blueprintObject = $this->modx->getObject('FredBlueprint', $blueprint);
             if ($blueprintObject) {
@@ -88,15 +96,15 @@ class CreateResource extends Endpoint
 
                 $data['fingerprint'] = Utils::resourceFingerprint($resource);
                 $resource->setProperty('data', $data, 'fred');
-                
+
                 $renderer = new RenderResource($resource, $this->modx);
                 $renderer->render();
             }
         }
-        
+
         $data = [
             'message' => $this->modx->lexicon('fred.fe.pages.created'),
-            'url' => $this->getPreviewUrl($resource)
+            'url' => $this->getPreviewUrl($resource),
         ];
 
         return $this->success($data);
