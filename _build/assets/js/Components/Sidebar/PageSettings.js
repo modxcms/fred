@@ -221,8 +221,35 @@ export default class PageSettings extends SidebarPlugin {
 
         fredConfig.tvs.forEach(tv => {
             switch (tv.type) {
+                case 'select': 
+                    fields.appendChild(ui.select(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                case 'toggle':
+                    fields.appendChild(ui.toggle(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                case 'colorswatch':
+                    fields.appendChild(ui.colorSwatch(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                case 'colorpicker':
+                    fields.appendChild(ui.colorPicker(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                case 'slider':
+                    fields.appendChild(ui.slider(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                case 'page':
+                    fields.appendChild(ui.page(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                case 'tagger':
+                    fields.appendChild(ui.tagger(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
                 case 'image':
                     fields.appendChild(ui.image(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                case 'file':
+                    fields.appendChild(ui.file(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
+                case 'folder':
+                    fields.appendChild(ui.folder(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
                     break;
                 case 'textarea':
                     fields.appendChild(ui.area(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));

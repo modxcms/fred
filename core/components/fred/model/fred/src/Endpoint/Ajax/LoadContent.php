@@ -168,12 +168,14 @@ class LoadContent extends Endpoint
                     'type' => 'text'
                 ];
 
-                if (!empty($props['fred.type'])) {
-                    $def['type'] = $props['fred.type'];
+                if (!empty($props['fred.options'])) {
+                    $def['options'] = json_decode($props['fred.options']);
+                    unset($props['fred.options']);
                 }
-
-                if (!empty($props['fred.mediaSource'])) {
-                    $def['mediaSource'] = $props['fred.mediaSource'];
+                foreach($props as $k => $v){
+                    if(substr($k, 0, 5 ) === "fred."){
+                        $def[substr($k, 5)] = $v;
+                    }
                 }
 
                 $output['def'][] = $def;

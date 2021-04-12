@@ -164,6 +164,7 @@ input{
     border-radius: 2.5px 2.5px 0 0;
     border-bottom: 1px solid $border-light;
     &:focus {
+      color: $black;
       background-color: $white;
       border-bottom-color: $border;
       border-bottom-width: 2px;
@@ -369,7 +370,7 @@ select{
   -webkit-background-size: 10px;
   background-size: 10px;
   &:focus, &:active{
-    color: $white;
+    //color: $white;
     //background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAgNSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+LnN0MHtmaWxsOiNGRkZGRkY7fTwvc3R5bGU+PHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxMCw1IDUsMCAwLDUgIi8+PC9zdmc+);
   }
   &::-ms-expand{
