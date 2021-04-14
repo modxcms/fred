@@ -25,8 +25,8 @@ if (!@include_once (MODX_CORE_PATH . "model/modx/modx.class.php")) {
 ob_start();
 
 /* Create an instance of the modX class */
-$modx= new modX();
-if (!is_object($modx) || !($modx instanceof modX)) {
+$modx= new \MODX\Revolution\modX();
+if (!is_object($modx) || !($modx instanceof \MODX\Revolution\modX)) {
     ob_get_level() && @ob_end_flush();
     exit();
 }
@@ -36,12 +36,5 @@ $modx->startTime= $tStart;
 $modx->initialize('web');
 
 $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
-/** @var Fred $fred */
-$fred = $modx->getService(
-    'fred',
-    'Fred',
-    $corePath . 'model/fred/',
-    array(
-        'core_path' => $corePath
-    )
-);
+/** @var \Fred\Fred $fred */
+$fred = $modx->services->get('fred');

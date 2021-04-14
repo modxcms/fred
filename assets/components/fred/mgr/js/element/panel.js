@@ -7,9 +7,9 @@ fred.panel.Element = function (config) {
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/elements/update'
+            action: 'Fred\\Processors\\Elements\\Update'
         },
         useLoadingMask: true,
         items: this.getItems(config),
@@ -36,7 +36,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
             MODx.Ajax.request({
                 url: this.config.url,
                 params: {
-                    action: 'mgr/elements/get',
+                    action: 'Fred\\Processors\\Elements\\Get',
                     id: MODx.request.id
                 },
                 listeners: {
@@ -504,7 +504,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                 name: 'option_set',
                                                 hiddenName: 'option_set',
                                                 baseParams: {
-                                                    action: 'mgr/element_option_sets/getlist',
+                                                    action: 'Fred\\Processors\\ElementOptionSets\\GetList',
                                                     addEmpty: 1,
                                                     complete: 1
                                                 },
@@ -564,7 +564,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
         MODx.Ajax.request({
             url: this.config.url,
             params: {
-                action: 'mgr/element_option_sets/get',
+                action: 'Fred\\Processors\\ElementOptionSets\\Get',
                 id: optionSetId
             },
             listeners: {
@@ -615,7 +615,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
         var createOptionSet = MODx.load({
             xtype: 'fred-window-element-option-set',
             title: _('fred.element_option_sets.new_from_override'),
-            action: 'mgr/element_option_sets/create',
+            action: 'Fred\\Processors\\ElementOptionSets\\Create',
             record: record,
             showSaveCloseOnly: true,
             saveCloseBtnText: _('save'),

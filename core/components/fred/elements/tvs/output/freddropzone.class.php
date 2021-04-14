@@ -1,4 +1,7 @@
 <?php
+
+use MODX\Revolution\modTemplateVarOutputRender;
+
 if (!class_exists('FredDropZoneOutputRender')) {
     class FredDropZoneOutputRender extends modTemplateVarOutputRender
     {

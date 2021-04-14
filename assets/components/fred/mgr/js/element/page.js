@@ -10,7 +10,7 @@ fred.page.Element = function (config) {
             {
                 text: _('save'),
                 method: 'remote',
-                process: config.isUpdate ? 'mgr/elements/update' : 'mgr/elements/create',
+                process: config.isUpdate ? 'Fred\\Processors\\Elements\\Update' : 'Fred\\Processors\\Elements\\Create',
                 keys: [
                     {
                         key: MODx.config.keymap_save || 's',

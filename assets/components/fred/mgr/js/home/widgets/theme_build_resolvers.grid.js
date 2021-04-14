@@ -24,7 +24,7 @@ fred.grid.ThemeBuildResolvers = function (config) {
     fred.grid.ThemeBuildResolvers.superclass.constructor.call(this, config);
 
 };
-Ext.extend(fred.grid.ThemeBuildResolvers, fred.grid.LocalGearGrid, {
+Ext.extend(fred.grid.ThemeBuildResolvers, MODx.grid.LocalGrid, {
     _loadStore: function (config) {
         return new Ext.data.JsonStore({
             fields: config.fields,

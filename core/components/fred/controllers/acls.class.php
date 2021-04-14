@@ -8,6 +8,14 @@
  * file that was distributed with this source code.
  */
 
+use MODX\Revolution\modAccessContext;
+use MODX\Revolution\modAccessPermission;
+use MODX\Revolution\modAccessPolicy;
+use MODX\Revolution\modAccessPolicyTemplate;
+use MODX\Revolution\modAccessPolicyTemplateGroup;
+use MODX\Revolution\modContext;
+use MODX\Revolution\modUserGroup;
+
 require_once dirname(dirname(__FILE__)) . '/index.class.php';
 
 /**
@@ -19,14 +27,14 @@ class FredACLsManagerController extends FredBaseManagerController
     public function process(array $scriptProperties = array())
     {
         $modx = $this->modx;
-        
-        $group = $modx->getObject('modAccessPolicyTemplateGroup', ['name' => 'Admin']);
+
+        $group = $modx->getObject(modAccessPolicyTemplateGroup::class, ['name' => 'Admin']);
         if (!$group) return;
 
         /** @var modAccessPolicyTemplate $template */
-        $template = $modx->getObject('modAccessPolicyTemplate', ['name' => 'Fred', 'template_group' => $group->get('id')]);
+        $template = $modx->getObject(modAccessPolicyTemplate::class, ['name' => 'Fred', 'template_group' => $group->get('id')]);
         if (!$template) {
-            $template = $modx->newObject('modAccessPolicyTemplate');
+            $template = $modx->newObject(modAccessPolicyTemplate::class);
         }
 
         $template->set('name', 'Fred');
@@ -85,12 +93,12 @@ class FredACLsManagerController extends FredBaseManagerController
 
         foreach ($permissions as $permission) {
             /** @var modAccessPermission $obj */
-            $obj = $modx->getObject('modAccessPermission', ['template' => $template->get('id'), 'name' => $permission]);
-            
+            $obj = $modx->getObject(modAccessPermission::class, ['template' => $template->get('id'), 'name' => $permission]);
+
             if (!$obj) {
                 $obj = $modx->newObject('modAccessPermission');
             }
-            
+
             $obj->set('template', $template->get('id'));
             $obj->set('name', $permission);
             $obj->set('description', "fred.permissions.{$permission}");
@@ -98,9 +106,9 @@ class FredACLsManagerController extends FredBaseManagerController
         }
 
         /** @var modAccessPolicy $adminPolicy */
-        $adminPolicy = $modx->getObject('modAccessPolicy', ['name' => 'Fred Admin']);
+        $adminPolicy = $modx->getObject(modAccessPolicy::class, ['name' => 'Fred Admin']);
         if (!$adminPolicy) {
-            $adminPolicy = $modx->newObject('modAccessPolicy');
+            $adminPolicy = $modx->newObject(modAccessPolicy::class);
             $adminPolicy->set('name', 'Fred Admin');
             $adminPolicy->set('description', 'Administrator policy for Fred.');
             $adminPolicy->set('template', $template->get('id'));
@@ -117,23 +125,23 @@ class FredACLsManagerController extends FredBaseManagerController
         }
 
         /** @var modUserGroup $adminUserGroup */
-        $adminUserGroup = $modx->getObject('modUserGroup', ['id' => 1]);
+        $adminUserGroup = $modx->getObject(modUserGroup::class, ['id' => 1]);
         if ($adminUserGroup) {
             /** @var modContext[] $contexts */
-            $contexts = $modx->getIterator('modContext');
+            $contexts = $modx->getIterator(modContext::class);
             foreach ($contexts as $context) {
-                $contextAccess = $modx->getObject('modAccessContext', [
+                $contextAccess = $modx->getObject(modAccessContext::class, [
                     'target' => $context->get('key'),
                     'policy' => $adminPolicy->get('id'),
                     'principal_class' => 'modUserGroup',
                 ]);
 
                 if (!$contextAccess) {
-                    $contextAccess = $modx->newObject('modAccessContext');
+                    $contextAccess = $modx->newObject(modAccessContext::class);
                 }
 
                 $contextAccess->set('target', $context->get('key'));
-                $contextAccess->set('principal_class', 'modUserGroup');
+                $contextAccess->set('principal_class', modUserGroup::class);
                 $contextAccess->set('principal', 1);
                 $contextAccess->set('policy', $adminPolicy->get('id'));
                 $contextAccess->set('authority', 0);
@@ -142,9 +150,9 @@ class FredACLsManagerController extends FredBaseManagerController
         }
 
         /** @var modAccessPolicy $editorPolicy */
-        $editorPolicy = $modx->getObject('modAccessPolicy', ['name' => 'Fred Editor']);
+        $editorPolicy = $modx->getObject(modAccessPolicy::class, ['name' => 'Fred Editor']);
         if (!$editorPolicy) {
-            $editorPolicy = $modx->newObject('modAccessPolicy');
+            $editorPolicy = $modx->newObject(modAccessPolicy::class);
             $editorPolicy->set('name', 'Fred Editor');
             $editorPolicy->set('description', 'Editor policy for Fred.');
             $editorPolicy->set('template', $template->get('id'));

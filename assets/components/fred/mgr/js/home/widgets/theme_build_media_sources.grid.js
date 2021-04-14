@@ -38,7 +38,7 @@ fred.grid.ThemeBuildMediaSources = function (config) {
     fred.grid.ThemeBuildMediaSources.superclass.constructor.call(this, config);
 
 };
-Ext.extend(fred.grid.ThemeBuildMediaSources, fred.grid.LocalGearGrid, {
+Ext.extend(fred.grid.ThemeBuildMediaSources, MODx.grid.LocalGrid, {
     _loadStore: function (config) {
         return new Ext.data.JsonStore({
             fields: config.fields,
@@ -59,9 +59,9 @@ Ext.extend(fred.grid.ThemeBuildMediaSources, fred.grid.LocalGearGrid, {
     fillGrid: function (prepare) {
         if (this.config && this.config.initValue && Array.isArray(this.config.initValue)) {
             MODx.Ajax.request({
-                url: fred.config.connectorUrl,
+                url: MODx.config.connector_url,
                 params: {
-                    action: 'mgr/media_sources/getlist',
+                    action: 'Fred\\Processors\\MediaSources\\GetList',
                     'id[]': this.config.initValue
                 },
                 listeners: {
@@ -69,7 +69,7 @@ Ext.extend(fred.grid.ThemeBuildMediaSources, fred.grid.LocalGearGrid, {
                         fn: function (r) {
                            if (r.results && Array.isArray(r.results)) {
                                prepare.store.loadData(r.results);
-                           } 
+                           }
                         },
                         scope: this
                     }
@@ -80,7 +80,7 @@ Ext.extend(fred.grid.ThemeBuildMediaSources, fred.grid.LocalGearGrid, {
 
     addMediaSource: function(btn, e) {
         var self = this;
-        
+
         var addMediaSource = MODx.load({
             xtype: 'fred-window-theme-build-media-source',
             listeners: {
@@ -96,16 +96,16 @@ Ext.extend(fred.grid.ThemeBuildMediaSources, fred.grid.LocalGearGrid, {
                             MODx.msg.alert(_('fred.themes.media_source_already_added'), _('fred.themes.media_source_already_added_desc'));
                             return false;
                         }
-                        
+
                         var field = this.find('name', 'source');
                         if (field[0] === undefined) return false;
 
                         field = field[0];
-                        
+
                         var fieldData = field.store.getById(values.source).data;
-                        
+
                         self.store.add(new self.store.recordType(fieldData));
-                        
+
                         this.close();
                         return false;
                     }

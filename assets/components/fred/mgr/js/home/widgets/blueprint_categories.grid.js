@@ -3,7 +3,7 @@ fred.grid.BlueprintCategories = function (config) {
     config.permission = config.permission || {};
 
     if (config.permission.fred_blueprint_categories_save) {
-        config.save_action = 'mgr/blueprint_categories/updatefromgrid';
+        config.save_action = 'Fred\\Processors\\BlueprintCategories\\UpdateFromGrid';
         config.autosave = true;
         config.ddGroup = 'FredBlueprintCategoriesDDGroup';
         config.enableDragDrop = true;
@@ -16,7 +16,7 @@ fred.grid.BlueprintCategories = function (config) {
     this.homePanel = config.homePanel;
 
     var baseParams = {
-        action: 'mgr/blueprint_categories/getlist',
+        action: 'Fred\\Processors\\BlueprintCategories\\GetList',
         sort: 'rank',
         dir: 'asc'
     };
@@ -27,7 +27,7 @@ fred.grid.BlueprintCategories = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints', 'theme', 'theme_name', 'templates'],
@@ -92,7 +92,7 @@ fred.grid.BlueprintCategories = function (config) {
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
 };
-Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
+Ext.extend(fred.grid.BlueprintCategories, MODx.grid.Grid, {
     getMenu: function () {
         var m = [];
 
@@ -224,7 +224,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
             xtype: 'fred-window-blueprint-category',
             canPublic: this.config.permission.fred_blueprint_categories_create_public,
             title: _('fred.blueprint_categories.update'),
-            action: 'mgr/blueprint_categories/update',
+            action: 'Fred\\Processors\\BlueprintCategories\\Update',
             isUpdate: true,
             record: this.menu.record,
             listeners: {
@@ -265,7 +265,7 @@ Ext.extend(fred.grid.BlueprintCategories, fred.grid.GearGrid, {
             text: text,
             url: this.config.url,
             params: {
-                action: 'mgr/blueprint_categories/remove',
+                action: 'Fred\\Processors\\BlueprintCategories\\Remove',
                 id: this.menu.record.id
             },
             listeners: {

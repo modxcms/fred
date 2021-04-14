@@ -3,7 +3,7 @@ fred.grid.ElementOptionSets = function (config) {
     config.permission = config.permission || {};
 
     if (config.permission.fred_element_option_sets_save) {
-        config.save_action = 'mgr/element_option_sets/updatefromgrid';
+        config.save_action = 'Fred\\Processors\\ElementOptionSets\\UpdateFromGrid';
         config.autosave = true;
     }
 
@@ -14,7 +14,7 @@ fred.grid.ElementOptionSets = function (config) {
     this.homePanel = config.homePanel;
 
     var baseParams = {
-        action: 'mgr/element_option_sets/getlist'
+        action: 'Fred\\Processors\\ElementOptionSets\\GetList'
     };
 
     var initialThemeFilter = this.homePanel.state.get('fred-home-panel-filter-theme', '');
@@ -23,7 +23,7 @@ fred.grid.ElementOptionSets = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'complete', 'data', 'theme', 'theme_name'],
@@ -68,7 +68,7 @@ fred.grid.ElementOptionSets = function (config) {
     });
     fred.grid.ElementOptionSets.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.grid.ElementOptionSets, fred.grid.GearGrid, {
+Ext.extend(fred.grid.ElementOptionSets, MODx.grid.Grid, {
 
     getMenu: function () {
         var m = [];
@@ -186,7 +186,7 @@ Ext.extend(fred.grid.ElementOptionSets, fred.grid.GearGrid, {
             text: _('fred.element_option_sets.remove_confirm', {name: this.menu.record.name}),
             url: this.config.url,
             params: {
-                action: 'mgr/element_option_sets/remove',
+                action: 'Fred\\Processors\\ElementOptionSets\\Remove',
                 id: this.menu.record.id
             },
             listeners: {

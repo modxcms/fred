@@ -135,9 +135,9 @@ fred.combo.BlueprintCategories = function (config) {
         valueField: 'id',
         fields: ['name', 'id'],
         pageSize: 20,
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/blueprint_categories/getlist',
+            action: 'Fred\\Processors\\BlueprintCategories\\GetList',
             addAll: config.addAll || 0,
             theme: config.theme || null,
         }
@@ -161,9 +161,9 @@ fred.combo.ElementCategories = function (config) {
         valueField: 'id',
         fields: ['name', 'id'],
         pageSize: 20,
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/element_categories/getlist',
+            action: 'Fred\\Processors\\ElementCategories\\GetList',
             addAll: config.addAll || 0,
             theme: config.theme || null,
         }
@@ -198,9 +198,9 @@ fred.combo.ElementOptionSets = function (config) {
             '<tpl if="description"> - <span style="font-style:italic">{description:htmlEncode}</span></tpl>',
             '</div></tpl>'),
         pageSize: 20,
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/element_option_sets/getlist',
+            action: 'Fred\\Processors\\ElementOptionSets\\GetList',
             addEmpty: config.addEmpty || 0
         }
     });
@@ -229,9 +229,9 @@ fred.combo.Themes = function (config) {
         fields: ['name', 'id', 'theme_folder'],
         pageSize: 20,
         isUpdate: false,
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/themes/getlist',
+            action: 'Fred\\Processors\\Themes\\GetList',
             addAll: config.addAll || 0
         }
     });
@@ -279,9 +279,9 @@ fred.combo.Template = function (config, getStore) {
         editable: true,
         forceSelection: false,
         pageSize: 20,
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/extra/gettemplates',
+            action: 'Fred\\Processors\\Extra\\GetTemplates',
             hideUsed: 1
         }
     });
@@ -339,9 +339,9 @@ fred.combo.ThemedTemplate = function (config, getStore) {
         editable: true,
         forceSelection: false,
         pageSize: 20,
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/extra/getthemedtemplates',
+            action: 'Fred\\Processors\\Extra\\GetThemedTemplates',
             theme: config.theme
         }
     });
@@ -399,9 +399,9 @@ fred.combo.RootCategory = function (config, getStore) {
         editable: true,
         forceSelection: false,
         pageSize: 20,
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/extra/getcategories',
+            action: 'Fred\\Processors\\Extra\\GetCategories',
             parent: 0
         }
     });
@@ -438,13 +438,13 @@ fred.combo.InstalledPackages = function (config) {
         fields: ['package_name'],
         pageSize: 20,
         isUpdate: false,
-        url: fred.config.connectorUrl,
         editable: true,
         forceSelection: false,
         typeAhead: false,
         selectOnFocus: false,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/extra/getinstalledpackages'
+            action: 'Fred\\Processors\\Extra\\GetInstalledPackages'
         }
     });
     fred.combo.Themes.superclass.constructor.call(this, config);
@@ -469,9 +469,9 @@ fred.combo.Blueprint = function (config) {
         valueField: 'id',
         fields: ['name', 'id'],
         pageSize: 20,
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/blueprints/getlist',
+            action: 'Fred\\Processors\\Blueprints\\GetList',
             addNone: config.addNone || 0,
             complete: (config.complete !== undefined) ? config.complete : '',
             public: (config.public !== undefined) ? config.public : '',

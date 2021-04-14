@@ -6,9 +6,9 @@ fred.panel.ElementOptionSet = function (config) {
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/element_option_sets/update'
+            action: 'Fred\\Processors\\ElementOptionSets\\Update'
         },
         useLoadingMask: true,
         items: this.getItems(config),
@@ -32,7 +32,7 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
             MODx.Ajax.request({
                 url: this.config.url,
                 params: {
-                    action: 'mgr/element_option_sets/get',
+                    action: 'Fred\\Processors\\ElementOptionSets\\Get',
                     id: MODx.request.id
                 },
                 listeners: {

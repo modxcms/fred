@@ -8,16 +8,19 @@
  * file that was distributed with this source code.
  */
 
-$corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
-/** @var Fred $fred */
-$fred = $modx->getService(
-    'fred',
-    'Fred',
-    $corePath . 'model/fred/',
-    [
-        'core_path' => $corePath
-    ]
-);
+/**
+ * @var \MODX\Revolution\modX $modx
+ * @var string $mode
+ * @var \MODX\Revolution\modResource $resource
+ */
+
+/** @var \Fred\Fred $fred */
+
+use Fred\Model\FredElementRTEConfig;
+use Fred\Model\FredThemedTemplate;
+use MODX\Revolution\modTemplate;
+
+$fred = $modx->services->get('fred');
 
 $disabledClassKeys = ['modWebLink', 'modSymLink'];
 
@@ -202,7 +205,7 @@ switch ($modx->event->name) {
             }
 
             /** @var FredElementRTEConfig[] $rteConfigs */
-            $rteConfigs = $modx->getIterator('FredElementRTEConfig');
+            $rteConfigs = $modx->getIterator(FredElementRTEConfig::class);
             $rteConfigString = [];
 
             foreach ($rteConfigs as $rteConfig) {
@@ -227,7 +230,7 @@ switch ($modx->event->name) {
 
             $jwt = \Firebase\JWT\JWT::encode($payload, $fred->getSecret());
 
-            $versionHash = substr(md5(Fred::VERSION), 0, 6);
+            $versionHash = substr(md5(\Fred\Fred::VERSION), 0, 6);
 
             $fredContent = '
         <script type="text/javascript" src="' . $fred->getOption('webAssetsUrl') . 'fred.min.js?v=' . $versionHash . '"></script>
@@ -368,7 +371,7 @@ switch ($modx->event->name) {
         $templateId = $template->id;
         if (!empty($templateId)) {
             /** @var FredThemedTemplate $themedTemplate */
-            $themedTemplate = $modx->getObject('FredThemedTemplate', ['template' => $templateId]);
+            $themedTemplate = $modx->getObject(FredThemedTemplate::class, ['template' => $templateId]);
             if ($themedTemplate) {
                 $themedTemplate->remove();
             }

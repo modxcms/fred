@@ -3,7 +3,7 @@ fred.grid.Blueprints = function (config) {
     config.permission = config.permission || {};
 
     if (config.permission.fred_blueprints_save) {
-        config.save_action = 'mgr/blueprints/updatefromgrid';
+        config.save_action = 'Fred\\Processors\\Blueprints\\UpdateFromGrid';
         config.autosave = true;
         config.ddGroup = 'FredBlueprintsDDGroup';
         config.enableDragDrop = true;
@@ -16,7 +16,7 @@ fred.grid.Blueprints = function (config) {
     this.homePanel = config.homePanel;
 
     var baseParams = {
-        action: 'mgr/blueprints/getlist',
+        action: 'Fred\\Processors\\Blueprints\\GetList',
         sort: 'rank',
         dir: 'asc'
     };
@@ -27,7 +27,7 @@ fred.grid.Blueprints = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname', 'theme_id', 'theme_name', 'theme_theme_folder'],
@@ -141,7 +141,7 @@ fred.grid.Blueprints = function (config) {
         categoryFilter.fireEvent('select', categoryFilter, recordCategory);
     }, this);
 };
-Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
+Ext.extend(fred.grid.Blueprints, MODx.grid.Grid, {
 
     getMenu: function () {
         var m = [];
@@ -274,7 +274,7 @@ Ext.extend(fred.grid.Blueprints, fred.grid.GearGrid, {
             text: _('fred.blueprints.remove_confirm', {name: this.menu.record.name}),
             url: this.config.url,
             params: {
-                action: 'mgr/blueprints/remove',
+                action: 'Fred\\Processors\\Blueprints\\Remove',
                 id: this.menu.record.id
             },
             listeners: {

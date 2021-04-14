@@ -6,9 +6,9 @@ fred.panel.ElementRTEConfig = function (config) {
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/element_rte_configs/update'
+            action: 'Fred\\Processors\\ElementRTEConfigs\\Update'
         },
         useLoadingMask: true,
         items: this.getItems(config),
@@ -32,7 +32,7 @@ Ext.extend(fred.panel.ElementRTEConfig, MODx.FormPanel, {
             MODx.Ajax.request({
                 url: this.config.url,
                 params: {
-                    action: 'mgr/element_rte_configs/get',
+                    action: 'Fred\\Processors\\ElementRTEConfigs\\Get',
                     id: MODx.request.id
                 },
                 listeners: {

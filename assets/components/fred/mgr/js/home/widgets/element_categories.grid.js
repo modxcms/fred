@@ -5,7 +5,7 @@ fred.grid.ElementCategories = function (config) {
     if (config.permission.fred_element_category_save) {
         config.ddGroup = 'FredElementCategoriesDDGroup';
         config.enableDragDrop = true;
-        config.save_action = 'mgr/element_categories/updatefromgrid';
+        config.save_action = 'Fred\\Processors\\ElementCategories\\UpdateFromGrid';
         config.autosave = true;
     }
 
@@ -16,7 +16,7 @@ fred.grid.ElementCategories = function (config) {
     this.homePanel = config.homePanel;
 
     var baseParams = {
-        action: 'mgr/element_categories/getlist',
+        action: 'Fred\\Processors\\ElementCategories\\GetList',
         sort: 'rank',
         dir: 'asc'
     };
@@ -27,7 +27,7 @@ fred.grid.ElementCategories = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'rank', 'elements', 'theme_name', 'theme', 'templates'],
@@ -75,7 +75,7 @@ fred.grid.ElementCategories = function (config) {
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
 };
-Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
+Ext.extend(fred.grid.ElementCategories, MODx.grid.Grid, {
     getMenu: function () {
         var m = [];
 
@@ -202,7 +202,7 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
         var updateCategory = MODx.load({
             xtype: 'fred-window-element-category',
             title: _('fred.element_categories.update'),
-            action: 'mgr/element_categories/update',
+            action: 'Fred\\Processors\\ElementCategories\\Update',
             isUpdate: true,
             record: this.menu.record,
             listeners: {
@@ -228,7 +228,7 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
         var duplicateCategory = MODx.load({
             xtype: 'fred-window-element-category-duplicate',
             title: _('fred.element_categories.duplicate'),
-            action: 'mgr/element_categories/duplicate',
+            action: 'Fred\\Processors\\ElementCategories\\Duplicate',
             isUpdate: true,
             record: this.menu.record,
             listeners: {
@@ -266,7 +266,7 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
             text: text,
             url: this.config.url,
             params: {
-                action: 'mgr/element_categories/remove',
+                action: 'Fred\\Processors\\ElementCategories\\Remove',
                 id: this.menu.record.id
             },
             listeners: {
@@ -360,7 +360,7 @@ Ext.extend(fred.grid.ElementCategories, fred.grid.GearGrid, {
                     MODx.Ajax.request({
                         url: fred.config.connectorUrl,
                         params: {
-                            action: 'mgr/element_categories/ddreorder',
+                            action: 'Fred\\Processors\\ElementCategories\\DDReorder',
                             categoryId: currentElement.id,
                             themeId: currentElement.data.theme,
                             oldIndex: oldIndex,

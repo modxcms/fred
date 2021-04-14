@@ -3,7 +3,7 @@ fred.grid.ElementRTEConfigs = function (config) {
     config.permission = config.permission || {};
 
     if (config.permission.fred_element_rte_config_save) {
-        config.save_action = 'mgr/element_rte_configs/updatefromgrid';
+        config.save_action = 'Fred\\Processors\\ElementRTEConfigs\\UpdateFromGrid';
         config.autosave = true;
     }
 
@@ -14,7 +14,7 @@ fred.grid.ElementRTEConfigs = function (config) {
     this.homePanel = config.homePanel;
 
     var baseParams = {
-        action: 'mgr/element_rte_configs/getlist'
+        action: 'Fred\\Processors\\ElementRTEConfigs\\GetList'
     };
 
     var initialThemeFilter = this.homePanel.state.get('fred-home-panel-filter-theme', '');
@@ -23,7 +23,7 @@ fred.grid.ElementRTEConfigs = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'complete', 'data', 'theme', 'theme_name'],
@@ -61,7 +61,7 @@ fred.grid.ElementRTEConfigs = function (config) {
     });
     fred.grid.ElementRTEConfigs.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
+Ext.extend(fred.grid.ElementRTEConfigs, MODx.grid.Grid, {
 
     getMenu: function () {
         var m = [];
@@ -168,7 +168,7 @@ Ext.extend(fred.grid.ElementRTEConfigs, fred.grid.GearGrid, {
             text: _('fred.element_rte_configs.remove_confirm', {name: this.menu.record.name}),
             url: this.config.url,
             params: {
-                action: 'mgr/element_rte_configs/remove',
+                action: 'Fred\\Processors\\ElementRTEConfigs\\Remove',
                 id: this.menu.record.id
             },
             listeners: {

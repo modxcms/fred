@@ -5,7 +5,7 @@ fred.grid.Elements = function (config) {
     if (config.permission.fred_element_save) {
         config.ddGroup = 'FredElementsDDGroup';
         config.enableDragDrop = true;
-        config.save_action = 'mgr/elements/updatefromgrid';
+        config.save_action = 'Fred\\Elements\\UpdateFromGrid';
         config.autosave = true;
     }
 
@@ -16,7 +16,7 @@ fred.grid.Elements = function (config) {
     this.homePanel = config.homePanel;
 
     var baseParams = {
-        action: 'mgr/elements/getlist',
+        action: 'Fred\\Processors\\Elements\\GetList',
         sort: 'rank',
         dir: 'asc'
     };
@@ -27,7 +27,7 @@ fred.grid.Elements = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name', 'theme_theme_folder', 'templates'],
@@ -138,7 +138,7 @@ fred.grid.Elements = function (config) {
         categoryFilter.fireEvent('select', categoryFilter, recordCategory);
     }, this);
 };
-Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
+Ext.extend(fred.grid.Elements, MODx.grid.Grid, {
 
     getMenu: function () {
         var m = [];
@@ -267,7 +267,7 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
             text: _('fred.elements.remove_confirm', {name: this.menu.record.name}),
             url: this.config.url,
             params: {
-                action: 'mgr/elements/remove',
+                action: 'Fred\\Processors\\Elements\\Remove',
                 id: this.menu.record.id
             },
             listeners: {
@@ -472,7 +472,7 @@ Ext.extend(fred.grid.Elements, fred.grid.GearGrid, {
                     MODx.Ajax.request({
                         url: fred.config.connectorUrl,
                         params: {
-                            action: 'mgr/elements/ddreorder',
+                            action: 'Fred\\Processors\\Elements\\DDReorder',
                             elementId: currentElement.id,
                             categoryId: currentElement.data.category,
                             oldIndex: oldIndex,

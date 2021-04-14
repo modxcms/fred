@@ -2,11 +2,11 @@ fred.grid.MediaSources = function (config) {
     config = config || {};
 
     Ext.applyIf(config, {
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/media_sources/getlist'
+            action: 'Fred\\Processors\\MediaSources\\GetList'
         },
-        save_action: 'mgr/media_sources/updatefromgrid',
+        save_action: 'Fred\\Processors\\MediaSources\\UpdateFromGrid',
         autosave: true,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'fred', 'fredReadOnly'],
@@ -82,10 +82,10 @@ fred.grid.MediaSources = function (config) {
     });
     fred.grid.MediaSources.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.grid.MediaSources, fred.grid.GearGrid, {
+Ext.extend(fred.grid.MediaSources, MODx.grid.Grid, {
     getMenu: function () {
         var m = [];
-        
+
         m.push({
             text: _('fred.media_sources.update'),
             handler: this.updateMediaSource
@@ -99,7 +99,7 @@ Ext.extend(fred.grid.MediaSources, fred.grid.GearGrid, {
     },
 
     updateMediaSource: function() {
-        MODx.loadPage('source/update', 'id='+this.menu.record.id);                 
+        MODx.loadPage('source/update', 'id='+this.menu.record.id);
     },
 
     search: function (field, value) {

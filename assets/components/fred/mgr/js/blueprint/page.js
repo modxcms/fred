@@ -2,7 +2,7 @@ fred.page.Blueprint = function (config) {
     config = config || {};
     config.permission = config.permission || {};
 
-    config.isUpdate = (MODx.request.id) ? true : false;
+    config.isUpdate = !!MODx.request.id;
 
     Ext.applyIf(config, {
         formpanel: 'fred-panel-blueprint',
@@ -10,7 +10,7 @@ fred.page.Blueprint = function (config) {
             {
                 text: _('save'),
                 method: 'remote',
-                process: 'mgr/blueprints/update',
+                process: 'Fred\\Processors\\Blueprints\\Update',
                 keys: [
                     {
                         key: MODx.config.keymap_save || 's',

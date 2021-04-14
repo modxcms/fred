@@ -1,15 +1,15 @@
 fred.grid.ThemedTemplates = function (config) {
     config = config || {};
     config.permission = config.permission || {};
-    
+
     if (!config.permission.fred_themed_templates_save && !config.permission.fred_themed_templates_delete) {
         config.showGear = false;
     }
-    
+
     Ext.applyIf(config, {
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/themed_templates/getlist'
+            action: 'Fred\\Processors\\ThemedTemplates\\GetList'
         },
         preventSaveRefresh: false,
         fields: ['id', 'theme', 'template', 'theme_name', 'template_templatename', 'default_blueprint', 'default_blueprint_name'],
@@ -42,7 +42,7 @@ fred.grid.ThemedTemplates = function (config) {
                 width: 80,
                 renderer: function(value) {
                     if (!value) return _('fred.global.none');
-                    
+
                     return value;
                 }
             }
@@ -55,7 +55,7 @@ fred.grid.ThemedTemplates = function (config) {
         this.getBottomToolbar().changePage(1);
     }, this);
 };
-Ext.extend(fred.grid.ThemedTemplates, fred.grid.GearGrid, {
+Ext.extend(fred.grid.ThemedTemplates, MODx.grid.Grid, {
     getMenu: function () {
         var m = [];
 
@@ -65,31 +65,31 @@ Ext.extend(fred.grid.ThemedTemplates, fred.grid.GearGrid, {
                 handler: this.updateTheme
             });
         }
-        
+
         if (this.config.permission.fred_themed_templates_delete) {
             if (m.length > 0) {
                 m.push('-');
             }
-            
+
             m.push({
                 text: _('fred.themed_templates.remove'),
                 handler: this.unassignTheme
             });
         }
-        
+
         return m;
     },
-    
+
     getTbar: function(config) {
         var output = [];
-        
+
         if (config.permission.fred_themed_templates_save) {
             output.push({
                 text: _('fred.themed_templates.create'),
                 handler: this.assignTheme
             });
         }
-        
+
         return output;
     },
 
@@ -113,11 +113,11 @@ Ext.extend(fred.grid.ThemedTemplates, fred.grid.GearGrid, {
 
     updateTheme: function (btn, e) {
         this.menu.record.template_value = this.menu.record.template;
-        
+
         var updateTheme = MODx.load({
             xtype: 'fred-window-themed-template',
             title: _('fred.themed_templates.update'),
-            action: 'mgr/themed_templates/update',
+            action: 'Fred\\Processors\\ThemedTemplates\\Update',
             isUpdate: true,
             record: this.menu.record,
             listeners: {
@@ -145,7 +145,7 @@ Ext.extend(fred.grid.ThemedTemplates, fred.grid.GearGrid, {
             text: _('fred.themed_templates.remove_confirm', {template: this.menu.record.template_templatename, theme: this.menu.record.theme_name}),
             url: this.config.url,
             params: {
-                action: 'mgr/themed_templates/remove',
+                action: 'Fred\\Processors\\ThemedTemplates\\Remove',
                 template: this.menu.record.template
             },
             listeners: {

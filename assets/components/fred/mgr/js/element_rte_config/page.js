@@ -9,7 +9,7 @@ fred.page.ElementRTEConfig = function (config) {
             {
                 text: _('save'),
                 method: 'remote',
-                process: config.isUpdate ? 'mgr/element_rte_configs/update' : 'mgr/element_rte_configs/create',
+                process: config.isUpdate ? 'Fred\\Processors\\ElementRTEConfigs\\Update' : 'Fred\\Processors\\ElementRTEConfigs\\Create',
                 keys: [
                     {
                         key: MODx.config.keymap_save || 's',

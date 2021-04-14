@@ -27,7 +27,7 @@ fred.grid.Dependencies = function (config) {
                 if ((data.field === 'name') && (data.value === 'fred')) {
                     return false;
                 }
-                
+
                 return true;
             },
             validateedit: function(data) {
@@ -39,12 +39,12 @@ fred.grid.Dependencies = function (config) {
                         return false;
                     }
                 });
-                
+
                 if (!valid) {
                     MODx.msg.alert('Error', 'Package Name must be unique');
                     return false;
                 }
-                
+
                 return valid;
             }
         },
@@ -58,7 +58,7 @@ fred.grid.Dependencies = function (config) {
     fred.grid.Dependencies.superclass.constructor.call(this, config);
 
 };
-Ext.extend(fred.grid.Dependencies, fred.grid.LocalGearGrid, {
+Ext.extend(fred.grid.Dependencies, MODx.grid.LocalGrid, {
     _loadStore: function (config) {
         return new Ext.data.JsonStore({
             fields: config.fields,
@@ -95,7 +95,7 @@ Ext.extend(fred.grid.Dependencies, fred.grid.LocalGearGrid, {
             MODx.msg.alert(_('fred.err.fred_dependency_title'), _('fred.err.fred_dependency_body'));
             return;
         }
-        
+
         this.store.removeAt(this.menu.recordIndex);
     }
 });

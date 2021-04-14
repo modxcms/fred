@@ -8,28 +8,17 @@
  * file that was distributed with this source code.
  */
 
-require_once dirname(__FILE__) . '/model/fred/fred.class.php';
-
 /**
  * @package fred
  */
 abstract class FredBaseManagerController extends modExtraManagerController
 {
-    /** @var Fred $fred */
+    /** @var \Fred\Fred $fred */
     public $fred;
 
     public function initialize()
     {
-        $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
-        $this->fred = $this->modx->getService(
-            'fred',
-            'Fred',
-            $corePath . 'model/fred/',
-            array(
-                'core_path' => $corePath
-            )
-        );
-
+        $this->fred = $this->modx->services->get('fred');
 
         $this->addCss($this->fred->getOption('cssUrl') . 'fred.css');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'fred.js');
@@ -37,7 +26,6 @@ abstract class FredBaseManagerController extends modExtraManagerController
         $this->addHtml('<script type="text/javascript">
             Ext.onReady(function() {
                 fred.config = ' . $this->modx->toJSON($this->fred->options) . ';
-                fred.config.connector_url = "' . $this->fred->getOption('connectorUrl') . '";
             });
         </script>');
 

@@ -3,7 +3,7 @@ fred.grid.Themes = function (config) {
     config.permission = config.permission || {};
 
     if (config.permission.fred_themes_save) {
-        config.save_action = 'mgr/themes/updatefromgrid';
+        config.save_action = 'Fred\\Processors\\Themes\\UpdateFromGrid';
         config.autosave = true;
     }
 
@@ -12,9 +12,9 @@ fred.grid.Themes = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/themes/getlist'
+            action: 'Fred\\Processors\\Themes\\GetList'
         },
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace', 'settingsPrefix'],
@@ -82,7 +82,7 @@ fred.grid.Themes = function (config) {
     });
     fred.grid.Themes.superclass.constructor.call(this, config);
 };
-Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
+Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
     getMenu: function () {
         var m = [];
 
@@ -190,7 +190,7 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
         var updateTheme = MODx.load({
             xtype: 'fred-window-theme',
             title: _('fred.themes.update'),
-            action: 'mgr/themes/update',
+            action: 'Fred\\Processors\\Themes\\Update',
             isUpdate: true,
             record: this.menu.record,
             listeners: {
@@ -228,7 +228,7 @@ Ext.extend(fred.grid.Themes, fred.grid.GearGrid, {
         var buildTheme = MODx.load({
             xtype: 'fred-window-theme-build',
             title: _('fred.themes.build'),
-            action: 'mgr/themes/build',
+            action: 'Fred\\Processors\\Themes\\Build',
             isUpdate: true,
             record: this.menu.record.config,
             listeners: {

@@ -9,7 +9,7 @@ fred.page.ElementOptionSet = function (config) {
             {
                 text: _('save'),
                 method: 'remote',
-                process: config.isUpdate ? 'mgr/element_option_sets/update' : 'mgr/element_option_sets/create',
+                process: config.isUpdate ? 'Fred\\Processors\\ElementOptionSets\\Update' : 'Fred\\Processors\\ElementOptionSets\\Create',
                 keys: [
                     {
                         key: MODx.config.keymap_save || 's',

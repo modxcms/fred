@@ -7,9 +7,9 @@ fred.panel.Blueprint = function (config) {
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
-        url: fred.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams: {
-            action: 'mgr/blueprints/update'
+            action: 'Fred\\Processors\\Blueprints\\Update'
         },
         useLoadingMask: true,
         items: this.getItems(config),
@@ -36,7 +36,7 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
             MODx.Ajax.request({
                 url: this.config.url,
                 params: {
-                    action: 'mgr/blueprints/get',
+                    action: 'Fred\\Processors\\Blueprints\\Get',
                     id: MODx.request.id
                 },
                 listeners: {
