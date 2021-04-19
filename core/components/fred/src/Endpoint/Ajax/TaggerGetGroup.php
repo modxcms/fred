@@ -13,7 +13,7 @@ namespace Fred\Endpoint\Ajax;
 class TaggerGetGroup extends Endpoint
 {
     protected $allowedMethod = ['OPTIONS', 'GET'];
-    
+
     public function process()
     {
         $group = isset($_GET['group']) ? intval($_GET['group']) : 0;
@@ -27,15 +27,15 @@ class TaggerGetGroup extends Endpoint
 
         if (!$this->taggerLoaded) return [];
 
-        /** @var \TaggerGroup $groups */
-        $group = $this->modx->getObject('TaggerGroup', ['id' => $group]);
+        /** @var \Tagger\Model\TaggerGroup $groups */
+        $group = $this->modx->getObject('Tagger\\Model\\TaggerGroup', ['id' => $group]);
 
         if (!$group) {
             return $this->failure($this->modx->lexicon('fred.fe.err.tagger_ns_group'));
         }
 
         $groupArray = $group->toArray();
-        
+
         switch ($includeTags) {
             case -1:
                 $groupArray['tags'] = ($group->show_autotag === 1) ? $this->taggerGetTagsForGroup($group) : [];
@@ -54,7 +54,7 @@ class TaggerGetGroup extends Endpoint
     {
         if (!$this->taggerLoaded) return [];
 
-        $c = $this->modx->newQuery('TaggerTag');
+        $c = $this->modx->newQuery('Tagger\\Model\\TaggerTag');
         $c->where(['group' => $group->id]);
 
         $sortDir = (strtolower($group->sort_dir) === 'asc') ? 'ASC' : 'DESC';
@@ -65,7 +65,7 @@ class TaggerGetGroup extends Endpoint
             $c->sortby('TaggerTag.rank', $sortDir);
         }
 
-        $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', ['tag']));
+        $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTag', 'TaggerTag', '', ['tag']));
 
         $c->prepare();
 

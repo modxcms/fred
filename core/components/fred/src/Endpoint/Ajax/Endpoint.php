@@ -33,7 +33,7 @@ abstract class Endpoint
     /** @var bool */
     protected $taggerLoaded = false;
 
-    /** @var \Tagger|null */
+    /** @var \Tagger\Tagger|null */
     protected $tagger = null;
 
     /** @var array */
@@ -142,16 +142,11 @@ abstract class Endpoint
 
     protected function loadTagger()
     {
-        $taggerCorePath = $this->modx->getOption('tagger.core_path', null, $this->modx->getOption('core_path') . 'components/tagger/');
+        $this->taggerLoaded = $this->modx->services->has('tagger');
 
-        if (!file_exists($taggerCorePath . 'model/tagger/tagger.class.php')) {
-            return;
+        if ($this->taggerLoaded) {
+            $this->tagger = $this->modx->services->get('tagger');
         }
-
-        $this->tagger = $this->modx->getService('tagger', 'Tagger', $taggerCorePath . 'model/tagger/');
-        if (!($this->tagger instanceof \Tagger)) return;
-
-        $this->taggerLoaded = true;
     }
 
     protected function verifyClaim($name, $value)

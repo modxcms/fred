@@ -200,18 +200,18 @@ class LoadContent extends Endpoint
     {
         if (!$this->taggerLoaded) return [];
 
-        $c = $this->modx->newQuery('TaggerGroup');
+        $c = $this->modx->newQuery('Tagger\\Model\\TaggerGroup');
         $c->sortby('position');
-        /** @var \TaggerGroup[] $groups */
-        $groups = $this->modx->getIterator('TaggerGroup', $c);
+        /** @var \Tagger\Model\TaggerGroup[] $groups */
+        $groups = $this->modx->getIterator('Tagger\\Model\\TaggerGroup', $c);
         $groupsArray = [];
 
         foreach ($groups as $group) {
             $showForTemplates = $group->show_for_templates;
-            $showForTemplates = $this->tagger->explodeAndClean($showForTemplates, ',', true);
+            $showForTemplates = \Tagger\Utils::explodeAndClean($showForTemplates, ',', true);
 
             $showForContexts = $group->show_for_contexts;
-            $showForContexts = $this->tagger->explodeAndClean($showForContexts);
+            $showForContexts = \Tagger\Utils::explodeAndClean($showForContexts);
 
             if (!in_array($resource->template, $showForTemplates)) continue;
             if (!empty($showForContexts) && !in_array($resource->context_key, $showForContexts)) continue;
@@ -232,13 +232,13 @@ class LoadContent extends Endpoint
 
         $tagsArray = [];
 
-        $c = $this->modx->newQuery('TaggerTagResource');
-        $c->leftJoin('TaggerTag', 'Tag');
+        $c = $this->modx->newQuery('Tagger\\Model\\TaggerTagResource');
+        $c->leftJoin('Tagger\\Model\\TaggerTag', 'Tag');
         $c->where(['resource' => $resource->id]);
         $c->sortby('Tag.alias', 'ASC');
 
-        $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', ['resource']));
-        $c->select($this->modx->getSelectColumns('TaggerTag', 'Tag', '', ['tag', 'group']));
+        $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTagResource', 'TaggerTagResource', '', ['resource']));
+        $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTag', 'Tag', '', ['tag', 'group']));
 
         $c->prepare();
         $c->stmt->execute();
@@ -258,7 +258,7 @@ class LoadContent extends Endpoint
     {
         if (!$this->taggerLoaded) return [];
 
-        $c = $this->modx->newQuery('TaggerTag');
+        $c = $this->modx->newQuery('Tagger\\Model\\TaggerTag');
         $c->where(['group' => $group->id]);
 
         $sortDir = (strtolower($group->sort_dir) === 'asc') ? 'ASC' : 'DESC';
@@ -269,7 +269,7 @@ class LoadContent extends Endpoint
             $c->sortby('TaggerTag.rank', $sortDir);
         }
 
-        $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', ['tag']));
+        $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTag', 'TaggerTag', '', ['tag']));
 
         $c->prepare();
 

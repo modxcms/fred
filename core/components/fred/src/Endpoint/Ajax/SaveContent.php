@@ -235,9 +235,7 @@ class SaveContent extends Endpoint
         $this->object->set('editedon', time());
         $this->object->set('editedby', $this->modx->user->get('id'));
 
-        if ($this->taggerLoaded) {
-            $this->handleTagger($this->object);
-        }
+        $this->handleTagger($this->object);
 
         $this->body['data']['fingerprint'] = Utils::resourceFingerprint($this->object);
         $this->object->setProperty('data', $this->body['data'], 'fred');
@@ -297,33 +295,21 @@ class SaveContent extends Endpoint
         return $this->success($response);
     }
 
-    protected function loadTagger()
-    {
-        $taggerCorePath = $this->modx->getOption('tagger.core_path', null, $this->modx->getOption('core_path') . 'components/tagger/');
-
-        if (!file_exists($taggerCorePath . 'model/tagger/tagger.class.php')) {
-            return;
-        }
-
-        $this->tagger = $this->modx->getService('tagger', 'Tagger', $taggerCorePath . 'model/tagger/');
-        if (!($this->tagger instanceof \Tagger)) return;
-
-        $this->taggerLoaded = true;
-    }
-
     /**
      * @param modResource $resource
      */
     protected function handleTagger($resource) {
-        /** @var \TaggerGroup[] $groups */
-        $groups = $this->modx->getIterator('TaggerGroup');
+        if ($this->taggerLoaded) return;
+
+            /** @var \Tagger\Model\TaggerGroup[] $groups */
+        $groups = $this->modx->getIterator('Tagger\\Model\\TaggerGroup');
         foreach ($groups as $group) {
             $showForTemplates = $group->show_for_templates;
-            $showForTemplates = $this->tagger->explodeAndClean($showForTemplates);
+            $showForTemplates = \Tagger\Utils::explodeAndClean($showForTemplates);
             $showForTemplates = array_flip($showForTemplates);
 
             $showForContexts = $group->show_for_contexts;
-            $showForContexts = $this->tagger->explodeAndClean($showForContexts);
+            $showForContexts = \Tagger\Utils::explodeAndClean($showForContexts);
             $showForContexts = array_flip($showForContexts);
 
             if (!isset($showForTemplates[$resource->template])) {
@@ -334,10 +320,10 @@ class SaveContent extends Endpoint
                 continue;
             }
 
-            $oldTagsQuery = $this->modx->newQuery('TaggerTagResource');
+            $oldTagsQuery = $this->modx->newQuery('Tagger\\Model\\TaggerTagResource');
             $oldTagsQuery->leftJoin('TaggerTag', 'Tag');
             $oldTagsQuery->where(['resource' => $resource->id, 'Tag.group' => $group->id]);
-            $oldTagsQuery->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', ['tag']));
+            $oldTagsQuery->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTagResource', 'TaggerTagResource', '', ['tag']));
 
             $oldTagsQuery->prepare();
             $oldTagsQuery->stmt->execute();
@@ -358,10 +344,10 @@ class SaveContent extends Endpoint
             }
 
             foreach ($tags as $tag) {
-                /** @var \TaggerTag $tagObject */
-                $tagObject = $this->modx->getObject('TaggerTag', array('tag' => $tag, 'group' => $group->id));
+                /** @var \Tagger\Model\TaggerTag $tagObject */
+                $tagObject = $this->modx->getObject('Tagger\\Model\\TaggerTag', array('tag' => $tag, 'group' => $group->id));
                 if ($tagObject) {
-                    $existsRelation = $this->modx->getObject('TaggerTagResource', array('tag' => $tagObject->id, 'resource' => $resource->id));
+                    $existsRelation = $this->modx->getObject('Tagger\\Model\\TaggerTagResource', array('tag' => $tagObject->id, 'resource' => $resource->id));
                     if ($existsRelation) {
                         if (isset($oldTags[$existsRelation->tag])) {
                             unset($oldTags[$existsRelation->tag]);
@@ -374,14 +360,14 @@ class SaveContent extends Endpoint
                         continue;
                     }
 
-                    $tagObject = $this->modx->newObject('TaggerTag');
+                    $tagObject = $this->modx->newObject('Tagger\\Model\\TaggerTag');
                     $tagObject->set('tag', $tag);
                     $tagObject->addOne($group, 'Group');
                     $tagObject->save();
                 }
 
-                /** @var \TaggerTagResource $relationObject */
-                $relationObject = $this->modx->newObject('TaggerTagResource');
+                /** @var \Tagger\Model\TaggerTagResource $relationObject */
+                $relationObject = $this->modx->newObject('Tagger\\Model\\TaggerTagResource');
                 $relationObject->set('tag', $tagObject->id);
                 $relationObject->set('resource', $resource->id);
                 $relationObject->save();
@@ -396,8 +382,8 @@ class SaveContent extends Endpoint
             }
 
             if ($group->remove_unused) {
-                $c = $this->modx->newQuery('TaggerTagResource');
-                $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', array('tag')));
+                $c = $this->modx->newQuery('Tagger\\Model\\TaggerTagResource');
+                $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTagResource', 'TaggerTagResource', '', array('tag')));
                 $c->prepare();
                 $c->stmt->execute();
                 $IDs = $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
