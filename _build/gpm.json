@@ -118,6 +118,10 @@
       "after.defaulttheme.php",
       "after.migration.php"
     ],
-    "installValidator": "requirements.php"
+    "installValidator": "requirements.php",
+    "requires": {
+      "gpm": ">=3.0.0",
+      "modx": ">=3.0.0-alpha"
+    }
   }
 }
