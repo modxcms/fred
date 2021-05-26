@@ -299,7 +299,7 @@ class SaveContent extends Endpoint
      * @param modResource $resource
      */
     protected function handleTagger($resource) {
-        if ($this->taggerLoaded) return;
+        if (!$this->taggerLoaded) return;
 
             /** @var \Tagger\Model\TaggerGroup[] $groups */
         $groups = $this->modx->getIterator('Tagger\\Model\\TaggerGroup');
