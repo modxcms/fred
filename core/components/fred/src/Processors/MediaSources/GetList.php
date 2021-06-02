@@ -2,6 +2,7 @@
 namespace Fred\Processors\MediaSources;
 use MODX\Revolution\Processors\Model\GetListProcessor;
 use MODX\Revolution\Sources\modFileMediaSource;
+use MODX\Revolution\Sources\modS3MediaSource;
 use MODX\Revolution\Sources\modMediaSource;
 use xPDO\Om\xPDOObject;
 use xPDO\Om\xPDOQuery;
@@ -57,7 +58,10 @@ class GetList extends GetListProcessor
         $query = $this->getProperty('search');
 
         $c->where([
-            'class_key' => modFileMediaSource::class
+            'class_key:IN' => [
+                modFileMediaSource::class,
+                modS3MediaSource::class
+            ]
         ]);
 
         if (!empty($query)) {
@@ -78,6 +82,5 @@ class GetList extends GetListProcessor
 
         return $objectArray;
     }
-
 
 }

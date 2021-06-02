@@ -12,7 +12,9 @@ namespace Fred\Endpoint;
 
 use Fred\Utils;
 use MODX\Revolution\Sources\modFileMediaSource;
+use MODX\Revolution\Sources\modS3MediaSource;
 use MODX\Revolution\Sources\modMediaSource;
+use League\Flysystem\FilesystemInterface;
 
 class ElFinder extends Endpoint
 {
@@ -44,6 +46,8 @@ class ElFinder extends Endpoint
 
         include_once $this->fred->getOption('corePath') . 'elFinder/autoload.php';
 
+        include_once $this->fred->getOption('corePath') . 'src/Endpoint/ElFinder/elFinderVolumeFlysystem.php';
+
         $roots = [];
 
         $mediaSourceIDs = $this->modx->getOption('mediaSource', $_GET, '');
@@ -54,7 +58,10 @@ class ElFinder extends Endpoint
 
         $c = $this->modx->newQuery(modMediaSource::class);
         $where = [
-            'class_key' => modFileMediaSource::class
+            'class_key:IN' => [
+                modFileMediaSource::class,
+                modS3MediaSource::class
+            ]
         ];
 
         if (!empty($mediaSourceIDs)) {
@@ -71,20 +78,19 @@ class ElFinder extends Endpoint
 
             $properties = $mediaSource->getProperties();
             if (isset($properties['fred']) && ($properties['fred']['value'] === true)) {
-                $bases = $mediaSource->getBases();
-
-                $path = $bases['pathAbsoluteWithPath'];
-                $url =  $bases['urlAbsoluteWithPath'];
-
+                $bases = $mediaSource->getBases(); 
+                $filesystem = $mediaSource->getFilesystem();
+                $path = $mediaSource->getBasePath();
+                $url =  $mediaSource->getBaseUrl();
                 $readOnly = false;
                 if (isset($properties['fredReadOnly']) && ($properties['fredReadOnly']['value'] === true)) $readOnly = true;
-
                 $roots[] = [
                     'id' => 'ms' . $mediaSource->id,
-                    'driver' => 'LocalFileSystem',
+                    'driver' => 'Flysystem',
                     'alias' => $mediaSource->name,
                     'path' => $path,
                     'URL' => $url,
+                    'filesystem' => $filesystem,
                     'tmbPath' => '.tmb',
                     'startPath' => $path,
                     'disabled' => $readOnly ? array('rename', 'rm', 'cut', 'copy') : [],
@@ -110,6 +116,7 @@ class ElFinder extends Endpoint
         }
 
         $options = json_decode(json_encode($params), true);
+        $options['roots'] = $roots;
         $connector = new \elFinderConnector(new \elFinder($options));
         $connector->run();
     }
