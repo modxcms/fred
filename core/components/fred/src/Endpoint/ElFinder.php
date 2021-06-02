@@ -14,7 +14,6 @@ use Fred\Utils;
 use MODX\Revolution\Sources\modFileMediaSource;
 use MODX\Revolution\Sources\modS3MediaSource;
 use MODX\Revolution\Sources\modMediaSource;
-use League\Flysystem\FilesystemInterface;
 
 class ElFinder extends Endpoint
 {
