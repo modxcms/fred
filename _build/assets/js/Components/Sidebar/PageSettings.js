@@ -217,6 +217,7 @@ export default class PageSettings extends SidebarPlugin {
         });
 
         const tvContent = dd();
+        const tvHeader = h3('fred.fe.page_settings.tvs');
         const fields = fieldSet(['fred--page_settings_form_advanced']);
 
         fredConfig.tvs.forEach(tv => {
@@ -254,11 +255,16 @@ export default class PageSettings extends SidebarPlugin {
                 case 'textarea':
                     fields.appendChild(ui.area(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
                     break;
+                case 'datetime':
+                    const epoch = new Date(this.pageSettings.tvs[tv.name]).getTime()/1000;
+                    fields.appendChild(ui.dateTime(tv, epoch, this.setTVWithEmitter, this.addTVChangeListener));
+                    break;
                 default:
                     fields.appendChild(ui.text(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
             }
         });
 
+        tvContent.appendChild(tvHeader);
         tvContent.appendChild(fields);
 
         tvList.appendChild(tvTab);
@@ -302,7 +308,6 @@ export default class PageSettings extends SidebarPlugin {
 
     setTVWithEmitter(name, value, input) {
         this.setSetting(name, value, 'tvs');
-
         emitter.emit('fred-page-setting-change', 'tv_' + name, value, valueParser(value), input);
     }
 
@@ -310,6 +315,11 @@ export default class PageSettings extends SidebarPlugin {
         emitter.on('fred-page-setting-change', (settingName, settingValue, parsedValue, sourceEl) => {
 
             if ((input !== sourceEl) && (('tv_' + setting.name) === settingName)) {
+
+                if(setting.type == 'datetime'){
+                    settingValue = this.formatTVDate(settingValue)
+                }
+
                 this.setSetting(setting.name, settingValue, 'tvs');
                 input.value = settingValue;
 
@@ -318,5 +328,16 @@ export default class PageSettings extends SidebarPlugin {
                 }
             }
         });
+    }
+
+    formatTVDate(epochdate) {
+        if(!epochdate) return '';
+        const datetime = new Date(epochdate*1000);
+        return datetime.getFullYear() + '-' +
+            (datetime.getMonth() + 1).toString().padStart(2,0) + '-' +
+            datetime.getDate().toString().padStart(2,0) + ' ' +
+            datetime.getHours().toString().padStart(2,0) + ':' +
+            datetime.getMinutes().toString().padStart(2,0)  + ':' +
+            datetime.getSeconds().toString().padStart(2,0);
     }
 }
