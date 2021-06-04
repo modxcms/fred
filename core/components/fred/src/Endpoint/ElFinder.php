@@ -45,8 +45,6 @@ class ElFinder extends Endpoint
 
         include_once $this->fred->getOption('corePath') . 'elFinder/autoload.php';
 
-        include_once $this->fred->getOption('corePath') . 'src/Endpoint/ElFinder/elFinderVolumeFlysystem.php';
-
         $roots = [];
 
         $mediaSourceIDs = $this->modx->getOption('mediaSource', $_GET, '');
@@ -59,7 +57,7 @@ class ElFinder extends Endpoint
         $where = [
             'class_key:IN' => [
                 modFileMediaSource::class,
-                modS3MediaSource::class
+                modS3MediaSource::class,
             ]
         ];
 
@@ -77,7 +75,7 @@ class ElFinder extends Endpoint
 
             $properties = $mediaSource->getProperties();
             if (isset($properties['fred']) && ($properties['fred']['value'] === true)) {
-                $bases = $mediaSource->getBases(); 
+                $bases = $mediaSource->getBases();
                 $filesystem = $mediaSource->getFilesystem();
                 $path = $mediaSource->getBasePath();
                 $url =  $mediaSource->getBaseUrl();
@@ -87,12 +85,12 @@ class ElFinder extends Endpoint
                     'id' => 'ms' . $mediaSource->id,
                     'driver' => 'Flysystem',
                     'alias' => $mediaSource->name,
-                    'path' => $path,
+                    'path' => '/',
                     'URL' => $url,
                     'filesystem' => $filesystem,
                     'tmbPath' => '.tmb',
                     'startPath' => $path,
-                    'disabled' => $readOnly ? array('rename', 'rm', 'cut', 'copy') : [],
+                    'disabled' => $readOnly ? ['rename', 'rm', 'cut', 'copy'] : [],
                     'uploadDeny' => ['text/x-php'],
                     'attributes' => $this->getRootAttributes($properties)
                 ];
