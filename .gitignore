@@ -34,3 +34,5 @@ core/components/fred/vendor
 site
 assets/components/fred/web/fred.css*
 assets/components/fred/web/fred.min.js*
+
+deploy.*
