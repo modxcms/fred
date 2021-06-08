@@ -163,6 +163,56 @@ export const toggle = (
     return labelEl;
 };
 
+type ToggleGroupSetting = Setting & {
+    options: {[key: string]: string};
+};
+type MultiOnChange<S = Setting, I = HTMLInputElement> = (name: string, value: any, input: I, setting: S, add: boolean) => void;
+export const toggleGroup = (
+    setting: ToggleGroupSetting,
+    defaultValue: string = '',
+    onChange: MultiOnChange,
+    onInit: (setting: ToggleGroupSetting, label: EnhancedLabel<HTMLInputElement>, input: HTMLInputElement, span: HTMLSpanElement) => void
+) => {
+    const labelEl = span(['fred--label'], (setting.label || setting.name)); 
+    const values = defaultValue.split('||');
+
+    if (setting.options) {
+        for (let value in setting.options) { 
+            if (setting.options.hasOwnProperty(value)) {
+                let inputEl = input(value, 'checkbox');
+                let spanEl = span();
+                let smallLabel = setting.options[value];
+                if (fredConfig.lngExists(setting.options[value])) {
+                    smallLabel = fredConfig.lng(setting.options[value]);
+                }
+                let smallLableEl = label(smallLabel, 'fred--toggle') as EnhancedLabel<HTMLInputElement>;
+
+                inputEl.value = value;
+
+                if (values.indexOf(value) != -1) {
+                    inputEl.setAttribute('checked', 'checked');
+                }
+
+                if (typeof onChange === 'function') {
+                    inputEl.addEventListener('change', e => { 
+                        onChange(setting.name, inputEl.value, inputEl, setting, inputEl.checked);
+                    });
+                }
+
+                smallLableEl.appendChild(inputEl);
+                smallLableEl.appendChild(spanEl);
+                labelEl.appendChild(smallLableEl);
+
+                if (typeof onInit === 'function') {
+                    onInit(setting, smallLableEl, inputEl, spanEl);
+                }
+            }
+        }
+    } 
+
+    return labelEl;
+};
+
 type AreaSetting = Setting & {
     rows: string|number;
 };
@@ -1005,6 +1055,7 @@ export default {
     text,
     select,
     toggle,
+    toggleGroup,
     area,
     dateTime,
     colorSwatch,

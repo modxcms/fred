@@ -148,7 +148,7 @@ input{
     color: $border;
     border-bottom: 1px solid $border-light;
   }
-  label, .choices {
+  label, .choices, .fred--label {
     margin: 0 30px 16px 20px;
     color: $black;
     display: block;
@@ -280,7 +280,7 @@ input{
   //}
 //}
 .fred--modal{
-  label{
+  label, .fred--label{
     width: 100%;
     margin-top: 0;
     margin-bottom: 0;
