@@ -13,9 +13,11 @@ export default class PageSettings extends SidebarPlugin {
 
     init() {
         this.setSetting = this.setSetting.bind(this);
+        this.getSetting = this.getSetting.bind(this);
         this.setSettingWithEmitter = this.setSettingWithEmitter.bind(this);
         this.addSettingChangeListener = this.addSettingChangeListener.bind(this);
         this.setTVWithEmitter = this.setTVWithEmitter.bind(this);
+        this.setMultiTVWithEmitter = this.setMultiTVWithEmitter.bind(this);
         this.addTVChangeListener = this.addTVChangeListener.bind(this);
 
         this.pageSettings = fredConfig.pageSettings;
@@ -259,6 +261,9 @@ export default class PageSettings extends SidebarPlugin {
                     const epoch = new Date(this.pageSettings.tvs[tv.name]).getTime()/1000;
                     fields.appendChild(ui.dateTime(tv, epoch, this.setTVWithEmitter, this.addTVChangeListener));
                     break;
+                case 'checkbox':
+                    fields.appendChild(ui.toggleGroup(tv, this.pageSettings.tvs[tv.name], this.setMultiTVWithEmitter, this.addTVChangeListener));
+                    break;
                 default:
                     fields.appendChild(ui.text(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
             }
@@ -291,6 +296,16 @@ export default class PageSettings extends SidebarPlugin {
         }
     }
 
+    getSetting(name, namespace = null) {
+        if (namespace) {
+            if (!this.pageSettings[namespace]) this.pageSettings[namespace] = {}; 
+
+            return this.pageSettings[namespace][name];
+        } else { 
+            return this.pageSettings[name];
+        }
+    }
+
     setSettingWithEmitter(name, value, input) {
         this.setSetting(name, value);
 
@@ -311,8 +326,26 @@ export default class PageSettings extends SidebarPlugin {
         emitter.emit('fred-page-setting-change', 'tv_' + name, value, valueParser(value), input);
     }
 
+    setMultiTVWithEmitter(name, value, input, setting, add) { 
+        let oValue = this.getSetting(name, 'tvs'); 
+            oValue = (oValue) ? oValue.split('||') : []; 
+        let nValue = (add) ? [value] : [];
+        
+        oValue.forEach(ov => {
+            if(value !== ov){ 
+                nValue.push(ov);
+            }
+        }); 
+        
+        nValue = this.trim(nValue.join('||'), '|');
+        
+        this.setSetting(name, nValue, 'tvs');
+        
+        emitter.emit('fred-page-setting-change', 'tv_' + name, nValue, valueParser(nValue), input, true);
+    }
+
     addTVChangeListener(setting, label, input) {
-        emitter.on('fred-page-setting-change', (settingName, settingValue, parsedValue, sourceEl) => {
+        emitter.on('fred-page-setting-change', (settingName, settingValue, parsedValue, sourceEl, ignoreInput) => {
 
             if ((input !== sourceEl) && (('tv_' + setting.name) === settingName)) {
 
@@ -321,7 +354,9 @@ export default class PageSettings extends SidebarPlugin {
                 }
 
                 this.setSetting(setting.name, settingValue, 'tvs');
-                input.value = settingValue;
+                if(!ignoreInput){
+                    input.value = settingValue;
+                }
 
                 if (label.setPreview && (typeof label.setPreview === 'function')) {
                     label.setPreview(input.value);
@@ -339,5 +374,18 @@ export default class PageSettings extends SidebarPlugin {
             datetime.getHours().toString().padStart(2,0) + ':' +
             datetime.getMinutes().toString().padStart(2,0)  + ':' +
             datetime.getSeconds().toString().padStart(2,0);
+    }
+    
+    trim(str, ch) {
+        let start = 0, 
+            end = str.length;
+    
+        while(start < end && str[start] === ch)
+            ++start;
+    
+        while(end > start && str[end - 1] === ch)
+            --end;
+    
+        return (start > 0 || end < str.length) ? str.substring(start, end) : str;
     }
 }
