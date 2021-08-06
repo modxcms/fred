@@ -19,6 +19,7 @@ class ElFinder extends Endpoint
 {
     public function run()
     {
+
         if (!$this->modx->user) {
             http_response_code(401);
             return;
@@ -44,6 +45,7 @@ class ElFinder extends Endpoint
         }
 
         include_once $this->fred->getOption('corePath') . 'elFinder/autoload.php';
+        class_alias(\Fred\Endpoint\ElFinder\elFinderVolumeFlysystem::class, 'elFinderVolumeFlysystem');
 
         $roots = [];
 
