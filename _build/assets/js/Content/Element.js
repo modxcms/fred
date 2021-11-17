@@ -332,7 +332,7 @@ export class Element {
         wrapper.appendChild(titleEl);
         this.contentEl.titleEl = titleEl;
 
-        this.contentEl.innerHTML = await this.templateRender(true, false, refreshCache);
+        this.contentEl.innerHTML = await this.templateRender(true, false, false, refreshCache);
         replaceScripts(this.contentEl);
 
         const blockClasses = this.contentEl.querySelectorAll('[data-fred-block-class]');

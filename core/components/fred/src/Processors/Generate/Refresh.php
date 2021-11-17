@@ -3,6 +3,7 @@ namespace Fred\Processors\Generate;
 
 use Fred\Fred;
 use Fred\Model\FredThemedTemplate;
+use Fred\Model\FredCache;
 use MODX\Revolution\modResource;
 use MODX\Revolution\modX;
 use MODX\Revolution\Processors\Processor;
@@ -20,6 +21,9 @@ class Refresh extends Processor
     {
         /** @var Fred $fred */
         $fred =  $this->modx->services->get('fred');
+
+        //Clear Element Values
+        $this->modx->removeCollection(FredCache::class, []);
 
         $c = $this->modx->newQuery(FredThemedTemplate::class);
         $c->select($this->modx->getSelectColumns(FredThemedTemplate::class, 'FredThemedTemplate', '', ['template']));
