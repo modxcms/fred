@@ -145,7 +145,14 @@ final class RenderResource
 
         foreach ($contentData as $item) {
             if (isset($this->elementCache[$item['widget']])) {
-                $html .= $this->elementCache[$item['widget']];
+                try {
+                    $html .= $this->renderElement(
+                        $this->elementCache[$item['widget']],
+                        $item,
+                        true
+                    );
+                } catch (\Exception $e) {
+                }
             } else {
                 try {
                     $html .= $this->renderElement(
