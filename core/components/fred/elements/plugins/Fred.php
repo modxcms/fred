@@ -186,6 +186,9 @@ switch ($modx->event->name) {
             $modifyPermissions = '';
             $lexicons = [];
             foreach ($beforeRenderResults as $result) {
+                if (!is_array($result)) {
+                    continue;
+                }
 
                 if ($result['includes']) {
                     $includes .= $result['includes'];

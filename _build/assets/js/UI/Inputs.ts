@@ -8,7 +8,7 @@ import Finder from "./../Finder";
 import {div, label, input, select as selectElement, span, textArea, a, img} from './Elements';
 import {fixChoices, valueParser} from "../Utils";
 import Tagger from "./Tagger";
-import { getResources } from '../Actions/pages';
+import { getResources, getChunks } from '../Actions/pages';
 import { getGroups } from '../Actions/tagger';
 
 type Setting = {
@@ -173,12 +173,12 @@ export const toggleGroup = (
     onChange: MultiOnChange,
     onInit: (setting: ToggleGroupSetting, label: EnhancedLabel<HTMLInputElement>, input: HTMLInputElement, span: HTMLSpanElement) => void
 ) => {
-    const labelEl = span(['fred--label', 'fred--label-'+setting.name], (setting.label || setting.name)); 
+    const labelEl = span(['fred--label', 'fred--label-'+setting.name], (setting.label || setting.name));
     const values = defaultValue.split('||');
 
     if (setting.options) {
         let i = 0;
-        for (let value in setting.options) { 
+        for (let value in setting.options) {
             if (setting.options.hasOwnProperty(value)) {
                 i++;
                 let inputEl = input(value, 'checkbox');
@@ -196,7 +196,7 @@ export const toggleGroup = (
                 }
 
                 if (typeof onChange === 'function') {
-                    inputEl.addEventListener('change', e => { 
+                    inputEl.addEventListener('change', e => {
                         onChange(setting.name, inputEl.value, inputEl, setting, inputEl.checked);
                     });
                 }
@@ -210,7 +210,7 @@ export const toggleGroup = (
                 }
             }
         }
-    } 
+    }
 
     return labelEl;
 };
@@ -715,6 +715,132 @@ export const page = (
     return wrapper;
 };
 
+type ChunkSetting = Setting & {
+    clearButton?: boolean;
+    category?: string|(string|number)[];
+    chunks?: string|(string|number)[];
+};
+export const chunk = (
+    setting: ChunkSetting,
+    defaultValue: {id: number, name: string} = {id: 0, name: ''},
+    onChange: OnChange<ChunkSetting, any>,
+    onInit: OnInit<ChunkSetting, HTMLLabelElement, HTMLSelectElement>
+) => {
+    const wrapper = div();
+    const labelEl = label((setting.label || setting.name), ['fred--label-'+setting.name, 'fred--label-choices']);
+    const selectEl = selectElement();
+
+    if (!defaultValue || (typeof(defaultValue) !== 'object') || (defaultValue.id === undefined) || (defaultValue.name === undefined)) {
+        defaultValue = {id: 0, name: ''};
+    }
+
+    wrapper.appendChild(labelEl);
+    wrapper.appendChild(selectEl);
+
+    let lookupTimeout = null;
+    const lookupCache = {};
+    let initData = [];
+
+    const chunkChoices = new Choices(selectEl, {
+        shouldSort:false,
+        removeItemButton: setting.clearButton || false,
+        searchResultLimit: 0
+    }) as any;
+
+    fixChoices(chunkChoices);
+
+    const queryOptions: Pick<ChunkSetting, 'category'|'chunks'> = {};
+
+    if (setting.category) {
+        queryOptions.category = setting.category;
+    }
+
+    if (setting.chunks) {
+        queryOptions.chunks = setting.chunks;
+    }
+
+    chunkChoices.ajax(callback => {
+        getChunks(defaultValue.id, queryOptions)
+            .then(json => {
+                initData = json.data.chunks;
+                callback(json.data.chunks, 'value', 'name');
+
+                if (json.data.current) {
+                    chunkChoices.setChoices([json.data.current], 'value', 'name', false);
+                    chunkChoices.setValueByChoice("" + defaultValue.id);
+                }
+            })
+            .catch(error => {
+                emitter.emit('fred-loading', error.message);
+            });
+    });
+
+    const populateOptions = options => {
+        const toRemove = [];
+
+        chunkChoices.currentState.items.forEach(item => {
+            if (item.active) {
+                toRemove.push(item.value);
+            }
+        });
+
+        const toKeep = [];
+        options.forEach(option => {
+            if (toRemove.indexOf(option.id) === -1) {
+                toKeep.push(option);
+            }
+        });
+
+        chunkChoices.setChoices(toKeep, 'value', 'name', true);
+    };
+
+    const serverLookup = () => {
+        const query = chunkChoices.input.value;
+        if (query in lookupCache) {
+            populateOptions(lookupCache[query]);
+        } else {
+            getChunks(null, {query, ...queryOptions})
+                .then(data => {
+                    lookupCache[query] = data.data.chunks;
+                    populateOptions(data.data.chunks);
+                })
+                .catch(error => {
+                    emitter.emit('fred-loading', error.message);
+                });
+        }
+    };
+
+    chunkChoices.passedElement.addEventListener('search', event => {
+        clearTimeout(lookupTimeout);
+        lookupTimeout = setTimeout(serverLookup, 200);
+    });
+
+    chunkChoices.passedElement.addEventListener('choice', event => {
+        chunkChoices.setChoices(initData, 'value', 'name', true);
+
+        if (typeof onChange === 'function') {
+            onChange(setting.name, {
+                name: event.detail.choice.label,
+                id: event.detail.choice.value
+            }, chunkChoices, setting);
+        }
+    });
+
+    chunkChoices.passedElement.addEventListener('removeItem', event => {
+        if (chunkChoices.getValue()) return;
+
+        if (typeof onChange === 'function') {
+            onChange(setting.name, {name: '', id: ''}, chunkChoices, setting);
+        }
+    });
+
+    if (typeof onInit === 'function') {
+        onInit(setting, labelEl, selectEl);
+    }
+
+    return wrapper;
+};
+
 type ImageSetting = Setting & {
     showPreview?: boolean;
     mediaSource?: string;
@@ -1064,6 +1190,7 @@ export default {
     colorPicker,
     slider,
     page,
+    chunk,
     image,
     file,
     folder,

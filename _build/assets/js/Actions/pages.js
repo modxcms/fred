@@ -55,6 +55,22 @@ export const getResources = (currentResource = null, query = {}) => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources${queryString}`).then(errorHandler)
 };
 
+export const getChunks = (currentChunk = null, query = {}) => {
+    let queryString = '';
+
+    if (currentChunk !== null) {
+        queryString += `&current=${currentChunk}`;
+    }
+
+    for (let key in query) {
+        if (query.hasOwnProperty(key)) {
+            queryString += `&${key}=${query[key]}`;
+        }
+    }
+
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-chunks${queryString}`).then(errorHandler)
+};
+
 export const publishResource = resource => {
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=publish-resource`, {
         method: "post",

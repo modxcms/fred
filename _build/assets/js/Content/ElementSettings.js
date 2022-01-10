@@ -130,6 +130,8 @@ export class ElementSettings {
                 return ui.slider(setting, defaultValue, this.setSetting.bind(this));
             case 'page':
                 return ui.page(setting, defaultValue, this.setSetting.bind(this));
+            case 'chunk':
+                return ui.chunk(setting, defaultValue, this.setSetting.bind(this));
             case 'tagger':
                 return ui.tagger(setting, defaultValue, this.setSetting.bind(this));
             case 'image':

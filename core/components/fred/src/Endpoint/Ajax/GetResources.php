@@ -16,8 +16,6 @@ use MODX\Revolution\modResource;
 class GetResources extends Endpoint
 {
     protected $allowedMethod = ['OPTIONS', 'GET'];
-    protected $templates = [];
-    protected $map = [];
     protected $resources = [];
 
     /**
@@ -29,11 +27,11 @@ class GetResources extends Endpoint
         $context = !empty($context) ? $context : 'web';
 
         $query = $_GET['query'];
-        $current = isset($_GET['current']) ? intval($_GET['current']) : 0;
-        $parents = isset($_GET['parents']) ? $_GET['parents'] : '';
-        $resources = isset($_GET['resources']) ? $_GET['resources'] : '';
-        $depth = isset($_GET['depth']) ? intval($_GET['depth']) : 1;
-        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 25;
+        $current = isset($_GET['current']) ? (int)$_GET['current'] : 0;
+        $parents = $_GET['parents'] ?? '';
+        $resources = $_GET['resources'] ?? '';
+        $depth = isset($_GET['depth']) ? (int)$_GET['depth'] : 1;
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 25;
 
         $parents = Utils::explodeAndClean($parents, ',', 'intval', 0, 'strlen');
         $resources = Utils::explodeAndClean($resources, ',', 'intval');
