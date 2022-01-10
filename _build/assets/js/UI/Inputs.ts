@@ -254,7 +254,8 @@ export const dateTime = (
     setting: Setting,
     defaultValue: string|number = 0,
     onChange: OnChange<Setting, any>,
-    onInit: OnInit<Setting, EnhancedLabel<HTMLInputElement> & {picker: any}, any>
+    onInit: OnInit<Setting, EnhancedLabel<HTMLInputElement> & {picker: any}, any>,
+    dateFormat?: string
 ) => {
     defaultValue = parseInt('' + defaultValue) || 0;
 
@@ -265,7 +266,7 @@ export const dateTime = (
 
     const picker = flatpickr(inputEl, {
         enableTime: true,
-        dateFormat: "Y-m-d H:i",
+        dateFormat: ( dateFormat === undefined) ? "Y-m-d H:i" : dateFormat,
         appendTo: group,
         defaultDate: (defaultValue === 0) ? '' : (defaultValue * 1000),
         onChange: selectedDates => {

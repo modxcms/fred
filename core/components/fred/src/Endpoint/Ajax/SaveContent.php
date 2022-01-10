@@ -86,7 +86,6 @@ class SaveContent extends Endpoint
         $c->leftJoin(modTemplateVarTemplate::class, 'TemplateVarTemplates');
 
         $c->where([
-            'type' => 'freddropzone',
             'TemplateVarTemplates.templateid' => $this->object->get('template')
         ]);
 
@@ -266,16 +265,9 @@ class SaveContent extends Endpoint
             return $this->failure($preventSave);
         }
 
-        $saved = $this->object->save();
-
-        if (!$saved) {
-            return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
-        }
-
         if (isset($this->body['pageSettings']['tvs']) && is_array($this->body['pageSettings']['tvs'])) {
             foreach ($tvs as $tv) {
                 $tvName = $tv->get('name');
-
                 if (isset($this->body['pageSettings']['tvs'][$tvName])) {
                     $tvContent = $this->body['pageSettings']['tvs'][$tvName];
                     $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
@@ -286,6 +278,12 @@ class SaveContent extends Endpoint
                     }
                 }
             }
+        }
+
+        $saved = $this->object->save();
+
+        if (!$saved) {
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
         }
 
         $this->modx->getCacheManager()->refresh();
