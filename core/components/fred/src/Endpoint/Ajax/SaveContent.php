@@ -446,8 +446,8 @@ class SaveContent extends Endpoint
 
     public function reversePreparedOutput($tv, $value, $resource) {
         if (!empty($value)) {
-            $context = !empty($resource) ? $$resource->get('context_key') : $this->modx->context->get('key');
-            $sourceCache = $this->getSourceCache($context);
+            $context = !empty($resource) ? $resource->get('context_key') : $this->modx->context->get('key');
+            $sourceCache = $tv->getSourceCache($context);
             $classKey = $sourceCache['class_key'];
             if (!empty($sourceCache) && !empty($classKey)) {
                 if ($this->modx->loadClass($classKey)) {
