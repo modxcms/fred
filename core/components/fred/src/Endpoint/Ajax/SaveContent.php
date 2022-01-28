@@ -458,11 +458,11 @@ class SaveContent extends Endpoint
                         $source->initialize();
                         $properties = $source->getPropertyList();
                         if (!empty($properties['baseUrl'])) {
-                            return rtrim(rtrim($properties['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR, $value);
+                            return ltrim($value,rtrim($properties['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
                         }
                         //S3 Objects
                         if (!empty($properties['url'])) {
-                            return rtrim(rtrim($properties['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR, $value);
+                            return ltrim($value,rtrim($properties['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
                         }
                     }
                 }
