@@ -169,7 +169,7 @@ switch ($modx->event->name) {
                     $newNode->attr($attr->nodeName, $attr->nodeValue);
                 }
 
-                $newNode->setAttribute('data-fred-script', $node->getInnerHtml());
+                $newNode->setAttribute('data-fred-script', $node->html());
 
                 $node->replaceWith($newNode);
 

@@ -179,7 +179,7 @@ final class RenderResource {
                     $node->attr('data-fred-fake-src', $value);
                     break;
                 default:
-                    $node->html($value);
+                    $node->setInnerHtml($value);
             }
         });
     }
@@ -311,7 +311,7 @@ final class RenderResource {
                         $node->attr('data-fred-fake-src', $value);
                         break;
                     default:
-                        $node->html($value);
+                        $node->setInnerHtml($value);
                 }
             }
 
@@ -428,7 +428,7 @@ final class RenderResource {
                     } catch (\Exception $e) {}
                 }
 
-                $node->html($html);
+                $node->setInnerHtml($html);
             }
 
             $node->removeAttr('data-fred-dropzone');
