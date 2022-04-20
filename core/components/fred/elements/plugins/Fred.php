@@ -139,6 +139,10 @@ switch ($modx->event->name) {
                 return;
             }
 
+            if ($fredMode === 5) {
+                return;
+            }
+
             $html = Wa72\HtmlPageDom\HtmlPageCrawler::create($modx->resource->_output);
             $dzs = $html->filter('[data-fred-dropzone]');
 
