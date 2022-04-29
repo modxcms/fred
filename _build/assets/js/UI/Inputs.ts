@@ -8,7 +8,7 @@ import Finder from "./../Finder";
 import {div, label, input, select as selectElement, span, textArea, a, img} from './Elements';
 import {fixChoices, valueParser} from "../Utils";
 import Tagger from "./Tagger";
-import { getResources } from '../Actions/pages';
+import { getResources, getChunks } from '../Actions/pages';
 import { getGroups } from '../Actions/tagger';
 
 type Setting = {
@@ -36,9 +36,9 @@ export const text = (
 ) => {
     let labelEl;
     if (setting.labelAsPlaceholder === true) {
-        labelEl = label();
+        labelEl = label('', ['fred--label-'+setting.name]);
     } else {
-        labelEl = label(setting.label || setting.name);
+        labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]);
     }
 
     const inputEl = input(defaultValue);
@@ -91,7 +91,7 @@ export const select = (
     onChange: OnChange<SelectSetting, HTMLSelectElement>,
     onInit: OnInit<SelectSetting, EnhancedLabel<HTMLSelectElement>, HTMLSelectElement>
 ) => {
-    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLSelectElement>;
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]) as EnhancedLabel<HTMLSelectElement>;
 
     const selectEl = selectElement();
     labelEl.inputEl = selectEl;
@@ -163,6 +163,56 @@ export const toggle = (
     return labelEl;
 };
 
+type ToggleGroupSetting = Setting & {
+    options: {[key: string]: string};
+};
+type MultiOnChange<S = Setting, I = HTMLInputElement> = (name: string, value: any, input: I, setting: S, add: boolean) => void;
+export const toggleGroup = (
+    setting: ToggleGroupSetting,
+    defaultValue: string = '',
+    onChange: MultiOnChange,
+    onInit: (setting: ToggleGroupSetting, label: EnhancedLabel<HTMLInputElement>, input: HTMLInputElement, span: HTMLSpanElement) => void
+) => {
+    const labelEl = span(['fred--label'], (setting.label || setting.name));
+    const values = defaultValue.split('||');
+
+    if (setting.options) {
+        for (let value in setting.options) {
+            if (setting.options.hasOwnProperty(value)) {
+                let inputEl = input(value, 'checkbox');
+                let spanEl = span();
+                let smallLabel = setting.options[value];
+                if (fredConfig.lngExists(setting.options[value])) {
+                    smallLabel = fredConfig.lng(setting.options[value]);
+                }
+                let smallLableEl = label(smallLabel, 'fred--toggle') as EnhancedLabel<HTMLInputElement>;
+
+                inputEl.value = value;
+
+                if (values.indexOf(value) != -1) {
+                    inputEl.setAttribute('checked', 'checked');
+                }
+
+                if (typeof onChange === 'function') {
+                    inputEl.addEventListener('change', e => {
+                        onChange(setting.name, inputEl.value, inputEl, setting, inputEl.checked);
+                    });
+                }
+
+                smallLableEl.appendChild(inputEl);
+                smallLableEl.appendChild(spanEl);
+                labelEl.appendChild(smallLableEl);
+
+                if (typeof onInit === 'function') {
+                    onInit(setting, smallLableEl, inputEl, spanEl);
+                }
+            }
+        }
+    }
+
+    return labelEl;
+};
+
 type AreaSetting = Setting & {
     rows: string|number;
 };
@@ -172,7 +222,7 @@ export const area = (
     onChange: OnChange<AreaSetting, HTMLTextAreaElement>,
     onInit: OnInit<AreaSetting, EnhancedLabel<HTMLTextAreaElement>, HTMLTextAreaElement>
 ) => {
-    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLTextAreaElement>;
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]) as EnhancedLabel<HTMLTextAreaElement>;
 
     const textAreaEl = textArea(defaultValue);
     labelEl.inputEl = textAreaEl;
@@ -202,18 +252,19 @@ export const dateTime = (
     setting: Setting,
     defaultValue: string|number = 0,
     onChange: OnChange<Setting, any>,
-    onInit: OnInit<Setting, EnhancedLabel<HTMLInputElement> & {picker: any}, any>
+    onInit: OnInit<Setting, EnhancedLabel<HTMLInputElement> & {picker: any}, any>,
+    dateFormat?: string
 ) => {
     defaultValue = parseInt('' + defaultValue) || 0;
 
-    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLInputElement> & {picker: any};
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]) as EnhancedLabel<HTMLInputElement> & {picker: any};
     const group = div(['fred--input-group', 'fred--datetime']);
     const inputEl = input();
     labelEl.inputEl = inputEl;
 
     const picker = flatpickr(inputEl, {
         enableTime: true,
-        dateFormat: "Y-m-d H:i",
+        dateFormat: ( dateFormat === undefined) ? "Y-m-d H:i" : dateFormat,
         appendTo: group,
         defaultDate: (defaultValue === 0) ? '' : (defaultValue * 1000),
         onChange: selectedDates => {
@@ -260,7 +311,7 @@ export const colorSwatch = (
     onChange: OnChange<ColorSwatchSetting, HTMLDivElement>,
     onInit: (setting: ColorSwatchSetting, label: HTMLLabelElement, wrapper: HTMLDivElement, preview: HTMLDivElement, colors: HTMLDivElement) => void
 ) => {
-    const labelEl = label(setting.label || setting.name);
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]);
     const wrapper = div('fred--color_swatch');
     const preview = div('fred--color_swatch-preview');
     const colors = div(['fred--color_swatch-colors', 'fred--hidden']);
@@ -371,7 +422,7 @@ export const colorPicker = (
     onChange: OnChange<ColorPickerSetting>,
     onInit: (setting:ColorPickerSetting, label: HTMLLabelElement, wrapper: HTMLDivElement, preview: HTMLDivElement, picker: HTMLDivElement) => void
 ) => {
-    const labelEl = label(setting.label || setting.name);
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]);
     const wrapper = div('fred--color_picker');
     const preview = div('fred--color_picker-preview');
 
@@ -439,7 +490,7 @@ export const slider = (
     onChange: OnChange<SliderSetting, HTMLDivElement>,
     onInit: OnInit<SliderSetting, HTMLLabelElement, HTMLDivElement & {noUiSlider: any}>
 ) => {
-    const labelEl = label(setting.label || setting.name);
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]);
 
     if (!setting.min && !setting.max) {
         console.error('Slider Input error. Parameters min and max are required');
@@ -663,6 +714,132 @@ export const page = (
     return wrapper;
 };
 
+type ChunkSetting = Setting & {
+    clearButton?: boolean;
+    category?: string|(string|number)[];
+    chunks?: string|(string|number)[];
+};
+export const chunk = (
+    setting: ChunkSetting,
+    defaultValue: {id: number, name: string} = {id: 0, name: ''},
+    onChange: OnChange<ChunkSetting, any>,
+    onInit: OnInit<ChunkSetting, HTMLLabelElement, HTMLSelectElement>
+) => {
+    const wrapper = div();
+    const labelEl = label((setting.label || setting.name), ['fred--label-'+setting.name, 'fred--label-choices']);
+    const selectEl = selectElement();
+
+    if (!defaultValue || (typeof(defaultValue) !== 'object') || (defaultValue.id === undefined) || (defaultValue.name === undefined)) {
+        defaultValue = {id: 0, name: ''};
+    }
+
+    wrapper.appendChild(labelEl);
+    wrapper.appendChild(selectEl);
+
+    let lookupTimeout = null;
+    const lookupCache = {};
+    let initData = [];
+
+    const chunkChoices = new Choices(selectEl, {
+        shouldSort:false,
+        removeItemButton: setting.clearButton || false,
+        searchResultLimit: 0
+    }) as any;
+
+    fixChoices(chunkChoices);
+
+    const queryOptions: Pick<ChunkSetting, 'category'|'chunks'> = {};
+
+    if (setting.category) {
+        queryOptions.category = setting.category;
+    }
+
+    if (setting.chunks) {
+        queryOptions.chunks = setting.chunks;
+    }
+
+    chunkChoices.ajax(callback => {
+        getChunks(defaultValue.id, queryOptions)
+            .then(json => {
+                initData = json.data.chunks;
+                callback(json.data.chunks, 'value', 'name');
+
+                if (json.data.current) {
+                    chunkChoices.setChoices([json.data.current], 'value', 'name', false);
+                    chunkChoices.setValueByChoice("" + defaultValue.id);
+                }
+            })
+            .catch(error => {
+                emitter.emit('fred-loading', error.message);
+            });
+    });
+
+    const populateOptions = options => {
+        const toRemove = [];
+
+        chunkChoices.currentState.items.forEach(item => {
+            if (item.active) {
+                toRemove.push(item.value);
+            }
+        });
+
+        const toKeep = [];
+        options.forEach(option => {
+            if (toRemove.indexOf(option.id) === -1) {
+                toKeep.push(option);
+            }
+        });
+
+        chunkChoices.setChoices(toKeep, 'value', 'name', true);
+    };
+
+    const serverLookup = () => {
+        const query = chunkChoices.input.value;
+        if (query in lookupCache) {
+            populateOptions(lookupCache[query]);
+        } else {
+            getChunks(null, {query, ...queryOptions})
+                .then(data => {
+                    lookupCache[query] = data.data.chunks;
+                    populateOptions(data.data.chunks);
+                })
+                .catch(error => {
+                    emitter.emit('fred-loading', error.message);
+                });
+        }
+    };
+
+    chunkChoices.passedElement.addEventListener('search', event => {
+        clearTimeout(lookupTimeout);
+        lookupTimeout = setTimeout(serverLookup, 200);
+    });
+
+    chunkChoices.passedElement.addEventListener('choice', event => {
+        chunkChoices.setChoices(initData, 'value', 'name', true);
+
+        if (typeof onChange === 'function') {
+            onChange(setting.name, {
+                name: event.detail.choice.label,
+                id: event.detail.choice.value
+            }, chunkChoices, setting);
+        }
+    });
+
+    chunkChoices.passedElement.addEventListener('removeItem', event => {
+        if (chunkChoices.getValue()) return;
+
+        if (typeof onChange === 'function') {
+            onChange(setting.name, {name: '', id: ''}, chunkChoices, setting);
+        }
+    });
+
+    if (typeof onInit === 'function') {
+        onInit(setting, labelEl, selectEl);
+    }
+
+    return wrapper;
+};
+
 type ImageSetting = Setting & {
     showPreview?: boolean;
     mediaSource?: string;
@@ -673,7 +850,7 @@ export const image = (
     onChange: OnChange<ImageSetting>,
     onInit: OnInit<ImageSetting>
 ) => {
-    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLInputElement> & {setPreview: (src: string) => void};
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]) as EnhancedLabel<HTMLInputElement> & {setPreview: (src: string) => void};
 
     setting.showPreview = (setting.showPreview === undefined) ? true : setting.showPreview;
 
@@ -782,7 +959,7 @@ export const file = (
     onChange: OnChange<FileSetting>,
     onInit: OnInit<FileSetting>
 ) => {
-    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLInputElement>;
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]) as EnhancedLabel<HTMLInputElement>;
 
     const inputWrapper = div(['fred--input-group', 'fred--browse']);
 
@@ -847,7 +1024,7 @@ export const folder = (
     onChange: OnChange<FolderSetting>,
     onInit: OnInit<FolderSetting>
 ) => {
-    const labelEl = label(setting.label || setting.name) as EnhancedLabel<HTMLInputElement>;
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]) as EnhancedLabel<HTMLInputElement>;
 
     const inputWrapper = div(['fred--input-group', 'fred--browse']);
 
@@ -915,7 +1092,7 @@ export const choices = (
     onInit: (setting:ChoicesSetting, label: HTMLLabelElement, input: HTMLSelectElement, choices: Choices, defaultValue: string) => void
 ) => {
     const wrapper = div() as HTMLDivElement & {choices: any, onError: (msg: string) => void};
-    const labelEl = label(setting.label || setting.name);
+    const labelEl = label(setting.label || setting.name, ['fred--label-'+setting.name]);
     const selectEl = selectElement();
 
     let errorEl = null;
@@ -1005,12 +1182,14 @@ export default {
     text,
     select,
     toggle,
+    toggleGroup,
     area,
     dateTime,
     colorSwatch,
     colorPicker,
     slider,
     page,
+    chunk,
     image,
     file,
     folder,

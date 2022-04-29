@@ -82,20 +82,24 @@ class SaveContent extends Endpoint
         $c->leftJoin('modTemplateVarTemplate', 'TemplateVarTemplates');
 
         $c->where([
-            'type' => 'freddropzone',
             'TemplateVarTemplates.templateid' => $this->object->get('template')
         ]);
 
         /** @var \modTemplateVar[] $tvs */
         $tvs = $this->modx->getIterator('modTemplateVar', $c);
+        $mTypes = $this->modx->getOption('manipulatable_url_tv_output_types', null, 'image,file');
+        $mTypes = explode(',', $mTypes);
         foreach ($tvs as $tv) {
             $tvName = $tv->get('name');
 
             if (isset($this->body[$tvName])) {
                 $tvContent = $this->body[$tvName];
                 $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
-
-                $this->object->setTVValue($tvName, $tvContent);
+                if(in_array($tv->type, $mTypes, true)) {
+                    $this->object->setTVValue($tvName, $this->reversePreparedOutput($tv, $tvContent, $this->object));
+                }else{
+                    $this->object->setTVValue($tvName, $tvContent);
+                }
             }
         }
 
@@ -259,16 +263,25 @@ class SaveContent extends Endpoint
             return $this->failure($preventSave);
         }
 
+        if (isset($this->body['pageSettings']['tvs']) && is_array($this->body['pageSettings']['tvs'])) {
+            foreach ($tvs as $tv) {
+                $tvName = $tv->get('name');
+                if (isset($this->body['pageSettings']['tvs'][$tvName])) {
+                    $tvContent = $this->body['pageSettings']['tvs'][$tvName];
+                    $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
+                    if(in_array($tv->type, $mTypes, true)) {
+                        $this->object->setTVValue($tvName, $this->reversePreparedOutput($tv, $tvContent, $this->object));
+                    }else{
+                        $this->object->setTVValue($tvName, $tvContent);
+                    }
+                }
+            }
+        }
+
         $saved = $this->object->save();
 
         if (!$saved) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
-        }
-
-        if (isset($this->body['pageSettings']['tvs']) && is_array($this->body['pageSettings']['tvs'])) {
-            foreach ($this->body['pageSettings']['tvs'] as $tvName => $tvValue) {
-                $this->object->setTVValue($tvName, $tvValue);
-            }
         }
 
         $this->modx->getCacheManager()->refresh();
@@ -439,5 +452,33 @@ class SaveContent extends Endpoint
 
         $this->object->set('alias', $alias);
         return true;
+    }
+
+    public function reversePreparedOutput($tv, $value, $resource) {
+        if (!empty($value)) {
+            $context = !empty($resource) ? $resource->get('context_key') : $this->modx->context->get('key');
+            $sourceCache = $tv->getSourceCache($context);
+            $classKey = $sourceCache['class_key'];
+            if (!empty($sourceCache) && !empty($classKey)) {
+                if ($this->modx->loadClass($classKey)) {
+                    /** @var modMediaSource $source */
+                    $source = $this->modx->newObject($classKey);
+                    if ($source) {
+                        $source->fromArray($sourceCache, '', true, true);
+                        $source->initialize();
+                        $properties = $source->getPropertyList();
+                        if (!empty($properties['baseUrl'])) {
+                            return ltrim($value,rtrim($properties['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+                        }
+                        //S3 Objects
+                        if (!empty($properties['url'])) {
+                            return ltrim($value,rtrim($properties['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+                        }
+                    }
+                }
+            }
+        }
+
+        return $value;
     }
 }

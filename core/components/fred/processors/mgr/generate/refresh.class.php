@@ -11,6 +11,9 @@ class fredRefreshProcessor extends modProcessor
     {
         $fred = $this->initFred();
 
+        //Clear Element Values
+        $this->modx->removeCollection('FredCache', []);
+
         $c = $this->modx->newQuery('FredThemedTemplate');
         $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate', '', ['template']));
 
@@ -64,7 +67,7 @@ class fredRefreshProcessor extends modProcessor
         }
 
         $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_complete'));
-        
+
         return $this->success('');
     }
 

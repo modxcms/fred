@@ -128,6 +128,8 @@ export class ElementSettings {
                 return ui.colorPicker(setting, defaultValue, this.setSetting.bind(this));
             case 'slider':
                 return ui.slider(setting, defaultValue, this.setSetting.bind(this));
+            case 'chunk':
+                return ui.chunk(setting, defaultValue, this.setSetting.bind(this));
             case 'page':
                 return ui.page(setting, defaultValue, this.setSetting.bind(this));
             case 'tagger':

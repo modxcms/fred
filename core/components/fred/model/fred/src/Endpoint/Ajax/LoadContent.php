@@ -157,6 +157,8 @@ class LoadContent extends Endpoint
 
         /** @var \modTemplateVar[] $tvs */
         $tvs = $resource->getTemplateVars();
+        $mTypes = $this->modx->getOption('manipulatable_url_tv_output_types', null, 'image,file');
+        $mTypes = explode(',', $mTypes);
 
         foreach ($tvs as $tv) {
             $props = $tv->getProperties();
@@ -179,7 +181,11 @@ class LoadContent extends Endpoint
                 }
 
                 $output['def'][] = $def;
-                $output['values'][$tv->name] = $tv->value;
+                if(in_array($tv->type, $mTypes, true)) {
+                    $output['values'][$tv->name] = $tv->prepareOutput($tv->value, $resource->id);
+                }else {
+                    $output['values'][$tv->name] = $tv->value;
+                }
             }
         }
 

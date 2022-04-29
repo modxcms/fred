@@ -71,10 +71,24 @@ final class RenderResource {
 
         foreach ($contentData as $item) {
             if (isset($this->elementCache[$item['widget']])) {
-                $html .= $this->elementCache[$item['widget']];
+                try {
+                    $html .= $this->renderElement(
+                        $this->elementCache[$item['widget']],
+                        $item,
+                        true
+                    );
+                } catch (\Exception $e) {
+                }
             } else {
                 try {
-                    $html .= $this->renderElement($this->twig->render($item['widget'], $this->mergeSetting(!empty($item['elId']) ? $item['elId'] : '', $item['settings'])), $item, true);
+                    $html .= $this->renderElement(
+                        $this->twig->render(
+                            $item['widget'],
+                            $this->mergeSetting(!empty($item['elId']) ? $item['elId'] : '', $item['settings'])
+                        ),
+                        $item,
+                        true
+                    );
                 } catch (\Exception $e) {
                 }
             }
