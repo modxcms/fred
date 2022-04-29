@@ -460,21 +460,12 @@ class SaveContent extends Endpoint
             $sourceCache = $tv->getSourceCache($context);
             $classKey = $sourceCache['class_key'];
             if (!empty($sourceCache) && !empty($classKey)) {
-                if ($this->modx->loadClass($classKey)) {
-                    /** @var modMediaSource $source */
-                    $source = $this->modx->newObject($classKey);
-                    if ($source) {
-                        $source->fromArray($sourceCache, '', true, true);
-                        $source->initialize();
-                        $properties = $source->getPropertyList();
-                        if (!empty($properties['baseUrl'])) {
-                            return ltrim($value,rtrim($properties['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
-                        }
-                        //S3 Objects
-                        if (!empty($properties['url'])) {
-                            return ltrim($value,rtrim($properties['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
-                        }
-                    }
+                if (!empty($sourceCache['baseUrl'])) {
+                    return ltrim($value,rtrim($sourceCache['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+                }
+                //S3 Objects
+                if (!empty($sourceCache['url'])) {
+                    return ltrim($value,rtrim($sourceCache['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
                 }
             }
         }
