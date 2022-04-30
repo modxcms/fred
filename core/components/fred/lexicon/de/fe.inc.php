@@ -154,6 +154,7 @@ $_lang['fred.fe.err.blueprint_categories_ae_name'] = 'Eine Blaupausen Kategorie 
 $_lang['fred.fe.err.resource_ns_parent'] = 'Übergeordnete Ressource ist erforderlich';
 $_lang['fred.fe.err.resource_ns_template'] = 'Template ist erforderlich';
 $_lang['fred.fe.err.resource_ns_pagetitle'] = 'Seitentitel ist erforderlich';
+$_lang['fred.fe.err.resource_ae_pagetitle'] = 'Page Title already used';
 $_lang['fred.fe.err.resource_save_new'] = 'Fehler beim Erstellen einer neuen Ressource';
 $_lang['fred.fe.err.resource_ns_id'] = 'Ressource ist erforderlich';
 $_lang['fred.fe.err.resource_nf'] = 'Resource nicht gefunden';

@@ -154,6 +154,7 @@ $_lang['fred.fe.err.blueprint_categories_ae_name'] = 'Blueprint Category with th
 $_lang['fred.fe.err.resource_ns_parent'] = 'Parent is required';
 $_lang['fred.fe.err.resource_ns_template'] = 'Template is required';
 $_lang['fred.fe.err.resource_ns_pagetitle'] = 'Page Title is required';
+$_lang['fred.fe.err.resource_ae_pagetitle'] = 'Page Title already used';
 $_lang['fred.fe.err.resource_save_new'] = 'Error creating new resource';
 $_lang['fred.fe.err.resource_ns_id'] = 'Resource is required';
 $_lang['fred.fe.err.resource_nf'] = 'Resource not found';

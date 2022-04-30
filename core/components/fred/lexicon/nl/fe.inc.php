@@ -154,6 +154,7 @@ $_lang['fred.fe.err.blueprint_categories_ae_name'] = 'Blauwdruk categorie met de
 $_lang['fred.fe.err.resource_ns_parent'] = 'Bovenliggende pagina is verplicht';
 $_lang['fred.fe.err.resource_ns_template'] = 'Template is verplicht';
 $_lang['fred.fe.err.resource_ns_pagetitle'] = 'Titel is verplicht';
+$_lang['fred.fe.err.resource_ae_pagetitle'] = 'Page Title already used';
 $_lang['fred.fe.err.resource_save_new'] = 'Fout bij aanmaken nieuwe pagina';
 $_lang['fred.fe.err.resource_ns_id'] = 'Pagina is verplicht';
 $_lang['fred.fe.err.resource_nf'] = 'Pagina niet gevonden';
