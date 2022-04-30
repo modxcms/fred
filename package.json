@@ -38,7 +38,7 @@
     "html2canvas": "^1.0.0-rc.5",
     "isomorphic-fetch": "^2.2.1",
     "jssha": "^3.1.2",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mousetrap": "^1.6.3",
     "nouislider": "^11.1.0",
     "promise-cancel": "^2.0.1",
