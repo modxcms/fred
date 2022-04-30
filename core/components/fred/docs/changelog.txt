@@ -1,1 +1,11 @@
-Fred 1.2.3 fixes an issue with some broken dependencies during last package build. 
+- Migrating in changes from MODX 3 version of Fred
+- Fixing issue with image TV save processor incompatible with manager
+- Adding new TV types:
+  - datetime
+  - checkbox (acts like a group of toggles)
+- Adding new element setting type:
+  - chunk
+- fixing issues with cached elements
+- Cleaning out the cobwebs of dependabot
+- Add a means of hiding Fred to play well with Preview
+- Update elFinder to 2.1.61
