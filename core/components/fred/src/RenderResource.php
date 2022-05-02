@@ -173,7 +173,8 @@ final class RenderResource
                         $item,
                         true
                     );
-                    if ($this->elementOptions[$item['widget']]['cacheOutput'] === true) {
+                    if (isset($this->elementOptions[$item['widget']]['cacheOutput'])
+                        && $this->elementOptions[$item['widget']]['cacheOutput'] === true) {
                         $this->cacheElement($item['widget'], $elementContent);
                     }
                     $html .= $elementContent;
