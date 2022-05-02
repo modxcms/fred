@@ -30,9 +30,11 @@ npm-debug.log
 .sass-cache
 package-lock.json
 
-core/components/fred/vendor
+# Development files #
+#####################
+deploy.*
+.php-cs-fixer.cache
 site
+core/components/fred/vendor
 assets/components/fred/web/fred.css*
 assets/components/fred/web/fred.min.js*
-
-deploy.*

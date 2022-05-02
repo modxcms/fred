@@ -19,7 +19,6 @@ use Wa72\HtmlPageDom\HtmlPageCrawler;
 
 final class RenderResource
 {
-
     /** @var modResource */
     private $resource;
 
@@ -117,7 +116,7 @@ final class RenderResource
         }
     }
 
-    private function getElement($id)
+    private function getElement($id): string
     {
         /** @var FredElement $element */
         $element = $this->modx->getObject(FredElement::class, ['uuid' => $id]);
@@ -138,7 +137,18 @@ final class RenderResource
         return $element->content;
     }
 
-    public function render()
+    private function cacheElement($id, $content): void
+    {
+        /** @var FredElement $element */
+        $element = $this->modx->getObject(FredElement::class, ['uuid' => $id]);
+        if (!$element) {
+            $this->modx->log(modX::LOG_LEVEL_ERROR, "[Fred] Element {$id} wasn't found.");
+            return;
+        }
+        $element->setCache($this->resource->id, $content);
+    }
+
+    public function render(): bool
     {
         $contentData = !empty($this->data['content']) ? $this->data['content'] : [];
         $html = '';
@@ -155,7 +165,7 @@ final class RenderResource
                 }
             } else {
                 try {
-                    $html .= $this->renderElement(
+                    $elementContent = $this->renderElement(
                         $this->twig->render(
                             $item['widget'],
                             $this->mergeSetting(!empty($item['elId']) ? $item['elId'] : '', $item['settings'])
@@ -163,6 +173,10 @@ final class RenderResource
                         $item,
                         true
                     );
+                    if ($this->elementOptions[$item['widget']]['cacheOutput'] === true) {
+                        $this->cacheElement($item['widget'], $elementContent);
+                    }
+                    $html .= $elementContent;
                 } catch (\Exception $e) {
                 }
             }
@@ -192,6 +206,8 @@ final class RenderResource
 
         /** @var modTemplateVar[] $tvs */
         $tvs = $this->modx->getIterator(modTemplateVar::class, $c);
+        $mTypes = $this->modx->getOption('manipulatable_url_tv_output_types', null, 'image,file');
+        $mTypes = explode(',', $mTypes);
         foreach ($tvs as $tv) {
             $tvName = $tv->get('name');
 
@@ -213,8 +229,11 @@ final class RenderResource
                 }
 
                 $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
-
-                $this->resource->setTVValue($tvName, $tvContent);
+                if (in_array($tv->type, $mTypes, true)) {
+                    $this->object->setTVValue($tvName, $this->reversePreparedOutput($tv, $tvContent, $this->object));
+                } else {
+                    $this->object->setTVValue($tvName, $tvContent);
+                }
             }
         }
 
@@ -530,4 +549,32 @@ final class RenderResource
         return $settings;
     }
 
+    public function reversePreparedOutput($tv, $value, $resource)
+    {
+        if (!empty($value)) {
+            $context = !empty($resource) ? $resource->get('context_key') : $this->modx->context->get('key');
+            $sourceCache = $tv->getSourceCache($context);
+            $classKey = $sourceCache['class_key'];
+            if (!empty($sourceCache) && !empty($classKey)) {
+                if ($this->modx->loadClass($classKey)) {
+                    /** @var modMediaSource $source */
+                    $source = $this->modx->newObject($classKey);
+                    if ($source) {
+                        $source->fromArray($sourceCache, '', true, true);
+                        $source->initialize();
+                        $properties = $source->getPropertyList();
+                        if (!empty($properties['baseUrl'])) {
+                            return ltrim($value, rtrim($properties['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+                        }
+                        //S3 Objects
+                        if (!empty($properties['url'])) {
+                            return ltrim($value, rtrim($properties['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+                        }
+                    }
+                }
+            }
+        }
+
+        return $value;
+    }
 }
