@@ -103,7 +103,7 @@ if (!function_exists('alterTable')) {
     }
 }
 
-if ($object->xpdo) {
+if ($transport->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_UPGRADE:
             $modx =& $transport->xpdo;

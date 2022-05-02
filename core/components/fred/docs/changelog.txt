@@ -1,1 +1,1 @@
-Fred 1.2.3 fixes an issue with some broken dependencies during last package build. 
+Fred 2.0.0-pl is a rebuild for MODX 3
