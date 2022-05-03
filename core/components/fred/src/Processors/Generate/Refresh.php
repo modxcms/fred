@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\Generate;
 
 use Fred\Fred;
@@ -19,6 +20,8 @@ class Refresh extends Processor
 
     public function process()
     {
+        //allow larger sites to rebuild
+        ini_set('max_execution_time', 300);
         /** @var Fred $fred */
         $fred =  $this->modx->services->get('fred');
 
@@ -57,12 +60,20 @@ class Refresh extends Processor
             $ck = $resource->getCacheKey();
             $mgrCtx = $this->modx->context->get('key');
             $cKey = str_replace($mgrCtx, $ctx, $ck);
-            $this->modx->cacheManager->delete($cKey, array(
+            $this->modx->cacheManager->delete(
+                $cKey,
+                array(
                     xPDO::OPT_CACHE_KEY => $this->modx->getOption('cache_resource_key', null, 'resource'),
-                    xPDO::OPT_CACHE_HANDLER => $this->modx->getOption('cache_resource_handler', null,
-                        $this->modx->getOption(xPDO::OPT_CACHE_HANDLER)),
-                    xPDO::OPT_CACHE_FORMAT => (integer)$this->modx->getOption('cache_resource_format', null,
-                        $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
+                    xPDO::OPT_CACHE_HANDLER => $this->modx->getOption(
+                        'cache_resource_handler',
+                        null,
+                        $this->modx->getOption(xPDO::OPT_CACHE_HANDLER)
+                    ),
+                    xPDO::OPT_CACHE_FORMAT => (int)$this->modx->getOption(
+                        'cache_resource_format',
+                        null,
+                        $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP)
+                    )
                 )
             );
             /* clear the cache the old-fashioned way, just in case */
@@ -73,7 +84,6 @@ class Refresh extends Processor
             /* End CacheMaster Script */
 
             $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_id', array('id' => $resource->id)));
-
         }
 
         $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_complete'));

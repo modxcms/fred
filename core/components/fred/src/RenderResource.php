@@ -13,6 +13,7 @@ namespace Fred;
 use Fred\Model\FredElement;
 use Fred\Model\FredTheme;
 use MODX\Revolution\modResource;
+use MODX\Revolution\modRequest;
 use MODX\Revolution\modTemplateVar;
 use MODX\Revolution\modX;
 use Wa72\HtmlPageDom\HtmlPageCrawler;
@@ -159,7 +160,9 @@ final class RenderResource
                     $html .= $this->renderElement(
                         $this->elementCache[$item['widget']],
                         $item,
-                        true
+                        true,
+                        (isset($this->elementOptions[$item['widget']]['remote'])
+                            && $this->elementOptions[$item['widget']]['remote'] === true)
                     );
                 } catch (\Exception $e) {
                 }
@@ -171,7 +174,9 @@ final class RenderResource
                             $this->mergeSetting(!empty($item['elId']) ? $item['elId'] : '', $item['settings'])
                         ),
                         $item,
-                        true
+                        true,
+                        (isset($this->elementOptions[$item['widget']]['remote'])
+                            && $this->elementOptions[$item['widget']]['remote'] === true)
                     );
                     if (isset($this->elementOptions[$item['widget']]['cacheOutput'])
                         && $this->elementOptions[$item['widget']]['cacheOutput'] === true) {
@@ -249,7 +254,7 @@ final class RenderResource
         return false;
     }
 
-    private function renderElement($html, $item, $replaceFakes = false)
+    private function renderElement($html, $item, $replaceFakes = false, $parseModx = false)
     {
         $html = HtmlPageCrawler::create('<div>' . $html . '</div>');
 
@@ -514,6 +519,22 @@ final class RenderResource
             $html = str_replace(' data-fred-fake-href=', ' href=', $html);
             $html = str_replace(' data-fred-fake-src=', ' src=', $html);
             $html = str_replace('data-fred-fake-action=', ' action=', $html);
+        }
+
+        if ($parseModx) {
+            $this->modx->request = new modRequest($this->modx);
+            $this->modx->request->sanitizeRequest();
+
+            $this->modx->getParser();
+            $maxIterations = empty($maxIterations) || (int) $maxIterations < 1 ? 10 : (int) $maxIterations;
+
+            $this->modx->resource = $this->resource;
+            $this->modx->resourceIdentifier = $this->resource->id;
+            $this->modx->elementCache = [];
+
+            $this->modx->parser->processElementTags('', $html, false, false, '[[', ']]', [], $maxIterations);
+            $this->modx->parser->processElementTags('', $html, true, false, '[[', ']]', [], $maxIterations);
+            $this->modx->parser->processElementTags('', $html, true, true, '[[', ']]', [], $maxIterations);
         }
 
         return $html;
