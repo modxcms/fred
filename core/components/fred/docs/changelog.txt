@@ -1,1 +1,1 @@
-Fred 2.0.0-pl is a rebuild for MODX 3
+Tweaks to the rebuild processor for more consistent results
