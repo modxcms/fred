@@ -386,9 +386,11 @@ switch ($modx->event->name) {
 
         break;
     case 'OnTVInputRenderList':
+        $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
         $modx->event->output($corePath . 'elements/tvs/input/');
         break;
     case 'OnTVInputPropertiesList':
+        $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
         $modx->event->output($corePath . 'elements/tvs/input/options/');
         break;
     case 'OnManagerPageBeforeRender':
