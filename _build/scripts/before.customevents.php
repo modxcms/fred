@@ -10,7 +10,7 @@ use xPDO\Transport\xPDOTransport;
  */
 
 
-if ($object->xpdo) {
+if ($transport->xpdo) {
     /** @var modX $modx */
     $modx =& $transport->xpdo;
 
