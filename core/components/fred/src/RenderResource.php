@@ -236,9 +236,9 @@ final class RenderResource
 
                 $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
                 if (in_array($tv->type, $mTypes, true)) {
-                    $this->object->setTVValue($tvName, $this->reversePreparedOutput($tv, $tvContent, $this->object));
+                    $this->resource->setTVValue($tvName, $this->reversePreparedOutput($tv, $tvContent, $this->resource));
                 } else {
-                    $this->object->setTVValue($tvName, $tvContent);
+                    $this->resource->setTVValue($tvName, $tvContent);
                 }
             }
         }
