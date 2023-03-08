@@ -41,9 +41,7 @@ class Utils {
             }
         }
 
-        $path = implode('/', $parts);
-
-        return $path;
+        return '/' . ltrim(implode('/', $parts), '/');
     }
 
     public static function normalizePath($path): string
