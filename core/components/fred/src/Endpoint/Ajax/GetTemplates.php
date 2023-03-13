@@ -35,7 +35,7 @@ class GetTemplates extends Endpoint
         $c->sortby('template_templatename');
 
         /** @var FredThemedTemplate[] $themes */
-        $themes = $this->modx->getIterator('FredTheme', $c);
+        $themes = $this->modx->getIterator(FredThemedTemplate::class, $c);
         $data = [];
 
         foreach ($themes as $theme) {
