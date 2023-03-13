@@ -5,7 +5,7 @@ fred.window.BlueprintCategory = function (config) {
         closeAction: 'close',
         isUpdate: false,
         url: MODx.config.connector_url,
-        action: 'Fred\\Processprs\\BlueprintCategories\\Create',
+        action: 'Fred\\Processors\\BlueprintCategories\\Create',
         modal: true,
         autoHeight: true,
         buttonAlign: 'left',
