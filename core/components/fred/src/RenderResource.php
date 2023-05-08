@@ -161,8 +161,7 @@ final class RenderResource
                         $this->elementCache[$item['widget']],
                         $item,
                         true,
-                        (isset($this->elementOptions[$item['widget']]['remote'])
-                            && $this->elementOptions[$item['widget']]['remote'] === true)
+                        true
                     );
                 } catch (\Exception $e) {
                 }
