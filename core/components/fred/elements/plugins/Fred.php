@@ -173,7 +173,7 @@ switch ($modx->event->name) {
                 $attrs = $node->getNode(0)->attributes;
 
                 foreach ($attrs as $attr) {
-                    $newNode->attr($attr->nodeName, $attr->nodeValue);
+                    $newNode->setAttribute($attr->nodeName, $attr->nodeValue);
                 }
 
                 $newNode->setAttribute('data-fred-script', $node->getInnerHtml());
@@ -235,7 +235,7 @@ switch ($modx->event->name) {
                 'requestParams' => $_REQUEST
             ];
 
-            $jwt = \Firebase\JWT\JWT::encode($payload, $fred->getSecret());
+            $jwt = \Firebase\JWT\JWT::encode($payload, $fred->getSecret(), 'HS256');
 
             $versionHash = substr(md5(\Fred\Fred::VERSION), 0, 6);
 

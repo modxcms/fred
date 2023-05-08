@@ -261,7 +261,7 @@ final class RenderResource
         $renderElements = $html->filter('[data-fred-render]');
         $renderElements->each(
             function (HtmlPageCrawler $node, $i) use ($item, $html) {
-                $render = $node->attr('data-fred-render');
+                $render = $node->getAttribute('data-fred-render');
                 if (($render === 'true') || ($render === '1')) {
                     $node->removeAttribute('data-fred-render');
                 } else {
@@ -303,17 +303,17 @@ final class RenderResource
         $fredLinks = $html->filter('[data-fred-link-type]');
         $fredLinks->each(
             function (HtmlPageCrawler $node, $i) use ($item) {
-                $linkType = $node->attr('data-fred-link-type');
+                $linkType = $node->getAttribute('data-fred-link-type');
                 $node->removeAttr('data-fred-link-type');
 
                 if ($linkType === 'page') {
-                    $resourceId = intval($node->attr('data-fred-link-page'));
-                    $anchor = $node->attr('data-fred-link-anchor') ? ('#' . $node->attr('data-fred-link-anchor')) : '';
+                    $resourceId = intval($node->getAttribute('data-fred-link-page'));
+                    $anchor = $node->getAttribute('data-fred-link-anchor') ? ('#' . $node->getAttribute('data-fred-link-anchor')) : '';
 
                     if ($resourceId > 0) {
-                        $node->attr('data-fred-fake-href', "[[~{$resourceId}]]{$anchor}");
+                        $node->setAttribute('data-fred-fake-href', "[[~{$resourceId}]]{$anchor}");
                     } else {
-                        $node->attr('data-fred-fake-href', $anchor);
+                        $node->setAttribute('data-fred-fake-href', $anchor);
                     }
 
                     $node->removeAttr('href');
@@ -336,16 +336,16 @@ final class RenderResource
             }
         );
 
-        $html = HtmlPageCrawler::create($html->first()->html());
+        $html = HtmlPageCrawler::create($html->first()->getInnerHtml());
 
         $elements = $html->filter('[data-fred-name]');
         $elements->each(
             function (HtmlPageCrawler $node, $i) use ($item, $html) {
-                $valueName = $node->attr('data-fred-name');
+                $valueName = $node->getAttribute('data-fred-name');
 
                 $value = null;
 
-                $target = $node->attr('data-fred-target');
+                $target = $node->getAttribute('data-fred-target');
                 if (!empty($target)) {
                     $value = $this->resource->get($target);
                 } else {
@@ -357,23 +357,23 @@ final class RenderResource
                 if ($value !== null) {
                     switch ($node->nodeName()) {
                         case 'i':
-                            $node->attr('class', $value);
+                            $node->setAttribute('class', $value);
                             break;
                         case 'img':
-                            $node->attr('data-fred-fake-src', $value);
+                            $node->setAttribute('data-fred-fake-src', $value);
                             break;
                         default:
-                            $node->html($value);
+                            $node->setInnerHtml($value);
                     }
                 }
 
                 $this->setValueForBindElements($html, $valueName, $value);
 
-                $attrs = $node->attr('data-fred-attrs');
+                $attrs = $node->getAttribute('data-fred-attrs');
                 $attrs = explode(',', $attrs);
                 foreach ($attrs as $attr) {
                     if (isset($item['values'][$valueName]['_raw'][$attr])) {
-                        $node->attr($attr, $item['values'][$valueName]['_raw'][$attr]);
+                        $node->setAttribute($attr, $item['values'][$valueName]['_raw'][$attr]);
                     }
                 }
 
@@ -394,17 +394,17 @@ final class RenderResource
         $fredLinks = $html->filter('[data-fred-link-type]');
         $fredLinks->each(
             function (HtmlPageCrawler $node, $i) use ($item) {
-                $linkType = $node->attr('data-fred-link-type');
+                $linkType = $node->getAttribute('data-fred-link-type');
                 $node->removeAttr('data-fred-link-type');
 
                 if ($linkType === 'page') {
-                    $resourceId = intval($node->attr('data-fred-link-page'));
-                    $anchor = $node->attr('data-fred-link-anchor') ? ('#' . $node->attr('data-fred-link-anchor')) : '';
+                    $resourceId = intval($node->getAttribute('data-fred-link-page'));
+                    $anchor = $node->getAttribute('data-fred-link-anchor') ? ('#' . $node->getAttribute('data-fred-link-anchor')) : '';
 
                     if ($resourceId > 0) {
-                        $node->attr('data-fred-fake-href', "[[~{$resourceId}]]{$anchor}");
+                        $node->setAttribute('data-fred-fake-href', "[[~{$resourceId}]]{$anchor}");
                     } else {
-                        $node->attr('data-fred-fake-href', $anchor);
+                        $node->setAttribute('data-fred-fake-href', $anchor);
                     }
 
                     $node->removeAttr('href');
@@ -412,10 +412,10 @@ final class RenderResource
                     $node->removeAttr('data-fred-link-page');
                     $node->removeAttr('data-fred-link-anchor');
                 } else {
-                    $href = $node->attr('href');
+                    $href = $node->getAttribute('href');
                     $node->removeAttr('href');
 
-                    $node->attr('data-fred-fake-href', $href);
+                    $node->setAttribute('data-fred-fake-href', $href);
                 }
             }
         );
@@ -435,7 +435,7 @@ final class RenderResource
         $blockClasses = $html->filter('[data-fred-block-class]');
         $blockClasses->each(
             function (HtmlPageCrawler $node, $i) use ($item) {
-                $classes = $node->attr('data-fred-block-class');
+                $classes = $node->getAttribute('data-fred-block-class');
                 $classes = Utils::explodeAndClean($classes, ' ');
 
                 foreach ($classes as $class) {
@@ -449,7 +449,7 @@ final class RenderResource
         $fredClasses = $html->filter('[data-fred-class]');
         $fredClasses->each(
             function (HtmlPageCrawler $node, $i) use ($item) {
-                $classes = $node->attr('data-fred-class');
+                $classes = $node->getAttribute('data-fred-class');
                 $classes = Utils::explodeAndClean($classes, ' ');
 
                 foreach ($classes as $class) {
@@ -486,7 +486,7 @@ final class RenderResource
 
         $dzs->each(
             function (HtmlPageCrawler $node, $i) use ($item, $self) {
-                $dzName = $node->attr('data-fred-dropzone');
+                $dzName = $node->getAttribute('data-fred-dropzone');
                 if ($item['children'][$dzName]) {
                     $html = '';
 
@@ -506,7 +506,7 @@ final class RenderResource
                         }
                     }
 
-                    $node->html($html);
+                    $node->setInnerHtml($html);
                 }
 
                 $node->removeAttr('data-fred-dropzone');
@@ -547,13 +547,13 @@ final class RenderResource
             function (HtmlPageCrawler $node, $i) use ($value) {
                 switch ($node->nodeName()) {
                     case 'i':
-                        $node->attr('class', $value);
+                        $node->setAttribute('class', $value);
                         break;
                     case 'img':
-                        $node->attr('data-fred-fake-src', $value);
+                        $node->setAttribute('data-fred-fake-src', $value);
                         break;
                     default:
-                        $node->html($value);
+                        $node->setInnerHtml($value);
                 }
             }
         );
