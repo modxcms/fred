@@ -175,8 +175,8 @@ final class RenderResource
                         ),
                         $item,
                         true,
-                        (isset($this->elementOptions[$item['widget']]['remote'])
-                            && $this->elementOptions[$item['widget']]['remote'] === true)
+                        (isset($this->elementOptions[$item['widget']]['cacheOutput'])) ?
+                            $this->elementOptions[$item['widget']]['cacheOutput'] : false
                     );
                     if (isset($this->elementOptions[$item['widget']]['cacheOutput'])
                         && $this->elementOptions[$item['widget']]['cacheOutput'] === true) {
