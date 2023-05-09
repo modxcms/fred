@@ -8,9 +8,9 @@
     "symfony/css-selector": "^3.4",
     "symfony/filesystem": "^3.4",
     "symfony/finder": "^3.4",
-    "firebase/php-jwt": "^5.0",
+    "firebase/php-jwt": "^6.4",
     "intervention/image": "^2.6.0",
-    "studio-42/elfinder": "2.1.61"
+    "studio-42/elfinder": "^2.1"
   },
   "config": {
     "platform": {

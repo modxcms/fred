@@ -1,5 +1,6 @@
 <?php
 namespace Fred;
+
 /*
  * This file is part of the Fred package.
  *
@@ -9,6 +10,7 @@ namespace Fred;
  * file that was distributed with this source code.
  */
 
+use Firebase\JWT\Key;
 use Fred\Model\FredTheme;
 use Fred\Model\FredThemedTemplate;
 use MODX\Revolution\modSystemSetting;
@@ -88,7 +90,9 @@ class Fred
     {
         /** @var FredThemedTemplate $themedTemplate */
         $themedTemplate = $this->modx->getObject(FredThemedTemplate::class, ['template' => $template]);
-        if (!$themedTemplate) return null;
+        if (!$themedTemplate) {
+            return null;
+        }
 
         return $themedTemplate->Theme;
     }
@@ -122,8 +126,12 @@ class Fred
 
             $secret = $secretObject->get('value');
         }
-
         return $secret;
+    }
+
+    public function getSecretKey()
+    {
+        return new Key($this->getSecret(), 'HS256');
     }
 
     /**
@@ -141,7 +149,7 @@ class Fred
             throw new \Exception('Fred Token is missing');
         }
 
-        $payload = \Firebase\JWT\JWT::decode($_SERVER['HTTP_X_FRED_TOKEN'], $this->getSecret(), ['HS256']);
+        $payload = \Firebase\JWT\JWT::decode($_SERVER['HTTP_X_FRED_TOKEN'], $this->getSecretKey());
         return (array)$payload;
     }
 
