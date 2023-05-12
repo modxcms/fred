@@ -1,1 +1,7 @@
-Tweaks to the rebuild processor for more consistent results
+- Various stability fixes (now 40% less likely to fall off your desk)
+- Update Twig to 3.x
+- Update elFinder to use yarn and composer instead of manual insertion
+- Update JWT token for security
+- Adjust how elements are parsed during rebuild and manager saves
+- Fix blueprint categories in manager
+- Remove some lingering MODX Revo 2.x references
