@@ -45,6 +45,6 @@
     "mousetrap": "^1.6.3",
     "nouislider": "^11.1.0",
     "promise-cancel": "^2.0.1",
-    "twig": "^1.15.2"
+    "twig": "^1.16.0"
   }
 }
