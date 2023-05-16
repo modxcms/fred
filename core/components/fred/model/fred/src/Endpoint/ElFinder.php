@@ -107,8 +107,7 @@ class ElFinder extends Endpoint
             }
         }
 
-        $options = json_decode(json_encode($params), true);
-        $connector = new \elFinderConnector(new \elFinder($options));
+        $connector = new \elFinderConnector(new \elFinder((array)$params));
         $connector->run();
     }
 

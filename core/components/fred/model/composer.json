@@ -14,5 +14,10 @@
     "psr-4": {
       "Fred\\": "fred/src/"
     }
+  },
+  "config": {
+    "platform": {
+      "php": "7.4"
+    }
   }
 }
