@@ -50,9 +50,10 @@ class RenderElement extends Endpoint
 
         $templateName = $element->name . '_' . $element->id;
 
-        $twig = new \Twig_Environment(new \Twig_Loader_Array([
+        $loader = new \Twig\Loader\ArrayLoader([
             $templateName => $element->content
-        ]));
+        ]);
+        $twig = new \Twig\Environment($loader, []);
         $twig->setCache(false);
 
         $settings['theme_dir'] = '{{theme_dir}}';
