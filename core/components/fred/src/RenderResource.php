@@ -59,7 +59,8 @@ final class RenderResource
         $elements = [];
         $this->gatherElements($elements, $this->data);
 
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Array($elements));
+        $loader = new \Twig\Loader\ArrayLoader($elements);                                                                                                                              
+        $this->twig = new \Twig\Environment($loader, []);
         $this->twig->setCache(false);
     }
 
