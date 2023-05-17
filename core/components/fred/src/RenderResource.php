@@ -59,7 +59,8 @@ final class RenderResource
         $elements = [];
         $this->gatherElements($elements, $this->data);
 
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Array($elements));
+        $loader = new \Twig\Loader\ArrayLoader($elements);                                                                                                                              
+        $this->twig = new \Twig\Environment($loader, []);
         $this->twig->setCache(false);
     }
 
@@ -190,7 +191,8 @@ final class RenderResource
         $parser = $this->modx->getParser();
         $html = Utils::htmlDecodeTags($html, $parser);
 
-        $twig = new \Twig_Environment(new \Twig_Loader_Array(['content' => $html]));
+        $loader = new \Twig\Loader\ArrayLoader(['content' => $html]);
+        $twig = new \Twig\Environment($loader, []);
         $twig->setCache(false);
 
         try {
