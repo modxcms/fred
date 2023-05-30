@@ -349,6 +349,16 @@ class Driver extends \elFinderVolumeDriver
             return $stat;
         }
 
+        try {
+            $file = $this->fs->fileExists($path);
+            $mimeType = $this->fs->mimeType($path);
+
+            if (!$file && $mimeType !== 'directory') {
+                return [];
+            }
+        } catch (FilesystemException $e) {
+            return [];
+        }
 
         $name = explode(DIRECTORY_SEPARATOR, $path);
         $stat['name'] = array_pop($name);
