@@ -72,7 +72,7 @@
         })(),
 
         opts = {
-            cssAutoLoad : ['../elfinder-themes/material/css/theme-gray.css'],
+            cssAutoLoad : ['../vendor/elfinder-themes/material/css/theme-gray.css'],
             getFileCallback : function(file, fm) {
                 if (type === 'folder') {
                     if (file.mime === 'directory') {
