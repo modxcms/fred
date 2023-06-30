@@ -1,2 +1,2 @@
-- Fix issue with being unable to upload in elFinder
-- Fixing issues with Render Element
+- Update elFinder endpoint to use latest revisions from barryvdh repository
+- Restore thumbnails for images in the file manager
