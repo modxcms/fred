@@ -15,13 +15,14 @@ use Fred\Model\FredTheme;
 use MODX\Revolution\modResource;
 use MODX\Revolution\modRequest;
 use MODX\Revolution\modTemplateVar;
+use MODX\Revolution\modTemplateVarTemplate;
 use MODX\Revolution\modX;
 use Wa72\HtmlPageDom\HtmlPageCrawler;
 
 final class RenderResource
 {
     /** @var modResource */
-    private $resource;
+    public $resource;
 
     /** @var FredTheme */
     private $theme;
@@ -36,7 +37,7 @@ final class RenderResource
     private $fred;
 
     /** @var array */
-    private $data = [];
+    public $data = [];
 
     /** @var array */
     private $elementOptions = [];
@@ -44,22 +45,25 @@ final class RenderResource
     /** @var array */
     private $elementCache = [];
 
-    public function __construct(modResource $resource, modX $modx)
+    public function __construct(modResource $resource, modX $modx, $data = [])
     {
         $this->resource = $resource;
         $this->modx = $modx;
         $this->fred = $modx->services->get('fred');
 
         $this->theme = $this->fred->getTheme($this->resource->template);
-
-        $this->data = $this->resource->getProperty('data', 'fred');
+        if (empty($data)) {
+            $this->data = $this->resource->getProperty('data', 'fred');
+        } else {
+            $this->data = $data;
+        }
         if (empty($this->data) && !empty($this->resource->content)) {
             $this->setDefaults();
         }
         $elements = [];
         $this->gatherElements($elements, $this->data);
 
-        $loader = new \Twig\Loader\ArrayLoader($elements);                                                                                                                              
+        $loader = new \Twig\Loader\ArrayLoader($elements);
         $this->twig = new \Twig\Environment($loader, []);
         $this->twig->setCache(false);
     }
@@ -184,6 +188,7 @@ final class RenderResource
                     }
                     $html .= $elementContent;
                 } catch (\Exception $e) {
+                    $this->modx->log(modX::LOG_LEVEL_ERROR, "[Fred] Error rendering element {$item['widget']}: {$e->getMessage()}");
                 }
             }
         }
@@ -198,11 +203,13 @@ final class RenderResource
         try {
             $this->resource->set('content', $twig->render('content', $this->mergeSetting('')));
         } catch (\Exception $e) {
+            $this->modx->log(modX::LOG_LEVEL_ERROR, "[Fred] Error rendering resource {$this->resource->id}: {$e->getMessage()}");
+            $this->modx->log(modX::LOG_LEVEL_ERROR, "[Fred] HTML \n {$html}");
             $this->resource->set('content', '');
         }
 
-        $c = $this->modx->newQuery('modTemplateVar');
-        $c->leftJoin('modTemplateVarTemplate', 'TemplateVarTemplates');
+        $c = $this->modx->newQuery(modTemplateVar::class);
+        $c->leftJoin(modTemplateVarTemplate::class, 'TemplateVarTemplates');
 
         $c->where(
             [

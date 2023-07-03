@@ -73,40 +73,6 @@ class SaveContent extends Endpoint
 
         $this->loadTagger();
 
-        $parser = $this->modx->getParser();
-
-        if (isset($this->body['content'])) {
-            $content = $this->body['content'];
-            $content = Utils::htmlDecodeTags($content, $parser);
-
-            $this->object->setContent($content);
-        }
-
-        $c = $this->modx->newQuery(modTemplateVar::class);
-        $c->leftJoin(modTemplateVarTemplate::class, 'TemplateVarTemplates');
-
-        $c->where([
-            'TemplateVarTemplates.templateid' => $this->object->get('template')
-        ]);
-
-        /** @var modTemplateVar[] $tvs */
-        $tvs = $this->modx->getIterator(modTemplateVar::class, $c);
-        $mTypes = $this->modx->getOption('manipulatable_url_tv_output_types', null, 'image,file');
-        $mTypes = explode(',', $mTypes);
-        foreach ($tvs as $tv) {
-            $tvName = $tv->get('name');
-
-            if (isset($this->body[$tvName])) {
-                $tvContent = $this->body[$tvName];
-                $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
-                if (in_array($tv->type, $mTypes, true)) {
-                    $this->object->setTVValue($tvName, $this->reversePreparedOutput($tv, $tvContent, $this->object));
-                } else {
-                    $this->object->setTVValue($tvName, $tvContent);
-                }
-            }
-        }
-
         if (isset($this->body['pageSettings']['introtext'])) {
             $this->object->set('introtext', $this->body['pageSettings']['introtext']);
         }
@@ -241,7 +207,6 @@ class SaveContent extends Endpoint
 
         $this->handleTagger($this->object);
 
-        $this->body['data']['fingerprint'] = Utils::resourceFingerprint($this->object);
         $this->object->setProperty('data', $this->body['data'], 'fred');
 
         $beforeSave = $this->modx->invokeEvent('FredOnBeforeFredResourceSave', [
@@ -265,28 +230,19 @@ class SaveContent extends Endpoint
             return $this->failure($preventSave);
         }
 
-        if (isset($this->body['pageSettings']['tvs']) && is_array($this->body['pageSettings']['tvs'])) {
-            foreach ($tvs as $tv) {
-                $tvName = $tv->get('name');
-                if (isset($this->body['pageSettings']['tvs'][$tvName])) {
-                    $tvContent = $this->body['pageSettings']['tvs'][$tvName];
-                    $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
-                    if (in_array($tv->type, $mTypes, true)) {
-                        $this->object->setTVValue($tvName, $this->reversePreparedOutput($tv, $tvContent, $this->object));
-                    } else {
-                        $this->object->setTVValue($tvName, $tvContent);
-                    }
-                }
-            }
-        }
-
         $saved = $this->object->save();
 
         if (!$saved) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
         }
+        // unify resource rendering
+        $renderResource = new \Fred\RenderResource($this->object, $this->modx, $this->body['data']);
+        if (!$renderResource->render()) {
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
+        }
 
-        $this->modx->getCacheManager()->refresh();
+        $this->object = $renderResource->resource;
+
         $this->modx->setOption('cache_alias_map', false);
 
         $this->modx->invokeEvent('FredOnFredResourceSave', [
@@ -296,7 +252,7 @@ class SaveContent extends Endpoint
 
         $response = [
             'message' => $this->modx->lexicon('fred.fe.pages.updated'),
-            'fingerprint' => $this->body['data']['fingerprint'],
+            'fingerprint' =>  $renderResource->data['fingerprint'],
             'publishedon' => $this->object->publishedon,
             'alias' => $this->object->alias,
         ];
@@ -446,34 +402,5 @@ class SaveContent extends Endpoint
 
         $this->object->set('alias', $alias);
         return true;
-    }
-
-    public function reversePreparedOutput($tv, $value, $resource): string
-    {
-        if (!empty($value)) {
-            $context = !empty($resource) ? $resource->get('context_key') : $this->modx->context->get('key');
-            $sourceCache = $tv->getSourceCache($context);
-            $classKey = $sourceCache['class_key'];
-            if (!empty($sourceCache) && !empty($classKey)) {
-                if ($this->modx->loadClass($classKey)) {
-                    /** @var modMediaSource $source */
-                    $source = $this->modx->newObject($classKey);
-                    if ($source) {
-                        $source->fromArray($sourceCache, '', true, true);
-                        $source->initialize();
-                        $properties = $source->getPropertyList();
-                        if (!empty($properties['baseUrl'])) {
-                            return ltrim($value, rtrim($properties['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
-                        }
-                        //S3 Objects
-                        if (!empty($properties['url'])) {
-                            return ltrim($value, rtrim($properties['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
-                        }
-                    }
-                }
-            }
-        }
-
-        return $value;
     }
 }
