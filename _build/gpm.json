@@ -3,7 +3,7 @@
   "lowCaseName": "fred",
   "description": "Frontend Editor",
   "author": "John Peca",
-  "version": "2.1.2-pl",
+  "version": "2.1.3-pl",
   "menus": [
     {
       "text": "fred.menu.fred",
