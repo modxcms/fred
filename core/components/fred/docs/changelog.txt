@@ -1,2 +1,1 @@
-- Update elFinder endpoint to use latest revisions from barryvdh repository
-- Restore thumbnails for images in the file manager
+- fix PSR Compatability with MODX in PHP 8.1
