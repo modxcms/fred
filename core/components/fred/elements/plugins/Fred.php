@@ -194,19 +194,19 @@ switch ($modx->event->name) {
                     continue;
                 }
 
-                if ($result['includes']) {
+                if (isset($result['includes'])) {
                     $includes .= $result['includes'];
                 }
 
-                if ($result['beforeRender']) {
+                if (isset($result['beforeRender'])) {
                     $beforeRender .= $result['beforeRender'];
                 }
 
-                if ($result['modifyPermissions']) {
+                if (isset($result['modifyPermissions'])) {
                     $modifyPermissions .= $result['modifyPermissions'];
                 }
 
-                if ($result['lexicons'] && is_array($result['lexicons'])) {
+                if (isset($result['lexicons']) && is_array($result['lexicons'])) {
                     $lexicons = array_merge($lexicons, $result['lexicons']);
                 }
             }
