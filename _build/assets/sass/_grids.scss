@@ -1,3 +1,4 @@
+@use "sass:math";
 ////
 /// @group Grid
 ////
@@ -191,7 +192,7 @@ $mpGutter: 1.2%;
       position: absolute;
       z-index: 99;
       bottom: 0;
-      padding: $gridGutter/2;
+      padding: math.div($baseGutter, 2);
     }
     &:not(.fred--fill-tile) figcaption {
       padding: $gridGutter*1.25;

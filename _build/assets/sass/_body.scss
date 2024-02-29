@@ -1,3 +1,4 @@
+@use "sass:math";
 .fred--open {
   position: fixed;
   z-index: 10010;
@@ -251,7 +252,7 @@
     .fred--element-settings {
       display: block;
       height: 32px;
-      margin-bottom: $baseGutter/2;
+      margin-bottom: math.div($baseGutter, 2);
 
       &:before {                            // override _buttons.scss … move here?
         background-color: transparent;

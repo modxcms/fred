@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .fred--panel{
   font-family: $font-family;
   background-color: $white;
@@ -59,7 +61,7 @@
   //}
   //
   dl {
-    margin-top: $baseGutter/2;
+    margin-top: math.div($baseGutter, 2);
     dt {
       background-color: $offwhite;
       padding: $sidebar-actions-padding;
@@ -77,7 +79,7 @@
       }
       &:hover, &.active {
         color: $white;
-        background-color: $dark-gray;    
+        background-color: $dark-gray;
       }
       &.active {
         + dd {

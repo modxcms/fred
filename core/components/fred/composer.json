@@ -22,5 +22,8 @@
     "psr-4": {
       "Fred\\": "src/"
     }
+  },
+  "require-dev": {
+    "modx/revolution": "^3.0"
   }
 }

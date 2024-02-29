@@ -1,4 +1,4 @@
-
+@use "sass:math";
 // COLORS
 
 $blue: #2a4365; //$was: #031723 and #123764
@@ -10,7 +10,7 @@ $offwhite: #f1f1f1;
 $light-gray: #e4e4e4;
 $gray: #b1b1b1;
 $dark-gray: darken($gray, 20%);
-$black: #272727; 
+$black: #272727;
 
 $border-light: $light-gray;
 $border: $gray;
@@ -40,23 +40,16 @@ $timing: .3s;
 $box-shad-subtle: 0px 3px 15px rgba(0,0,0,0.2);
 $ui-shad: 0 1px 2px rgba($black, 0.4);
 
-$btn-padding: $baseGutter/2 $baseGutter;
+$btn-padding: math.div($baseGutter, 2) $baseGutter;
 $btn-padding-small: 3px 11px;
 $sidebar-actions-padding: 12px 30px 12px 20px;
 
 $font-family: "Open Sans", Arial, sans-serif;
 //Mixins
 @mixin draggable{
-  cursor: move; /* fallback: no `url()` support or images disabled */
-  cursor: url(images/grab.cur); /* fallback: Internet Explorer */
-  cursor: -webkit-grab; /* Chrome 1-21, Safari 4+ */
-  cursor:    -moz-grab; /* Firefox 1.5-26 */
-  cursor:         grab; /* W3C standards syntax, should come least */
+  cursor: grab;
   &:active {
-    cursor: url(images/grabbing.cur);
-    cursor: -webkit-grabbing;
-    cursor:    -moz-grabbing;
-    cursor:         grabbing;
+    cursor: grabbing;
   }
 }
 
@@ -76,7 +69,7 @@ $font-family: "Open Sans", Arial, sans-serif;
   height: auto;
 }
 
-@mixin btn-disabled{  
+@mixin btn-disabled{
   &:disabled, &[disabled]{
     background-color: $dark-gray !important;
     opacity: .8;
@@ -92,15 +85,15 @@ mixin that calculates if text needs to be light or dark
 depending on the background color passed.
 
 From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
-			
-Color brightness is determined by the following formula: 
+
+Color brightness is determined by the following formula:
 ((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
 ------------------------*/
 
 @mixin text-contrast($n) {
   $color-brightness: round((red($n) * 299) + (green($n) * 587) + (blue($n) * 114) / 1000);
   $light-color: round((red(#ffffff) * 299) + (green(#ffffff) * 587) + (blue(#ffffff) * 114) / 1000);
-  
+
   @if abs($color-brightness) < ($light-color/2){
     color: white;
   }

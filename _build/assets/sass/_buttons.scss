@@ -1,3 +1,4 @@
+@use "sass:math";
 button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
   @include btn();
   padding: $btn-padding;
@@ -109,8 +110,8 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     text-align: center;
     background: transparent;
     border-radius: $radius;
-    padding: $baseGutter/2 $baseGutter;
-    margin: $baseGutter/2 $baseGutter;
+    padding: math.div($baseGutter, 2) $baseGutter;
+    margin: math.div($baseGutter, 2) $baseGutter;
     float: right;
     //&:hover, &:focus {
     //  background-color: darken($border-light, 15%);
