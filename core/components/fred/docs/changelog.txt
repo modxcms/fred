@@ -1,1 +1,1 @@
-- fix PSR Compatability with MODX in PHP 8.1
+- fix issue with image saving
