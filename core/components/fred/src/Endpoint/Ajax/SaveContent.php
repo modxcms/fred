@@ -236,7 +236,7 @@ class SaveContent extends Endpoint
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
         }
         // unify resource rendering
-        $renderResource = new \Fred\RenderResource($this->object, $this->modx, $this->body['data']);
+        $renderResource = new \Fred\RenderResource($this->object, $this->modx, $this->body['data'], $this->body['pageSettings']);
         if (!$renderResource->render()) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
         }

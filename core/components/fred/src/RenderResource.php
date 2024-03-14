@@ -40,12 +40,15 @@ final class RenderResource
     public $data = [];
 
     /** @var array */
+    public $pageSettings = [];
+
+    /** @var array */
     private $elementOptions = [];
 
     /** @var array */
     private $elementCache = [];
 
-    public function __construct(modResource $resource, modX $modx, $data = [])
+    public function __construct(modResource $resource, modX $modx, $data = [], $pageSettings = [])
     {
         $this->resource = $resource;
         $this->modx = $modx;
@@ -60,6 +63,7 @@ final class RenderResource
         if (empty($this->data) && !empty($this->resource->content)) {
             $this->setDefaults();
         }
+        $this->pageSettings = $pageSettings;
         $elements = [];
         $this->gatherElements($elements, $this->data);
 
@@ -213,7 +217,6 @@ final class RenderResource
 
         $c->where(
             [
-                'type'                            => 'freddropzone',
                 'TemplateVarTemplates.templateid' => $this->resource->get('template'),
             ]
         );
@@ -224,24 +227,29 @@ final class RenderResource
         $mTypes = explode(',', $mTypes);
         foreach ($tvs as $tv) {
             $tvName = $tv->get('name');
-
-            if (isset($this->data[$tvName])) {
+            // check if TV is in base data or pageSettings
+            $tvValue = (isset($this->pageSettings['tvs'][$tvName])) ?
+                $this->pageSettings['tvs'][$tvName] :
+                ($this->data[$tvName] ?? null);
+            if (isset($tvValue)) {
                 $tvContent = '';
-
-                foreach ($this->data[$tvName] as $item) {
-                    try {
-                        $tvContent .= $this->renderElement(
-                            $this->twig->render(
-                                $item['widget'],
-                                $this->mergeSetting(!empty($item['elId']) ? $item['elId'] : '', $item['settings'])
-                            ),
-                            $item,
-                            true
-                        );
-                    } catch (\Exception $e) {
+                if ($tv->type === 'freddropzone' || is_array($tvValue)) {
+                    foreach ($tvValue as $item) {
+                        try {
+                            $tvContent .= $this->renderElement(
+                                $this->twig->render(
+                                    $item['widget'],
+                                    $this->mergeSetting(!empty($item['elId']) ? $item['elId'] : '', $item['settings'])
+                                ),
+                                $item,
+                                true
+                            );
+                        } catch (\Exception $e) {
+                        }
                     }
+                } else {
+                    $tvContent = $tvValue;
                 }
-
                 $tvContent = Utils::htmlDecodeTags($tvContent, $parser);
                 if (in_array($tv->type, $mTypes, true)) {
                     $this->resource->setTVValue($tvName, $this->reversePreparedOutput($tv, $tvContent, $this->resource));
