@@ -1,1 +1,2 @@
-- fix issue with image saving
+- Update ramsey/uuid
+- Fix php warning in ElFinder

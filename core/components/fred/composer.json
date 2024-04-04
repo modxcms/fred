@@ -2,8 +2,7 @@
   "require": {
     "twig/twig": "^3.6",
     "wa72/htmlpagedom": "^1.3",
-    "ramsey/uuid": "^3.0",
-    "moontoast/math": "^1.1",
+    "ramsey/uuid": "^4.0",
     "symfony/dom-crawler": "^3.4",
     "symfony/css-selector": "^3.4",
     "symfony/filesystem": "^3.4",

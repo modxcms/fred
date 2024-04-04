@@ -10,6 +10,7 @@
 
 namespace Fred\Endpoint;
 
+use Fred\Endpoint\ElFinder\elFinderVolumeFlysystem;
 use Fred\Utils;
 use MODX\Revolution\Sources\modFileMediaSource;
 use MODX\Revolution\Sources\modS3MediaSource;
@@ -44,8 +45,7 @@ class ElFinder extends Endpoint
             return;
         }
 
-        include_once $this->fred->getOption('corePath') . 'elFinder/autoload.php';
-        class_alias(\Fred\Endpoint\ElFinder\elFinderVolumeFlysystem::class, 'elFinderVolumeFlysystem');
+        class_alias(elFinderVolumeFlysystem::class, 'elFinderVolumeFlysystem');
 
         $roots = [];
 
