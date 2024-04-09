@@ -64,7 +64,7 @@ export class Element {
 
         this.settings = {
             ...(this.settings),
-            ...JSON.parse(JSON.stringify(settings))
+            ...JSON.parse(JSON.stringify(settings)),
         };
 
         for (let setting in this.settings) {
@@ -74,9 +74,20 @@ export class Element {
             this.parsedSettingsClean[setting] = valueParser(this.settings[setting], true);
         }
 
+        if (this.settings.tvs) {
+            for (let tvName in this.settings.tvs) {
+                if (this.settings.tvs.hasOwnProperty(tvName)) {
+                    this.settings.tvs[tvName] = valueParser(this.settings.tvs[tvName], true);
+                }
+            }
+        }
+
         this.dzs = {};
 
         this.inEditor = false;
+        emitter.on('fred-page-setting-change', (setting, value, rawValue, el) => {
+            this.render(false, false);
+        });
     }
 
     static fromMarkup(data, markup, dropzone) {

@@ -27,7 +27,7 @@ final class RenderResource
     /** @var FredTheme */
     private $theme;
 
-    /** @var \Twig_Environment */
+    /** @var \Twig\Environment */
     private $twig;
 
     /** @var modX */
@@ -64,6 +64,14 @@ final class RenderResource
             $this->setDefaults();
         }
         $this->pageSettings = $pageSettings;
+        if (empty($this->pageSettings)) {
+            $this->pageSettings = $this->resource->toArray();
+            unset($this->pageSettings['content']);
+            $tvs = $this->resource->getTemplateVars();
+            foreach ($tvs as $tv) {
+                $this->pageSettings['tv_' . $tv->get('name')] = $this->resource->getTVValue($tv->get('name'));
+            }
+        }
         $elements = [];
         $this->gatherElements($elements, $this->data);
 
@@ -583,7 +591,9 @@ final class RenderResource
         ];
 
         $settings['id'] = $id;
-
+        foreach($this->pageSettings as $key => $value) {
+            $settings[$key] = $value;
+        }
         return $settings;
     }
 

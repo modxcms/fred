@@ -14,6 +14,7 @@ import ColorPicker from './ColorPicker/ColorPicker';
 import noUiSlider from 'nouislider';
 import hoverintent from 'hoverintent';
 import Finder from './Finder';
+import {cloneDeep} from "lodash";
 
 export const debounce = (delay, fn) => {
     let timerId;
@@ -251,11 +252,19 @@ export const buildBlueprint = (data, dropzone, before) => {
 };
 
 export const getTemplateSettings = (cleanRender = false) => {
+    const pageSettings = cloneDeep(fredConfig.pageSettings);
+    delete pageSettings['tvs'];
+    for (let tv in fredConfig.pageSettings['tvs']) {
+        if (!pageSettings.hasOwnProperty('tv_' + tv)) {
+            pageSettings['tv_' + tv] = fredConfig.pageSettings['tvs'][tv];
+        }
+    }
     return {
+        ...pageSettings,
         theme_dir: '{{theme_dir}}',
         template: {
             theme_dir: cleanRender ? `[[++${fredConfig.config.themeSettingsPrefix}.theme_dir]]` : fredConfig.config.themeDir
-        }
+        },
     };
 };
 
