@@ -1,6 +1,5 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (env, options) => {
     const isProd = options.mode === 'production';
@@ -20,7 +19,7 @@ module.exports = (env, options) => {
             library: 'Fred',
             libraryTarget: 'umd',
             libraryExport: 'default',
-            filename: 'fred.min.js'
+            filename: 'fred.min.js',
         },
 
         module: {
@@ -44,7 +43,11 @@ module.exports = (env, options) => {
                             loader: MiniCssExtractPlugin.loader
                         },
                         {
-                            loader: "css-loader?url=false",
+                            loader: "css-loader",
+                            options: {
+                                url: false,
+                                sourceMap: true
+                            }
                         },
                         {
                             loader: "postcss-loader"
@@ -66,12 +69,13 @@ module.exports = (env, options) => {
                 '@fred/UI': path.resolve(__dirname, '_build/assets/js/UI')
             },
             extensions: [ '.ts', '.js' ],
+            fallback: {
+                "path": require.resolve("path-browserify"),
+                "url":  require.resolve("url/"),
+            }
         },
 
         plugins: [
-            isProd ? new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: ['fred.*']
-            }) : () => {},
             new MiniCssExtractPlugin({
                 filename: "fred.css"
             })
