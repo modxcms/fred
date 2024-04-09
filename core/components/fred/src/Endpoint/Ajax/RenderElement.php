@@ -60,6 +60,27 @@ class RenderElement extends Endpoint
         $settings['template'] = [
             'theme_dir' => '{{template.theme_dir}}'
         ];
+        $resource = $this->modx->getObject(modResource::class, $resourceId);
+        if (empty($resource)) {
+            return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
+        }
+        foreach ($resource->toArray() as $key => $value) {
+            if (isset($settings[$key])) continue;
+            $settings[$key] = $value;
+        }
+        unset($settings['content']);
+        if (!isset($settings['tvs'])) {
+            $tvs = $resource->getTemplateVars();
+            foreach ($tvs as $tv) {
+                if (isset($settings['tv_' . $tv->get('name')])) continue;
+                $settings['tv_' . $tv->get('name')] = $resource->getTVValue($tv->get('name'));
+            }
+        } else {
+            foreach($settings['tvs'] as $tv) {
+                if (isset($settings['tv_' . $tv['name']])) continue;
+                $settings['tv_' . $tv['name']] = $tv['value'];
+            }
+        }
 
         try {
             $html = $twig->render($templateName, $settings);
@@ -68,7 +89,6 @@ class RenderElement extends Endpoint
         }
 
         if ($parseModx === true) {
-            $resource = $this->modx->getObject(modResource::class, $resourceId);
 
             $queryParams = $this->getClaim('queryParams');
             if ($queryParams !== false) {
