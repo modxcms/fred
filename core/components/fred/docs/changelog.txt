@@ -1,2 +1,4 @@
 - Update ramsey/uuid
 - Fix php warning in ElFinder
+- Update most legacy packages
+- Add resource fields to Twig variables
