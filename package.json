@@ -33,18 +33,17 @@
   },
   "dependencies": {
     "choices.js": "^3.0.4",
-    "dragula": "github:theboxer/dragula#master",
+    "dragula": "^3.7.3",
     "elfinder-material-theme": "^3.0.0",
     "elfinder-npm": "^2.1.17",
     "fetch-defaults": "^1.0.0",
     "flatpickr": "^4.6.13",
     "hoverintent": "^2.2.1",
-    "html2canvas": "^1.4.1",
     "isomorphic-fetch": "^3.0.0",
     "jssha": "^3.3.1",
     "lodash": "^4.17.20",
     "mousetrap": "^1.6.5",
-    "nouislider": "^11.1.0",
+    "nouislider": "^15.7.1",
     "promise-cancel": "^2.0.1",
     "twig": "^1.16.0"
   }

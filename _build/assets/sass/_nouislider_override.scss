@@ -5,15 +5,8 @@
  */
 
 .noUi-target {
-  -webkit-touch-callout: none;
-  -webkit-tap-highlight-color: $light-gray;
-  -webkit-user-select: none;
-  -ms-touch-action: none;
   touch-action: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
   user-select: none;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   * {
     -webkit-touch-callout: none;
@@ -21,10 +14,7 @@
     -webkit-user-select: none;
     -ms-touch-action: none;
     touch-action: none;
-    -ms-user-select: none;
-    -moz-user-select: none;
     user-select: none;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
   position: relative;
@@ -42,7 +32,6 @@
   width: 100%;
   height: 100%;
   position: relative;
-  z-index: 1;
   overflow: hidden;
   z-index: 0;
 }
@@ -58,8 +47,6 @@
   left: 0;
   height: 100%;
   width: 100%;
-  -ms-transform-origin: 0 0;
-  -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
 }
 
@@ -82,7 +69,6 @@
 
 .noUi-state-tap {
   .noUi-connect, .noUi-origin {
-    -webkit-transition: transform 0.3s;
     transition: transform 0.3s;
   }
 }
@@ -99,9 +85,6 @@
   .noUi-handle {
     width: 23px;
     height: 23px;
-    left: -17px;
-    top: -6px;
-    //box-shadow: $ui-shad;
   }
 }
 
@@ -180,7 +163,6 @@
     height: 14px;
     width: 1px;
     background: #E8E7E6;
-    left: 14px;
     top: 6px;
     left: 17px;
   }
@@ -197,7 +179,6 @@
     width: 14px;
     height: 1px;
     left: 6px;
-    top: 14px;
     top: 17px;
   }
 }
@@ -219,10 +200,8 @@
  */
 
 .noUi-pips {
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   * {
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
   position: absolute;
@@ -270,12 +249,10 @@
 }
 
 .noUi-value-horizontal {
-  -webkit-transform: translate(-50%, 50%);
   transform: translate(-50%, 50%);
 }
 
 .noUi-rtl .noUi-value-horizontal {
-  -webkit-transform: translate(50%, 50%);
   transform: translate(50%, 50%);
 }
 
@@ -305,13 +282,11 @@
 }
 
 .noUi-value-vertical {
-  -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%, 0);
   padding-left: 25px;
 }
 
 .noUi-rtl .noUi-value-vertical {
-  -webkit-transform: translate(0, 50%);
   transform: translate(0, 50%);
 }
 
@@ -346,14 +321,12 @@
   }
 }
 .noUi-horizontal .noUi-tooltip {
-  -webkit-transform: translate(-50%, 0);
   transform: translate(-50%, 0);
   left: 50%;
   bottom: 120%;
 }
 
 .noUi-vertical .noUi-tooltip {
-  -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
   top: 50%;
   right: 120%;
