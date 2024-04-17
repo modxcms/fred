@@ -86,7 +86,12 @@ export class Element {
 
         this.inEditor = false;
         emitter.on('fred-page-setting-change', (setting, value, rawValue, el) => {
-            this.render(false, false);
+            // check if the setting exists in the content
+            if (this.content[setting] !== undefined) {
+                if (this.content[setting]._raw._value !== rawValue) {
+                    this.setValue(el, value, '_value', '_raw', null, false, true);
+                }
+            }
         });
     }
 
