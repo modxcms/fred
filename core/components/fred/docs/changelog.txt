@@ -1,2 +1,1 @@
-- Update ramsey/uuid
-- Fix php warning in ElFinder
+- Fix render loop with incorrect fred-target combination

@@ -535,14 +535,14 @@ export const slider = (
 
                 return parseFloat(value.toFixed(decimals));
             },
-            from: function ( value ) {
+            from: function ( value ): number {
                 const decimals = (setting.tooltipDecimals === undefined) ? 0 : setting.tooltipDecimals;
 
                 if (decimals === 0) {
                     return parseInt(value);
                 }
 
-                return parseFloat(value).toFixed(decimals);
+                return parseFloat(parseFloat(value).toFixed(decimals));
             }
         },
         step: step,
@@ -571,7 +571,7 @@ export const slider = (
             if (init === false) {
                 init = true;
             } else {
-                onChange(setting.name, values[0], slider, setting);
+                onChange(setting.name, values[0], sliderEl, setting);
             }
         });
     }
@@ -1110,6 +1110,7 @@ export const choices = (
     wrapper.choices = choicesInstance;
 
     if (typeof onChange === 'function') {
+
         choicesInstance.passedElement.addEventListener('choice', (event: any) => {
             if (errorEl !== null) {
                 errorEl.remove();

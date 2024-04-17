@@ -4,8 +4,8 @@
   v0.0.1
 
 */
-@import "node_modules/flatpickr/dist/flatpickr";
-@import "node_modules/nouislider/distribute/nouislider";
+@import "flatpickr";
+@import "nouislider";
 
 //Part of the Bootstrap - Need Globally
 @import "dragula";
@@ -21,10 +21,10 @@
   @import "launcher";
   @import "forms";
   @import "panels";
-  @import "flatpickr";
+  @import "flatpickr_override";
   @import "fields";
   @import "colorPicker";
-  @import "nouislider";
+  @import "nouislider_override";
   @import "tagger";
 }
 .fred,.mce-fred--modxlink{
