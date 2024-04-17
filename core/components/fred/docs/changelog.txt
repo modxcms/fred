@@ -1,1 +1,2 @@
-- Fix render loop with incorrect fred-target combination
+- allow re-rendering on settings changes
+- fix issue with TV not displaying correctly if file is in the theme directory

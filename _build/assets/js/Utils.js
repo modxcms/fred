@@ -256,7 +256,7 @@ export const getTemplateSettings = (cleanRender = false) => {
     delete pageSettings['tvs'];
     for (let tv in fredConfig.pageSettings['tvs']) {
         if (!pageSettings.hasOwnProperty('tv_' + tv)) {
-            pageSettings['tv_' + tv] = fredConfig.pageSettings['tvs'][tv];
+            pageSettings['tv_' + tv] = valueParser(fredConfig.pageSettings['tvs'][tv], cleanRender);
         }
     }
     return {

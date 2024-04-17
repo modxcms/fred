@@ -11,6 +11,7 @@ import { renderElement } from '../Actions/elements';
 import Toolbar from "./Toolbar";
 import jsSHA from "jssha";
 import Dropzone from "./Dropzone";
+import {trim} from "lodash";
 
 export class Element {
     constructor(el, dropzone, content = {}, settings = {}, pluginsData = {}, elId = null) {
@@ -21,6 +22,8 @@ export class Element {
         this.title = this.el.dataset.fredElementTitle;
         this.wrapper = null;
         this.invalidTheme = this.el.dataset.invalidTheme === 'true';
+        this.renderOn = [];
+        this.setUpRenderOn();
 
         if (!elId) {
             this.elId = this.generateElId();
@@ -86,11 +89,8 @@ export class Element {
 
         this.inEditor = false;
         emitter.on('fred-page-setting-change', (setting, value, rawValue, el) => {
-            // check if the setting exists in the content
-            if (this.content[setting] !== undefined) {
-                if (this.content[setting]._raw._value !== rawValue) {
-                    this.setValue(el, value, '_value', '_raw', null, false, true);
-                }
+            if (this.renderOn.indexOf(setting) !== -1) {
+                this.render(true, false);
             }
         });
     }
@@ -137,6 +137,26 @@ export class Element {
 
         this.imageEditor = this.config.imageEditor || 'ImageEditor';
         this.imageEditor = this.editors[this.imageEditor] || null;
+    }
+
+    setUpRenderOn() {
+        this.el.elementMarkup.replace(/\{\{([^}]+)}}/g, (match, p1) => {
+            let element = trim(p1, ' ');
+            if (this.renderOn.indexOf(element) === -1 &&
+                ( fredConfig.pageSettings[element] !== undefined ||
+                        // test tvs and remove tv_ prefix
+                    fredConfig.pageSettings.tvs[element.replace('tv_', '')] !== undefined
+                )
+            ) {
+                this.renderOn.push(element);
+            }
+        });
+        this.el.elementMarkup.replace(/data-fred-target="([^"]+)"/g, (match, p1) => {
+            // if renderOn contains match then remove it
+            if (this.renderOn.indexOf(p1) !== -1) {
+                this.renderOn.splice(this.renderOn.indexOf(p1), 1);
+            }
+        });
     }
 
     setEl(el) {

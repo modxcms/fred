@@ -187,11 +187,13 @@ class LoadContent extends Endpoint
                 }
 
                 $output['def'][] = $def;
+                $value = $tv->value;
                 if(in_array($tv->type, $mTypes, true)) {
-                    $output['values'][$tv->name] = $tv->prepareOutput($tv->value, $resource->id);
-                }else {
-                    $output['values'][$tv->name] = $tv->value;
+                    $value = $tv->prepareOutput($tv->value, $resource->id);
                 }
+                // replace [[++fred.theme.$theme.theme_dir]] with {{theme_dir}}
+                $value = str_replace('[[++' . $this->theme->settingsPrefix . '.theme_dir]]', '{{theme_dir}}', $value);
+                $output['values'][$tv->name] = $value;
             }
         }
 
