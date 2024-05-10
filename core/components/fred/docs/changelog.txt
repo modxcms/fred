@@ -1,2 +1,1 @@
-- allow re-rendering on settings changes
-- fix issue with TV not displaying correctly if file is in the theme directory
+- improve handling of media sources in template variables
