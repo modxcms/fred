@@ -619,11 +619,18 @@ final class RenderResource
                         $source->initialize();
                         $properties = $source->getPropertyList();
                         if (!empty($properties['baseUrl'])) {
-                            return ltrim($value, rtrim($properties['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+                            // remove the base url from the front of the value
+                            $url = rtrim($properties['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                            if (substr($value, 0, strlen($url)) === $url) {
+                                return substr($value, strlen($url));
+                            }
                         }
                         //S3 Objects
                         if (!empty($properties['url'])) {
-                            return ltrim($value, rtrim($properties['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+                            $url = rtrim($properties['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                            if (substr($value, 0, strlen($url)) === $url) {
+                                return substr($value, strlen($url));
+                            }
                         }
                     }
                 }
