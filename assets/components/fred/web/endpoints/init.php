@@ -13,8 +13,8 @@ $tStart= microtime(true);
 define('MODX_API_MODE', true);
 $modx_cache_disabled = false;
 
-require_once dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))) . '/config.core.php';
-if (!defined('MODX_CORE_PATH')) define('MODX_CORE_PATH', dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))) . '/core/');
+require_once dirname(__FILE__, 6) . '/config.core.php';
+if (!defined('MODX_CORE_PATH')) define('MODX_CORE_PATH', dirname(__FILE__, 6) . '/core/');
 
 /* include the modX class */
 if (!@include_once (MODX_CORE_PATH . "model/modx/modx.class.php")) {

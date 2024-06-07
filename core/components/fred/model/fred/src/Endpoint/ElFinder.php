@@ -40,8 +40,6 @@ class ElFinder extends Endpoint
             return;
         }
 
-        include_once $this->fred->getOption('modelPath') . 'elFinder/autoload.php';
-
         $roots = [];
 
         $mediaSourceIDs = $this->modx->getOption('mediaSource', $_GET, '');
