@@ -2189,6 +2189,16 @@ electron-to-chromium@^1.4.118:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.129.tgz#c675793885721beefff99da50f57c6525c2cd238"
   integrity sha512-GgtN6bsDtHdtXJtlMYZWGB/uOyjZWjmRDumXTas7dGBaB9zUyCjzHet1DY2KhyHN8R0GLbzZWqm4efeddqqyRQ==
 
+elfinder-material-theme@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/elfinder-material-theme/-/elfinder-material-theme-3.0.0.tgz#8b4cc63307d3550b5f9aa4063e524c6a23d7935f"
+  integrity sha512-6tKnuZ3XHUA522R/mI9HAfZ/eN2NmhQEFIOj2k+Hd51jzXdeiO0JdRt7Iov82AU0rRaTIos/AAFKYFH3HiAEog==
+
+elfinder-npm@^2.1.28:
+  version "2.1.28"
+  resolved "https://registry.yarnpkg.com/elfinder-npm/-/elfinder-npm-2.1.28.tgz#546ebaf2c0b5cf11fd966209910f77ac88544812"
+  integrity sha512-l9RsbveewNZfyWZo9wGeJcNV9Hsp12jdAI3uWdkZramEln3+Qz+dpOyZETLRsKC3yTFc/n7zMqNMdE2Sw+IVyQ==
+
 elliptic@^6.5.3:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
