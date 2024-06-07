@@ -461,11 +461,17 @@ class SaveContent extends Endpoint
             $classKey = $sourceCache['class_key'];
             if (!empty($sourceCache) && !empty($classKey)) {
                 if (!empty($sourceCache['baseUrl'])) {
-                    return ltrim($value,rtrim($sourceCache['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+                    $url = rtrim($sourceCache['baseUrl'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                    if (substr($value, 0, strlen($url)) === $url) {
+                        return substr($value, strlen($url));
+                    }
                 }
                 //S3 Objects
                 if (!empty($sourceCache['url'])) {
-                    return ltrim($value,rtrim($sourceCache['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+                    $url = rtrim($sourceCache['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                    if (substr($value, 0, strlen($url)) === $url) {
+                        return substr($value, strlen($url));
+                    }
                 }
             }
         }
