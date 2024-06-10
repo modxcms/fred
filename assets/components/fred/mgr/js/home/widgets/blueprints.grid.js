@@ -27,7 +27,7 @@ fred.grid.Blueprints = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname', 'theme_id', 'theme_name', 'theme_theme_folder'],

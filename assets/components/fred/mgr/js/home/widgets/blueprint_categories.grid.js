@@ -27,7 +27,7 @@ fred.grid.BlueprintCategories = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints', 'theme', 'theme_name', 'templates'],

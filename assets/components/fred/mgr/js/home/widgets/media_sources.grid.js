@@ -2,7 +2,7 @@ fred.grid.MediaSources = function (config) {
     config = config || {};
 
     Ext.applyIf(config, {
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\MediaSources\\GetList'
         },

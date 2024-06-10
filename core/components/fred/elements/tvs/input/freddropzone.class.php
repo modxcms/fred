@@ -1,9 +1,9 @@
 <?php
 
-use MODX\Revolution\modTemplateVarInputRender;
+// use MODX\Revolution\modTemplateVarInputRender;
 
 if (!class_exists('FredDropZoneInputRender')) {
-    class FredDropZoneInputRender extends modTemplateVarInputRender
+    class FredDropZoneInputRender extends \modTemplateVarInputRender
     {
         public function getTemplate()
         {

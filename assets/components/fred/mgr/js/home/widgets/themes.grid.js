@@ -12,7 +12,7 @@ fred.grid.Themes = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\Themes\\GetList'
         },

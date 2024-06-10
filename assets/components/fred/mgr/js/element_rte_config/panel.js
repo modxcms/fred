@@ -6,7 +6,7 @@ fred.panel.ElementRTEConfig = function (config) {
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\ElementRTEConfigs\\Update'
         },

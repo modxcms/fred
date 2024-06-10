@@ -14,12 +14,29 @@
  */
 abstract class FredBaseManagerController extends modExtraManagerController
 {
-    /** @var \Fred\Fred $fred */
     public $fred;
 
     public function initialize()
     {
-        $this->fred = $this->modx->services->get('fred');
+        if (!$this->modx->version)
+        {
+            $this->modx->getVersionData();
+        }
+        $version = (int) $this->modx->version['version'];
+        if ($version > 2)
+        {
+            $this->fred = $this->modx->services->get('fred');
+        } else {
+            $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+            $this->fred = $this->modx->getService(
+                'fred',
+                'Fred',
+                $corePath . 'model/fred/',
+                array(
+                    'core_path' => $corePath
+                )
+            );
+        }
 
         $this->addCss($this->fred->getOption('cssUrl') . 'fred.css');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'fred.js');
@@ -27,6 +44,7 @@ abstract class FredBaseManagerController extends modExtraManagerController
         $this->addHtml('<script type="text/javascript">
             Ext.onReady(function() {
                 fred.config = ' . $this->modx->toJSON($this->fred->options) . ';
+                fred.config.modx = "' . $version . '";
             });
         </script>');
 

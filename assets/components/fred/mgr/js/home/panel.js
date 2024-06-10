@@ -244,7 +244,7 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                                     console.show(Ext.getBody());
 
                                     MODx.Ajax.request({
-                                        url: MODx.config.connector_url,
+                                        url: fred.config.connectorUrl,
                                         params: {
                                             action: 'Fred\\Processors\\Generate\\Refresh',
                                             register: 'mgr',

@@ -27,7 +27,7 @@ fred.grid.Elements = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name', 'theme_theme_folder', 'templates'],

@@ -27,7 +27,7 @@ fred.grid.ElementCategories = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'rank', 'elements', 'theme_name', 'theme', 'templates'],

@@ -11,11 +11,6 @@
 
 namespace Fred;
 
-use MODX\Revolution\modChunk;
-use MODX\Revolution\modParser;
-use MODX\Revolution\modResource;
-use MODX\Revolution\modX;
-
 final class Utils
 {
     public static function explodeAndClean($array, $delimiter = ',', $mapMethod = '', $keepDuplicates = 0, $filterCallback = null)
@@ -46,7 +41,7 @@ final class Utils
 
     /**
      * @param string $content
-     * @param modParser $parser
+     * @param \MODX\Revolution\modParser $parser
      * @return string
      */
     public static function htmlDecodeTags($content, $parser)
@@ -63,7 +58,7 @@ final class Utils
     }
 
     /**
-     * @param modResource $resource
+     * @param \MODX\Revolution\modResource $resource
      * @return string
      */
     public static function resourceFingerprint($resource)
@@ -74,7 +69,7 @@ final class Utils
     }
 
     /**
-     * @param modX|\xPDO\xPDO $modx
+     * @param \MODX\Revolution\modX|\xPDO\xPDO $modx
      * @param string|array $data
      * @param array $phs
      * @return string|array
@@ -87,8 +82,8 @@ final class Utils
             $isArray = true;
             $data = json_encode($data);
         }
-        /** @var modChunk $chunk */
-        $chunk = $modx->newObject(modChunk::class, ['name' => 'inline-' . uniqid()]);
+        /** @var \MODX\Revolution\modChunk $chunk */
+        $chunk = $modx->newObject('modChunk', ['name' => 'inline-' . uniqid()]);
         $chunk->setCacheable(false);
 
         $output = $chunk->process($phs, $data);

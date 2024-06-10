@@ -7,7 +7,7 @@ fred.panel.Blueprint = function (config) {
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\Blueprints\\Update'
         },

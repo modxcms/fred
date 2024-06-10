@@ -25,13 +25,12 @@ class Fred
 {
     public const VERSION = '1.2.1-pl';
 
-    /** @var \MODX\Revolution\modX */
     public $modx = null;
     public $namespace = 'fred';
     public $cache = null;
     public $options = [];
 
-    public function __construct(\MODX\Revolution\modX &$modx, array $options = [])
+    public function __construct(&$modx, array $options = [])
     {
         $this->modx =& $modx;
 
@@ -43,7 +42,7 @@ class Fred
         $this->options = array_merge([
             'namespace' => $this->namespace,
             'corePath' => $corePath,
-            'modelPath' => $corePath . 'src/Mmodel/',
+            'modelPath' => $corePath . 'src/Model/',
             'buildHelpers' => $corePath . 'src/Processors/Themes/build_helpers/',
             'chunksPath' => $corePath . 'elements/chunks/',
             'snippetsPath' => $corePath . 'elements/snippets/',
@@ -53,10 +52,16 @@ class Fred
             'jsUrl' => $assetsUrl . 'mgr/js/',
             'cssUrl' => $assetsUrl . 'mgr/css/',
             'webAssetsUrl' => $assetsUrl . 'web/',
+            'connectorUrl' => $this->modx->getOption('connector_url'),
             'version' => self::VERSION
         ], $options);
-
+        $this->addPackage();
         $this->modx->lexicon->load('fred:default');
+    }
+
+    public function addPackage()
+    {
+        // Unnecessary to implement in 3.x
     }
 
     /**
