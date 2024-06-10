@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -9,7 +10,6 @@
  */
 
 namespace Fred\Endpoint\Ajax;
-
 
 use Fred\Model\FredThemedTemplate;
 use MODX\Revolution\modContextSetting;
@@ -66,7 +66,9 @@ class GetResourceTree extends Endpoint
         $resources = $this->modx->getIterator(modResource::class, $c);
 
         foreach ($resources as $resource) {
-            if (!$resource->checkPolicy('list')) continue;
+            if (!$resource->checkPolicy('list')) {
+                continue;
+            }
             if (isset($this->hideChildren[$resource->parent])) {
                 $this->hideChildren[$resource->id] = true;
                 continue;
@@ -84,17 +86,18 @@ class GetResourceTree extends Endpoint
      * @param modResource $resource
      * @param boolean $isFred
      */
-    protected function handleResource($resource, $isFred) {
+    protected function handleResource($resource, $isFred)
+    {
         $pageFormatted = [
             'id' => $resource->id,
             'pagetitle' => $resource->pagetitle,
             'children' => [],
             'isFred' => $isFred,
             'template' => $resource->template,
-            'published' => (boolean)$resource->published,
-            'deleted' => (boolean)$resource->deleted,
+            'published' => (bool)$resource->published,
+            'deleted' => (bool)$resource->deleted,
             'url' => $this->getPreviewUrl($resource),
-            'hidemenu' => (boolean)$resource->hidemenu,
+            'hidemenu' => (bool)$resource->hidemenu,
             'menuindex' => $resource->menuindex
         ];
 
@@ -149,7 +152,8 @@ class GetResourceTree extends Endpoint
      * @param modResource $resource
      * @return string
      */
-    public function getPreviewUrl($resource) {
+    public function getPreviewUrl($resource)
+    {
         $previewUrl = '';
 
         if (!$resource->get('deleted')) {

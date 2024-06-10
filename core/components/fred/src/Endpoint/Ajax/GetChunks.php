@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -21,7 +22,7 @@ class GetChunks extends Endpoint
     /**
      * @return string
      */
-    function process()
+    public function process()
     {
         $query = $_GET['query'];
         $current = isset($_GET['current']) ? (int)$_GET['current'] : 0;
@@ -54,7 +55,7 @@ class GetChunks extends Endpoint
             $where['id:IN'] = $chunks;
         }
 
-        if (!empty($category)){
+        if (!empty($category)) {
             $where['category:IN'] = $category;
         }
 
@@ -74,7 +75,9 @@ class GetChunks extends Endpoint
         $chunksIterator = $this->modx->getIterator(modChunk::class, $c);
 
         foreach ($chunksIterator as $chunk) {
-            if (!$chunk->checkPolicy('list')) continue;
+            if (!$chunk->checkPolicy('list')) {
+                continue;
+            }
             $data[] = [
                 'id' => $chunk->id,
                 'value' => (string)$chunk->id,

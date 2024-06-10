@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -25,7 +26,7 @@ class LoadContent extends Endpoint
 
     private $categoryThemeMap = [];
 
-    function process()
+    public function process()
     {
         $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -49,7 +50,9 @@ class LoadContent extends Endpoint
 
         $data = $object->getProperty('data', 'fred');
         $plugins = $object->getProperty('plugins', 'fred');
-        if (empty($plugins)) $plugins = [];
+        if (empty($plugins)) {
+            $plugins = [];
+        }
 
         $fingerprint = !empty($data['fingerprint']) ? $data['fingerprint'] : '';
         $elements = [];
@@ -97,7 +100,9 @@ class LoadContent extends Endpoint
     protected function gatherElements(&$elements, $dropZones)
     {
         foreach ($dropZones as $dropZone) {
-            if(!is_array($dropZone)) continue;
+            if (!is_array($dropZone)) {
+                continue;
+            }
             foreach ($dropZone as $element) {
                 $elementId = $element['widget'];
 
@@ -139,7 +144,6 @@ class LoadContent extends Endpoint
                     $invalidTheme = true;
                 }
             }
-
         }
 
         return [
@@ -180,15 +184,15 @@ class LoadContent extends Endpoint
                     $def['options'] = json_decode($props['fred.options']);
                     unset($props['fred.options']);
                 }
-                foreach($props as $k => $v){
-                    if(substr($k, 0, 5 ) === "fred."){
+                foreach ($props as $k => $v) {
+                    if (substr($k, 0, 5) === "fred.") {
                         $def[substr($k, 5)] = $v;
                     }
                 }
 
                 $output['def'][] = $def;
                 $value = $tv->value;
-                if(in_array($tv->type, $mTypes, true)) {
+                if (in_array($tv->type, $mTypes, true)) {
                     $value = $tv->prepareOutput($tv->value, $resource->id);
                 }
                 // replace [[++fred.theme.$theme.theme_dir]] with {{theme_dir}}
@@ -206,7 +210,9 @@ class LoadContent extends Endpoint
      */
     protected function getTagger($resource)
     {
-        if (!$this->taggerLoaded) return [];
+        if (!$this->taggerLoaded) {
+            return [];
+        }
 
         $c = $this->modx->newQuery('Tagger\\Model\\TaggerGroup');
         $c->sortby('position');
@@ -221,8 +227,12 @@ class LoadContent extends Endpoint
             $showForContexts = $group->show_for_contexts;
             $showForContexts = \Tagger\Utils::explodeAndClean($showForContexts);
 
-            if (!in_array($resource->template, $showForTemplates)) continue;
-            if (!empty($showForContexts) && !in_array($resource->context_key, $showForContexts)) continue;
+            if (!in_array($resource->template, $showForTemplates)) {
+                continue;
+            }
+            if (!empty($showForContexts) && !in_array($resource->context_key, $showForContexts)) {
+                continue;
+            }
 
             $groupsArray[] = array_merge($group->toArray(), [
                 'show_for_templates' => array_values($showForTemplates),
@@ -236,7 +246,9 @@ class LoadContent extends Endpoint
 
     protected function getTaggerTags($resource)
     {
-        if (!$this->taggerLoaded) return [];
+        if (!$this->taggerLoaded) {
+            return [];
+        }
 
         $tagsArray = [];
 
@@ -251,7 +263,7 @@ class LoadContent extends Endpoint
         $c->prepare();
         $c->stmt->execute();
 
-        while($relatedTag = $c->stmt->fetch(\PDO::FETCH_ASSOC)) {
+        while ($relatedTag = $c->stmt->fetch(\PDO::FETCH_ASSOC)) {
             if (!isset($tagsArray['tagger-' . $relatedTag['group']])) {
                 $tagsArray['tagger-' . $relatedTag['group']] = [$relatedTag['tag']];
             } else {
@@ -264,7 +276,9 @@ class LoadContent extends Endpoint
 
     protected function taggerGetTagsForGroup($group)
     {
-        if (!$this->taggerLoaded) return [];
+        if (!$this->taggerLoaded) {
+            return [];
+        }
 
         $c = $this->modx->newQuery('Tagger\\Model\\TaggerTag');
         $c->where(['group' => $group->id]);

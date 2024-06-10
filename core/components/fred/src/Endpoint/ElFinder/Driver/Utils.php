@@ -2,8 +2,8 @@
 
 namespace Fred\Endpoint\ElFinder\Driver;
 
-class Utils {
-
+class Utils
+{
     public static function normalizeDirname($dirname): string
     {
         return $dirname === '.' ? '' : $dirname;

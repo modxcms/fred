@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\Blueprints;
+
 use Fred\Model\FredBlueprint;
 use Fred\Model\FredBlueprintTemplateAccess;
 use MODX\Revolution\Processors\Model\UpdateProcessor;
@@ -95,7 +97,9 @@ class Update extends UpdateProcessor
     public function afterSave()
     {
         $templates = $this->getProperty('templates');
-        if ($templates === null) return parent::afterSave();
+        if ($templates === null) {
+            return parent::afterSave();
+        }
 
         $templates = array_map('intval', $templates);
         $templates = array_filter($templates);

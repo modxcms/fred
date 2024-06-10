@@ -1,4 +1,5 @@
 <?php
+
 use xPDO\Transport\xPDOTransport;
 
 /**
@@ -16,7 +17,9 @@ use xPDO\Transport\xPDOTransport;
 
 $modx =& $transport->xpdo;
 
-if ($options[xPDOTransport::PACKAGE_ACTION] === xPDOTransport::ACTION_UNINSTALL) return true;
+if ($options[xPDOTransport::PACKAGE_ACTION] === xPDOTransport::ACTION_UNINSTALL) {
+    return true;
+}
 
 $manager = $modx->getManager();
 

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -29,7 +30,9 @@ class FredACLsManagerController extends FredBaseManagerController
         $modx = $this->modx;
 
         $group = $modx->getObject(modAccessPolicyTemplateGroup::class, ['name' => 'Admin']);
-        if (!$group) return;
+        if (!$group) {
+            return;
+        }
 
         /** @var modAccessPolicyTemplate $template */
         $template = $modx->getObject(modAccessPolicyTemplate::class, ['name' => 'Fred', 'template_group' => $group->get('id')]);
@@ -197,6 +200,4 @@ class FredACLsManagerController extends FredBaseManagerController
     {
         return true;
     }
-
-
 }

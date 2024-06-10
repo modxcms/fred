@@ -1,5 +1,5 @@
 <?php
-namespace Fred;
+
 /**
  * This file is part of the teleport package.
  *
@@ -8,6 +8,8 @@ namespace Fred;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+namespace Fred;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -22,7 +24,8 @@ use xPDO\xPDO;
  *
  * @package Teleport\Transport
  */
-class FredFileVehicle extends xPDOFileVehicle {
+class FredFileVehicle extends xPDOFileVehicle
+{
     protected $skipObjectParams = ['in', 'target'];
     public $class = 'FileVehicle';
 
@@ -33,8 +36,9 @@ class FredFileVehicle extends xPDOFileVehicle {
      * @param mixed          &$object A reference to the artifact this vehicle will represent.
      * @param array          $attributes Additional attributes represented in the vehicle.
      */
-    public function put(& $transport, & $object, $attributes = array ()) {
-        if (!isset ($this->payload['class'])) {
+    public function put(&$transport, &$object, $attributes = array ())
+    {
+        if (!isset($this->payload['class'])) {
             $this->payload['class'] = $this->class;
         }
         if (!isset($object['in']) || !isset($object['target'])) {
@@ -44,8 +48,10 @@ class FredFileVehicle extends xPDOFileVehicle {
         } else {
             $finder = new Finder();
             $finder->in($object['in']);
-            foreach($object as $method => $data) {
-                if (in_array($method, $this->skipObjectParams)) continue;
+            foreach ($object as $method => $data) {
+                if (in_array($method, $this->skipObjectParams)) {
+                    continue;
+                }
                 if (method_exists($finder, $method)) {
                     if (is_array($data)) {
                         foreach ($data as $param) {
@@ -65,7 +71,8 @@ class FredFileVehicle extends xPDOFileVehicle {
     /**
      * Copies the files into the vehicle and transforms the payload for storage.
      */
-    protected function _compilePayload(& $transport) {
+    protected function _compilePayload(&$transport)
+    {
         xPDOVehicle :: _compilePayload($transport);
         if (isset($this->payload['object']['in']) && isset($this->payload['object']['target'])) {
             $fs = new Filesystem();

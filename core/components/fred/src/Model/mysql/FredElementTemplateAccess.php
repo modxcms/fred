@@ -1,28 +1,28 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredElementTemplateAccess extends \Fred\Model\FredElementTemplateAccess
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_element_templates_access',
         'extends' => 'xPDO\\Om\\xPDOObject',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'element' => NULL,
-            'template' => NULL,
+            'element' => null,
+            'template' => null,
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'element' => 
+            'element' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -31,7 +31,7 @@ class FredElementTemplateAccess extends \Fred\Model\FredElementTemplateAccess
                 'null' => false,
                 'index' => 'pk',
             ),
-            'template' => 
+            'template' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -41,23 +41,23 @@ class FredElementTemplateAccess extends \Fred\Model\FredElementTemplateAccess
                 'index' => 'pk',
             ),
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'PRIMARY' => 
+            'PRIMARY' =>
             array (
                 'alias' => 'PRIMARY',
                 'primary' => true,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'element' => 
+                    'element' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
                         'null' => false,
                     ),
-                    'template' => 
+                    'template' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -66,9 +66,9 @@ class FredElementTemplateAccess extends \Fred\Model\FredElementTemplateAccess
                 ),
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'Template' => 
+            'Template' =>
             array (
                 'class' => 'Fred\\Model\\FredThemedTemplate',
                 'local' => 'template',
@@ -76,7 +76,7 @@ class FredElementTemplateAccess extends \Fred\Model\FredElementTemplateAccess
                 'cardinality' => 'one',
                 'owner' => 'foreign',
             ),
-            'Element' => 
+            'Element' =>
             array (
                 'class' => 'Fred\\Model\\FredElement',
                 'local' => 'element',
@@ -86,5 +86,4 @@ class FredElementTemplateAccess extends \Fred\Model\FredElementTemplateAccess
             ),
         ),
     );
-
 }

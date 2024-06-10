@@ -1,4 +1,5 @@
 <?php
+
 use MODX\Revolution\modX;
 use xPDO\Transport\xPDOTransport;
 
@@ -11,7 +12,7 @@ use xPDO\Transport\xPDOTransport;
 /** @var modX $modx */
 $modx =& $transport->xpdo;
 
-switch($options[xPDOTransport::PACKAGE_ACTION]) {
+switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
     case xPDOTransport::ACTION_UPGRADE:
         $success = true;
@@ -26,7 +27,7 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
             $modx->log(modX::LOG_LEVEL_ERROR, 'Requirements not met. Fred can\'t be installed.');
         }
 
-        return $success;    
+        return $success;
 }
 
 return true;

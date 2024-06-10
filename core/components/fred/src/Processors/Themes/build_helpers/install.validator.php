@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var xPDOTransport $transport
  */
@@ -18,7 +19,7 @@ if ($options[xPDOTransport::PACKAGE_ACTION] !== xPDOTransport::ACTION_UNINSTALL)
         $modelName = empty($package['modelName']) ? $package['name'] : $package['modelName'];
         $settingPrefix = empty($package['settingPrefix']) ? $package['name'] : $package['settingPrefix'];
 
-        $service = $modx->getService($package['name'],$package['class'],$modx->getOption($settingPrefix . '.core_path',null,$modx->getOption('core_path').'components/' . $componentName . '/').'model/' . $modelName . '/',[]);
+        $service = $modx->getService($package['name'], $package['class'], $modx->getOption($settingPrefix . '.core_path', null, $modx->getOption('core_path') . 'components/' . $componentName . '/') . 'model/' . $modelName . '/', []);
         if (!($service instanceof $package['class'])) {
             $halt = true;
             $modx->log(modX::LOG_LEVEL_ERROR, ' - Could not load ' . $package['name'] . ' service.');

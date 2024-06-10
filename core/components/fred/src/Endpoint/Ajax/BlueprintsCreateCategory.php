@@ -2,14 +2,13 @@
 
 namespace Fred\Endpoint\Ajax;
 
-
 use Fred\Model\FredBlueprintCategory;
 use Fred\Model\FredBlueprintCategoryTemplateAccess;
 use Fred\Utils;
 
 class BlueprintsCreateCategory extends Endpoint
 {
-    function process()
+    public function process()
     {
         if (!$this->modx->hasPermission('fred_blueprint_categories_save')) {
             return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));

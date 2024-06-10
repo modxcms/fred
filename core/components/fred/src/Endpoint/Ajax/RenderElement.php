@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -18,7 +19,7 @@ class RenderElement extends Endpoint
 {
     protected $allowedMethod = ['POST', 'OPTIONS'];
 
-    function process()
+    public function process()
     {
         $resourceId = isset($this->body['resource']) ? intval($this->body['resource']) : 0;
         $elementUUID = isset($this->body['element']) ? $this->body['element'] : '';
@@ -45,7 +46,9 @@ class RenderElement extends Endpoint
         if (($cacheOutput === true) && ($refreshCache === false)) {
             $cache = $element->getCache($resourceId);
 
-            if ($cache !== false) return $this->data(["html" => $cache]);
+            if ($cache !== false) {
+                return $this->data(["html" => $cache]);
+            }
         }
 
         $templateName = $element->name . '_' . $element->id;
@@ -65,19 +68,25 @@ class RenderElement extends Endpoint
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
         }
         foreach ($resource->toArray() as $key => $value) {
-            if (isset($settings[$key])) continue;
+            if (isset($settings[$key])) {
+                continue;
+            }
             $settings[$key] = $value;
         }
         unset($settings['content']);
         if (!isset($settings['tvs'])) {
             $tvs = $resource->getTemplateVars();
             foreach ($tvs as $tv) {
-                if (isset($settings['tv_' . $tv->get('name')])) continue;
+                if (isset($settings['tv_' . $tv->get('name')])) {
+                    continue;
+                }
                 $settings['tv_' . $tv->get('name')] = $resource->getTVValue($tv->get('name'));
             }
         } else {
-            foreach($settings['tvs'] as $tv) {
-                if (isset($settings['tv_' . $tv['name']])) continue;
+            foreach ($settings['tvs'] as $tv) {
+                if (isset($settings['tv_' . $tv['name']])) {
+                    continue;
+                }
                 $settings['tv_' . $tv['name']] = $tv['value'];
             }
         }
@@ -89,7 +98,6 @@ class RenderElement extends Endpoint
         }
 
         if ($parseModx === true) {
-
             $queryParams = $this->getClaim('queryParams');
             if ($queryParams !== false) {
                 $queryParams = (array)$queryParams;
@@ -118,7 +126,7 @@ class RenderElement extends Endpoint
             $this->modx->request->sanitizeRequest();
 
             $this->modx->getParser();
-            $maxIterations = empty($maxIterations) || (integer) $maxIterations < 1 ? 10 : (integer) $maxIterations;
+            $maxIterations = empty($maxIterations) || (int) $maxIterations < 1 ? 10 : (int) $maxIterations;
             $currentResource = $this->modx->resource;
             $currentResourceIdentifier = $this->modx->resourceIdentifier;
             $currentElementCache = $this->modx->elementCache;
@@ -144,6 +152,4 @@ class RenderElement extends Endpoint
             "html" => $html
         ]);
     }
-
-
 }

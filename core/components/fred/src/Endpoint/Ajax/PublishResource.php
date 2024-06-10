@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -14,7 +15,7 @@ use MODX\Revolution\modResource;
 
 class PublishResource extends Endpoint
 {
-    function process()
+    public function process()
     {
         if (!isset($this->body['resource'])) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
@@ -41,7 +42,7 @@ class PublishResource extends Endpoint
         $resource->set('pub_date', false);
         $resource->set('unpub_date', false);
         $resource->set('editedby', $this->modx->user->id);
-        $resource->set('editedon', time(),'integer');
+        $resource->set('editedon', time(), 'integer');
         $resource->set('publishedby', $this->modx->user->id);
         $resource->set('publishedon', time());
         $resource->save();

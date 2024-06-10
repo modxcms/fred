@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\Extra;
 
 use MODX\Revolution\Processors\Model\GetListProcessor;
@@ -12,7 +13,8 @@ class GetInstalledPackages extends GetListProcessor
 {
     public $classKey = modTransportPackage::class;
 
-    public function initialize() {
+    public function initialize()
+    {
         $this->setDefaultProperties(array(
             'start' => 0,
             'limit' => 10,
@@ -22,16 +24,17 @@ class GetInstalledPackages extends GetListProcessor
         return true;
     }
 
-    public function getData() {
+    public function getData()
+    {
         $data = array();
         $limit = intval($this->getProperty('limit'));
         $start = intval($this->getProperty('start'));
         $pkgList = $this->modx->call(modTransportPackage::class, 'listPackages', array(
             &$this->modx,
-            $this->getProperty('workspace',1),
+            $this->getProperty('workspace', 1),
             $limit > 0 ? $limit : 0,
             $start,
-            $this->getProperty('query','')
+            $this->getProperty('query', '')
         ));
 
         $data['results'] = $pkgList['collection'];

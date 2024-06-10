@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\Elements;
 
 use Fred\Model\FredElement;

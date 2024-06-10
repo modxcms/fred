@@ -1,28 +1,28 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredBlueprintCategoryTemplateAccess extends \Fred\Model\FredBlueprintCategoryTemplateAccess
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_blueprint_category_templates_access',
         'extends' => 'xPDO\\Om\\xPDOObject',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'category' => NULL,
-            'template' => NULL,
+            'category' => null,
+            'template' => null,
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'category' => 
+            'category' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -31,7 +31,7 @@ class FredBlueprintCategoryTemplateAccess extends \Fred\Model\FredBlueprintCateg
                 'null' => false,
                 'index' => 'pk',
             ),
-            'template' => 
+            'template' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -41,23 +41,23 @@ class FredBlueprintCategoryTemplateAccess extends \Fred\Model\FredBlueprintCateg
                 'index' => 'pk',
             ),
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'PRIMARY' => 
+            'PRIMARY' =>
             array (
                 'alias' => 'PRIMARY',
                 'primary' => true,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'category' => 
+                    'category' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
                         'null' => false,
                     ),
-                    'template' => 
+                    'template' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -66,9 +66,9 @@ class FredBlueprintCategoryTemplateAccess extends \Fred\Model\FredBlueprintCateg
                 ),
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'Template' => 
+            'Template' =>
             array (
                 'class' => 'Fred\\Model\\FredThemedTemplate',
                 'local' => 'template',
@@ -76,7 +76,7 @@ class FredBlueprintCategoryTemplateAccess extends \Fred\Model\FredBlueprintCateg
                 'cardinality' => 'one',
                 'owner' => 'foreign',
             ),
-            'BlueprintCategory' => 
+            'BlueprintCategory' =>
             array (
                 'class' => 'Fred\\Model\\FredBlueprintCategory',
                 'local' => 'category',
@@ -86,5 +86,4 @@ class FredBlueprintCategoryTemplateAccess extends \Fred\Model\FredBlueprintCateg
             ),
         ),
     );
-
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\ThemedTemplates;
+
 use Fred\Model\FredThemedTemplate;
 use MODX\Revolution\Processors\Processor;
 
@@ -43,10 +45,14 @@ class Create extends Processor
         foreach ($templates as $template) {
             $template = intval($template);
 
-            if (empty($template)) continue;
+            if (empty($template)) {
+                continue;
+            }
 
             $exists = $this->modx->getCount($this->classKey, ['template' => $template]);
-            if ($exists > 0) continue;
+            if ($exists > 0) {
+                continue;
+            }
 
             $themedTemplate = $this->modx->newObject($this->classKey);
             $themedTemplate->set('template', $template);

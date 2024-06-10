@@ -1,40 +1,40 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredTheme extends \Fred\Model\FredTheme
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_themes',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'name' => NULL,
+            'name' => null,
             'namespace' => '',
             'settingsPrefix' => '',
             'theme_folder' => '',
-            'uuid' => NULL,
+            'uuid' => null,
             'description' => '',
             'config' => '',
             'default_element' => '',
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'name' => 
+            'name' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '127',
                 'phptype' => 'string',
                 'null' => false,
             ),
-            'namespace' => 
+            'namespace' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '255',
@@ -42,7 +42,7 @@ class FredTheme extends \Fred\Model\FredTheme
                 'null' => false,
                 'default' => '',
             ),
-            'settingsPrefix' => 
+            'settingsPrefix' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '255',
@@ -50,7 +50,7 @@ class FredTheme extends \Fred\Model\FredTheme
                 'null' => false,
                 'default' => '',
             ),
-            'theme_folder' => 
+            'theme_folder' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '255',
@@ -58,7 +58,7 @@ class FredTheme extends \Fred\Model\FredTheme
                 'null' => false,
                 'default' => '',
             ),
-            'uuid' => 
+            'uuid' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '36',
@@ -66,7 +66,7 @@ class FredTheme extends \Fred\Model\FredTheme
                 'null' => false,
                 'index' => 'unique',
             ),
-            'description' => 
+            'description' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '255',
@@ -74,14 +74,14 @@ class FredTheme extends \Fred\Model\FredTheme
                 'null' => false,
                 'default' => '',
             ),
-            'config' => 
+            'config' =>
             array (
                 'dbtype' => 'mediumtext',
                 'phptype' => 'json',
                 'null' => false,
                 'default' => '',
             ),
-            'default_element' => 
+            'default_element' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '255',
@@ -90,17 +90,17 @@ class FredTheme extends \Fred\Model\FredTheme
                 'default' => '',
             ),
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'uuid' => 
+            'uuid' =>
             array (
                 'alias' => 'uuid',
                 'primary' => false,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'uuid' => 
+                    'uuid' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -108,15 +108,15 @@ class FredTheme extends \Fred\Model\FredTheme
                     ),
                 ),
             ),
-            'name' => 
+            'name' =>
             array (
                 'alias' => 'name',
                 'primary' => false,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'name' => 
+                    'name' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -125,9 +125,9 @@ class FredTheme extends \Fred\Model\FredTheme
                 ),
             ),
         ),
-        'composites' => 
+        'composites' =>
         array (
-            'ElementCategories' => 
+            'ElementCategories' =>
             array (
                 'class' => 'Fred\\Model\\FredElementCategory',
                 'local' => 'id',
@@ -135,7 +135,7 @@ class FredTheme extends \Fred\Model\FredTheme
                 'cardinality' => 'many',
                 'owner' => 'local',
             ),
-            'BlueprintCategories' => 
+            'BlueprintCategories' =>
             array (
                 'class' => 'Fred\\Model\\FredBlueprintCategory',
                 'local' => 'id',
@@ -143,7 +143,7 @@ class FredTheme extends \Fred\Model\FredTheme
                 'cardinality' => 'many',
                 'owner' => 'local',
             ),
-            'RTEConfigs' => 
+            'RTEConfigs' =>
             array (
                 'class' => 'Fred\\Model\\FredElementRTEConfig',
                 'local' => 'id',
@@ -151,7 +151,7 @@ class FredTheme extends \Fred\Model\FredTheme
                 'cardinality' => 'many',
                 'owner' => 'local',
             ),
-            'OptionSets' => 
+            'OptionSets' =>
             array (
                 'class' => 'Fred\\Model\\FredElementOptionSet',
                 'local' => 'id',
@@ -159,7 +159,7 @@ class FredTheme extends \Fred\Model\FredTheme
                 'cardinality' => 'many',
                 'owner' => 'local',
             ),
-            'Templates' => 
+            'Templates' =>
             array (
                 'class' => 'Fred\\Model\\FredThemedTemplate',
                 'local' => 'id',
@@ -169,5 +169,4 @@ class FredTheme extends \Fred\Model\FredTheme
             ),
         ),
     );
-
 }

@@ -1,7 +1,8 @@
 <?php
-namespace Fred\Processors\Themes;
-use Fred\Model\FredTheme;
 
+namespace Fred\Processors\Themes;
+
+use Fred\Model\FredTheme;
 use MODX\Revolution\Processors\Model\RemoveProcessor;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -38,7 +39,8 @@ class Remove extends RemoveProcessor
                     $fs = new Filesystem();
 
                     $fs->remove([$this->object->getThemeFolderPath()]);
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                }
             }
         }
 

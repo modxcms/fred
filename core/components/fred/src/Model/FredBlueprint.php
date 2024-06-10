@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Model;
 
 use xPDO\xPDO;
@@ -32,7 +33,8 @@ class FredBlueprint extends \xPDO\Om\xPDOSimpleObject
         if (empty($uuid)) {
             try {
                 $this->set('uuid', \Fred\Utils::uuid());
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         }
 
         return parent::save($cacheFlag);
@@ -55,7 +57,7 @@ class FredBlueprint extends \xPDO\Om\xPDOSimpleObject
 
             $image = str_replace('{{assets_url}}', $this->xpdo->getOption('assets_url'), $image);
 
-            if ((strtolower(substr($image, 0,7)) !== 'http://') && (strtolower(substr($image, 0,8)) !== 'https://') && (substr($image, 0,2) !== '//')  && (substr($image, 0,1) !== '/')) {
+            if ((strtolower(substr($image, 0, 7)) !== 'http://') && (strtolower(substr($image, 0, 8)) !== 'https://') && (substr($image, 0, 2) !== '//')  && (substr($image, 0, 1) !== '/')) {
                 $image = $this->xpdo->getOption('base_url') . $image;
             }
         }

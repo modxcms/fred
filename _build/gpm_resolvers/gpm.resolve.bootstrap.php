@@ -1,4 +1,5 @@
 <?php
+
 use xPDO\Transport\xPDOTransport;
 
 /**
@@ -15,7 +16,9 @@ use xPDO\Transport\xPDOTransport;
  */
 
 $modx =& $object->xpdo;
-if ($options[xPDOTransport::PACKAGE_ACTION] !== xPDOTransport::ACTION_INSTALL) return true;
+if ($options[xPDOTransport::PACKAGE_ACTION] !== xPDOTransport::ACTION_INSTALL) {
+    return true;
+}
 
 $bootstrap = $object->getCorePath() . 'bootstrap.php';
 if (file_exists($bootstrap)) {

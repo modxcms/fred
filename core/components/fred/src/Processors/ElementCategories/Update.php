@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\ElementCategories;
 
 use Fred\Model\FredElementCategory;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Model;
 
 use MODX\Revolution\modLexiconEntry;
@@ -36,7 +37,8 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
         if (empty($uuid)) {
             try {
                 $this->set('uuid', \Fred\Utils::uuid());
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         }
 
         $namespace = $this->get('namespace');
@@ -117,8 +119,12 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
             $v = str_replace('/', '', $v);
         }
 
-        if ($k === 'namespace') return false;
-        if ($k === 'settingsPrefix') return false;
+        if ($k === 'namespace') {
+            return false;
+        }
+        if ($k === 'settingsPrefix') {
+            return false;
+        }
 
         return parent::set($k, $v, $vType);
     }
@@ -126,7 +132,8 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
     public function remove(array $ancestors = [])
     {
         $namespace = $this->get('namespace');
-        $response = parent::remove($ancestors);;
+        $response = parent::remove($ancestors);
+        ;
 
         if ($response === true) {
             if (!empty($namespace)) {

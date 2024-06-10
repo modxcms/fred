@@ -18,7 +18,9 @@ class GetBlueprints extends Endpoint
         $theme = isset($_GET['theme']) ? intval($_GET['theme']) : 0;
 
         $complete = isset($_GET['complete']) ? intval($_GET['complete']) : -1;
-        if (($complete !== 0) && ($complete !== 1)) $complete = -1;
+        if (($complete !== 0) && ($complete !== 1)) {
+            $complete = -1;
+        }
 
         $c = $this->modx->newQuery(FredBlueprintCategory::class);
         $c->leftJoin(FredBlueprintCategoryTemplateAccess::class, 'BlueprintCategoryTemplatesAccess');

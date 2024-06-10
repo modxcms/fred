@@ -1,38 +1,38 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_blueprint_categories',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'name' => NULL,
-            'uuid' => NULL,
+            'name' => null,
+            'uuid' => null,
             'rank' => 0,
-            'theme' => NULL,
+            'theme' => null,
             'public' => 0,
             'createdBy' => 0,
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'name' => 
+            'name' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '127',
                 'phptype' => 'string',
                 'null' => false,
             ),
-            'uuid' => 
+            'uuid' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '36',
@@ -40,7 +40,7 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                 'null' => false,
                 'index' => 'unique',
             ),
-            'rank' => 
+            'rank' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -49,7 +49,7 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                 'null' => false,
                 'default' => 0,
             ),
-            'theme' => 
+            'theme' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -57,7 +57,7 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                 'phptype' => 'integer',
                 'null' => false,
             ),
-            'public' => 
+            'public' =>
             array (
                 'dbtype' => 'tinyint',
                 'precision' => '1',
@@ -65,7 +65,7 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                 'null' => false,
                 'default' => 0,
             ),
-            'createdBy' => 
+            'createdBy' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -75,17 +75,17 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                 'default' => 0,
             ),
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'uuid' => 
+            'uuid' =>
             array (
                 'alias' => 'uuid',
                 'primary' => false,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'uuid' => 
+                    'uuid' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -93,15 +93,15 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                     ),
                 ),
             ),
-            'theme' => 
+            'theme' =>
             array (
                 'alias' => 'theme',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'theme' => 
+                    'theme' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -109,15 +109,15 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                     ),
                 ),
             ),
-            'public' => 
+            'public' =>
             array (
                 'alias' => 'public',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'public' => 
+                    'public' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -125,15 +125,15 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                     ),
                 ),
             ),
-            'rank' => 
+            'rank' =>
             array (
                 'alias' => 'rank',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'rank' => 
+                    'rank' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -141,15 +141,15 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                     ),
                 ),
             ),
-            'createdBy' => 
+            'createdBy' =>
             array (
                 'alias' => 'createdBy',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'createdBy' => 
+                    'createdBy' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -157,21 +157,21 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                     ),
                 ),
             ),
-            'name_theme' => 
+            'name_theme' =>
             array (
                 'alias' => 'name_theme',
                 'primary' => false,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'name' => 
+                    'name' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
                         'null' => false,
                     ),
-                    'theme' => 
+                    'theme' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -180,9 +180,9 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                 ),
             ),
         ),
-        'composites' => 
+        'composites' =>
         array (
-            'Blueprints' => 
+            'Blueprints' =>
             array (
                 'class' => 'Fred\\Model\\FredBlueprint',
                 'local' => 'id',
@@ -190,7 +190,7 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                 'cardinality' => 'many',
                 'owner' => 'local',
             ),
-            'BlueprintCategoryTemplatesAccess' => 
+            'BlueprintCategoryTemplatesAccess' =>
             array (
                 'class' => 'Fred\\Model\\FredBlueprintCategoryTemplateAccess',
                 'local' => 'id',
@@ -199,9 +199,9 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                 'owner' => 'local',
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'User' => 
+            'User' =>
             array (
                 'class' => 'MODX\\Revolution\\modUser',
                 'local' => 'user',
@@ -209,7 +209,7 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
                 'cardinality' => 'one',
                 'owner' => 'foreign',
             ),
-            'Theme' => 
+            'Theme' =>
             array (
                 'class' => 'Fred\\Model\\FredTheme',
                 'local' => 'theme',
@@ -219,5 +219,4 @@ class FredBlueprintCategory extends \Fred\Model\FredBlueprintCategory
             ),
         ),
     );
-
 }

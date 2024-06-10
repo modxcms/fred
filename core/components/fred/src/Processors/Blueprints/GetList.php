@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\Blueprints;
+
 use Fred\Model\FredBlueprint;
 use Fred\Model\FredBlueprintCategory;
 use Fred\Model\FredTheme;

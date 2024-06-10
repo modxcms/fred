@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -14,7 +15,7 @@ use MODX\Revolution\modResource;
 
 class UnpublishResource extends Endpoint
 {
-    function process()
+    public function process()
     {
         if (!isset($this->body['resource'])) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));

@@ -1,29 +1,29 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredThemedTemplate extends \Fred\Model\FredThemedTemplate
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_themed_templates',
         'extends' => 'xPDO\\Om\\xPDOObject',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'template' => NULL,
-            'theme' => NULL,
+            'template' => null,
+            'theme' => null,
             'default_blueprint' => 0,
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'template' => 
+            'template' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -32,7 +32,7 @@ class FredThemedTemplate extends \Fred\Model\FredThemedTemplate
                 'null' => false,
                 'index' => 'pk',
             ),
-            'theme' => 
+            'theme' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -40,7 +40,7 @@ class FredThemedTemplate extends \Fred\Model\FredThemedTemplate
                 'phptype' => 'integer',
                 'null' => false,
             ),
-            'default_blueprint' => 
+            'default_blueprint' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -50,17 +50,17 @@ class FredThemedTemplate extends \Fred\Model\FredThemedTemplate
                 'default' => 0,
             ),
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'PRIMARY' => 
+            'PRIMARY' =>
             array (
                 'alias' => 'PRIMARY',
                 'primary' => true,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'template' => 
+                    'template' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -68,15 +68,15 @@ class FredThemedTemplate extends \Fred\Model\FredThemedTemplate
                     ),
                 ),
             ),
-            'theme' => 
+            'theme' =>
             array (
                 'alias' => 'theme',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'theme' => 
+                    'theme' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -85,9 +85,9 @@ class FredThemedTemplate extends \Fred\Model\FredThemedTemplate
                 ),
             ),
         ),
-        'composites' => 
+        'composites' =>
         array (
-            'ElementCategoryTemplatesAccess' => 
+            'ElementCategoryTemplatesAccess' =>
             array (
                 'class' => 'Fred\\Model\\FredElementCategoryTemplateAccess',
                 'local' => 'template',
@@ -96,9 +96,9 @@ class FredThemedTemplate extends \Fred\Model\FredThemedTemplate
                 'owner' => 'local',
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'Theme' => 
+            'Theme' =>
             array (
                 'class' => 'Fred\\Model\\FredTheme',
                 'local' => 'theme',
@@ -106,7 +106,7 @@ class FredThemedTemplate extends \Fred\Model\FredThemedTemplate
                 'cardinality' => 'one',
                 'owner' => 'foreign',
             ),
-            'Template' => 
+            'Template' =>
             array (
                 'class' => 'MODX\\Revolution\\modTemplate',
                 'local' => 'template',
@@ -116,5 +116,4 @@ class FredThemedTemplate extends \Fred\Model\FredThemedTemplate
             ),
         ),
     );
-
 }

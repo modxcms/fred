@@ -1,36 +1,36 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredElementRTEConfig extends \Fred\Model\FredElementRTEConfig
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_element_rte_configs',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'name' => NULL,
+            'name' => null,
             'description' => '',
-            'theme' => NULL,
+            'theme' => null,
             'data' => '',
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'name' => 
+            'name' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '128',
                 'phptype' => 'string',
                 'null' => false,
             ),
-            'description' => 
+            'description' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '255',
@@ -38,7 +38,7 @@ class FredElementRTEConfig extends \Fred\Model\FredElementRTEConfig
                 'null' => false,
                 'default' => '',
             ),
-            'theme' => 
+            'theme' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -46,7 +46,7 @@ class FredElementRTEConfig extends \Fred\Model\FredElementRTEConfig
                 'phptype' => 'integer',
                 'null' => false,
             ),
-            'data' => 
+            'data' =>
             array (
                 'dbtype' => 'mediumtext',
                 'phptype' => 'json',
@@ -54,21 +54,21 @@ class FredElementRTEConfig extends \Fred\Model\FredElementRTEConfig
                 'default' => '',
             ),
         ),
-        'fieldAliases' => 
+        'fieldAliases' =>
         array (
             'content' => 'data',
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'theme' => 
+            'theme' =>
             array (
                 'alias' => 'theme',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'theme' => 
+                    'theme' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -76,21 +76,21 @@ class FredElementRTEConfig extends \Fred\Model\FredElementRTEConfig
                     ),
                 ),
             ),
-            'name_theme' => 
+            'name_theme' =>
             array (
                 'alias' => 'name_theme',
                 'primary' => false,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'name' => 
+                    'name' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
                         'null' => false,
                     ),
-                    'theme' => 
+                    'theme' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -99,9 +99,9 @@ class FredElementRTEConfig extends \Fred\Model\FredElementRTEConfig
                 ),
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'Theme' => 
+            'Theme' =>
             array (
                 'class' => 'Fred\\Model\\FredTheme',
                 'local' => 'theme',
@@ -111,5 +111,4 @@ class FredElementRTEConfig extends \Fred\Model\FredElementRTEConfig
             ),
         ),
     );
-
 }

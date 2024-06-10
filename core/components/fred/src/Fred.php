@@ -1,5 +1,4 @@
 <?php
-namespace Fred;
 
 /*
  * This file is part of the Fred package.
@@ -9,6 +8,8 @@ namespace Fred;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+namespace Fred;
 
 use Firebase\JWT\Key;
 use Fred\Model\FredTheme;
@@ -22,7 +23,7 @@ use MODX\Revolution\modSystemSetting;
  */
 class Fred
 {
-    const VERSION = '1.2.1-pl';
+    public const VERSION = '1.2.1-pl';
 
     /** @var \MODX\Revolution\modX */
     public $modx = null;

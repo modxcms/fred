@@ -38,7 +38,6 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
             if (!is_dir($path)) {
                 mkdir($path, $amode, true);
             }
-
         }
 
         break;

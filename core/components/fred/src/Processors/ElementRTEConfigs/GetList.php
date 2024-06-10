@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\ElementRTEConfigs;
+
 use Fred\Model\FredElementRTEConfig;
 use Fred\Model\FredTheme;
 use MODX\Revolution\Processors\Model\GetListProcessor;

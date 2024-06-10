@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\Blueprints;
+
 use Fred\Model\FredBlueprint;
 use Fred\Model\FredBlueprintTemplateAccess;
 use MODX\Revolution\Processors\Model\GetProcessor;
@@ -41,5 +43,4 @@ class Get extends GetProcessor
 
         return true;
     }
-
 }

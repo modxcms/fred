@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Model;
 
 use xPDO\xPDO;

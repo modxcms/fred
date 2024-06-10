@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -9,7 +10,6 @@
  */
 
 namespace Fred\Endpoint\Ajax;
-
 
 use Fred\Model\FredThemedTemplate;
 use MODX\Revolution\modTemplate;
@@ -24,7 +24,7 @@ class GetTemplates extends Endpoint
     /**
      * @return string
      */
-    function process()
+    public function process()
     {
         $c = $this->modx->newQuery(FredThemedTemplate::class);
         $c->leftJoin(modTemplate::class, 'Template');

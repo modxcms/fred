@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -45,7 +46,6 @@ class FredElementUpdateManagerController extends FredBaseManagerController
         ');
 
         $this->modx->invokeEvent('FredElementFormRender');
-
     }
 
     public function getTemplateFile()

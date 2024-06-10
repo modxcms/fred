@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\Extra;
 
 use MODX\Revolution\modCategory;
@@ -41,7 +42,6 @@ class GetCategories extends GetListProcessor
                 }
             } else {
                 $where['category:LIKE'] = '%' . $query . '%';
-
             }
         }
 
@@ -49,5 +49,4 @@ class GetCategories extends GetListProcessor
 
         return $c;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -21,7 +22,7 @@ class GetResources extends Endpoint
     /**
      * @return string
      */
-    function process()
+    public function process()
     {
         $context = $this->getClaim('context');
         $context = !empty($context) ? $context : 'web';
@@ -101,7 +102,9 @@ class GetResources extends Endpoint
         $resourcesIterator = $this->modx->getIterator(modResource::class, $c);
 
         foreach ($resourcesIterator as $resource) {
-            if (!$resource->checkPolicy('list')) continue;
+            if (!$resource->checkPolicy('list')) {
+                continue;
+            }
             $data[] = [
                 'id' => $resource->id,
                 'value' => (string)$resource->id,

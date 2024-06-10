@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\ElementOptionSets;
+
 use Fred\Model\FredElementOptionSet;
 use Fred\Model\FredTheme;
 use MODX\Revolution\Processors\Model\GetListProcessor;

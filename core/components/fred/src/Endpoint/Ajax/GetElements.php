@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -24,7 +25,9 @@ class GetElements extends Endpoint
         $theme = isset($_GET['theme']) ? intval($_GET['theme']) : 0;
 
         $groupSort = $this->fred->getOption('element_group_sort');
-        if ($groupSort !== 'rank') $groupSort = 'name';
+        if ($groupSort !== 'rank') {
+            $groupSort = 'name';
+        }
 
         $elements = [];
 
@@ -50,7 +53,9 @@ class GetElements extends Endpoint
         $categories = $this->modx->getIterator(FredElementCategory::class, $c);
 
         $elementSort = $this->fred->getOption('element_sort');
-        if ($elementSort !== 'rank') $elementSort = 'name';
+        if ($elementSort !== 'rank') {
+            $elementSort = 'name';
+        }
 
         foreach ($categories as $category) {
             $categoryElements = [

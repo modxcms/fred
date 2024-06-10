@@ -1,11 +1,12 @@
 <?php
+
 $xpdo_meta_map = array (
     'version' => '3.0',
     'namespace' => 'Fred\\Model',
     'namespacePrefix' => 'Fred',
-    'class_map' => 
+    'class_map' =>
     array (
-        'xPDO\\Om\\xPDOSimpleObject' => 
+        'xPDO\\Om\\xPDOSimpleObject' =>
         array (
             0 => 'Fred\\Model\\FredBlueprintCategory',
             1 => 'Fred\\Model\\FredBlueprint',
@@ -15,7 +16,7 @@ $xpdo_meta_map = array (
             5 => 'Fred\\Model\\FredElement',
             6 => 'Fred\\Model\\FredTheme',
         ),
-        'xPDO\\Om\\xPDOObject' => 
+        'xPDO\\Om\\xPDOObject' =>
         array (
             0 => 'Fred\\Model\\FredThemedTemplate',
             1 => 'Fred\\Model\\FredCache',

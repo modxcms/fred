@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var xPDOTransport $transport
  */
@@ -32,7 +33,9 @@ if ($options[xPDOTransport::PACKAGE_ACTION] === xPDOTransport::ACTION_UNINSTALL)
                 }
             }
 
-            if ($noChildCategories === false) return false;
+            if ($noChildCategories === false) {
+                return false;
+            }
 
             $hasChunks = $modx->getCount('modChunk', ['category' => $category->get('id')]);
             if ($hasChunks > 0) {

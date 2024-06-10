@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\MediaSources;
+
 use MODX\Revolution\Processors\Model\GetListProcessor;
 use MODX\Revolution\Sources\modFileMediaSource;
 use MODX\Revolution\Sources\modS3MediaSource;
@@ -21,7 +23,8 @@ class GetList extends GetListProcessor
 
     protected $packagesDir;
 
-    public function getSortClassKey() {
+    public function getSortClassKey()
+    {
         return modMediaSource::class;
     }
 
@@ -40,7 +43,8 @@ class GetList extends GetListProcessor
         return parent::beforeIteration($list);
     }
 
-    public function prepareQueryBeforeCount(xPDOQuery $c) {
+    public function prepareQueryBeforeCount(xPDOQuery $c)
+    {
         $id = $this->getProperty('id');
         if (!empty($id)) {
             if (is_array($id)) {
@@ -65,14 +69,15 @@ class GetList extends GetListProcessor
         ]);
 
         if (!empty($query)) {
-            $c->where(['modMediaSource.name:LIKE' => '%'.$query.'%']);
-            $c->orCondition(['modMediaSource.description:LIKE' => '%'.$query.'%']);
+            $c->where(['modMediaSource.name:LIKE' => '%' . $query . '%']);
+            $c->orCondition(['modMediaSource.description:LIKE' => '%' . $query . '%']);
         }
 
         return $c;
     }
 
-    public function prepareRow(xPDOObject $object) {
+    public function prepareRow(xPDOObject $object)
+    {
         $objectArray = $object->toArray();
 
         $props = $object->getPropertyList();
@@ -82,5 +87,4 @@ class GetList extends GetListProcessor
 
         return $objectArray;
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\ElementRTEConfigs;
+
 use Fred\Model\FredElementRTEConfig;
 use MODX\Revolution\Processors\Model\RemoveProcessor;
 

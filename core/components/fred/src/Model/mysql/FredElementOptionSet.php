@@ -1,37 +1,37 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_element_option_sets',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'name' => NULL,
+            'name' => null,
             'description' => '',
             'complete' => 0,
-            'theme' => NULL,
+            'theme' => null,
             'data' => '',
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'name' => 
+            'name' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '127',
                 'phptype' => 'string',
                 'null' => false,
             ),
-            'description' => 
+            'description' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '255',
@@ -39,7 +39,7 @@ class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
                 'null' => false,
                 'default' => '',
             ),
-            'complete' => 
+            'complete' =>
             array (
                 'dbtype' => 'tinyint',
                 'attributes' => 'unsigned',
@@ -48,7 +48,7 @@ class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
                 'null' => false,
                 'default' => 0,
             ),
-            'theme' => 
+            'theme' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -56,7 +56,7 @@ class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
                 'phptype' => 'integer',
                 'null' => false,
             ),
-            'data' => 
+            'data' =>
             array (
                 'dbtype' => 'mediumtext',
                 'phptype' => 'json',
@@ -64,21 +64,21 @@ class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
                 'default' => '',
             ),
         ),
-        'fieldAliases' => 
+        'fieldAliases' =>
         array (
             'content' => 'data',
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'theme' => 
+            'theme' =>
             array (
                 'alias' => 'theme',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'theme' => 
+                    'theme' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -86,15 +86,15 @@ class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
                     ),
                 ),
             ),
-            'complete' => 
+            'complete' =>
             array (
                 'alias' => 'complete',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'complete' => 
+                    'complete' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -102,21 +102,21 @@ class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
                     ),
                 ),
             ),
-            'name_theme' => 
+            'name_theme' =>
             array (
                 'alias' => 'name_theme',
                 'primary' => false,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'name' => 
+                    'name' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
                         'null' => false,
                     ),
-                    'theme' => 
+                    'theme' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -125,9 +125,9 @@ class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
                 ),
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'Theme' => 
+            'Theme' =>
             array (
                 'class' => 'Fred\\Model\\FredTheme',
                 'local' => 'theme',
@@ -137,5 +137,4 @@ class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
             ),
         ),
     );
-
 }

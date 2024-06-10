@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -73,7 +74,9 @@ class ElFinder extends Endpoint
         $mediaSources = $this->modx->getIterator(modMediaSource::class, $c);
         foreach ($mediaSources as $mediaSource) {
             $mediaSource->initialize();
-            if(!$mediaSource->checkPolicy('list')) continue;
+            if (!$mediaSource->checkPolicy('list')) {
+                continue;
+            }
 
             $properties = $mediaSource->getProperties();
             if (isset($properties['fred']) && ($properties['fred']['value'] === true)) {
@@ -82,7 +85,9 @@ class ElFinder extends Endpoint
                 $path = $mediaSource->getBasePath();
                 $url =  $mediaSource->getBaseUrl();
                 $readOnly = false;
-                if (isset($properties['fredReadOnly']) && ($properties['fredReadOnly']['value'] === true)) $readOnly = true;
+                if (isset($properties['fredReadOnly']) && ($properties['fredReadOnly']['value'] === true)) {
+                    $readOnly = true;
+                }
                 $roots[] = [
                     'id' => 'ms' . $mediaSource->id,
                     'driver' => 'Flysystem',
@@ -96,7 +101,6 @@ class ElFinder extends Endpoint
                     'uploadDeny' => ['text/x-php'],
                     'attributes' => $this->getRootAttributes($properties)
                 ];
-
             }
         }
 
@@ -123,7 +127,9 @@ class ElFinder extends Endpoint
     private function getRootAttributes($properties)
     {
         $readOnly = false;
-        if (isset($properties['fredReadOnly']) && ($properties['fredReadOnly']['value'] === true)) $readOnly = true;
+        if (isset($properties['fredReadOnly']) && ($properties['fredReadOnly']['value'] === true)) {
+            $readOnly = true;
+        }
 
         $skipFiles = isset($properties['skipFiles']) ? $properties['skipFiles']['value'] : '';
         $skipFiles = Utils::explodeAndClean($skipFiles);
@@ -173,7 +179,7 @@ class ElFinder extends Endpoint
             ];
 
             foreach ($skipFiles as $file) {
-                $file = (substr( $file, 0, 1 ) === ".") ? '\\'.$file.'$' : $file;
+                $file = (substr($file, 0, 1) === ".") ? '\\' . $file . '$' : $file;
                 $attributes[] = [
                     'pattern' => '/' . $file . '/',
                     'read' => false,

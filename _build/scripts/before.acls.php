@@ -23,9 +23,10 @@ $modx =& $transport->xpdo;
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
     case xPDOTransport::ACTION_UPGRADE:
-
         $group = $modx->getObject(modAccessPolicyTemplateGroup::class, ['name' => 'Administrator']);
-        if (!$group) return;
+        if (!$group) {
+            return;
+        }
 
         /** @var modAccessPolicyTemplate $template */
         $template = $modx->getObject(modAccessPolicyTemplate::class, ['name' => 'Fred', 'template_group' => $group->get('id')]);

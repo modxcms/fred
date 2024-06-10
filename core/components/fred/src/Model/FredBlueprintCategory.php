@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Model;
 
 use xPDO\xPDO;
@@ -29,7 +30,8 @@ class FredBlueprintCategory extends \xPDO\Om\xPDOSimpleObject
         if (empty($uuid)) {
             try {
                 $this->set('uuid', \Fred\Utils::uuid());
-            } catch (Exception $e) {}
+            } catch (Exception $e) {
+            }
         }
 
         return parent::save($cacheFlag);

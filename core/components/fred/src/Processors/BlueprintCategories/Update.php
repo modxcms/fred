@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\BlueprintCategories;
+
 use Fred\Model\FredBlueprintCategory;
 use Fred\Model\FredBlueprintCategoryTemplateAccess;
 use MODX\Revolution\Processors\Model\UpdateProcessor;

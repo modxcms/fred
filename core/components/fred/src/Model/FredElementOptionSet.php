@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Model;
 
 use xPDO\xPDO;
@@ -93,7 +94,7 @@ class FredElementOptionSet extends \xPDO\Om\xPDOSimpleObject
         return $newSettings;
     }
 
-    public function remove(array $ancestors= array ())
+    public function remove(array $ancestors = array ())
     {
         $removed = parent::remove($ancestors);
 

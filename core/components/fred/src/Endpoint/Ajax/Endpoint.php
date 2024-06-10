@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -81,7 +82,7 @@ abstract class Endpoint
     /**
      * @return string
      */
-    abstract function process();
+    abstract public function process();
 
     /**
      * @param string|array $message
@@ -134,7 +135,9 @@ abstract class Endpoint
     {
         $this->method = strtoupper($_SERVER['REQUEST_METHOD']);
 
-        if (in_array($this->method, $this->allowedMethod)) return true;
+        if (in_array($this->method, $this->allowedMethod)) {
+            return true;
+        }
 
         http_response_code(405);
         return '{}';
@@ -151,14 +154,18 @@ abstract class Endpoint
 
     protected function verifyClaim($name, $value)
     {
-        if (!isset($this->jwtPayload[$name])) return false;
+        if (!isset($this->jwtPayload[$name])) {
+            return false;
+        }
 
         return $this->jwtPayload[$name] === $value;
     }
 
     protected function getClaim($name)
     {
-        if (!isset($this->jwtPayload[$name])) return false;
+        if (!isset($this->jwtPayload[$name])) {
+            return false;
+        }
 
         return $this->jwtPayload[$name];
     }

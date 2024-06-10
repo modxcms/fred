@@ -2,13 +2,12 @@
 
 namespace Fred\Endpoint\Ajax;
 
-
 use Fred\Model\FredBlueprintCategory;
 use Fred\Model\FredElement;
 
 class ElementReplaceImage extends Endpoint
 {
-    function process()
+    public function process()
     {
         if (!$this->modx->hasPermission('fred_element_screenshot')) {
             return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));

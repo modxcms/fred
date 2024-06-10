@@ -1,4 +1,5 @@
 <?php
+
 use MODX\Revolution\modX;
 use MODX\Revolution\Sources\modFileMediaSource;
 use MODX\Revolution\Sources\modMediaSource;
@@ -59,8 +60,8 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 
             $assetsMS = $modx->newObject(modFileMediaSource::class);
             $assetsMS->set('class_key', modFileMediaSource::class);
-            $assetsMS->set('name','Assets');
-            $assetsMS->set('description','Assets');
+            $assetsMS->set('name', 'Assets');
+            $assetsMS->set('description', 'Assets');
 
             if (strpos($assetsPath, $basePath) === 0) {
                 $msAssetsPathRelative = true;

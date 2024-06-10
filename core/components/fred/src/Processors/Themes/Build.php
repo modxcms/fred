@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\Themes;
+
 use Fred\Fred;
 use Fred\FredFileVehicle;
 use Fred\Model\FredBlueprint;
@@ -155,7 +157,7 @@ class Build extends ModelProcessor
                 $componentName = empty($package['componentName']) ? $package['name'] : $package['componentName'];
                 $modelName = empty($package['modelName']) ? $package['name'] : $package['modelName'];
                 $settingPrefix = empty($package['settingPrefix']) ? $package['name'] : $package['settingPrefix'];
-                $service = $this->modx->getService($package['name'],$package['class'],$this->modx->getOption($settingPrefix . '.core_path',null,$this->modx->getOption('core_path').'components/' . $componentName . '/').'model/' . $modelName . '/',[]);
+                $service = $this->modx->getService($package['name'], $package['class'], $this->modx->getOption($settingPrefix . '.core_path', null, $this->modx->getOption('core_path') . 'components/' . $componentName . '/') . 'model/' . $modelName . '/', []);
 
                 if (!($service instanceof $package['class'])) {
                     return $this->modx->lexicon('fred.err.themes_extract_tpl_package_load', ['name' => $package['name']]);
@@ -292,7 +294,7 @@ class Build extends ModelProcessor
                     if ($templateCategory) {
                         $templateRootCategory = $templateCategory->get('category');
                         $templateParentCategory = $templateCategory->getOne('Parent');
-                        while($templateParentCategory) {
+                        while ($templateParentCategory) {
                             $templateRootCategory = $templateParentCategory->get('category');
                             $templateParentCategory = $templateParentCategory->getOne('Parent');
                         }
@@ -314,7 +316,7 @@ class Build extends ModelProcessor
                                 if ($category) {
                                     $rootCategory = $category->get('category');
                                     $parent = $category->getOne('Parent');
-                                    while($parent) {
+                                    while ($parent) {
                                         $rootCategory = $parent->get('category');
                                         $parent = $parent->getOne('Parent');
                                     }
@@ -325,12 +327,13 @@ class Build extends ModelProcessor
                         }
                     }
                 }
-
             }
         }
 
         $categories = $this->getProperty('categories');
-        if (!is_array($categories)) $categories = [];
+        if (!is_array($categories)) {
+            $categories = [];
+        }
         $buildConfig['categories'] = $categories;
 
         $categoryVehicles = [];
@@ -615,14 +618,20 @@ class Build extends ModelProcessor
         $mediaSources = json_decode($this->getProperty('mediaSources'), true);
         if (is_array($mediaSources)) {
             $buildConfig['mediaSources'] = [];
-            foreach($mediaSources as $mediaSource) {
-                if (empty($mediaSource['id'])) continue;
+            foreach ($mediaSources as $mediaSource) {
+                if (empty($mediaSource['id'])) {
+                    continue;
+                }
 
                 $mediaSourceId = (int)$mediaSource['id'];
-                if (empty($mediaSourceId)) continue;
+                if (empty($mediaSourceId)) {
+                    continue;
+                }
 
                 $mediaSourceObject = $this->modx->getObject(modMediaSource::class, ['id' => $mediaSourceId]);
-                if (!$mediaSourceObject) continue;
+                if (!$mediaSourceObject) {
+                    continue;
+                }
 
                 $mediaSourceVehicle = $builder->createVehicle($mediaSourceObject, [
                     xPDOTransport::PRESERVE_KEYS => false,
@@ -712,14 +721,20 @@ class Build extends ModelProcessor
         $dependencies = json_decode($this->getProperty('dependencies'), true);
         if (is_array($dependencies)) {
             $buildConfig['dependencies'] = $dependencies;
-            foreach($dependencies as $dependency) {
+            foreach ($dependencies as $dependency) {
                 $name = trim($dependency['name']);
-                if (empty($name)) continue;
+                if (empty($name)) {
+                    continue;
+                }
 
                 $depVersion = trim($dependency['version']);
-                if (empty($depVersion)) $depVersion = '*';
+                if (empty($depVersion)) {
+                    $depVersion = '*';
+                }
 
-                if (strtolower($name) === 'fred') $fredFound = true;
+                if (strtolower($name) === 'fred') {
+                    $fredFound = true;
+                }
 
                 $requires[$name] = $depVersion;
             }
@@ -764,7 +779,7 @@ class Build extends ModelProcessor
 
         /** @var modPlugin[] $plugins */
         $plugins = $category->getMany('Plugins');
-        foreach ($plugins as $plugin){
+        foreach ($plugins as $plugin) {
             $plugin->getMany('PluginEvents');
         }
 
@@ -786,7 +801,7 @@ class Build extends ModelProcessor
                         if ($cat) {
                             $rootCategory = $cat->get('category');
                             $parentCategory = $cat->getOne('Parent');
-                            while($parentCategory) {
+                            while ($parentCategory) {
                                 $rootCategory = $parentCategory->get('category');
                                 $parentCategory = $parentCategory->getOne('Parent');
                             }

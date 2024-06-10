@@ -1,4 +1,5 @@
 <?php
+
 use xPDO\Transport\xPDOTransport;
 
 /**
@@ -16,7 +17,9 @@ use xPDO\Transport\xPDOTransport;
  */
 
 $modx =& $object->xpdo;
-if ($options[xPDOTransport::PACKAGE_ACTION] === xPDOTransport::ACTION_UNINSTALL) return true;
+if ($options[xPDOTransport::PACKAGE_ACTION] === xPDOTransport::ACTION_UNINSTALL) {
+    return true;
+}
 
 $propertySetsCache = [];
 
@@ -32,26 +35,34 @@ foreach ($elementClasses as $type => $elementClass) {
         foreach ($fileMeta[$type] as $elementName => $propertySets) {
             /** @var \MODX\Revolution\modElement $element */
             $element = $modx->getObject($elementClass, ['name' => $elementName]);
-            if (!$element) continue;
+            if (!$element) {
+                continue;
+            }
 
             if (empty($propertySets)) {
                 $modx->removeCollection(\MODX\Revolution\modElementPropertySet::class, ['element' => $element->id, 'element_class' => $elementClass]);
                 continue;
             }
 
-            if (!is_array($propertySets)) continue;
+            if (!is_array($propertySets)) {
+                continue;
+            }
 
             foreach ($propertySets as $propertySetName) {
                 if (!isset($propertySetsCache[$propertySetName])) {
                     /** @var \MODX\Revolution\modPropertySet $propertySet */
                     $propertySet = $modx->getObject(\MODX\Revolution\modPropertySet::class, ['name' => $propertySetName]);
-                    if (!$propertySet) continue;
+                    if (!$propertySet) {
+                        continue;
+                    }
 
                     $propertySetsCache[$propertySetName] = $propertySet->id;
                 }
 
                 $elementPropertySet = $modx->getObject(\MODX\Revolution\modElementPropertySet::class, ['element' => $element->id, 'element_class' => $elementClass, 'property_set' => $propertySetsCache[$propertySetName]]);
-                if ($elementPropertySet) continue;
+                if ($elementPropertySet) {
+                    continue;
+                }
 
                 $elementPropertySet = $modx->newObject(\MODX\Revolution\modElementPropertySet::class);
                 $elementPropertySet->set('element', $element->id);

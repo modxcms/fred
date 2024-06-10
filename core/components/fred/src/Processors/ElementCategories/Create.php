@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\ElementCategories;
 
 use Fred\Model\FredElementCategory;
@@ -81,5 +82,4 @@ class Create extends CreateProcessor
 
         return parent::afterSave();
     }
-
 }

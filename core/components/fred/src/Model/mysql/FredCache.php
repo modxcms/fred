@@ -1,29 +1,29 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredCache extends \Fred\Model\FredCache
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_cache',
         'extends' => 'xPDO\\Om\\xPDOObject',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'resource' => NULL,
-            'element' => NULL,
+            'resource' => null,
+            'element' => null,
             'content' => '',
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'resource' => 
+            'resource' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -32,7 +32,7 @@ class FredCache extends \Fred\Model\FredCache
                 'null' => false,
                 'index' => 'pk',
             ),
-            'element' => 
+            'element' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -41,7 +41,7 @@ class FredCache extends \Fred\Model\FredCache
                 'null' => false,
                 'index' => 'pk',
             ),
-            'content' => 
+            'content' =>
             array (
                 'dbtype' => 'mediumtext',
                 'phptype' => 'string',
@@ -49,17 +49,17 @@ class FredCache extends \Fred\Model\FredCache
                 'default' => '',
             ),
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'resource' => 
+            'resource' =>
             array (
                 'alias' => 'resource',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'resource' => 
+                    'resource' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -67,15 +67,15 @@ class FredCache extends \Fred\Model\FredCache
                     ),
                 ),
             ),
-            'element' => 
+            'element' =>
             array (
                 'alias' => 'element',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'element' => 
+                    'element' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -83,21 +83,21 @@ class FredCache extends \Fred\Model\FredCache
                     ),
                 ),
             ),
-            'PRIMARY' => 
+            'PRIMARY' =>
             array (
                 'alias' => 'PRIMARY',
                 'primary' => true,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'resource' => 
+                    'resource' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
                         'null' => false,
                     ),
-                    'element' => 
+                    'element' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -106,9 +106,9 @@ class FredCache extends \Fred\Model\FredCache
                 ),
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'Resource' => 
+            'Resource' =>
             array (
                 'class' => 'MODX\\Revolution\\modResource',
                 'local' => 'resource',
@@ -116,7 +116,7 @@ class FredCache extends \Fred\Model\FredCache
                 'cardinality' => 'one',
                 'owner' => 'foreign',
             ),
-            'Element' => 
+            'Element' =>
             array (
                 'class' => 'Fred\\Model\\FredElement',
                 'local' => 'element',
@@ -126,5 +126,4 @@ class FredCache extends \Fred\Model\FredCache
             ),
         ),
     );
-
 }

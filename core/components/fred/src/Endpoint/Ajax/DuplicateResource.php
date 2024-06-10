@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -14,7 +15,7 @@ use MODX\Revolution\modResource;
 
 class DuplicateResource extends Endpoint
 {
-    function process()
+    public function process()
     {
         $resourceId = (int)$this->modx->getOption('resource', $this->body, 0);
         $pageTitle = $this->modx->getOption('pagetitle', $this->body, '');

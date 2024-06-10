@@ -1,4 +1,5 @@
 <?php
+
 use MODX\Revolution\modX;
 use xPDO\Transport\xPDOTransport;
 
@@ -81,7 +82,9 @@ if (!function_exists('updateTableIndexes')) {
         $indexes = array_keys($meta);
 
         foreach ($indexes as $index) {
-            if ($index == 'PRIMARY') continue;
+            if ($index == 'PRIMARY') {
+                continue;
+            }
             $m->addIndex($table, $index);
             $modx->log(modX::LOG_LEVEL_INFO, ' -- added index: ' . $index);
         }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -18,7 +19,7 @@ use MODX\Revolution\modResource;
 
 class CreateResource extends Endpoint
 {
-    function process()
+    public function process()
     {
         if (!$this->modx->hasPermission('new_document')) {
             return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
@@ -128,7 +129,8 @@ class CreateResource extends Endpoint
      * @param modResource $resource
      * @return string
      */
-    public function getPreviewUrl($resource) {
+    public function getPreviewUrl($resource)
+    {
         $previewUrl = '';
 
         if (!$resource->get('deleted')) {

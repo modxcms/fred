@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\Elements;
 
 use Fred\Model\FredElement;
@@ -71,5 +72,4 @@ class Create extends CreateProcessor
 
         return parent::beforeSet();
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\ElementCategories;
 
 use Fred\Model\FredElementCategory;
@@ -64,5 +65,4 @@ class DDReorder extends ModelProcessor
 
         return $this->success('', $categoryObject);
     }
-
 }

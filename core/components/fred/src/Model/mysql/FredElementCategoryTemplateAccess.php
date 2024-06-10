@@ -1,28 +1,28 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredElementCategoryTemplateAccess extends \Fred\Model\FredElementCategoryTemplateAccess
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_element_category_templates_access',
         'extends' => 'xPDO\\Om\\xPDOObject',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'category' => NULL,
-            'template' => NULL,
+            'category' => null,
+            'template' => null,
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'category' => 
+            'category' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -31,7 +31,7 @@ class FredElementCategoryTemplateAccess extends \Fred\Model\FredElementCategoryT
                 'null' => false,
                 'index' => 'pk',
             ),
-            'template' => 
+            'template' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -41,23 +41,23 @@ class FredElementCategoryTemplateAccess extends \Fred\Model\FredElementCategoryT
                 'index' => 'pk',
             ),
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'PRIMARY' => 
+            'PRIMARY' =>
             array (
                 'alias' => 'PRIMARY',
                 'primary' => true,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'category' => 
+                    'category' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
                         'null' => false,
                     ),
-                    'template' => 
+                    'template' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -66,9 +66,9 @@ class FredElementCategoryTemplateAccess extends \Fred\Model\FredElementCategoryT
                 ),
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'Template' => 
+            'Template' =>
             array (
                 'class' => 'Fred\\Model\\FredThemedTemplate',
                 'local' => 'template',
@@ -76,7 +76,7 @@ class FredElementCategoryTemplateAccess extends \Fred\Model\FredElementCategoryT
                 'cardinality' => 'one',
                 'owner' => 'foreign',
             ),
-            'ElementCategory' => 
+            'ElementCategory' =>
             array (
                 'class' => 'Fred\\Model\\FredElementCategory',
                 'local' => 'category',
@@ -86,5 +86,4 @@ class FredElementCategoryTemplateAccess extends \Fred\Model\FredElementCategoryT
             ),
         ),
     );
-
 }

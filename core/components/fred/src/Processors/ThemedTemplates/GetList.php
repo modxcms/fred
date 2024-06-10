@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\ThemedTemplates;
+
 use Fred\Model\FredBlueprint;
 use Fred\Model\FredTheme;
 use Fred\Model\FredThemedTemplate;

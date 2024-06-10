@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\BlueprintCategories;
+
 use Fred\Model\FredBlueprintCategory;
 use MODX\Revolution\Processors\ModelProcessor;
 
@@ -63,5 +65,4 @@ class DDReorder extends ModelProcessor
 
         return $this->success('', $categoryObject);
     }
-
 }

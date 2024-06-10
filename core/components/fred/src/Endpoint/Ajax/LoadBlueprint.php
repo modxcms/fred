@@ -10,7 +10,7 @@ class LoadBlueprint extends Endpoint
 {
     protected $allowedMethod = ['GET', 'OPTIONS'];
 
-    function process()
+    public function process()
     {
         $id = isset($_GET['blueprint']) ? intval($_GET['blueprint']) : 0;
 
@@ -45,7 +45,8 @@ class LoadBlueprint extends Endpoint
         }
     }
 
-    protected function iterateElements(&$elements, &$dropZone) {
+    protected function iterateElements(&$elements, &$dropZone)
+    {
         foreach ($dropZone as &$element) {
             $elementId = $element['widget'];
             $element['elId'] = null;

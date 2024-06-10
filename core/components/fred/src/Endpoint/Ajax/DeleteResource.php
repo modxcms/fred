@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -16,7 +17,7 @@ class DeleteResource extends Endpoint
 {
     protected $deletedTime = 0;
 
-    function process()
+    public function process()
     {
         if (!isset($this->body['resource'])) {
             return $this->failure('No id was provided');
@@ -66,7 +67,8 @@ class DeleteResource extends Endpoint
      * @param modResource $resource
      * @return mixed
      */
-    public function deleteChildren($resource) {
+    public function deleteChildren($resource)
+    {
         /** @var modResource[] $childResources */
         $childResources = $this->modx->getIterator(modResource::class, [
             'parent' => $resource->id

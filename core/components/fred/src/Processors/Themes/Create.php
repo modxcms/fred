@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\Themes;
+
 use Fred\Model\FredTheme;
 use MODX\Revolution\Processors\Model\CreateProcessor;
 

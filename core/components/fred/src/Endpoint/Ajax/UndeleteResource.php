@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -14,7 +15,7 @@ use MODX\Revolution\modResource;
 
 class UndeleteResource extends Endpoint
 {
-    function process()
+    public function process()
     {
         if (!isset($this->body['resource'])) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_ns_id'));
@@ -62,7 +63,8 @@ class UndeleteResource extends Endpoint
      * @param modResource $resource
      * @return mixed
      */
-    public function undeleteChildren($resource) {
+    public function undeleteChildren($resource)
+    {
         /** @var modResource[] $childResources */
         $childResources = $this->modx->getIterator(modResource::class, [
             'parent' => $resource->id,

@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\ElementOptionSets;
+
 use Fred\Model\FredElementOptionSet;
 use MODX\Revolution\Processors\Model\CreateProcessor;
 
@@ -44,5 +46,4 @@ class Create extends CreateProcessor
 
         return parent::beforeSet();
     }
-
 }

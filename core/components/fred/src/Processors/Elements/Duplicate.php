@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\Elements;
+
 use Fred\Model\FredElement;
 use MODX\Revolution\Processors\Model\DuplicateProcessor;
 
@@ -23,7 +25,8 @@ class Duplicate extends DuplicateProcessor
         return parent::initialize();
     }
 
-    public function process() {
+    public function process()
+    {
         $this->newObject->fromArray($this->object->toArray());
         $name = $this->getProperty('name');
         $category = $this->getProperty('category');
@@ -61,7 +64,7 @@ class Duplicate extends DuplicateProcessor
 
         if ($this->saveObject() === false) {
             $this->modx->error->checkValidation($this->newObject);
-            return $this->failure($this->modx->lexicon($this->objectType.'_err_duplicate'));
+            return $this->failure($this->modx->lexicon($this->objectType . '_err_duplicate'));
         }
 
         return $this->success('');

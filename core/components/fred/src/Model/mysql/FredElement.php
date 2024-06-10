@@ -1,41 +1,41 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredElement extends \Fred\Model\FredElement
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_elements',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'name' => NULL,
-            'uuid' => NULL,
+            'name' => null,
+            'uuid' => null,
             'description' => '',
             'image' => '',
-            'category' => NULL,
+            'category' => null,
             'rank' => 0,
             'option_set' => 0,
             'options_override' => '',
             'content' => '',
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'name' => 
+            'name' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '127',
                 'phptype' => 'string',
                 'null' => false,
             ),
-            'uuid' => 
+            'uuid' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '36',
@@ -43,7 +43,7 @@ class FredElement extends \Fred\Model\FredElement
                 'null' => false,
                 'index' => 'unique',
             ),
-            'description' => 
+            'description' =>
             array (
                 'dbtype' => 'varchar',
                 'precision' => '255',
@@ -51,14 +51,14 @@ class FredElement extends \Fred\Model\FredElement
                 'null' => false,
                 'default' => '',
             ),
-            'image' => 
+            'image' =>
             array (
                 'dbtype' => 'text',
                 'phptype' => 'string',
                 'null' => false,
                 'default' => '',
             ),
-            'category' => 
+            'category' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -66,16 +66,7 @@ class FredElement extends \Fred\Model\FredElement
                 'phptype' => 'integer',
                 'null' => false,
             ),
-            'rank' => 
-            array (
-                'dbtype' => 'int',
-                'attributes' => 'unsigned',
-                'precision' => '10',
-                'phptype' => 'integer',
-                'null' => false,
-                'default' => 0,
-            ),
-            'option_set' => 
+            'rank' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -84,14 +75,23 @@ class FredElement extends \Fred\Model\FredElement
                 'null' => false,
                 'default' => 0,
             ),
-            'options_override' => 
+            'option_set' =>
+            array (
+                'dbtype' => 'int',
+                'attributes' => 'unsigned',
+                'precision' => '10',
+                'phptype' => 'integer',
+                'null' => false,
+                'default' => 0,
+            ),
+            'options_override' =>
             array (
                 'dbtype' => 'mediumtext',
                 'phptype' => 'json',
                 'null' => false,
                 'default' => '',
             ),
-            'content' => 
+            'content' =>
             array (
                 'dbtype' => 'mediumtext',
                 'phptype' => 'string',
@@ -99,17 +99,17 @@ class FredElement extends \Fred\Model\FredElement
                 'default' => '',
             ),
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'uuid' => 
+            'uuid' =>
             array (
                 'alias' => 'uuid',
                 'primary' => false,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'uuid' => 
+                    'uuid' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -117,15 +117,15 @@ class FredElement extends \Fred\Model\FredElement
                     ),
                 ),
             ),
-            'category' => 
+            'category' =>
             array (
                 'alias' => 'category',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'category' => 
+                    'category' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -133,15 +133,15 @@ class FredElement extends \Fred\Model\FredElement
                     ),
                 ),
             ),
-            'rank' => 
+            'rank' =>
             array (
                 'alias' => 'rank',
                 'primary' => false,
                 'unique' => false,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'rank' => 
+                    'rank' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -149,21 +149,21 @@ class FredElement extends \Fred\Model\FredElement
                     ),
                 ),
             ),
-            'name_category' => 
+            'name_category' =>
             array (
                 'alias' => 'name_category',
                 'primary' => false,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'name' => 
+                    'name' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
                         'null' => false,
                     ),
-                    'category' => 
+                    'category' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -172,9 +172,9 @@ class FredElement extends \Fred\Model\FredElement
                 ),
             ),
         ),
-        'composites' => 
+        'composites' =>
         array (
-            'Cache' => 
+            'Cache' =>
             array (
                 'class' => 'Fred\\Model\\FredCache',
                 'local' => 'id',
@@ -182,7 +182,7 @@ class FredElement extends \Fred\Model\FredElement
                 'cardinality' => 'many',
                 'owner' => 'local',
             ),
-            'ElementTemplatesAccess' => 
+            'ElementTemplatesAccess' =>
             array (
                 'class' => 'Fred\\Model\\FredElementTemplateAccess',
                 'local' => 'id',
@@ -191,9 +191,9 @@ class FredElement extends \Fred\Model\FredElement
                 'owner' => 'local',
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'Category' => 
+            'Category' =>
             array (
                 'class' => 'Fred\\Model\\FredElementCategory',
                 'local' => 'category',
@@ -201,7 +201,7 @@ class FredElement extends \Fred\Model\FredElement
                 'cardinality' => 'one',
                 'owner' => 'foreign',
             ),
-            'OptionSet' => 
+            'OptionSet' =>
             array (
                 'class' => 'Fred\\Model\\FredElementOptionSet',
                 'local' => 'option_set',
@@ -211,5 +211,4 @@ class FredElement extends \Fred\Model\FredElement
             ),
         ),
     );
-
 }

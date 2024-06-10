@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -69,7 +70,9 @@ final class RenderResource
             unset($this->pageSettings['content']);
             $tvs = $this->resource->getTemplateVars();
             foreach ($tvs as $tv) {
-                if (isset($this->pageSettings['tv_' . $tv->get('name')])) continue;
+                if (isset($this->pageSettings['tv_' . $tv->get('name')])) {
+                    continue;
+                }
                 $this->pageSettings['tv_' . $tv->get('name')] = $this->resource->getTVValue($tv->get('name'));
             }
         } else {
@@ -201,8 +204,10 @@ final class RenderResource
                         (isset($this->elementOptions[$item['widget']]['cacheOutput'])) ?
                             $this->elementOptions[$item['widget']]['cacheOutput'] : false
                     );
-                    if (isset($this->elementOptions[$item['widget']]['cacheOutput'])
-                        && $this->elementOptions[$item['widget']]['cacheOutput'] === true) {
+                    if (
+                        isset($this->elementOptions[$item['widget']]['cacheOutput'])
+                        && $this->elementOptions[$item['widget']]['cacheOutput'] === true
+                    ) {
                         $this->cacheElement($item['widget'], $elementContent);
                     }
                     $html .= $elementContent;
@@ -598,7 +603,7 @@ final class RenderResource
         ];
 
         $settings['id'] = $id;
-        foreach($this->pageSettings as $key => $value) {
+        foreach ($this->pageSettings as $key => $value) {
             $settings[$key] = $value;
         }
         return $settings;

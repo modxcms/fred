@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\BlueprintCategories;
+
 use Fred\Model\FredBlueprint;
 use Fred\Model\FredBlueprintCategory;
 use Fred\Model\FredBlueprintCategoryTemplateAccess;

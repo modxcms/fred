@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\MediaSources;
+
 use MODX\Revolution\Processors\Model\UpdateProcessor;
 use MODX\Revolution\Sources\modMediaSource;
 
@@ -23,9 +25,13 @@ class UpdateFromGrid extends UpdateProcessor
     public function initialize()
     {
         $data = $this->getProperty('data');
-        if (empty($data)) return $this->modx->lexicon('invalid_data');
+        if (empty($data)) {
+            return $this->modx->lexicon('invalid_data');
+        }
         $data = $this->modx->fromJSON($data);
-        if (empty($data)) return $this->modx->lexicon('invalid_data');
+        if (empty($data)) {
+            return $this->modx->lexicon('invalid_data');
+        }
 
         $this->setProperty('id', $data['id']);
 

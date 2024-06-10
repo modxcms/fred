@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -25,7 +26,9 @@ class TaggerGetGroup extends Endpoint
 
         $this->loadTagger();
 
-        if (!$this->taggerLoaded) return [];
+        if (!$this->taggerLoaded) {
+            return [];
+        }
 
         /** @var \Tagger\Model\TaggerGroup $groups */
         $group = $this->modx->getObject('Tagger\\Model\\TaggerGroup', ['id' => $group]);
@@ -52,7 +55,9 @@ class TaggerGetGroup extends Endpoint
 
     protected function taggerGetTagsForGroup($group)
     {
-        if (!$this->taggerLoaded) return [];
+        if (!$this->taggerLoaded) {
+            return [];
+        }
 
         $c = $this->modx->newQuery('Tagger\\Model\\TaggerTag');
         $c->where(['group' => $group->id]);

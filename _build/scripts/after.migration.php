@@ -22,7 +22,9 @@ if (!function_exists('replaceIdWithUuidOnElements')) {
     function replaceIdWithUuidOnElements($modx, &$cache, &$data)
     {
         foreach ($data as &$dropZone) {
-            if(!is_array($dropZone)) continue;
+            if (!is_array($dropZone)) {
+                continue;
+            }
 
             foreach ($dropZone as &$element) {
                 $elementId = intval($element['widget']);

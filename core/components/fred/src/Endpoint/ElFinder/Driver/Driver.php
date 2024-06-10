@@ -22,6 +22,7 @@ use League\Flysystem\Util;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\WhitespacePathNormalizer;
 use League\Glide\Urls\UrlBuilderFactory;
+
 /**
  * elFinder driver for Flysytem (https://github.com/thephpleague/flysystem)
  *
@@ -114,7 +115,7 @@ class Driver extends elFinderVolumeDriver
             return $this->setError('A FilesystemOperator instance is required');
         }
 
-        $this->options['icon'] = $this->options['icon'] ?: (empty($this->options['rootCssClass'])? $this->getIcon() : '');
+        $this->options['icon'] = $this->options['icon'] ?: (empty($this->options['rootCssClass']) ? $this->getIcon() : '');
         $this->root = $this->options['path'];
 
         if ($this->options['glideURL']) {
@@ -234,7 +235,6 @@ class Driver extends elFinderVolumeDriver
         } else {
             // If not exists, return empty
             if (!$this->has($path)) {
-
                 // Check if the parent doesn't have this path
                 if ($this->_dirExists($path)) {
                     return $stat;
@@ -262,7 +262,7 @@ class Driver extends elFinderVolumeDriver
             }
         }
 
-        if(false === $meta) {
+        if (false === $meta) {
             return $stat;
         }
 
@@ -284,7 +284,7 @@ class Driver extends elFinderVolumeDriver
 
         // Check if file, if so, check mimetype when available
         if ($meta['type'] == 'file') {
-            if(isset($meta['mimetype'])) {
+            if (isset($meta['mimetype'])) {
                 $stat['mime'] = $meta['mimetype'];
             } else {
                 $stat['mime'] = null;

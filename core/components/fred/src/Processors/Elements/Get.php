@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\Elements;
+
 use Fred\Model\FredElement;
 use Fred\Model\FredElementTemplateAccess;
 use MODX\Revolution\Processors\Model\GetProcessor;

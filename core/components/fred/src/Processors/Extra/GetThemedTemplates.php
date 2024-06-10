@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\Extra;
 
 use Fred\Model\FredThemedTemplate;
@@ -39,7 +40,6 @@ class GetThemedTemplates extends GetListProcessor
                 }
             } else {
                 $where['templatename:LIKE'] = '%' . $query . '%';
-
             }
         }
 
@@ -47,5 +47,4 @@ class GetThemedTemplates extends GetListProcessor
 
         return $c;
     }
-
 }

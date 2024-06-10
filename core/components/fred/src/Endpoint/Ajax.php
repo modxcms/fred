@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -23,23 +24,25 @@ class Ajax extends Endpoint
             $payload = $this->fred->getJWTPayload();
 
             $this->modx->switchContext($payload['context']);
-            
+
             if (!$this->modx->hasPermission('fred')) {
                 http_response_code(403);
                 return;
             }
-            
+
             if ($payload['iss'] !== $this->modx->user->id) {
                 http_response_code(403);
-                return;    
+                return;
             }
         } catch (\Exception $e) {
             http_response_code(403);
             return;
         }
-        
+
         $action = $this->modx->getOption('action', $_REQUEST, '');
-        if (empty($action)) return;
+        if (empty($action)) {
+            return;
+        }
 
         $action = str_replace('/', '', $action);
         $action = str_replace('\\', '', $action);

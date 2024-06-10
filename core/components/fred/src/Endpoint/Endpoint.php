@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Fred package.
  *
@@ -31,5 +32,5 @@ abstract class Endpoint
         $this->modx =& $fred->modx;
     }
 
-    abstract function run();
+    abstract public function run();
 }

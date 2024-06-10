@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Processors\Elements;
 
 use Fred\Model\FredElement;
@@ -55,7 +56,7 @@ class GetList extends GetListProcessor
         $c->select(
             [
                '(SELECT IFNULL(GROUP_CONCAT(template SEPARATOR \',\'), \'\') FROM ' . $this->modx->getTableName(FredElementTemplateAccess::class) . ' WHERE element = FredElement.id) AS templates'
-           ]
+            ]
         );
 
         return parent::prepareQueryAfterCount($c);

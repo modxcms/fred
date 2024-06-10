@@ -1,5 +1,7 @@
 <?php
+
 namespace Fred\Processors\Themes;
+
 use Fred\Model\FredBlueprint;
 use Fred\Model\FredBlueprintCategory;
 use Fred\Model\FredElement;
@@ -7,7 +9,6 @@ use Fred\Model\FredElementCategory;
 use Fred\Model\FredElementOptionSet;
 use Fred\Model\FredElementRTEConfig;
 use Fred\Model\FredTheme;
-
 use Fred\Model\FredThemedTemplate;
 use MODX\Revolution\modLexiconEntry;
 use MODX\Revolution\modSystemSetting;
@@ -42,7 +43,8 @@ class Duplicate extends DuplicateProcessor
         return parent::initialize();
     }
 
-    public function process() {
+    public function process()
+    {
         $this->newObject->fromArray($this->object->toArray());
         $name = $this->getProperty('name');
 
@@ -58,7 +60,7 @@ class Duplicate extends DuplicateProcessor
 
         if ($this->saveObject() === false) {
             $this->modx->error->checkValidation($this->newObject);
-            return $this->failure($this->modx->lexicon($this->objectType.'_err_duplicate'));
+            return $this->failure($this->modx->lexicon($this->objectType . '_err_duplicate'));
         }
 
         $this->duplicateThemeObjects();
@@ -72,7 +74,9 @@ class Duplicate extends DuplicateProcessor
     protected function duplicateThemeObjects()
     {
         $duplicateThemeObjects = (int)$this->getProperty('duplicate_theme_objects', 0);
-        if ($duplicateThemeObjects !== 1) return;
+        if ($duplicateThemeObjects !== 1) {
+            return;
+        }
 
         $optionSetsMap = [];
         $elementsMap = [];
@@ -164,7 +168,9 @@ class Duplicate extends DuplicateProcessor
     protected function replaceIdWithUuidOnElements(&$data, $map)
     {
         foreach ($data as &$dropZone) {
-            if(!is_array($dropZone)) continue;
+            if (!is_array($dropZone)) {
+                continue;
+            }
 
             foreach ($dropZone as &$element) {
                 $elementId = $element['widget'];
@@ -214,7 +220,9 @@ class Duplicate extends DuplicateProcessor
     {
         $duplicateThemeFolder = (int)$this->getProperty('duplicate_theme_folder', 0);
 
-        if ($duplicateThemeFolder !== 1) return;
+        if ($duplicateThemeFolder !== 1) {
+            return;
+        }
 
         try {
             $fs = new Filesystem();
@@ -223,14 +231,17 @@ class Duplicate extends DuplicateProcessor
             $themeFolderPath = $this->newObject->getThemeFolderPath();
 
             $fs->mirror($originalThemeFolderPath, $themeFolderPath);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 
     protected function duplicateTemplates()
     {
         $duplicateTemplates = (int)$this->getProperty('duplicate_templates', 0);
 
-        if ($duplicateTemplates !== 1) return;
+        if ($duplicateTemplates !== 1) {
+            return;
+        }
 
         $assignedTemplates = $this->object->Templates;
         foreach ($assignedTemplates as $assignedTemplate) {
@@ -240,7 +251,7 @@ class Duplicate extends DuplicateProcessor
                 $cnt = 0;
 
                 $exists = $this->modx->getCount('modTemplate', ['templatename' => $newName]);
-                while($exists > 0) {
+                while ($exists > 0) {
                     $cnt++;
                     $newName = "{$template->get('templatename')} ({$this->newObject->get('name')}) #{$cnt}";
                     $exists = $this->modx->getCount('modTemplate', ['templatename' => $newName]);
@@ -276,7 +287,9 @@ class Duplicate extends DuplicateProcessor
         $namespace = $this->object->get('namespace');
         $newNamespace = $this->newObject->get('namespace');
 
-        if (empty($namespace) || empty($newNamespace)) return;
+        if (empty($namespace) || empty($newNamespace)) {
+            return;
+        }
 
         /** @var modSystemSetting[] $settings */
         $settings = $this->modx->getIterator(modSystemSetting::class, [
@@ -312,7 +325,6 @@ class Duplicate extends DuplicateProcessor
                 $newLexicon->set('namespace', $newNamespace);
                 $newLexicon->save();
             }
-
         }
     }
 }

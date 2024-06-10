@@ -1,4 +1,5 @@
 <?php
+
 namespace Fred\Model;
 
 use MODX\Revolution\modUserGroupMember;
@@ -53,7 +54,9 @@ class FredElement extends \xPDO\Om\xPDOSimpleObject
         }
 
         $override = $this->get('options_override');
-        if (empty($override)) $override = [];
+        if (empty($override)) {
+            $override = [];
+        }
 
         $elementCategory = $this->Category;
         if ($elementCategory) {
@@ -71,7 +74,9 @@ class FredElement extends \xPDO\Om\xPDOSimpleObject
 
         if (isset($override['merge']) && ($override['merge'] === true)) {
             foreach ($override as $key => $value) {
-                if ($key === 'merge') continue;
+                if ($key === 'merge') {
+                    continue;
+                }
 
                 if ((!empty($options['settings'])) && ($key === 'settings')) {
                     $options['settings'] = $this->mergeSettings($options['settings'], $value);
@@ -107,11 +112,15 @@ class FredElement extends \xPDO\Om\xPDOSimpleObject
                     $memberGroups = $modx->getIterator(modUserGroupMember::class, ['user_group:IN' => $groups, 'member' => $modx->user->id]);
                     foreach ($memberGroups as $memberGroup) {
                         $group = $memberGroup->getOne('UserGroup');
-                        if (!$group) continue;
+                        if (!$group) {
+                            continue;
+                        }
 
                         if (!isset($roles[$memberGroup->get('role')])) {
                             $role = $memberGroup->getOne('UserGroupRole');
-                            if (!$role) continue;
+                            if (!$role) {
+                                continue;
+                            }
 
                             $roles[$memberGroup->get('role')] = $role->get('authority');
                         }
@@ -157,7 +166,9 @@ class FredElement extends \xPDO\Om\xPDOSimpleObject
                         }
 
                         if (isset($userGroup['role'])) {
-                            if (!isset($rolesMap[$userGroup['role']])) continue 2;
+                            if (!isset($rolesMap[$userGroup['role']])) {
+                                continue 2;
+                            }
 
                             if ($memberships[$userGroup['group']] <= $rolesMap[$userGroup['role']]) {
                                 $match = true;
@@ -196,7 +207,9 @@ class FredElement extends \xPDO\Om\xPDOSimpleObject
                     }
                 }
 
-                if ($match === false) continue;
+                if ($match === false) {
+                    continue;
+                }
             }
 
             if (isset($setting['group']) && !empty($setting['settings'])) {
@@ -266,7 +279,7 @@ class FredElement extends \xPDO\Om\xPDOSimpleObject
 
             $image = str_replace('{{assets_url}}', $this->xpdo->getOption('assets_url'), $image);
 
-            if ((strtolower(substr($image, 0,7)) !== 'http://') && (strtolower(substr($image, 0,8)) !== 'https://') && (substr($image, 0,2) !== '//')  && (substr($image, 0,1) !== '/')) {
+            if ((strtolower(substr($image, 0, 7)) !== 'http://') && (strtolower(substr($image, 0, 8)) !== 'https://') && (substr($image, 0, 2) !== '//')  && (substr($image, 0, 1) !== '/')) {
                 $image = $this->xpdo->getOption('base_url') . $image;
             }
         }
@@ -281,7 +294,8 @@ class FredElement extends \xPDO\Om\xPDOSimpleObject
         if (empty($uuid)) {
             try {
                 $this->set('uuid', \Fred\Utils::uuid());
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         }
 
         return parent::save($cacheFlag);
@@ -300,7 +314,9 @@ class FredElement extends \xPDO\Om\xPDOSimpleObject
             'resource' => $resource
         ]);
 
-        if (!$cache) return false;
+        if (!$cache) {
+            return false;
+        }
 
         return $cache->content;
     }

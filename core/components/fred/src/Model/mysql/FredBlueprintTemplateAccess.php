@@ -1,28 +1,28 @@
 <?php
+
 namespace Fred\Model\mysql;
 
 use xPDO\xPDO;
 
 class FredBlueprintTemplateAccess extends \Fred\Model\FredBlueprintTemplateAccess
 {
-
     public static $metaMap = array (
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_blueprint_templates_access',
         'extends' => 'xPDO\\Om\\xPDOObject',
-        'tableMeta' => 
+        'tableMeta' =>
         array (
             'engine' => 'InnoDB',
         ),
-        'fields' => 
+        'fields' =>
         array (
-            'blueprint' => NULL,
-            'template' => NULL,
+            'blueprint' => null,
+            'template' => null,
         ),
-        'fieldMeta' => 
+        'fieldMeta' =>
         array (
-            'blueprint' => 
+            'blueprint' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -31,7 +31,7 @@ class FredBlueprintTemplateAccess extends \Fred\Model\FredBlueprintTemplateAcces
                 'null' => false,
                 'index' => 'pk',
             ),
-            'template' => 
+            'template' =>
             array (
                 'dbtype' => 'int',
                 'attributes' => 'unsigned',
@@ -41,23 +41,23 @@ class FredBlueprintTemplateAccess extends \Fred\Model\FredBlueprintTemplateAcces
                 'index' => 'pk',
             ),
         ),
-        'indexes' => 
+        'indexes' =>
         array (
-            'PRIMARY' => 
+            'PRIMARY' =>
             array (
                 'alias' => 'PRIMARY',
                 'primary' => true,
                 'unique' => true,
                 'type' => 'BTREE',
-                'columns' => 
+                'columns' =>
                 array (
-                    'blueprint' => 
+                    'blueprint' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
                         'null' => false,
                     ),
-                    'template' => 
+                    'template' =>
                     array (
                         'length' => '',
                         'collation' => 'A',
@@ -66,9 +66,9 @@ class FredBlueprintTemplateAccess extends \Fred\Model\FredBlueprintTemplateAcces
                 ),
             ),
         ),
-        'aggregates' => 
+        'aggregates' =>
         array (
-            'Template' => 
+            'Template' =>
             array (
                 'class' => 'Fred\\Model\\FredThemedTemplate',
                 'local' => 'template',
@@ -76,7 +76,7 @@ class FredBlueprintTemplateAccess extends \Fred\Model\FredBlueprintTemplateAcces
                 'cardinality' => 'one',
                 'owner' => 'foreign',
             ),
-            'Blueprint' => 
+            'Blueprint' =>
             array (
                 'class' => 'Fred\\Model\\FredBlueprint',
                 'local' => 'blueprint',
@@ -86,5 +86,4 @@ class FredBlueprintTemplateAccess extends \Fred\Model\FredBlueprintTemplateAcces
             ),
         ),
     );
-
 }
