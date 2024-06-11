@@ -5,7 +5,7 @@ import {errorHandler} from "../Utils";
 
 export const getResourceTree = contextKey => {
     return cache.load('resources', {name: 'resource-tree'}, () => {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resource-tree&context=${contextKey}`)
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=get-resource-tree&context=${contextKey}`)
             .then(response => {
                 return response.json();
             }).then(response => {
@@ -16,13 +16,13 @@ export const getResourceTree = contextKey => {
 
 export const getTemplates = contextKey => {
     return cache.load('templates', {name: 'templates'}, () => {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-templates`)
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=get-templates`)
             .then(errorHandler);
     });
 };
 
 export const createResource = (parent, template, pagetitle, blueprint, published = null, hidemenu = null) => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=create-resource`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=create-resource`, {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ export const getResources = (currentResource = null, query = {}) => {
         }
     }
 
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-resources${queryString}`).then(errorHandler)
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=get-resources${queryString}`).then(errorHandler)
 };
 
 export const getChunks = (currentChunk = null, query = {}) => {
@@ -68,11 +68,11 @@ export const getChunks = (currentChunk = null, query = {}) => {
         }
     }
 
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-chunks${queryString}`).then(errorHandler)
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=get-chunks${queryString}`).then(errorHandler)
 };
 
 export const publishResource = resource => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=publish-resource`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=publish-resource`, {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ export const publishResource = resource => {
 };
 
 export const unpublishResource = resource => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=unpublish-resource`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=unpublish-resource`, {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ export const unpublishResource = resource => {
 };
 
 export const deleteResource = resource => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=delete-resource`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=delete-resource`, {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
@@ -108,7 +108,7 @@ export const deleteResource = resource => {
 };
 
 export const undeleteResource = resource => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=undelete-resource`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=undelete-resource`, {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
@@ -120,7 +120,7 @@ export const undeleteResource = resource => {
 };
 
 export const duplicateResource = (pagetitle, duplicate_children, publishing_options, resource) => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=duplicate-resource`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=duplicate-resource`, {
         method: "post",
         headers: {
             'Content-Type': 'application/json'

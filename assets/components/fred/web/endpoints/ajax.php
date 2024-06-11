@@ -9,7 +9,14 @@
  * file that was distributed with this source code.
  */
 
-require_once 'init.php';
+$version = $_REQUEST['modx'] ?? 3;
 
-$ajax = new \Fred\Endpoint\Ajax($fred);
+require_once 'init.'.$version.'x.php';
+
+$class = $version > 2 ? '\\Fred\\Endpoint\\Ajax' : '\\Fred\\v2\\Endpoint\\Ajax';
+if (!class_exists($class)) {
+    print 'Class not found: ' . $class;
+    die();
+}
+$ajax = new $class($fred);
 $ajax->run();

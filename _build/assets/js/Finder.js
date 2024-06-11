@@ -5,18 +5,18 @@ import { section, div, button, h4, iFrame } from './UI/Elements';
 export class Finder {
     constructor(onSelect = (file, fm) => {}, title = 'fred.fe.browse_files', options = {}) {
         this.wrapper = null;
-        
+
         if (fredConfig.lngExists(title)) {
             title = fredConfig.lng(title);
         }
-        
+
         this.title = title;
         this.options = {
-            width: '800px', 
+            width: '800px',
             height: '600px',
             ...options
         };
-        
+
         this.onSelect = onSelect.bind(this);
     }
 
@@ -37,22 +37,23 @@ export class Finder {
         modal.style.width = this.options.width || '800px';
         modal.style.height = this.options.height || '600px';
         this.body.style.padding = '0';
-
+        console.log(fredConfig);
         const finderOptions = [
-            `fredToken=${fredConfig.jwt}`
+            `fredToken=${fredConfig.jwt}`,
+            `modx=${fredConfig.config.modxVersion}`
         ];
-        
+
         if (this.options.mediaSource) {
             finderOptions.push(`mediaSource=${this.options.mediaSource}`);
         }
-        
+
         if (this.options.type) {
             finderOptions.push(`type=${this.options.type}`);
             window.getLexicon = (key) => {
                 return fredConfig.lng(key)
             }
         }
-        
+
         if (this.options.showOnlyFolders !== undefined) {
             finderOptions.push(`showOnlyFolders=${this.options.showOnlyFolders}`);
         }
@@ -63,12 +64,12 @@ export class Finder {
         }
 
         const finderIframe = iFrame(`${fredConfig.config.assetsUrl}elfinder/index.html` + finderOptionsString);
-        
+
         finderIframe.style.width = '100%';
         finderIframe.style.height = '100%';
-        
+
         this.body.appendChild(finderIframe);
-        
+
         header.appendChild(close);
         header.appendChild(this.titleEl);
 
@@ -89,10 +90,10 @@ export class Finder {
 
     close() {
         delete window.fredFinderOnChange;
-        
+
         this.wrapper.remove();
     }
-    
+
     static getFinderOptionsFromElement(el, imageFinder = false) {
         const options = {};
 

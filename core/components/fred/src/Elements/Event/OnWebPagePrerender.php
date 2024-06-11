@@ -162,7 +162,10 @@ class OnWebPagePrerender extends Event
             $jwt = JWT::encode($payload, $this->fred->getSecret(), 'HS256');
 
             $versionHash = substr(md5(Fred::VERSION), 0, 6);
-
+            if (!$this->modx->version) {
+                $this->modx->getVersionData();
+            }
+            $version = (int)$this->modx->version['version'];
             $fredContent = '
         <script type="text/javascript" src="' . $this->fred->getOption('webAssetsUrl') . 'fred.min.js?v=' . $versionHash . '"></script>
         <link rel="stylesheet" href="' . $this->fred->getOption('webAssetsUrl') . 'fred.css?v=' . $versionHash . '" type="text/css" />
@@ -185,6 +188,7 @@ class OnWebPagePrerender extends Event
                 forceSidebar: ' . (int)$this->fred->getOption('force_sidebar') . ',
                 rte: "' . $this->fred->getOption('rte') . '",
                 rteConfig: ' . $rteConfigString . ',
+                modxVersion: ' . $version . ',
                 jwt: "' . $jwt . '",
                 resource: {
                     "id": ' . $this->modx->resource->id . ',
