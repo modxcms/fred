@@ -8,7 +8,6 @@ namespace Fred\Traits\Processors\Themes;
  */
 trait GetList
 {
-
     public function initialize()
     {
         $corePath = $this->modx->getOption('core_path');

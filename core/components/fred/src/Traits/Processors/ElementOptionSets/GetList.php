@@ -8,7 +8,6 @@ namespace Fred\Traits\Processors\ElementOptionSets;
  */
 trait GetList
 {
-
     public function beforeIteration(array $list)
     {
         $addAll = (int)$this->getProperty('addEmpty', 0);

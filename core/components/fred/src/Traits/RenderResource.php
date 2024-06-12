@@ -16,7 +16,6 @@ use Wa72\HtmlPageDom\HtmlPageCrawler;
 
 trait RenderResource
 {
-
     private function setDefaults()
     {
         if (!$this->theme) {

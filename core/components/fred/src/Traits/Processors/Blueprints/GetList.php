@@ -8,7 +8,6 @@ namespace Fred\Traits\Processors\Blueprints;
  */
 trait GetList
 {
-
     public function beforeIteration(array $list)
     {
         $addNone = (int)$this->getProperty('addNone', 0);

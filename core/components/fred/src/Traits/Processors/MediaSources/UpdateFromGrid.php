@@ -9,7 +9,6 @@ namespace Fred\Traits\Processors\MediaSources;
 
 trait UpdateFromGrid
 {
-
     public function initialize()
     {
         $data = $this->getProperty('data');

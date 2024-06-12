@@ -12,7 +12,6 @@ use Fred\Model\FredElementCategoryTemplateAccess;
 
 trait Duplicate
 {
-
     public function initialize()
     {
         if (!$this->modx->hasPermission('fred_element_category_save')) {

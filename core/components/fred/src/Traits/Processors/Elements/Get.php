@@ -8,7 +8,6 @@ namespace Fred\Traits\Processors\Elements;
  */
 trait Get
 {
-
     public function beforeOutput()
     {
         $templatesAccess = $this->modx->getIterator($this->templateAccessClass, ['element' => $this->object->id]);

@@ -8,7 +8,6 @@ namespace Fred\Traits\Processors\ElementCategories;
  */
 trait GetList
 {
-
     public function beforeIteration(array $list)
     {
         $addAll = (int)$this->getProperty('addAll', 0);
