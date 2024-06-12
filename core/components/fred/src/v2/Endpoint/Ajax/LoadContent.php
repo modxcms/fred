@@ -13,12 +13,15 @@ namespace Fred\v2\Endpoint\Ajax;
 
 class LoadContent extends Endpoint
 {
+    use \Fred\Traits\Endpoint\Ajax\LoadContent;
+
     protected $allowedMethod = ['GET', 'OPTIONS'];
 
     /** @var \FredTheme */
     private $theme;
 
     private $categoryThemeMap = [];
+    private $elementClass = 'FredElement';
 
     public function process()
     {
@@ -91,113 +94,6 @@ class LoadContent extends Endpoint
         return $this->data((array)$data);
     }
 
-    protected function gatherElements(&$elements, $dropZones)
-    {
-        foreach ($dropZones as $dropZone) {
-            if (!is_array($dropZone)) {
-                continue;
-            }
-            foreach ($dropZone as $element) {
-                $elementId = $element['widget'];
-
-                if (!isset($elements[$elementId])) {
-                    $elements[$elementId] = $this->getElement($elementId);
-                }
-
-                $this->gatherElements($elements, $element['children']);
-            }
-        }
-    }
-
-    protected function getElement($uuid)
-    {
-        /** @var \FredElement $element */
-        $element = $this->modx->getObject('FredElement', ['uuid' => $uuid]);
-        if (!$element) {
-            $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$uuid} wasn't found.");
-            return [];
-        }
-
-        $invalidTheme = false;
-        if ($this->theme) {
-            $categoryId = $element->get('category');
-            $elementTheme = null;
-
-            if (!isset($this->categoryThemeMap[$categoryId])) {
-                $category = $element->Category;
-                if ($category) {
-                    $this->categoryThemeMap[$categoryId] = $category->get('theme');
-                    $elementTheme = $this->categoryThemeMap[$categoryId];
-                }
-            } else {
-                $elementTheme = $this->categoryThemeMap[$categoryId];
-            }
-
-            if ($elementTheme) {
-                if ($elementTheme !== $this->theme->id) {
-                    $invalidTheme = true;
-                }
-            }
-        }
-
-        return [
-            "title" => $element->name,
-            "html" => $element->content,
-            "invalidTheme" => $invalidTheme,
-            "options" => $element->processOptions()
-        ];
-    }
-
-    /**
-     * @param \modResource $resource
-     * @return array
-     */
-    protected function gatherTVs($resource)
-    {
-        $output = [
-            'values' => [],
-            'def' => []
-        ];
-
-        /** @var \modTemplateVar[] $tvs */
-        $tvs = $resource->getTemplateVars();
-        $mTypes = $this->modx->getOption('manipulatable_url_tv_output_types', null, 'image,file');
-        $mTypes = explode(',', $mTypes);
-
-        foreach ($tvs as $tv) {
-            $props = $tv->getProperties();
-
-            if (isset($props['fred']) && (intval($props['fred']) === 1)) {
-                $def = [
-                    'name' => $tv->name,
-                    'label' => $tv->caption,
-                    'type' => 'text'
-                ];
-
-                if (!empty($props['fred.options'])) {
-                    $def['options'] = json_decode($props['fred.options']);
-                    unset($props['fred.options']);
-                }
-                foreach ($props as $k => $v) {
-                    if (substr($k, 0, 5) === "fred.") {
-                        $def[substr($k, 5)] = $v;
-                    }
-                }
-
-                $output['def'][] = $def;
-                $value = $tv->value;
-                if (in_array($tv->type, $mTypes, true)) {
-                    $value = $tv->prepareOutput($tv->value, $resource->id);
-                }
-                // replace [[++fred.theme.$theme.theme_dir]] with {{theme_dir}}
-                $value = str_replace('[[++' . $this->theme->settingsPrefix . '.theme_dir]]', '{{theme_dir}}', $value);
-                $output['values'][$tv->name] = $value;
-            }
-        }
-
-        return $output;
-    }
-
     /**
      * @param \modResource $resource
      * @return array
@@ -216,10 +112,10 @@ class LoadContent extends Endpoint
 
         foreach ($groups as $group) {
             $showForTemplates = $group->show_for_templates;
-            $showForTemplates = \Tagger\Utils::explodeAndClean($showForTemplates, ',', true);
+            $showForTemplates = $this->tagger->explodeAndClean($showForTemplates, ',', true);
 
             $showForContexts = $group->show_for_contexts;
-            $showForContexts = \Tagger\Utils::explodeAndClean($showForContexts);
+            $showForContexts = $this->tagger->explodeAndClean($showForContexts);
 
             if (!in_array($resource->template, $showForTemplates)) {
                 continue;

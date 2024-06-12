@@ -13,81 +13,11 @@ namespace Fred\v2\Endpoint\Ajax;
 
 class GetElements extends Endpoint
 {
+    use \Fred\Traits\Endpoint\Ajax\GetElements;
+
     protected $allowedMethod = ['OPTIONS', 'GET'];
-
-    public function process()
-    {
-        $theme = isset($_GET['theme']) ? intval($_GET['theme']) : 0;
-
-        $groupSort = $this->fred->getOption('element_group_sort');
-        if ($groupSort !== 'rank') {
-            $groupSort = 'name';
-        }
-
-        $elements = [];
-
-        $c = $this->modx->newQuery('FredElementCategory');
-        $c->leftJoin('FredElementCategoryTemplateAccess', 'ElementCategoryTemplatesAccess');
-
-        $c->where(
-            [
-                'ElementCategoryTemplatesAccess.template' => $this->getClaim('template'),
-                'OR:ElementCategoryTemplatesAccess.template:IS' => null,
-            ]
-        );
-
-        if (!empty($theme)) {
-            $c->where([
-                'theme' => $theme
-            ]);
-        }
-
-        $c->sortby($groupSort);
-
-        /** @var \FredElementCategory[] $categories */
-        $categories = $this->modx->getIterator('FredElementCategory', $c);
-
-        $elementSort = $this->fred->getOption('element_sort');
-        if ($elementSort !== 'rank') {
-            $elementSort = 'name';
-        }
-
-        foreach ($categories as $category) {
-            $categoryElements = [
-                'category' => $category->name,
-                'elements' => []
-            ];
-
-            $elementCriteria = $this->modx->newQuery('FredElement');
-            $elementCriteria->leftJoin('FredElementTemplateAccess', 'ElementTemplatesAccess');
-
-            $elementCriteria->where(
-                [
-                    'category' => $category->id,
-                    [
-                        'ElementTemplatesAccess.template' => $this->getClaim('template'),
-                        'OR:ElementTemplatesAccess.template:IS' => null,
-                    ]
-                ]
-            );
-            $elementCriteria->sortby($elementSort);
-
-            /** @var \FredElement[] $fredElements */
-            $fredElements = $this->modx->getIterator('FredElement', $elementCriteria);
-            foreach ($fredElements as $element) {
-                $categoryElements['elements'][] = [
-                    "id" => $element->uuid,
-                    "title" => $element->name,
-                    "description" => $element->description,
-                    "image" => $element->getImage(),
-                    "content" => $element->content,
-                    "options" => $element->processOptions()
-                ];
-            }
-
-            $elements[] = $categoryElements;
-        }
-
-        return $this->data(['elements' => $elements]);
-    }
+    private $elementClass = 'FredElement';
+    private $elementCategoryClass = 'FredElementCategory';
+    private $elementCategoryTemplateAccessClass = 'FredElementCategoryTemplateAccess';
+    private $elementTemplateAccessClass = 'FredElementTemplateAccess';
 }
