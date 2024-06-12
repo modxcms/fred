@@ -3,6 +3,7 @@
 namespace Fred\Processors\Elements;
 
 use Fred\Model\FredElement;
+use Fred\Model\FredElementTemplateAccess;
 use MODX\Revolution\Processors\Model\CreateProcessor;
 
 /**
@@ -14,6 +15,7 @@ class Create extends CreateProcessor
     use \Fred\Traits\Processors\Elements\Create;
 
     public $classKey = FredElement::class;
+    public $templateAccessClass = FredElementTemplateAccess::class;
 
     public $languageTopics = ['fred:default'];
     public $objectType = 'fred.elements';
