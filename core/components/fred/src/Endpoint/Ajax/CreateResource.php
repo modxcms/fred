@@ -24,5 +24,4 @@ class CreateResource extends Endpoint
     private $blueprintClass = FredBlueprint::class;
     private $contextSettingClass = modContextSetting::class;
     private $renderResource = RenderResource::class;
-
 }

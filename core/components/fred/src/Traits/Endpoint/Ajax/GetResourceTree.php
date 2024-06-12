@@ -13,7 +13,6 @@ namespace Fred\Traits\Endpoint\Ajax;
 
 trait GetResourceTree
 {
-
     /**
      * @return string
      */

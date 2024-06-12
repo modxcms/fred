@@ -15,7 +15,6 @@ use Fred\Utils;
 
 trait GetChunks
 {
-
     /**
      * @return string
      */

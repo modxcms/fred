@@ -2,7 +2,6 @@
 
 namespace Fred\Traits\Endpoint\Ajax;
 
-
 trait GetThemedTemplates
 {
     protected $allowedMethod = ['OPTIONS', 'GET'];

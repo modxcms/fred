@@ -14,5 +14,6 @@ namespace Fred\v2\Endpoint\Ajax;
 class LoadLexicons extends Endpoint
 {
     use \Fred\Traits\Endpoint\Ajax\LoadLexicons;
+
     protected $allowedMethod = ['OPTIONS', 'GET'];
 }

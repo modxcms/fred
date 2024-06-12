@@ -16,7 +16,6 @@ use MODX\Revolution\modResource;
 
 trait GetResources
 {
-
     /**
      * @return string
      */

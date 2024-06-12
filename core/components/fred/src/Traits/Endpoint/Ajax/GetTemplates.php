@@ -11,10 +11,8 @@
 
 namespace Fred\Traits\Endpoint\Ajax;
 
-
 trait GetTemplates
 {
-
     /**
      * @return string
      */

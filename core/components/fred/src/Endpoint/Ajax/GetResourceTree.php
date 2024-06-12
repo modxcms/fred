@@ -30,5 +30,4 @@ class GetResourceTree extends Endpoint
     private $resourceClass = modResource::class;
     private $contextSettingClass = modContextSetting::class;
     private $themedTemplateClass = FredThemedTemplate::class;
-
 }

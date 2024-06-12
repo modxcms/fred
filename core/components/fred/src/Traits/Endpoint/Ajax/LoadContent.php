@@ -13,7 +13,6 @@ namespace Fred\Traits\Endpoint\Ajax;
 
 trait LoadContent
 {
-
     protected function gatherElements(&$elements, $dropZones)
     {
         foreach ($dropZones as $dropZone) {
