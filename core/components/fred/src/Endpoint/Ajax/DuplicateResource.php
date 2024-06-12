@@ -52,6 +52,15 @@ class DuplicateResource extends Endpoint
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_duplicate_failed'));
         }
 
+        $this->modx->invokeEvent('OnResourceDuplicate', [
+            'oldResource' => $resource,
+            'newResource' => $newResource,
+            'newName' => $pageTitle,
+            'duplicateChildren' => $duplicateChildren,
+            'prefixDuplicate' => false,
+            'publishedMode' => $publishingOptions,
+        ]);
+
         $this->modx->cacheManager->refresh([
             'db' => [],
             'auto_publish' => ['contexts' => [$newResource->get('context_key')]],
