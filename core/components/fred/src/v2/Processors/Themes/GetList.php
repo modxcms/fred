@@ -8,6 +8,8 @@ namespace Fred\v2\Processors\Themes;
  */
 class GetList extends \modObjectGetListProcessor
 {
+    use \Fred\Traits\Processors\Themes\GetList;
+
     public $classKey = 'FredTheme';
     public $languageTopics = ['fred:default'];
     public $defaultSortField = 'name';
@@ -15,30 +17,6 @@ class GetList extends \modObjectGetListProcessor
     public $objectType = 'fred.theme';
 
     protected $packagesDir;
-
-    public function initialize()
-    {
-        $corePath = $this->modx->getOption('core_path');
-
-        $this->packagesDir = $corePath . 'packages/';
-
-        return parent::initialize();
-    }
-
-
-    public function beforeIteration(array $list)
-    {
-        $addAll = (int)$this->getProperty('addAll', 0);
-
-        if ($addAll === 1) {
-            $list[] = [
-                'id' => 0,
-                'name' => $this->modx->lexicon('fred.themes.all')
-            ];
-        }
-
-        return parent::beforeIteration($list);
-    }
 
     public function prepareQueryBeforeCount(\xPDOQuery $c)
     {

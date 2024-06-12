@@ -11,16 +11,11 @@ use MODX\Revolution\Processors\Model\RemoveProcessor;
  */
 class Remove extends RemoveProcessor
 {
+    use \Fred\Traits\Processors\ElementCategories\Remove;
+
     public $classKey = FredElementCategory::class;
+
     public $languageTopics = ['fred:default'];
     public $objectType = 'fred.element_categories';
-
-    public function initialize()
-    {
-        if (!$this->modx->hasPermission('fred_element_category_delete')) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return parent::initialize();
-    }
+    public $permissions = ['fred_element_category_delete'];
 }

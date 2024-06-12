@@ -30,8 +30,8 @@ class TaggerGetGroup extends Endpoint
             return [];
         }
 
-        /** @var \Tagger\Model\TaggerGroup $groups */
-        $group = $this->modx->getObject('Tagger\\Model\\TaggerGroup', ['id' => $group]);
+        /** @var \TaggerGroup $groups */
+        $group = $this->modx->getObject('TaggerGroup', ['id' => $group]);
 
         if (!$group) {
             return $this->failure($this->modx->lexicon('fred.fe.err.tagger_ns_group'));
@@ -59,7 +59,7 @@ class TaggerGetGroup extends Endpoint
             return [];
         }
 
-        $c = $this->modx->newQuery('Tagger\\Model\\TaggerTag');
+        $c = $this->modx->newQuery('TaggerTag');
         $c->where(['group' => $group->id]);
 
         $sortDir = (strtolower($group->sort_dir) === 'asc') ? 'ASC' : 'DESC';
@@ -70,7 +70,7 @@ class TaggerGetGroup extends Endpoint
             $c->sortby('TaggerTag.rank', $sortDir);
         }
 
-        $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTag', 'TaggerTag', '', ['tag']));
+        $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', ['tag']));
 
         $c->prepare();
 

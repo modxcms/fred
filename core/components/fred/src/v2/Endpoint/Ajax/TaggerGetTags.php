@@ -34,11 +34,11 @@ class TaggerGetTags extends Endpoint
             $where['tag:LIKE'] = '%' . $query . '%';
         }
 
-        $c = $this->modx->newQuery('Tagger\\Model\\TaggerTag');
+        $c = $this->modx->newQuery('TaggerTag');
         $c->where($where);
 
 
-        $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTag', 'TaggerTag', '', ['tag']));
+        $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', ['tag']));
 
         $c->prepare();
         $c->stmt->execute();

@@ -8,16 +8,10 @@ namespace Fred\v2\Processors\ElementRTEConfigs;
  */
 class Remove extends \modObjectRemoveProcessor
 {
+    use \Fred\Traits\Processors\ElementRTEConfigs\Remove;
+
     public $classKey = 'FredElementRTEConfig';
+
     public $languageTopics = ['fred:default'];
     public $objectType = 'fred.element_rte_configs';
-
-    public function initialize()
-    {
-        if (!$this->modx->hasPermission('fred_element_rte_config_delete')) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return parent::initialize();
-    }
 }

@@ -11,7 +11,6 @@
 
 namespace Fred\v2\Endpoint;
 
-
 abstract class Endpoint
 {
     /** @var \modX */

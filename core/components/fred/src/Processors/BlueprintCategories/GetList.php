@@ -16,25 +16,13 @@ use xPDO\Om\xPDOQuery;
  */
 class GetList extends GetListProcessor
 {
+    use \Fred\Traits\Processors\BlueprintCategories\GetList;
+
     public $classKey = FredBlueprintCategory::class;
     public $languageTopics = ['fred:default'];
     public $defaultSortField = 'rank';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'fred.blueprint_categories';
-
-    public function beforeIteration(array $list)
-    {
-        $addAll = (int)$this->getProperty('addAll', 0);
-
-        if ($addAll === 1) {
-            $list[] = [
-                'id' => 0,
-                'name' => $this->modx->lexicon('fred.blueprint_cateogries.all')
-            ];
-        }
-
-        return parent::beforeIteration($list);
-    }
 
 
     public function prepareQueryBeforeCount(xPDOQuery $c)

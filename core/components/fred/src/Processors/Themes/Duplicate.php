@@ -15,7 +15,6 @@ use MODX\Revolution\modSystemSetting;
 use MODX\Revolution\modTemplate;
 use MODX\Revolution\modTemplateVarTemplate;
 use MODX\Revolution\Processors\Model\DuplicateProcessor;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @package fred
@@ -24,52 +23,17 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Duplicate extends DuplicateProcessor
 {
+    use \Fred\Traits\Processors\Themes\Duplicate;
+
     public $classKey = FredTheme::class;
+
     public $languageTopics = ['fred:default'];
     public $objectType = 'fred.theme';
+    public $permissions = ['fred_themes_save'];
 
-    /** @var FredTheme */
     public $object;
 
-    /** @var FredTheme */
     public $newObject;
-
-    public function initialize()
-    {
-        if (!$this->modx->hasPermission('fred_themes_save')) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return parent::initialize();
-    }
-
-    public function process()
-    {
-        $this->newObject->fromArray($this->object->toArray());
-        $name = $this->getProperty('name');
-
-        if (empty($name)) {
-            $this->addFieldError('name', $this->modx->lexicon('fred.err.theme_ns_name'));
-            return $this->failure();
-        }
-
-        $this->newObject->set('name', $name);
-        $this->newObject->set('uuid', '');
-        $this->newObject->set('config', []);
-        $this->newObject->set('theme_folder', $name);
-
-        if ($this->saveObject() === false) {
-            $this->modx->error->checkValidation($this->newObject);
-            return $this->failure($this->modx->lexicon($this->objectType . '_err_duplicate'));
-        }
-
-        $this->duplicateThemeObjects();
-        $this->createThemeFolder();
-        $this->duplicateThemeFolder();
-        $this->duplicateTemplates();
-
-        return $this->success('');
-    }
 
     protected function duplicateThemeObjects()
     {
@@ -163,76 +127,6 @@ class Duplicate extends DuplicateProcessor
         }
 
         $this->duplicateSystemSettings();
-    }
-
-    protected function replaceIdWithUuidOnElements(&$data, $map)
-    {
-        foreach ($data as &$dropZone) {
-            if (!is_array($dropZone)) {
-                continue;
-            }
-
-            foreach ($dropZone as &$element) {
-                $elementId = $element['widget'];
-
-                if ($map[$elementId]) {
-                    $element['widget'] = $map[$elementId];
-                } else {
-                    $element['widget'] = '';
-                }
-
-                $this->replaceIdWithUuidOnElements($element['children'], $map);
-            }
-        }
-    }
-
-    protected function iterateElements(&$data, $map)
-    {
-        foreach ($data as &$element) {
-            $elementId = $element['widget'];
-
-            if ($map[$elementId]) {
-                $element['widget'] = $map[$elementId];
-            } else {
-                $element['widget'] = '';
-            }
-
-            $this->replaceIdWithUuidOnElements($element['children'], $map);
-        }
-    }
-
-    protected function createThemeFolder()
-    {
-        $themeFolder = $this->newObject->get('theme_folder');
-
-        if (!empty($themeFolder)) {
-            $path = rtrim($this->modx->getOption('assets_path'), '/') . '/themes/' . $themeFolder . '/';
-
-            $nfp = $this->modx->getOption('new_folder_permissions');
-            $amode = !empty($nfp) ? octdec($this->modx->getOption('new_folder_permissions')) : 0777;
-            if (!is_dir($path)) {
-                mkdir($path, $amode, true);
-            }
-        }
-    }
-
-    protected function duplicateThemeFolder()
-    {
-        $duplicateThemeFolder = (int)$this->getProperty('duplicate_theme_folder', 0);
-
-        if ($duplicateThemeFolder !== 1) {
-            return;
-        }
-
-        try {
-            $fs = new Filesystem();
-
-            $originalThemeFolderPath = $this->object->getThemeFolderPath();
-            $themeFolderPath = $this->newObject->getThemeFolderPath();
-
-            $fs->mirror($originalThemeFolderPath, $themeFolderPath);
-        } catch (\Exception $e) {
-        }
     }
 
     protected function duplicateTemplates()

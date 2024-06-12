@@ -10,7 +10,7 @@ namespace Fred\v2\Processors\Themes;
 class Build extends \modObjectProcessor
 {
     public $classKey = 'FredTheme';
-    public $languageTopics = array('fred:default');
+    public $languageTopics = ['fred:default'];
     public $objectType = 'fred.theme';
 
     /** @var \Fred */

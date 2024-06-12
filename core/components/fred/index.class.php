@@ -18,13 +18,11 @@ abstract class FredBaseManagerController extends modExtraManagerController
 
     public function initialize()
     {
-        if (!$this->modx->version)
-        {
+        if (!$this->modx->version) {
             $this->modx->getVersionData();
         }
         $version = (int) $this->modx->version['version'];
-        if ($version > 2)
-        {
+        if ($version > 2) {
             $this->fred = $this->modx->services->get('fred');
         } else {
             $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');

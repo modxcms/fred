@@ -11,7 +11,7 @@
 
 $version = $_REQUEST['modx'] ?? 3;
 
-require_once 'init.'.$version.'x.php';
+require_once 'init.' . $version . 'x.php';
 
 
 $class = $version > 2 ? '\\Fred\\Endpoint\\ElFinder' : '\\Fred\\v2\\Endpoint\\ElFinder';

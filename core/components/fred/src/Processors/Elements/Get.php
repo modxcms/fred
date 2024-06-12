@@ -12,35 +12,13 @@ use MODX\Revolution\Processors\Model\GetProcessor;
  */
 class Get extends GetProcessor
 {
+    use \Fred\Traits\Processors\Elements\Get;
+
     public $classKey = FredElement::class;
+    public $templateAccessClass = FredElementTemplateAccess::class;
+
     public $languageTopics = ['fred:default'];
     public $objectType = 'fred.elements';
 
-    /** @var FredElement $object */
     public $object;
-
-    public function beforeOutput()
-    {
-        $templatesAccess = $this->modx->getIterator(FredElementTemplateAccess::class, ['element' => $this->object->id]);
-        $templates = [];
-        foreach ($templatesAccess as $templateAccess) {
-            $templates[] = $templateAccess->get('template');
-        }
-
-        $templates = join(',', $templates);
-        $this->object->set('templates', $templates);
-
-        $category = $this->object->Category;
-
-        if ($category) {
-            $theme = $category->Theme;
-
-            if ($theme) {
-                $this->object->set('theme', $theme->id);
-                $this->object->set('theme_folder', $theme->theme_folder);
-            }
-        }
-
-        return true;
-    }
 }

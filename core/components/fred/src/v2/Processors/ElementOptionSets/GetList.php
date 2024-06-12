@@ -8,26 +8,13 @@ namespace Fred\v2\Processors\ElementOptionSets;
  */
 class GetList extends \modObjectGetListProcessor
 {
+    use \Fred\Traits\Processors\ElementOptionSets\GetList;
+
     public $classKey = 'FredElementOptionSet';
     public $languageTopics = ['fred:default'];
     public $defaultSortField = 'name';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'fred.element_option_sets';
-
-    public function beforeIteration(array $list)
-    {
-        $addAll = (int)$this->getProperty('addEmpty', 0);
-        $search = $this->getProperty('search', '');
-
-        if (empty($search) && ($addAll === 1)) {
-            $list[] = [
-                'id' => 0,
-                'name' => $this->modx->lexicon('fred.element_option_sets.no_set')
-            ];
-        }
-
-        return parent::beforeIteration($list);
-    }
 
     public function prepareQueryBeforeCount(\xPDOQuery $c)
     {

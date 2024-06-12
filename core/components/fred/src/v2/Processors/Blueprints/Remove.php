@@ -8,16 +8,11 @@ namespace Fred\v2\Processors\Blueprints;
  */
 class Remove extends \modObjectRemoveProcessor
 {
+    use \Fred\Traits\Processors\Blueprints\Remove;
+
     public $classKey = 'FredBlueprint';
+
     public $languageTopics = ['fred:default'];
     public $objectType = 'fred.blueprints';
-
-    public function initialize()
-    {
-        if (!$this->modx->hasPermission('fred_blueprints_delete')) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return parent::initialize();
-    }
+    public $permissions = ['fred_blueprint_delete'];
 }

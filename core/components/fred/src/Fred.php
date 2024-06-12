@@ -23,7 +23,7 @@ use MODX\Revolution\modSystemSetting;
  */
 class Fred
 {
-    public const VERSION = '1.2.1-pl';
+    public const VERSION = '3.0.0-beta';
 
     public $modx = null;
     public $namespace = 'fred';

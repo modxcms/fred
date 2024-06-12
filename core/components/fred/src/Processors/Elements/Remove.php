@@ -11,16 +11,11 @@ use MODX\Revolution\Processors\Model\RemoveProcessor;
  */
 class Remove extends RemoveProcessor
 {
+    use \Fred\Traits\Processors\Elements\Remove;
+
     public $classKey = FredElement::class;
+
     public $languageTopics = ['fred:default'];
     public $objectType = 'fred.elements';
-
-    public function initialize()
-    {
-        if (!$this->modx->hasPermission('fred_element_option_sets_delete')) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return parent::initialize();
-    }
+    public $permissions = ['fred_element_save'];
 }

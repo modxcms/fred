@@ -208,10 +208,10 @@ class LoadContent extends Endpoint
             return [];
         }
 
-        $c = $this->modx->newQuery('Tagger\\Model\\TaggerGroup');
+        $c = $this->modx->newQuery('TaggerGroup');
         $c->sortby('position');
-        /** @var \Tagger\Model\TaggerGroup[] $groups */
-        $groups = $this->modx->getIterator('Tagger\\Model\\TaggerGroup', $c);
+        /** @var \TaggerGroup[] $groups */
+        $groups = $this->modx->getIterator('TaggerGroup', $c);
         $groupsArray = [];
 
         foreach ($groups as $group) {
@@ -246,13 +246,13 @@ class LoadContent extends Endpoint
 
         $tagsArray = [];
 
-        $c = $this->modx->newQuery('Tagger\\Model\\TaggerTagResource');
-        $c->leftJoin('Tagger\\Model\\TaggerTag', 'Tag');
+        $c = $this->modx->newQuery('TaggerTagResource');
+        $c->leftJoin('TaggerTag', 'Tag');
         $c->where(['resource' => $resource->id]);
         $c->sortby('Tag.alias', 'ASC');
 
-        $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTagResource', 'TaggerTagResource', '', ['resource']));
-        $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTag', 'Tag', '', ['tag', 'group']));
+        $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', ['resource']));
+        $c->select($this->modx->getSelectColumns('TaggerTag', 'Tag', '', ['tag', 'group']));
 
         $c->prepare();
         $c->stmt->execute();
@@ -274,7 +274,7 @@ class LoadContent extends Endpoint
             return [];
         }
 
-        $c = $this->modx->newQuery('Tagger\\Model\\TaggerTag');
+        $c = $this->modx->newQuery('TaggerTag');
         $c->where(['group' => $group->id]);
 
         $sortDir = (strtolower($group->sort_dir) === 'asc') ? 'ASC' : 'DESC';
@@ -285,7 +285,7 @@ class LoadContent extends Endpoint
             $c->sortby('TaggerTag.rank', $sortDir);
         }
 
-        $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTag', 'TaggerTag', '', ['tag']));
+        $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', ['tag']));
 
         $c->prepare();
 

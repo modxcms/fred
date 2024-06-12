@@ -20,7 +20,7 @@ class OnDocFormSave extends Event
             return;
         }
 
-        $renderResource = new \Fred\RenderResource($resource, $this->modx);
+        $renderResource = new \Fred\v2\RenderResource($resource, $this->modx);
         $renderResource->render();
 
         $this->modx->invokeEvent('FredOnFredResourceSave', [

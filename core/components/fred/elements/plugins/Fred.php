@@ -35,10 +35,10 @@ if ($version > 2) {
 }
 
 $class = '\\Fred\\';
-if($version < 3) {
+if ($version < 3) {
     $class .= 'v2\\';
 }
-$class .= 'Elements\\Event\\'. $modx->event->name;
+$class .= 'Elements\\Event\\' . $modx->event->name;
 
 if (class_exists($class)) {
     /** @var \Fred\Elements\Event\Event $event */

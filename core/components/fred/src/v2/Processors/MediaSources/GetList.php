@@ -56,8 +56,7 @@ class GetList extends \modObjectGetListProcessor
 
         $c->where([
             'class_key:IN' => [
-                'modFileMediaSource',
-                'modS3MediaSource'
+                'sources.modFileMediaSource',
             ]
         ]);
 

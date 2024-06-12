@@ -8,16 +8,11 @@ namespace Fred\v2\Processors\Elements;
  */
 class Remove extends \modObjectRemoveProcessor
 {
+    use \Fred\Traits\Processors\Elements\Remove;
+
     public $classKey = 'FredElement';
+
     public $languageTopics = ['fred:default'];
     public $objectType = 'fred.elements';
-
-    public function initialize()
-    {
-        if (!$this->modx->hasPermission('fred_element_option_sets_delete')) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return parent::initialize();
-    }
+    public $permissions = ['fred_element_save'];
 }

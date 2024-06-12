@@ -11,7 +11,6 @@
 
 namespace Fred\v2\Endpoint\Ajax;
 
-
 abstract class Endpoint
 {
     /** @var \modX */
@@ -150,7 +149,9 @@ abstract class Endpoint
         }
 
         $this->tagger = $this->modx->getService('tagger', 'Tagger', $taggerCorePath . 'model/tagger/');
-        if (!($this->tagger instanceof \Tagger)) return;
+        if (!($this->tagger instanceof \Tagger)) {
+            return;
+        }
 
         $this->taggerLoaded = true;
     }
