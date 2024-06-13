@@ -19,7 +19,7 @@ class GetList extends GetListProcessor
 
     public $classKey = FredElementCategory::class;
     public $languageTopics = ['fred:default'];
-    public $defaultSortField = 'rank';
+    public $defaultSortField = '`rank`';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'fred.element_categories';
 

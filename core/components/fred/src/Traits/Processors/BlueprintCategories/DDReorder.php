@@ -25,7 +25,7 @@ trait DDReorder
             'rank:<=' => max($oldIndex, $newIndex),
         ]);
 
-        $c->sortby('rank', 'ASC');
+        $c->sortby('`rank`', 'ASC');
 
         $categories = $this->modx->getIterator($this->classKey, $c);
 

@@ -36,7 +36,7 @@ trait Update
                 'category' => $this->getProperty('category', $this->object->get('category')),
             ]);
             $c->limit(1);
-            $c->sortby('rank', 'DESC');
+            $c->sortby('`rank`', 'DESC');
 
             $last = 0;
 

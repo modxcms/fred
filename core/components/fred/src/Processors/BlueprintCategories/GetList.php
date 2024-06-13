@@ -20,7 +20,7 @@ class GetList extends GetListProcessor
 
     public $classKey = FredBlueprintCategory::class;
     public $languageTopics = ['fred:default'];
-    public $defaultSortField = 'rank';
+    public $defaultSortField = '`rank`';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'fred.blueprint_categories';
 

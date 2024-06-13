@@ -38,7 +38,7 @@ trait Update
             ]);
 
             $c->limit(1);
-            $c->sortby('rank', 'DESC');
+            $c->sortby('`rank`', 'DESC');
 
             $last = 0;
 

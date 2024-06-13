@@ -32,7 +32,7 @@ trait Create
             $c = $this->modx->newQuery($this->classKey);
             $c->where(['theme' => $theme]);
             $c->limit(1);
-            $c->sortby('rank', 'DESC');
+            $c->sortby('`rank`', 'DESC');
 
             $last = 0;
 

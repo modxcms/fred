@@ -10,7 +10,7 @@ class GetList extends \modObjectGetListProcessor
 {
     public $classKey = 'FredElement';
     public $languageTopics = ['fred:default'];
-    public $defaultSortField = 'rank';
+    public $defaultSortField = '`rank`';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'fred.elements';
 

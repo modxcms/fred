@@ -12,7 +12,7 @@ class GetList extends \modObjectGetListProcessor
 
     public $classKey = 'FredBlueprint';
     public $languageTopics = ['fred:default'];
-    public $defaultSortField = 'rank';
+    public $defaultSortField = '`rank`';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'fred.blueprints';
 

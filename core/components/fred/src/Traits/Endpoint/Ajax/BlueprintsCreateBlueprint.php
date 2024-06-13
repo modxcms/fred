@@ -50,7 +50,7 @@ trait BlueprintsCreateBlueprint
             $c->where([
                 'category' => $category
             ]);
-            $c->sortby('rank', 'desc');
+            $c->sortby('`rank`', 'desc');
             $c->limit(1);
 
             $lastRecord = $this->modx->getIterator($this->blueprintClass, $c);
