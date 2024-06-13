@@ -6,135 +6,135 @@ use xPDO\xPDO;
 
 class FredElementOptionSet extends \Fred\Model\FredElementOptionSet
 {
-    public static $metaMap = array (
+    public static $metaMap =  [
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_element_option_sets',
         'tableMeta' =>
-        array (
-            'engine' => 'InnoDB',
-        ),
+         [
+             'engine' => 'InnoDB',
+         ],
         'fields' =>
-        array (
-            'name' => null,
-            'description' => '',
-            'complete' => 0,
-            'theme' => null,
-            'data' => '',
-        ),
+         [
+             'name' => null,
+             'description' => '',
+             'complete' => 0,
+             'theme' => null,
+             'data' => '',
+         ],
         'fieldMeta' =>
-        array (
-            'name' =>
-            array (
-                'dbtype' => 'varchar',
-                'precision' => '127',
-                'phptype' => 'string',
-                'null' => false,
-            ),
-            'description' =>
-            array (
-                'dbtype' => 'varchar',
-                'precision' => '255',
-                'phptype' => 'string',
-                'null' => false,
-                'default' => '',
-            ),
-            'complete' =>
-            array (
-                'dbtype' => 'tinyint',
-                'attributes' => 'unsigned',
-                'precision' => '1',
-                'phptype' => 'boolean',
-                'null' => false,
-                'default' => 0,
-            ),
-            'theme' =>
-            array (
-                'dbtype' => 'int',
-                'attributes' => 'unsigned',
-                'precision' => '10',
-                'phptype' => 'integer',
-                'null' => false,
-            ),
-            'data' =>
-            array (
-                'dbtype' => 'mediumtext',
-                'phptype' => 'json',
-                'null' => false,
-                'default' => '',
-            ),
-        ),
+         [
+             'name' =>
+             [
+                 'dbtype' => 'varchar',
+                 'precision' => '127',
+                 'phptype' => 'string',
+                 'null' => false,
+             ],
+             'description' =>
+             [
+                 'dbtype' => 'varchar',
+                 'precision' => '255',
+                 'phptype' => 'string',
+                 'null' => false,
+                 'default' => '',
+             ],
+             'complete' =>
+             [
+                 'dbtype' => 'tinyint',
+                 'attributes' => 'unsigned',
+                 'precision' => '1',
+                 'phptype' => 'boolean',
+                 'null' => false,
+                 'default' => 0,
+             ],
+             'theme' =>
+             [
+                 'dbtype' => 'int',
+                 'attributes' => 'unsigned',
+                 'precision' => '10',
+                 'phptype' => 'integer',
+                 'null' => false,
+             ],
+             'data' =>
+             [
+                 'dbtype' => 'mediumtext',
+                 'phptype' => 'json',
+                 'null' => false,
+                 'default' => '',
+             ],
+         ],
         'fieldAliases' =>
-        array (
-            'content' => 'data',
-        ),
+         [
+             'content' => 'data',
+         ],
         'indexes' =>
-        array (
-            'theme' =>
-            array (
-                'alias' => 'theme',
-                'primary' => false,
-                'unique' => false,
-                'type' => 'BTREE',
-                'columns' =>
-                array (
-                    'theme' =>
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => false,
-                    ),
-                ),
-            ),
-            'complete' =>
-            array (
-                'alias' => 'complete',
-                'primary' => false,
-                'unique' => false,
-                'type' => 'BTREE',
-                'columns' =>
-                array (
-                    'complete' =>
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => false,
-                    ),
-                ),
-            ),
-            'name_theme' =>
-            array (
-                'alias' => 'name_theme',
-                'primary' => false,
-                'unique' => true,
-                'type' => 'BTREE',
-                'columns' =>
-                array (
-                    'name' =>
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => false,
-                    ),
-                    'theme' =>
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => false,
-                    ),
-                ),
-            ),
-        ),
+         [
+             'theme' =>
+             [
+                 'alias' => 'theme',
+                 'primary' => false,
+                 'unique' => false,
+                 'type' => 'BTREE',
+                 'columns' =>
+                 [
+                     'theme' =>
+                     [
+                         'length' => '',
+                         'collation' => 'A',
+                         'null' => false,
+                     ],
+                 ],
+             ],
+             'complete' =>
+             [
+                 'alias' => 'complete',
+                 'primary' => false,
+                 'unique' => false,
+                 'type' => 'BTREE',
+                 'columns' =>
+                 [
+                     'complete' =>
+                     [
+                         'length' => '',
+                         'collation' => 'A',
+                         'null' => false,
+                     ],
+                 ],
+             ],
+             'name_theme' =>
+             [
+                 'alias' => 'name_theme',
+                 'primary' => false,
+                 'unique' => true,
+                 'type' => 'BTREE',
+                 'columns' =>
+                 [
+                     'name' =>
+                     [
+                         'length' => '',
+                         'collation' => 'A',
+                         'null' => false,
+                     ],
+                     'theme' =>
+                     [
+                         'length' => '',
+                         'collation' => 'A',
+                         'null' => false,
+                     ],
+                 ],
+             ],
+         ],
         'aggregates' =>
-        array (
-            'Theme' =>
-            array (
-                'class' => 'Fred\\Model\\FredTheme',
-                'local' => 'theme',
-                'foreign' => 'id',
-                'cardinality' => 'one',
-                'owner' => 'foreign',
-            ),
-        ),
-    );
+         [
+             'Theme' =>
+             [
+                 'class' => 'Fred\\Model\\FredTheme',
+                 'local' => 'theme',
+                 'foreign' => 'id',
+                 'cardinality' => 'one',
+                 'owner' => 'foreign',
+             ],
+         ],
+    ];
 }

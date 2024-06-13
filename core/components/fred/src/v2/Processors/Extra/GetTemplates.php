@@ -17,10 +17,10 @@ class GetTemplates extends \modObjectGetListProcessor
         $addEmpty = $this->getProperty('addEmpty', false);
 
         if ($addEmpty) {
-            $list[] = array(
+            $list[] = [
                 'id' => 0,
                 'templatename' => $this->modx->lexicon('template_empty'),
-            );
+            ];
         }
 
         return $list;
@@ -47,7 +47,7 @@ class GetTemplates extends \modObjectGetListProcessor
 
         $query = $this->getProperty('query');
 
-        $where = array();
+        $where = [];
 
         if (!empty($query)) {
             $valuesqry = $this->getProperty('valuesqry');

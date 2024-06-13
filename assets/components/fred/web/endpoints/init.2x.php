@@ -44,7 +44,7 @@ $fred = $modx->getService(
     'fred',
     'Fred',
     $corePath . 'model/fred/',
-    array(
+    [
         'core_path' => $corePath
-    )
+    ]
 );

@@ -1,4 +1,5 @@
 <?php
+
 if ($object->xpdo) {
     /** @var modX $modx */
     $modx =& $object->xpdo;

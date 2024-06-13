@@ -30,9 +30,9 @@ abstract class FredBaseManagerController extends modExtraManagerController
                 'fred',
                 'Fred',
                 $corePath . 'model/fred/',
-                array(
+                [
                     'core_path' => $corePath
-                )
+                ]
             );
         }
 
@@ -55,7 +55,7 @@ abstract class FredBaseManagerController extends modExtraManagerController
 
     public function getLanguageTopics()
     {
-        return array('fred:default');
+        return ['fred:default'];
     }
 
     public function checkPermissions()

@@ -28,9 +28,9 @@ if ($version > 2) {
         'fred',
         'Fred',
         $corePath . 'model/fred/',
-        array(
+        [
             'core_path' => $corePath
-        )
+        ]
     );
 }
 

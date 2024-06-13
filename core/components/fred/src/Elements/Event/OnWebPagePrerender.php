@@ -2,10 +2,8 @@
 
 namespace Fred\Elements\Event;
 
-use Firebase\JWT\JWT;
 use Fred\Fred;
 use Fred\Model\FredElementRTEConfig;
-use Wa72\HtmlPageDom\HtmlPageCrawler;
 
 class OnWebPagePrerender extends Event
 {

@@ -20,7 +20,7 @@ class GetThemedTemplates extends \modObjectGetListProcessor
 
         $query = $this->getProperty('query');
 
-        $where = array();
+        $where = [];
 
         $where['ThemedTemplate.theme'] = $theme;
 

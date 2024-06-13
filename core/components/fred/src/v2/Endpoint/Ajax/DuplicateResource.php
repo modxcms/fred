@@ -39,12 +39,12 @@ class DuplicateResource extends Endpoint
             return $this->failure($this->modx->lexicon('fred.fe.err.permission_denied'));
         }
 
-        $newResource = $resource->duplicate(array(
+        $newResource = $resource->duplicate([
             'newName' => $pageTitle,
             'duplicateChildren' => $duplicateChildren,
             'prefixDuplicate' => false,
             'publishedMode' => $publishingOptions,
-        ));
+        ]);
 
         if (!($newResource instanceof \modResource)) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_duplicate_failed'));

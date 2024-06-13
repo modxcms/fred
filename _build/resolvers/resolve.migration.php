@@ -1,4 +1,5 @@
 <?php
+
 set_time_limit(0);
 
 if (!function_exists('replaceIdWithUuidOnElements')) {
@@ -10,7 +11,9 @@ if (!function_exists('replaceIdWithUuidOnElements')) {
     function replaceIdWithUuidOnElements($modx, &$cache, &$data)
     {
         foreach ($data as &$dropZone) {
-            if(!is_array($dropZone)) continue;
+            if (!is_array($dropZone)) {
+                continue;
+            }
 
             foreach ($dropZone as &$element) {
                 $elementId = intval($element['widget']);
@@ -67,7 +70,7 @@ if ($object->xpdo) {
 
             // http://forums.modx.com/thread/88734/package-version-check#dis-post-489104
             $c = $modx->newQuery('transport.modTransportPackage');
-            $c->where(array(
+            $c->where([
                 'workspace' => 1,
                 "(SELECT
                         `signature`
@@ -80,11 +83,11 @@ if ($object->xpdo) {
                          IF(`release` = '' OR `release` = 'ga' OR `release` = 'pl','z',`release`) DESC,
                          `latestPackage`.`release_index` DESC
                       LIMIT 1,1) = `modTransportPackage`.`signature`",
-            ));
-            $c->where(array(
+            ]);
+            $c->where([
                 'modTransportPackage.package_name' => 'fred',
                 'installed:IS NOT' => null
-            ));
+            ]);
 
             /** @var modTransportPackage $oldPackage */
             $oldPackage = $modx->getObject('transport.modTransportPackage', $c);
@@ -94,9 +97,9 @@ if ($object->xpdo) {
                 'fred',
                 'Fred',
                 $corePath . 'model/fred/',
-                array(
+                [
                     'core_path' => $corePath
-                )
+                ]
             );
 
             if ($oldPackage && $oldPackage->compareVersion('1.0.0-beta4', '>')) {
@@ -193,7 +196,6 @@ if ($object->xpdo) {
                             $newElement->set('option_set', $optionSet);
                             $newElement->save();
                         }
-
                     }
                 }
 

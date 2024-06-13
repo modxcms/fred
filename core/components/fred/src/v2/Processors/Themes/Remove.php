@@ -14,9 +14,9 @@ class Remove extends \modObjectRemoveProcessor
 
     public $classKey = 'FredTheme';
 
-    public $languageTopics = array('fred:default');
+    public $languageTopics = ['fred:default'];
     public $objectType = 'fred.theme';
-    public $permissions = array('fred_themes_delete');
+    public $permissions = ['fred_themes_delete'];
 
     public $object;
 }

@@ -151,16 +151,16 @@ trait GetResourceTree
             if (isset($this->sessionEnabled[$resource->get('context_key')])) {
                 $sessionEnabled = $this->sessionEnabled[$resource->get('context_key')];
             } else {
-                $ctxSetting = $this->modx->getObject($this->contextSettingClass, array('context_key' => $resource->get('context_key'), 'key' => 'session_enabled'));
+                $ctxSetting = $this->modx->getObject($this->contextSettingClass, ['context_key' => $resource->get('context_key'), 'key' => 'session_enabled']);
 
                 if ($ctxSetting) {
-                    $sessionEnabled = $ctxSetting->get('value') == 0 ? array('preview' => 'true') : '';
+                    $sessionEnabled = $ctxSetting->get('value') == 0 ? ['preview' => 'true'] : '';
                 }
 
                 $this->sessionEnabled[$resource->get('context_key')] = $sessionEnabled;
             }
 
-            $previewUrl = $this->modx->makeUrl($resource->get('id'), $resource->get('context_key'), $sessionEnabled, 'full', array('xhtml_urls' => false));
+            $previewUrl = $this->modx->makeUrl($resource->get('id'), $resource->get('context_key'), $sessionEnabled, 'full', ['xhtml_urls' => false]);
         }
         return $previewUrl;
     }

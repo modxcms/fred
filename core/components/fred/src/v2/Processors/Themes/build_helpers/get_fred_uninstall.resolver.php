@@ -7,9 +7,9 @@ if ($options[xPDOTransport::PACKAGE_ACTION] === xPDOTransport::ACTION_UNINSTALL)
         'fred',
         'Fred',
         $corePath . 'model/fred/',
-        array(
+        [
             'core_path' => $corePath
-        )
+        ]
     );
 
     $modx->loadClass('xpdo.transport.xPDOVehicle', $modx->getOption('core_path'), false, true);

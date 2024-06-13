@@ -43,7 +43,7 @@ class Refresh extends Processor
         }
 
         $c = $this->modx->newQuery(modResource::class);
-        $c->where(array('template:IN' => $templates));
+        $c->where(['template:IN' => $templates]);
         $results = $this->modx->getIterator(modResource::class, $c);
 
         foreach ($results as $resource) {
@@ -62,7 +62,7 @@ class Refresh extends Processor
             $cKey = str_replace($mgrCtx, $ctx, $ck);
             $this->modx->cacheManager->delete(
                 $cKey,
-                array(
+                [
                     xPDO::OPT_CACHE_KEY => $this->modx->getOption('cache_resource_key', null, 'resource'),
                     xPDO::OPT_CACHE_HANDLER => $this->modx->getOption(
                         'cache_resource_handler',
@@ -74,7 +74,7 @@ class Refresh extends Processor
                         null,
                         $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP)
                     )
-                )
+                ]
             );
             /* clear the cache the old-fashioned way, just in case */
             if ($path && file_exists($path)) {
@@ -83,7 +83,7 @@ class Refresh extends Processor
 
             /* End CacheMaster Script */
 
-            $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_id', array('id' => $resource->id)));
+            $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_id', ['id' => $resource->id]));
         }
 
         $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_complete'));

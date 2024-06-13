@@ -1,4 +1,5 @@
 <?php
+
 set_time_limit(0);
 
 if (!function_exists('updateTableColumns')) {
@@ -72,7 +73,9 @@ if (!function_exists('updateTableIndexes')) {
         $indexes = array_keys($meta);
 
         foreach ($indexes as $index) {
-            if ($index == 'PRIMARY') continue;
+            if ($index == 'PRIMARY') {
+                continue;
+            }
             $m->addIndex($table, $index);
             $modx->log(modX::LOG_LEVEL_INFO, ' -- added index: ' . $index);
         }
@@ -100,7 +103,7 @@ if ($object->xpdo) {
             /** @var modX $modx */
             $modx =& $object->xpdo;
 
-            $tables = array(
+            $tables = [
                 "FredBlueprintCategory",
                 "FredBlueprint",
                 "FredElementCategory",
@@ -110,7 +113,7 @@ if ($object->xpdo) {
                 "FredTheme",
                 "FredThemedTemplate",
                 "FredCache"
-            );
+            ];
 
             $modelPath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path') . 'components/fred/') . 'model/';
             $modx->addPackage('fred', $modelPath);

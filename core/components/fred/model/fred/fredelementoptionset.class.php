@@ -80,7 +80,7 @@ class FredElementOptionSet extends xPDOSimpleObject
         return $newSettings;
     }
 
-    public function remove(array $ancestors = array ())
+    public function remove(array $ancestors = [])
     {
         $removed = parent::remove($ancestors);
 

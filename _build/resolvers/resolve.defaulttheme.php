@@ -1,8 +1,8 @@
 <?php
+
 if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
-
         case xPDOTransport::ACTION_UPGRADE:
             /** @var modX $modx */
             $modx =& $object->xpdo;
@@ -12,15 +12,15 @@ if ($object->xpdo) {
                 'fred',
                 'Fred',
                 $corePath . 'model/fred/',
-                array(
+                [
                     'core_path' => $corePath
-                )
+                ]
             );
 
             $templates = $modx->getCount('FredTheme');
             if ($templates === 0) {
                 $themeFolder = 'default';
-                
+
                 /** @var FredTheme $theme */
                 $theme = $modx->newObject('FredTheme');
                 $theme->set('name', 'Default');
@@ -36,7 +36,6 @@ if ($object->xpdo) {
                 if (!is_dir($path)) {
                     mkdir($path, $amode, true);
                 }
-                
             }
 
             break;

@@ -80,7 +80,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 
         // http://forums.modx.com/thread/88734/package-version-check#dis-post-489104
         $c = $modx->newQuery(modTransportPackage::class);
-        $c->where(array(
+        $c->where([
             'workspace' => 1,
             "(SELECT
                     `signature`
@@ -93,7 +93,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                      IF(`release` = '' OR `release` = 'ga' OR `release` = 'pl','z',`release`) DESC,
                      `latestPackage`.`release_index` DESC
                   LIMIT 1,1) = `modTransportPackage`.`signature`",
-        ));
+        ]);
         $c->where(
             [
                 'modTransportPackage.package_name' => 'fred',

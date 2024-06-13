@@ -36,7 +36,7 @@ class FredFileVehicle extends xPDOFileVehicle
      * @param mixed          &$object A reference to the artifact this vehicle will represent.
      * @param array          $attributes Additional attributes represented in the vehicle.
      */
-    public function put(&$transport, &$object, $attributes = array ())
+    public function put(&$transport, &$object, $attributes = [])
     {
         if (!isset($this->payload['class'])) {
             $this->payload['class'] = $this->class;

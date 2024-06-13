@@ -12,13 +12,13 @@ if (!class_exists('FredDropZoneInputRender')) {
             return $corePath . 'elements/tvs/input/tpl/freddropzone.render.tpl';
         }
 
-        public function process($value, array $params = array())
+        public function process($value, array $params = [])
         {
         }
 
         public function getLexiconTopics()
         {
-            return array('fred:default');
+            return ['fred:default'];
         }
     }
 }

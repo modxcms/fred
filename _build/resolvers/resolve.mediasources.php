@@ -1,4 +1,5 @@
 <?php
+
 if ($object->xpdo) {
     /** @var modX $modx */
     $modx =& $object->xpdo;
@@ -8,7 +9,7 @@ if ($object->xpdo) {
         case xPDOTransport::ACTION_UPGRADE:
             /** @var modMediaSource[] $mediaSources */
             $mediaSources = $modx->getIterator('sources.modMediaSource');
-            
+
             foreach ($mediaSources as $mediaSource) {
                 $properties = $mediaSource->getProperties();
 
@@ -22,7 +23,7 @@ if ($object->xpdo) {
                         'name_trans' => 'fred'
                     ];
                 }
-                
+
                 if (!isset($properties['fredReadOnly'])) {
                     $properties['fredReadOnly'] = [
                         'name' => 'fredReadOnly',
@@ -45,11 +46,11 @@ if ($object->xpdo) {
                 $assetsUrl = $modx->getOption('assets_url');
                 $basePath = $modx->getOption('base_path');
                 $baseUrl = $modx->getOption('base_url');
-                
+
                 $assetsMS = $modx->newObject('sources.modFileMediaSource');
-                $assetsMS->set('class_key','sources.modFileMediaSource');
-                $assetsMS->set('name','Assets');
-                $assetsMS->set('description','Assets');
+                $assetsMS->set('class_key', 'sources.modFileMediaSource');
+                $assetsMS->set('name', 'Assets');
+                $assetsMS->set('description', 'Assets');
 
                 if (strpos($assetsPath, $basePath) === 0) {
                     $msAssetsPathRelative = true;
@@ -58,7 +59,7 @@ if ($object->xpdo) {
                     $msAssetsPathRelative = false;
                     $msAssetsPath = $assetsPath;
                 }
-                
+
                 if (strpos($assetsUrl, $baseUrl) === 0) {
                     $msAssetsUrlRelative = true;
                     $msAssetsUrl = trim(str_replace($baseUrl, '', $assetsUrl), '/\\') . '/';
@@ -93,7 +94,7 @@ if ($object->xpdo) {
 
                 $assetsMS->save();
             }
-            
+
             break;
     }
 }

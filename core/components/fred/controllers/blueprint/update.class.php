@@ -19,7 +19,7 @@ class FredBlueprintUpdateManagerController extends FredBaseManagerController
 {
     protected $permissions = [];
 
-    public function process(array $scriptProperties = array())
+    public function process(array $scriptProperties = [])
     {
         $this->loadPermissions();
     }

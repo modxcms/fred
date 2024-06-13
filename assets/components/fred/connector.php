@@ -25,9 +25,9 @@ $fred = $modx->getService(
     'fred',
     'Fred',
     $corePath . 'model/fred/',
-    array(
+    [
         'core_path' => $corePath
-    )
+    ]
 );
 
 $action = $_REQUEST['action'] ?? null;
@@ -44,9 +44,9 @@ if ($action) {
 }
 
 $modx->request->handleRequest(
-    array(
+    [
         'processors_path' => $fred->getOption('processorsPath', [], $corePath . 'processors/'),
         'location' => '',
         'action' => $action
-    )
+    ]
 );

@@ -88,7 +88,7 @@ class ElFinder extends Endpoint
                     'URL' => $url,
                     'tmbPath' => '.tmb',
                     'startPath' => $path,
-                    'disabled' => $readOnly ? array('rename', 'rm', 'cut', 'copy') : [],
+                    'disabled' => $readOnly ? ['rename', 'rm', 'cut', 'copy'] : [],
                     'uploadDeny' => ['text/x-php'],
                     'attributes' => $this->getRootAttributes($properties)
                 ];

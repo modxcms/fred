@@ -55,9 +55,9 @@ final class RenderResource
             'fred',
             'Fred',
             $corePath . 'model/fred/',
-            array(
+            [
                 'core_path' => $corePath
-            )
+            ]
         );
 
         $this->theme = $this->fred->getTheme($this->resource->template);

@@ -1,8 +1,8 @@
 <?php
 
-$xpdo_meta_map = array (
+$xpdo_meta_map =  [
   'xPDOSimpleObject' =>
-  array (
+   [
     0 => 'FredBlueprintCategory',
     1 => 'FredBlueprint',
     2 => 'FredElementCategory',
@@ -10,14 +10,14 @@ $xpdo_meta_map = array (
     4 => 'FredElementRTEConfig',
     5 => 'FredElement',
     6 => 'FredTheme',
-  ),
+  ],
   'xPDOObject' =>
-  array (
+   [
     0 => 'FredThemedTemplate',
     1 => 'FredCache',
     2 => 'FredElementCategoryTemplateAccess',
     3 => 'FredElementTemplateAccess',
     4 => 'FredBlueprintCategoryTemplateAccess',
     5 => 'FredBlueprintTemplateAccess',
-  ),
-);
+  ],
+];

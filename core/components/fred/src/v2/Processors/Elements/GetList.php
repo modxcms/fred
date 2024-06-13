@@ -46,7 +46,7 @@ class GetList extends \modObjectGetListProcessor
         $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['id', 'name', 'theme_folder']));
         $c->select(
             [
-               '(SELECT IFNULL(GROUP_CONCAT(template SEPARATOR \',\'), \'\') FROM ' . $this->modx->getTableName('FredElementTemplateAccess') . ' WHERE element = FredElement.id) AS templates'
+                '(SELECT IFNULL(GROUP_CONCAT(template SEPARATOR \',\'), \'\') FROM ' . $this->modx->getTableName('FredElementTemplateAccess') . ' WHERE element = FredElement.id) AS templates'
             ]
         );
 

@@ -18,12 +18,12 @@ trait DDReorder
         $newIndex = $this->getProperty('newIndex');
 
         $c = $this->modx->newQuery($this->classKey);
-        $c->where(array(
+        $c->where([
             'id:!=' => $categoryId,
             'theme' => $themeId,
             'rank:>=' => min($oldIndex, $newIndex),
             'rank:<=' => max($oldIndex, $newIndex),
-        ));
+        ]);
 
         $c->sortby('rank', 'ASC');
 

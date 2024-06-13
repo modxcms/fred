@@ -1,10 +1,11 @@
 <?php
+
 /** @var modX $modx */
 $modx =& $object->xpdo;
 
 $success = false;
 
-switch($options[xPDOTransport::PACKAGE_ACTION]) {
+switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
     case xPDOTransport::ACTION_UPGRADE:
         $success = true;

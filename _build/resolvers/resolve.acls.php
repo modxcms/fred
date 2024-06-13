@@ -1,4 +1,5 @@
 <?php
+
 if ($object->xpdo) {
     /** @var modX $modx */
     $modx =& $object->xpdo;
@@ -6,9 +7,10 @@ if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
-
             $group = $modx->getObject('modAccessPolicyTemplateGroup', ['name' => 'Admin']);
-            if (!$group) return;
+            if (!$group) {
+                return;
+            }
 
             /** @var modAccessPolicyTemplate $template */
             $template = $modx->getObject('modAccessPolicyTemplate', ['name' => 'Fred', 'template_group' => $group->get('id')]);

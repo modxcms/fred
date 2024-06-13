@@ -30,10 +30,10 @@ trait Update
         $rank = $this->getProperty('rank', '');
         if ($rank === '') {
             $c = $this->modx->newQuery($this->classKey);
-            $c->where(array(
+            $c->where([
                 'id:!=' => $this->object->id,
                 'theme' => $theme
-            ));
+            ]);
             $c->limit(1);
             $c->sortby('rank', 'DESC');
 

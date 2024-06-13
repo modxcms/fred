@@ -58,7 +58,7 @@ class Driver extends elFinderVolumeDriver
      **/
     public function __construct()
     {
-        $opts = array(
+        $opts = [
             'filesystem' => null,
             'URLCallback' => null,
             'glideURL' => null,
@@ -66,7 +66,7 @@ class Driver extends elFinderVolumeDriver
             'imageManager' => null,
             'cache' => 'session',   // 'session', 'memory' or false
             'checkSubfolders' => false, // Disable for performance
-        );
+        ];
 
         $this->options = array_merge($this->options, $opts);
     }
@@ -200,7 +200,7 @@ class Driver extends elFinderVolumeDriver
      **/
     protected function _stat($path)
     {
-        $stat = array(
+        $stat = [
             'size' => 0,
             'ts' => time(),
             'read' => true,
@@ -208,7 +208,7 @@ class Driver extends elFinderVolumeDriver
             'locked' => false,
             'hidden' => false,
             'mime' => 'directory',
-        );
+        ];
 
         // If root, just return from above
         if ($this->root == $path) {
@@ -241,7 +241,7 @@ class Driver extends elFinderVolumeDriver
                 }
 
                 // Neither a file or directory exist, return empty
-                return array();
+                return [];
             }
 
             try {
@@ -258,7 +258,7 @@ class Driver extends elFinderVolumeDriver
                     $meta['size'] = $this->fs->fileSize($path);
                 }
             } catch (\Exception $e) {
-                return array();
+                return [];
             }
         }
 
@@ -372,7 +372,7 @@ class Driver extends elFinderVolumeDriver
      **/
     protected function _scandir($path)
     {
-        $paths = array();
+        $paths = [];
 
         foreach ($this->listContents($path, false) as $object) {
             if ($object) {
@@ -821,7 +821,7 @@ class Driver extends elFinderVolumeDriver
      * @param array $options options
      * @return string
      **/
-    public function getContentUrl($hash, $options = array())
+    public function getContentUrl($hash, $options = [])
     {
         if (! empty($options['onetime']) && $this->options['onetimeUrl']) {
             // use parent method to make onetime URL

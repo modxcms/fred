@@ -6,124 +6,124 @@ use xPDO\xPDO;
 
 class FredCache extends \Fred\Model\FredCache
 {
-    public static $metaMap = array (
+    public static $metaMap =  [
         'package' => 'Fred\\Model\\',
         'version' => '3.0',
         'table' => 'fred_cache',
         'extends' => 'xPDO\\Om\\xPDOObject',
         'tableMeta' =>
-        array (
-            'engine' => 'InnoDB',
-        ),
+         [
+             'engine' => 'InnoDB',
+         ],
         'fields' =>
-        array (
-            'resource' => null,
-            'element' => null,
-            'content' => '',
-        ),
+         [
+             'resource' => null,
+             'element' => null,
+             'content' => '',
+         ],
         'fieldMeta' =>
-        array (
-            'resource' =>
-            array (
-                'dbtype' => 'int',
-                'attributes' => 'unsigned',
-                'precision' => '11',
-                'phptype' => 'integer',
-                'null' => false,
-                'index' => 'pk',
-            ),
-            'element' =>
-            array (
-                'dbtype' => 'int',
-                'attributes' => 'unsigned',
-                'precision' => '11',
-                'phptype' => 'integer',
-                'null' => false,
-                'index' => 'pk',
-            ),
-            'content' =>
-            array (
-                'dbtype' => 'mediumtext',
-                'phptype' => 'string',
-                'null' => false,
-                'default' => '',
-            ),
-        ),
+         [
+             'resource' =>
+             [
+                 'dbtype' => 'int',
+                 'attributes' => 'unsigned',
+                 'precision' => '11',
+                 'phptype' => 'integer',
+                 'null' => false,
+                 'index' => 'pk',
+             ],
+             'element' =>
+             [
+                 'dbtype' => 'int',
+                 'attributes' => 'unsigned',
+                 'precision' => '11',
+                 'phptype' => 'integer',
+                 'null' => false,
+                 'index' => 'pk',
+             ],
+             'content' =>
+             [
+                 'dbtype' => 'mediumtext',
+                 'phptype' => 'string',
+                 'null' => false,
+                 'default' => '',
+             ],
+         ],
         'indexes' =>
-        array (
-            'resource' =>
-            array (
-                'alias' => 'resource',
-                'primary' => false,
-                'unique' => false,
-                'type' => 'BTREE',
-                'columns' =>
-                array (
-                    'resource' =>
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => false,
-                    ),
-                ),
-            ),
-            'element' =>
-            array (
-                'alias' => 'element',
-                'primary' => false,
-                'unique' => false,
-                'type' => 'BTREE',
-                'columns' =>
-                array (
-                    'element' =>
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => false,
-                    ),
-                ),
-            ),
-            'PRIMARY' =>
-            array (
-                'alias' => 'PRIMARY',
-                'primary' => true,
-                'unique' => true,
-                'type' => 'BTREE',
-                'columns' =>
-                array (
-                    'resource' =>
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => false,
-                    ),
-                    'element' =>
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => false,
-                    ),
-                ),
-            ),
-        ),
+         [
+             'resource' =>
+             [
+                 'alias' => 'resource',
+                 'primary' => false,
+                 'unique' => false,
+                 'type' => 'BTREE',
+                 'columns' =>
+                 [
+                     'resource' =>
+                     [
+                         'length' => '',
+                         'collation' => 'A',
+                         'null' => false,
+                     ],
+                 ],
+             ],
+             'element' =>
+             [
+                 'alias' => 'element',
+                 'primary' => false,
+                 'unique' => false,
+                 'type' => 'BTREE',
+                 'columns' =>
+                 [
+                     'element' =>
+                     [
+                         'length' => '',
+                         'collation' => 'A',
+                         'null' => false,
+                     ],
+                 ],
+             ],
+             'PRIMARY' =>
+             [
+                 'alias' => 'PRIMARY',
+                 'primary' => true,
+                 'unique' => true,
+                 'type' => 'BTREE',
+                 'columns' =>
+                 [
+                     'resource' =>
+                     [
+                         'length' => '',
+                         'collation' => 'A',
+                         'null' => false,
+                     ],
+                     'element' =>
+                     [
+                         'length' => '',
+                         'collation' => 'A',
+                         'null' => false,
+                     ],
+                 ],
+             ],
+         ],
         'aggregates' =>
-        array (
-            'Resource' =>
-            array (
-                'class' => 'MODX\\Revolution\\modResource',
-                'local' => 'resource',
-                'foreign' => 'id',
-                'cardinality' => 'one',
-                'owner' => 'foreign',
-            ),
-            'Element' =>
-            array (
-                'class' => 'Fred\\Model\\FredElement',
-                'local' => 'element',
-                'foreign' => 'id',
-                'cardinality' => 'one',
-                'owner' => 'foreign',
-            ),
-        ),
-    );
+         [
+             'Resource' =>
+             [
+                 'class' => 'MODX\\Revolution\\modResource',
+                 'local' => 'resource',
+                 'foreign' => 'id',
+                 'cardinality' => 'one',
+                 'owner' => 'foreign',
+             ],
+             'Element' =>
+             [
+                 'class' => 'Fred\\Model\\FredElement',
+                 'local' => 'element',
+                 'foreign' => 'id',
+                 'cardinality' => 'one',
+                 'owner' => 'foreign',
+             ],
+         ],
+    ];
 }

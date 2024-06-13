@@ -25,7 +25,7 @@ class GetCategories extends \modObjectGetListProcessor
 
         $query = $this->getProperty('query');
 
-        $where = array();
+        $where = [];
 
         if (!empty($query)) {
             $valuesqry = $this->getProperty('valuesqry');
