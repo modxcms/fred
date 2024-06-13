@@ -8,8 +8,6 @@ namespace Fred\Traits\Processors;
  */
 trait PermissionCheck
 {
-    public $permissions = [];
-
     public function initialize()
     {
         foreach ($this->permissions as $permission) {
