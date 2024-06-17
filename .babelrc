@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["@babel/preset-env", { "targets": "> 0.25%, not dead" }]
+    ["@babel/preset-env", { "targets": "> 0.25%, not dead", "corejs":  "3.37", "useBuiltIns": "usage"}]
   ],
   "plugins": ["@babel/plugin-transform-class-properties"]
 }

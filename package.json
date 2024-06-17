@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "choices.js": "^3.0.4",
+    "core-js": "^3.37.1",
     "dragula": "^3.7.3",
     "elfinder-material-theme": "^3.0.0",
     "elfinder-npm": "^2.1.17",
