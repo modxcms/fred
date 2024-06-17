@@ -1,1 +1,2 @@
-- improve handling of media sources in template variables
+- Add processors compatible with 2.x and 3.x
+- Update included packages
