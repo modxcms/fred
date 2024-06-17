@@ -318,9 +318,9 @@ class SaveContent extends Endpoint
 
             foreach ($tags as $tag) {
                 /** @var \Tagger\Model\TaggerTag $tagObject */
-                $tagObject = $this->modx->getObject('Tagger\\Model\\TaggerTag', array('tag' => $tag, 'group' => $group->id));
+                $tagObject = $this->modx->getObject('Tagger\\Model\\TaggerTag', ['tag' => $tag, 'group' => $group->id]);
                 if ($tagObject) {
-                    $existsRelation = $this->modx->getObject('Tagger\\Model\\TaggerTagResource', array('tag' => $tagObject->id, 'resource' => $resource->id));
+                    $existsRelation = $this->modx->getObject('Tagger\\Model\\TaggerTagResource', ['tag' => $tagObject->id, 'resource' => $resource->id]);
                     if ($existsRelation) {
                         if (isset($oldTags[$existsRelation->tag])) {
                             unset($oldTags[$existsRelation->tag]);
@@ -348,21 +348,21 @@ class SaveContent extends Endpoint
 
             if (count($oldTags) > 0) {
                 $oldTags = array_keys($oldTags);
-                $this->modx->removeCollection('TaggerTagResource', array(
+                $this->modx->removeCollection('TaggerTagResource', [
                     'tag:IN' => $oldTags,
                     'AND:resource:=' => $resource->id
-                ));
+                ]);
             }
 
             if ($group->remove_unused) {
                 $c = $this->modx->newQuery('Tagger\\Model\\TaggerTagResource');
-                $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTagResource', 'TaggerTagResource', '', array('tag')));
+                $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTagResource', 'TaggerTagResource', '', ['tag']));
                 $c->prepare();
                 $c->stmt->execute();
                 $IDs = $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
                 $IDs = array_keys(array_flip($IDs));
                 if (count($IDs) > 0) {
-                    $this->modx->removeCollection('TaggerTag', array('id:NOT IN' => $IDs, 'group' => $group->id));
+                    $this->modx->removeCollection('TaggerTag', ['id:NOT IN' => $IDs, 'group' => $group->id]);
                 }
             }
         }

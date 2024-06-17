@@ -25,7 +25,7 @@ require_once dirname(dirname(__FILE__)) . '/index.class.php';
  */
 class FredACLsManagerController extends FredBaseManagerController
 {
-    public function process(array $scriptProperties = array())
+    public function process(array $scriptProperties = [])
     {
         $modx = $this->modx;
 

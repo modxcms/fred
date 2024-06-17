@@ -19,7 +19,7 @@ class GetList extends GetListProcessor
 {
     public $classKey = FredElement::class;
     public $languageTopics = ['fred:default'];
-    public $defaultSortField = 'rank';
+    public $defaultSortField = '`rank`';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'fred.elements';
 
@@ -55,7 +55,7 @@ class GetList extends GetListProcessor
         $c->select($this->modx->getSelectColumns(FredTheme::class, 'Theme', 'theme_', ['id', 'name', 'theme_folder']));
         $c->select(
             [
-               '(SELECT IFNULL(GROUP_CONCAT(template SEPARATOR \',\'), \'\') FROM ' . $this->modx->getTableName(FredElementTemplateAccess::class) . ' WHERE element = FredElement.id) AS templates'
+                '(SELECT IFNULL(GROUP_CONCAT(template SEPARATOR \',\'), \'\') FROM ' . $this->modx->getTableName(FredElementTemplateAccess::class) . ' WHERE element = FredElement.id) AS templates'
             ]
         );
 

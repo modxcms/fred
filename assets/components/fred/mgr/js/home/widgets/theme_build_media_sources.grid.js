@@ -59,7 +59,7 @@ Ext.extend(fred.grid.ThemeBuildMediaSources, MODx.grid.LocalGrid, {
     fillGrid: function (prepare) {
         if (this.config && this.config.initValue && Array.isArray(this.config.initValue)) {
             MODx.Ajax.request({
-                url: MODx.config.connector_url,
+                url: fred.config.connectorUrl,
                 params: {
                     action: 'Fred\\Processors\\MediaSources\\GetList',
                     'id[]': this.config.initValue

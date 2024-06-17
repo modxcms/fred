@@ -20,5 +20,13 @@
         <exclude name="Generic.Files.LineLength.TooLong"/>
         <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
     </rule>
-    <!-- <rule ref="PHPCompatibility"/> -->
+    <rule ref="PHPCompatibility"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax">
+        <exclude-pattern>/core/components/fred/model/fred/mysql/*</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Arrays.ArrayIndent">
+        <exclude-pattern>/core/components/fred/model/fred/mysql/*</exclude-pattern>
+        <exclude-pattern>/core/components/fred/model/fred/metadata.mysql.php</exclude-pattern>
+    </rule>
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
 </ruleset>

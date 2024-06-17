@@ -135,7 +135,7 @@ fred.combo.BlueprintCategories = function (config) {
         valueField: 'id',
         fields: ['name', 'id'],
         pageSize: 20,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\BlueprintCategories\\GetList',
             addAll: config.addAll || 0,
@@ -161,7 +161,7 @@ fred.combo.ElementCategories = function (config) {
         valueField: 'id',
         fields: ['name', 'id'],
         pageSize: 20,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\ElementCategories\\GetList',
             addAll: config.addAll || 0,
@@ -198,7 +198,7 @@ fred.combo.ElementOptionSets = function (config) {
             '<tpl if="description"> - <span style="font-style:italic">{description:htmlEncode}</span></tpl>',
             '</div></tpl>'),
         pageSize: 20,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\ElementOptionSets\\GetList',
             addEmpty: config.addEmpty || 0
@@ -229,7 +229,7 @@ fred.combo.Themes = function (config) {
         fields: ['name', 'id', 'theme_folder'],
         pageSize: 20,
         isUpdate: false,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\Themes\\GetList',
             addAll: config.addAll || 0
@@ -252,7 +252,7 @@ fred.combo.Template = function (config, getStore) {
     config = config || {};
 
     if (!config.clearBtnCls) {
-        if (MODx.config.connector_url) {
+        if (fred.config.connectorUrl) {
             config.clearBtnCls = 'x-form-trigger';
         } else {
             config.clearBtnCls = null;
@@ -260,7 +260,7 @@ fred.combo.Template = function (config, getStore) {
     }
 
     if (!config.expandBtnCls) {
-        if (MODx.config.connector_url) {
+        if (fred.config.connectorUrl) {
             config.expandBtnCls = 'x-form-trigger';
         } else {
             config.expandBtnCls = null;
@@ -279,7 +279,7 @@ fred.combo.Template = function (config, getStore) {
         editable: true,
         forceSelection: false,
         pageSize: 20,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\Extra\\GetTemplates',
             hideUsed: 1
@@ -312,7 +312,7 @@ fred.combo.ThemedTemplate = function (config, getStore) {
     config = config || {};
 
     if (!config.clearBtnCls) {
-        if (MODx.config.connector_url) {
+        if (fred.config.connectorUrl) {
             config.clearBtnCls = 'x-form-trigger';
         } else {
             config.clearBtnCls = null;
@@ -320,7 +320,7 @@ fred.combo.ThemedTemplate = function (config, getStore) {
     }
 
     if (!config.expandBtnCls) {
-        if (MODx.config.connector_url) {
+        if (fred.config.connectorUrl) {
             config.expandBtnCls = 'x-form-trigger';
         } else {
             config.expandBtnCls = null;
@@ -339,7 +339,7 @@ fred.combo.ThemedTemplate = function (config, getStore) {
         editable: true,
         forceSelection: false,
         pageSize: 20,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\Extra\\GetThemedTemplates',
             theme: config.theme
@@ -372,7 +372,7 @@ fred.combo.RootCategory = function (config, getStore) {
     config = config || {};
 
     if (!config.clearBtnCls) {
-        if (MODx.config.connector_url) {
+        if (fred.config.connectorUrl) {
             config.clearBtnCls = 'x-form-trigger';
         } else {
             config.clearBtnCls = null;
@@ -380,7 +380,7 @@ fred.combo.RootCategory = function (config, getStore) {
     }
 
     if (!config.expandBtnCls) {
-        if (MODx.config.connector_url) {
+        if (fred.config.connectorUrl) {
             config.expandBtnCls = 'x-form-trigger';
         } else {
             config.expandBtnCls = null;
@@ -399,7 +399,7 @@ fred.combo.RootCategory = function (config, getStore) {
         editable: true,
         forceSelection: false,
         pageSize: 20,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\Extra\\GetCategories',
             parent: 0
@@ -442,7 +442,7 @@ fred.combo.InstalledPackages = function (config) {
         forceSelection: false,
         typeAhead: false,
         selectOnFocus: false,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\Extra\\GetInstalledPackages'
         }
@@ -469,7 +469,7 @@ fred.combo.Blueprint = function (config) {
         valueField: 'id',
         fields: ['name', 'id'],
         pageSize: 20,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\Blueprints\\GetList',
             addNone: config.addNone || 0,

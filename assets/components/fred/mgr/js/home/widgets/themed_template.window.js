@@ -4,7 +4,7 @@ fred.window.ThemedTemplate = function (config) {
         title: _('fred.themed_templates.create'),
         closeAction: 'close',
         isUpdate: false,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         action: 'Fred\\Processors\\ThemedTemplates\\Create',
         modal: true,
         autoHeight: true,

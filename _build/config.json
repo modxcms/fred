@@ -1,0 +1,138 @@
+{
+  "name": "Fred",
+  "lowCaseName": "fred",
+  "description": "Frontend Editor",
+  "author": "John Peca",
+  "version": "3.0.0-rc1",
+  "package": {
+    "menus": [
+      {
+        "text": "fred.menu.fred",
+        "description": "fred.menu.fred_desc",
+        "action": "home",
+        "permissions": "fred"
+      }
+    ],
+    "elements": {
+      "plugins": [
+        {
+          "name": "Fred",
+          "file": "Fred.php",
+          "events": [
+            "OnWebPagePrerender",
+            "OnDocFormPrerender",
+            "OnDocFormSave",
+            "OnBeforeDocFormSave",
+            "OnTemplateRemove",
+            "OnTVInputRenderList",
+            "OnTVInputPropertiesList",
+            "OnManagerPageBeforeRender",
+            "OnManagerLogin",
+            "OnWebLogin"
+          ]
+        }
+      ]
+    },
+    "systemSettings": [
+      {
+        "key": "launcher_position",
+        "value": "bottom_left"
+      },
+      {
+        "key": "icon_editor",
+        "value": "IconEditor"
+      },
+      {
+        "key": "image_editor",
+        "value": "ImageEditor"
+      },
+      {
+        "key": "rte",
+        "value": ""
+      },
+      {
+        "key": "element_group_sort",
+        "value": "name"
+      },
+      {
+        "key": "element_sort",
+        "value": "name"
+      },
+      {
+        "key": "blueprint_category_sort",
+        "value": "name"
+      },
+      {
+        "key": "blueprint_sort",
+        "value": "name"
+      },
+      {
+        "key": "secret",
+        "type": "text-password",
+        "value": ""
+      },
+      {
+        "key": "active_class",
+        "value": "fred--active"
+      },
+      {
+        "key": "default_enabled",
+        "type" : "combo-boolean",
+        "value": "1"
+      },
+      {
+        "key": "sidebar_open",
+        "type" : "combo-boolean",
+        "value": "0"
+      },
+      {
+        "key": "force_sidebar",
+        "type" : "combo-boolean",
+        "value": "0"
+      },
+      {
+        "key": "logout_url",
+        "value": ""
+      }
+    ]
+  },
+  "database": {
+    "tables": [
+      "FredBlueprintCategory",
+      "FredBlueprint",
+      "FredElementCategory",
+      "FredElement",
+      "FredElementOptionSet",
+      "FredElementRTEConfig",
+      "FredTheme",
+      "FredThemedTemplate",
+      "FredCache",
+      "FredElementCategoryTemplateAccess",
+      "FredElementTemplateAccess",
+      "FredBlueprintCategoryTemplateAccess",
+      "FredBlueprintTemplateAccess"
+    ]
+  },
+  "build": {
+    "options": {
+      "abort_install_on_vehicle_fail": true
+    },
+    "validator": {
+      "validators": [
+        "requirements.validator.php"
+      ]
+    },
+    "resolver": {
+      "before": [
+        "resolve.customevents.php",
+        "resolve.mediasources.php",
+        "resolve.acls.php"
+      ],
+      "after": [
+        "resolve.synctables.php",
+        "resolve.defaulttheme.php",
+        "resolve.migration.php"
+      ]
+    }
+  }
+}

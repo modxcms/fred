@@ -4,7 +4,7 @@ fred.window.Blueprint = function (config) {
         title: _('fred.blueprints.quick_update'),
         closeAction: 'close',
         isUpdate: false,
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         action: 'Fred\\Processors\\Blueprints\\Update',
         modal: true,
         fields: this.getFields(config),

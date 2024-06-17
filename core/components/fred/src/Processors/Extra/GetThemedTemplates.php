@@ -25,7 +25,7 @@ class GetThemedTemplates extends GetListProcessor
 
         $query = $this->getProperty('query');
 
-        $where = array();
+        $where = [];
 
         $where['ThemedTemplate.theme'] = $theme;
 

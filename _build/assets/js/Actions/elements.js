@@ -5,7 +5,7 @@ import { errorHandler } from "../Utils";
 
 export const getElements = () => {
     return cache.load('elements', {name: 'elements'}, () => {
-        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=get-elements&theme=${fredConfig.config.theme}`)
+        return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=get-elements&theme=${fredConfig.config.theme}`)
             .then(response => {
                 return response.json();
             }).then(response => {
@@ -15,7 +15,7 @@ export const getElements = () => {
 };
 
 export const renderElement = (element, settings, parseModx, cacheOutput, refreshCache) => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=render-element`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=render-element`, {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ export const replaceImage = (element, image) => {
         body.generatedImage = generatedImage;
     }
 
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?action=element-replace-image`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=element-replace-image`, {
         method: "post",
         headers: {
             'Content-Type': 'application/json'

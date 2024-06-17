@@ -94,7 +94,7 @@ class FredElementOptionSet extends \xPDO\Om\xPDOSimpleObject
         return $newSettings;
     }
 
-    public function remove(array $ancestors = array ())
+    public function remove(array $ancestors = [])
     {
         $removed = parent::remove($ancestors);
 

@@ -23,7 +23,7 @@ fred.grid.ElementRTEConfigs = function (config) {
     }
 
     Ext.applyIf(config, {
-        url: MODx.config.connector_url,
+        url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
         fields: ['id', 'name', 'description', 'complete', 'data', 'theme', 'theme_name'],

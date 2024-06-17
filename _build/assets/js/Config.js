@@ -14,6 +14,7 @@ class Config {
         this._lang = {};
         this._fred = null;
         this._jwt = null;
+        this._modxVersion = null;
         this._permission = null;
         this._resource = null;
         this._invalidElements = false;
@@ -44,6 +45,12 @@ class Config {
     set jwt(jwt) {
         if (this._jwt === null) {
             this._jwt = jwt;
+        }
+    }
+
+    set modxVersion(modxVersion) {
+        if (this._modxVersion === null) {
+            this._modxVersion = modxVersion;
         }
     }
 
@@ -127,6 +134,10 @@ class Config {
 
     get jwt() {
         return this._jwt;
+    }
+
+    get modxVersion() {
+        return this._modxVersion;
     }
 
     get permission() {
