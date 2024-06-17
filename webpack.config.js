@@ -9,7 +9,6 @@ module.exports = (env, options) => {
         devtool: isProd ? false : 'source-map',
 
         entry: [
-            '@babel/polyfill',
             './_build/assets/sass/fred.scss',
             './_build/assets/js/index.js'
         ],
