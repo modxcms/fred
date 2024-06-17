@@ -70,5 +70,5 @@ jobs:
           path: dir
 
       - name: Deploy to GitHub Pages
-        id: deployment
+        id: gh-pages
         uses: actions/deploy-pages@v4.0.4
