@@ -1,2 +1,2 @@
-- Add processors compatible with 2.x and 3.x
-- Update included packages
+- Fix OnPageSave error in MODX 3
+- Fix theme building in MODX 2

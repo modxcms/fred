@@ -27,7 +27,15 @@ class Build extends \modObjectProcessor
 
     public function process()
     {
-        $this->fred = $this->modx->services->get('fred');
+        $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+        $this->fred = $this->modx->getService(
+            'fred',
+            'Fred',
+            $corePath . 'model/fred/',
+            [
+                'core_path' => $corePath
+            ]
+        );
 
         $name = $this->getProperty('name');
         $version = $this->getProperty('version', '1.0.0');

@@ -25,8 +25,15 @@ class FredThemeDownloadManagerController extends FredBaseManagerController
         if (empty($themeId)) {
             die($this->modx->lexicon('fred.err.build_ns_theme'));
         }
-
-        $theme = $this->modx->getObject(FredTheme::class, ['id' => $themeId]);
+        if (!$this->modx->version) {
+            $this->modx->getVersionData();
+        }
+        $version = (int) $this->modx->version['version'];
+        if ($version > 2) {
+            $theme = $this->modx->getObject(FredTheme::class, ['id' => $themeId]);
+        } else {
+            $theme = $this->modx->getObject('FredTheme', ['id' => $themeId]);
+        }
         if (!$theme) {
             die($this->modx->lexicon('fred.err.build_ns_theme'));
         }
