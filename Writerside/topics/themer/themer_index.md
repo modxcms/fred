@@ -17,3 +17,11 @@ We strongly suggest installing the [Ace Extra](https://modx.com/extras/package/a
 If you have Ace installed as suggested above, attribute-completion and code hints are available when working in the Manager for Fred by installing the [Fred Ace Integration](https://modx.com/extras/package/fredaceintegration) Extra. When creating or editing an Element, start typing `data-` or `fred` and the press `ctrl+space` to show list of all available Fred attributes.
 
 ![Ace Integration](ace_integration_dialog.png)
+
+## Customizing theme's directory
+
+By default theme's assets will be located in `/assets/themes/{theme_folder}`, where `theme_folder` is a property on theme. This can be overriden, by creating 2 system settings:
+- `{settingsPrefix}.theme_dir.custom_path`
+  - Path on filesystem to the theme's directory. Available placeholders: `{{assets_path}}` - path to MODX assets, `{{pkg_assets_path}}` - path to package's assets (usually `/assets/components/{package_name}}`)
+- `{settingsPrefix}.theme_dir.custom_url`
+  - URL to the theme's directory. Available placeholders: `{{assets_url}}` - URL to MODX assets, `{{pkg_assets_url}}` - URL to package's assets
