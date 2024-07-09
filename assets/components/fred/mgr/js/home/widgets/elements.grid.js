@@ -30,7 +30,7 @@ fred.grid.Elements = function (config) {
         url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name', 'theme_theme_folder', 'templates'],
+        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name', 'theme_theme_folder', 'theme_settingsPrefix', 'templates'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.elements.none'),
@@ -48,7 +48,7 @@ fred.grid.Elements = function (config) {
                 width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                     if (value) {
-                        value = fred.prependBaseUrl(value, record.data.theme_theme_folder);
+                        value = fred.prependBaseUrl(value, record.data.theme_settingsPrefix);
 
                         metaData.attr = 'ext:qtip=\'<img src=\"' + value + '\">\'';
                         return '<img src="' + value + '"  style="max-width:200px;max-height:150px;">';

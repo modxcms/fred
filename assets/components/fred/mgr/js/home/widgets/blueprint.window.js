@@ -31,7 +31,7 @@ fred.window.Blueprint = function (config) {
         width: 800
     });
 
-    this.theme_folder = config.record.theme_theme_folder;
+    this.settingsPrefix = config.record.theme_settingsPrefix;
 
     fred.window.Blueprint.superclass.constructor.call(this, config);
 };
@@ -103,7 +103,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                         var category = this.find('name', 'category');
                                         if (!category[0]) return;
 
-                                        this.theme_folder = record.data.theme_folder;
+                                        this.settingsPrefix = record.data.settingsPrefix;
 
                                         category = category[0];
                                         category.setValue();
@@ -113,7 +113,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
 
                                         var image = Ext.getCmp('fred-blueprint-image-field');
                                         if (image) {
-                                            image.updatePreview(this.theme_folder);
+                                            image.updatePreview(this.settingsPrefix);
                                         }
                                     },
                                     scope: this
@@ -169,11 +169,10 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                 name: 'image',
                                 anchor: '100%',
                                 allowBlank: true,
-                                updatePreview: function (theme_folder) {
+                                updatePreview: function (settingsPrefix) {
                                     var value = this.getValue();
-
                                     if (value) {
-                                        value = fred.prependBaseUrl(value, theme_folder);
+                                        value = fred.prependBaseUrl(value, settingsPrefix);
                                     } else {
                                         value = "https://via.placeholder.com/300x150?text=No+image";
                                     }
@@ -187,7 +186,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                     },
                                     change: {
                                         fn:function (cb, nv) {
-                                            cb.updatePreview(this.theme_folder);
+                                            cb.updatePreview(this.settingsPrefix);
                                         },
                                         scope: this
                                     }
@@ -195,7 +194,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                             },
                             {
                                 id: 'image_preview',
-                                html: '<img src="' + (config.record.image ? fred.prependBaseUrl(config.record.image, config.record.theme_theme_folder) : "https://via.placeholder.com/300x150?text=No+image") + '" style="max-height: 400px;max-width: 770px;margin-top: 15px;">'
+                                html: '<img src="' + (config.record.image ? fred.prependBaseUrl(config.record.image, config.record.theme_settingsPrefix) : "https://via.placeholder.com/300x150?text=No+image") + '" style="max-height: 400px;max-width: 770px;margin-top: 15px;">'
                             }
                         ]
                     }

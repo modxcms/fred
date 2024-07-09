@@ -30,7 +30,7 @@ fred.grid.Blueprints = function (config) {
         url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname', 'theme_id', 'theme_name', 'theme_theme_folder'],
+        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'complete', 'public', 'createdBy', 'category_name', 'user_profile_fullname', 'theme_id', 'theme_name', 'theme_theme_folder', 'theme_settingsPrefix'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.blueprints.none'),
@@ -48,7 +48,7 @@ fred.grid.Blueprints = function (config) {
                 width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                     if (value) {
-                        value = fred.prependBaseUrl(value, record.data.theme_theme_folder);
+                        value = fred.prependBaseUrl(value, record.data.theme_settingsPrefix);
 
                         metaData.attr = 'ext:qtip=\'<img src=\"' + value + '\">\'';
                         return '<img src="' + value + '"  style="max-width:200px;max-height:150px;">';

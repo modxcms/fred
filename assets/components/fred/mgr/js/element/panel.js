@@ -7,6 +7,7 @@ fred.panel.Element = function (config) {
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
+        baseCls: 'modx-formpanel',
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\Elements\\Update'
@@ -25,7 +26,7 @@ fred.panel.Element = function (config) {
         }
     });
 
-    this.theme_folder = '';
+    this.settingsPrefix = '';
 
     fred.panel.Element.superclass.constructor.call(this, config);
 };
@@ -82,8 +83,8 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                             this.getForm().setValues(r.object);
 
                             if (r.object.image) {
-                                this.theme_folder = r.object.theme_folder;
-                                r.object.image = fred.prependBaseUrl(r.object.image, r.object.theme_folder);
+                                this.settingsPrefix = r.object.settingsPrefix;
+                                r.object.image = fred.prependBaseUrl(r.object.image, r.object.settingsPrefix);
                             } else {
                                 r.object.image = "https://via.placeholder.com/300x150?text=No+image";
                             }
@@ -227,7 +228,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                         var category = this.find('name', 'category');
                                                         if (!category[0]) return;
 
-                                                        this.theme_folder = record.data.theme_folder;
+                                                        this.settingsPrefix = record.data.settingsPrefix;
 
                                                         category = category[0];
                                                         category.setValue();
@@ -268,7 +269,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
 
                                                         var image = Ext.getCmp('fred-element-image-field');
                                                         if (image) {
-                                                            image.updatePreview(this.theme_folder);
+                                                            image.updatePreview(this.settingsPrefix);
                                                         }
                                                     },
                                                     scope: this
@@ -332,11 +333,11 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                 name: 'image',
                                                 anchor: '100%',
                                                 allowBlank: true,
-                                                updatePreview: function (theme_folder = '') {
+                                                updatePreview: function (settingsPrefix = '') {
                                                     var value = this.getValue();
 
                                                     if (value) {
-                                                        value = fred.prependBaseUrl(value, theme_folder);
+                                                        value = fred.prependBaseUrl(value, settingsPrefix);
                                                     } else {
                                                         value = "https://via.placeholder.com/300x150?text=No+image";
                                                     }
@@ -352,7 +353,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                                     },
                                                     'change': {
                                                         fn: function (cb, nv) {
-                                                            cb.updatePreview(this.theme_folder);
+                                                            cb.updatePreview(this.settingsPrefix);
                                                         },
                                                         scope: this
                                                     }

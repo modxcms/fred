@@ -6,6 +6,7 @@ fred.panel.ElementOptionSet = function (config) {
     Ext.applyIf(config, {
         border: false,
         cls: 'container',
+        baseCls: 'modx-formpanel',
         url: fred.config.connectorUrl,
         baseParams: {
             action: 'Fred\\Processors\\ElementOptionSets\\Update'

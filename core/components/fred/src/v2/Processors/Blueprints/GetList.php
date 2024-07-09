@@ -63,7 +63,7 @@ class GetList extends \modObjectGetListProcessor
         $c->select($this->modx->getSelectColumns('FredBlueprint', 'FredBlueprint', '', ['data'], true));
         $c->select($this->modx->getSelectColumns('FredBlueprintCategory', 'Category', 'category_', ['name', 'public']));
         $c->select($this->modx->getSelectColumns('modUserProfile', 'UserProfile', 'user_profile_', ['fullname']));
-        $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['id', 'name', 'theme_folder']));
+        $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['id', 'name', 'theme_folder', 'settingsPrefix']));
 
         return parent::prepareQueryAfterCount($c);
     }

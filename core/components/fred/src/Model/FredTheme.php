@@ -133,7 +133,6 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
     {
         $namespace = $this->get('namespace');
         $response = parent::remove($ancestors);
-        ;
 
         if ($response === true) {
             if (!empty($namespace)) {
@@ -149,6 +148,11 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
 
     public function getThemeFolderPath()
     {
+        $customPath = $this->xpdo->getOption("$this->settingsPrefix.theme_dir.custom_path");
+        if (!empty($customPath)) {
+            return $this->parseThemeFolderPath($customPath);
+        }
+
         $themeFolder = $this->get('theme_folder');
 
         if (empty($themeFolder)) {
@@ -165,6 +169,11 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
 
     public function getThemeFolderUri()
     {
+        $customUrl = $this->xpdo->getOption("$this->settingsPrefix.theme_dir.custom_url");
+        if (!empty($customUrl)) {
+            return $this->parseThemeFolderUri($customUrl);
+        }
+
         $themeFolder = $this->get('theme_folder');
 
         if (empty($themeFolder)) {
@@ -175,6 +184,38 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
         }
 
         $uri = rtrim($this->xpdo->getOption('assets_url'), '/') . '/themes/' . $themeFolder . '/';
+
+        return $uri;
+    }
+
+    private function parseThemeFolderPath($path)
+    {
+        $assetsPath = $this->xpdo->getOption('assets_path');
+        $assetsPath = rtrim($assetsPath, '/');
+
+        $pkgAssetsPath = $this->xpdo->getOption("$this->settingsPrefix.assets_path", null, "$assetsPath/components/$this->namespace");
+        $pkgAssetsPath = rtrim($pkgAssetsPath, '/');
+
+        $path = str_replace('{{assets_path}}', $assetsPath, $path);
+        $path = str_replace('{{pkg_assets_path}}', $pkgAssetsPath, $path);
+
+        $path = rtrim($path, '/') . '/';
+
+        return $path;
+    }
+
+    private function parseThemeFolderUri($uri)
+    {
+        $assetsUri = $this->xpdo->getOption('assets_url');
+        $assetsUri = rtrim($assetsUri, '/');
+
+        $pkgAssetsUri = $this->xpdo->getOption("$this->settingsPrefix.assets_url", null, "$assetsUri/components/$this->namespace");
+        $pkgAssetsUri = rtrim($pkgAssetsUri, '/');
+
+        $uri = str_replace('{{assets_url}}', $assetsUri, $uri);
+        $uri = str_replace('{{pkg_assets_url}}', $pkgAssetsUri, $uri);
+
+        $uri = rtrim($uri, '/') . '/';
 
         return $uri;
     }

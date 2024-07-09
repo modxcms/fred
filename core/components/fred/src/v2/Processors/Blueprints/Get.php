@@ -34,6 +34,7 @@ class Get extends \modObjectGetProcessor
             if ($theme) {
                 $this->object->set('theme', $theme->id);
                 $this->object->set('theme_folder', $theme->theme_folder);
+                $this->object->set('settingsPrefix', $theme->settingsPrefix);
             }
         }
 
