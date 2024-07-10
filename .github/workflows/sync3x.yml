@@ -1,4 +1,4 @@
-name: Build Package
+name: Sync 3.x Tables
 
 on:
   workflow_dispatch:
@@ -8,6 +8,7 @@ jobs:
   deploy:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    environment: 3.x
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -42,6 +43,7 @@ jobs:
             cd /www/pkgs/fred/
             npm install
             npm run build
-            rm -rf _packages
-            /www/pkgs/gpm/cli/bin/gpm package:update --pkg fred --updateDB=alter
-            /www/pkgs/gpm/cli/bin/gpm package:build --pkg fred
+            /www/pkgs/gpm/bin/gpm fred:update --alterDB
+            git add .
+            git commit -m "Update fred 3.x tables"
+            git push origin $BRANCH
