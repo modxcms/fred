@@ -12,7 +12,7 @@ fred.window.ThemedTemplate = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'themer/cmp/themed_templates/'
+                path: 'themer/cmp/themed-templates.html'
             },
             '->',
             {

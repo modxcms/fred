@@ -14,7 +14,7 @@ fred.window.ElementRTEConfig = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'themer/cmp/rte_configs/'
+                path: 'rte-configs.html'
             },
             '->',
             {

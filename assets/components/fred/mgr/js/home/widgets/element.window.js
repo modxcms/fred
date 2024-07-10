@@ -14,7 +14,7 @@ fred.window.Element = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'themer/cmp/elements/'
+                path: 'cmp-elements.html'
             },
             '->',
             {

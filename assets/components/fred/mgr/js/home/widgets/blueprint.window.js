@@ -13,7 +13,7 @@ fred.window.Blueprint = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'themer/cmp/blueprints/'
+                path: 'blueprints.html'
             },
             '->',
             {

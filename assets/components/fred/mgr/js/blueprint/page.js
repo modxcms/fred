@@ -27,7 +27,7 @@ fred.page.Blueprint = function (config) {
             },
             {
                 xtype: 'fred-button-help',
-                path: 'themer/cmp/blueprints/'
+                path: 'blueprints.html'
             }
         ],
         components: [

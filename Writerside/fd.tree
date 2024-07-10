@@ -30,17 +30,17 @@
             <toc-element topic="override.md"/>
         </toc-element>
         <toc-element toc-title="Fred CMP">
-            <toc-element topic="cmp_elements.md"/>
-            <toc-element topic="element_categories.md"/>
-            <toc-element topic="option_sets.md"/>
-            <toc-element topic="rte_configs.md"/>
-            <toc-element topic="rebuild.md"/>
-            <toc-element topic="cmp_blueprints.md"/>
-            <toc-element topic="blueprint_categories.md"/>
-            <toc-element topic="cmp_themes.md"/>
-            <toc-element topic="themed_templates.md"/>
-            <toc-element topic="media_sources.md"/>
-            <toc-element topic="theme_settings_and_resolvers.md"/>
+            <toc-element topic="cmp_elements.md" accepts-web-file-names="themer/cmp/elements/"/>
+            <toc-element topic="element_categories.md" accepts-web-file-names="themer/cmp/element_categories/"/>
+            <toc-element topic="option_sets.md" accepts-web-file-names="themer/cmp/option_sets/"/>
+            <toc-element topic="rte_configs.md" accepts-web-file-names="themer/cmp/rte_configs/"/>
+            <toc-element topic="rebuild.md" accepts-web-file-names="themer/cmp/rebuild/"/>
+            <toc-element topic="cmp_blueprints.md" accepts-web-file-names="themer/cmp/blueprints/"/>
+            <toc-element topic="blueprint_categories.md" accepts-web-file-names="themer/cmp/blueprint_categories/"/>
+            <toc-element topic="cmp_themes.md" accepts-web-file-names="themer/cmp/themes/"/>
+            <toc-element topic="themed_templates.md" accepts-web-file-names="themer/cmp/themed_templates/"/>
+            <toc-element topic="media_sources.md" accepts-web-file-names="themer/cmp/media_sources/"/>
+            <toc-element topic="theme_settings_and_resolvers.md" accepts-web-file-names="themer/cmp/theme_settings_and_resolvers/"/>
         </toc-element>
         <toc-element topic="rte_configs_index.md"/>
         <toc-element topic="system_settings_index.md"/>

@@ -12,7 +12,7 @@ fred.window.ElementCategory = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'themer/cmp/element_categories/'
+                path: 'element-categories.html'
             },
             '->',
             {

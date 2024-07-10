@@ -31,7 +31,7 @@ Ext.extend(fred.window.ElementOptionSet, MODx.Window, {
         var buttons = [
             {
                 xtype: 'fred-button-help',
-                path: 'themer/cmp/option_sets/'
+                path: 'option-sets.html'
             },
             '->',
             {

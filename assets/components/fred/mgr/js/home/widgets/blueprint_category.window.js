@@ -12,7 +12,7 @@ fred.window.BlueprintCategory = function (config) {
         buttons: [
             {
                 xtype: 'fred-button-help',
-                path: 'themer/cmp/blueprint_categories/'
+                path: 'blueprint-categories.html'
             },
             '->',
             {

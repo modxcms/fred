@@ -27,7 +27,7 @@ fred.page.Element = function (config) {
             },
             {
                 xtype: 'fred-button-help',
-                path: 'themer/cmp/elements/'
+                path: 'elements.html'
             }
         ],
         components: [
