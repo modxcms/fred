@@ -1,2 +1,2 @@
-- Fix OnPageSave error in MODX 3
-- Fix theme building in MODX 2
+- Fixing broken links in help buttons
+- Add method to customize generated theme_dir path
