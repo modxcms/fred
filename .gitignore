@@ -28,7 +28,6 @@ Thumbs.db
 node_modules
 npm-debug.log
 .sass-cache
-package-lock.json
 
 # Development files #
 #####################
