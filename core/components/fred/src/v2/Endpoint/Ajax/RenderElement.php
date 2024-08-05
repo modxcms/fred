@@ -19,4 +19,11 @@ class RenderElement extends Endpoint
     private $elementClass = 'FredElement';
     private $requestClass = 'modRequest';
     private $resourceClass = 'modResource';
+
+    public function __construct(\Fred &$fred, $payload)
+    {
+        parent::__construct($fred, $payload);
+        $this->modx->loadClass($this->requestClass, '', false, true);
+    }
+
 }
