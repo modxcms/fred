@@ -425,13 +425,20 @@ trait RenderResource
         if (!empty($value)) {
             $context = !empty($resource) ? $resource->get('context_key') : $this->modx->context->get('key');
             $sourceCache = $tv->getSourceCache($context);
-            $classKey = $sourceCache['class_key'];
+            $classKey = $sourceCache['source_class_key'];
             if (!empty($sourceCache) && !empty($classKey)) {
                 if ($this->modx->loadClass($classKey)) {
                     $source = $this->modx->newObject($classKey);
                     if ($source) {
                         $source->fromArray($sourceCache, '', true, true);
                         $source->initialize();
+                        $bases = $source->getBases();
+                        if (!empty($bases['urlAbsolute'])) {
+                            $url = $bases['urlAbsolute'];
+                            if (substr($value, 0, strlen($url)) === $url) {
+                                return substr($value, strlen($url));
+                            }
+                        }
                         $properties = $source->getPropertyList();
                         if (!empty($properties['baseUrl'])) {
                             // remove the base url from the front of the value
