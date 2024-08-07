@@ -9,6 +9,9 @@ if ($object->xpdo) {
         case xPDOTransport::ACTION_UPGRADE:
             $group = $modx->getObject('modAccessPolicyTemplateGroup', ['name' => 'Admin']);
             if (!$group) {
+                $group = $modx->getObject('modAccessPolicyTemplateGroup', ['name' => 'Administrator']);
+            }
+            if (!$group) {
                 return;
             }
 
