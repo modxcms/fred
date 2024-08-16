@@ -11,6 +11,7 @@
 
 namespace Fred\Traits;
 
+use Fred\Utils;
 use Twig\Environment;
 use Wa72\HtmlPageDom\HtmlPageCrawler;
 
