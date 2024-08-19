@@ -1,1 +1,2 @@
 - Fix saving issue in MODX 3.x
+- Fix broken "Assets" file class in new installs on MODX 3.x
