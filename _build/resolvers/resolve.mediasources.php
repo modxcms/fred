@@ -7,8 +7,20 @@ if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
+            // check modx version
+            if (empty($modx->version)) {
+                $modx->getVersionData();
+            }
+            $version = (int) $modx->version['version'];
+            if ($version > 2) {
+                $sourceClass = \MODX\Revolution\Sources\modMediaSource::class;
+                $fileClass = '\\MODX\\Revolution\\Sources\\modFileMediaSource';
+            } else {
+                $sourceClass = 'sources.modMediaSource';
+                $fileClass = 'sources.modFileMediaSource';
+            }
             /** @var modMediaSource[] $mediaSources */
-            $mediaSources = $modx->getIterator('sources.modMediaSource');
+            $mediaSources = $modx->getIterator($sourceClass);
 
             foreach ($mediaSources as $mediaSource) {
                 $properties = $mediaSource->getProperties();
@@ -40,15 +52,14 @@ if ($object->xpdo) {
             }
 
             /** @var modMediaSource $assetsMS */
-            $assetsMS = $modx->getObject('sources.modMediaSource', ['name' => 'Assets']);
+            $assetsMS = $modx->getObject($sourceClass, ['name' => 'Assets']);
             if (!$assetsMS) {
                 $assetsPath = $modx->getOption('assets_path');
                 $assetsUrl = $modx->getOption('assets_url');
                 $basePath = $modx->getOption('base_path');
                 $baseUrl = $modx->getOption('base_url');
 
-                $assetsMS = $modx->newObject('sources.modFileMediaSource');
-                $assetsMS->set('class_key', 'sources.modFileMediaSource');
+                $assetsMS = $modx->newObject($fileClass);
                 $assetsMS->set('name', 'Assets');
                 $assetsMS->set('description', 'Assets');
 
