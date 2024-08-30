@@ -2,6 +2,8 @@
 - [ ] Include documentation on Template Variables
 - [ ] Add screenshots to different Option Types
 - [ ] Document **chunk** Element option
+- [ ] New resource variable placeholders
+- [ ] Reference GPM in collaborative theme development
 
 # Programming
 - [ ] Make **chunk** option work without ID
