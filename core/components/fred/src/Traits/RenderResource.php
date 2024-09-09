@@ -27,7 +27,23 @@ trait RenderResource
         if (!empty($defElement[0]) && is_numeric($defElement[0]) && !empty($defElement[1])) {
             $defaultElement = $this->modx->getObject($this->elementClass, ['id' => $defElement[0]]);
             if (!$defaultElement) {
-                $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$defElement[0]} wasn't found.");
+                if (!is_numeric($defElement[0])) {
+                    $c = $this->modx->newQuery($this->elementClass);
+                    $c->where(['uuid' => $defElement[0], 'OR:name' => $defElement[0]]);
+                    $defaultElement = $this->modx->getObject($this->elementClass, $c);
+                    if(!$defaultElement) {
+                        $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Default Element {$defElement[0]} wasn't found.");
+                        return;
+                    }
+                } else {
+                    $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$defElement[0]} wasn't found.");
+                    return;
+                }
+            }
+            // check if the element is part of the theme
+            $elementCategory = $defaultElement->getOne('Category');
+            if (!$elementCategory || $elementCategory->get('theme') !== $this->theme->id) {
+                $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Default Element {$defElement[0]} is not part of the current theme.");
                 return;
             }
 

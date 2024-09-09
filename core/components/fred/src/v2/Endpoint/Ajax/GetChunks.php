@@ -20,4 +20,5 @@ class GetChunks extends Endpoint
     protected $allowedMethod = ['OPTIONS', 'GET'];
     protected $chunks = [];
     private $chunkClass = 'modChunk';
+    private $categoryClass = 'modCategory';
 }
