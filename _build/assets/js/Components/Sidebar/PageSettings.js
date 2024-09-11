@@ -261,9 +261,12 @@ export default class PageSettings extends SidebarPlugin {
                     const epoch = new Date(this.pageSettings.tvs[tv.name]).getTime()/1000;
                     fields.appendChild(ui.dateTime(tv, epoch, this.setTVWithEmitter, this.addTVChangeListener, 'Y-m-d H:i:s'));
                     break;
+                case 'togglegroup':
                 case 'checkbox':
                     fields.appendChild(ui.toggleGroup(tv, this.pageSettings.tvs[tv.name], this.setMultiTVWithEmitter, this.addTVChangeListener));
                     break;
+                case 'chunk':
+                    fields.appendChild(ui.chunk(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
                 default:
                     fields.appendChild(ui.text(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
             }

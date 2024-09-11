@@ -4,9 +4,18 @@ Fred Elements are made of HTML with specific attributes. The markup can be enhan
 
 ## Custom Tags
 
-### themplate.theme_dir
+### Template Theme Directory
 
 To make themes more portable `{{template.theme_dir}}` can be used in an element as a dynamic placeholder reference to the template's theme directory (e.g. '/assets/theme/default/'.)
+
+### Resource Fields
+
+Resource fields can be accessed in the element markup object. For example, to access the pagetitle of the current resource, you would use `{{ pagetitle }}`.
+
+### TV Fields
+
+Template Variables can be accessed in the element markup object with the prefix `tv_`. For example, to access a TV named `myTV`, you would use `{{ tv_myTV }}`.
+
 
 ## Markup Examples
 

@@ -50,30 +50,46 @@ Note: for the best end-user experience, it is a good idea to set a default value
 The following Settings types are used to configure Elements in Fred.
 
 #### text
+![option_text](option_text.png)
 
 - A single-line HTML `<input type="text">` element
 - Can have any text value
+- **Returns** - A string
 
 #### textarea
+![option_textarea.png](option_textarea.png)
 
 - A multie-line HTML `<textarea>` element
 - Can have any text value
 - Type specific properties:
   - `rows` - The number of rows to show; Default: 4
+- **Returns** - A string
 
 #### select
+![option_select.png](option_select.png)
 
 - An HTML `<select>` list element
 - Only supports a single select value
 - Type specific properties:
-  - `options` - An object of `value:label` properties
+  - `options` - An object of `"value":"label"` properties
+- **Returns** - A string with the selected value
 
 #### toggle
+![option_toggle.png](option_toggle.png)
 
 - true/false checkbox
-- returns logical `true` or `false`
+- **Returns** - A logical `true` or `false` (`0` or `1` if output as a string)
+
+#### togglegroup
+![option_togglegroup.png](option_togglegroup.png)
+
+- A checkbox group
+- Type-specific properties:
+  - `options` - An object of `"value":"label"` properties
+- **Returns** - A double-pipe `||` separated string of checked values
 
 #### colorswatch
+![option_colorswatch.png](option_colorswatch.png)
 
 - Visual color picker, to choose from predefined values
 - Type-specific properties:
@@ -85,15 +101,19 @@ The following Settings types are used to configure Elements in Fred.
       - `colorAsClass` - if set to `true` the `color` value will be added as a class to the option, instead of setting as a background
       - `label` - an arbitrary label for the swatch
       - `width` - width of the color option, default is `1`
+- **Returns** - A string of the color value
   
 #### colorpicker
+![option_colorpicker.png](option_colorpicker.png)
 
 - A color picker that supports arbitrary color definitions including RGB, HSL or Hex values with optional opacity
 - Type-specific properties:
   - `showAlpha` - A boolean to show an alpha transparency slider; Default: `true`
   - `options` - An array of colors; Example: `["lightcoral", "red", "black"]`
+- **Returns** - A string of the color's hexadecimal value
 
 #### slider
+![option_slider.png](option_slider.png)
 
 - An input slider for numbers
 - Type-specific properties:
@@ -101,46 +121,66 @@ The following Settings types are used to configure Elements in Fred.
   - `max` - **REQUIRED**: The maximum value of the slider
   - `tooltipDecimals` – Number of decimals to show in the slider’s tooltip; Default: 0
   - `step` – A number to increment the slider’s value; Default: 1
+- **Notice:** To avoid issues with this option, set a default `value` within the range of `min` and `max`
+- **Returns** - A number
 
 #### page
+![option_page.png](option_page.png)
 
 - MODX Page select
-- Value is returned as an object in format: `{"id": 1, "url": "fred.html"}`
-  - Refrencing ID or URL alone is done through the dot syntax: `{{ page-name-example.id}}`
 - Type-specific properties:
   - `clearButton` - If set to `true` an `x` button shows in the input field allowing a user to clear any set value
   - `resources` - If set, only resource with specified IDs will show; Value can be string with a comma as a separator or an array
   - `parents` - If set, only resource from these parents (including parents itself) will show; Value can be string with a comma as a separator or an array
   - `depth` - Depth to look for children for specified `parents`; Default: 1
+- **Returns** - An object with `id` and `url` properties
+    - Referencing ID or URL alone is done through the dot syntax: `{{ page-name-example.id}}`
+
+#### chunk
+![option_chunk.png](option_chunk.png)
+- Chunk select
+- Type-specific properties:
+    - `chunks` - Comma separated list of chunk names/ids to show
+    - `category` - Comma separated list of category names/ids to show chunks from
+- **Returns** - An object with `id` and `name` properties
+    - Referencing ID or URL alone is done through the dot syntax: `{{ chunk-name-example.name}}`
 
 #### file
+![option_file.png](option_file.png)
 
 - File picker
 - Type-specific property:
   - `mediaSource` - Optional name of the Media Source to use that overrides the top-level ```<a href="#mediasource">`mediaSource` global setting</a>```
+- **Returns** - A string of the file path
 
 #### folder
+![option_folder.png](option_folder.png)
 
 - Folder picker
 - Type-specific property:
   - `mediaSource` - Optional name of the Media Source to use that overrides the top-level  ```<a href="#mediasource">`mediaSource` global setting</a>```
   - `showOnlyFolders` - If set to `true` only folder will be visible in the elFinder; Default: false
+- **Returns** - A string of the folder path
 
 #### image
+![option_image.png](option_image.png)
 
 - Image select
 - Type-specific properties:
   - `showPreview` - If set to `false` preview won't appear under the text input
   - `mediaSource` - Optional name of the Media Source to use that overrides the top-level ```<a href="#imagemediasource">`imageMediaSource` global setting</a>```
+- **Returns** - A string of the image path
+
 
 #### tagger
-
+![option_tagger.png](option_tagger.png)
 - Allows users to choose from preset Tagger tags
 - Type-specific properties:
+  - `group` - **REQUIRED** An ID of the Tagger group to use
   - `autoTag` - true/false to show/hide the auto tag
   - `hideInput` - true/false to show/hide the input
-  - `group` - An ID of the Tagger group to use
   - `limit` - Maximum limit of the number of tags that can be selected
+- **Returns** - A string of comma-separated tag names
 
 ### Setting Groups
 

@@ -25,9 +25,31 @@ trait GetChunks
         $category = $_GET['category'] ?? '';
         $chunks = $_GET['chunks'] ?? '';
         $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 25;
+        $catArr = [];
+        foreach(explode(",", $category) as $cat) {
+            if (is_numeric($cat)) {
+                $catArr[] = $cat;
+            } else {
+                $obj = $this->modx->getObject($this->categoryClass, ['name' => $cat]);
+                if (!empty($obj)) {
+                    $catArr[] = $obj->get('id');
+                }
+            }
+        }
+        $category = $catArr;
 
-        $category = Utils::explodeAndClean($category, ',', 'intval', 0, 'strlen');
-        $chunks = Utils::explodeAndClean($chunks, ',', 'intval');
+        $chunkArr = [];
+        foreach(explode(",", $chunks) as $chunk) {
+            if (is_numeric($chunk)) {
+                $chunkArr[] = $chunk;
+            } else {
+                $obj = $this->modx->getObject($this->chunkClass, ['name' => $chunk]);
+                if (!empty($obj) && !in_array($obj->get('id'), $chunkArr)) {
+                    $chunkArr[] = $obj->get('id');
+                }
+            }
+        }
+        $chunks = $chunkArr;
 
         $c = $this->modx->newQuery($this->chunkClass);
 
@@ -39,9 +61,9 @@ trait GetChunks
             $currentChunk = $this->modx->getObject($this->chunkClass, $current);
             if ($currentChunk) {
                 $currentChunk = [
-                    'id' => $currentChunk->id,
-                    'value' => (string)$currentChunk->id,
-                    'name' => $currentChunk->name,
+                    'id' => $currentChunk->get('id'),
+                    'value' => (string)$currentChunk->get('id'),
+                    'name' => $currentChunk->get('name'),
                 ];
                 $where['id:!='] = $current;
             }
@@ -75,9 +97,9 @@ trait GetChunks
                 continue;
             }
             $data[] = [
-                'id' => $chunk->id,
-                'value' => (string)$chunk->id,
-                'name' => $chunk->name,
+                'id' => $chunk->get('id'),
+                'value' => (string)$chunk->get('id'),
+                'name' => $chunk->get('name'),
             ];
         }
 
