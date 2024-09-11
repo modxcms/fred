@@ -66,7 +66,7 @@ The following Settings types are used to configure Elements in Fred.
 - An HTML `<select>` list element
 - Only supports a single select value
 - Type specific properties:
-  - `options` - An object of `value:label` properties
+  - `options` - An object of `"value":"label"` properties
 
 #### toggle
 
@@ -78,7 +78,7 @@ The following Settings types are used to configure Elements in Fred.
 - A checkbox group
 - returns array of checked values
 - Type-specific properties:
-  - `options` - An object of `value:label` properties
+  - `options` - An object of `"value":"label"` properties
 
 #### colorswatch
 

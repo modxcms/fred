@@ -166,7 +166,7 @@ export class ElementSettings {
             }
             case 'togglegroup':
             case 'checkbox':
-                return ui.toggleGroup(setting, defaultValue, this.setSetting.bind(this));
+                return ui.toggleGroup(setting, defaultValue, this.setMultiSetting.bind(this));
             case 'textarea':
                 return ui.area(setting, defaultValue, this.setSetting.bind(this));
             default:
@@ -184,6 +184,19 @@ export class ElementSettings {
                 this.debouncedRender();
             }
         }
+    }
+
+    setMultiSetting(name, value) {
+        let oValue = this.el.settings[name];
+        oValue = oValue || [];
+        let nValue = (add) ? [value] : [];
+        oValue.forEach((ov) => {
+            if(value !== ov){
+                nValue.push(ov);
+            }
+        });
+        this.setSetting(name, oValue);
+
     }
 
     apply() {

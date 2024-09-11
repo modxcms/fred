@@ -15,7 +15,7 @@
         <toc-element topic="themes.md"/>
         <toc-element topic="convert-to-fred.md"/>
         <toc-element toc-title="Fred Templates">
-            <toc-element topic="Templat-Variables-in-Fred.md"/>
+            <toc-element topic="Template-Variables-in-Fred.md"/>
             <toc-element topic="templates_index.md"/>
         </toc-element>
         <toc-element toc-title="Fred Elements">
