@@ -164,6 +164,9 @@ export class ElementSettings {
 
                 return ui.folder({mediaSource, ...setting}, defaultValue, this.setSetting.bind(this));
             }
+            case 'togglegroup':
+            case 'checkbox':
+                return ui.toggleGroup(setting, defaultValue, this.setSetting.bind(this));
             case 'textarea':
                 return ui.area(setting, defaultValue, this.setSetting.bind(this));
             default:
@@ -245,6 +248,19 @@ export class ElementSettings {
         }
 
         utilitySidebar.close();
+    }
+
+    trim(str, ch) {
+        let start = 0,
+            end = str.length;
+
+        while(start < end && str[start] === ch)
+            ++start;
+
+        while(end > start && str[end - 1] === ch)
+            --end;
+
+        return (start > 0 || end < str.length) ? str.substring(start, end) : str;
     }
 }
 

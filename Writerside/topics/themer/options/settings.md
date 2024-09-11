@@ -73,6 +73,13 @@ The following Settings types are used to configure Elements in Fred.
 - true/false checkbox
 - returns logical `true` or `false`
 
+#### togglegroup
+
+- A checkbox group
+- returns array of checked values
+- Type-specific properties:
+  - `options` - An object of `value:label` properties
+
 #### colorswatch
 
 - Visual color picker, to choose from predefined values
@@ -112,6 +119,13 @@ The following Settings types are used to configure Elements in Fred.
   - `resources` - If set, only resource with specified IDs will show; Value can be string with a comma as a separator or an array
   - `parents` - If set, only resource from these parents (including parents itself) will show; Value can be string with a comma as a separator or an array
   - `depth` - Depth to look for children for specified `parents`; Default: 1
+
+#### chunk
+
+- Chunk select
+- Type-specific properties:
+    - `chunks` - Comma separated list of chunk names/ids to show
+    - `category` - Comma separated list of category names/ids to show chunks from
 
 #### file
 
