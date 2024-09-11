@@ -189,13 +189,13 @@ export class ElementSettings {
     setMultiSetting(name, value) {
         let oValue = this.el.settings[name];
         oValue = oValue || [];
-        let nValue = (add) ? [value] : [];
+        let nValue = [value];
         oValue.forEach((ov) => {
             if(value !== ov){
                 nValue.push(ov);
             }
         });
-        this.setSetting(name, oValue);
+        this.setSetting(name, nValue);
 
     }
 
