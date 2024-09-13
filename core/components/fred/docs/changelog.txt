@@ -1,6 +1,3 @@
-- Fix saving issue in MODX 3.x
-- Fix broken "Assets" file class in new installs on MODX 3.x
-- Fix ACLs resolver for MODX 3.x
-- Fix processor classes for RTE Configs in MODX 2.x
-- Fix removing source path from image TV value in MODX 2.x
-- Fix fatal error "Class modRequest not found" in MODX 2.x
+- Make chunk option work without ID
+- Make theme's Default Element work without ID
+- Update Docs
