@@ -2,10 +2,14 @@
 
 namespace Fred\Model;
 
+use MODX\Revolution\modContextSetting;
 use MODX\Revolution\modLexiconEntry;
 use MODX\Revolution\modNamespace;
 use MODX\Revolution\modResource;
 use MODX\Revolution\modSystemSetting;
+use MODX\Revolution\modUserGroupMember;
+use MODX\Revolution\modUserGroupRole;
+use MODX\Revolution\modX;
 use xPDO\xPDO;
 
 /**
@@ -100,6 +104,8 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
         }
         $themeDirDescLexicon->set('value', 'WARNING! DO NOT CHANGE! This setting is automatically generated.');
         $themeDirDescLexicon->save();
+
+        $this->syncThemeSettings();
 
         $this->xpdo->cacheManager->refresh(
             [
@@ -218,5 +224,224 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
         $uri = rtrim($uri, '/') . '/';
 
         return $uri;
+    }
+
+    public function getThemeSettingKey($key)
+    {
+        return "$this->settingsPrefix.setting.$key";
+    }
+
+    public function getThemeSettingXType($setting)
+    {
+        if (!empty($setting['xtype'])) return $setting['xtype'];
+
+        switch ($setting['type']) {
+            case 'slider':
+                return 'numberfield';
+            case 'toggle':
+                return 'combo-boolean';
+            case 'textarea':
+                return 'textarea';
+            case 'text':
+            case 'page':
+            case 'chunk':
+            case 'file':
+            case 'folder':
+            case 'image':
+            case 'tagger':
+            case 'togglegroup':
+            case 'colorswatch':
+            case 'colorpicker':
+            case 'select':
+            default:
+                return 'textfield';
+        }
+    }
+
+    private function syncThemeSettings()
+    {
+        $settings = $this->get('settings');
+        if (empty($settings) || !is_array($settings)) {
+            $this->xpdo->removeCollection(modSystemSetting::class, ['namespace' => $this->namespace, 'key:LIKE' => "$this->settingsPrefix.setting.%"]);
+            $this->xpdo->removeCollection(modContextSetting::class, ['namespace' => $this->namespace, 'key:LIKE' => "$this->settingsPrefix.setting.%"]);
+            return;
+        }
+
+        $touchedSettings = [];
+
+        foreach ($settings as $setting) {
+            if (!empty($setting['group'])) {
+                if (empty($setting['settings'])) {
+                    continue;
+                }
+
+                foreach ($setting['settings'] as $groupSetting) {
+                    $touchedSettings[] = $this->getThemeSettingKey($groupSetting['name']);
+                    $groupSetting['xtype'] = $this->getThemeSettingXType($groupSetting);
+                    $this->syncThemeSetting($groupSetting, $setting['group']);
+                }
+                continue;
+            }
+
+            $setting['xtype'] = $this->getThemeSettingXType($setting);
+            $touchedSettings[] = $this->getThemeSettingKey($setting['name']);
+            $this->syncThemeSetting($setting);
+        }
+
+        $where = [
+            'namespace' => $this->namespace,
+            'key:LIKE' => "$this->settingsPrefix.setting.%",
+        ];
+
+        if (!empty($touchedSettings)) {
+            $where['key:NOT IN'] = $touchedSettings;
+        }
+
+        $this->xpdo->removeCollection(modSystemSetting::class, $where);
+        $this->xpdo->removeCollection(modContextSetting::class, $where);
+    }
+
+    private function syncThemeSetting($setting, $group = '')
+    {
+        $systemSetting = $this->xpdo->getObject(modSystemSetting::class, ['namespace' => $this->namespace, 'key' => $this->getThemeSettingKey($setting['name'])]);
+        if (!$systemSetting) {
+            $systemSetting = $this->xpdo->newObject(modSystemSetting::class);
+            $systemSetting->set('namespace', $this->namespace);
+            $systemSetting->set('key', $this->getThemeSettingKey($setting['name']));
+            $systemSetting->set('value', $setting['value']);
+        }
+
+        $systemSetting->set('xtype', $setting['xtype']);
+        $systemSetting->set('area', $group);
+        $systemSetting->save();
+    }
+
+    public function getSettings()
+    {
+        $settings = $this->get('settings');
+        if (empty($settings)) {
+            return [];
+        }
+
+        /** @var modX $modx */
+        $modx = $this->xpdo;
+
+        if (!$modx->user->get('sudo')) {
+            $memberships = [];
+            $groups = $modx->user->getUserGroups();
+            $roles = [];
+
+            if (!empty($groups)) {
+                /** @var modUserGroupMember[] $memberGroups */
+                $memberGroups = $modx->getIterator(modUserGroupMember::class, ['user_group:IN' => $groups, 'member' => $modx->user->id]);
+                foreach ($memberGroups as $memberGroup) {
+                    $group = $memberGroup->getOne('UserGroup');
+                    if (!$group) {
+                        continue;
+                    }
+
+                    if (!isset($roles[$memberGroup->get('role')])) {
+                        $role = $memberGroup->getOne('UserGroupRole');
+                        if (!$role) {
+                            continue;
+                        }
+
+                        $roles[$memberGroup->get('role')] = $role->get('authority');
+                    }
+
+                    $memberships[$group->get('name')] = $roles[$memberGroup->get('role')];
+                }
+            }
+
+            $rolesMap = [];
+            /** @var modUserGroupRole[] $userGroupRoles */
+            $userGroupRoles = $modx->getIterator(modUserGroupRole::class);
+            foreach ($userGroupRoles as $userGroupRole) {
+                $rolesMap[$userGroupRole->get('name')] = $userGroupRole->get('authority');
+            }
+
+            $settings = $this->filterSettings($settings, $memberships, $rolesMap);
+        }
+
+        return $settings;
+    }
+
+    private function filterSettings($settings, $memberships, $rolesMap)
+    {
+        $filtered = [];
+
+        foreach ($settings as $setting) {
+            $matchAll = (isset($setting['userGroupMatchAll'])) ? $setting['userGroupMatchAll'] : false;
+
+            if (isset($setting['userGroup']) && is_array($setting['userGroup'])) {
+                $match = false;
+
+                foreach ($setting['userGroup'] as $userGroup) {
+                    if (is_array($userGroup)) {
+                        if (!isset($memberships[$userGroup['group']])) {
+                            $match = false;
+
+                            if ($matchAll === true) {
+                                continue 2;
+                            } else {
+                                continue;
+                            }
+                        }
+
+                        if (isset($userGroup['role'])) {
+                            if (!isset($rolesMap[$userGroup['role']])) {
+                                continue 2;
+                            }
+
+                            if ($memberships[$userGroup['group']] <= $rolesMap[$userGroup['role']]) {
+                                $match = true;
+
+                                if ($matchAll === false) {
+                                    break;
+                                }
+                            } else {
+                                $match = false;
+
+                                if ($matchAll === true) {
+                                    continue 2;
+                                }
+                            }
+                        } else {
+                            $match = true;
+
+                            if ($matchAll === false) {
+                                break;
+                            }
+                        }
+                    } else {
+                        if (isset($memberships[$userGroup])) {
+                            $match = true;
+
+                            if ($matchAll === false) {
+                                break;
+                            }
+                        } else {
+                            $match = false;
+
+                            if ($matchAll === true) {
+                                continue 2;
+                            }
+                        }
+                    }
+                }
+
+                if ($match === false) {
+                    continue;
+                }
+            }
+
+            if (isset($setting['group']) && !empty($setting['settings'])) {
+                $setting['settings'] = $this->filterSettings($setting['settings'], $memberships, $rolesMap);
+            }
+
+            $filtered[] = $setting;
+        }
+
+        return $filtered;
     }
 }

@@ -31,6 +31,9 @@ export default class Fred {
         fredConfig.resource = config.resource;
         delete config.resource;
 
+        fredConfig.themeSettings = config.themeSettings;
+        delete config.themeSettings;
+
         fredConfig.config = config || {};
         fredConfig.fred = this;
         this.loading = null;
@@ -55,6 +58,10 @@ export default class Fred {
             await lexiconsLoaded;
             await this.init();
         });
+    }
+
+    getConfig() {
+        return fredConfig;
     }
 
     render() {

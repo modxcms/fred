@@ -21,6 +21,7 @@ export default class PageSettings extends SidebarPlugin {
         this.addTVChangeListener = this.addTVChangeListener.bind(this);
 
         this.pageSettings = fredConfig.pageSettings;
+        this.themeSettings = fredConfig.themeSettings;
         this.content = this.render();
     }
 
@@ -32,6 +33,8 @@ export default class PageSettings extends SidebarPlugin {
         const settingsForm = form(['fred--page_settings_form']);
 
         settingsForm.appendChild(this.getGeneralFields());
+
+        settingsForm.appendChild(this.getThemeSettingFields());
 
         if (fredConfig.permission.fred_settings_advanced) {
             settingsForm.appendChild(this.getAdvancedFields());
@@ -155,6 +158,123 @@ export default class PageSettings extends SidebarPlugin {
         });
 
         return advancedList;
+    }
+
+    getThemeSettingFields() {
+        const advancedList = dl();
+
+        const advancedTab = dt('fred.fe.page_settings.theme_settings', ['fred--accordion-cog'], e => {
+            const activeTabs = advancedList.parentElement.querySelectorAll('dt.active');
+
+            const isActive = advancedTab.classList.contains('active');
+
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
+                advancedTab.classList.add('active');
+                e.stopPropagation();
+                emitter.emit('fred-sidebar-dt-active', advancedTab, advancedContent);
+            }
+
+        });
+
+        const advancedContent = dd();
+        const advancedHeader = h3('fred.fe.page_settings.theme_settings');
+        const fields = fieldSet(['fred--page_settings_form_theme_settings']);
+
+        this.themeSettings.forEach(setting => {
+            if (setting.group && setting.settings) {
+                const groupEl = this.renderThemeSettingsGroup(setting);
+                if (groupEl !== false) {
+                    fields.appendChild(groupEl);
+                }
+            } else {
+                const settingEl = this.renderThemeSetting(setting);
+                if (settingEl !== false) {
+                    fields.appendChild(settingEl);
+                }
+            }
+        });
+
+        advancedContent.appendChild(advancedHeader);
+        advancedContent.appendChild(fields);
+        advancedList.appendChild(advancedTab);
+        advancedList.appendChild(advancedContent);
+
+        return advancedList;
+    }
+
+    renderThemeSettingsGroup(group) {
+        const content = dl();
+
+        const settingGroup = dt(group.group, [], (e, el) => {
+            const activeTabs = content.parentElement.querySelectorAll('dt.active');
+
+            const isActive = el.classList.contains('active');
+
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
+                el.classList.add('active');
+                e.stopPropagation();
+                // this.dtActive(settingGroup, settingGroupContent);
+            }
+        });
+        const settingGroupContent = dd();
+
+        group.settings.forEach(setting => {
+            const settingEl = this.renderThemeSetting(setting);
+            if (settingEl !== false) {
+                settingGroupContent.appendChild(settingEl);
+            }
+        });
+
+        content.appendChild(settingGroup);
+        content.appendChild(settingGroupContent);
+
+        return content;
+    }
+
+    renderThemeSetting(setting) {
+        const defaultValue = setting.value;
+
+        switch (setting.type) {
+            case 'select':
+                return ui.select(setting, defaultValue, this.setSetting.bind(this));
+            case 'toggle':
+                return ui.toggle(setting, defaultValue, this.setSetting.bind(this));
+            case 'colorswatch':
+                return ui.colorSwatch(setting, defaultValue, this.setSetting.bind(this));
+            case 'colorpicker':
+                return ui.colorPicker(setting, defaultValue, this.setSetting.bind(this));
+            case 'slider':
+                return ui.slider(setting, defaultValue, this.setSetting.bind(this));
+            case 'page':
+                return ui.page(setting, defaultValue, this.setSetting.bind(this));
+            case 'chunk':
+                return ui.chunk(setting, defaultValue, this.setSetting.bind(this));
+            case 'tagger':
+                return ui.tagger(setting, defaultValue, this.setSetting.bind(this));
+            case 'image':
+                return ui.image(setting, defaultValue, this.setSetting.bind(this));
+            case 'file': {
+                return ui.file(setting, defaultValue, this.setSetting.bind(this));
+            }
+            case 'folder': {
+                return ui.folder(setting, defaultValue, this.setSetting.bind(this));
+            }
+            case 'togglegroup':
+            case 'checkbox':
+                return ui.toggleGroup(setting, defaultValue, this.setMultiSetting.bind(this));
+            case 'textarea':
+                return ui.area(setting, defaultValue, this.setSetting.bind(this));
+            default:
+                return ui.text(setting, defaultValue, this.setSetting.bind(this));
+        }
     }
 
     getTaggerFields() {

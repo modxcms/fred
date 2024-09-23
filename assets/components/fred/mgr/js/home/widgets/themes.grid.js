@@ -17,7 +17,7 @@ fred.grid.Themes = function (config) {
             action: 'Fred\\Processors\\Themes\\GetList'
         },
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace', 'settingsPrefix'],
+        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace', 'settingsPrefix', 'settings'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -187,12 +187,17 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
     },
 
     updateTheme: function (btn, e) {
+        const record = {
+            ...this.menu.record,
+            settings: this.menu.record.settings ? JSON.stringify(this.menu.record.settings, null, 2) : '',
+        };
+
         var updateTheme = MODx.load({
             xtype: 'fred-window-theme',
             title: _('fred.themes.update'),
             action: 'Fred\\Processors\\Themes\\Update',
             isUpdate: true,
-            record: this.menu.record,
+            record: record,
             listeners: {
                 success: {
                     fn: function () {
@@ -204,7 +209,7 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         });
 
         updateTheme.fp.getForm().reset();
-        updateTheme.fp.getForm().setValues(this.menu.record);
+        updateTheme.fp.getForm().setValues(record);
         updateTheme.show(e.target);
 
         return true;

@@ -9,6 +9,7 @@ class Config {
         this._toolbarPlugins = {};
         this._pluginsData = {};
         this._pageSettings = {};
+        this._themeSettings = {};
         this._tagger = [];
         this._tvs = [];
         this._lang = {};
@@ -32,6 +33,10 @@ class Config {
 
     set pageSettings(pageSettings) {
         this._pageSettings = pageSettings;
+    }
+
+    set themeSettings(themeSettings) {
+        this._themeSettings = themeSettings;
     }
 
     set tagger(tagger) {
@@ -118,6 +123,10 @@ class Config {
 
     get pageSettings() {
         return this._pageSettings;
+    }
+
+    get themeSettings() {
+        return this._themeSettings;
     }
 
     get fred() {

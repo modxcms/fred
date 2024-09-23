@@ -42,6 +42,13 @@ Ext.extend(fred.window.Theme, MODx.Window, {
                 name: 'description',
                 anchor: '100%',
                 allowBlank: true
+            },
+            {
+                xtype: 'textarea',
+                fieldLabel: _('fred.themes.settings'),
+                name: 'settings',
+                anchor: '100%',
+                allowBlank: true
             }
         ];
     }
