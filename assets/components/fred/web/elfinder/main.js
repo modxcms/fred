@@ -72,7 +72,7 @@
         })(),
 
         opts = {
-            cssAutoLoad : ['../vendor/elfinder-themes/material/css/theme-gray.css'],
+            cssAutoLoad : ['../vendor/elfinder-themes/material/css/theme-light.css'],
             getFileCallback : function(file, fm) {
                 if (type === 'folder') {
                     if (file.mime === 'directory') {
@@ -94,6 +94,13 @@
                     }
                 }
 
+            },
+            handlers: {
+                upload: function(event, instance) {
+                    if (event.data.changed) {
+                        instance.exec('reload');
+                    }
+                }
             },
             commandsOptions: commandsOptions,
             resizable : false,

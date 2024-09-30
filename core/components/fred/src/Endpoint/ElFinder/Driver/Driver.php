@@ -3,13 +3,8 @@
 namespace Fred\Endpoint\ElFinder\Driver;
 
 use elFinderVolumeDriver;
-use Fred\Endpoint\ElFinder\Driver\Utils;
 use Intervention\Image\ImageManager;
-use League\Flysystem\Cached\CachedAdapter;
-use League\Flysystem\Cached\CacheInterface;
-use League\Flysystem\DirectoryAttributes;
 use League\Flysystem\FileAttributes;
-use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\StorageAttributes;
 use League\Flysystem\UnableToCopyFile;
@@ -18,9 +13,7 @@ use League\Flysystem\UnableToDeleteDirectory;
 use League\Flysystem\UnableToDeleteFile;
 use League\Flysystem\UnableToMoveFile;
 use League\Flysystem\UnableToWriteFile;
-use League\Flysystem\Util;
-use League\Flysystem\FilesystemInterface;
-use League\Flysystem\WhitespacePathNormalizer;
+use League\Glide\Urls\UrlBuilder;
 use League\Glide\Urls\UrlBuilderFactory;
 
 /**
@@ -262,7 +255,7 @@ class Driver extends elFinderVolumeDriver
             }
         }
 
-        if (false === $meta) {
+        if (empty($meta)) {
             return $stat;
         }
 
@@ -611,7 +604,7 @@ class Driver extends elFinderVolumeDriver
      **/
     protected function _joinPath($dir, $name)
     {
-        return (new WhitespacePathNormalizer())->normalizePath($dir . $this->separator . $name);
+        return Utils::normalizePath($dir . $this->separator . $name);
     }
 
     /**
