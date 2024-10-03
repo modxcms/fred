@@ -10,6 +10,8 @@ class Config {
         this._pluginsData = {};
         this._pageSettings = {};
         this._themeSettings = {};
+        this._indexedThemeSettings = {};
+        this._themeSettingsCache = null;
         this._tagger = [];
         this._tvs = [];
         this._lang = {};
@@ -37,6 +39,17 @@ class Config {
 
     set themeSettings(themeSettings) {
         this._themeSettings = themeSettings;
+        this._themeSettingsCache = null;
+        for (const setting of this._themeSettings) {
+            if (setting['group'] !== undefined && setting['settings'] !== undefined) {
+                for (const groupSetting of setting['settings']) {
+                    this._indexedThemeSettings[groupSetting['name']] = groupSetting;
+                }
+                continue;
+            }
+
+            this._indexedThemeSettings[setting['name']] = setting;
+        }
     }
 
     set tagger(tagger) {
@@ -244,6 +257,34 @@ class Config {
 
     lngExists(key) {
         return this._lang[key] !== undefined;
+    }
+
+    themeSettingsExists(name) {
+        return this._indexedThemeSettings[name] !== undefined;
+    }
+
+    getThemeSettingValue(name) {
+        return this._indexedThemeSettings[name]?.value || undefined;
+    }
+
+    setThemeSettingValue(name, value) {
+        if (!this._indexedThemeSettings[name]) return;
+
+        this._themeSettingsCache = null;
+        this._indexedThemeSettings[name].value = value;
+    }
+
+    getThemeSettingsMap() {
+        if (this._themeSettingsCache !== null) {
+            return this._themeSettingsCache;
+        }
+
+        this._themeSettingsCache = Object.values(this._indexedThemeSettings).reduce((acc, item) => {
+            acc['setting'][item.name] = item.value;
+            return acc;
+        }, {setting: {}});
+
+        return this._themeSettingsCache;
     }
 }
 

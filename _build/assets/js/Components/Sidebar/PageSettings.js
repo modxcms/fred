@@ -19,6 +19,8 @@ export default class PageSettings extends SidebarPlugin {
         this.setTVWithEmitter = this.setTVWithEmitter.bind(this);
         this.setMultiTVWithEmitter = this.setMultiTVWithEmitter.bind(this);
         this.addTVChangeListener = this.addTVChangeListener.bind(this);
+        this.setThemeSettingWithEmitter = this.setThemeSettingWithEmitter.bind(this);
+        this.setMultiThemeSettingWithEmitter = this.setMultiThemeSettingWithEmitter.bind(this);
 
         this.pageSettings = fredConfig.pageSettings;
         this.themeSettings = fredConfig.themeSettings;
@@ -244,36 +246,36 @@ export default class PageSettings extends SidebarPlugin {
 
         switch (setting.type) {
             case 'select':
-                return ui.select(setting, defaultValue, this.setSetting.bind(this));
+                return ui.select(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'toggle':
-                return ui.toggle(setting, defaultValue, this.setSetting.bind(this));
+                return ui.toggle(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'colorswatch':
-                return ui.colorSwatch(setting, defaultValue, this.setSetting.bind(this));
+                return ui.colorSwatch(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'colorpicker':
-                return ui.colorPicker(setting, defaultValue, this.setSetting.bind(this));
+                return ui.colorPicker(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'slider':
-                return ui.slider(setting, defaultValue, this.setSetting.bind(this));
+                return ui.slider(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'page':
-                return ui.page(setting, defaultValue, this.setSetting.bind(this));
+                return ui.page(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'chunk':
-                return ui.chunk(setting, defaultValue, this.setSetting.bind(this));
+                return ui.chunk(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'tagger':
-                return ui.tagger(setting, defaultValue, this.setSetting.bind(this));
+                return ui.tagger(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'image':
-                return ui.image(setting, defaultValue, this.setSetting.bind(this));
+                return ui.image(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'file': {
-                return ui.file(setting, defaultValue, this.setSetting.bind(this));
+                return ui.file(setting, defaultValue, this.setThemeSettingWithEmitter);
             }
             case 'folder': {
-                return ui.folder(setting, defaultValue, this.setSetting.bind(this));
+                return ui.folder(setting, defaultValue, this.setThemeSettingWithEmitter);
             }
             case 'togglegroup':
             case 'checkbox':
-                return ui.toggleGroup(setting, defaultValue, this.setMultiSetting.bind(this));
+                return ui.toggleGroup(setting, defaultValue, this.setMultiThemeSettingWithEmitter);
             case 'textarea':
-                return ui.area(setting, defaultValue, this.setSetting.bind(this));
+                return ui.area(setting, defaultValue, this.setThemeSettingWithEmitter);
             default:
-                return ui.text(setting, defaultValue, this.setSetting.bind(this));
+                return ui.text(setting, defaultValue, this.setThemeSettingWithEmitter);
         }
     }
 
@@ -419,6 +421,18 @@ export default class PageSettings extends SidebarPlugin {
         }
     }
 
+    setThemeSetting(name, value) {
+        fredConfig.setThemeSettingValue(name, value);
+        emitter.emit('fred-content-changed');
+        // if (this.cacheOutput === false) {
+        //     if (this.remote === false) {
+        //         this.el.render();
+        //     } else {
+        //         this.debouncedRender();
+        //     }
+        // }
+    }
+
     getSetting(name, namespace = null) {
         if (namespace) {
             if (!this.pageSettings[namespace]) this.pageSettings[namespace] = {};
@@ -427,6 +441,27 @@ export default class PageSettings extends SidebarPlugin {
         } else {
             return this.pageSettings[name];
         }
+    }
+
+    setThemeSettingWithEmitter(name, value, input) {
+        this.setThemeSetting(name, value);
+
+        emitter.emit('fred-theme-setting-change', name, value, valueParser(value), input);
+    }
+
+    setMultiThemeSettingWithEmitter(name, value, input) {
+        let oValue = this.themeSettings[name];
+        oValue = (oValue) ? oValue.split('||') : [];
+        let nValue = [value];
+        oValue.forEach((ov) => {
+            if(value !== ov){
+                nValue.push(ov);
+            }
+        });
+        nValue = this.trim(nValue.join('||'), '|');
+        this.setThemeSetting(name, nValue);
+
+        emitter.emit('fred-theme-setting-change', name, value, valueParser(value), input);
     }
 
     setSettingWithEmitter(name, value, input) {
