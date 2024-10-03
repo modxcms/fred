@@ -1,10 +1,12 @@
 fred.field.JSONField = function (config) {
-    config = config || {};
+    config = config || {
+        name: 'data',
+    };
 
     Ext.applyIf(config, {
         xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
         mimeType: 'application/json',
-        name: 'data',
+        name: config.name ?? 'data',
         hideLabel: true,
         anchor: '100%',
         height: 400,

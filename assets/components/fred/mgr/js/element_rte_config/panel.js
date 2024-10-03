@@ -75,11 +75,19 @@ Ext.extend(fred.panel.ElementRTEConfig, MODx.FormPanel, {
 
     getItems: function (config) {
         return [
-            {
-                html: '<h2>' + ((config.isUpdate == true) ? _('fred.element_rte_configs.update') : _('fred.element_rte_configs.create')) + '</h2>',
-                border: false,
-                cls: 'modx-page-header'
-            },
+            MODx.util.getHeaderBreadCrumbs({
+                html: ((config.isUpdate == true) ? _('fred.element_rte_configs.update') : _('fred.element_rte_configs.create')),
+                xtype: "modx-header"
+            }, [
+                {
+                    text: _('fred.home.page_title'),
+                    href: '?a=home&namespace=fred',
+                },
+                {
+                    text: _('fred.home.rte_configs'),
+                    href: null,
+                }
+            ]),
             {
                 name: 'id',
                 xtype: 'hidden'
@@ -98,6 +106,9 @@ Ext.extend(fred.panel.ElementRTEConfig, MODx.FormPanel, {
             {
                 deferredRender: false,
                 border: true,
+                style: {
+                    marginTop: '40px'
+                },
                 defaults: {
                     autoHeight: true,
                     layout: 'form',

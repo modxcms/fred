@@ -99,6 +99,11 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
             }
 
             m.push({
+                text: _('fred.themes.quick_update'),
+                handler: this.quickUpdateTheme
+            });
+
+            m.push({
                 text: _('fred.themes.update'),
                 handler: this.updateTheme
             });
@@ -186,7 +191,7 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         return true;
     },
 
-    updateTheme: function (btn, e) {
+    quickUpdateTheme: function (btn, e) {
         const record = {
             ...this.menu.record,
             settings: this.menu.record.settings ? JSON.stringify(this.menu.record.settings, null, 2) : '',
@@ -213,6 +218,10 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         updateTheme.show(e.target);
 
         return true;
+    },
+
+    updateTheme: function (btn, e) {
+        fred.loadPage('theme/update', {id: this.menu.record.id});
     },
 
     buildTheme: function (btn, e) {

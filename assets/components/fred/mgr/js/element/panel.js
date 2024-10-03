@@ -136,11 +136,19 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
 
     getItems: function (config) {
         return [
-            {
-                html: '<h2>' + ((config.isUpdate == true) ? _('fred.elements.update') : _('fred.elements.create')) + '</h2>',
-                border: false,
-                cls: 'modx-page-header'
-            },
+            MODx.util.getHeaderBreadCrumbs({
+                html: ((config.isUpdate == true) ? _('fred.elements.update') : _('fred.elements.create')),
+                xtype: "modx-header"
+            }, [
+                {
+                    text: _('fred.home.page_title'),
+                    href: '?a=home&namespace=fred',
+                },
+                {
+                    text: _('fred.home.elements'),
+                    href: null,
+                }
+            ]),
             {
                 name: 'id',
                 xtype: 'hidden'
@@ -159,6 +167,9 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
             {
                 deferredRender: false,
                 border: true,
+                style: {
+                    marginTop: '40px'
+                },
                 defaults: {
                     autoHeight: true,
                     layout: 'form',

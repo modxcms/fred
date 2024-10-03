@@ -160,6 +160,7 @@ $_lang['fred.themes.name'] = 'Name';
 $_lang['fred.themes.description'] = 'Description';
 $_lang['fred.themes.create'] = 'Create Theme';
 $_lang['fred.themes.update'] = 'Update Theme';
+$_lang['fred.themes.quick_update'] = 'Quick Update Theme';
 $_lang['fred.themes.remove'] = 'Remove Theme';
 $_lang['fred.themes.remove_confirm'] = 'Are you sure tou want to delete the “[[+name]]” Theme? This cannot be undone.';
 $_lang['fred.themes.search_name'] = 'Search by Name';

@@ -90,11 +90,19 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
 
     getItems: function (config) {
         return [
-            {
-                html: '<h2>' + ((config.isUpdate == true) ? _('fred.blueprints.update') : _('fred.blueprints.create')) + '</h2>',
-                border: false,
-                cls: 'modx-page-header'
-            },
+            MODx.util.getHeaderBreadCrumbs({
+                html: ((config.isUpdate == true) ? _('fred.blueprints.update') : _('fred.blueprints.create')),
+                xtype: "modx-header"
+            }, [
+                {
+                    text: _('fred.home.page_title'),
+                    href: '?a=home&namespace=fred',
+                },
+                {
+                    text: _('fred.home.blueprints'),
+                    href: null,
+                }
+            ]),
             {
                 name: 'id',
                 xtype: 'hidden'
@@ -113,6 +121,9 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
             {
                 deferredRender: false,
                 border: true,
+                style: {
+                    marginTop: '40px'
+                },
                 defaults: {
                     autoHeight: true,
                     layout: 'form',
