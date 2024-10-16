@@ -76,6 +76,8 @@ class FredTheme extends xPDOSimpleObject
         $themeDirDescLexicon->set('value', 'WARNING! DO NOT CHANGE! This setting is automatically generated.');
         $themeDirDescLexicon->save();
 
+        $this->syncThemeSettings();
+
         $this->xpdo->cacheManager->refresh(
             [
                 'system_settings' => []

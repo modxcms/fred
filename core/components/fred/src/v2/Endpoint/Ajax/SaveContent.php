@@ -230,6 +230,10 @@ class SaveContent extends Endpoint
         if (!$saved) {
             return $this->failure($this->modx->lexicon('fred.fe.err.resource_save'));
         }
+
+        $theme = $this->fred->getTheme($this->object->template);
+        $theme->saveThemeSettings($this->body['themeSettings']);
+
         // unify resource rendering
         $renderResource = new \Fred\v2\RenderResource($this->object, $this->modx, $this->body['data'], $this->body['pageSettings']);
         if (!$renderResource->render()) {
