@@ -39,7 +39,6 @@ export const createBlueprint = (name, description, category, rank, isPublic, dat
 };
 
 export const createBlueprintCategory = (name, rank, isPublic, templates) => {
-    console.log({name, rank, isPublic, templates});
     return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=blueprints-create-category`, {
         method: "post",
         headers: {

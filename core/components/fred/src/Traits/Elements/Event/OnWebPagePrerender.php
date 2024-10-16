@@ -174,6 +174,7 @@ trait OnWebPagePrerender
                 themeNamespace: "' . $theme->get('namespace') . '",
                 themeSettingsPrefix: "' . $theme->get('settingsPrefix') . '",
                 themeSettings: ' . json_encode($theme->getSettings()) . ',
+                allThemeSettings: ' . json_encode($theme->getAllSettingValues()) . ',
                 assetsUrl: "' . $this->fred->getOption('webAssetsUrl') . '",
                 managerUrl: "' . MODX_MANAGER_URL . '",
                 fredOffUrl: "' . str_replace('&amp;', '&', $this->modx->makeUrl($this->modx->resource->id, '', array_merge($get, ['fred' => 4]), 'full')) . '",

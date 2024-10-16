@@ -34,6 +34,9 @@ export default class Fred {
         fredConfig.themeSettings = config.themeSettings;
         delete config.themeSettings;
 
+        fredConfig.allThemeSettings = config.allThemeSettings;
+        delete config.allThemeSettings;
+
         fredConfig.config = config || {};
         fredConfig.fred = this;
         this.loading = null;
@@ -218,6 +221,7 @@ export default class Fred {
         body.data = data;
         body.plugins = fredConfig.pluginsData;
         body.pageSettings = JSON.parse(JSON.stringify(fredConfig.pageSettings));
+        body.themeSettings = JSON.parse(JSON.stringify(fredConfig.getEditableThemeSettingsMap()));
         body.fingerprint = this.fingerprint;
 
         if (body.pageSettings.tvs) {

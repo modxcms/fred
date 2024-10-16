@@ -849,15 +849,16 @@ export class Element {
             settings = this.parsedSettings;
         }
 
-        const themeSettings = fredConfig.getThemeSettingsMap();
+        const themeSettings = {setting: fredConfig.getThemeSettingsMap(true, parseModx, cleanRender)};
 
         return this.template.render({...settings, ...(getTemplateSettings(cleanRender && !isPreview)), ...themeSettings, id: this.elId});
     }
 
     remoteTemplateRender(parseModx = true, cleanRender = false, isPreview = false, refreshCache = false) {
         const cacheOutput = this.options.cacheOutput === true;
+        const themeSettings = {setting: fredConfig.getThemeSettingsMap()}
 
-        return renderElement(this.id, {...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), ...(getTemplateSettings(cleanRender && !isPreview)), id: this.elId}, parseModx, cacheOutput, refreshCache).then(json => {
+        return renderElement(this.id, {...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), ...(getTemplateSettings(cleanRender && !isPreview)), ...themeSettings, id: this.elId}, parseModx, cacheOutput, refreshCache).then(json => {
             const html = twig({data: json.data.html}).render(getTemplateSettings(cleanRender && !isPreview));
             this.setEl(html);
 

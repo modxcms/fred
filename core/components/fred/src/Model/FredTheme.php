@@ -10,6 +10,7 @@ use MODX\Revolution\modSystemSetting;
 use MODX\Revolution\modUserGroupMember;
 use MODX\Revolution\modUserGroupRole;
 use MODX\Revolution\modX;
+use xPDO\Cache\xPDOCacheManager;
 use xPDO\xPDO;
 
 /**
@@ -308,12 +309,135 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
             $systemSetting = $this->xpdo->newObject(modSystemSetting::class);
             $systemSetting->set('namespace', $this->namespace);
             $systemSetting->set('key', $this->getThemeSettingKey($setting['name']));
-            $systemSetting->set('value', $setting['value']);
+
+            $systemSetting->set('value', $this->themeSettingValueToModxPlaceholder($setting['value']));
         }
 
         $systemSetting->set('xtype', $setting['xtype']);
         $systemSetting->set('area', $group);
         $systemSetting->save();
+    }
+
+    public function saveThemeSettings($settingValues)
+    {
+        $settings = $this->get('settings');
+        if (empty($settings)) {
+            return;
+        }
+
+        /** @var modX $modx */
+        $modx = $this->xpdo;
+
+        if (!$modx->user->get('sudo')) {
+            $settings = $this->filterThemeSettings($settings, false, false);
+        }
+
+        $keys = [];
+
+        foreach ($settings as $setting) {
+            if (isset($setting['group']) && is_array($setting['settings'])) {
+                foreach ($setting['settings'] as $groupSetting) {
+                    $keys[] = $groupSetting['name'];
+                }
+                continue;
+            }
+
+            $keys[] = $setting['name'];
+        }
+
+        $keys = array_flip($keys);
+
+        foreach ($settingValues as $name => $value) {
+            if (!isset($keys[$name])) {
+                continue;
+            }
+
+            $setting = $this->xpdo->getObject(modSystemSetting::class, ['namespace' => $this->namespace, 'key' => $this->getThemeSettingKey($name)]);
+            if (!$setting) {
+                continue;
+            }
+
+            $setting->set('value', $this->themeSettingValueToModxPlaceholder($value));
+            $setting->save();
+        }
+
+        $this->reloadSystemSettings();
+    }
+
+    protected function reloadSystemSettings()
+    {
+        /** @var modX $modx */
+        $modx = $this->xpdo;
+        $modx->getCacheManager();
+        $modx->cacheManager->refresh();
+
+        $config = $modx->cacheManager->get('config', [
+            xPDO::OPT_CACHE_KEY => $modx->getOption('cache_system_settings_key', null, 'system_settings'),
+            xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_system_settings_handler', null, $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
+            xPDO::OPT_CACHE_FORMAT => (integer) $modx->getOption('cache_system_settings_format', null, $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP)),
+        ]);
+
+        if (empty($config)) {
+            $config = $modx->cacheManager->generateConfig();
+        }
+
+        if (empty($config)) {
+            $config = [];
+            if (!$settings = $modx->getCollection(modSystemSetting::class)) {
+                return;
+            }
+            /** @var modSystemSetting $setting */
+            foreach ($settings as $setting) {
+                $config[$setting->get('key')]= $setting->get('value');
+            }
+        }
+
+        $modx->config = array_merge($modx->config, $config);
+        $modx->_systemConfig = $modx->config;
+    }
+
+    public function themeSettingValueToModxPlaceholder($value)
+    {
+        $value = str_replace('{{theme_dir}}', "[[++{$this->settingsPrefix}.theme_dir]]", $value);
+
+        return $value;
+    }
+
+    public function themeSettingValueFromModxPlaceholder($value)
+    {
+        $value = str_replace("[[++{$this->settingsPrefix}.theme_dir]]", '{{theme_dir}}', $value);
+
+        return $value;
+    }
+
+    public function getAllSettingValues($withModxTags = false)
+    {
+        $settings = $this->get('settings');
+        if (empty($settings)) {
+            return [];
+        }
+
+        $output = [];
+
+        foreach ($settings as $setting) {
+            if (isset($setting['group']) && !empty($setting['settings'])) {
+                foreach ($setting['settings'] as $gSetting) {
+                    $output[$gSetting['name']] = $this->xpdo->getOption("$this->settingsPrefix.setting.{$gSetting['name']}");
+
+                    if (!$withModxTags) {
+                        $output[$gSetting['name']] = $this->themeSettingValueFromModxPlaceholder($output[$gSetting['name']]);
+                    }
+                }
+                continue;
+            }
+
+            $output[$setting['name']] = $this->xpdo->getOption("$this->settingsPrefix.setting.{$setting['name']}");
+            if (!$withModxTags) {
+                $output[$setting['name']] = $this->themeSettingValueFromModxPlaceholder($output[$setting['name']]);
+            }
+        }
+
+        return $output;
     }
 
     public function getSettings()
@@ -323,10 +447,56 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
             return [];
         }
 
+        foreach ($settings as $key => $setting) {
+            if (isset($setting['group']) && !empty($setting['settings'])) {
+                foreach ($setting['settings'] as $gKey => $gSetting) {
+                    $settings[$key]['settings'][$gKey]['value'] = $this->xpdo->getOption("$this->settingsPrefix.setting.{$gSetting['name']}");
+                }
+                continue;
+            }
+
+            $settings[$key]['value'] = $this->xpdo->getOption("$this->settingsPrefix.setting.{$setting['name']}");
+        }
+
         /** @var modX $modx */
         $modx = $this->xpdo;
 
         if (!$modx->user->get('sudo')) {
+            $settings = $this->filterThemeSettings($settings, false, false);
+        }
+
+        return $settings;
+    }
+
+    public function getSettingKeys()
+    {
+        $settings = $this->get('settings');
+        if (empty($settings)) {
+            return [];
+        }
+
+        $keys = [];
+
+        foreach ($settings as $setting) {
+            if (isset($setting['group']) && is_array($setting['settings'])) {
+                foreach ($setting['settings'] as $groupSetting) {
+                    $keys[] = $groupSetting['name'];
+                }
+                continue;
+            }
+
+            $keys[] = $setting['name'];
+        }
+
+        return $keys;
+    }
+
+    private function filterThemeSettings($settings, $memberships, $rolesMap)
+    {
+        if ($memberships === false && $rolesMap === false) {
+            /** @var modX $modx */
+            $modx = $this->xpdo;
+
             $memberships = [];
             $groups = $modx->user->getUserGroups();
             $roles = [];
@@ -359,15 +529,8 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
             foreach ($userGroupRoles as $userGroupRole) {
                 $rolesMap[$userGroupRole->get('name')] = $userGroupRole->get('authority');
             }
-
-            $settings = $this->filterSettings($settings, $memberships, $rolesMap);
         }
 
-        return $settings;
-    }
-
-    private function filterSettings($settings, $memberships, $rolesMap)
-    {
         $filtered = [];
 
         foreach ($settings as $setting) {
@@ -436,7 +599,7 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
             }
 
             if (isset($setting['group']) && !empty($setting['settings'])) {
-                $setting['settings'] = $this->filterSettings($setting['settings'], $memberships, $rolesMap);
+                $setting['settings'] = $this->filterThemeSettings($setting['settings'], $memberships, $rolesMap);
             }
 
             $filtered[] = $setting;
