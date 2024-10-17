@@ -2,6 +2,7 @@
 
 namespace Fred\Model;
 
+use MODX\Revolution\modContext;
 use MODX\Revolution\modContextSetting;
 use MODX\Revolution\modLexiconEntry;
 use MODX\Revolution\modNamespace;
@@ -318,7 +319,7 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
         $systemSetting->save();
     }
 
-    public function saveThemeSettings($settingValues)
+    public function saveThemeSettings($settingValues, $ctx)
     {
         $settings = $this->get('settings');
         if (empty($settings)) {
@@ -337,15 +338,19 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
         foreach ($settings as $setting) {
             if (isset($setting['group']) && is_array($setting['settings'])) {
                 foreach ($setting['settings'] as $groupSetting) {
-                    $keys[] = $groupSetting['name'];
+                    $keys[$groupSetting['name']] = [
+                        'group' => $setting['group'],
+                        'global' => isset($groupSetting['global']) ? $groupSetting['global'] : true
+                    ];
                 }
                 continue;
             }
 
-            $keys[] = $setting['name'];
+            $keys[$setting['name']] = [
+                'group' => '',
+                'global' => isset($setting['global']) ? $setting['global'] : true
+            ];
         }
-
-        $keys = array_flip($keys);
 
         foreach ($settingValues as $name => $value) {
             if (!isset($keys[$name])) {
@@ -357,7 +362,23 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
                 continue;
             }
 
-            $setting->set('value', $this->themeSettingValueToModxPlaceholder($value));
+            $newValue = $this->themeSettingValueToModxPlaceholder($value);
+            if ($setting->get('value') === $newValue) {
+                continue;
+            }
+
+            if ($keys[$name]['global'] === false) {
+                $setting = $this->xpdo->getObject(modContextSetting::class, ['namespace' => $this->namespace, 'context_key' => $ctx, 'key' => $this->getThemeSettingKey($name)]);
+                if (!$setting) {
+                    $setting = $this->xpdo->newObject(modContextSetting::class);
+                    $setting->set('namespace', $this->namespace);
+                    $setting->set('key', $this->getThemeSettingKey($name));
+                    $setting->set('context_key', $ctx);
+                    $setting->set('area', $keys[$name]['group']);
+                }
+            }
+
+            $setting->set('value', $newValue);
             $setting->save();
         }
 
