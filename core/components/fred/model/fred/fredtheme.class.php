@@ -442,11 +442,13 @@ class FredTheme extends xPDOSimpleObject
             if (isset($setting['group']) && !empty($setting['settings'])) {
                 foreach ($setting['settings'] as $gKey => $gSetting) {
                     $settings[$key]['settings'][$gKey]['value'] = $this->xpdo->getOption("$this->settingsPrefix.setting.{$gSetting['name']}");
+                    $settings[$key]['settings'][$gKey]['raw'] = $this->getRawValue($settings[$key]['settings'][$gKey]['value']);
                 }
                 continue;
             }
 
             $settings[$key]['value'] = $this->xpdo->getOption("$this->settingsPrefix.setting.{$setting['name']}");
+            $settings[$key]['raw'] = $this->getRawValue($settings[$key]['value']);
         }
 
         /** @var \modX $modx */
@@ -457,6 +459,40 @@ class FredTheme extends xPDOSimpleObject
         }
 
         return $settings;
+    }
+
+    public function getRawValue($value) {
+        // check if it contains modx tags
+        if (strpos($value, '[[') !== false) {
+
+            /** @var \modX $modx */
+            $modx = $this->xpdo;
+            $currentResource = $modx->resource;
+            $currentResourceIdentifier = $modx->resourceIdentifier;
+            $currentElementCache = $modx->elementCache;
+            $modx->request = new \modRequest($modx);
+            $modx->request->sanitizeRequest();
+
+            $modx->getParser();
+            $maxIterations = empty($maxIterations) || (int) $maxIterations < 1 ? 10 : (int) $maxIterations;
+
+            $resource = $modx->getObject('modResource', $modx->getOption('site_start'));
+
+            $modx->resource = $resource;
+            $modx->resourceIdentifier = $resource->get('id');
+            $modx->elementCache = [];
+
+            $modx->parser->processElementTags('', $value, false, false, '[[', ']]', [], $maxIterations);
+            $modx->parser->processElementTags('', $value, true, false, '[[', ']]', [], $maxIterations);
+            $modx->parser->processElementTags('', $value, true, true, '[[', ']]', [], $maxIterations);
+
+            if (!empty($currentResource)) {
+                $modx->resource = $currentResource;
+                $modx->resourceIdentifier = $currentResourceIdentifier;
+                $modx->elementCache = $currentElementCache;
+            }
+        }
+        return $value;
     }
 
     public function getSettingKeys()

@@ -12,6 +12,7 @@
 namespace Fred\Endpoint\Ajax;
 
 use Fred\Model\FredElement;
+use Fred\Model\FredTheme;
 use MODX\Revolution\modRequest;
 use MODX\Revolution\modResource;
 
@@ -23,4 +24,5 @@ class RenderElement extends Endpoint
     private $elementClass = FredElement::class;
     private $requestClass = modRequest::class;
     private $resourceClass = modResource::class;
+    private $themeClass = FredTheme::class;
 }

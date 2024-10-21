@@ -32,6 +32,8 @@ trait RenderElement
 
         /** @var $element */
         $element = $this->modx->getObject($this->elementClass, ['uuid' => $elementUUID]);
+        $category = $element->getOne('Category');
+        $theme = $this->modx->getObject($this->themeClass, $category->theme);
 
         if (!$this->modx->hasPermission('fred_element_cache_refresh')) {
             $refreshCache = false;
@@ -53,9 +55,10 @@ trait RenderElement
         $twig = new \Twig\Environment($loader, []);
         $twig->setCache(false);
 
-        $settings['theme_dir'] = '{{theme_dir}}';
+        $settings['theme_dir'] = $theme->getThemeFolderUri();
+        $settings['theme_setting'] = $this->getThemeSettings($theme);
         $settings['template'] = [
-            'theme_dir' => '{{template.theme_dir}}'
+            'theme_dir' => $theme->getThemeFolderUri()
         ];
         $resource = $this->modx->getObject($this->resourceClass, $resourceId);
         if (empty($resource)) {
@@ -145,5 +148,18 @@ trait RenderElement
         return $this->data([
             "html" => $html
         ]);
+    }
+
+    private function getThemeSettings($theme)
+    {
+        $settings = [];
+        if ($theme) {
+            $keys = $theme->getSettingKeys();
+            foreach ($keys as $key) {
+                $settings[$key] = $this->modx->getOption($theme->get('settingsPrefix') . '.setting.' . $key, [], '');
+            }
+        }
+
+        return $settings;
     }
 }

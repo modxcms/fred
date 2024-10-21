@@ -354,12 +354,12 @@ class Config {
             } else {
                 if (cleanRender === true) {
                     if (parseModx === true) {
-                        acc[item.name] = valueParser(item.value, false);
+                        acc[item.name] = item.raw;
                     } else {
                         acc[item.name] = `[[++${this.config.themeSettingsPrefix}.setting.${item.name}]]`;
                     }
                 } else {
-                    acc[item.name] = valueParser(item.value, false);
+                    acc[item.name] = item.raw;
                 }
             }
             return acc;

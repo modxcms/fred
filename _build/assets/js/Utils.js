@@ -261,7 +261,7 @@ export const getTemplateSettings = (cleanRender = false) => {
     }
     return {
         ...pageSettings,
-        theme_dir: '{{theme_dir}}',
+        theme_dir:  cleanRender ? `[[++${fredConfig.config.themeSettingsPrefix}.theme_dir]]` : fredConfig.config.themeDir,
         template: {
             theme_dir: cleanRender ? `[[++${fredConfig.config.themeSettingsPrefix}.theme_dir]]` : fredConfig.config.themeDir
         },
