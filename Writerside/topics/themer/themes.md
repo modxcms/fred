@@ -1,4 +1,4 @@
-# Basic Tutorial Tutorial
+# Basic Tutorial
 
 Once you have created a design you are happy with, it is straightforward to build a Theme to share. To start creating a theme, follow the steps below:
 

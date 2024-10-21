@@ -23,6 +23,7 @@ $_lang['fred.global.any'] = 'Any';
 $_lang['fred.global.change_order'] = 'Change order: [[+name]]';
 $_lang['fred.global.help'] = 'Help';
 $_lang['fred.global.none'] = 'None';
+$_lang['fred.global.uuid'] = 'UUID';
 
 $_lang['fred.open_in_fred'] = 'Open In Fred';
 

@@ -17,7 +17,7 @@ fred.grid.Themes = function (config) {
             action: 'Fred\\Processors\\Themes\\GetList'
         },
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace', 'settingsPrefix', 'settings'],
+        fields: ['id', 'uuid', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace', 'settingsPrefix', 'settings'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -29,10 +29,24 @@ fred.grid.Themes = function (config) {
                 hidden: true
             },
             {
+                header: _('fred.global.uuid'),
+                dataIndex: 'uuid',
+                sortable: true,
+                hidden: true
+            },
+            {
                 header: _('fred.themes.name'),
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                    return `<div class="fred-x-grid-cell-name">
+                                <h3><a href="?a=theme/update&namespace=fred&id=${record.data.id}">${value}</a></h3>
+                                <small>${_('fred.global.uuid')}: ${record.data.uuid}</small>
+                                <small>${record.data.description}</small>
+                            </div>`;
+
+                },
                 editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
@@ -40,6 +54,7 @@ fred.grid.Themes = function (config) {
                 dataIndex: 'description',
                 sortable: true,
                 width: 80,
+                hidden: true,
                 editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {

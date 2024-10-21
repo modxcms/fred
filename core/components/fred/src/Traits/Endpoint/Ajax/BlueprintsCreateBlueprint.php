@@ -117,7 +117,7 @@ trait BlueprintsCreateBlueprint
 
                 $blueprint->set('image', '{{theme_dir}}generated/' . $fileName . '?timestamp=' . time());
             } else {
-                $blueprint->set('image', 'https://via.placeholder.com/300x150?text=' . urlencode($this->body['name']));
+                $blueprint->set('image', 'https://placehold.co/300x150?text=' . urlencode($this->body['name']));
             }
 
             $blueprint->save();

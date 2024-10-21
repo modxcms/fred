@@ -30,7 +30,7 @@ fred.grid.Elements = function (config) {
         url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name', 'theme_theme_folder', 'theme_settingsPrefix', 'templates'],
+        fields: ['id', 'uuid', 'name', 'description', 'image', 'category', 'rank', 'category_name', 'option_set', 'content', 'has_override', 'option_set_name', 'theme_id', 'theme_name', 'theme_theme_folder', 'theme_settingsPrefix', 'templates'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.elements.none'),
@@ -38,6 +38,12 @@ fred.grid.Elements = function (config) {
             {
                 header: _('id'),
                 dataIndex: 'id',
+                sortable: true,
+                hidden: true
+            },
+            {
+                header: _('fred.global.uuid'),
+                dataIndex: 'uuid',
                 sortable: true,
                 hidden: true
             },
@@ -51,7 +57,7 @@ fred.grid.Elements = function (config) {
                         value = fred.prependBaseUrl(value, record.data.theme_settingsPrefix);
 
                         metaData.attr = 'ext:qtip=\'<img src=\"' + value + '\">\'';
-                        return '<img src="' + value + '"  style="max-width:200px;max-height:150px;">';
+                        return '<img src="' + value + '"  style="max-width:100%;max-height:150px;object-fit:contain;" width="350" height="150">';
                     }
 
                     return value;
@@ -62,6 +68,14 @@ fred.grid.Elements = function (config) {
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                    return `<div class="fred-x-grid-cell-name">
+                                <h3><a href="?a=element/update&namespace=fred&id=${record.data.id}">${value}</a></h3>
+                                <small>${_('fred.global.uuid')}: ${record.data.uuid}</small>
+                                <small>${record.data.description}</small>
+                            </div>`;
+
+                },
                 editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
@@ -69,7 +83,7 @@ fred.grid.Elements = function (config) {
                 dataIndex: 'description',
                 width: 120,
                 editor: {xtype: 'textfield'},
-                hidden: document.body.clientWidth < 1550
+                hidden: true
             },
             {
                 header: _('fred.elements.theme'),

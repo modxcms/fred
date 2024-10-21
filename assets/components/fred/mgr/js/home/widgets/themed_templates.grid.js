@@ -27,6 +27,11 @@ fred.grid.ThemedTemplates = function (config) {
                 header: _('fred.themed_templates.template'),
                 dataIndex: 'template_templatename',
                 sortable: true,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                    return `<div class="fred-x-grid-cell-name">
+                                <h3><a href="?a=element/template/update&id=${record.data.template}">${value}</a></h3>
+                            </div>`;
+                },
                 width: 80
             },
             {

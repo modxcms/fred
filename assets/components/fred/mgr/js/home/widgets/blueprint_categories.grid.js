@@ -30,7 +30,7 @@ fred.grid.BlueprintCategories = function (config) {
         url: fred.config.connectorUrl,
         baseParams: baseParams,
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints', 'theme', 'theme_name', 'templates'],
+        fields: ['id', 'uuid', 'name', 'rank', 'public', 'createdBy', 'user_profile_fullname', 'blueprints', 'theme', 'theme_name', 'templates'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.blueprint_categories.none'),
@@ -42,10 +42,23 @@ fred.grid.BlueprintCategories = function (config) {
                 hidden: true
             },
             {
+                header: _('fred.global.uuid'),
+                dataIndex: 'uuid',
+                sortable: true,
+                hidden: true
+            },
+            {
                 header: _('fred.blueprint_categories.name'),
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                    return `<div class="fred-x-grid-cell-name">
+                                <h3>${value}</h3>
+                                <small>${_('fred.global.uuid')}: ${record.data.uuid}</small>
+                            </div>`;
+
+                },
                 editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {

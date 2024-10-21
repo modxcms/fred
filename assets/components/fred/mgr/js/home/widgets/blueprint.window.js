@@ -174,7 +174,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                                     if (value) {
                                         value = fred.prependBaseUrl(value, settingsPrefix);
                                     } else {
-                                        value = "https://via.placeholder.com/300x150?text=No+image";
+                                        value = "https://placehold.co/300x150?text=No+image";
                                     }
 
                                     Ext.getCmp('image_preview').el.dom.querySelector('img').src = value;
@@ -194,7 +194,7 @@ Ext.extend(fred.window.Blueprint, MODx.Window, {
                             },
                             {
                                 id: 'image_preview',
-                                html: '<img src="' + (config.record.image ? fred.prependBaseUrl(config.record.image, config.record.theme_settingsPrefix) : "https://via.placeholder.com/300x150?text=No+image") + '" style="max-height: 400px;max-width: 770px;margin-top: 15px;">'
+                                html: '<img src="' + (config.record.image ? fred.prependBaseUrl(config.record.image, config.record.theme_settingsPrefix) : "https://placehold.co/300x150?text=No+image") + '" style="max-height: 400px;max-width: 770px;margin-top: 15px;">'
                             }
                         ]
                     }

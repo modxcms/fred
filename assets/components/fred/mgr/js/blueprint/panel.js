@@ -64,7 +64,7 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                 this.settingsPrefix = r.object.settingsPrefix;
                                 r.object.image = fred.prependBaseUrl(r.object.image, r.object.settingsPrefix);
                             } else {
-                                r.object.image = "https://via.placeholder.com/300x150?text=No+image";
+                                r.object.image = "https://placehold.co/300x150?text=No+image";
                             }
 
                             Ext.getCmp('image_preview').el.dom.querySelector('img').src = r.object.image;
@@ -187,7 +187,7 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                                     if (value) {
                                                         value = fred.prependBaseUrl(value, settingsPrefix);
                                                     } else {
-                                                        value = "https://via.placeholder.com/300x150?text=No+image";
+                                                        value = "https://placehold.co/300x150?text=No+image";
                                                     }
 
                                                     Ext.getCmp('image_preview').el.dom.querySelector('img').src = value;
@@ -323,7 +323,7 @@ Ext.extend(fred.panel.Blueprint, MODx.FormPanel, {
                                         items: [
                                             {
                                                 id: 'image_preview',
-                                                html: '<img src="' + "https://via.placeholder.com/800x100?text=No+image" + '" style="max-height: 800px;max-width: 100%;margin-top: 15px;">',
+                                                html: '<img src="' + "https://placehold.co/800x100?text=No+image" + '" style="max-height: 800px;max-width: 100%;margin-top: 15px;">',
                                                 listeners: {
                                                     render: function () {
                                                         this.el.dom.style.textAlign = 'center';

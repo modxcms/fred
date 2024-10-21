@@ -28,7 +28,7 @@ The value of this attribute has to be unique in each Element, but you can have m
 <p data-fred-name="description">Default value</p>
 
 <!-- Editable image -->
-<img src="http://via.placeholder.com/450x150" data-fred-name="header-image">
+<img src="http://placehold.co/450x150" data-fred-name="header-image">
 ```
 
 ## data-fred-editable
@@ -48,7 +48,7 @@ Defines other HTML attributes (comma separated) to save with the content of the 
 ### Example {id="example_3"}
 
 ```html
-<img src="http://via.placeholder.com/450x150" alt="Default Alt" data-fred-name="header-image" data-fred-attrs="alt,title">
+<img src="http://placehold.co/450x150" alt="Default Alt" data-fred-name="header-image" data-fred-attrs="alt,title">
 ```
 
 ## data-fred-render
@@ -124,7 +124,7 @@ Identical to `data-fred-media-source` but only for images.
 ### Example {id="example_8"}
 
 ```html
-<img src="http://via.placeholder.com/450x150" data-fred-name="header-image" data-fred-image-media-source="Blogs,Images">
+<img src="http://placehold.co/450x150" data-fred-name="header-image" data-fred-image-media-source="Blogs,Images">
 ```
 
 ## data-fred-block-class

@@ -24,13 +24,21 @@ fred.grid.MediaSources = function (config) {
                 header: _('fred.media_sources.name'),
                 dataIndex: 'name',
                 sortable: true,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                    return `<div class="fred-x-grid-cell-name">
+                                <h3><a href="?a=source/update&id=${record.data.id}">${value}</a></h3>
+                                <small>${record.data.description}</small>
+                            </div>`;
+
+                },
                 width: 80
             },
             {
                 header: _('fred.media_sources.description'),
                 dataIndex: 'description',
                 sortable: true,
-                width: 80
+                width: 80,
+                hidden: true
             },
             {
                 header: _('fred.media_sources.fred'),
