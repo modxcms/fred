@@ -462,7 +462,7 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
         return $output;
     }
 
-    public function getSettings()
+    public function getSettings($twig = false)
     {
         $settings = $this->get('settings');
         if (empty($settings)) {
@@ -472,13 +472,20 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
         foreach ($settings as $key => $setting) {
             if (isset($setting['group']) && !empty($setting['settings'])) {
                 foreach ($setting['settings'] as $gKey => $gSetting) {
-                    $settings[$key]['settings'][$gKey]['value'] = $this->xpdo->getOption("$this->settingsPrefix.setting.{$gSetting['name']}");
+                    $value = $this->xpdo->getOption("$this->settingsPrefix.setting.{$gSetting['name']}");
+                    if ($twig) {
+                        $value = $this->themeSettingValueFromModxPlaceholder($value);
+                    }
+                    $settings[$key]['settings'][$gKey]['value'] = $value;
                     $settings[$key]['settings'][$gKey]['raw'] = $this->getRawValue($settings[$key]['settings'][$gKey]['value']);
                 }
                 continue;
             }
-
-            $settings[$key]['value'] = $this->xpdo->getOption("$this->settingsPrefix.setting.{$setting['name']}");
+            $value = $this->xpdo->getOption("$this->settingsPrefix.setting.{$setting['name']}");
+            if ($twig) {
+                $value = $this->themeSettingValueFromModxPlaceholder($value);
+            }
+            $settings[$key]['value'] = $value;
             $settings[$key]['raw'] = $this->getRawValue($settings[$key]['value']);
         }
 
@@ -494,6 +501,7 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
 
     public function getRawValue($value) {
         // check if it contains modx tags
+        $value = str_replace('{{theme_dir}}', '[[++'. $this->settingsPrefix .'.theme_dir]]', $value);
         if (strpos($value, '[[') !== false) {
 
             /** @var \modX $modx */
@@ -506,7 +514,7 @@ class FredTheme extends \xPDO\Om\xPDOSimpleObject
             $modx->request->sanitizeRequest();
 
             $modx->getParser();
-            $maxIterations = empty($maxIterations) || (int) $maxIterations < 1 ? 10 : (int) $maxIterations;
+            $maxIterations = 10;
 
             $resource = $modx->getObject(modResource::class, $modx->getOption('site_start'));
 

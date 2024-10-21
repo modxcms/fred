@@ -435,7 +435,7 @@ trait RenderResource
         $settings['setting'] = [];
 
         foreach ($themeSettingKeys as $settingKey) { {
-            $settings['setting'][$settingKey] = "[[++{$this->theme->settingsPrefix}.setting.$settingKey]]";
+            $settings['theme_setting'][$settingKey] = "[[++{$this->theme->settingsPrefix}.setting.$settingKey]]";
         }}
 
         $settings['id'] = $id;

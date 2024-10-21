@@ -232,7 +232,8 @@ class SaveContent extends Endpoint
         }
 
         $theme = $this->fred->getTheme($this->object->template);
-        $theme->saveThemeSettings($this->body['themeSettings'],$this->object->Context->key);
+        $context = $this->object->getOne('Context');
+        $theme->saveThemeSettings($this->body['themeSettings'], $context->key);
 
         // unify resource rendering
         $renderResource = new \Fred\v2\RenderResource($this->object, $this->modx, $this->body['data'], $this->body['pageSettings']);

@@ -173,7 +173,7 @@ trait OnWebPagePrerender
                 themeDir: "' . $theme->getThemeFolderUri() . '",
                 themeNamespace: "' . $theme->get('namespace') . '",
                 themeSettingsPrefix: "' . $theme->get('settingsPrefix') . '",
-                themeSettings: ' . json_encode($theme->getSettings()) . ',
+                themeSettings: ' . json_encode($theme->getSettings(true)) . ',
                 allThemeSettings: ' . json_encode($theme->getAllSettingValues()) . ',
                 assetsUrl: "' . $this->fred->getOption('webAssetsUrl') . '",
                 managerUrl: "' . MODX_MANAGER_URL . '",
