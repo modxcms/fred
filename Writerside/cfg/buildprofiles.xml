@@ -6,7 +6,23 @@
     <build-profile instance="fd">
         <variables>
             <noindex-content>false</noindex-content>
+            <offline-docs>true</offline-docs>
+            <primary-color>blueberry</primary-color>
+            <color-preset>vivid</color-preset>
+            <custom-favicons>https://modx.com/favicon.svg</custom-favicons>
+            <header-logo>https://modx.com/assets/themes/manana/images/logo.svg</header-logo>
+            <product-web-url>https://modx.com/cloud-web-hosting</product-web-url>
+            <download-title>Get Help</download-title>
+            <download-page>https://modx.com/get-help/</download-page>
+            <showDownloadButton>true</showDownloadButton>
         </variables>
+        <footer>
+            <social type="twitter" href="https://twitter.com/modx"/>
+            <social type="youtube" href="https://www.youtube.com/modx" />
+            <social type="blog" href="https://modx.com/blog/" />
+            <social type="email" href="help@modx.com" />
+            <copyright>MODX, LLC</copyright>
+        </footer>
     </build-profile>
 
 </buildprofiles>
