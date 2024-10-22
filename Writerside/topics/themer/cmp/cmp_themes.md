@@ -74,6 +74,8 @@ The theme settings are formatted as a JSON array. Here is an example of a theme 
 ]
 ```
 
+One additional option that is specific to Theme Settings is that each setting can have a `"global": false` flag. This flag will cause the setting to save to the context it is used in, rather than the system settings. This is useful for multi-context sites where you want to have different settings for different contexts.
+
 ### Elements
 
 A Theme Builder will automatically include all Element Categories attached to the Theme with all their [Elements](cmp_elements.md). All [Option Sets](option_sets.md) and [RTE Configs](rte_configs.md) attached to the Theme will be also included.
