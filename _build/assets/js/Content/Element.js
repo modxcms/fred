@@ -23,6 +23,7 @@ export class Element {
         this.wrapper = null;
         this.invalidTheme = this.el.dataset.invalidTheme === 'true';
         this.renderOn = [];
+        this.usedThemeSettings = {};
         this.setUpRenderOn();
 
         if (!elId) {
@@ -88,8 +89,14 @@ export class Element {
         this.dzs = {};
 
         this.inEditor = false;
-        emitter.on('fred-page-setting-change', (setting, value, rawValue, el) => {
+        emitter.on('fred-page-setting-change', (setting) => {
             if (this.renderOn.indexOf(setting) !== -1) {
+                this.render(true, false);
+            }
+        });
+
+        emitter.on('fred-theme-setting-change', (setting) => {
+            if (this.usedThemeSettings[setting]) {
                 this.render(true, false);
             }
         });
@@ -149,6 +156,13 @@ export class Element {
                 )
             ) {
                 this.renderOn.push(element);
+            }
+
+            if (element.startsWith(`setting.`)) {
+                const themeElement = element.replace(`setting.`, '');
+                if (this.usedThemeSettings[themeElement] === undefined && fredConfig.themeSettingsExists(themeElement)) {
+                    this.usedThemeSettings[themeElement] = true;
+                }
             }
         });
         this.el.elementMarkup.replace(/data-fred-target="([^"]+)"/g, (match, p1) => {
@@ -835,13 +849,16 @@ export class Element {
             settings = this.parsedSettings;
         }
 
-        return this.template.render({...settings, ...(getTemplateSettings(cleanRender && !isPreview)), id: this.elId});
+        const themeSettings = {theme_setting: fredConfig.getThemeSettingsMap(true, parseModx, cleanRender)};
+
+        return this.template.render({...settings, ...(getTemplateSettings(cleanRender && !isPreview)), ...themeSettings, id: this.elId});
     }
 
     remoteTemplateRender(parseModx = true, cleanRender = false, isPreview = false, refreshCache = false) {
         const cacheOutput = this.options.cacheOutput === true;
+        const themeSettings = {theme_setting: fredConfig.getThemeSettingsMap()}
 
-        return renderElement(this.id, {...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), ...(getTemplateSettings(cleanRender && !isPreview)), id: this.elId}, parseModx, cacheOutput, refreshCache).then(json => {
+        return renderElement(this.id, {...(cleanRender ? this.parsedSettingsClean : this.parsedSettings), ...(getTemplateSettings(cleanRender && !isPreview)), ...themeSettings, id: this.elId}, parseModx, cacheOutput, refreshCache).then(json => {
             const html = twig({data: json.data.html}).render(getTemplateSettings(cleanRender && !isPreview));
             this.setEl(html);
 

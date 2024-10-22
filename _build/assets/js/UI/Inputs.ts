@@ -512,7 +512,7 @@ export const slider = (
     }
 
     const slider = noUiSlider.create(sliderEl, {
-        start: defaultValue,
+        start: defaultValue ?? setting.value ?? setting.min,
         connect: [true, false],
         tooltips: {
             to: value => {

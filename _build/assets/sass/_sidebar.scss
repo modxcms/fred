@@ -412,6 +412,12 @@
         + dd {
           transition: .001s;
           transition-delay: .3s;
+          dl {
+            dt {
+              background-color: $offwhite;
+              margin-top: 10px;
+            }
+          }
         }
         &.active {
           + dd {
@@ -428,6 +434,32 @@
             transition: $timing;
             transition-delay: .001s;
             z-index: 99;
+            dl {
+              dt {
+                &.active {
+                  + dd {
+                    margin-top: 16px;
+                    height: auto;
+                    max-height: 9999px;
+                    position: relative;
+                    left: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+        + dd {
+          dl {
+            dt {
+              + dd {
+                max-height: 0;
+                position: relative;
+                transition-delay: 0s;
+                left: 0;
+                width: 280px;
+              }
+            }
           }
         }
         &:hover:not(:focus) {
@@ -466,6 +498,7 @@
       border-left: 1px solid rgba($black, .25);
       margin: 0 0 0 20px;
       transition: $timing left;
+      max-width: calc(100% - 20px);
       &:not(.fred--hidden){
         position: relative;
         left: 0;
@@ -533,28 +566,6 @@
     }
   }
 }
-//Safari Fixes
-@media not all and (min-resolution:.001dpcm)
-{ @supports (-webkit-appearance:none) {
-
-  .fred--sidebar {
-    overflow-y: visible;
-  }
-  .fred--accordion dd{
-    overflow: auto;
-  }
-  .fred--accordion dd dl dt{
-    &.active + dd{
-      position: relative;
-      left: 0;
-    }
-    & + dd{
-      height: auto !important;
-      width: 260px !important;
-      transition: 0s;
-    }
-  }
-}}
 @keyframes fred--fadein {
   0% {
     opacity: 0;

@@ -56,6 +56,8 @@ $_lang['fred.fe.page_settings.menu_index'] = 'Menu Index';
 $_lang['fred.fe.page_settings.deleted'] = 'Deleted';
 $_lang['fred.fe.page_settings.tvs'] = 'TVs';
 
+$_lang['fred.fe.page_settings.theme_settings'] = 'Theme Settings';
+
 $_lang['fred.fe.pages.no_parent'] = 'No Parent';
 $_lang['fred.fe.pages.create_page'] = 'Create Page';
 $_lang['fred.fe.pages.parent'] = 'Parent';

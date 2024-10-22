@@ -430,6 +430,14 @@ trait RenderResource
             'theme_dir' => "[[++{$this->theme->settingsPrefix}.theme_dir]]",
         ];
 
+        $themeSettingKeys = $this->theme->getSettingKeys();
+
+        $settings['setting'] = [];
+
+        foreach ($themeSettingKeys as $settingKey) { {
+            $settings['theme_setting'][$settingKey] = "[[++{$this->theme->settingsPrefix}.setting.$settingKey]]";
+        }}
+
         $settings['id'] = $id;
         foreach ($this->pageSettings as $key => $value) {
             $settings[$key] = $value;

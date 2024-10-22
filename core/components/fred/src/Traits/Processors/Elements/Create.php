@@ -49,7 +49,7 @@ trait Create
         }
 
         if (empty($image)) {
-            $this->setProperty('image', 'https://via.placeholder.com/300x150?text=' . urlencode($name));
+            $this->setProperty('image', 'https://placehold.co/300x150?text=' . urlencode($name));
         }
 
         return parent::beforeSet();

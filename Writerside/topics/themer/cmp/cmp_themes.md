@@ -27,9 +27,54 @@ When you create a Theme, Fred will automatically create a directory named for th
 
 ### Default Element
 
-The default element setting allows you to chose a default Fred Element and target area for placing the content on existing documents. The setting is formatted as `ID|target` where ID is the identification number of the Fred Element and the target is the HTML object within containing a `data-fred-name` attribute. This is useful for converting a standard resource to Fred, as it will place the existing content in the default element.
+The default element setting allows you to choose a default Fred Element and target area for placing the content on existing documents. The setting is formatted as `UUID|target` where UUID is the universally unique identification number of the Fred Element and the target is the HTML object within containing a `data-fred-name` attribute. This is useful for converting a standard resource to Fred, as it will place the existing content in the default element.
 
-If you aren't finding the identification number of the Fred Element, right-click on the top of the element grid and make sure the ID column is selected.
+If you aren't finding the UUID of the Fred Element, open an element and look for a display field labeled "UUID".
+
+### Theme Settings
+
+Themes can have settings that are used to configure the theme. These settings are stored in the "Settings" section of the Theme. The settings are stored as a JSON object and can be accessed in the theme's twig templates using the `theme_setting` object. For example, if you have a setting named `logo`, you can access it in a template like this:
+    
+```twig
+  <img src="{{ theme_setting.logo }}" />
+```
+
+Theme settings are saved in the system settings and can be accessed outside of fred using the theme's Setting Prefix. For example, if the theme's setting prefix is `my_theme`, you can access the setting `logo` in a chunk like this:
+
+```html
+<img src="[[++fred.theme.my_theme.setting.logo]]" alt="[[++site_name]]" />
+```
+
+Theme settings can use any of the [setting types](settings.md#available-settings-types) described in the option groups documentation.
+
+#### Format
+
+The theme settings are formatted as a JSON array. Here is an example of a theme setting:
+
+```json
+[
+  {
+    "group": "Look and Feel",
+    "settings": [
+      {
+        "name": "site_color",
+        "type": "colorswatch",
+        "options": [
+          "lightcoral",
+          "red",
+          "black"
+        ]
+      },
+      {
+        "name": "site_logo",
+        "type": "image"
+      }
+    ]
+  }
+]
+```
+
+One additional option that is specific to Theme Settings is that each setting can have a `"global": false` flag. This flag will cause the setting to save to the context it is used in, rather than the system settings. This is useful for multi-context sites where you want to have different settings for different contexts.
 
 ### Elements
 

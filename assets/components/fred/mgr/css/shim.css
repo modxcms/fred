@@ -1,0 +1,59 @@
+.modx-header-breadcrumbs .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+.modx-header-breadcrumbs .breadcrumbs h2 {
+    order: 1;
+    font: normal 20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    color: #53595F;
+    margin: 0 !important;
+    padding-left: 0;
+}
+@media screen and (max-width: 960px) {
+    .modx-header-breadcrumbs .breadcrumbs h2 {
+        width: 100%;
+        text-align: center;
+        font-size: 2em;
+    }
+}
+.modx-header-breadcrumbs ul {
+    order: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.modx-header-breadcrumbs ul li {
+    font: normal 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    color: #53595F;
+}
+.modx-header-breadcrumbs ul li a {
+    font: normal 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    text-decoration: none;
+}
+.modx-header-breadcrumbs ul li a.menu_hidden {
+    font-style: italic;
+}
+.modx-header-breadcrumbs ul li a.menu_hidden:hover {
+    color: #162a42;
+}
+.modx-header-breadcrumbs ul li a.not_published {
+    color: #b3b3b3 !important;
+}
+.modx-header-breadcrumbs ul li a.not_published:hover {
+    color: #162a42;
+}
+.modx-header-breadcrumbs ul li a.deleted {
+    color: rgba(175, 90, 98, 0.5) !important;
+    text-decoration: line-through;
+}
+.modx-header-breadcrumbs ul li a.deleted:hover {
+    color: #162a42;
+}
+.modx-header-breadcrumbs ul li:after {
+    content: "\f054";
+    padding: 0 10px;
+    color: #999999;
+    font-size: 12px;
+    font-family: "FontAwesome";
+}

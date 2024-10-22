@@ -19,6 +19,7 @@ class RenderElement extends Endpoint
     private $elementClass = 'FredElement';
     private $requestClass = 'modRequest';
     private $resourceClass = 'modResource';
+    private $themeClass = 'FredTheme';
 
     public function __construct(\Fred &$fred, $payload)
     {

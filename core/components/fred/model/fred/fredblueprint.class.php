@@ -21,7 +21,7 @@ class FredBlueprint extends xPDOSimpleObject
 
     public function getImage()
     {
-        $image = 'https://via.placeholder.com/350x150?text=' . urlencode($this->name);
+        $image = 'https://placehold.co/350x150?text=' . urlencode($this->name);
 
         if (!empty($this->image)) {
             $image = $this->image;

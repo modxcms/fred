@@ -19,8 +19,11 @@ export default class PageSettings extends SidebarPlugin {
         this.setTVWithEmitter = this.setTVWithEmitter.bind(this);
         this.setMultiTVWithEmitter = this.setMultiTVWithEmitter.bind(this);
         this.addTVChangeListener = this.addTVChangeListener.bind(this);
+        this.setThemeSettingWithEmitter = this.setThemeSettingWithEmitter.bind(this);
+        this.setMultiThemeSettingWithEmitter = this.setMultiThemeSettingWithEmitter.bind(this);
 
         this.pageSettings = fredConfig.pageSettings;
+        this.themeSettings = fredConfig.themeSettings;
         this.content = this.render();
     }
 
@@ -32,6 +35,8 @@ export default class PageSettings extends SidebarPlugin {
         const settingsForm = form(['fred--page_settings_form']);
 
         settingsForm.appendChild(this.getGeneralFields());
+
+        settingsForm.appendChild(this.getThemeSettingFields());
 
         if (fredConfig.permission.fred_settings_advanced) {
             settingsForm.appendChild(this.getAdvancedFields());
@@ -155,6 +160,122 @@ export default class PageSettings extends SidebarPlugin {
         });
 
         return advancedList;
+    }
+
+    getThemeSettingFields() {
+        const advancedList = dl();
+
+        const advancedTab = dt('fred.fe.page_settings.theme_settings', ['fred--accordion-cog'], e => {
+            const activeTabs = advancedList.parentElement.querySelectorAll('dt.active');
+
+            const isActive = advancedTab.classList.contains('active');
+
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
+                advancedTab.classList.add('active');
+                e.stopPropagation();
+                emitter.emit('fred-sidebar-dt-active', advancedTab, advancedContent);
+            }
+
+        });
+
+        const advancedContent = dd();
+        const advancedHeader = h3('fred.fe.page_settings.theme_settings');
+        const fields = fieldSet(['fred--page_settings_form_theme_settings']);
+
+        this.themeSettings.forEach(setting => {
+            if (setting.group && setting.settings) {
+                const groupEl = this.renderThemeSettingsGroup(setting);
+                if (groupEl !== false) {
+                    fields.appendChild(groupEl);
+                }
+            } else {
+                const settingEl = this.renderThemeSetting(setting);
+                if (settingEl !== false) {
+                    fields.appendChild(settingEl);
+                }
+            }
+        });
+
+        advancedContent.appendChild(advancedHeader);
+        advancedContent.appendChild(fields);
+        advancedList.appendChild(advancedTab);
+        advancedList.appendChild(advancedContent);
+
+        return advancedList;
+    }
+
+    renderThemeSettingsGroup(group) {
+        const content = dl();
+
+        const settingGroup = dt(group.group, [], (e, el) => {
+            const activeTabs = content.parentElement.querySelectorAll('dt.active');
+
+            const isActive = el.classList.contains('active');
+
+            for (let tab of activeTabs) {
+                tab.classList.remove('active');
+            }
+
+            if (!isActive) {
+                el.classList.add('active');
+                e.stopPropagation();
+            }
+        });
+        const settingGroupContent = dd();
+
+        group.settings.forEach(setting => {
+            const settingEl = this.renderThemeSetting(setting);
+            if (settingEl !== false) {
+                settingGroupContent.appendChild(settingEl);
+            }
+        });
+
+        content.appendChild(settingGroup);
+        content.appendChild(settingGroupContent);
+
+        return content;
+    }
+
+    renderThemeSetting(setting) {
+        const defaultValue = setting.value;
+
+        switch (setting.type) {
+            case 'select':
+                return ui.select(setting, defaultValue, this.setThemeSettingWithEmitter);
+            case 'toggle':
+                return ui.toggle(setting, defaultValue, this.setThemeSettingWithEmitter);
+            case 'colorswatch':
+                return ui.colorSwatch(setting, defaultValue, this.setThemeSettingWithEmitter);
+            case 'colorpicker':
+                return ui.colorPicker(setting, defaultValue, this.setThemeSettingWithEmitter);
+            case 'slider':
+                return ui.slider(setting, defaultValue, this.setThemeSettingWithEmitter);
+            case 'page':
+                return ui.page(setting, defaultValue, this.setThemeSettingWithEmitter);
+            case 'chunk':
+                return ui.chunk(setting, defaultValue, this.setThemeSettingWithEmitter);
+            case 'tagger':
+                return ui.tagger(setting, defaultValue, this.setThemeSettingWithEmitter);
+            case 'image':
+                return ui.image(setting, defaultValue, this.setThemeSettingWithEmitter);
+            case 'file': {
+                return ui.file(setting, defaultValue, this.setThemeSettingWithEmitter);
+            }
+            case 'folder': {
+                return ui.folder(setting, defaultValue, this.setThemeSettingWithEmitter);
+            }
+            case 'togglegroup':
+            case 'checkbox':
+                return ui.toggleGroup(setting, defaultValue, this.setMultiThemeSettingWithEmitter);
+            case 'textarea':
+                return ui.area(setting, defaultValue, this.setThemeSettingWithEmitter);
+            default:
+                return ui.text(setting, defaultValue, this.setThemeSettingWithEmitter);
+        }
     }
 
     getTaggerFields() {
@@ -299,6 +420,11 @@ export default class PageSettings extends SidebarPlugin {
         }
     }
 
+    setThemeSetting(name, value) {
+        fredConfig.setThemeSettingValue(name, value);
+        emitter.emit('fred-content-changed');
+    }
+
     getSetting(name, namespace = null) {
         if (namespace) {
             if (!this.pageSettings[namespace]) this.pageSettings[namespace] = {};
@@ -307,6 +433,27 @@ export default class PageSettings extends SidebarPlugin {
         } else {
             return this.pageSettings[name];
         }
+    }
+
+    setThemeSettingWithEmitter(name, value, input) {
+        this.setThemeSetting(name, value);
+
+        emitter.emit('fred-theme-setting-change', name, value, valueParser(value), input);
+    }
+
+    setMultiThemeSettingWithEmitter(name, value, input) {
+        let oValue = this.themeSettings[name];
+        oValue = (oValue) ? oValue.split('||') : [];
+        let nValue = [value];
+        oValue.forEach((ov) => {
+            if(value !== ov){
+                nValue.push(ov);
+            }
+        });
+        nValue = this.trim(nValue.join('||'), '|');
+        this.setThemeSetting(name, nValue);
+
+        emitter.emit('fred-theme-setting-change', name, value, valueParser(value), input);
     }
 
     setSettingWithEmitter(name, value, input) {

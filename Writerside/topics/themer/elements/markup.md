@@ -23,7 +23,7 @@ Template Variables can be accessed in the element markup object with the prefix 
 <!-- Simple Element -->
 <div class="panel">
     <p data-fred-name="header_text">Default Value</p>
-    <img src="http://via.placeholder.com/450x150" data-fred-name="header_image">
+    <img src="http://placehold.co/450x150" data-fred-name="header_image">
 </div>
 
 <!-- Enhanced Element -->

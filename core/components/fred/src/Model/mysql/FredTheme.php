@@ -24,6 +24,7 @@ class FredTheme extends \Fred\Model\FredTheme
             'description' => '',
             'config' => '',
             'default_element' => '',
+            'settings' => '',
         ),
         'fieldMeta' => 
         array (
@@ -86,6 +87,13 @@ class FredTheme extends \Fred\Model\FredTheme
                 'dbtype' => 'varchar',
                 'precision' => '255',
                 'phptype' => 'string',
+                'null' => false,
+                'default' => '',
+            ),
+            'settings' => 
+            array (
+                'dbtype' => 'mediumtext',
+                'phptype' => 'json',
                 'null' => false,
                 'default' => '',
             ),

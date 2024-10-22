@@ -42,12 +42,20 @@ fred.grid.ElementRTEConfigs = function (config) {
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                    return `<div class="fred-x-grid-cell-name">
+                                <h3><a href="?a=element/rte_config/update&namespace=fred&id=${record.data.id}">${value}</a></h3>
+                                <small>${record.data.description}</small>
+                            </div>`;
+
+                },
                 editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
                 header: _('fred.element_rte_configs.description'),
                 dataIndex: 'description',
                 width: 120,
+                hidden: true,
                 editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {

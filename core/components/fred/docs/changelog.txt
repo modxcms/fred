@@ -1,3 +1,3 @@
-- Make chunk option work without ID
-- Make theme's Default Element work without ID
-- Update Docs
+- Add Theme Settings
+- Fix issue with wrong image path selected after clicking on a newly uploaded file
+- Update Safari fixes for latest version

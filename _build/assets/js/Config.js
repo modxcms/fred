@@ -1,4 +1,5 @@
 import fredEditors from './Editors';
+import {valueParser} from "./Utils";
 
 class Config {
     constructor() {
@@ -9,6 +10,10 @@ class Config {
         this._toolbarPlugins = {};
         this._pluginsData = {};
         this._pageSettings = {};
+        this._allThemeSettings = {};
+        this._themeSettings = {};
+        this._indexedThemeSettings = {};
+        this._cache = {};
         this._tagger = [];
         this._tvs = [];
         this._lang = {};
@@ -32,6 +37,29 @@ class Config {
 
     set pageSettings(pageSettings) {
         this._pageSettings = pageSettings;
+    }
+
+    set allThemeSettings(allThemeSettings) {
+        if (!allThemeSettings || Array.isArray(allThemeSettings)) {
+            allThemeSettings = {};
+        }
+
+        this._allThemeSettings = allThemeSettings;
+    }
+
+    set themeSettings(themeSettings) {
+        this._themeSettings = themeSettings;
+        delete this._cache['themeSettings'];
+        for (const setting of this._themeSettings) {
+            if (setting['group'] !== undefined && setting['settings'] !== undefined) {
+                for (const groupSetting of setting['settings']) {
+                    this._indexedThemeSettings[groupSetting['name']] = groupSetting;
+                }
+                continue;
+            }
+
+            this._indexedThemeSettings[setting['name']] = setting;
+        }
     }
 
     set tagger(tagger) {
@@ -118,6 +146,14 @@ class Config {
 
     get pageSettings() {
         return this._pageSettings;
+    }
+
+    get themeSettings() {
+        return this._themeSettings;
+    }
+
+    get allThemeSettings() {
+        return this._allThemeSettings;
     }
 
     get fred() {
@@ -235,6 +271,102 @@ class Config {
 
     lngExists(key) {
         return this._lang[key] !== undefined;
+    }
+
+    themeSettingsExists(name) {
+        return this._indexedThemeSettings[name] !== undefined;
+    }
+
+    getThemeSettingValue(name) {
+        return this._indexedThemeSettings[name]?.value || undefined;
+    }
+
+    setThemeSettingValue(name, value) {
+        if (!this._indexedThemeSettings[name]) return;
+
+        delete this._cache['themeSettings'];
+        this._indexedThemeSettings[name].value = value;
+    }
+
+    getEditableThemeSettingsMap(parseValue = false, parseModx= false, cleanRender= false) {
+        const cacheKey = `editable-${+parseValue}${+parseModx}${+cleanRender}`;
+
+        if (this._cache['themeSettings']?.[cacheKey]) {
+            return this._cache['themeSettings'][cacheKey];
+        }
+
+        if (!this._cache['themeSettings']) {
+            this._cache['themeSettings'] = {};
+        }
+
+        this._cache['themeSettings'][cacheKey] = Object.values(this._indexedThemeSettings).reduce((acc, item) => {
+            if (!parseValue) {
+                acc[item.name] = item.value;
+            } else {
+                if (cleanRender === true) {
+                    if (parseModx === true) {
+                        acc[item.name] = valueParser(item.value, false);
+                    } else {
+                        acc[item.name] = `[[++${this.config.themeSettingsPrefix}.setting.${item.name}]]`;
+                    }
+                } else {
+                    acc[item.name] = valueParser(item.value, false);
+                }
+            }
+            return acc;
+        }, {});
+
+
+        return this._cache['themeSettings'][cacheKey];
+    }
+
+    getThemeSettingsMap(parseValue = false, parseModx= false, cleanRender= false) {
+        const cacheKey = `all-${+parseValue}${+parseModx}${+cleanRender}`;
+
+        if (this._cache['themeSettings']?.[cacheKey]) {
+            return this._cache['themeSettings'][cacheKey];
+        }
+
+        const allSettings = Object.entries(this._allThemeSettings).reduce((acc, [name, value]) => {
+            if (!parseValue) {
+                acc[name] = value;
+            } else {
+                if (cleanRender === true) {
+                    if (parseModx === true) {
+                        acc[name] = valueParser(value, false);
+                    } else {
+                        acc[name] = `[[++${this.config.themeSettingsPrefix}.setting.${name}]]`;
+                    }
+                } else {
+                    acc[name] = valueParser(value, false);
+                }
+            }
+            return acc;
+        }, {});
+
+        if (!this._cache['themeSettings']) {
+            this._cache['themeSettings'] = {};
+        }
+
+        this._cache['themeSettings'][cacheKey] = Object.values(this._indexedThemeSettings).reduce((acc, item) => {
+            if (!parseValue) {
+                acc[item.name] = item.value;
+            } else {
+                if (cleanRender === true) {
+                    if (parseModx === true) {
+                        acc[item.name] = item.raw;
+                    } else {
+                        acc[item.name] = `[[++${this.config.themeSettingsPrefix}.setting.${item.name}]]`;
+                    }
+                } else {
+                    acc[item.name] = item.raw;
+                }
+            }
+            return acc;
+        }, allSettings);
+
+
+        return this._cache['themeSettings'][cacheKey];
     }
 }
 

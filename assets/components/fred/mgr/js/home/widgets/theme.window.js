@@ -8,6 +8,7 @@ fred.window.Theme = function (config) {
         action: 'Fred\\Processors\\Themes\\Create',
         modal: true,
         autoHeight: true,
+        width: 800,
         fields: this.getFields(config),
         keys: [
             {
@@ -42,6 +43,22 @@ Ext.extend(fred.window.Theme, MODx.Window, {
                 name: 'description',
                 anchor: '100%',
                 allowBlank: true
+            },
+            {
+                xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
+                mimeType: 'application/json',
+                fieldLabel: _('fred.themes.settings'),
+                name: 'settings',
+                anchor: '100%',
+                allowBlank: true,
+                height: 400,
+                grow: false,
+                listeners: {
+                    render: function () {
+                        if ((this.xtype === 'modx-texteditor') && this.editor)
+                            this.editor.getSession().setMode('application/json')
+                    }
+                }
             }
         ];
     }

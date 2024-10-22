@@ -24,7 +24,7 @@ trait GetResources
         $context = $this->getClaim('context');
         $context = !empty($context) ? $context : 'web';
 
-        $query = $_GET['query'];
+        $query = $_GET['query'] ?? '';
         $current = isset($_GET['current']) ? (int)$_GET['current'] : 0;
         $parents = $_GET['parents'] ?? '';
         $resources = $_GET['resources'] ?? '';

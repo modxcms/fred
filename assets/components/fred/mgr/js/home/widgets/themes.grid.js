@@ -17,7 +17,7 @@ fred.grid.Themes = function (config) {
             action: 'Fred\\Processors\\Themes\\GetList'
         },
         preventSaveRefresh: false,
-        fields: ['id', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace', 'settingsPrefix'],
+        fields: ['id', 'uuid', 'name', 'description', 'config', 'latest_build', 'theme_folder', 'default_element', 'namespace', 'settingsPrefix', 'settings'],
         paging: true,
         remoteSort: true,
         emptyText: _('fred.themes.none'),
@@ -29,10 +29,24 @@ fred.grid.Themes = function (config) {
                 hidden: true
             },
             {
+                header: _('fred.global.uuid'),
+                dataIndex: 'uuid',
+                sortable: true,
+                hidden: true
+            },
+            {
                 header: _('fred.themes.name'),
                 dataIndex: 'name',
                 sortable: true,
                 width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                    return `<div class="fred-x-grid-cell-name">
+                                <h3><a href="?a=theme/update&namespace=fred&id=${record.data.id}">${value}</a></h3>
+                                <small>${_('fred.global.uuid')}: ${record.data.uuid}</small>
+                                <small>${record.data.description}</small>
+                            </div>`;
+
+                },
                 editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
@@ -40,6 +54,7 @@ fred.grid.Themes = function (config) {
                 dataIndex: 'description',
                 sortable: true,
                 width: 80,
+                hidden: true,
                 editor: this.getEditor(config, {xtype: 'textfield'})
             },
             {
@@ -97,6 +112,11 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
             if (m.length > 0) {
                 m.push('-');
             }
+
+            m.push({
+                text: _('fred.themes.quick_update'),
+                handler: this.quickUpdateTheme
+            });
 
             m.push({
                 text: _('fred.themes.update'),
@@ -186,13 +206,18 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         return true;
     },
 
-    updateTheme: function (btn, e) {
+    quickUpdateTheme: function (btn, e) {
+        const record = {
+            ...this.menu.record,
+            settings: this.menu.record.settings ? JSON.stringify(this.menu.record.settings, null, 2) : '',
+        };
+
         var updateTheme = MODx.load({
             xtype: 'fred-window-theme',
             title: _('fred.themes.update'),
             action: 'Fred\\Processors\\Themes\\Update',
             isUpdate: true,
-            record: this.menu.record,
+            record: record,
             listeners: {
                 success: {
                     fn: function () {
@@ -204,10 +229,14 @@ Ext.extend(fred.grid.Themes, MODx.grid.Grid, {
         });
 
         updateTheme.fp.getForm().reset();
-        updateTheme.fp.getForm().setValues(this.menu.record);
+        updateTheme.fp.getForm().setValues(record);
         updateTheme.show(e.target);
 
         return true;
+    },
+
+    updateTheme: function (btn, e) {
+        fred.loadPage('theme/update', {id: this.menu.record.id});
     },
 
     buildTheme: function (btn, e) {

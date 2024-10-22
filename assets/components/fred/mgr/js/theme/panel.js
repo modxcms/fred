@@ -1,7 +1,7 @@
-fred.panel.ElementOptionSet = function (config) {
+fred.panel.Theme = function (config) {
     config = config || {};
 
-    config.id = config.id || 'fred-panel-element-option-set';
+    config.id = config.id || 'fred-panel-theme';
 
     Ext.applyIf(config, {
         border: false,
@@ -9,7 +9,7 @@ fred.panel.ElementOptionSet = function (config) {
         baseCls: 'modx-formpanel',
         url: fred.config.connectorUrl,
         baseParams: {
-            action: 'Fred\\Processors\\ElementOptionSets\\Update'
+            action: 'Fred\\Processors\\Themes\\Update'
         },
         useLoadingMask: true,
         items: this.getItems(config),
@@ -24,26 +24,26 @@ fred.panel.ElementOptionSet = function (config) {
             }
         }
     });
-    fred.panel.ElementOptionSet.superclass.constructor.call(this, config);
+    fred.panel.Theme.superclass.constructor.call(this, config);
 };
 
-Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
+Ext.extend(fred.panel.Theme, MODx.FormPanel, {
     setup: function () {
         if (this.config.isUpdate) {
             MODx.Ajax.request({
                 url: this.config.url,
                 params: {
-                    action: 'Fred\\Processors\\ElementOptionSets\\Get',
+                    action: 'Fred\\Processors\\Themes\\Get',
                     id: MODx.request.id
                 },
                 listeners: {
                     'success': {
                         fn: function (r) {
-                            if (Array.isArray(r.object.data) && r.object.data.length === 0) {
-                                r.object.data = '';
+                            if (Array.isArray(r.object.settings) && r.object.settings.length === 0) {
+                                r.object.settings = '';
                             } else {
-                                if (typeof r.object.data === 'object') {
-                                    r.object.data = JSON.stringify(r.object.data, null, 2);
+                                if (typeof r.object.settings === 'object') {
+                                    r.object.settings = JSON.stringify(r.object.settings, null, 2);
                                 }
                             }
 
@@ -69,14 +69,14 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
 
     success: function (o, r) {
         if (this.config.isUpdate == false) {
-            fred.loadPage('element/option_set/update', {id: o.result.object.id});
+            fred.loadPage('theme/update', {id: o.result.object.id});
         }
     },
 
     getItems: function (config) {
         return [
             MODx.util.getHeaderBreadCrumbs({
-                html: ((config.isUpdate == true) ? _('fred.element_option_sets.update') : _('fred.element_option_sets.create')),
+                html: ((config.isUpdate == true) ? _('fred.themes.update') : _('fred.themes.create')),
                 xtype: "modx-header"
             }, [
                 {
@@ -84,7 +84,7 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                     href: '?a=home&namespace=fred',
                 },
                 {
-                    text: _('fred.home.option_sets'),
+                    text: _('fred.home.themes'),
                     href: null,
                 }
             ]),
@@ -118,78 +118,71 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                 },
                 items: [
                     {
-                        defaults: {
-                            msgTarget: 'side',
-                            autoHeight: true
-                        },
-                        cls: 'form-with-labels',
+                        layout: 'column',
                         border: false,
+                        height: 100,
+                        defaults: {
+                            layout: 'form',
+                            labelAlign: 'top',
+                            labelSeparator: '',
+                            anchor: '100%',
+                            border: false
+                        },
                         items: [
                             {
-                                layout: 'column',
+                                columnWidth: 0.7,
                                 border: false,
-                                height: 100,
                                 defaults: {
-                                    layout: 'form',
-                                    labelAlign: 'top',
-                                    labelSeparator: '',
-                                    anchor: '100%',
-                                    border: false
+                                    msgTarget: 'under'
                                 },
                                 items: [
                                     {
-                                        columnWidth: 0.7,
-                                        border: false,
-                                        defaults: {
-                                            msgTarget: 'under'
-                                        },
-                                        items: [
-                                            {
-                                                xtype: 'textfield',
-                                                fieldLabel: _('fred.element_option_sets.name'),
-                                                name: 'name',
-                                                anchor: '100%',
-                                                allowBlank: false
-                                            },
-                                            {
-                                                xtype: 'textarea',
-                                                fieldLabel: _('fred.element_option_sets.description'),
-                                                name: 'description',
-                                                anchor: '100%'
-                                            }
-                                        ]
+                                        xtype: 'textfield',
+                                        fieldLabel: _('fred.themes.name'),
+                                        name: 'name',
+                                        anchor: '100%',
+                                        allowBlank: false
                                     },
                                     {
-                                        columnWidth: 0.3,
-                                        border: false,
-                                        defaults: {
-                                            msgTarget: 'under'
-                                        },
-                                        items: [
-                                            {
-                                                xtype: 'fred-combo-themes',
-                                                fieldLabel: _('fred.element_option_sets.theme'),
-                                                name: 'theme',
-                                                hiddenName: 'theme',
-                                                anchor: '100%',
-                                                allowBlank: false,
-                                                isUpdate: config.isUpdate
-                                            },
-                                            {
-                                                xtype: 'fred-combo-boolean',
-                                                useInt: true,
-                                                fieldLabel: _('fred.element_option_sets.complete'),
-                                                name: 'complete',
-                                                hiddenName: 'complete',
-                                                anchor: '100%',
-                                                value: 1
-                                            }
-                                        ]
+                                        xtype: 'textarea',
+                                        fieldLabel: _('fred.themes.description'),
+                                        name: 'description',
+                                        anchor: '100%',
+                                        height: 170
+                                    }
+                                ]
+                            },
+                            {
+                                columnWidth: 0.3,
+                                border: false,
+                                defaults: {
+                                    msgTarget: 'under'
+                                },
+                                items: [
+                                    {
+                                        xtype: 'textfield',
+                                        fieldLabel: _('fred.themes.theme_folder'),
+                                        name: 'theme_folder',
+                                    },
+                                    {
+                                        xtype: 'textfield',
+                                        fieldLabel: _('fred.themes.default_element'),
+                                        name: 'default_element',
+                                    },
+                                    {
+                                        xtype: 'displayfield',
+                                        fieldLabel: _('fred.themes.namespace'),
+                                        name: 'namespace',
+                                    },
+                                    {
+                                        xtype: 'displayfield',
+                                        fieldLabel: _('fred.themes.settings_prefix'),
+                                        name: 'settingsPrefix',
                                     }
                                 ]
                             }
                         ]
-                    }
+                    },
                 ]
             }
         ];
@@ -242,7 +235,11 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                                             msgTarget: 'under'
                                         },
                                         items: [
-                                            fred.field.JSONField()
+                                            {
+                                                xtype: 'displayfield',
+                                                fieldLabel: _('fred.themes.settings'),
+                                            },
+                                            fred.field.JSONField({name: 'settings'})
                                         ]
                                     }
                                 ]
@@ -256,4 +253,4 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
         return items;
     }
 });
-Ext.reg('fred-panel-element-option-set', fred.panel.ElementOptionSet);
+Ext.reg('fred-panel-theme', fred.panel.Theme);

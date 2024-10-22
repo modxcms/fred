@@ -23,6 +23,7 @@ $_lang['fred.global.any'] = 'Any';
 $_lang['fred.global.change_order'] = 'Change order: [[+name]]';
 $_lang['fred.global.help'] = 'Help';
 $_lang['fred.global.none'] = 'None';
+$_lang['fred.global.uuid'] = 'UUID';
 
 $_lang['fred.open_in_fred'] = 'Open In Fred';
 
@@ -160,6 +161,7 @@ $_lang['fred.themes.name'] = 'Name';
 $_lang['fred.themes.description'] = 'Description';
 $_lang['fred.themes.create'] = 'Create Theme';
 $_lang['fred.themes.update'] = 'Update Theme';
+$_lang['fred.themes.quick_update'] = 'Quick Update Theme';
 $_lang['fred.themes.remove'] = 'Remove Theme';
 $_lang['fred.themes.remove_confirm'] = 'Are you sure tou want to delete the “[[+name]]” Theme? This cannot be undone.';
 $_lang['fred.themes.search_name'] = 'Search by Name';
@@ -211,6 +213,7 @@ $_lang['fred.themes.media_source_already_added'] = 'Media Source already added';
 $_lang['fred.themes.media_source_already_added_desc'] = 'This Media Source is already added to the build process.';
 $_lang['fred.themes.namespace'] = 'Namespace';
 $_lang['fred.themes.settings_prefix'] = 'Settings Prefix';
+$_lang['fred.themes.settings'] = 'Settings';
 $_lang['fred.themes.resolvers'] = 'Resolvers';
 $_lang['fred.themes.resolver'] = 'Resolver';
 $_lang['fred.themes.add_resolver'] = 'Add Resolver';

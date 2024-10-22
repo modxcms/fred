@@ -46,6 +46,11 @@ abstract class FredBaseManagerController extends modExtraManagerController
             });
         </script>');
 
+        if ($version < 3) {
+            $this->addCss($this->fred->getOption('cssUrl') . 'shim.css');
+            $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/breadcrumbs.js');
+        }
+
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/utils.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/combos.js');
         $this->addJavascript($this->fred->getOption('jsUrl') . 'utils/fields.js');

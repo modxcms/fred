@@ -1,0 +1,19 @@
+.fred-x-grid-cell-name h3, .fred-x-grid-cell-name h3 a {
+    color: #556C88;
+    line-height: 1;
+    text-decoration: none;
+}
+.fred-x-grid-cell-name h3 a::after {
+    content: "\f08e";
+    font-family: FontAwesome;
+    color: #808080;
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+.fred-x-grid-cell-name small {
+    display: block;
+    line-height: 1.5;
+}
+.x-grid3-cell-inner {
+    color: #808080;
+}
