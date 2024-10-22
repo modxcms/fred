@@ -1,0 +1,39 @@
+.fred.fred--safari {
+  /** Panel **/
+  .fred--panel {
+    overflow-y: auto;
+  }
+  .fred--panel dl:last-of-type dt:last-of-type.active{
+    margin-bottom: 0;
+  }
+  .fred--panel dd dl dt{
+    &.active + dd{
+      position: relative;
+      left: 0;
+      margin-bottom: 18px;
+    }
+    & + dd{
+      height: auto !important;
+      width: 260px !important;
+      transition: 0s;
+    }
+  }
+  /** Sidebar **/
+  .fred--sidebar {
+    overflow-y: visible;
+  }
+  .fred--accordion dd{
+    overflow: auto;
+  }
+  .fred--accordion dd dl dt{
+    &.active + dd{
+      position: relative;
+      left: 0;
+    }
+    & + dd{
+      height: auto !important;
+      width: 260px !important;
+      transition: 0s;
+    }
+  }
+}

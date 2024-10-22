@@ -69,7 +69,9 @@ export default class Fred {
 
     render() {
         this.wrapper = div(['fred']);
-
+        if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+            this.wrapper.classList.add('fred--safari');
+        }
         document.body.appendChild(this.wrapper);
     }
 
