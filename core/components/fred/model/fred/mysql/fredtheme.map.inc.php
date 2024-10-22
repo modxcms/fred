@@ -1,38 +1,37 @@
 <?php
-
 /**
  * @package fred
  */
-
-$xpdo_meta_map['FredTheme'] = array (
+$xpdo_meta_map['FredTheme']= array (
   'package' => 'fred',
   'version' => '2.0',
   'table' => 'fred_themes',
-  'tableMeta' =>
+  'tableMeta' => 
   array (
     'engine' => 'InnoDB',
   ),
-  'fields' =>
+  'fields' => 
   array (
-    'name' => null,
+    'name' => NULL,
     'namespace' => '',
     'settingsPrefix' => '',
     'theme_folder' => '',
-    'uuid' => null,
+    'uuid' => NULL,
     'description' => '',
     'config' => '',
     'default_element' => '',
+    'settings' => '',
   ),
-  'fieldMeta' =>
+  'fieldMeta' => 
   array (
-    'name' =>
+    'name' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '127',
       'phptype' => 'string',
       'null' => false,
     ),
-    'namespace' =>
+    'namespace' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',
@@ -40,7 +39,7 @@ $xpdo_meta_map['FredTheme'] = array (
       'null' => false,
       'default' => '',
     ),
-    'settingsPrefix' =>
+    'settingsPrefix' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',
@@ -48,7 +47,7 @@ $xpdo_meta_map['FredTheme'] = array (
       'null' => false,
       'default' => '',
     ),
-    'theme_folder' =>
+    'theme_folder' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',
@@ -56,7 +55,7 @@ $xpdo_meta_map['FredTheme'] = array (
       'null' => false,
       'default' => '',
     ),
-    'uuid' =>
+    'uuid' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '36',
@@ -64,7 +63,7 @@ $xpdo_meta_map['FredTheme'] = array (
       'null' => false,
       'index' => 'unique',
     ),
-    'description' =>
+    'description' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',
@@ -72,14 +71,14 @@ $xpdo_meta_map['FredTheme'] = array (
       'null' => false,
       'default' => '',
     ),
-    'config' =>
+    'config' => 
     array (
       'dbtype' => 'mediumtext',
       'phptype' => 'json',
       'null' => false,
       'default' => '',
     ),
-    'default_element' =>
+    'default_element' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',
@@ -87,18 +86,25 @@ $xpdo_meta_map['FredTheme'] = array (
       'null' => false,
       'default' => '',
     ),
+    'settings' => 
+    array (
+      'dbtype' => 'mediumtext',
+      'phptype' => 'json',
+      'null' => false,
+      'default' => '',
+    ),
   ),
-  'indexes' =>
+  'indexes' => 
   array (
-    'uuid' =>
+    'uuid' => 
     array (
       'alias' => 'uuid',
       'primary' => false,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'uuid' =>
+        'uuid' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -106,15 +112,15 @@ $xpdo_meta_map['FredTheme'] = array (
         ),
       ),
     ),
-    'name' =>
+    'name' => 
     array (
       'alias' => 'name',
       'primary' => false,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'name' =>
+        'name' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -123,9 +129,9 @@ $xpdo_meta_map['FredTheme'] = array (
       ),
     ),
   ),
-  'composites' =>
+  'composites' => 
   array (
-    'ElementCategories' =>
+    'ElementCategories' => 
     array (
       'class' => 'FredElementCategory',
       'local' => 'id',
@@ -133,7 +139,7 @@ $xpdo_meta_map['FredTheme'] = array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
-    'BlueprintCategories' =>
+    'BlueprintCategories' => 
     array (
       'class' => 'FredBlueprintCategory',
       'local' => 'id',
@@ -141,7 +147,7 @@ $xpdo_meta_map['FredTheme'] = array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
-    'RTEConfigs' =>
+    'RTEConfigs' => 
     array (
       'class' => 'FredElementRTEConfig',
       'local' => 'id',
@@ -149,7 +155,7 @@ $xpdo_meta_map['FredTheme'] = array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
-    'OptionSets' =>
+    'OptionSets' => 
     array (
       'class' => 'FredElementOptionSet',
       'local' => 'id',
@@ -157,7 +163,7 @@ $xpdo_meta_map['FredTheme'] = array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
-    'Templates' =>
+    'Templates' => 
     array (
       'class' => 'FredThemedTemplate',
       'local' => 'id',

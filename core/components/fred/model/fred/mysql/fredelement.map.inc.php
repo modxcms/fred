@@ -1,39 +1,37 @@
 <?php
-
 /**
  * @package fred
  */
-
-$xpdo_meta_map['FredElement'] = array (
+$xpdo_meta_map['FredElement']= array (
   'package' => 'fred',
   'version' => '2.0',
   'table' => 'fred_elements',
-  'tableMeta' =>
+  'tableMeta' => 
   array (
     'engine' => 'InnoDB',
   ),
-  'fields' =>
+  'fields' => 
   array (
-    'name' => null,
-    'uuid' => null,
+    'name' => NULL,
+    'uuid' => NULL,
     'description' => '',
     'image' => '',
-    'category' => null,
+    'category' => NULL,
     'rank' => 0,
     'option_set' => 0,
     'options_override' => '',
     'content' => '',
   ),
-  'fieldMeta' =>
+  'fieldMeta' => 
   array (
-    'name' =>
+    'name' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '127',
       'phptype' => 'string',
       'null' => false,
     ),
-    'uuid' =>
+    'uuid' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '36',
@@ -41,7 +39,7 @@ $xpdo_meta_map['FredElement'] = array (
       'null' => false,
       'index' => 'unique',
     ),
-    'description' =>
+    'description' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',
@@ -49,14 +47,14 @@ $xpdo_meta_map['FredElement'] = array (
       'null' => false,
       'default' => '',
     ),
-    'image' =>
+    'image' => 
     array (
       'dbtype' => 'text',
       'phptype' => 'string',
       'null' => false,
       'default' => '',
     ),
-    'category' =>
+    'category' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -64,16 +62,7 @@ $xpdo_meta_map['FredElement'] = array (
       'phptype' => 'integer',
       'null' => false,
     ),
-    'rank' =>
-    array (
-      'dbtype' => 'int',
-      'attributes' => 'unsigned',
-      'precision' => '10',
-      'phptype' => 'integer',
-      'null' => false,
-      'default' => 0,
-    ),
-    'option_set' =>
+    'rank' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -82,14 +71,23 @@ $xpdo_meta_map['FredElement'] = array (
       'null' => false,
       'default' => 0,
     ),
-    'options_override' =>
+    'option_set' => 
+    array (
+      'dbtype' => 'int',
+      'attributes' => 'unsigned',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'options_override' => 
     array (
       'dbtype' => 'mediumtext',
       'phptype' => 'json',
       'null' => false,
       'default' => '',
     ),
-    'content' =>
+    'content' => 
     array (
       'dbtype' => 'mediumtext',
       'phptype' => 'string',
@@ -97,17 +95,17 @@ $xpdo_meta_map['FredElement'] = array (
       'default' => '',
     ),
   ),
-  'indexes' =>
+  'indexes' => 
   array (
-    'uuid' =>
+    'uuid' => 
     array (
       'alias' => 'uuid',
       'primary' => false,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'uuid' =>
+        'uuid' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -115,15 +113,15 @@ $xpdo_meta_map['FredElement'] = array (
         ),
       ),
     ),
-    'category' =>
+    'category' => 
     array (
       'alias' => 'category',
       'primary' => false,
       'unique' => false,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'category' =>
+        'category' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -131,15 +129,15 @@ $xpdo_meta_map['FredElement'] = array (
         ),
       ),
     ),
-    'rank' =>
+    'rank' => 
     array (
       'alias' => 'rank',
       'primary' => false,
       'unique' => false,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'rank' =>
+        'rank' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -147,21 +145,21 @@ $xpdo_meta_map['FredElement'] = array (
         ),
       ),
     ),
-    'name_category' =>
+    'name_category' => 
     array (
       'alias' => 'name_category',
       'primary' => false,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'name' =>
+        'name' => 
         array (
           'length' => '',
           'collation' => 'A',
           'null' => false,
         ),
-        'category' =>
+        'category' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -170,9 +168,9 @@ $xpdo_meta_map['FredElement'] = array (
       ),
     ),
   ),
-  'composites' =>
+  'composites' => 
   array (
-    'Cache' =>
+    'Cache' => 
     array (
       'class' => 'FredCache',
       'local' => 'id',
@@ -180,7 +178,7 @@ $xpdo_meta_map['FredElement'] = array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
-    'ElementTemplatesAccess' =>
+    'ElementTemplatesAccess' => 
     array (
       'class' => 'FredElementTemplateAccess',
       'local' => 'id',
@@ -189,9 +187,9 @@ $xpdo_meta_map['FredElement'] = array (
       'owner' => 'local',
     ),
   ),
-  'aggregates' =>
+  'aggregates' => 
   array (
-    'Category' =>
+    'Category' => 
     array (
       'class' => 'FredElementCategory',
       'local' => 'category',
@@ -199,7 +197,7 @@ $xpdo_meta_map['FredElement'] = array (
       'cardinality' => 'one',
       'owner' => 'foreign',
     ),
-    'OptionSet' =>
+    'OptionSet' => 
     array (
       'class' => 'FredElementOptionSet',
       'local' => 'option_set',

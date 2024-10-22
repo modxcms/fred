@@ -1,27 +1,25 @@
 <?php
-
 /**
  * @package fred
  */
-
-$xpdo_meta_map['FredCache'] = array (
+$xpdo_meta_map['FredCache']= array (
   'package' => 'fred',
   'version' => '2.0',
   'table' => 'fred_cache',
   'extends' => 'xPDOObject',
-  'tableMeta' =>
+  'tableMeta' => 
   array (
     'engine' => 'InnoDB',
   ),
-  'fields' =>
+  'fields' => 
   array (
-    'resource' => null,
-    'element' => null,
+    'resource' => NULL,
+    'element' => NULL,
     'content' => '',
   ),
-  'fieldMeta' =>
+  'fieldMeta' => 
   array (
-    'resource' =>
+    'resource' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -30,7 +28,7 @@ $xpdo_meta_map['FredCache'] = array (
       'null' => false,
       'index' => 'pk',
     ),
-    'element' =>
+    'element' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -39,7 +37,7 @@ $xpdo_meta_map['FredCache'] = array (
       'null' => false,
       'index' => 'pk',
     ),
-    'content' =>
+    'content' => 
     array (
       'dbtype' => 'mediumtext',
       'phptype' => 'string',
@@ -47,17 +45,17 @@ $xpdo_meta_map['FredCache'] = array (
       'default' => '',
     ),
   ),
-  'indexes' =>
+  'indexes' => 
   array (
-    'resource' =>
+    'resource' => 
     array (
       'alias' => 'resource',
       'primary' => false,
       'unique' => false,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'resource' =>
+        'resource' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -65,15 +63,15 @@ $xpdo_meta_map['FredCache'] = array (
         ),
       ),
     ),
-    'element' =>
+    'element' => 
     array (
       'alias' => 'element',
       'primary' => false,
       'unique' => false,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'element' =>
+        'element' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -81,21 +79,21 @@ $xpdo_meta_map['FredCache'] = array (
         ),
       ),
     ),
-    'PRIMARY' =>
+    'PRIMARY' => 
     array (
       'alias' => 'PRIMARY',
       'primary' => true,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'resource' =>
+        'resource' => 
         array (
           'length' => '',
           'collation' => 'A',
           'null' => false,
         ),
-        'element' =>
+        'element' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -104,9 +102,9 @@ $xpdo_meta_map['FredCache'] = array (
       ),
     ),
   ),
-  'aggregates' =>
+  'aggregates' => 
   array (
-    'Resource' =>
+    'Resource' => 
     array (
       'class' => 'modResource',
       'local' => 'resource',
@@ -114,7 +112,7 @@ $xpdo_meta_map['FredCache'] = array (
       'cardinality' => 'one',
       'owner' => 'foreign',
     ),
-    'Element' =>
+    'Element' => 
     array (
       'class' => 'FredElement',
       'local' => 'element',

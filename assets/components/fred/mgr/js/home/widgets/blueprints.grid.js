@@ -70,7 +70,7 @@ fred.grid.Blueprints = function (config) {
                 width: 70,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                     return `<div class="fred-x-grid-cell-name">
-                                <h3><a href="?a=blueprint/update&namespace=fred&id=${record.data.id}"${value}</a></h3>
+                                <h3><a href="?a=blueprint/update&namespace=fred&id=${record.data.id}">${value}</a></h3>
                                 <small>${_('fred.global.uuid')}: ${record.data.uuid}</small>
                                 <small>${record.data.description}</small>
                             </div>`;

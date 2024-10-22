@@ -1,27 +1,25 @@
 <?php
-
 /**
  * @package fred
  */
-
-$xpdo_meta_map['FredThemedTemplate'] = array (
+$xpdo_meta_map['FredThemedTemplate']= array (
   'package' => 'fred',
   'version' => '2.0',
   'table' => 'fred_themed_templates',
   'extends' => 'xPDOObject',
-  'tableMeta' =>
+  'tableMeta' => 
   array (
     'engine' => 'InnoDB',
   ),
-  'fields' =>
+  'fields' => 
   array (
-    'template' => null,
-    'theme' => null,
+    'template' => NULL,
+    'theme' => NULL,
     'default_blueprint' => 0,
   ),
-  'fieldMeta' =>
+  'fieldMeta' => 
   array (
-    'template' =>
+    'template' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -30,7 +28,7 @@ $xpdo_meta_map['FredThemedTemplate'] = array (
       'null' => false,
       'index' => 'pk',
     ),
-    'theme' =>
+    'theme' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -38,7 +36,7 @@ $xpdo_meta_map['FredThemedTemplate'] = array (
       'phptype' => 'integer',
       'null' => false,
     ),
-    'default_blueprint' =>
+    'default_blueprint' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -48,17 +46,17 @@ $xpdo_meta_map['FredThemedTemplate'] = array (
       'default' => 0,
     ),
   ),
-  'indexes' =>
+  'indexes' => 
   array (
-    'PRIMARY' =>
+    'PRIMARY' => 
     array (
       'alias' => 'PRIMARY',
       'primary' => true,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'template' =>
+        'template' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -66,15 +64,15 @@ $xpdo_meta_map['FredThemedTemplate'] = array (
         ),
       ),
     ),
-    'theme' =>
+    'theme' => 
     array (
       'alias' => 'theme',
       'primary' => false,
       'unique' => false,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'theme' =>
+        'theme' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -83,9 +81,9 @@ $xpdo_meta_map['FredThemedTemplate'] = array (
       ),
     ),
   ),
-  'composites' =>
+  'composites' => 
   array (
-    'ElementCategoryTemplatesAccess' =>
+    'ElementCategoryTemplatesAccess' => 
     array (
       'class' => 'FredElementCategoryTemplateAccess',
       'local' => 'template',
@@ -94,9 +92,9 @@ $xpdo_meta_map['FredThemedTemplate'] = array (
       'owner' => 'local',
     ),
   ),
-  'aggregates' =>
+  'aggregates' => 
   array (
-    'Theme' =>
+    'Theme' => 
     array (
       'class' => 'FredTheme',
       'local' => 'theme',
@@ -104,7 +102,7 @@ $xpdo_meta_map['FredThemedTemplate'] = array (
       'cardinality' => 'one',
       'owner' => 'foreign',
     ),
-    'Template' =>
+    'Template' => 
     array (
       'class' => 'modTemplate',
       'local' => 'template',

@@ -1,26 +1,24 @@
 <?php
-
 /**
  * @package fred
  */
-
-$xpdo_meta_map['FredElementTemplateAccess'] = array (
+$xpdo_meta_map['FredElementTemplateAccess']= array (
   'package' => 'fred',
   'version' => '2.0',
   'table' => 'fred_element_templates_access',
   'extends' => 'xPDOObject',
-  'tableMeta' =>
+  'tableMeta' => 
   array (
     'engine' => 'InnoDB',
   ),
-  'fields' =>
+  'fields' => 
   array (
-    'element' => null,
-    'template' => null,
+    'element' => NULL,
+    'template' => NULL,
   ),
-  'fieldMeta' =>
+  'fieldMeta' => 
   array (
-    'element' =>
+    'element' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -29,7 +27,7 @@ $xpdo_meta_map['FredElementTemplateAccess'] = array (
       'null' => false,
       'index' => 'pk',
     ),
-    'template' =>
+    'template' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -39,23 +37,23 @@ $xpdo_meta_map['FredElementTemplateAccess'] = array (
       'index' => 'pk',
     ),
   ),
-  'indexes' =>
+  'indexes' => 
   array (
-    'PRIMARY' =>
+    'PRIMARY' => 
     array (
       'alias' => 'PRIMARY',
       'primary' => true,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'element' =>
+        'element' => 
         array (
           'length' => '',
           'collation' => 'A',
           'null' => false,
         ),
-        'template' =>
+        'template' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -64,9 +62,9 @@ $xpdo_meta_map['FredElementTemplateAccess'] = array (
       ),
     ),
   ),
-  'aggregates' =>
+  'aggregates' => 
   array (
-    'Template' =>
+    'Template' => 
     array (
       'class' => 'FredThemedTemplate',
       'local' => 'template',
@@ -74,7 +72,7 @@ $xpdo_meta_map['FredElementTemplateAccess'] = array (
       'cardinality' => 'one',
       'owner' => 'foreign',
     ),
-    'Element' =>
+    'Element' => 
     array (
       'class' => 'FredElement',
       'local' => 'element',

@@ -1,26 +1,24 @@
 <?php
-
 /**
  * @package fred
  */
-
-$xpdo_meta_map['FredBlueprintTemplateAccess'] = array (
+$xpdo_meta_map['FredBlueprintTemplateAccess']= array (
   'package' => 'fred',
   'version' => '2.0',
   'table' => 'fred_blueprint_templates_access',
   'extends' => 'xPDOObject',
-  'tableMeta' =>
+  'tableMeta' => 
   array (
     'engine' => 'InnoDB',
   ),
-  'fields' =>
+  'fields' => 
   array (
-    'blueprint' => null,
-    'template' => null,
+    'blueprint' => NULL,
+    'template' => NULL,
   ),
-  'fieldMeta' =>
+  'fieldMeta' => 
   array (
-    'blueprint' =>
+    'blueprint' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -29,7 +27,7 @@ $xpdo_meta_map['FredBlueprintTemplateAccess'] = array (
       'null' => false,
       'index' => 'pk',
     ),
-    'template' =>
+    'template' => 
     array (
       'dbtype' => 'int',
       'attributes' => 'unsigned',
@@ -39,23 +37,23 @@ $xpdo_meta_map['FredBlueprintTemplateAccess'] = array (
       'index' => 'pk',
     ),
   ),
-  'indexes' =>
+  'indexes' => 
   array (
-    'PRIMARY' =>
+    'PRIMARY' => 
     array (
       'alias' => 'PRIMARY',
       'primary' => true,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        'blueprint' =>
+        'blueprint' => 
         array (
           'length' => '',
           'collation' => 'A',
           'null' => false,
         ),
-        'template' =>
+        'template' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -64,9 +62,9 @@ $xpdo_meta_map['FredBlueprintTemplateAccess'] = array (
       ),
     ),
   ),
-  'aggregates' =>
+  'aggregates' => 
   array (
-    'Template' =>
+    'Template' => 
     array (
       'class' => 'FredThemedTemplate',
       'local' => 'template',
@@ -74,7 +72,7 @@ $xpdo_meta_map['FredBlueprintTemplateAccess'] = array (
       'cardinality' => 'one',
       'owner' => 'foreign',
     ),
-    'Blueprint' =>
+    'Blueprint' => 
     array (
       'class' => 'FredBlueprint',
       'local' => 'blueprint',
