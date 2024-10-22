@@ -223,7 +223,6 @@ export default class PageSettings extends SidebarPlugin {
             if (!isActive) {
                 el.classList.add('active');
                 e.stopPropagation();
-                // this.dtActive(settingGroup, settingGroupContent);
             }
         });
         const settingGroupContent = dd();
@@ -424,13 +423,6 @@ export default class PageSettings extends SidebarPlugin {
     setThemeSetting(name, value) {
         fredConfig.setThemeSettingValue(name, value);
         emitter.emit('fred-content-changed');
-        // if (this.cacheOutput === false) {
-        //     if (this.remote === false) {
-        //         this.el.render();
-        //     } else {
-        //         this.debouncedRender();
-        //     }
-        // }
     }
 
     getSetting(name, namespace = null) {
