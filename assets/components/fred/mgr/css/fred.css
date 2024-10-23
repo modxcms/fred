@@ -4,7 +4,7 @@
     text-decoration: none;
 }
 .fred-x-grid-cell-name h3 a::after {
-    content: "\f08e";
+    content: "\f35d";
     font-family: FontAwesome;
     color: #808080;
     font-size: 0.8em;

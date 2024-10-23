@@ -1,3 +1,7 @@
+.fred-x-grid-cell-name h3 a::after {
+    content: "\f08e";
+}
+
 .modx-header-breadcrumbs .breadcrumbs {
     display: flex;
     flex-wrap: wrap;
