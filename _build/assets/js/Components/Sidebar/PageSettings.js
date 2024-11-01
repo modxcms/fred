@@ -255,9 +255,9 @@ export default class PageSettings extends SidebarPlugin {
             case 'slider':
                 return ui.slider(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'page':
-                return ui.page(setting, defaultValue, this.setThemeSettingWithEmitter);
+                return ui.page(setting, {id: defaultValue, url: ''}, this.setThemeSettingWithEmitter);
             case 'chunk':
-                return ui.chunk(setting, defaultValue, this.setThemeSettingWithEmitter);
+                return ui.chunk(setting, {id: defaultValue, name: ''}, this.setThemeSettingWithEmitter);
             case 'tagger':
                 return ui.tagger(setting, defaultValue, this.setThemeSettingWithEmitter);
             case 'image':
@@ -361,7 +361,7 @@ export default class PageSettings extends SidebarPlugin {
                     fields.appendChild(ui.slider(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
                     break;
                 case 'page':
-                    fields.appendChild(ui.page(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    fields.appendChild(ui.page(tv, { id: this.pageSettings.tvs[tv.name], url: ''}, this.setTVWithEmitter, this.addTVChangeListener));
                     break;
                 case 'tagger':
                     fields.appendChild(ui.tagger(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
@@ -387,7 +387,7 @@ export default class PageSettings extends SidebarPlugin {
                     fields.appendChild(ui.toggleGroup(tv, this.pageSettings.tvs[tv.name], this.setMultiTVWithEmitter, this.addTVChangeListener));
                     break;
                 case 'chunk':
-                    fields.appendChild(ui.chunk(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
+                    fields.appendChild(ui.chunk(tv, { id: this.pageSettings.tvs[tv.name], name: ''}, this.setTVWithEmitter, this.addTVChangeListener));
                 default:
                     fields.appendChild(ui.text(tv, this.pageSettings.tvs[tv.name], this.setTVWithEmitter, this.addTVChangeListener));
             }
@@ -436,6 +436,9 @@ export default class PageSettings extends SidebarPlugin {
     }
 
     setThemeSettingWithEmitter(name, value, input) {
+        if (typeof value === 'object' && value.id) {
+            value = value.id;
+        }
         this.setThemeSetting(name, value);
 
         emitter.emit('fred-theme-setting-change', name, value, valueParser(value), input);
@@ -472,6 +475,9 @@ export default class PageSettings extends SidebarPlugin {
     }
 
     setTVWithEmitter(name, value, input) {
+        if (typeof value === 'object' && value.id) {
+            value = value.id;
+        }
         this.setSetting(name, value, 'tvs');
         emitter.emit('fred-page-setting-change', 'tv_' + name, value, valueParser(value), input);
     }
