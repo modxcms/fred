@@ -1,4 +1,4 @@
-- Add Theme Settings
-- Fix issue with wrong image path selected after clicking on a newly uploaded file
-- Update Safari fixes for latest version
-- BONUS: fix mysql mapping
+- Fix missing Font Awesome icons in MODX 3
+- Update old placeholder images on Upgrade
+- Adjust panel close confirmation button behavior
+- Fix page and chunk selector on TVs and Theme Settings
