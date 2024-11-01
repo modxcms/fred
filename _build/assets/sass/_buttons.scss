@@ -111,17 +111,19 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     background: transparent;
     border-radius: $radius;
     padding: math.div($baseGutter, 2) $baseGutter;
-    margin: math.div($baseGutter, 2) $baseGutter;
+    margin: auto $baseGutter;
     float: right;
-    //&:hover, &:focus {
-    //  background-color: darken($border-light, 15%);
-    //  color: $black;
-    //}
+    order: 0;
+    &:hover, &:focus {
+      background-color: $border-light;
+      color: $black;
+    }
   }
   &-apply {
     background: $green;
     color: $white;
     border: 0px solid transparent;
+    order: 1;
     &:hover, &:focus {
       background-color: darken($green, 15%);
     }
