@@ -761,14 +761,20 @@ export const chunk = (
     }
 
     chunkChoices.ajax(callback => {
-        getChunks(defaultValue.id, queryOptions)
+        let defaultSearch: string | number = '';
+        if (defaultValue.id) {
+            defaultSearch = defaultValue.id;
+        } else if (defaultValue.name) {
+            defaultSearch = defaultValue.name;
+        }
+        getChunks(defaultSearch, queryOptions)
             .then(json => {
                 initData = json.data.chunks;
                 callback(json.data.chunks, 'value', 'name');
 
                 if (json.data.current) {
                     chunkChoices.setChoices([json.data.current], 'value', 'name', false);
-                    chunkChoices.setValueByChoice("" + defaultValue.id);
+                    chunkChoices.setValueByChoice(json.data.current.value);
                 }
             })
             .catch(error => {

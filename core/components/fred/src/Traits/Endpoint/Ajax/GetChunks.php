@@ -21,7 +21,7 @@ trait GetChunks
     public function process()
     {
         $query = $_GET['query'];
-        $current = isset($_GET['current']) ? (int)$_GET['current'] : 0;
+        $current = isset($_GET['current']) ? $_GET['current'] : 0;
         $category = $_GET['category'] ?? '';
         $chunks = $_GET['chunks'] ?? '';
         $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 25;
@@ -58,7 +58,8 @@ trait GetChunks
         $currentChunk = null;
         if (!empty($current)) {
             /** @var $currentChunk */
-            $currentChunk = $this->modx->getObject($this->chunkClass, $current);
+            $currentWhere = (is_numeric($current)) ? ['id' => $current] : ['name' => $current];
+            $currentChunk = $this->modx->getObject($this->chunkClass, $currentWhere);
             if ($currentChunk) {
                 $currentChunk = [
                     'id' => $currentChunk->get('id'),
