@@ -30,7 +30,7 @@ trait GetChunks
             if (is_numeric($cat)) {
                 $catArr[] = $cat;
             } else {
-                $obj = $this->modx->getObject($this->categoryClass, ['name' => $cat]);
+                $obj = $this->modx->getObject($this->categoryClass, ['category' => $cat]);
                 if (!empty($obj)) {
                     $catArr[] = $obj->get('id');
                 }
