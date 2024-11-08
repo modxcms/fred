@@ -1,4 +1,1 @@
-- Fix missing Font Awesome icons in MODX 3
-- Update old placeholder images on Upgrade
-- Adjust panel close confirmation button behavior
-- Fix page and chunk selector on TVs and Theme Settings
+- Allow template setting adjustments to appear in Fred Preview mode
