@@ -2,7 +2,7 @@
 
 namespace Fred\Elements\Event;
 
-class OnLoadWebDocument
+class OnLoadWebDocument extends Event
 {
     use \Fred\Traits\Elements\Event\OnLoadWebDocument;
 }

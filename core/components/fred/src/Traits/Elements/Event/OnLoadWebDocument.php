@@ -9,10 +9,10 @@ trait OnLoadWebDocument
     use User;
     public function run()
     {
-        if (!$this->canFred()) {
+        if (!isset($_GET['fred'])) {
             return;
         }
-        if ($_GET['fred'] && intval($_GET['fred']) !== 2) {
+        if (!$this->canFred()) {
             return;
         }
         $this->modx->resource->set('cacheable', 0);

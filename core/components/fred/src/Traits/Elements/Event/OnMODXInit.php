@@ -9,10 +9,10 @@ trait OnMODXInit
     use User;
     public function run()
     {
-        if (!$this->canFred()) {
+        if ($_GET['fred'] && intval($_GET['fred']) !== 2) {
             return;
         }
-        if ($_GET['fred'] && intval($_GET['fred']) !== 2) {
+        if (!$this->canFred()) {
             return;
         }
 
@@ -21,9 +21,16 @@ trait OnMODXInit
         if (empty($params) || empty($params['themeSettingsPrefix']) || empty($params['themeSettings']) || !is_array($params['themeSettings'])) {
             return;
         }
+        $this->modx->setOption('cache_resource', false);
+        $this->modx->setOption('pageshrink.cache_resource_shrink', false);
+        $this->modx->setOption('pageshrink.resource_shrink', false);
 
         foreach ($params['themeSettings'] as $name => $value) {
-            $this->modx->setOption($params['themeSettingsPrefix'] . '.setting.' . $name, $value);
+            $key = $params['themeSettingsPrefix'] . '.setting.' . $name;
+            $this->modx->setOption($key, $value);
+            if($this->modx->context) {
+                $this->modx->context->config[$key] = $value;
+            }
         }
     }
 }

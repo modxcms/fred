@@ -29,7 +29,8 @@
             "OnManagerPageBeforeRender",
             "OnManagerLogin",
             "OnWebLogin",
-            "OnMODXInit"
+            "OnMODXInit",
+            "OnLoadWebDocument"
           ]
         }
       ]
