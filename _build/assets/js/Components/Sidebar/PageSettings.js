@@ -36,7 +36,10 @@ export default class PageSettings extends SidebarPlugin {
 
         settingsForm.appendChild(this.getGeneralFields());
 
-        settingsForm.appendChild(this.getThemeSettingFields());
+        const themeSettingsField = this.getThemeSettingFields();
+        if (themeSettingsField) {
+            settingsForm.appendChild(themeSettingsField);
+        }
 
         if (fredConfig.permission.fred_settings_advanced) {
             settingsForm.appendChild(this.getAdvancedFields());
@@ -186,19 +189,27 @@ export default class PageSettings extends SidebarPlugin {
         const advancedHeader = h3('fred.fe.page_settings.theme_settings');
         const fields = fieldSet(['fred--page_settings_form_theme_settings']);
 
+        let themeSettingPresent = false;
+
         this.themeSettings.forEach(setting => {
             if (setting.group && setting.settings) {
                 const groupEl = this.renderThemeSettingsGroup(setting);
                 if (groupEl !== false) {
+                    themeSettingPresent = true;
                     fields.appendChild(groupEl);
                 }
             } else {
                 const settingEl = this.renderThemeSetting(setting);
                 if (settingEl !== false) {
+                    themeSettingPresent = true;
                     fields.appendChild(settingEl);
                 }
             }
         });
+
+        if (themeSettingPresent === false) {
+            return false;
+        }
 
         advancedContent.appendChild(advancedHeader);
         advancedContent.appendChild(fields);
@@ -227,12 +238,18 @@ export default class PageSettings extends SidebarPlugin {
         });
         const settingGroupContent = dd();
 
+        let themeSettingPresent = false;
         group.settings.forEach(setting => {
             const settingEl = this.renderThemeSetting(setting);
             if (settingEl !== false) {
+                themeSettingPresent = true;
                 settingGroupContent.appendChild(settingEl);
             }
         });
+
+        if (themeSettingPresent === false) {
+            return false;
+        }
 
         content.appendChild(settingGroup);
         content.appendChild(settingGroupContent);
