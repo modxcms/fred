@@ -3,21 +3,17 @@
 namespace Fred\Traits\Elements\Event;
 
 use Firebase\JWT\JWT;
+use Fred\Traits\User;
 use Wa72\HtmlPageDom\HtmlPageCrawler;
 
 trait OnWebPagePrerender
 {
+    use User;
     public function run()
     {
         $theme = $this->fred->getTheme($this->modx->resource->template);
         if (!empty($theme)) {
-            if (!$this->modx->user) {
-                return;
-            }
-            if (!($this->modx->user->hasSessionContext('mgr') || $this->modx->user->hasSessionContext($this->modx->resource->context_key))) {
-                return;
-            }
-            if (!$this->modx->hasPermission('fred')) {
+            if (!$this->canFred()) {
                 return;
             }
 
