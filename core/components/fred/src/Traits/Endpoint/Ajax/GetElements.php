@@ -85,7 +85,9 @@ trait GetElements
                 ];
             }
 
-            $elements[] = $categoryElements;
+            if (!empty($categoryElements['elements'])) {
+                $elements[] = $categoryElements;
+            }
         }
 
         return $this->data(['elements' => $elements]);
