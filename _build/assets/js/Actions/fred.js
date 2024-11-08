@@ -3,9 +3,28 @@ import fetch from '../Fetch';
 import {errorHandler} from "../Utils";
 
 export const getPreview = async () => {
-    return fetch(fredConfig.resource.previewUrl).then(response => {
-        return response.text();
-    })
+    const response = await fetch(fredConfig.resource.previewUrl, {
+        method: 'POST',
+        body: JSON.stringify({
+            themeSettingsPrefix: fredConfig.config.themeSettingsPrefix,
+            themeSettings: {
+                ...fredConfig.getThemeSettingsMap(true),
+                ...fredConfig.getEditableThemeSettingsMap(true)
+            }
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    // const response = await  fetch(fredConfig.resource.previewUrl + '&params=' + JSON.stringify({
+    //     themeSettingsPrefix:fredConfig.config.themeSettingsPrefix,
+    //     themeSettings: {
+    //         ...fredConfig.getThemeSettingsMap(true),
+    //         ...fredConfig.getEditableThemeSettingsMap(true)
+    //     }
+    // }));
+    return response.text();
 };
 
 export const saveContent = async body => {

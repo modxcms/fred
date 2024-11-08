@@ -386,6 +386,10 @@ export default class Fred {
         emitter.on('fred-content-changed', () => {
             this.unsavedChanges = true;
         })
+
+        emitter.on('fred-theme-setting-change', () => {
+            this.previewDocument = null;
+        })
     }
 
     registerKeyboardShortcuts() {

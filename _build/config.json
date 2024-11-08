@@ -28,7 +28,8 @@
             "OnTVInputPropertiesList",
             "OnManagerPageBeforeRender",
             "OnManagerLogin",
-            "OnWebLogin"
+            "OnWebLogin",
+            "OnMODXInit"
           ]
         }
       ]
