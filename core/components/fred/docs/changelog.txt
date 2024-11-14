@@ -1,1 +1,1 @@
-- Allow template setting adjustments to appear in Fred Preview mode
+- Adjust handling of fred-target
