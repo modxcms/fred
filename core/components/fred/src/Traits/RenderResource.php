@@ -211,7 +211,12 @@ trait RenderResource
 
                 $target = $node->getAttribute('data-fred-target');
                 if (!empty($target)) {
-                    $value = $this->resource->get($target);
+                    // if target starts with "tv_"
+                    if (str_starts_with($target, 'tv_')) {
+                        // remove the "tv_"
+                        $target = substr($target, 3);
+                    }
+                    $value = "[[*".$target."]]";
                 } else {
                     if (isset($item['values'][$valueName]['_raw']['_value'])) {
                         $value = $item['values'][$valueName]['_raw']['_value'];

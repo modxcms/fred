@@ -810,8 +810,16 @@ export class Element {
                 if (!this.content[el.dataset.fredName]._raw) this.content[el.dataset.fredName]._raw = {};
 
                 if (el.dataset.fredTarget) {
+                    console.log(el.dataset.fredTarget);
                     if (fredConfig.pageSettings[el.dataset.fredTarget]) {
                         this.content[el.dataset.fredName]._raw._value = fredConfig.pageSettings[el.dataset.fredTarget];
+                    }
+                    if (
+                        (el.dataset.fredTarget.indexOf('tv_') === 0) &&
+                        (el.dataset.fredTarget.substr(3) !== '') &&
+                        fredConfig.pageSettings['tvs'][el.dataset.fredTarget.substr(3)]
+                    ) {
+                        this.content[el.dataset.fredTarget]._raw._value = fredConfig.pageSettings['tvs'][el.dataset.fredTarget.substr(3)];
                     }
                 }
 
