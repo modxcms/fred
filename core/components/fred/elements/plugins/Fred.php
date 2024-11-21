@@ -19,6 +19,9 @@ if (!$modx->version) {
 }
 $version = (int) $modx->version['version'];
 
+// fix bug if MODX version can't be detected
+if (!$version) return;
+
 if ($version > 2) {
     $fred = $modx->services->get('fred');
 } else {
