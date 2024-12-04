@@ -9,7 +9,7 @@ trait OnMODXInit
     use User;
     public function run()
     {
-        if ($_GET['fred'] && intval($_GET['fred']) !== 2) {
+        if (!isset($_GET['fred']) && intval($_GET['fred']) !== 2) {
             return;
         }
         if (!$this->canFred()) {
