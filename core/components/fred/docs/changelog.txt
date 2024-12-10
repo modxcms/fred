@@ -1,1 +1,3 @@
-- Adjust handling of fred-target
+- Fix height of elFinder modal content
+- Fix PHP warning in log
+- Fix bug if MODX version can't be detected
