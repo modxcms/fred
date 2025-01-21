@@ -18,7 +18,15 @@ class Refresh extends \modProcessor
         //allow larger sites to rebuild
         ini_set('max_execution_time', 300);
         /** @var \Fred $fred */
-        $fred =  $this->modx->services->get('fred');
+        $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+        $fred = $this->modx->getService(
+            'fred',
+            'Fred',
+            $corePath . 'model/fred/',
+            [
+                'core_path' => $corePath
+            ]
+        );
 
         //Clear Element Values
         $this->modx->removeCollection('FredCache', []);
@@ -42,7 +50,7 @@ class Refresh extends \modProcessor
         $results = $this->modx->getIterator('modResource', $c);
 
         foreach ($results as $resource) {
-            $renderResource = new \Fred\RenderResource($resource, $this->modx);
+            $renderResource = new \Fred\v2\RenderResource($resource, $this->modx);
             $renderResource->render();
 
             /* CacheMaster Script to rebuild output */
