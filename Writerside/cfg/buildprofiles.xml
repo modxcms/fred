@@ -17,6 +17,7 @@
             <showDownloadButton>true</showDownloadButton>
         </variables>
         <footer>
+            <social type="github" href="https://github.com/modxcms/fred"/>
             <social type="twitter" href="https://twitter.com/modx"/>
             <social type="youtube" href="https://www.youtube.com/modx" />
             <social type="blog" href="https://modx.com/blog/" />
