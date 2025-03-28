@@ -67,4 +67,40 @@ abstract class FredBaseManagerController extends modExtraManagerController
     {
         return $this->modx->hasPermission('fred');
     }
+
+    /**
+     * Add an external Javascript file to the head of the page
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    public function addJavascript($script)
+    {
+        $this->head['js'][] = $script . "?lit=" . $this->fred->lit;
+    }
+
+    /**
+     * Add a external CSS file to the head of the page
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    public function addCss($script)
+    {
+        $this->head['css'][] = $script . "?lit=" . $this->fred->lit;
+    }
+
+    /**
+     * Add an external Javascript file to the head of the page
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    public function addLastJavascript($script)
+    {
+        $this->head['lastjs'][] = $script . "?lit=" . $this->fred->lit;
+    }
 }

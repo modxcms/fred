@@ -95,6 +95,10 @@
       {
         "key": "logout_url",
         "value": ""
+      },
+      {
+        "key": "lit",
+        "value": "0"
       }
     ]
   },

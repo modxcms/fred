@@ -154,14 +154,13 @@ trait OnWebPagePrerender
 
             $jwt = JWT::encode($payload, $this->fred->getSecret(), 'HS256');
 
-            $versionHash = substr(md5($this->fredClass::VERSION), 0, 6);
             if (!$this->modx->version) {
                 $this->modx->getVersionData();
             }
             $version = (int)$this->modx->version['version'];
             $fredContent = '
-        <script type="text/javascript" src="' . $this->fred->getOption('webAssetsUrl') . 'fred.min.js?v=' . $versionHash . '"></script>
-        <link rel="stylesheet" href="' . $this->fred->getOption('webAssetsUrl') . 'fred.css?v=' . $versionHash . '" type="text/css" />
+        <script type="text/javascript" src="' . $this->fred->getOption('webAssetsUrl') . 'fred.min.js?v=' . $this->fred->lit . '"></script>
+        <link rel="stylesheet" href="' . $this->fred->getOption('webAssetsUrl') . 'fred.css?v=' . $this->fred->lit . '" type="text/css" />
         ' . $includes . '
         <script>
             var fred = new Fred({

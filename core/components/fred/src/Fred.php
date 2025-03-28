@@ -29,6 +29,7 @@ class Fred
     public $namespace = 'fred';
     public $cache = null;
     public $options = [];
+    public $lit = 0;
 
     public function __construct(&$modx, array $options = [])
     {
@@ -57,6 +58,7 @@ class Fred
         ], $options);
         $this->addPackage();
         $this->modx->lexicon->load('fred:default');
+        $this->lit = $this->modx->getOption('fred.lit', $options, 0);
     }
 
     public function addPackage()
