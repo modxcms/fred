@@ -34,7 +34,7 @@
             <column key="theme" length="" collation="A" null="false" />
         </index>
 
-        <aggregate alias="User" class="MODX\Revolution\modUser" local="user" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="User" class="MODX\Revolution\modUser" local="createdBy" foreign="id" cardinality="one" owner="foreign" />
         <composite alias="Blueprints" class="Fred\Model\FredBlueprint" local="id" foreign="category" cardinality="many" owner="local" />
         <aggregate alias="Theme" class="Fred\Model\FredTheme" local="theme" foreign="id" cardinality="one" owner="foreign" />
         <composite alias="BlueprintCategoryTemplatesAccess" class="Fred\Model\FredBlueprintCategoryTemplateAccess" local="id" foreign="category" cardinality="many" owner="local" />
@@ -80,7 +80,7 @@
             <column key="category" length="" collation="A" null="false" />
         </index>
 
-        <aggregate alias="User" class="MODX\Revolution\modUser" local="user" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="User" class="MODX\Revolution\modUser" local="createdBy" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Category" class="Fred\Model\FredBlueprintCategory" local="category" foreign="id" cardinality="one" owner="foreign" />
         <composite alias="BlueprintTemplatesAccess" class="Fred\Model\FredBlueprintTemplateAccess" local="id" foreign="blueprint" cardinality="many" owner="local" />
     </object>
