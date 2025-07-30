@@ -1,3 +1,9 @@
+3.1.6-pl
+===========================
+- pass settings schema location to element options
+
+3.1.5-pl
+===========================
 - Fix height of elFinder modal content
 - Fix PHP warning in log
 - Fix bug if MODX version can't be detected

@@ -242,7 +242,9 @@ Ext.extend(fred.panel.ElementOptionSet, MODx.FormPanel, {
                                             msgTarget: 'under'
                                         },
                                         items: [
-                                            fred.field.JSONField()
+                                            fred.field.JSONField({
+                                                schema: fred.config?.assetsUrl + 'mgr/js/schema/settings.schema.json',
+                                            })
                                         ]
                                     }
                                 ]

@@ -1,12 +1,14 @@
 fred.field.JSONField = function (config) {
     config = config || {
         name: 'data',
+        schema: '',
     };
 
     Ext.applyIf(config, {
         xtype: Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea',
         mimeType: 'application/json',
         name: config.name ?? 'data',
+        schema: config.schema ?? '',
         hideLabel: true,
         anchor: '100%',
         height: 400,
@@ -27,9 +29,9 @@ fred.field.JSONField = function (config) {
                 return noError;
             }
 
-            var annotations = this.editor.getSession().getAnnotations();
+            var annotations = this.editor?.getSession().getAnnotations();
             var errorMsg = [];
-
+            if (!annotations) return noError;
             annotations.forEach(function(annotation){
                 if (annotation.type === 'error') {
                     errorMsg.push(_('fred.err.invalid_json', {error: annotation.text, row: annotation.row, column: annotation.column}));

@@ -1,0 +1,591 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Fred Settings",
+  "description": "Settings for Fred Elements",
+  "type": "object",
+  "definitions": {
+    "option": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "text"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "textarea"
+            },
+            "value": {
+              "type": "string"
+            },
+            "rows": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "toggle"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "togglegroup"
+            },
+            "value": {
+              "type": "string"
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "select"
+            },
+            "value": {
+              "type": "string"
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "colorswatch"
+            },
+            "value": {
+              "type": "string"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "color": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "width": {
+                        "type": "number"
+                      },
+                      "colorAsClass": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "colorpicker"
+            },
+            "value": {
+              "type": "string"
+            },
+            "showAlpha": {
+              "type": "boolean"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type",
+            "min",
+            "max"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "slider"
+            },
+            "value": {
+              "type": "string"
+            },
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "tooltipDecimals": {
+              "type": "number"
+            },
+            "step": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "page"
+            },
+            "value": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "url": {
+                  "type": "string"
+                }
+              }
+            },
+            "clearButton": {
+              "type": "boolean"
+            },
+            "depth": {
+              "type": "number"
+            },
+            "resources": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              ]
+            },
+            "parents": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              ]
+            }
+          }
+        },{
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "chunk"
+            },
+            "value": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            },
+            "chunks": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              ]
+            },
+            "category": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "file"
+            },
+            "value": {
+              "type": "string"
+            },
+            "mediaSource": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "folder"
+            },
+            "value": {
+              "type": "string"
+            },
+            "mediaSource": {
+              "type": "string"
+            },
+            "showOnlyFolders": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "image"
+            },
+            "value": {
+              "type": "string"
+            },
+            "mediaSource": {
+              "type": "string"
+            },
+            "showPreview": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "label",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "const": "c"
+            },
+            "value": {
+              "type": "string"
+            },
+            "group": {
+              "type": "number"
+            },
+            "autoTag": {
+              "type": "boolean"
+            },
+            "hideInput": {
+              "type": "boolean"
+            },
+            "limit": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fred-import"
+          ],
+          "properties": {
+            "fred-import": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "remote": {
+      "description": "Determine whether to render the element remotely.",
+      "type": "boolean"
+    },
+    "cacheOutput": {
+      "description": "Whether or not to cache the output of an element to static HTML when remote is set to true.",
+      "type": "boolean"
+    },
+    "mediaSource": {
+      "description": "Comma-separated names of the media sources to use for the Finder.",
+      "type": "string"
+    },
+    "imageMediaSource": {
+      "description": "Comma-separated names of the media sources to use for the Finder specific for image selection.",
+      "type": "string"
+    },
+    "toolbarPluginsInclude": {
+      "description": "List of toolbar plugins to enable for elements.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "toolbarPluginsExclude": {
+      "description": "List of toolbar plugins to disable for elements.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "settings": {
+      "description": "Settings are made of a JSON array of option objects, which provide configuration controls for the element.",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "group",
+              "settings"
+            ],
+            "properties": {
+              "group": {
+                "type": "string"
+              },
+              "settings": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/option"
+                }
+              }
+            }
+          },
+          {
+            "$ref": "#/definitions/option"
+          }
+        ]
+      }
+    }
+  }
+}

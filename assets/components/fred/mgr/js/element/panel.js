@@ -551,6 +551,7 @@ Ext.extend(fred.panel.Element, MODx.FormPanel, {
                                 name: 'options_override',
                                 id: 'fred-element-options-override',
                                 fieldLabel: _('fred.elements.options_override'),
+                                schema: fred.config?.assetsUrl + 'mgr/js/schema/settings.schema.json',
                                 hideLabel: false,
                                 enableKeyEvents: !!config.permission.fred_element_option_sets_save,
                                 listeners: {

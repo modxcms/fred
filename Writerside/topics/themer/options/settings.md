@@ -32,7 +32,7 @@ List of toolbar plugins to disable for elements.
 
 ## Settings
 
-Settings are made of a JSON array of objects and [group objects](#setting-groups) which provide configuratin controls for Elements. Settings can [import](import.md) sub-sets of settings using a `fred-import` object.
+Settings are made of a JSON array of objects and [group objects](#setting-groups) which provide configuration controls for Elements. Settings can [import](import.md) subsets of settings using a `fred-import` object.
 
 ### Settings properties
 
