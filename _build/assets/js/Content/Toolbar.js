@@ -2,6 +2,7 @@ import { h3, div, button } from "../UI/Elements";
 import ElementScreenshot from "./Toolbar/ElementScreenshot";
 import PartialBlueprint from "./Toolbar/PartialBlueprint";
 import ElementSettings from "./Toolbar/ElementSettings";
+import ElementSettingsButton from "./Toolbar/ElementSettingsButton";
 import Duplicate from "./Toolbar/Duplicate";
 import Delete from "./Toolbar/Delete";
 import Move from "./Toolbar/Move";
@@ -67,6 +68,7 @@ export default class Toolbar {
             new plugin(this.el, this.pluginWrapper);
         });
         toolbar.appendChild(this.pluginWrapper);
+        new ElementSettingsButton(this.el, toolbar);
         toolbar.appendChild(pluginToggle);
         new Move(this.el, toolbar);
 

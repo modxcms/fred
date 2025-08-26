@@ -271,6 +271,16 @@ button.fred--btn, .fred--btn, .fred button.fred--btn, .fred .fred--btn{
     background-color: $dark-gray;
   }
 }
+
+.fred--element-edit {
+  outline: none;
+  &:before {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: svg-load('pencil.svg', fill=$black);
+    background-color: $dark-gray;
+  }
+}
 .fred--position{
   &-up{
     background-repeat: no-repeat;

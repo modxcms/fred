@@ -238,25 +238,14 @@
         bottom: -10px;
       }
     }
-    // ++++++ TODO: rework opactity below, later ++++++ //
-    //fred--element-settings, .fred--position-up, .fred--position-down {
-    // &::before {
-    // opacity: .6;
-    // transition: $timing;
-    //
-    // &:hover::before {
-    //   opacity: 1;
-    //   transition: $timing;
-    // }
 
+    .fred--element-edit,
     .fred--element-settings {
       display: block;
       height: 32px;
       margin-bottom: math.div($baseGutter, 2);
 
-      &:before {                            // override _buttons.scss … move here?
-        background-color: transparent;
-        background-position: center 1px;
+      &:before {
         border-radius: 50%;
         background-color: $offwhite;
         text-align: center;
@@ -313,7 +302,8 @@
       .fred--toolbar{
         bottom: 5px;
         right: 10px;
-        .fred--element-settings{
+        .fred--element-settings,
+        .fred--element-edit {
           display: inline-block;
           margin-bottom: 0;
           margin-right: 8px;
@@ -333,6 +323,17 @@
           .fred--toolbar-grip{
             display: inline-block;
             background-position: 5px 3px;
+          }
+        }
+        .fred--toolbar-edit {
+          display: inline-block;
+          margin-bottom: 0;
+          margin-right: 8px;
+          height: 32px;
+          width: 32px;
+          &:before{
+            height: 32px;
+            width: 32px;
           }
         }
         .fred--toolbar-plugins:after{

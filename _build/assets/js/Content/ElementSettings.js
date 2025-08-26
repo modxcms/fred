@@ -11,12 +11,19 @@ export class ElementSettings {
         this.settings = {};
         this.originalValues = {};
         this.wrapper = null;
+        this.isOpened = false;
 
         this.dtActive = this.dtActive.bind(this);
         this.open = this.open.bind(this);
     }
 
     open(el) {
+        if (this.isOpened === true) {
+            utilitySidebar.close();
+            this.isOpened = false;
+            return;
+        }
+        this.isOpened = true;
         this.el = el;
         this.settings = el.options.settings;
         this.options = el.options;
@@ -24,7 +31,6 @@ export class ElementSettings {
         this.remote = this.options.remote || false;
         this.cacheOutput = ((this.remote === true) && (this.options.cacheOutput === true));
         this.debouncedRender = debounce(200, this.el.render);
-
         utilitySidebar.open(this.render());
     }
 
