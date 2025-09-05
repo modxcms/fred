@@ -81,7 +81,7 @@ export default class Elements extends SidebarPlugin {
     }
 
     static elementWrapper(id, title, description, image, content, options) {
-        const element = figure(['fred--thumb']);
+        const element = figure(['fred--thumb', 'fred--draggable']);
 
         const imageWrapper = div();
         const elementImage = img(image, title);

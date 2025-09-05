@@ -133,7 +133,7 @@ export default class Blueprints extends SidebarPlugin {
     }
 
     static wrapper(id, name, description, image) {
-        const element = figure(['fred--thumb']);
+        const element = figure(['fred--thumb', 'fred--draggable']);
 
         const imageWrapper = div();
         const elementImage = img(image, name);

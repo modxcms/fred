@@ -353,7 +353,7 @@ export class Element {
     }
 
     async render(refreshCache = false, initScripts = true) {
-        const wrapperClasses = ['fred--block'];
+        const wrapperClasses = ['fred--block', 'fred--draggable'];
 
         if (this.invalidTheme) {
             wrapperClasses.push('fred--block-invalid');
