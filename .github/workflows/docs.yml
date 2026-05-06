@@ -1,0 +1,47 @@
+name: Docs
+on:
+    workflow_dispatch:
+
+jobs:
+    build:
+        name: Build Docusaurus
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+                  cache: npm
+                  cache-dependency-path: _build/docs/package-lock.json
+
+            - name: Install dependencies
+              working-directory: _build/docs
+              run: npm ci
+            - name: Build website
+              working-directory: _build/docs
+              run: npm run build
+
+            - name: Upload Build Artifact
+              uses: actions/upload-pages-artifact@v6
+              with:
+                  path: _build/docs/build
+
+    deploy:
+        name: Deploy to GitHub Pages
+        needs: build
+
+        permissions:
+            pages: write
+            id-token: write
+
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v5
