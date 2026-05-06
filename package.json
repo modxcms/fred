@@ -5,7 +5,8 @@
   "scripts": {
     "build": "webpack --progress --mode production",
     "dev": "webpack --watch --progress --mode development",
-    "postinstall": "cp -r node_modules/elfinder-npm/css node_modules/elfinder-npm/js node_modules/elfinder-npm/img node_modules/elfinder-npm/sounds ./assets/components/fred/web/vendor/elfinder/ && cp -r node_modules/elfinder-material-theme/Material/* ./assets/components/fred/web/vendor/elfinder-themes/material"
+    "postinstall": "cp -r node_modules/elfinder-npm/css node_modules/elfinder-npm/js node_modules/elfinder-npm/img node_modules/elfinder-npm/sounds ./assets/components/fred/web/vendor/elfinder/ && cp -r node_modules/elfinder-material-theme/Material/* ./assets/components/fred/web/vendor/elfinder-themes/material",
+    "docs:dev": "cd _build/docs && npm start"
   },
   "license": "MIT",
   "devDependencies": {
