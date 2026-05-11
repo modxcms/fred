@@ -106,7 +106,7 @@ The buttons registered to the sidebar are always added before the `More` button.
 
 When you have the `init` function returning your plugin's class, you need to register it for Fred by creating a MODX Plugin on the `[FredBeforeRender](/developer/modx_events#fredbeforerender)` event.
 
-Include the JS file containing the init function using [includes](modx_events.#includes) and registering the Plugin using [`beforeRender`](modx_events.#beforerender).
+Include the JS file containing the init function using [includes](/developer/modx_events#includes) and registering the Plugin using [`beforeRender`](/developer/modx_events#beforerender).
 
 To register the toolbar Plugin, you call the `registerSidebarPlugin` function from Fred with two arguments:
 

@@ -12,17 +12,16 @@ Being able to have multiple Themes allows Theme Builders to create and release a
 
 Themes are made of multiple things:
 
-- [About Fred Themes](#about-fred-themes)
-    - [What makes up a Theme](#what-makes-up-a-theme)
-        - [Default Element](#default-element)
-        - [Elements](#elements)
-        - [Blueprints](#blueprints)
-        - [Templates and TVs](#templates-and-tvs)
-        - [Categories](#categories)
-        - [Extras](#extras)
-        - [Assets](#assets)
-        - [License, Changelog and Readme Files](#license-changelog-and-readme-files)
-    - [Build a Theme to Share](#build-a-theme-to-share)
+- [What makes up a Theme](#what-makes-up-a-theme)
+    - [Default Element](#default-element)
+    - [Elements](#elements)
+    - [Blueprints](#blueprints)
+    - [Templates and TVs](#templates-and-tvs)
+    - [Categories](#categories)
+    - [Extras](#extras)
+    - [Assets](#assets)
+    - [License, Changelog and Readme Files](#license-changelog-and-readme-files)
+- [Build a Theme to Share](#build-a-theme-to-share)
 
 When you create a Theme, Fred will automatically create a directory named for the theme in `assets/themes/{{theme-name}}`. Use this to store all your theme-specific assets like images, css, fonts and javascript.
 
