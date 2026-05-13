@@ -34,7 +34,7 @@ const config: Config = {
       tagName: 'meta',
       attributes: {
         name: 'algolia-site-verification',
-        content: '01BB65AA433A70F0',
+        content: '2841EAF47DF53C20',
       },
     },
   ],
@@ -105,8 +105,8 @@ const config: Config = {
       darkTheme: prismThemes.palenight,
     },
     algolia: {
-      appId: '8GDHE5VTYD',
-      apiKey: '5ad56659f6fd5f2a0ad167fb33bb82f4',
+      appId: 'DFEXG1UAYP',
+      apiKey: '014a10a343530b38df78bca3a1376c3c',
       indexName: 'fred',
       contextualSearch: true,
       searchParameters: {},
