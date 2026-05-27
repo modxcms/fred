@@ -97,11 +97,13 @@ trait LoadContent
                 ];
 
                 if (!empty($props['fred.options'])) {
-                    $def['options'] = json_decode($props['fred.options']);
+                    $v = \Fred\Utils::modxParseString($this->modx, $props['fred.options']);
+                    $def['options'] = json_decode($v);
                     unset($props['fred.options']);
                 }
                 foreach ($props as $k => $v) {
                     if (substr($k, 0, 5) === "fred.") {
+                        $v = \Fred\Utils::modxParseString($this->modx, $v);
                         $def[substr($k, 5)] = $v;
                     }
                 }
