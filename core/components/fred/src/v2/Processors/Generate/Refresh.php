@@ -15,8 +15,12 @@ class Refresh extends \modProcessor
 
     public function process()
     {
-        //allow larger sites to rebuild
-        ini_set('max_execution_time', 300);
+        ini_set('max_execution_time', 30);
+
+        $offset = (int)$this->getProperty('offset', 0);
+        $limit = (int)$this->getProperty('limit', 10);
+        $isLast = (bool)$this->getProperty('isLast', false);
+
         /** @var \Fred $fred */
         $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
         $fred = $this->modx->getService(
@@ -28,8 +32,9 @@ class Refresh extends \modProcessor
             ]
         );
 
-        //Clear Element Values
-        $this->modx->removeCollection('FredCache', []);
+        if ($offset === 0) {
+            $this->modx->removeCollection('FredCache', []);
+        }
 
         $c = $this->modx->newQuery('FredThemedTemplate');
         $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate', '', ['template']));
@@ -47,6 +52,7 @@ class Refresh extends \modProcessor
 
         $c = $this->modx->newQuery('modResource');
         $c->where(['template:IN' => $templates]);
+        $c->limit($limit, $offset);
         $results = $this->modx->getIterator('modResource', $c);
 
         foreach ($results as $resource) {
@@ -89,7 +95,9 @@ class Refresh extends \modProcessor
             $this->modx->log(\modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_id', ['id' => $resource->id]));
         }
 
-        $this->modx->log(\modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_complete'));
+        if ($isLast) {
+            $this->modx->log(\modX::LOG_LEVEL_INFO, $this->modx->lexicon('fred.refresh_complete'));
+        }
 
         return $this->success('');
     }

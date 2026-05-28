@@ -233,30 +233,81 @@ Ext.extend(fred.panel.Home, MODx.Panel, {
                                 text: _('fred.rebuild.rebuild'),
                                 handler: function() {
                                     var topic = '/fred/mgr/generate/refresh/';
+                                    var batchSize = MODx.config.fred.batch_size || 10;
+                                    var offset = 0;
+                                    var total = 0;
 
-                                    var console = MODx.load({
+                                    var consoleWin = MODx.load({
                                         xtype: 'modx-console',
                                         register: 'mgr',
                                         topic: topic,
                                         show_filename: 0
                                     });
 
-                                    console.show(Ext.getBody());
+                                    consoleWin.show(Ext.getBody());
+
+                                    function processNextBatch() {
+                                        var isLast = (offset + batchSize) >= total;
+                                        MODx.Ajax.request({
+                                            url: fred.config.connectorUrl,
+                                            params: {
+                                                action: 'Fred\\Processors\\Generate\\Refresh',
+                                                register: 'mgr',
+                                                topic: topic,
+                                                offset: offset,
+                                                limit: batchSize,
+                                                isLast: isLast ? 1 : 0
+                                            },
+                                            listeners: {
+                                                success: {
+                                                    fn: function() {
+                                                        offset += batchSize;
+                                                        if (offset < total) {
+                                                            processNextBatch();
+                                                        } else {
+                                                            consoleWin.fireEvent('complete');
+                                                            consoleWin = null;
+                                                        }
+                                                    },
+                                                    scope: this
+                                                },
+                                                failure: {
+                                                    fn: function() {
+                                                        consoleWin.fireEvent('complete');
+                                                        consoleWin = null;
+                                                    },
+                                                    scope: this
+                                                }
+                                            }
+                                        });
+                                    }
 
                                     MODx.Ajax.request({
                                         url: fred.config.connectorUrl,
                                         params: {
-                                            action: 'Fred\\Processors\\Generate\\Refresh',
+                                            action: 'Fred\\Processors\\Generate\\Count',
                                             register: 'mgr',
                                             topic: topic
                                         },
                                         listeners: {
                                             success: {
-                                                fn: function() {
-                                                    console.fireEvent('complete');
-                                                    console = null
+                                                fn: function(r) {
+                                                    total = r.object.total;
+                                                    if (total === 0) {
+                                                        consoleWin.fireEvent('complete');
+                                                        consoleWin = null;
+                                                        return;
+                                                    }
+                                                    processNextBatch();
                                                 },
-                                                scope:this
+                                                scope: this
+                                            },
+                                            failure: {
+                                                fn: function() {
+                                                    consoleWin.fireEvent('complete');
+                                                    consoleWin = null;
+                                                },
+                                                scope: this
                                             }
                                         }
                                     });
