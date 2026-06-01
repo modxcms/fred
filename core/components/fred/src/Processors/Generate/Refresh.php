@@ -25,6 +25,7 @@ class Refresh extends Processor
         $offset = (int)$this->getProperty('offset', 0);
         $limit = (int)$this->getProperty('limit', 10);
         $isLast = (bool)$this->getProperty('isLast', false);
+        $theme = (int)$this->getProperty('theme', 0);
 
         if ($offset === 0) {
             $this->modx->removeCollection(FredCache::class, []);
@@ -32,6 +33,9 @@ class Refresh extends Processor
 
         $c = $this->modx->newQuery(FredThemedTemplate::class);
         $c->select($this->modx->getSelectColumns(FredThemedTemplate::class, 'FredThemedTemplate', '', ['template']));
+        if ($theme > 0) {
+            $c->where(['theme' => $theme]);
+        }
 
         $c->prepare();
         $c->stmt->execute();

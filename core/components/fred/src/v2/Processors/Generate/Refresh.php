@@ -20,6 +20,7 @@ class Refresh extends \modProcessor
         $offset = (int)$this->getProperty('offset', 0);
         $limit = (int)$this->getProperty('limit', 10);
         $isLast = (bool)$this->getProperty('isLast', false);
+        $theme = (int)$this->getProperty('theme', 0);
 
         /** @var \Fred $fred */
         $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
@@ -38,6 +39,9 @@ class Refresh extends \modProcessor
 
         $c = $this->modx->newQuery('FredThemedTemplate');
         $c->select($this->modx->getSelectColumns('FredThemedTemplate', 'FredThemedTemplate', '', ['template']));
+        if ($theme > 0) {
+            $c->where(['theme' => $theme]);
+        }
 
         $c->prepare();
         $c->stmt->execute();

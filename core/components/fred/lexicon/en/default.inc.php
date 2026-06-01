@@ -106,6 +106,7 @@ $_lang['fred.elements.templates'] = 'Templates';
 
 $_lang['fred.rebuild.rebuild'] = 'Rebuild';
 $_lang['fred.rebuild.rebuild_desc'] = 'Click the Rebuild button below to publish the changes in updated Elements to all existing Fred-powerd site pages.';
+$_lang['fred.rebuild.theme'] = 'Theme';
 
 $_lang['fred.element_cateogries.all'] = 'All Categories';
 $_lang['fred.element_categories.none'] = 'No Categories were found.';
