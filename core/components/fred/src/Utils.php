@@ -83,13 +83,18 @@ final class Utils
             $data = json_encode($data);
         }
         /** @var \MODX\Revolution\modChunk $chunk */
-        $chunk = $modx->newObject('modChunk', ['name' => 'inline-' . uniqid()]);
+        $chunk = $modx->newObject('modChunk', ['name' => 'inline-' . uniqid('', true)]);
         $chunk->setCacheable(false);
 
         $output = $chunk->process($phs, $data);
 
         if ($isArray === true) {
-            $output = json_decode($output, true);
+            try {
+                $output = json_decode($output, true, 512, JSON_THROW_ON_ERROR);
+            } catch (\JsonException $e) {
+                $modx->log(\modX::LOG_LEVEL_ERROR, 'Failed to parse JSON string: ' . $e->getMessage());
+                return [];
+            }
         }
 
         return $output;
