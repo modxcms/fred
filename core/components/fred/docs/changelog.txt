@@ -5,6 +5,7 @@
 - Split resources into batches during bulk regeneration (#520)
 - Fix issue with symlinks and weblinks on MODX 3.x (#518)
 - Reviewing for more MySQL rank issues (#521)
+- Adjust conflict handling for resource settings and element settings
 
 3.1.6-pl
 ===========================
