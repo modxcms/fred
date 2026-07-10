@@ -53,13 +53,8 @@ trait BlueprintsCreateBlueprint
             $c->sortby('`rank`', 'desc');
             $c->limit(1);
 
-            $lastRecord = $this->modx->getIterator($this->blueprintClass, $c);
-            $rank = 1;
-
-            foreach ($lastRecord as $lastItem) {
-                $rank = $lastItem->rank + 1;
-                break;
-            }
+            $lastRecord = $this->modx->getObject($this->blueprintClass, $c);
+            $rank = (!empty($lastRecord)) ? $lastRecord->get('rank') + 1 : 1;
         }
 
         $blueprint = $this->modx->newObject($this->blueprintClass);

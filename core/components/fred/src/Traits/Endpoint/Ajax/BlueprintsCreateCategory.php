@@ -38,13 +38,8 @@ trait BlueprintsCreateCategory
             $c->sortby('`rank`', 'desc');
             $c->limit(1);
 
-            $lastRecord = $this->modx->getIterator($this->blueprintCategoryClass, $c);
-            $rank = 1;
-
-            foreach ($lastRecord as $lastItem) {
-                $rank = $lastItem->rank + 1;
-                break;
-            }
+            $lastRecord = $this->modx->getObject($this->blueprintCategoryClass, $c);
+            $rank = (!empty($lastRecord)) ? $lastRecord->get('rank') + 1 : 1;
         }
 
         $category = $this->modx->newObject($this->blueprintCategoryClass);

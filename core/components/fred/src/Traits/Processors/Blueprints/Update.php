@@ -40,13 +40,8 @@ trait Update
             $c->limit(1);
             $c->sortby('`rank`', 'DESC');
 
-            $last = 0;
-
-            $blueprints = $this->modx->getIterator($this->classKey, $c);
-            foreach ($blueprints as $blueprint) {
-                $last = $blueprint->rank + 1;
-                break;
-            }
+            $lastBlueprint = $this->modx->getObject($this->classKey, $c);
+            $last = (!empty($lastBlueprint)) ? $lastBlueprint->get('rank') + 1 : 1;
 
             $this->setProperty('rank', $last);
         }

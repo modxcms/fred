@@ -88,7 +88,7 @@ trait RenderResource
 
     private function getElement($id): string
     {
-        /** @var FredElement $element */
+        /** @var \FredElement $element */
         $element = $this->modx->getObject($this->elementClass, ['uuid' => $id]);
         if (!$element) {
             $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$id} wasn't found.");
