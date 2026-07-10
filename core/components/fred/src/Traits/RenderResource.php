@@ -88,7 +88,7 @@ trait RenderResource
 
     private function getElement($id): string
     {
-        /** @var FredElement $element */
+        /** @var \FredElement $element */
         $element = $this->modx->getObject($this->elementClass, ['uuid' => $id]);
         if (!$element) {
             $this->modx->log(\modX::LOG_LEVEL_ERROR, "[Fred] Element {$id} wasn't found.");
@@ -430,23 +430,25 @@ trait RenderResource
 
     private function mergeSetting($id, $settings = [])
     {
-        $settings['theme_dir'] = "[[++{$this->theme->settingsPrefix}.theme_dir]]";
-        $settings['template'] = [
+        $extraSettings = [];
+        $extraSettings['theme_dir'] = "[[++{$this->theme->settingsPrefix}.theme_dir]]";
+        $extraSettings['template'] = [
             'theme_dir' => "[[++{$this->theme->settingsPrefix}.theme_dir]]",
         ];
 
         $themeSettingKeys = $this->theme->getSettingKeys();
 
-        $settings['setting'] = [];
+        $extraSettings['setting'] = [];
 
         foreach ($themeSettingKeys as $settingKey) { {
-            $settings['theme_setting'][$settingKey] = "[[++{$this->theme->settingsPrefix}.setting.$settingKey]]";
+            $extraSettings['theme_setting'][$settingKey] = "[[++{$this->theme->settingsPrefix}.setting.$settingKey]]";
         }}
 
-        $settings['id'] = $id;
+        $extraSettings['id'] = $id;
         foreach ($this->pageSettings as $key => $value) {
-            $settings[$key] = $value;
+            $extraSettings[$key] = $value;
         }
+        $settings = array_merge($extraSettings, $settings);
         return $settings;
     }
 

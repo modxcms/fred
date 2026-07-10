@@ -140,7 +140,7 @@ if ($object->xpdo) {
                     foreach ($categories as $category) {
                         $newCategory = $modx->newObject('FredElementCategory');
                         $newCategory->set('name', $category->category);
-                        $newCategory->set('rank', $category->rank);
+                        $newCategory->set('rank', $category->get('rank'));
                         $newCategory->set('theme', $defaultTheme);
                         $newCategory->save();
 

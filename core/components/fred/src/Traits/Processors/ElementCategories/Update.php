@@ -41,13 +41,8 @@ trait Update
             $c->limit(1);
             $c->sortby('`rank`', 'DESC');
 
-            $last = 0;
-
-            $categories = $this->modx->getIterator($this->classKey, $c);
-            foreach ($categories as $category) {
-                $last = $category->rank + 1;
-                break;
-            }
+            $lastCategory = $this->modx->getObject($this->classKey, $c);
+            $last = (!empty($lastCategory)) ? $lastCategory->get('rank') + 1 : 1;
 
             $this->setProperty('rank', $last);
         }

@@ -75,10 +75,11 @@ final class RenderResource
             unset($this->pageSettings['content']);
             $tvs = $this->resource->getTemplateVars();
             foreach ($tvs as $tv) {
-                if (isset($this->pageSettings['tv_' . $tv->get('name')])) {
+                $tvName = $tv->get('name');
+                if (isset($this->pageSettings["tv_$tvName"])) {
                     continue;
                 }
-                $this->pageSettings['tv_' . $tv->get('name')] = $this->resource->getTVValue($tv->get('name'));
+                $this->pageSettings["tv_$tvName"] = $this->resource->getTVValue($tvName);
             }
         } else {
             if (!empty($this->pageSettings['tvs'])) {

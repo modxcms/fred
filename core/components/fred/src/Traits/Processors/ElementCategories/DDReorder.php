@@ -29,7 +29,7 @@ trait DDReorder
 
         $categories = $this->modx->getIterator($this->classKey, $c);
 
-        if (min($oldIndex, $newIndex) == $newIndex) {
+        if (min($oldIndex, $newIndex) === $newIndex) {
             foreach ($categories as $category) {
                 $categoryObject = $this->modx->getObject($this->classKey, $category->get('id'));
                 $categoryObject->set('rank', $categoryObject->get('rank') + 1);

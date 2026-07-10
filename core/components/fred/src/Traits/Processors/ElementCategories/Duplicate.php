@@ -46,13 +46,9 @@ trait Duplicate
         $c->limit(1);
         $c->sortby('`rank`', 'DESC');
 
-        $last = 0;
+        $lastCategory = $this->modx->getObject($this->classKey, $c);
+        $last = (!empty($lastCategory)) ? $lastCategory->get('rank') + 1 : 1;
 
-        $categories = $this->modx->getIterator($this->classKey, $c);
-        foreach ($categories as $category) {
-            $last = $category->rank + 1;
-            break;
-        }
         $this->newObject->set('rank', $last);
 
         if ($this->saveObject() === false) {

@@ -38,13 +38,9 @@ trait Duplicate
         $c->limit(1);
         $c->sortby('`rank`', 'DESC');
 
-        $last = 0;
+        $lastElement = $this->modx->getObject($this->classKey, $c);
+        $last = (!empty($lastElement)) ? $lastElement->get('rank') + 1 : 1;
 
-        $elements = $this->modx->getIterator($this->classKey, $c);
-        foreach ($elements as $element) {
-            $last = $element->rank + 1;
-            break;
-        }
         $this->newObject->set('rank', $last);
 
         if ($this->saveObject() === false) {

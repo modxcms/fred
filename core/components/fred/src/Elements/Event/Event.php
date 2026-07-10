@@ -3,6 +3,8 @@
 namespace Fred\Elements\Event;
 
 use Fred\Fred;
+use MODX\Revolution\modSymLink;
+use MODX\Revolution\modWebLink;
 use MODX\Revolution\modX;
 
 abstract class Event
@@ -16,7 +18,7 @@ abstract class Event
     /** @var array */
     protected $sp = [];
 
-    protected $disabledClassKeys = ['modWebLink', 'modSymLink'];
+    protected $disabledClassKeys = [modWebLink::class, modSymLink::class];
 
     public function __construct(Fred &$fred, array $scriptProperties)
     {

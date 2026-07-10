@@ -17,10 +17,13 @@ trait GetElements
 
     public function process()
     {
-        $theme = isset($_GET['theme']) ? intval($_GET['theme']) : 0;
+        $theme = isset($_GET['theme']) ? (int)$_GET['theme'] : 0;
 
         $groupSort = $this->fred->getOption('element_group_sort');
-        if ($groupSort !== 'rank') {
+        if ($groupSort === 'rank') {
+            $groupSort = '`rank`';
+        }
+        if ($groupSort !== '`rank`') {
             $groupSort = 'name';
         }
 
