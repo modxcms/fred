@@ -3,7 +3,7 @@
   "lowCaseName": "fred",
   "description": "Frontend Editor",
   "author": "John Peca",
-  "version": "3.1.6-pl",
+  "version": "3.2.0-pl",
   "menus": [
     {
       "text": "fred.menu.fred",
@@ -95,6 +95,11 @@
     {
       "key": "lit",
       "value": "0"
+    },
+    {
+      "key": "batch_size",
+      "value": "10",
+      "type": "numberfield"
     }
   ],
   "database": {

@@ -106,6 +106,7 @@ $_lang['fred.elements.templates'] = 'Templates';
 
 $_lang['fred.rebuild.rebuild'] = 'Rebuild';
 $_lang['fred.rebuild.rebuild_desc'] = 'Click the Rebuild button below to publish the changes in updated Elements to all existing Fred-powerd site pages.';
+$_lang['fred.rebuild.theme'] = 'Theme';
 
 $_lang['fred.element_cateogries.all'] = 'All Categories';
 $_lang['fred.element_categories.none'] = 'No Categories were found.';
@@ -272,6 +273,8 @@ $_lang['setting_fred.force_sidebar'] = 'Force Sidebar';
 $_lang['setting_fred.force_sidebar_desc'] = 'When enabled, user won\'t be able to close the sidebar.';
 $_lang['setting_fred.logout_url'] = 'Logout Link';
 $_lang['setting_fred.logout_url_desc'] = 'Custom logout link. If filled, users will redirect there instead of to the manager logout after clicking the logout button.';
+$_lang['setting_fred.batch_size'] = 'Regenerate Batch Size';
+$_lang['setting_fred.batch_size_desc'] = 'Maximum number of resources to process in a single batch when regenerating (set to lower values to increase performance).';
 
 $_lang['fred.err.blueprint_categories_ns_name'] = 'Name is required';
 $_lang['fred.err.blueprints_ns_name'] = 'Name is required';
