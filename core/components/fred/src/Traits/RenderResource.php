@@ -430,23 +430,25 @@ trait RenderResource
 
     private function mergeSetting($id, $settings = [])
     {
-        $settings['theme_dir'] = "[[++{$this->theme->settingsPrefix}.theme_dir]]";
-        $settings['template'] = [
+        $extraSettings = [];
+        $extraSettings['theme_dir'] = "[[++{$this->theme->settingsPrefix}.theme_dir]]";
+        $extraSettings['template'] = [
             'theme_dir' => "[[++{$this->theme->settingsPrefix}.theme_dir]]",
         ];
 
         $themeSettingKeys = $this->theme->getSettingKeys();
 
-        $settings['setting'] = [];
+        $extraSettings['setting'] = [];
 
         foreach ($themeSettingKeys as $settingKey) { {
-            $settings['theme_setting'][$settingKey] = "[[++{$this->theme->settingsPrefix}.setting.$settingKey]]";
+            $extraSettings['theme_setting'][$settingKey] = "[[++{$this->theme->settingsPrefix}.setting.$settingKey]]";
         }}
 
-        $settings['id'] = $id;
+        $extraSettings['id'] = $id;
         foreach ($this->pageSettings as $key => $value) {
-            $settings[$key] = $value;
+            $extraSettings[$key] = $value;
         }
+        $settings = array_merge($extraSettings, $settings);
         return $settings;
     }
 
