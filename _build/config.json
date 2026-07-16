@@ -143,7 +143,8 @@
         "resolve.synctables.php",
         "resolve.defaulttheme.php",
         "resolve.migration.php",
-        "resolve.placehold.php"
+        "resolve.placehold.php",
+        "lit.php"
       ]
     }
   }
