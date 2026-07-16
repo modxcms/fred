@@ -37,6 +37,11 @@ if (!is_object($modx) || !($modx instanceof modX)) {
 $modx->startTime = $tStart;
 
 $contextKey = $_GET['ctx'] ?? 'web';
+$contextKey = is_string($contextKey) ? $contextKey : 'web';
+$contextKey = preg_replace('/[^A-Za-z0-9_-]/', '', $contextKey) ?: 'web';
+if ($contextKey === 'mgr') {
+    $contextKey = 'web';
+}
 
 $modx->initialize($contextKey);
 
