@@ -36,7 +36,9 @@ if (!is_object($modx) || !($modx instanceof \MODX\Revolution\modX)) {
 
 $modx->startTime = $tStart;
 
-$modx->initialize('web');
+$contextKey = $_GET['ctx'] ?? 'web';
+
+$modx->initialize($contextKey);
 
 $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
 /** @var \Fred\Fred $fred */

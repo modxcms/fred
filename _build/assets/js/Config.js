@@ -20,6 +20,7 @@ class Config {
         this._fred = null;
         this._jwt = null;
         this._modxVersion = null;
+        this._contextKey = null;
         this._permission = null;
         this._resource = null;
         this._invalidElements = false;
@@ -79,6 +80,12 @@ class Config {
     set modxVersion(modxVersion) {
         if (this._modxVersion === null) {
             this._modxVersion = modxVersion;
+        }
+    }
+
+    set contextKey(contextKey) {
+        if (this._contextKey === null) {
+            this._contextKey = contextKey;
         }
     }
 
@@ -174,6 +181,10 @@ class Config {
 
     get modxVersion() {
         return this._modxVersion;
+    }
+
+    get contextKey() {
+        return this._contextKey;
     }
 
     get permission() {
