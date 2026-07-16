@@ -36,7 +36,14 @@ if (!is_object($modx) || !($modx instanceof modX)) {
 
 $modx->startTime = $tStart;
 
-$modx->initialize('web');
+$contextKey = $_GET['ctx'] ?? 'web';
+$contextKey = is_string($contextKey) ? $contextKey : 'web';
+$contextKey = preg_replace('/[^A-Za-z0-9_-]/', '', $contextKey) ?: 'web';
+if ($contextKey === 'mgr') {
+    $contextKey = 'web';
+}
+
+$modx->initialize($contextKey);
 
 $corePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
 /** @var Fred $fred */

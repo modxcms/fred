@@ -32,7 +32,7 @@ export const saveContent = async body => {
         return Promise.reject(new Error());
     }
 
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=save-content`, {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=save-content&ctx=${fredConfig.config.contextKey}`, {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export const saveContent = async body => {
 };
 
 export const fetchContent = async () => {
-    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=load-content&id=${fredConfig.resource.id}`).then(response => {
+    return fetch(`${fredConfig.config.assetsUrl}endpoints/ajax.php?modx=${fredConfig.config.modxVersion}&action=load-content&id=${fredConfig.resource.id}&ctx=${fredConfig.config.contextKey}`).then(response => {
         return response.json();
     })
 };

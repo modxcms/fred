@@ -1,3 +1,7 @@
+3.2.1-pl
+===========================
+- Load the context settings correctly during save
+
 3.2.0-pl
 ===========================
 - Update Twig to 3.x
