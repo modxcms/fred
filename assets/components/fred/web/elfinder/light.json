@@ -1,0 +1,10 @@
+{
+  "name": "Material Light",
+  "cssurls": "../vendor/elfinder-themes/material/css/theme-light.min.css",
+  "author": "Róbert Kelčák",
+  "email": "robo@kelcak.com",
+  "license": "MIT",
+  "link": "https://github.com/RobiNN1/elFinder-Material-Theme",
+  "image": "https://raw.githubusercontent.com/RobiNN1/elFinder-Material-Theme/master/.github/img/preview-light.png",
+  "description": "A theme for the elFinder web file manager inspired by Google Material design."
+}

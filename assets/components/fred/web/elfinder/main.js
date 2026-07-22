@@ -72,7 +72,10 @@
         })(),
 
         opts = {
-            cssAutoLoad : ['../vendor/elfinder-themes/material/css/theme-light.css'],
+            themes : {
+                'mt-light'    : '../../elfinder/light.json',
+            },
+            theme : 'mt-light',
             getFileCallback : function(file, fm) {
                 if (type === 'folder') {
                     if (file.mime === 'directory') {
