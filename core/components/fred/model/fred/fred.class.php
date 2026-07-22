@@ -50,7 +50,7 @@ class Fred extends FredBase
                 $secretObject->set('key', 'fred.secret');
                 $secretObject->set('namespace', 'fred');
                 $secretObject->set('xtype', 'text-password');
-                $secretObject->set('value', md5(uniqid(rand(), true)) . sha1(md5(uniqid(rand(), true))));
+                $secretObject->set('value', md5(uniqid(mt_rand(), true)) . sha1(md5(uniqid(mt_rand(), true))));
                 $secretObject->save();
 
                 $this->modx->reloadConfig();
@@ -58,7 +58,7 @@ class Fred extends FredBase
                 $secret = $secretObject->get('value');
 
                 if (empty($secret)) {
-                    $secretObject->set('value', md5(uniqid(rand(), true)) . sha1(md5(uniqid(rand(), true))));
+                    $secretObject->set('value', md5(uniqid(mt_rand(), true)) . sha1(md5(uniqid(mt_rand(), true))));
                     $secretObject->save();
 
                     $this->modx->reloadConfig();

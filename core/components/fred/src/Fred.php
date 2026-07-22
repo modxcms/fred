@@ -108,8 +108,8 @@ class Fred
     public function getSecret()
     {
         $secret = $this->modx->getOption('fred.secret');
-
-        if (empty($secret)) {
+        $minLengthCheck =  ((strlen($secret) * 8) < 256);
+        if (empty($secret) || $minLengthCheck) {
             /** @var modSystemSetting $secretObject */
             $secretObject = $this->modx->getObject(modSystemSetting::class, ['key' => 'fred.secret']);
             if (!$secretObject) {
@@ -117,15 +117,15 @@ class Fred
                 $secretObject->set('key', 'fred.secret');
                 $secretObject->set('namespace', 'fred');
                 $secretObject->set('xtype', 'text-password');
-                $secretObject->set('value', md5(uniqid(rand(), true)) . sha1(md5(uniqid(rand(), true))));
+                $secretObject->set('value', md5(uniqid(mt_rand(), true)) . sha1(md5(uniqid(mt_rand(), true))));
                 $secretObject->save();
 
                 $this->modx->reloadConfig();
             } else {
                 $secret = $secretObject->get('value');
 
-                if (empty($secret)) {
-                    $secretObject->set('value', md5(uniqid(rand(), true)) . sha1(md5(uniqid(rand(), true))));
+                if (empty($secret) || $minLengthCheck) {
+                    $secretObject->set('value', md5(uniqid(mt_rand(), true)) . sha1(md5(uniqid(mt_rand(), true))));
                     $secretObject->save();
 
                     $this->modx->reloadConfig();
